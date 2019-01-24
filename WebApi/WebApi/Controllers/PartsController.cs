@@ -14,7 +14,7 @@ using WebApi.Models;
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class PartsController : ControllerBase
     {
@@ -27,9 +27,61 @@ namespace WebApi.Controllers
 
         // GET: api/Todo
         [HttpGet]
-        public IEnumerable<Part> GetTodoItems()
+        public async Task<IEnumerable<Part>> GetParts()
         {
-            return  this._partService.GetAllParts();
-        } 
+            return  await this._partService.GetAllPartsAsync();
+        }
+
+        // GET api/values/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Part>> Get(int id)
+        {
+            var result = await this._partService.GetPartAsync(id);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
+        }
+
+        // POST api/values
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody] Part part)
+        {
+             await this._partService.AddPartAsync(part);
+             return NoContent();
+        }
+
+        // PUT api/values/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] Part part)
+        {
+            if (id != part.Id)
+            {
+                return BadRequest();
+            }
+
+            part.Id = id;
+            await this._partService.AddPartAsync(part);
+
+            return NoContent();
+        }
+       
+        // DELETE: api/Todo/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Part>> DeleteTodoItem(long id)
+        {
+            var result = await this._partService.GetPartAsync(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            result = await this._partService.DeletePartAsync(id);
+
+            return result;
+        }
     }
 }
