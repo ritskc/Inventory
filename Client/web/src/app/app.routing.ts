@@ -6,13 +6,16 @@ import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
-import { LoginComponent } from './views/login/login.component';
+//import { LoginComponent } from './views/login/login.component';
+import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { AuthGuard } from './user/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
@@ -50,6 +53,14 @@ export const routes: Routes = [
       title: 'Home'
     },
     children: [
+      {
+        path: 'admin',
+        component: AdminDashboardComponent,
+        canActivate: [AuthGuard],
+        data: {
+          title: 'Admin Page'
+        }
+      },
       {
         path: 'base',
         loadChildren: './views/base/base.module#BaseModule'
