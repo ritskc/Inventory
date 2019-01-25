@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.IRepositories;
 using WebApi.IServices;
 using WebApi.Models;
 
@@ -9,6 +10,14 @@ namespace WebApi.Services
 {
     public class PartService : IPartService
     {
+
+        private readonly IPartRepository _partRepository;
+
+        public PartService(IPartRepository partRepository)
+        {
+            _partRepository = partRepository;
+        }
+
         List<Part> parts = new List<Part>();
         
         private IEnumerable<Part> GetAllParts()
@@ -29,8 +38,8 @@ namespace WebApi.Services
         }
 
         public async Task<IEnumerable<Part>> GetAllPartsAsync()
-        {           
-            return await Task.Run(() => GetAllParts());
+        {
+            return await this._partRepository.GetAllPartsAsync();//Task.Run(() => GetAllParts());
         }  
         
         public async Task<Part> GetPartAsync(long id)
@@ -42,7 +51,7 @@ namespace WebApi.Services
 
         public async Task AddPartAsync(Part part)
         {            
-            await Task.Run(() => AddPart(part));
+            await this._partRepository.AddPartAsync(part);
         }
 
         private void AddPart(Part part)
