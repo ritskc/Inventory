@@ -47,7 +47,18 @@ export const navItems: NavData[] = [
       {
         name: 'Cards',
         url: '/base/cards',
-        icon: 'icon-puzzle'
+        icon: 'icon-puzzle',
+        children: [
+          {
+            name: 'Sub Menu 1',
+            url: '/base/carousels',
+            icon: 'icon-puzzle'
+          },{
+            name: 'Sub Menu 2',
+            url: '/base/carousels',
+            icon: 'icon-puzzle'
+          }
+        ]
       },
       {
         name: 'Carousels',
