@@ -5,18 +5,21 @@ import { AuthGuard } from '../user/auth.guard';
 import { UserManagementComponent } from './user-management/user-management.component';
 
 const routes: Routes = [{
-  path: 'admin',
-  component: AdminDashboardComponent,
+  path: '',
   canActivate: [AuthGuard],
+  data: {
+    title: 'Admin'
+  },
   children: [{
-    path: '',
-    children: [{
-      path: 'user-management',
-      component: UserManagementComponent
+    path : '',
+    redirectTo: 'user-management',
+    pathMatch: 'full'
     }, {
-      path: '',
-      component: AdminDashboardComponent
-    }]
+      path: 'user-management',
+      component: UserManagementComponent,
+      data: {
+        title: 'User Management'
+      }
   }]
 }];
 

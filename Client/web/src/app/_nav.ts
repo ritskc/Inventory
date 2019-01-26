@@ -31,6 +31,11 @@ export const navItems: NavData[] = [
     icon: 'icon-user'
   },
   {
+    name: 'Reports',
+    url: '/reports',
+    icon: 'cui-graph'
+  },
+  {
     name: 'Colors',
     url: '/theme/colors',
     icon: 'icon-drop'
