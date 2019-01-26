@@ -8,10 +8,10 @@ namespace WebApi.IServices
 {
     public interface IPartService
     {
-        IEnumerable<Part> GetAllParts();
-        Part GetPart(long id);
-        void AddPart(Part part);
-        void UpdatePart(Part part);
-        void DeletePart(long id);
+        Task<IEnumerable<Part>> GetAllPartsAsync();
+        Task<Part> GetPartAsync(long id);
+        Task AddPartAsync(Part part);
+        Task UpdatePartAsync(Part part);
+        Task<Part> DeletePartAsync(long id);
     }
 }

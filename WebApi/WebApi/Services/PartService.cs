@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.IRepositories;
 using WebApi.IServices;
 using WebApi.Models;
 
@@ -9,39 +10,84 @@ namespace WebApi.Services
 {
     public class PartService : IPartService
     {
-        public void AddPart(Part part)
+
+        private readonly IPartRepository _partRepository;
+
+        public PartService(IPartRepository partRepository)
         {
-            throw new NotImplementedException();
+            _partRepository = partRepository;
         }
 
-        public void DeletePart(long id)
+        List<Part> parts = new List<Part>();
+        
+        private IEnumerable<Part> GetAllParts()
         {
-            throw new NotImplementedException();
-        }
+            if (parts != null && parts.Count() > 0)
+                return parts;
 
-        public IEnumerable<Part> GetAllParts()
-        {
-            List<Part> parts = new List<Part>();
+            parts = new List<Part>();
             for(int i=0;i<10;i++)
             {
                 Part part = new Part();
                 part.Id = i + 1;
                 part.Name = "Part" + i + 1;
                 part.Description = "PartDesc" + i + 1;
-
                 parts.Add(part);
             }
             return parts;
         }
 
-        public Part GetPart(long id)
+        public async Task<IEnumerable<Part>> GetAllPartsAsync()
         {
-            throw new NotImplementedException();
+            return await this._partRepository.GetAllPartsAsync();//Task.Run(() => GetAllParts());
+        }  
+        
+        public async Task<Part> GetPartAsync(long id)
+        {
+            if (parts == null || parts.Count() == 0)
+                GetAllParts();
+            return await Task.Run(() => parts.Where(p => p.Id == id).FirstOrDefault());
+        }       
+
+        public async Task AddPartAsync(Part part)
+        {            
+            await this._partRepository.AddPartAsync(part);
         }
 
-        public void UpdatePart(Part part)
+        private void AddPart(Part part)
         {
-            throw new NotImplementedException();
+            if (parts == null)
+                GetAllParts();
+            part.Id = this.parts.Count() + 1;
+            this.parts.Add(part);
         }
+
+        public async Task UpdatePartAsync(Part part)
+        {
+            await Task.Run(() => UpdatePart(part));
+        }
+
+        private void UpdatePart(Part part)
+        {
+            if (parts == null)
+                GetAllParts();
+            var oldPart = parts.Where(p => p.Id == part.Id).FirstOrDefault();            
+            this.parts.Remove(oldPart);
+            this.parts.Add(part);
+        }
+        
+        public async Task<Part> DeletePartAsync(long id)
+        {            
+            return await Task.Run(() => DeletePart(id));
+        }
+
+        private Part DeletePart(long id)
+        {
+            if (parts == null)
+                GetAllParts();
+            var oldPart = parts.Where(p => p.Id == id).FirstOrDefault();
+            this.parts.Remove(oldPart);
+            return oldPart;
+        }        
     }
 }

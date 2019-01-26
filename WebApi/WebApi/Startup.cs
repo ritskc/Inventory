@@ -13,7 +13,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using WebApi.DBHelper;
+using WebApi.IRepositories;
 using WebApi.IServices;
+using WebApi.Repositories;
 using WebApi.Services;
 using WebApi.Settings;
 
@@ -31,13 +34,23 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AutomaticAuthentication = false;
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            var connSettingsSection = Configuration.GetSection("ConnectionSettings");
+            services.Configure<ConnectionSettings>(connSettingsSection);
+
+            var connSettings = connSettingsSection.Get<ConnectionSettings>();
+
             var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
+            services.Configure<AppSettings>(appSettingsSection);            
 
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
@@ -67,6 +80,12 @@ namespace WebApi
 
             //add services here
             services.AddTransient<IPartService, PartService>();
+
+            //add repositories here
+            services.AddScoped<IPartRepository, PartRepository>();
+
+            //add helpers here
+            services.AddScoped<ISqlHelper, SqlHelper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
