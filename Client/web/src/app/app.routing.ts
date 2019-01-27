@@ -11,6 +11,7 @@ import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AuthGuard } from './user/auth.guard';
+import { InventoryComponent } from './reports/inventory/inventory.component';
 
 export const routes: Routes = [
   {
@@ -55,11 +56,11 @@ export const routes: Routes = [
     children: [
       {
         path: 'admin',
-        component: AdminDashboardComponent,
-        canActivate: [AuthGuard],
-        data: {
-          title: 'Admin Page'
-        }
+        loadChildren: './admin/admin.module#AdminModule'
+      },
+      {
+        path: 'reports',
+        loadChildren: './reports/reports.module#ReportsModule'
       },
       {
         path: 'base',
