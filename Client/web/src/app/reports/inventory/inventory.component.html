@@ -1,3 +1,25 @@
-<p>
-  inventory works!
-</p>
+<div class="card-body">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let part of parts">
+        <td>{{part.name}}</td>
+        <td>{{part.description}}</td>
+        <td>
+          <div *ngIf="part.isSample">
+              <span class="badge badge-success">Sample</span>
+          </div>
+          <div *ngIf="!part.isSample">
+              <span class="badge badge-danger">Not Sample</span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
