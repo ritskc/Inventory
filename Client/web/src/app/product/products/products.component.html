@@ -1,0 +1,25 @@
+<div class="card-body">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td><a (click)="productSelected(product.id)">{{product.name}}</a></td>
+        <td>{{product.description}}</td>
+        <td>
+          <div *ngIf="product.isSample">
+              <span class="badge badge-success">Sample</span>
+          </div>
+          <div *ngIf="!product.isSample">
+              <span class="badge badge-danger">Not Sample</span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

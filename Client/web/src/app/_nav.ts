@@ -32,6 +32,15 @@ export const navItems: NavData[] = [
   },
   {
     title: true,
+    name: 'Company'
+  },
+  {
+    name: 'Products',
+    url: '/products',
+    icon: 'icon-puzzle'
+  },
+  {
+    title: true,
     name: 'Reports'
   },
   {

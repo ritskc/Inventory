@@ -41,6 +41,8 @@ import { AdminModule } from './admin/admin.module';
 import { ReportComponent } from './common/components/report/report.component';
 import { ReportsModule } from './reports/reports.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfigService } from './config/config.service';
+import { ProductComponent } from './app/product/product/product.component';
 
 @NgModule({
   imports: [
@@ -67,9 +69,11 @@ import { HttpClientModule } from '@angular/common/http';
     P500Component,
     LoginComponent,
     RegisterComponent,
-    ReportComponent
+    ReportComponent,
+    ProductComponent
   ],
   providers: [
+    ConfigService,
     {
     provide: LocationStrategy,
     useClass: HashLocationStrategy
