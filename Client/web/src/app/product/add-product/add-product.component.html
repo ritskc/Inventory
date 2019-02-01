@@ -1,0 +1,32 @@
+
+<form [formGroup]="addProductForm" (ngSubmit)="save()">
+    <div class="form-group">
+      <label>Product Name</label>
+      <input type="text" formControlName="productName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productName.errors }" />
+      <div *ngIf="submitted && f.productName.errors" class="invalid-feedback">
+          <div *ngIf="f.productName.errors.required">Product Name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Product Description</label>
+      <input type="text" formControlName="productDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productDescription.errors }" />
+      <div *ngIf="submitted && f.productDescription.errors" class="invalid-feedback">
+          <div *ngIf="f.productDescription.errors.required">Product description is required</div>
+      </div>
+    </div>
+    
+    <div class="input-group mb-3">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-secondary" [ngClass]="{active: product.isSample}">
+            <input (click)="toggleSampleSelction()" type="radio" name="options" id="option1" autocomplete="off"> Sample
+          </label>
+          <label class="btn btn-secondary" [ngClass]="{active: !product.isSample}">
+            <input (click)="toggleSampleSelction()" type="radio" name="options" id="option2" autocomplete="off"> Not Sample
+          </label>
+        </div>
+    </div>
+    <div class="input-group mb-3">
+        <button type="button" class="standard-margin btn btn-primary" (click)="save()">Save</button>
+        <button type="button" class="btn btn-warning standard-margin">Cancel</button>
+    </div>
+</form>

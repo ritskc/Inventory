@@ -42,7 +42,7 @@ import { ReportComponent } from './common/components/report/report.component';
 import { ReportsModule } from './reports/reports.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfigService } from './config/config.service';
-import { ProductComponent } from './app/product/product/product.component';
+import { FormBuilder } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -69,10 +69,10 @@ import { ProductComponent } from './app/product/product/product.component';
     P500Component,
     LoginComponent,
     RegisterComponent,
-    ReportComponent,
-    ProductComponent
+    ReportComponent
   ],
   providers: [
+    FormBuilder,
     ConfigService,
     {
     provide: LocationStrategy,

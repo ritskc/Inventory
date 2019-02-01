@@ -27,4 +27,8 @@ export class ProductsComponent implements OnInit {
   productSelected(id: number) {
     this.router.navigateByUrl(`/products/product/${id}`);
   }
+
+  addProduct() {
+    this.router.navigateByUrl(`/products/add`);
+  }
 }

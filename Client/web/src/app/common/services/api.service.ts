@@ -12,4 +12,8 @@ export class ApiService {
   get<T>(url: string) {
     return this.http.get<T>(url);
   }
+
+  post<T>(t: T, url: string) {
+    return this.http.post(url, t);
+  }
 }
