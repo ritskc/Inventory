@@ -16,4 +16,8 @@ export class ApiService {
   post<T>(t: T, url: string) {
     return this.http.post(url, t);
   }
+
+  put<T>(t: T, url: string) {
+    return this.http.put(url, t);
+  }
 }

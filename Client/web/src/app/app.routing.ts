@@ -58,6 +58,10 @@ export const routes: Routes = [
         loadChildren: './admin/admin.module#AdminModule'
       },
       {
+        path: 'companies',
+        loadChildren: './company/company.module#CompanyModule'
+      },
+      {
         path: 'products',
         loadChildren: './product/product.module#ProductModule'
       },
