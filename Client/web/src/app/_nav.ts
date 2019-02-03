@@ -23,12 +23,29 @@ export const navItems: NavData[] = [
   },
   {
     title: true,
-    name: 'Theme'
+    name: 'Admin'
   },
   {
     name: 'Admin',
     url: '/admin',
     icon: 'icon-user'
+  },
+  {
+    title: true,
+    name: 'Company'
+  },{
+    name: 'Company',
+    url: '/companies',
+    icon: 'fa fa-building-o'
+  },
+  {
+    name: 'Products',
+    url: '/products',
+    icon: 'icon-puzzle'
+  },
+  {
+    title: true,
+    name: 'Reports'
   },
   {
     name: 'Reports',

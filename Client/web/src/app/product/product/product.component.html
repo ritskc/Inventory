@@ -1,0 +1,13 @@
+<div>
+  Name: {{product.name}}
+  <div *ngIf="product.isSample">
+      <span class="badge badge-success">Sample</span>
+  </div>
+  <div *ngIf="!product.isSample">
+      <span class="badge badge-danger">Not Sample</span>
+  </div>
+</div>
+
+<div>
+  Description: {{product.description}}
+</div>

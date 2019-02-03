@@ -11,7 +11,6 @@ import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AuthGuard } from './user/auth.guard';
-import { InventoryComponent } from './reports/inventory/inventory.component';
 
 export const routes: Routes = [
   {
@@ -57,6 +56,14 @@ export const routes: Routes = [
       {
         path: 'admin',
         loadChildren: './admin/admin.module#AdminModule'
+      },
+      {
+        path: 'companies',
+        loadChildren: './company/company.module#CompanyModule'
+      },
+      {
+        path: 'products',
+        loadChildren: './product/product.module#ProductModule'
       },
       {
         path: 'reports',

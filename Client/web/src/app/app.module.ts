@@ -11,13 +11,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 };
 
 import { AppComponent } from './app.component';
-
-// Import containers
 import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
-//import { LoginComponent } from './views/login/login.component';
 import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
@@ -43,6 +40,9 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { AdminModule } from './admin/admin.module';
 import { ReportComponent } from './common/components/report/report.component';
 import { ReportsModule } from './reports/reports.module';
+import { HttpClientModule } from '@angular/common/http';
+import { ConfigService } from './config/config.service';
+import { FormBuilder } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -57,6 +57,7 @@ import { ReportsModule } from './reports/reports.module';
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
+    HttpClientModule,
 
     AdminModule,
     ReportsModule
@@ -70,7 +71,10 @@ import { ReportsModule } from './reports/reports.module';
     RegisterComponent,
     ReportComponent
   ],
-  providers: [{
+  providers: [
+    FormBuilder,
+    ConfigService,
+    {
     provide: LocationStrategy,
     useClass: HashLocationStrategy
   }],

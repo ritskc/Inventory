@@ -1,3 +1,8 @@
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <button (click)="addProduct()" class="btn btn-primary float-right">Add</button>
+  </div>
+</div>
 <div class="card-body">
   <table class="table">
     <thead>
@@ -8,14 +13,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let part of parts">
-        <td>{{part.name}}</td>
-        <td>{{part.description}}</td>
+      <tr *ngFor="let product of products">
+        <td><a (click)="productSelected(product.id)">{{product.name}}</a></td>
+        <td>{{product.description}}</td>
         <td>
-          <div *ngIf="part.isSample">
+          <div *ngIf="product.isSample">
               <span class="badge badge-success">Sample</span>
           </div>
-          <div *ngIf="!part.isSample">
+          <div *ngIf="!product.isSample">
               <span class="badge badge-danger">Not Sample</span>
           </div>
         </td>
