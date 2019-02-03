@@ -4,6 +4,9 @@
   </div>
 </div>
 
+<simple-grid [data]="companies" [pageSize]="2" [columns]="columns" (selectedRow)="rowSelected($event)">
+</simple-grid>
+
 <div class="row standard-top-margin">
   <div class="col-md-12 col-xs-12 col-lg-12">
     <div class="card">

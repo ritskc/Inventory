@@ -1,0 +1,13 @@
+.standard-top-left {
+    margin-left: 20px;
+}
+
+.clickable {
+    color: #1A8EB7;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.05);
+}
