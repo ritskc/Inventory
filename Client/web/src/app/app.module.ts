@@ -43,7 +43,6 @@ import { ReportsModule } from './reports/reports.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfigService } from './config/config.service';
 import { FormBuilder } from '@angular/forms';
-import { SimpleGridComponent } from './commom/component/simple-grid/simple-grid.component';
 
 @NgModule({
   imports: [
@@ -70,8 +69,7 @@ import { SimpleGridComponent } from './commom/component/simple-grid/simple-grid.
     P500Component,
     LoginComponent,
     RegisterComponent,
-    ReportComponent,
-    SimpleGridComponent
+    ReportComponent
   ],
   providers: [
     FormBuilder,

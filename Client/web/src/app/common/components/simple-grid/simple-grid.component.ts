@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { DataColumn } from '../../models/dataColumn.model';
+import { DataColumn } from '../../../models/dataColumn.model';
 
 @Component({
   selector: 'simple-grid',
@@ -10,7 +10,7 @@ export class SimpleGridComponent implements OnInit {
 
   private _data: any[];
 
-  @Input() columns: DataColumn[];
+  @Input() columns: DataColumn[] = [];
   @Input() pageSize: number = 10;
   @Output() selectedRow = new EventEmitter();
 
@@ -20,7 +20,6 @@ export class SimpleGridComponent implements OnInit {
   page: number = 1;
 
   constructor() {
-    this.columns = [];
   }
  
   ngOnInit() {

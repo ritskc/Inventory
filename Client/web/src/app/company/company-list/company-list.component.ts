@@ -14,11 +14,6 @@ export class CompanyListComponent implements OnInit {
 
   companies: Company[] = [];
   columns: DataColumn[] = [];
-  
-  pageSize: number = 5;
-  pageNo: number = 1;
-  pages: any[] = [];
-  page: number = 1;
 
   constructor(private companyService: CompanyService, private router: Router) { 
 
@@ -41,8 +36,6 @@ export class CompanyListComponent implements OnInit {
       .subscribe(
         (companies) => { 
           this.companies = companies;
-          this.pageNo = Math.ceil(this.companies.length / this.pageSize);
-          this.createRange();
         },
         (error) => { console.log(error); }
     );
@@ -54,16 +47,6 @@ export class CompanyListComponent implements OnInit {
 
   companySelected(id: number) {
     this.router.navigateByUrl(`/companies/detail/${ UserAction.Edit }/${id}`);
-  }
-
-  createRange(){
-    for(var i = 1; i <= this.pageNo; i++){
-       this.pages.push(i);
-    }
-  }
-
-  setPageNo(item: number) {
-    this.page = item;
   }
 
   rowSelected(row) {
