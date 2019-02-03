@@ -3,3 +3,11 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.05);
+}
+
+.standard-top-margin {
+    margin-top: 10px;
+}

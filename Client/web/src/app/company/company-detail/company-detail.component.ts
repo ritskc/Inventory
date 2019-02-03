@@ -25,7 +25,11 @@ export class CompanyDetailComponent implements OnInit {
       phoneNo: ['', Validators.required],
       faxNo: ['', Validators.required],
       email: ['', Validators.required],
-      contactPersonName: ['', Validators.required]
+      contactPersonName: ['', Validators.required],
+      whName: ['', Validators.required],
+      whAddress: ['', Validators.required],
+      whPhoneNo: ['', Validators.required],
+      whEmail: ['', Validators.required]
     });
   }
 
