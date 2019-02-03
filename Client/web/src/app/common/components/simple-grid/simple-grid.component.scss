@@ -1,3 +1,7 @@
+.standard-top-left {
+    margin-left: 20px;
+}
+
 .clickable {
     color: #1A8EB7;
     text-decoration: underline;
@@ -6,16 +10,4 @@
 
 tbody tr:nth-of-type(odd) {
     background-color: rgba(0,0,0,.05);
-}
-
-.standard-top-margin {
-    margin-top: 10px;
-}
-
-.standard-top-left {
-    margin-left: 20px;
-}
-
-.standard-margin {
-    margin: 20px 0px;
 }
