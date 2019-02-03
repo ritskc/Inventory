@@ -18,6 +18,7 @@ export class SimpleGridComponent implements OnInit {
   pageNo: number = 1;
   pages: any[] = [];
   page: number = 1;
+  searchText: string = '';
 
   constructor() {
   }

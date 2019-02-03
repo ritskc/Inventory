@@ -1,6 +1,18 @@
 <div class="row">
     <div class="col-md-12 col-xs-12 col-lg-12">
       <div class="card">
+          <div class="card-header">
+            <div class="col-lg-6 col-md-6 col-sm-6 float-right">
+                <div class="input-group">
+                  <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Search by entering your text here">
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                    <i class="fa fa-search"></i>
+                    </span>
+                  </div>
+                </div>
+            </div>
+          </div>
           <div class="card-body">
             <table class="table table-responsive-sm">
               <thead>
@@ -11,7 +23,7 @@
                 </tr>
               </thead>
               <tbody>
-                <ng-template ngFor let-row [ngForOf]="_data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                <ng-template ngFor let-row [ngForOf]="_data | search: searchText | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
                   <tr>
                     <td *ngFor="let item of columns">
                       <span *ngIf="!item.isLink">{{row[item.value]}}</span>
