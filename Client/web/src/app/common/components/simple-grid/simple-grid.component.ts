@@ -10,6 +10,7 @@ export class SimpleGridComponent implements OnInit {
 
   private _data: any[];
 
+  
   @Input() columns: DataColumn[] = [];
   @Input() pageSize: number = 10;
   @Output() selectedRow = new EventEmitter();
@@ -24,16 +25,22 @@ export class SimpleGridComponent implements OnInit {
   }
  
   ngOnInit() {
+
   }
 
   @Input() 
   set data(data: any[]) {
     this._data = data;
-    this.pageNo = Math.ceil(this._data.length / this.pageSize);
+    this.calculatePages();
     this.createRange();
   }
 
+  calculatePages() {
+    this.pageNo = Math.ceil(this._data.length / this.pageSize);
+  }
+
   createRange(){
+    this.pages = [];
     for(var i = 1; i <= this.pageNo; i++){
        this.pages.push(i);
     }
@@ -45,5 +52,15 @@ export class SimpleGridComponent implements OnInit {
 
   rowSelected(row) {
     this.selectedRow.emit(row);
+  }
+
+  pageSizeSelected() {
+    this.calculatePages();
+    this.createRange();
+  }
+
+  dataChanges() {
+    this.calculatePages();
+    this.createRange();
   }
 }
