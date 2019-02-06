@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UserAction } from '../../models/enum/userAction';
 import { CompanyService } from '../company.service';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-company-detail',
@@ -16,7 +17,8 @@ export class CompanyDetailComponent implements OnInit {
   companyForm: FormGroup;
   submitted: boolean = false;
 
-  constructor(private companyBuilder: FormBuilder, private router: ActivatedRoute, private companyService: CompanyService) { 
+  constructor(private companyBuilder: FormBuilder, private router: ActivatedRoute, 
+    private companyService: CompanyService, private toastr: ToastrManager) { 
     this.company = new Company();
 
     this.companyForm = this.companyBuilder.group({
@@ -53,8 +55,16 @@ export class CompanyDetailComponent implements OnInit {
     if (this.companyForm.invalid) return;
 
     this.companyService.saveCompany(this.company)
-      .subscribe((response) => { console.log(response); },
-      (error) => { console.log(error); }
+      .subscribe((response) => { 
+        this.toastr.successToastr('Details saved successfully!!')
+      },
+      (error) => { 
+        this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
+      }
     );
+  }
+
+  clear() {
+    this.company = new Company();
   }
 }

@@ -2,27 +2,25 @@
     <div class="col-md-12 col-xs-12 col-lg-12">
       <div class="card">
           <div class="card-header">
-            <div class="col-lg-1 col-md-1 col-sm-1 float-right">
-                <div class="input-group">
-                  <select class="form-control" [(ngModel)]="pageSize" (change)="pageSizeSelected()">
-                    <option [ngValue]="5">5</option>
-                    <option [ngValue]="10">10</option>
-                    <option [ngValue]="20">20</option>
-                    <option [ngValue]="30">30</option>
-                    <option [ngValue]="40">40</option>
-                    <option [ngValue]="50">50</option>
-                  </select>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 float-right">
-                <div class="input-group">
-                  <input class="form-control" type="text" [(ngModel)]="searchText" (ngModelChange)="dataChanges()" placeholder="Search by entering your text here">
-                  <div class="input-group-append">
-                    <span class="input-group-text">
-                    <i class="fa fa-search"></i>
-                    </span>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <button *ngIf="addRequired" (click)="addClicked()" class="btn btn-primary">
+                  <span class="fa fa-plus-circle"></span> Add
+                </button>
+                <button *ngIf="exportRequired" (click)="addCompany()" class="btn btn-primary">
+                  <span class="fa fa-share"></span> Export
+                </button>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                  <div class="input-group">
+                    <input class="form-control" type="text" [(ngModel)]="searchText" (ngModelChange)="dataChanges()" placeholder="Search by entering your text here">
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                      <i class="fa fa-search"></i>
+                      </span>
+                    </div>
                   </div>
-                </div>
+              </div>
             </div>
           </div>
           <div class="card-body">
@@ -46,17 +44,33 @@
               </tbody>
             </table>
           </div>
-          <ul class="pagination standard-top-left">
-            <li class="page-item">
-              <a class="page-link" (click)="setPageNo(1)">First</a>
-            </li>
-            <li class="page-item" *ngFor="let item of pages;" [ngClass]="{ 'active': item == page } ">
-              <a class="page-link" (click)="setPageNo(item)">{{item}}</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" (click)="setPageNo(pageNo)">Last</a>
-            </li>
-          </ul>
+          <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9">
+              <ul class="pagination standard-top-left">
+                <li class="page-item">
+                  <a class="page-link" (click)="setPageNo(1)">First</a>
+                </li>
+                <li class="page-item" *ngFor="let item of pages | paginate: {args: _data}" [ngClass]="{ 'active': item == page } ">
+                  <a class="page-link" (click)="setPageNo(item)">{{item}}</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" (click)="setPageNo(pageNo)">Last</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 float-right">
+                <div class="input-group">
+                  <select class="form-control" [(ngModel)]="pageSize" (change)="pageSizeSelected()">
+                    <option [ngValue]="5">5 items</option>
+                    <option [ngValue]="10">10 items</option>
+                    <option [ngValue]="20">20 items</option>
+                    <option [ngValue]="30">30 items</option>
+                    <option [ngValue]="40">40 items</option>
+                    <option [ngValue]="50">50 items</option>
+                  </select>
+                </div>
+            </div>
+          </div>
         </div>
     </div>
   </div>

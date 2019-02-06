@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
 import { DataColumn } from '../../../models/dataColumn.model';
 
 @Component({
@@ -6,14 +6,16 @@ import { DataColumn } from '../../../models/dataColumn.model';
   templateUrl: './simple-grid.component.html',
   styleUrls: ['./simple-grid.component.scss']
 })
-export class SimpleGridComponent implements OnInit {
+export class SimpleGridComponent implements OnInit, OnChanges {
 
   private _data: any[];
 
-  
+  @Input() addRequired: boolean = true;
+  @Input() exportRequired: boolean = true;
   @Input() columns: DataColumn[] = [];
   @Input() pageSize: number = 10;
   @Output() selectedRow = new EventEmitter();
+  @Output() addClickedEventEmitter = new EventEmitter();
 
   dataToDisplay: any[] = [];
   pageNo: number = 1;
@@ -26,6 +28,10 @@ export class SimpleGridComponent implements OnInit {
  
   ngOnInit() {
 
+  }
+
+  ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+    console.log(changes);
   }
 
   @Input() 
@@ -62,5 +68,9 @@ export class SimpleGridComponent implements OnInit {
   dataChanges() {
     this.calculatePages();
     this.createRange();
+  }
+
+  addClicked() {
+    this.addClickedEventEmitter.emit(true);
   }
 }
