@@ -14,29 +14,28 @@ using WebApi.Models;
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
-    public class PartsController : ControllerBase
+    public class SuppliersController : ControllerBase
     {
-        private readonly IPartService _partService;
+        private readonly ISupplierService _supplierService;
 
-        public PartsController(IPartService partService)
+        public SuppliersController(ISupplierService supplierService)
         {
-            this._partService = partService;            
+            this._supplierService = supplierService;
         }
 
         // GET: api/Todo
         [HttpGet]
-        public async Task<IEnumerable<Part>> GetParts()
+        public async Task<IEnumerable<Supplier>> GetSuppliers()
         {
-            return  await this._partService.GetAllPartsAsync();
+            return await this._supplierService.GetAllSupplierAsync();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Part>> Get(int id)
+        public async Task<ActionResult<Supplier>> Get(int id)
         {
-            var result = await this._partService.GetPartAsync(id);
+            var result = await this._supplierService.GetSupplierAsync(id);
 
             if (result == null)
             {
@@ -48,38 +47,38 @@ namespace WebApi.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] Part part)
+        public async Task<ActionResult> Post([FromBody] Supplier supplier)
         {
-             await this._partService.AddPartAsync(part);
-             return NoContent();
+            await this._supplierService.AddSupplierAsync(supplier);
+            return NoContent();
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Part part)
+        public async Task<IActionResult> Put(int id, [FromBody] Supplier supplier)
         {
-            if (id != part.Id)
+            if (id != supplier.Id)
             {
                 return BadRequest();
             }
 
-            part.Id = id;
-            await this._partService.UpdatePartAsync(part);
+            supplier.Id = id;
+            await this._supplierService.UpdateSupplierAsync(supplier);
 
             return NoContent();
         }
-       
-        // DELETE: api/Todo/5
+
+        //DELETE: api/Todo/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Part>> DeleteTodoItem(long id)
+        public async Task<ActionResult<Supplier>> DeleteTodoItem(long id)
         {
-            var result = await this._partService.GetPartAsync(id);
+            var result = await this._supplierService.GetSupplierAsync(id);
             if (result == null)
             {
                 return NotFound();
             }
 
-            await this._partService.DeletePartAsync(id);
+            await this._supplierService.DeleteSupplierAsync(id);
 
             return result;
         }

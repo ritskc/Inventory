@@ -10,5 +10,7 @@ namespace WebApi.IRepositories
     {
         Task<IEnumerable<Part>> GetAllPartsAsync();
         Task<int> AddPartAsync(Part part);
+        Task<int> UpdatePartAsync(Part part);
+        Task<int> DeletePartAsync(long id);
     }
 }

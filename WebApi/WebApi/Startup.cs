@@ -80,9 +80,13 @@ namespace WebApi
 
             //add services here
             services.AddTransient<IPartService, PartService>();
+            services.AddTransient<ICompanyService, CompanyService>();
+            services.AddTransient<ISupplierService, SupplierService>();
 
             //add repositories here
             services.AddScoped<IPartRepository, PartRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
 
             //add helpers here
             services.AddScoped<ISqlHelper, SqlHelper>();
