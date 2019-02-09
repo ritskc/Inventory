@@ -61,6 +61,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   }
 
   pageSizeSelected() {
+    this.page = 1;
     this.calculatePages();
     this.createRange();
   }

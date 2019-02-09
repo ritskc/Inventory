@@ -56,7 +56,7 @@ export class CompanyDetailComponent implements OnInit {
 
     this.companyService.saveCompany(this.company)
       .subscribe((response) => { 
-        this.toastr.successToastr('Details saved successfully!!');
+        this.toastr.successToastr('Details saved successfully.');
       },
       (error) => { 
         this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
