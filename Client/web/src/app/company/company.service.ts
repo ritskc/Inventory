@@ -22,6 +22,10 @@ export class CompanyService {
     if (company.id == 0)
       return this.apiService.post(company, this.config.Settings.apiServerHost + this.config.Settings.companyUri);
     else
-      return this.apiService.put(company, this.config.Settings.apiServerHost + this.config.Settings.companyUri);
+      return this.apiService.put(company, this.config.Settings.apiServerHost + this.config.Settings.companyUri + `/${ company.id }`);
+  }
+
+  deleteCompany(id: number) {
+    return this.apiService.delete(id, this.config.Settings.apiServerHost + this.config.Settings.companyUri);
   }
 }

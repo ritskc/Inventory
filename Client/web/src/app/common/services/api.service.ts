@@ -20,4 +20,8 @@ export class ApiService {
   put<T>(t: T, url: string) {
     return this.http.put(url, t);
   }
+
+  delete(id: number, url: string) {
+    return this.http.delete(`${ url }/${ id }`);
+  }
 }

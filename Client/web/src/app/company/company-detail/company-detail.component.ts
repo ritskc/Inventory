@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Company } from '../../models/company.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserAction } from '../../models/enum/userAction';
 import { CompanyService } from '../company.service';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-company-detail',
@@ -16,7 +17,8 @@ export class CompanyDetailComponent implements OnInit {
   companyForm: FormGroup;
   submitted: boolean = false;
 
-  constructor(private companyBuilder: FormBuilder, private router: ActivatedRoute, private companyService: CompanyService) { 
+  constructor(private companyBuilder: FormBuilder, private activeRouter: ActivatedRoute, 
+    private companyService: CompanyService, private toastr: ToastrManager, private router: Router) { 
     this.company = new Company();
 
     this.companyForm = this.companyBuilder.group({
@@ -34,7 +36,7 @@ export class CompanyDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.router.snapshot.params.action == UserAction.Edit)
+    if (this.activeRouter.snapshot.params.action == UserAction.Edit)
       this.getCompany();
   }
 
@@ -43,7 +45,7 @@ export class CompanyDetailComponent implements OnInit {
   }
 
   getCompany() {
-    this.companyService.getCompany(this.router.snapshot.params.id)
+    this.companyService.getCompany(this.activeRouter.snapshot.params.id)
       .subscribe((company) => this.company = company,
     (error) => { console.log(error); });
   }
@@ -53,8 +55,28 @@ export class CompanyDetailComponent implements OnInit {
     if (this.companyForm.invalid) return;
 
     this.companyService.saveCompany(this.company)
-      .subscribe((response) => { console.log(response); },
-      (error) => { console.log(error); }
+      .subscribe((response) => { 
+        this.toastr.successToastr('Details saved successfully!!');
+      },
+      (error) => { 
+        this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
+      }
     );
+  }
+
+  delete() {
+    this.companyService.deleteCompany(this.company.id)
+      .subscribe(
+        (response) => {
+          this.toastr.successToastr('Company deleted successfully');
+          this.router.navigateByUrl(`/companies`);
+        },
+      (error) => {
+        this.toastr.errorToastr('Could not delete the company. Please try again & contact administrator if the problem persists.');
+      })
+  }
+
+  clear() {
+    this.company = new Company();
   }
 }
