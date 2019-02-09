@@ -31,7 +31,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
-    console.log(changes);
+    
   }
 
   @Input() 
