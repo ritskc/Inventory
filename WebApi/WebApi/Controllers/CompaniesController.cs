@@ -13,7 +13,7 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class CompaniesController : ControllerBase
     {
@@ -50,7 +50,7 @@ namespace WebApi.Controllers
         public async Task<ActionResult> Post([FromBody] Company company)
         {
             await this._companyService.AddCompanyAsync(company);
-            return NoContent();
+            return Ok();
         }
 
         // PUT api/values/5
@@ -65,22 +65,22 @@ namespace WebApi.Controllers
             company.Id = id;
             await this._companyService.UpdateCompanyAsync(company);
 
-            return NoContent();
+            return Ok();
         }
 
         // DELETE: api/Todo/5
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<Company>> DeleteTodoItem(long id)
-        //{
-        //    var result = await this._companyService.GetCompanyAsync(id);
-        //    if (result == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteTodoItem(long id)
+        {
+            var result = await this._companyService.GetCompanyAsync(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
 
-        //    await this._companyService.DeleteCompanyAsync(id);
+            await this._companyService.DeleteCompanyAsync(id);
 
-        //    return result;
-        //}
+            return Ok();
+        }
     }
 }
