@@ -4,6 +4,7 @@ import { CompanyService } from '../company.service';
 import { Router } from '@angular/router';
 import { UserAction } from '../../models/enum/userAction';
 import { DataColumn } from '../../models/dataColumn.model';
+import { Utils } from '../../common/utils/utils';
 
 @Component({
   selector: 'app-company-list',
@@ -36,6 +37,7 @@ export class CompanyListComponent implements OnInit {
       .subscribe(
         (companies) => { 
           this.companies = companies;
+          Utils.sortArray(this.companies, 'name');
         },
         (error) => { console.log(error); }
     );

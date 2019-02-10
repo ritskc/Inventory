@@ -38,8 +38,6 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { AdminModule } from './admin/admin.module';
-import { ReportComponent } from './common/components/report/report.component';
-import { ReportsModule } from './reports/reports.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfigService } from './config/config.service';
 import { FormBuilder } from '@angular/forms';
@@ -62,7 +60,6 @@ import { UserModule } from './user/user.module';
     HttpClientModule,
 
     AdminModule,
-    ReportsModule,
     UserModule
   ],
   declarations: [
@@ -70,8 +67,7 @@ import { UserModule } from './user/user.module';
     ...APP_CONTAINERS,
     P404Component,
     P500Component,
-    RegisterComponent,
-    ReportComponent
+    RegisterComponent
   ],
   providers: [
     FormBuilder,

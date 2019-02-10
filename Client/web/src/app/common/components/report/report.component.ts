@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -14,4 +14,5 @@ export class ReportComponent implements OnInit {
     
   }
 
+  @Input() reportSourceUrl: string = 'http://localhost:4200/#/companies';
 }
