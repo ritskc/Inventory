@@ -12,6 +12,6 @@ namespace WebApi.IServices
         Task<Part> GetPartAsync(long id);
         Task AddPartAsync(Part part);
         Task UpdatePartAsync(Part part);
-        Task<Part> DeletePartAsync(long id);
+        Task DeletePartAsync(long id);
     }
 }

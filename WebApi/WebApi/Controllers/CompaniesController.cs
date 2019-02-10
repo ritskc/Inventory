@@ -14,29 +14,28 @@ using WebApi.Models;
 namespace WebApi.Controllers
 {
     [Route("[controller]")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
-    public class PartsController : ControllerBase
+    public class CompaniesController : ControllerBase
     {
-        private readonly IPartService _partService;
+        private readonly ICompanyService _companyService;
 
-        public PartsController(IPartService partService)
+        public CompaniesController(ICompanyService companyService)
         {
-            this._partService = partService;            
+            this._companyService = companyService;
         }
 
         // GET: api/Todo
         [HttpGet]
-        public async Task<IEnumerable<Part>> GetParts()
+        public async Task<IEnumerable<Company>> GetCompanys()
         {
-            return  await this._partService.GetAllPartsAsync();
+            return await this._companyService.GetAllCompanyAsync();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Part>> Get(int id)
+        public async Task<ActionResult<Company>> Get(int id)
         {
-            var result = await this._partService.GetPartAsync(id);
+            var result = await this._companyService.GetCompanyAsync(id);
 
             if (result == null)
             {
@@ -48,40 +47,40 @@ namespace WebApi.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] Part part)
+        public async Task<ActionResult> Post([FromBody] Company company)
         {
-             await this._partService.AddPartAsync(part);
-             return NoContent();
+            await this._companyService.AddCompanyAsync(company);
+            return Ok();
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Part part)
+        public async Task<IActionResult> Put(int id, [FromBody] Company company)
         {
-            if (id != part.Id)
+            if (id != company.Id)
             {
                 return BadRequest();
             }
 
-            part.Id = id;
-            await this._partService.UpdatePartAsync(part);
+            company.Id = id;
+            await this._companyService.UpdateCompanyAsync(company);
 
-            return NoContent();
+            return Ok();
         }
-       
+
         // DELETE: api/Todo/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Part>> DeleteTodoItem(long id)
+        public async Task<ActionResult> DeleteTodoItem(long id)
         {
-            var result = await this._partService.GetPartAsync(id);
+            var result = await this._companyService.GetCompanyAsync(id);
             if (result == null)
             {
                 return NotFound();
             }
 
-            await this._partService.DeletePartAsync(id);
+            await this._companyService.DeleteCompanyAsync(id);
 
-            return result;
+            return Ok();
         }
     }
 }

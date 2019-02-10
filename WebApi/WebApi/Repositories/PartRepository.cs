@@ -19,6 +19,7 @@ namespace WebApi.Repositories
         {            
             _sqlHelper = sqlHelper;
         }
+
         public async Task<IEnumerable<Part>> GetAllPartsAsync()
         {            
             List<Part> parts = new List<Part>();
@@ -48,9 +49,23 @@ namespace WebApi.Repositories
 
         public async Task<int> AddPartAsync(Part part)
         {
-            string sql = "INSERT INTO [tblPart] ([name] ,[description] ,[issample] ) VALUES ('" + part.Name + "', '" + part.Description + "','" + part.IsSample+ "')";
+            string sql = string.Format("INSERT INTO [tblPart] ([name] ,[description] ,[issample] ) VALUES ('{0}', '{1}','{2}')",part.Name,part.Description,part.IsSample);
 
             return await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
         }
+
+        public async Task<int> UpdatePartAsync(Part part)
+        {
+            string sql = string.Format("UPDATE [dbo].[tblPart] SET[name] = '{0}'  ,[description] ='{1}' ,[issample] ='{2}'  WHERE id = '{3}'",part.Name,part.Description,part.IsSample,part.Id);
+
+            return await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+        }
+
+        public async Task<int> DeletePartAsync(long id)
+        {
+            string sql = string.Format("DELETE FROM [dbo].[tblPart]  WHERE id = '{0}'", id);
+
+            return await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+        }        
     }
 }
