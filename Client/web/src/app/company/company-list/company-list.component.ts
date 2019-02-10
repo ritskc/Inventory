@@ -36,8 +36,7 @@ export class CompanyListComponent implements OnInit {
     this.companyService.getAllCompanies()
       .subscribe(
         (companies) => { 
-          this.companies = companies;
-          Utils.sortArray(this.companies, 'name');
+          this.companies = Utils.sortArray(companies, 'name');
         },
         (error) => { console.log(error); }
     );
