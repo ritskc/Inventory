@@ -26,7 +26,7 @@ export class CompanyListComponent implements OnInit {
   }
 
   prepareColumnsList() {
-    this.columns.push( new DataColumn({ headerText: "Name", value: "name", isLink: true }));
+    this.columns.push( new DataColumn({ headerText: "Name", value: "name", isLink: true, sortable: true }));
     this.columns.push( new DataColumn({ headerText: "Address", value: "address" }));
     this.columns.push( new DataColumn({ headerText: "Phone No", value: "phoneNo" }));
     this.columns.push( new DataColumn({ headerText: "Email", value: "eMail" }));
@@ -36,7 +36,7 @@ export class CompanyListComponent implements OnInit {
     this.companyService.getAllCompanies()
       .subscribe(
         (companies) => { 
-          this.companies = Utils.sortArray(companies, 'name');
+          this.companies = companies;
         },
         (error) => { console.log(error); }
     );
