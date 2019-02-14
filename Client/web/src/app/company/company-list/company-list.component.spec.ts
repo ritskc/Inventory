@@ -7,8 +7,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { Company } from '../../models/company.model';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-fdescribe('CompanyListComponent', () => {
+describe('CompanyListComponent', () => {
   let component: CompanyListComponent;
   let fixture: ComponentFixture<CompanyListComponent>;
   let apiService: ApiService;
@@ -26,6 +27,9 @@ fdescribe('CompanyListComponent', () => {
         ApiService,
         CompanyService,
         { provide: Router, useValue: { }}
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     })
     .compileComponents();
