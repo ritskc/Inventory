@@ -9,6 +9,7 @@ import { SimpleGridComponent } from '../common/components/simple-grid/simple-gri
 import { SearchPipe } from '../common/pipes/search.pipe';
 import { PaginatePipe } from '../common/pipes/paginate.pipe';
 import { ToastrModule } from 'ng6-toastr-notifications';
+import { ReportComponent } from '../common/components/report/report.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ToastrModule } from 'ng6-toastr-notifications';
     CompanyDetailComponent, 
     SimpleGridComponent,
     SearchPipe,
-    PaginatePipe
+    PaginatePipe,
+    ReportComponent
   ],
   imports: [
     CommonModule,

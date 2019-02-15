@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
 import { DataColumn } from '../../../models/dataColumn.model';
+import { Utils } from '../../utils/utils';
 
 @Component({
   selector: 'simple-grid',
@@ -14,6 +15,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   @Input() exportRequired: boolean = true;
   @Input() columns: DataColumn[] = [];
   @Input() pageSize: number = 10;
+  @Input() defaultSortColumnName: string = 'name';
   @Output() selectedRow = new EventEmitter();
   @Output() addClickedEventEmitter = new EventEmitter();
 
@@ -22,6 +24,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   pages: any[] = [];
   page: number = 1;
   searchText: string = '';
+  ascendingSortOrder: boolean = true;
 
   constructor() {
   }
@@ -36,7 +39,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
 
   @Input() 
   set data(data: any[]) {
-    this._data = data;
+    this._data = Utils.sortArray(data, this.defaultSortColumnName, true);
     this.calculatePages();
     this.createRange();
   }
@@ -61,6 +64,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   }
 
   pageSizeSelected() {
+    this.page = 1;
     this.calculatePages();
     this.createRange();
   }
@@ -72,5 +76,11 @@ export class SimpleGridComponent implements OnInit, OnChanges {
 
   addClicked() {
     this.addClickedEventEmitter.emit(true);
+  }
+
+  toggleSort(columnName: string) {
+    this.ascendingSortOrder = !this.ascendingSortOrder;
+    this._data = Utils.sortArray(this._data, columnName, this.ascendingSortOrder);
+    this.pageSizeSelected();
   }
 }

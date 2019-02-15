@@ -16,7 +16,6 @@ import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
-import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
 const APP_CONTAINERS = [
@@ -39,11 +38,10 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { AdminModule } from './admin/admin.module';
-import { ReportComponent } from './common/components/report/report.component';
-import { ReportsModule } from './reports/reports.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfigService } from './config/config.service';
 import { FormBuilder } from '@angular/forms';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   imports: [
@@ -62,16 +60,14 @@ import { FormBuilder } from '@angular/forms';
     HttpClientModule,
 
     AdminModule,
-    ReportsModule
+    UserModule
   ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
     P404Component,
     P500Component,
-    LoginComponent,
-    RegisterComponent,
-    ReportComponent
+    RegisterComponent
   ],
   providers: [
     FormBuilder,

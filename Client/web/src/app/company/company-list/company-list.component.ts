@@ -4,6 +4,7 @@ import { CompanyService } from '../company.service';
 import { Router } from '@angular/router';
 import { UserAction } from '../../models/enum/userAction';
 import { DataColumn } from '../../models/dataColumn.model';
+import { Utils } from '../../common/utils/utils';
 
 @Component({
   selector: 'app-company-list',
@@ -25,7 +26,7 @@ export class CompanyListComponent implements OnInit {
   }
 
   prepareColumnsList() {
-    this.columns.push( new DataColumn({ headerText: "Name", value: "name", isLink: true }));
+    this.columns.push( new DataColumn({ headerText: "Name", value: "name", isLink: true, sortable: true }));
     this.columns.push( new DataColumn({ headerText: "Address", value: "address" }));
     this.columns.push( new DataColumn({ headerText: "Phone No", value: "phoneNo" }));
     this.columns.push( new DataColumn({ headerText: "Email", value: "eMail" }));

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InventoryComponent } from './inventory.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('InventoryComponent', () => {
   let component: InventoryComponent;
@@ -8,7 +10,13 @@ describe('InventoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InventoryComponent ]
+      declarations: [ 
+        InventoryComponent 
+      ],
+      imports: [
+        HttpClientModule,
+        HttpClientTestingModule
+      ]
     })
     .compileComponents();
   }));
