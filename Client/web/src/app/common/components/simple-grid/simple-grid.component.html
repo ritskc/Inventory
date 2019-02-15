@@ -29,8 +29,8 @@
                 <tr>
                   <th *ngFor="let column of columns">
                     {{column.headerText}}
-                    <span *ngIf="column.sortable && ascendingSortOrder" class="fa fa-sort-asc"  (click)="toggleSort(column.value)"></span>
-                    <span *ngIf="column.sortable && !ascendingSortOrder" class="fa fa-sort-desc" (click)="toggleSort(column.value)"></span>
+                    <span *ngIf="column.sortable && (isNotSortedOnThisColumn(column.value) || !descendingOrderSelected(column.value))" class="fa fa-sort-asc"  (click)="toggleSort(column.value)"></span>
+                    <span *ngIf="column.sortable && (isNotSortedOnThisColumn(column.value) || descendingOrderSelected(column.value))" class="fa fa-sort-desc" [ngClass]="{'descending-order-icon': isNotSortedOnThisColumn(column.value)}" (click)="toggleSort(column.value)"></span>
                   </th>
                 </tr>
               </thead>

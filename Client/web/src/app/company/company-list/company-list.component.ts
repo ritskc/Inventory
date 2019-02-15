@@ -27,9 +27,9 @@ export class CompanyListComponent implements OnInit {
 
   prepareColumnsList() {
     this.columns.push( new DataColumn({ headerText: "Name", value: "name", isLink: true, sortable: true }));
-    this.columns.push( new DataColumn({ headerText: "Address", value: "address" }));
-    this.columns.push( new DataColumn({ headerText: "Phone No", value: "phoneNo" }));
-    this.columns.push( new DataColumn({ headerText: "Email", value: "eMail" }));
+    this.columns.push( new DataColumn({ headerText: "Address", value: "address", sortable: true }));
+    this.columns.push( new DataColumn({ headerText: "Phone No", value: "phoneNo", sortable: true }));
+    this.columns.push( new DataColumn({ headerText: "Email", value: "eMail"}));
   }
 
   loadCompanies() {

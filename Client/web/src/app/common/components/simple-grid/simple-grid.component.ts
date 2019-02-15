@@ -25,12 +25,13 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   page: number = 1;
   searchText: string = '';
   ascendingSortOrder: boolean = true;
+  currentSortColumnName: string = '';
 
   constructor() {
   }
  
   ngOnInit() {
-
+    this.currentSortColumnName = this.defaultSortColumnName;
   }
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
@@ -80,7 +81,16 @@ export class SimpleGridComponent implements OnInit, OnChanges {
 
   toggleSort(columnName: string) {
     this.ascendingSortOrder = !this.ascendingSortOrder;
+    this.currentSortColumnName = columnName;
     this._data = Utils.sortArray(this._data, columnName, this.ascendingSortOrder);
     this.pageSizeSelected();
+  }
+
+  isNotSortedOnThisColumn(columnName: string) {
+    return columnName != this.currentSortColumnName;
+  }
+
+  descendingOrderSelected(columnName: string) {
+    return columnName == this.currentSortColumnName && !this.ascendingSortOrder;
   }
 }
