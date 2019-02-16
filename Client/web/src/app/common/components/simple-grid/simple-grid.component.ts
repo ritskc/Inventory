@@ -79,10 +79,12 @@ export class SimpleGridComponent implements OnInit, OnChanges {
     this.addClickedEventEmitter.emit(true);
   }
 
-  toggleSort(columnName: string) {
+  toggleSort(column: DataColumn) {
+    if (!column.sortable) return;
+    
     this.ascendingSortOrder = !this.ascendingSortOrder;
-    this.currentSortColumnName = columnName;
-    this._data = Utils.sortArray(this._data, columnName, this.ascendingSortOrder);
+    this.currentSortColumnName = column.value;
+    this._data = Utils.sortArray(this._data, column.value, this.ascendingSortOrder);
     this.pageSizeSelected();
   }
 
