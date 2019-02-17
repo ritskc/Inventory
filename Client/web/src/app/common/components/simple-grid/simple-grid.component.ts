@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
 import { DataColumn } from '../../../models/dataColumn.model';
 import { Utils } from '../../utils/utils';
+import { JsonToCsvExporterService } from '../../services/json-to-csv-exporter.service';
 
 @Component({
   selector: 'simple-grid',
@@ -27,7 +28,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   ascendingSortOrder: boolean = true;
   currentSortColumnName: string = '';
 
-  constructor() {
+  constructor(private jsonToCsvExporter: JsonToCsvExporterService) {
   }
  
   ngOnInit() {
@@ -94,5 +95,9 @@ export class SimpleGridComponent implements OnInit, OnChanges {
 
   descendingOrderSelected(columnName: string) {
     return columnName == this.currentSortColumnName && !this.ascendingSortOrder;
+  }
+
+  export() {
+    this.jsonToCsvExporter.export(`Company Details ${Date.now()}`, 'csv', this._data);
   }
 }
