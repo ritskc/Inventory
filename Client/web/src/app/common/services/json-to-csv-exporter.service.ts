@@ -10,7 +10,7 @@ export class JsonToCsvExporterService {
 
   export(filename: string, fileformat: string, data: any[]) {
 
-    var dataToWrite: String = '';
+    var dataToWrite: string = '';
     var headers = Object.keys(data[0]);
 
     headers.forEach(item => {
