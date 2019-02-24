@@ -8,7 +8,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using WebApi.IServices;
-using WebApi.Models;
+using DAL.Models;
+using DAL.IRepository;
 using WebApi.Settings;
 
 namespace WebApi.Services
@@ -18,19 +19,21 @@ namespace WebApi.Services
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
         private List<User> _users = new List<User>
         {
-            new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
+            new User { Id = 1, FirstName = "Test", LastName = "User", UserName = "test", Password = "test" }
         };
 
         private readonly AppSettings _appSettings;
+        private readonly IUserRepository userRepository;
 
-        public UserService(IOptions<AppSettings> appSettings)
+        public UserService(IOptions<AppSettings> appSettings, IUserRepository userRepository)
         {
             _appSettings = appSettings.Value;
+            this.userRepository = userRepository;
         }
 
         public User Authenticate(string username, string password)
         {
-            var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
+            var user = _users.SingleOrDefault(x => x.UserName == username && x.Password == password);
 
             // return null if user not found
             if (user == null)
@@ -64,6 +67,11 @@ namespace WebApi.Services
                 x.Password = null;
                 return x;
             });
+        }
+
+        public async Task<User> GetUserAsync(string userName)
+        {
+            return await this.userRepository.GetUserPropertyAsync(userName);            
         }
     }
 }

@@ -13,12 +13,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using WebApi.DBHelper;
-using WebApi.IRepositories;
+using DAL.DBHelper;
+using DAL.IRepository;
+using DAL.Repository;
 using WebApi.IServices;
-using WebApi.Repositories;
 using WebApi.Services;
 using WebApi.Settings;
+
 
 namespace WebApi
 {
@@ -27,6 +28,7 @@ namespace WebApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            
         }
 
         public IConfiguration Configuration { get; }
@@ -84,9 +86,10 @@ namespace WebApi
             services.AddTransient<ISupplierService, SupplierService>();
 
             //add repositories here
-            services.AddScoped<IPartRepository, PartRepository>();
-            services.AddScoped<ICompanyRepository, CompanyRepository>();
-            services.AddScoped<ISupplierRepository, SupplierRepository>();
+            //services.AddScoped<IPartRepository, PartRepository>();
+            services.AddScoped<ICompanyRepository,CompanyRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            // services.AddScoped<ISupplierRepository, SupplierRepository>();
 
             //add helpers here
             services.AddScoped<ISqlHelper, SqlHelper>();

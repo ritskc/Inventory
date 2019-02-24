@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApi.IRepositories;
+using DAL.IRepository;
 using WebApi.IServices;
-using WebApi.Models;
+using DAL.Models;
 
 namespace WebApi.Services
 {
