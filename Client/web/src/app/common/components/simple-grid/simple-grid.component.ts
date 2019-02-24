@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
 import { DataColumn } from '../../../models/dataColumn.model';
 import { Utils } from '../../utils/utils';
+import { JsonToCsvExporterService } from '../../services/json-to-csv-exporter.service';
 
 @Component({
   selector: 'simple-grid',
@@ -25,12 +26,13 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   page: number = 1;
   searchText: string = '';
   ascendingSortOrder: boolean = true;
+  currentSortColumnName: string = '';
 
-  constructor() {
+  constructor(private jsonToCsvExporter: JsonToCsvExporterService) {
   }
  
   ngOnInit() {
-
+    this.currentSortColumnName = this.defaultSortColumnName;
   }
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
@@ -78,9 +80,24 @@ export class SimpleGridComponent implements OnInit, OnChanges {
     this.addClickedEventEmitter.emit(true);
   }
 
-  toggleSort(columnName: string) {
+  toggleSort(column: DataColumn) {
+    if (!column.sortable) return;
+    
     this.ascendingSortOrder = !this.ascendingSortOrder;
-    this._data = Utils.sortArray(this._data, columnName, this.ascendingSortOrder);
+    this.currentSortColumnName = column.value;
+    this._data = Utils.sortArray(this._data, column.value, this.ascendingSortOrder);
     this.pageSizeSelected();
+  }
+
+  isNotSortedOnThisColumn(columnName: string) {
+    return columnName != this.currentSortColumnName;
+  }
+
+  descendingOrderSelected(columnName: string) {
+    return columnName == this.currentSortColumnName && !this.ascendingSortOrder;
+  }
+
+  export() {
+    this.jsonToCsvExporter.export(`Company Details ${Date.now()}`, 'csv', this._data);
   }
 }

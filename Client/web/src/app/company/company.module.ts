@@ -10,11 +10,14 @@ import { SearchPipe } from '../common/pipes/search.pipe';
 import { PaginatePipe } from '../common/pipes/paginate.pipe';
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { ReportComponent } from '../common/components/report/report.component';
+import { LoaderComponent } from '../common/components/loader/loader.component';
+import { httpLoaderService } from '../common/services/httpLoader.service';
 
 @NgModule({
   declarations: [
     CompanyListComponent, 
-    CompanyDetailComponent, 
+    CompanyDetailComponent,
+    LoaderComponent,
     SimpleGridComponent,
     SearchPipe,
     PaginatePipe,
@@ -26,6 +29,9 @@ import { ReportComponent } from '../common/components/report/report.component';
     FormsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
+  ],
+  providers: [
+    httpLoaderService
   ]
 })
 export class CompanyModule { }
