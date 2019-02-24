@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserAction } from '../../models/enum/userAction';
 import { DataColumn } from '../../models/dataColumn.model';
 import { Utils } from '../../common/utils/utils';
+import { httpLoaderService } from '../../common/services/httpLoader.service';
 
 @Component({
   selector: 'app-company-list',
@@ -16,7 +17,7 @@ export class CompanyListComponent implements OnInit {
   companies: Company[] = [];
   columns: DataColumn[] = [];
 
-  constructor(private companyService: CompanyService, private router: Router) { 
+  constructor(private companyService: CompanyService, private router: Router, private loaderService: httpLoaderService) { 
 
   }
 
@@ -26,17 +27,22 @@ export class CompanyListComponent implements OnInit {
   }
 
   prepareColumnsList() {
-    this.columns.push( new DataColumn({ headerText: "Name", value: "name", isLink: true, sortable: true }));
-    this.columns.push( new DataColumn({ headerText: "Address", value: "address" }));
-    this.columns.push( new DataColumn({ headerText: "Phone No", value: "phoneNo" }));
-    this.columns.push( new DataColumn({ headerText: "Email", value: "eMail" }));
+    this.columns.push( new DataColumn({ headerText: "Name", value: "name", isLink: true, sortable: true }) );
+    this.columns.push( new DataColumn({ headerText: "Address", value: "address", sortable: true }) );
+    this.columns.push( new DataColumn({ headerText: "Phone No", value: "phoneNo", sortable: true }) );
+    this.columns.push( new DataColumn({ headerText: "Email", value: "eMail", sortable: true }) );
   }
 
   loadCompanies() {
+    let that = this;
+    this.loaderService.show();
     this.companyService.getAllCompanies()
       .subscribe(
         (companies) => { 
-          this.companies = companies;
+          setTimeout(function() {
+            that.companies = companies;
+            that.loaderService.hide();
+          }, 2000);
         },
         (error) => { console.log(error); }
     );

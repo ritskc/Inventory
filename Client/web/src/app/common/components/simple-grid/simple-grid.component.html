@@ -7,7 +7,7 @@
                 <button *ngIf="addRequired" (click)="addClicked()" class="btn btn-primary">
                   <span class="fa fa-plus-circle"></span> Add
                 </button>
-                <button *ngIf="exportRequired" (click)="addCompany()" class="btn btn-primary">
+                <button *ngIf="exportRequired" (click)="export()" class="btn btn-primary">
                   <span class="fa fa-share"></span> Export
                 </button>
               </div>
@@ -27,10 +27,10 @@
             <table class="table table-responsive-sm">
               <thead>
                 <tr>
-                  <th *ngFor="let column of columns">
+                  <th *ngFor="let column of columns" (click)="toggleSort(column)">
                     {{column.headerText}}
-                    <span *ngIf="column.sortable && ascendingSortOrder" class="fa fa-sort-asc"  (click)="toggleSort(column.value)"></span>
-                    <span *ngIf="column.sortable && !ascendingSortOrder" class="fa fa-sort-desc" (click)="toggleSort(column.value)"></span>
+                    <span *ngIf="column.sortable && (isNotSortedOnThisColumn(column.value) || !descendingOrderSelected(column.value))" class="fa fa-sort-asc"></span>
+                    <span *ngIf="column.sortable && (isNotSortedOnThisColumn(column.value) || descendingOrderSelected(column.value))" class="fa fa-sort-desc" [ngClass]="{'descending-order-icon': isNotSortedOnThisColumn(column.value)}"></span>
                   </th>
                 </tr>
               </thead>
