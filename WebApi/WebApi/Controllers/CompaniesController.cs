@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.HttpSys;
 using WebApi.IServices;
-using WebApi.Models;
+using DAL.Models;
 
 namespace WebApi.Controllers
 {

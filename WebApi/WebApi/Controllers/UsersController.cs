@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.IServices;
-using WebApi.Models;
+using DAL.Models;
 
 namespace WebApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]    
     public class UsersController : ControllerBase
@@ -26,7 +26,7 @@ namespace WebApi.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]User userParam)
         {
-            var user = _userService.Authenticate(userParam.Username, userParam.Password);
+            var user = _userService.Authenticate(userParam.UserName, userParam.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -39,6 +39,19 @@ namespace WebApi.Controllers
         {
             var users = _userService.GetAll();
             return Ok(users);
+        }
+
+        [HttpGet("{userName}")]
+        public async Task<ActionResult<User>> Get(string userName)
+        {
+            var result = await this._userService.GetUserAsync(userName);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
         }
     }
 }

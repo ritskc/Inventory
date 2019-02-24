@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApi.Models;
+using DAL.Models;
 
 namespace WebApi.IServices
 {
@@ -10,5 +10,6 @@ namespace WebApi.IServices
     {
         User Authenticate(string username, string password);
         IEnumerable<User> GetAll();
+        Task<User> GetUserAsync(string userName);
     }
 }
