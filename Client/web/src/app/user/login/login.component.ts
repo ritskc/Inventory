@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   invalidCredentials: boolean = false;
   loginname: string = '';
+  password: string = '';
   user: User
   
   constructor(private router: Router, private authService: AuthService) { 
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.submitted = true;
-    this.authService.login(this.loginname, '').subscribe(
+    this.authService.login(this.loginname, this.password).subscribe(
       (user) => {
         this.user = user;
       if (this.user.email) {
