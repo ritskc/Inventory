@@ -15,8 +15,11 @@ export class AuthService {
 
   constructor(private apiService: ApiService, private configService: ConfigService) { }
 
-  login(loginname: string, password: string): Observable<User> {
-    return this.apiService.get<User>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.usersUri }/${ loginname }`)
+  login(loginname: string, password: string) {
+    var user = new User();
+    user.username = loginname;
+    user.password = password;
+    return this.apiService.post(user, this.configService.Settings.apiServerHost + this.configService.Settings.usersUri + '/authenticate');
   }
 
   logout(): void {

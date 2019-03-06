@@ -26,10 +26,10 @@ export class LoginComponent implements OnInit {
   login() {
     this.submitted = true;
     this.authService.login(this.loginname, this.password).subscribe(
-      (user) => {
-        this.user = user;
-      if (this.user.email) {
+      (user: any) => {
+      if (user.token) {
         this.authService.isLoggedIn = true;
+        localStorage.setItem('token', user.token);
         let redirectUrl = this.authService.redirectUrl ? this.authService.redirectUrl : '/dashboard';
         this.router.navigate([redirectUrl]);
       } else {
