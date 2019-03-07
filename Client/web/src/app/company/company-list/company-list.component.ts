@@ -6,6 +6,7 @@ import { UserAction } from '../../models/enum/userAction';
 import { DataColumn } from '../../models/dataColumn.model';
 import { Utils } from '../../common/utils/utils';
 import { httpLoaderService } from '../../common/services/httpLoader.service';
+import { ConfigService } from '../../config/config.service';
 
 @Component({
   selector: 'app-company-list',
@@ -17,7 +18,8 @@ export class CompanyListComponent implements OnInit {
   companies: Company[] = [];
   columns: DataColumn[] = [];
 
-  constructor(private companyService: CompanyService, private router: Router, private loaderService: httpLoaderService) { 
+  constructor(private companyService: CompanyService, private router: Router, private loaderService: httpLoaderService,
+              private config: ConfigService) { 
 
   }
 
@@ -27,6 +29,19 @@ export class CompanyListComponent implements OnInit {
   }
 
   prepareColumnsList() {
+    // var gridDefinition = this.companyService.getGridPriviledges(localStorage.getItem('username')).subscribe(
+    //   (result) => {
+    //     if (result && result.reports) {
+    //       var priviledges = result.reports.forEach(report => {
+    //         if (report.id == this.config.GridConstants.Company) {
+    //           report.userReportPriviledges.forEach(column => {
+    //             this.columns.push(new DataColumn({ headerText: column.displayName, value: column.columnName, sortable: column.sort, isLink: true }));
+    //           });
+    //         }
+    //       });
+    //     }
+    //   }
+    // )
     this.columns.push( new DataColumn({ headerText: "Name", value: "name", isLink: true, sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Address", value: "address", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Phone No", value: "phoneNo", sortable: true }) );

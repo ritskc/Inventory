@@ -38,10 +38,11 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { AdminModule } from './admin/admin.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ConfigService } from './config/config.service';
 import { FormBuilder } from '@angular/forms';
 import { UserModule } from './user/user.module';
+import { TokenInterceptor } from './common/services/api.service';
 
 @NgModule({
   imports: [
@@ -72,6 +73,11 @@ import { UserModule } from './user/user.module';
   providers: [
     FormBuilder,
     ConfigService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
     {
     provide: LocationStrategy,
     useClass: HashLocationStrategy
