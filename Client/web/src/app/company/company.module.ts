@@ -12,6 +12,8 @@ import { ToastrModule } from 'ng6-toastr-notifications';
 import { ReportComponent } from '../common/components/report/report.component';
 import { LoaderComponent } from '../common/components/loader/loader.component';
 import { httpLoaderService } from '../common/services/httpLoader.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from '../common/services/api.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,12 @@ import { httpLoaderService } from '../common/services/httpLoader.service';
     ToastrModule.forRoot(),
   ],
   providers: [
-    httpLoaderService
+    httpLoaderService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ]
 })
 export class CompanyModule { }
