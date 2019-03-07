@@ -10,7 +10,7 @@ namespace DAL.Models
     {
         public int Id { get; set; } 
         public string Name { get; set; }
-        public int PriviledgeId { get; set; }
+        //public int PriviledgeId { get; set; }
 
         public List<UserReportPriviledge> UserReportPriviledges { get; set; }
     }

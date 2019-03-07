@@ -13,6 +13,7 @@ using DAL.Models;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class CompaniesController : ControllerBase

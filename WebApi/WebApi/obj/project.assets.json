@@ -4720,6 +4720,15 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
+      },
+      "DAL/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/DAL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DAL.dll": {}
+        }
       }
     }
   },
@@ -12932,10 +12941,16 @@
         "system.xml.xpath.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xdocument.nuspec"
       ]
+    },
+    "DAL/1.0.0": {
+      "type": "project",
+      "path": "../DAL/DAL.csproj",
+      "msbuildProject": "../DAL/DAL.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
+      "DAL >= 1.0.0",
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0",
@@ -12949,11 +12964,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Ritesh\\Projects\\Inventory\\Source\\Inventory\\WebApi\\WebApi\\WebApi.csproj",
+      "projectUniqueName": "C:\\Ritesh\\Projects\\Inventory\\WebApi\\WebApi\\WebApi.csproj",
       "projectName": "WebApi",
-      "projectPath": "C:\\Ritesh\\Projects\\Inventory\\Source\\Inventory\\WebApi\\WebApi\\WebApi.csproj",
+      "projectPath": "C:\\Ritesh\\Projects\\Inventory\\WebApi\\WebApi\\WebApi.csproj",
       "packagesPath": "C:\\Users\\rcharkhawala\\.nuget\\packages\\",
-      "outputPath": "C:\\Ritesh\\Projects\\Inventory\\Source\\Inventory\\WebApi\\WebApi\\obj\\",
+      "outputPath": "C:\\Ritesh\\Projects\\Inventory\\WebApi\\WebApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -12971,7 +12986,11 @@
       },
       "frameworks": {
         "netcoreapp2.2": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Ritesh\\Projects\\Inventory\\WebApi\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\Ritesh\\Projects\\Inventory\\WebApi\\DAL\\DAL.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

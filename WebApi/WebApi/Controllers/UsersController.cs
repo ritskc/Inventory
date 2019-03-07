@@ -34,6 +34,7 @@ namespace WebApi.Controllers
             return Ok(user);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -41,6 +42,7 @@ namespace WebApi.Controllers
             return Ok(users);
         }
 
+        [Authorize]
         [HttpGet("{userName}")]
         public async Task<ActionResult<User>> Get(string userName)
         {

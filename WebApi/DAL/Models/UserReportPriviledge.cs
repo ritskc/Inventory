@@ -9,11 +9,12 @@ namespace DAL.Models
     public class UserReportPriviledge
     {
         public int Id { get; set; }
-        public int PriviledgeId { get; set; }
+        //public int PriviledgeId { get; set; }
         public int ReportId { get; set; }
-        public string ReportName { get; set; }
+        //public string ReportName { get; set; }
         public int ReportColumnId { get; set; }
         public string ColumnName { get; set; }
+        public string DisplayName { get; set; }
         public bool View { get; set; }
         public bool Edit { get; set; }
         public bool Sort { get; set; }

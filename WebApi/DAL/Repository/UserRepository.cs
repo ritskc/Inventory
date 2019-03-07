@@ -47,7 +47,7 @@ namespace DAL.Repository
 
             List<Report> reports = new List<Report>();
             commandText = string.Format("SELECT distinct  R.Name as ReportName, URP.[PriviledgeId] , URP.[ReportId] FROM [UserReportPriviledges] URP INNER JOIN[USER] U ON U.PriviledgeId = URP.PriviledgeId " +
-                "INNER JOIN[REPORT] R ON R.Id = URP.ReportId", user.Id);
+                "INNER JOIN[REPORT] R ON R.Id = URP.ReportId WHERE URP.PriviledgeId = '{0}'", user.PriviledgeId.ToString());
 
             using (SqlCommand cmd3 = new SqlCommand(commandText, conn))
             {
@@ -59,7 +59,7 @@ namespace DAL.Repository
                 {
                     var report = new Report();
                     report.Id = Convert.ToInt32(dataReader3["ReportId"]);
-                    report.PriviledgeId = Convert.ToInt32(dataReader3["PriviledgeId"]);
+                    //report.PriviledgeId = Convert.ToInt32(dataReader3["PriviledgeId"]);
                     report.Name = Convert.ToString(dataReader3["ReportName"]);
                    
                     reports.Add(report);
@@ -70,8 +70,9 @@ namespace DAL.Repository
 
 
             List<UserReportPriviledge> userReportPriviledges = new List<UserReportPriviledge>();
-            commandText = string.Format("SELECT URP.[Id], R.Name as ReportName, URP.[PriviledgeId] , URP.[ReportId],[ReportColumnId] , URP.[ColumnName] ,[View] ,[Edit],[Sort],[SortOrder] ," +
-                "[ColumnTypeId] ,[ColumnSequence] FROM [UserReportPriviledges] URP INNER JOIN[USER] U ON U.PriviledgeId = URP.PriviledgeId INNER JOIN[REPORT] R ON R.Id = URP.ReportId  WHERE U.Id = '{0}'", user.Id);
+            commandText = string.Format("SELECT URP.[Id], R.Name as ReportName, URP.[PriviledgeId] , URP.[ReportId],[ReportColumnId] , RC.ColumnName, URP.[ColumnName] AS 'DISPLAYNAME' ,[View] ,[Edit],[Sort],[SortOrder] ," +
+                "[ColumnTypeId] ,[ColumnSequence] FROM [UserReportPriviledges] URP INNER JOIN[USER] U ON U.PriviledgeId = URP.PriviledgeId INNER JOIN[REPORT] R ON R.Id = URP.ReportId  " +
+                "INNER JOIN ReportColumns RC ON RC.Id = URP.ReportColumnId WHERE U.PriviledgeId = '{0}'", user.PriviledgeId);
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
             {
@@ -83,10 +84,11 @@ namespace DAL.Repository
                 {
                     var userReportPriviledge = new UserReportPriviledge();
                     userReportPriviledge.Id = Convert.ToInt32(dataReader1["Id"]);
-                    userReportPriviledge.PriviledgeId = Convert.ToInt32(dataReader1["PriviledgeId"]);
+                    //userReportPriviledge.PriviledgeId = Convert.ToInt32(dataReader1["PriviledgeId"]);
                     userReportPriviledge.ReportId = Convert.ToInt32(dataReader1["ReportId"]);
-                    userReportPriviledge.ReportName = Convert.ToString(dataReader1["ReportName"]);
+                    //userReportPriviledge.ReportName = Convert.ToString(dataReader1["ReportName"]);
                     userReportPriviledge.ReportColumnId = Convert.ToInt32(dataReader1["ReportColumnId"]);
+                    userReportPriviledge.DisplayName = Convert.ToString(dataReader1["DisplayName"]);
                     userReportPriviledge.ColumnName = Convert.ToString(dataReader1["ColumnName"]);
                     userReportPriviledge.View = Convert.ToBoolean(dataReader1["Edit"]);
                     userReportPriviledge.Edit = Convert.ToBoolean(dataReader1["Sort"]);

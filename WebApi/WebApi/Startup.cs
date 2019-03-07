@@ -89,7 +89,7 @@ namespace WebApi
             //services.AddScoped<IPartRepository, PartRepository>();
             services.AddScoped<ICompanyRepository,CompanyRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            // services.AddScoped<ISupplierRepository, SupplierRepository>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
 
             //add helpers here
             services.AddScoped<ISqlHelper, SqlHelper>();

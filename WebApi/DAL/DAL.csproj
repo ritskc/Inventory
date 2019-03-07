@@ -45,10 +45,14 @@
     <Compile Include="DBHelper\ISqlHelper.cs" />
     <Compile Include="DBHelper\SqlHelper.cs" />
     <Compile Include="IRepository\ICompanyRepository.cs" />
+    <Compile Include="IRepository\ISupplierRepository.cs" />
     <Compile Include="IRepository\IUserRepository.cs" />
+    <Compile Include="Repository\SupplierRepository.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Report.cs" />
     <Compile Include="Models\SSRSReport.cs" />
+    <Compile Include="Models\Supplier.cs" />
+    <Compile Include="Models\SupplierTerms.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserReportPriviledge.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
