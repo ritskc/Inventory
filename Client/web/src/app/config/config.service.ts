@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from 'rxjs';
-import { AppConfigurations } from './app.config';
+import { AppConfigurations, GridConstants } from './app.config';
 
 @Injectable({
   providedIn: 'root'
@@ -16,4 +16,7 @@ export class ConfigService {
     return new AppConfigurations();
   }
 
+  get GridConstants(): GridConstants {
+    return new GridConstants();
+  }
 }

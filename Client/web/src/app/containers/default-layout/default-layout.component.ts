@@ -32,7 +32,7 @@ export class DefaultLayoutComponent implements OnDestroy {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.authService.logout();
     this.router.navigate(['/']);
   }
