@@ -10,6 +10,10 @@ export class CompanyService {
 
   constructor(private apiService: ApiService, private config: ConfigService) { }
 
+  getGridPriviledges(username: string): any {
+    return this.apiService.get<any>(`${ this.config.Settings.apiServerHost }/${ this.config.Settings.gridDefinitionUri }/${ username }`);
+  }
+
   getAllCompanies() {
     return this.apiService.get<Company[]>(this.config.Settings.apiServerHost + this.config.Settings.companyUri);
   }

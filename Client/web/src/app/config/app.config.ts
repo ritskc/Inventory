@@ -8,6 +8,7 @@ export class AppConfigurations {
     partsUri: string;
     companyUri: string;
     usersUri: string;
+    gridDefinitionUri: string;
 
     initialize() {
         this.apiServerHost = 'http://po.harisons.com/api';
@@ -15,5 +16,10 @@ export class AppConfigurations {
         this.usersUri = '/users';
         this.partsUri = '/parts';
         this.companyUri = '/companies';
+        this.gridDefinitionUri = '/users';
     }
+}
+
+export class GridConstants {
+    public readonly Company = 1;
 }
