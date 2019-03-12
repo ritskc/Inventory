@@ -3,6 +3,7 @@ import { SupplierService } from '../supplier.service';
 import { CompanyService } from '../../../company/company.service';
 import { Supplier } from '../../../models/supplier.model';
 import { DataColumn } from '../../../models/dataColumn.model';
+import { httpLoaderService } from '../../../common/services/httpLoader.service';
 
 @Component({
   selector: 'app-supplier-list',
@@ -15,7 +16,8 @@ export class SupplierListComponent implements OnInit {
   columns: DataColumn[] = [];
   currentlyLoggedInCompanyId: number = 0;
 
-  constructor(private supplierService: SupplierService, private companyService: CompanyService) { }
+  constructor(private supplierService: SupplierService, private companyService: CompanyService,
+              private loaderService: httpLoaderService) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompanyId = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -31,13 +33,16 @@ export class SupplierListComponent implements OnInit {
   }
 
   getAllSuppliers() {
+    this.loaderService.show();
     this.supplierService.getAllSuppliers(this.currentlyLoggedInCompanyId)
       .subscribe(
         (suppliers) => {
           this.suppliers = suppliers;
+          this.loaderService.hide();
         },
         (error) => {
           console.log(error);
+          this.loaderService.hide();
         }
       )
   }

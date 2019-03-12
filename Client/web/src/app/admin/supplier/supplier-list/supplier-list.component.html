@@ -1,3 +1,8 @@
 <div class="standard-margin">
-  supplier list works!
+  <simple-grid [data]="suppliers" [columns]="columns" 
+    (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="addSupplier()">
+
+  </simple-grid>
 </div>
+
+<loader></loader>

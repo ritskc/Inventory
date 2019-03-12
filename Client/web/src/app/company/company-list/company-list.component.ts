@@ -57,7 +57,10 @@ export class CompanyListComponent implements OnInit {
           that.companies = companies;
           that.loaderService.hide();
         },
-        (error) => { console.log(error); }
+        (error) => { 
+          console.log(error); 
+          that.loaderService.hide();
+        }
     );
   }
 

@@ -13,6 +13,7 @@ import { TokenInterceptor } from '../../common/services/api.service';
 import { SimpleGridComponent } from '../../common/components/simple-grid/simple-grid.component';
 import { LoaderComponent } from '../../common/components/loader/loader.component';
 import { httpLoaderService } from '../../common/services/httpLoader.service';
+import { SharedModule } from '../../common/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,8 +21,9 @@ import { httpLoaderService } from '../../common/services/httpLoader.service';
   ],
   imports: [
     CommonModule,
-    SupplierRoutingModule,
     FormsModule,
+    SharedModule,
+    SupplierRoutingModule,
     ReactiveFormsModule,
     ToastrModule.forRoot()
   ],
