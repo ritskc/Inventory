@@ -22,6 +22,10 @@ export class CompanyService {
     return this.apiService.get<Company>(this.config.Settings.apiServerHost + this.config.Settings.companyUri + '/' + id);
   }
 
+  getCurrentlyLoggedInCompanyId(): number {
+    return 1;
+  }
+
   saveCompany(company: Company) {
     if (company.id == 0)
       return this.apiService.post(company, this.config.Settings.apiServerHost + this.config.Settings.companyUri);

@@ -39,6 +39,11 @@ export const navItems: NavData[] = [
     icon: 'fa fa-building-o'
   },
   {
+    name: 'Supplier',
+    url: '/suppliers',
+    icon: 'icon-puzzle'
+  },
+  {
     name: 'Products',
     url: '/products',
     icon: 'icon-puzzle'

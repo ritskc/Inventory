@@ -9,6 +9,7 @@ export class AppConfigurations {
     companyUri: string;
     usersUri: string;
     gridDefinitionUri: string;
+    supplierUri: string;
 
     initialize() {
         this.apiServerHost = 'http://po.harisons.com/api';
@@ -17,6 +18,7 @@ export class AppConfigurations {
         this.partsUri = '/parts';
         this.companyUri = '/companies';
         this.gridDefinitionUri = '/users';
+        this.supplierUri = '/suppliers'
     }
 }
 
