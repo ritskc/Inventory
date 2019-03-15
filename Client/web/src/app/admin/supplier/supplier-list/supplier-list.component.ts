@@ -4,6 +4,8 @@ import { CompanyService } from '../../../company/company.service';
 import { Supplier } from '../../../models/supplier.model';
 import { DataColumn } from '../../../models/dataColumn.model';
 import { httpLoaderService } from '../../../common/services/httpLoader.service';
+import { UserAction } from '../../../models/enum/userAction';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-supplier-list',
@@ -17,7 +19,7 @@ export class SupplierListComponent implements OnInit {
   currentlyLoggedInCompanyId: number = 0;
 
   constructor(private supplierService: SupplierService, private companyService: CompanyService,
-              private loaderService: httpLoaderService) { }
+              private loaderService: httpLoaderService, private router: Router) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompanyId = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -47,11 +49,11 @@ export class SupplierListComponent implements OnInit {
       )
   }
 
-  rowSelected(event) {
-
+  rowSelected(row) {
+    this.router.navigateByUrl(`/suppliers/detail/${ UserAction.Edit }/${row.id}`);
   }
 
   addSupplier() {
-    
+    this.router.navigateByUrl(`/suppliers/detail/${ UserAction.Add }/#`);
   }
 }

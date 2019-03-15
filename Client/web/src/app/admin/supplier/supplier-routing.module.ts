@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
+import { SupplierDetailComponent } from './supplier-detail/supplier-detail.component';
 
 const routes: Routes = [{
   path: '',
@@ -10,6 +11,12 @@ const routes: Routes = [{
   children: [{
     path: '',
     component: SupplierListComponent
+  }, {
+    path: 'detail/:action/:id',
+    component: SupplierDetailComponent,
+    data: {
+      title: 'Supplier Detail'
+    }
   }]
 }];
 

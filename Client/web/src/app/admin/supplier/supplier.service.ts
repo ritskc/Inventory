@@ -14,4 +14,15 @@ export class SupplierService {
   getAllSuppliers(companyId: number): Observable<Supplier[]> {
     return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.supplierUri }`)
   }
+
+  getSupplier(companyId: number, supplierId: number): Observable<Supplier> {
+    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.supplierUri }/${ supplierId }`);
+  }
+
+  saveSupplier(supplier: Supplier) {
+    if (supplier.id == 0) 
+      return this.apiService.post(supplier, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri);
+    else
+    return this.apiService.put(supplier, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri + `/${ supplier.id }`);
+  }
 }
