@@ -17,6 +17,7 @@ export class SupplierDetailComponent implements OnInit {
   supplier: Supplier;
   supplierForm: FormGroup;
   submitted: boolean = false;
+  atleastOneTermPresent: boolean = true;
 
   constructor(private supplierBuilder: FormBuilder, private activeRoute: ActivatedRoute, private supplierService: SupplierService,
               private toastr: ToastrManager, private router: Router) { 
@@ -63,6 +64,10 @@ export class SupplierDetailComponent implements OnInit {
   save() {
     this.submitted = true;
     if (this.supplierForm.invalid) return;
+    if (this.supplier.terms && this.supplier.terms.length <= 0) {
+      this.atleastOneTermPresent = false;
+      return;
+    }
 
     this.supplierService.saveSupplier(this.supplier)
       .subscribe((response) => { 

@@ -115,7 +115,7 @@
           </div>
           <div class="card-body">
             <div *ngFor="let term of supplier.terms" class="standard-top-margin">
-                <input type="text" class="form-control" [(ngModel)]="term.terms" [ngModelOptions]="{standalone: true}" [ngClass]="{ 'is-invalid': submitted && term }"/>
+                <input type="text" class="form-control" [(ngModel)]="term.terms" [ngModelOptions]="{standalone: true}" [ngClass]="{ 'is-invalid': submitted && !atleastOneTermPresent }"/>
             </div>
           </div>
         </div>
