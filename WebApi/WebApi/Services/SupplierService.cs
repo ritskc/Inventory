@@ -4,9 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApi.IRepositories;
 using WebApi.IServices;
-using WebApi.Models;
+
 
 
 namespace WebApi.Services
@@ -20,14 +19,15 @@ namespace WebApi.Services
             _supplierRepository = supplierRepository;
         }
 
-        public async Task<IEnumerable<Supplier>> GetAllSupplierAsync()
+        public async Task<IEnumerable<Supplier>> GetAllSupplierAsync(int companyId)
         {
-            return await this._supplierRepository.GetAllSupplierAsync();
+            return await this._supplierRepository.GetAllSupplierAsync(companyId);
         }
 
-        public async Task<Supplier> GetSupplierAsync(long id)
+        public async Task<Supplier> GetSupplierAsync(int id)
         {
-            return await Task.Run(() => GetAllSupplierAsync().Result.Where(p => p.Id == id).FirstOrDefault());
+            return await this._supplierRepository.GetSupplierAsync(id);
+            
         }
 
         public async Task AddSupplierAsync(Supplier supplier)

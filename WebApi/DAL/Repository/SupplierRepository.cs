@@ -21,12 +21,12 @@ namespace DAL.Repository
             _sqlHelper = sqlHelper;
         }
 
-        public async Task<IEnumerable<Supplier>> GetAllSupplierAsync()
+        public async Task<IEnumerable<Supplier>> GetAllSupplierAsync(int companyId)
         {
             List<Supplier> suppliers = new List<Supplier>();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
-            var commandText = "SELECT [id],[CompanyId],[Name],[ContactPersonName],[PhoneNo],[EmailID],[Address],[City],[State],[Country]," +
-                                 "[ZIPCode],[FAXNo],[DateFormat],[noofstages],[CompanyProfileID] FROM [dbo].[supplier] WITH(NOLOCK) ";
+            var commandText = string.Format("SELECT [id],[CompanyId],[Name],[ContactPersonName],[PhoneNo],[EmailID],[Address],[City],[State],[Country]," +
+                                 "[ZIPCode],[FAXNo],[DateFormat],[noofstages],[CompanyProfileID] FROM [dbo].[supplier] WITH(NOLOCK) WHERE CompanyId = '{0}'", companyId);
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
                 cmd.CommandType = CommandType.Text;
@@ -88,6 +88,69 @@ namespace DAL.Repository
             return suppliers;
         }
 
+        public async Task<Supplier> GetSupplierAsync(int id)
+        {
+            Supplier supplier = new Supplier();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+            var commandText = string.Format("SELECT [id],[CompanyId],[Name],[ContactPersonName],[PhoneNo],[EmailID],[Address],[City],[State],[Country]," +
+                                 "[ZIPCode],[FAXNo],[DateFormat],[noofstages],[CompanyProfileID] FROM [dbo].[supplier] WITH(NOLOCK) WHERE id = '{0}'", id);
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    supplier.Id = Convert.ToInt32(dataReader["Id"]);
+                    supplier.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
+                    supplier.Name = Convert.ToString(dataReader["Name"]);
+                    supplier.ContactPersonName = Convert.ToString(dataReader["ContactPersonName"]);
+                    supplier.PhoneNo = Convert.ToString(dataReader["PhoneNo"]);
+                    supplier.EmailID = Convert.ToString(dataReader["EmailID"]);
+                    supplier.Address = Convert.ToString(dataReader["Address"]);
+                    supplier.City = Convert.ToString(dataReader["City"]);
+                    supplier.State = Convert.ToString(dataReader["State"]);
+                    supplier.Country = Convert.ToString(dataReader["Country"]);
+                    supplier.ZIPCode = Convert.ToString(dataReader["ZIPCode"]);
+                    supplier.FAXNo = Convert.ToString(dataReader["FAXNo"]);
+                    supplier.Address = Convert.ToString(dataReader["Address"]);
+                    supplier.PhoneNo = Convert.ToString(dataReader["PhoneNo"]);
+                    supplier.DateFormat = Convert.ToString(dataReader["DateFormat"]);
+                    supplier.noofstages = Convert.ToInt32(dataReader["noofstages"]);
+                    supplier.CompanyProfileID = Convert.ToInt32(dataReader["CompanyProfileID"]);
+                }
+                conn.Close();
+            }
+
+            List<SupplierTerms> lstTerms = new List<SupplierTerms>();
+            commandText = string.Format("SELECT [id],[supplierId],[sequenceNo],[terms] FROM [dbo].[supplierterms] WITH(NOLOCK)  WHERE supplierid = '{0}'", supplier.Id);
+
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+            {
+                cmd1.CommandType = CommandType.Text;
+                conn.Open();
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader1.Read())
+                {
+                    var terms = new SupplierTerms();
+                    terms.Id = Convert.ToInt32(dataReader1["Id"]);
+                    terms.SequenceNo = Convert.ToInt32(dataReader1["SequenceNo"]);
+                    terms.Terms = Convert.ToString(dataReader1["Terms"]);
+                    lstTerms.Add(terms);
+                }
+            }
+            supplier.Terms = lstTerms;
+            conn.Close();
+
+
+
+            return supplier;
+        }
+
         public async Task AddSupplierAsync(Supplier supplier)
         {
             string sql = string.Format("INSERT INTO [Supplier] ([CompanyId],[Name],[ContactPersonName],[PhoneNo],[EmailID],[Address],[City],[State],[Country]," +
@@ -118,20 +181,15 @@ namespace DAL.Repository
 
                 _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
-                sql = "UPDATE [dbo].[Supplier] SET [CompanyId] = '{0}',[Name]= '{1}',[ContactPersonName]= '{2}',[PhoneNo]= '{3}',[EmailID]= '{4}',[Address]= '{5}',[City]= '{6}',[State]= '{7}',[Country]= '{8}',[ZIPCode]= '{9}',[FAXNo]= '{10}',[DateFormat]= '{11}',[noofstages]= '{12}',[CompanyProfileID] = '{13}'  WHERE id = '{14}'";
+                //sql = "UPDATE [dbo].[Supplier] SET [CompanyId] = '{0}',[Name]= '{1}',[ContactPersonName]= '{2}',[PhoneNo]= '{3}',[EmailID]= '{4}',[Address]= '{5}',[City]= '{6}',[State]= '{7}',[Country]= '{8}',[ZIPCode]= '{9}',[FAXNo]= '{10}',[DateFormat]= '{11}',[noofstages]= '{12}',[CompanyProfileID] = '{13}'  WHERE id = '{14}'";
 
-                sql = string.Format("UPDATE [dbo].[Supplier] SET [CompanyId] = '{0}',[Name]= '{1}',[ContactPersonName]= '{2}',[PhoneNo]= '{3}',[EmailID]= '{4}',[Address]= '{5}',[City]= '{6}'," +
-                                            "[State]= '{7}',[Country]= '{8}',[ZIPCode]= '{9}',[FAXNo]= '{10}',[DateFormat]= '{11}',[noofstages]= '{12}',[CompanyProfileID] = '{13}'  WHERE id = '{14}'" +
-                                    supplier.CompanyId, supplier.Name, supplier.ContactPersonName, supplier.PhoneNo, supplier.EmailID, supplier.Address, supplier.City, supplier.State, supplier.Country,
-                                            supplier.ZIPCode, supplier.FAXNo, supplier.DateFormat, supplier.noofstages, supplier.CompanyProfileID, supplier.Id);
-
+                sql = string.Format($"UPDATE [dbo].[Supplier] SET [CompanyId] = '{supplier.CompanyId}',[Name]= '{supplier.Name}',[ContactPersonName]= '{supplier.ContactPersonName}',[PhoneNo]= '{supplier.PhoneNo}',[EmailID]= '{supplier.EmailID}',[Address]= '{supplier.Address}',[City]= '{supplier.City}'," +
+                                            $"[State]= '{supplier.State}',[Country]= '{supplier.Country}',[ZIPCode]= '{supplier.ZIPCode}',[FAXNo]= '{supplier.FAXNo}',[DateFormat]= '{supplier.DateFormat}',[noofstages]= '{supplier.noofstages}',[CompanyProfileID] = '{supplier.CompanyProfileID}'  WHERE id = '{supplier.Id}' ");
                 await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
                 foreach (SupplierTerms term in supplier.Terms)
                 {
-                    sql = string.Format("INSERT INTO [dbo].[supplierterms]([supplierId],[sequenceNo],[terms])) VALUES ('{0}', '{1}','{2}')",
-                                                supplier.Id, term.SequenceNo, term.Terms);
-
+                    sql = string.Format($"INSERT INTO [dbo].[supplierterms] ([supplierId],[sequenceNo],[terms]) VALUES ('{supplier.Id}', '{term.SequenceNo}','{term.Terms}')" );
                     await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
                 }
             }

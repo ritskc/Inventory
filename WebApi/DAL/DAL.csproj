@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\newtonsoft.json\11.0.2\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -45,8 +49,14 @@
     <Compile Include="DBHelper\ISqlHelper.cs" />
     <Compile Include="DBHelper\SqlHelper.cs" />
     <Compile Include="IRepository\ICompanyRepository.cs" />
+    <Compile Include="IRepository\IPartRepository.cs" />
     <Compile Include="IRepository\ISupplierRepository.cs" />
     <Compile Include="IRepository\IUserRepository.cs" />
+    <Compile Include="Models\ConnectionInfo.cs" />
+    <Compile Include="Models\Part.cs" />
+    <Compile Include="Models\PartCustomerAssignment.cs" />
+    <Compile Include="Models\PartSupplierAssignment.cs" />
+    <Compile Include="Repository\PartRepository.cs" />
     <Compile Include="Repository\SupplierRepository.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Report.cs" />

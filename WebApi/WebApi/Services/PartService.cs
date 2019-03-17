@@ -1,10 +1,10 @@
-﻿using System;
+﻿using DAL.IRepository;
+using DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApi.IRepositories;
 using WebApi.IServices;
-using WebApi.Models;
 
 namespace WebApi.Services
 {
@@ -19,14 +19,14 @@ namespace WebApi.Services
         }
 
        
-        public async Task<IEnumerable<Part>> GetAllPartsAsync()
+        public async Task<IEnumerable<Part>> GetAllPartsAsync(int companyId)
         {
-            return await this._partRepository.GetAllPartsAsync();
+            return await this._partRepository.GetAllPartsAsync(companyId);
         }  
         
-        public async Task<Part> GetPartAsync(long id)
+        public async Task<Part> GetPartAsync(int companyId,long id)
         {
-            return await Task.Run(() => GetAllPartsAsync().Result.Where(p => p.Id == id).FirstOrDefault());           
+            return await Task.Run(() => GetAllPartsAsync(companyId).Result.Where(p => p.Id == id).FirstOrDefault());           
         }       
 
         public async Task AddPartAsync(Part part)

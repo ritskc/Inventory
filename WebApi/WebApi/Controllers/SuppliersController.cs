@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.HttpSys;
 using WebApi.IServices;
-using WebApi.Models;
 
 namespace WebApi.Controllers
 {
@@ -27,15 +26,12 @@ namespace WebApi.Controllers
         }
 
         // GET: api/Todo
-        [HttpGet]
-        public async Task<IEnumerable<Supplier>> GetSuppliers()
-        {
-            return await this._supplierService.GetAllSupplierAsync();
-        }
+        [HttpGet("{companyId}")]
+        public async Task<IEnumerable<Supplier>> GetSuppliers(int companyId) => await this._supplierService.GetAllSupplierAsync(companyId);
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Supplier>> Get(int id)
+        [HttpGet("{companyId}/{id}")]
+        public async Task<ActionResult<Supplier>> Get(int companyId,int id)
         {
             var result = await this._supplierService.GetSupplierAsync(id);
 
@@ -72,7 +68,7 @@ namespace WebApi.Controllers
 
         //DELETE: api/Todo/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Supplier>> DeleteTodoItem(long id)
+        public async Task<ActionResult<Supplier>> DeleteTodoItem(int id)
         {
             var result = await this._supplierService.GetSupplierAsync(id);
             if (result == null)
