@@ -9,10 +9,10 @@ export class httpLoaderService {
     constructor() {
         this.loaderSubject.subscribe({
             next: (value) => {
-                console.log(value);
+                
             },
             error: (error) => {
-                console.error(error);
+                
             },
             complete: () => {
                 console.info('completed');
