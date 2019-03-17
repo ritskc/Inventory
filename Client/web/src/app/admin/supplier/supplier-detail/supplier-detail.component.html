@@ -1,0 +1,137 @@
+<form [formGroup]="supplierForm" (ngSubmit)="save()">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-xs-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Supplier Details</strong>
+        </div>
+
+        <div class="card-body">
+          <div class="form-group standard-top-margin">
+            <label>Name</label>
+            <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" [(ngModel)]="supplier.name"/>
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+              <div *ngIf="f.name.errors.required">Supplier Name is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Address</label>
+            <input type="text" formControlName="address" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" [(ngModel)]="supplier.address"/>
+            <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+              <div *ngIf="f.address.errors.required">Supplier Address is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Phone Number</label>
+            <input type="tel" formControlName="phoneNo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phoneNo.errors }" [(ngModel)]="supplier.phoneNo"/>
+            <div *ngIf="submitted && f.phoneNo.errors" class="invalid-feedback">
+              <div *ngIf="f.phoneNo.errors.required">Supplier Phone Number is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Fax Number</label>
+            <input type="tel" formControlName="faxNo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.faxNo.errors }" [(ngModel)]="supplier.faxNo"/>
+            <div *ngIf="submitted && f.faxNo.errors" class="invalid-feedback">
+              <div *ngIf="f.faxNo.errors.required">Supplier Fax Number is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Email</label>
+            <input type="email" formControlName="emailID" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.emailID.errors }" [(ngModel)]="supplier.eMail"/>
+            <div *ngIf="submitted && f.emailID.errors" class="invalid-feedback">
+              <div *ngIf="f.emailID.errors.required">Valid Supplier Email is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Contact Person</label>
+            <input type="tel" formControlName="contactPersonName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.contactPersonName.errors }" [(ngModel)]="supplier.contactPersonName"/>
+            <div *ngIf="submitted && f.contactPersonName.errors" class="invalid-feedback">
+              <div *ngIf="f.contactPersonName.errors.required">Contact Person Name is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-xs-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Address & Miscellaneous</strong>
+        </div>
+        <div class="card-body">
+          <div class="form-group standard-top-margin">
+            <label>City</label>
+            <input type="text" formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" [(ngModel)]="supplier.city"/>
+            <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+              <div *ngIf="f.city.errors.required">City Name is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>State</label>
+            <input type="text" formControlName="state" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" [(ngModel)]="supplier.state"/>
+            <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+              <div *ngIf="f.state.errors.required">State is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Country</label>
+            <input type="text" formControlName="country" class="form-control" [(ngModel)]="supplier.country" [ngClass]="{ 'is-invalid': submitted && f.country.errors }"/>
+            <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+              <div *ngIf="f.country.errors.required">Country is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Zipcode</label>
+            <input type="email" formControlName="zipCode" class="form-control" [(ngModel)]="supplier.zipCode" [ngClass]="{ 'is-invalid': submitted && f.zipCode.errors }"/>
+            <div *ngIf="submitted && f.zipCode.errors" class="invalid-feedback">
+              <div *ngIf="f.zipCode.errors.required">Zipcode is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Date Format</label>
+            <input type="text" formControlName="dateFormat" class="form-control" [(ngModel)]="supplier.dateFormat" [ngClass]="{ 'is-invalid': submitted && f.dateFormat.errors }"/>
+            <div *ngIf="submitted && f.dateFormat.errors" class="invalid-feedback">
+              <div *ngIf="f.dateFormat.errors.required">Date Format is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Number of Stages</label>
+            <input type="text" formControlName="noofstages" class="form-control" [(ngModel)]="supplier.noofstages" [ngClass]="{ 'is-invalid': submitted && f.noofstages.errors }"/>
+            <div *ngIf="submitted && f.noofstages.errors" class="invalid-feedback">
+              <div *ngIf="f.noofstages.errors.required">Number of State is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-xs-12">
+        <div class="card">
+          <div class="card-header">
+            <strong>Terms & Conditions</strong>
+            <button class="btn btn-primary float-right" (click)="addMoreTermAndCondition()">Add More</button>
+          </div>
+          <div class="card-body">
+            <div *ngFor="let term of supplier.terms" class="standard-top-margin">
+                <input type="text" class="form-control" [(ngModel)]="term.terms" [ngModelOptions]="{standalone: true}" [ngClass]="{ 'is-invalid': submitted && !atleastOneTermPresent }"/>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-xs-12">
+      <div class="card">
+        <div class="card-footer">
+            <button class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+            <span class="btn btn-warning" (click)="clear()"><span class="fa fa-eraser"></span> Clear</span>
+            <span class="btn btn-danger" (click)="delete()" *ngIf="supplier.id > 0" ><span class="fa fa-remove"></span> Delete</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</form>

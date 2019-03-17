@@ -14,15 +14,12 @@ import { LoaderComponent } from '../common/components/loader/loader.component';
 import { httpLoaderService } from '../common/services/httpLoader.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../common/services/api.service';
+import { SharedModule } from '../common/shared/shared.module';
 
 @NgModule({
   declarations: [
     CompanyListComponent, 
     CompanyDetailComponent,
-    LoaderComponent,
-    SimpleGridComponent,
-    SearchPipe,
-    PaginatePipe,
     ReportComponent
   ],
   imports: [
@@ -30,6 +27,7 @@ import { TokenInterceptor } from '../common/services/api.service';
     CompanyRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     ToastrModule.forRoot(),
   ],
   providers: [

@@ -54,12 +54,13 @@ export class CompanyListComponent implements OnInit {
     this.companyService.getAllCompanies()
       .subscribe(
         (companies) => { 
-          setTimeout(function() {
-            that.companies = companies;
-            that.loaderService.hide();
-          }, 2000);
+          that.companies = companies;
+          that.loaderService.hide();
         },
-        (error) => { console.log(error); }
+        (error) => { 
+          console.log(error); 
+          that.loaderService.hide();
+        }
     );
   }
 
