@@ -6,6 +6,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { Supplier } from '../../../models/supplier.model';
 import { Term } from '../../../models/terms.model';
 import { UserAction } from '../../../models/enum/userAction';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-supplier-detail',
@@ -56,15 +57,23 @@ export class SupplierDetailComponent implements OnInit {
   }
 
   addMoreTermAndCondition() {
-    var term = new Term();
-    term.terms = "New term & condition";
-    this.supplier.terms.push(term);
+    if (this.supplier.terms.length == 0) {
+      this.createNewTermAndCondition();
+      return;  
+    }
+
+    if (this.verifyIfAValidTermAndConditionExist())
+      this.createNewTermAndCondition();
+  }
+
+  removeTermAndCondition(index) {
+    this.supplier.terms.splice(index, 1);
   }
   
   save() {
     this.submitted = true;
     if (this.supplierForm.invalid) return;
-    if (this.supplier.terms && this.supplier.terms.length <= 0) {
+    if (!this.verifyIfAValidTermAndConditionExist()) {
       this.atleastOneTermPresent = false;
       return;
     }
@@ -77,5 +86,28 @@ export class SupplierDetailComponent implements OnInit {
         this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
       }
     );
+  }
+
+  private createNewTermAndCondition() {
+    var term = new Term();
+    this.supplier.terms.push(term);
+  }
+
+  private verifyIfAValidTermAndConditionExist(): boolean {
+    if (this.supplier.terms.length == 0) return false;
+
+    var isValid = true;
+    this.atleastOneTermPresent = isValid;
+    this.supplier.terms.forEach(term => {
+      if (!term.terms) {
+        this.atleastOneTermPresent = isValid = false;
+      }
+    });
+    return isValid;
+  }
+
+  private clearAllValidations() {
+    this.submitted = false;
+    this.atleastOneTermPresent = true;
   }
 }
