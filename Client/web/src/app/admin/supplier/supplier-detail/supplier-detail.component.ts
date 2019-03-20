@@ -72,11 +72,7 @@ export class SupplierDetailComponent implements OnInit {
   
   save() {
     this.submitted = true;
-    if (this.supplierForm.invalid) return;
-    if (!this.verifyIfAValidTermAndConditionExist()) {
-      this.atleastOneTermPresent = false;
-      return;
-    }
+    if (this.supplierForm.invalid || !this.verifyIfAValidTermAndConditionExist()) return;
 
     this.supplierService.saveSupplier(this.supplier)
       .subscribe((response) => { 

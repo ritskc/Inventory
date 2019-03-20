@@ -37,7 +37,7 @@
           </div>
           <div class="form-group standard-top-margin">
             <label>Email</label>
-            <input type="email" formControlName="emailID" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.emailID.errors }" [(ngModel)]="supplier.eMail"/>
+            <input type="email" formControlName="emailID" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.emailID.errors }" [(ngModel)]="supplier.emailID"/>
             <div *ngIf="submitted && f.emailID.errors" class="invalid-feedback">
               <div *ngIf="f.emailID.errors.required">Valid Supplier Email is required</div>
             </div>
