@@ -6,7 +6,7 @@ export class Supplier {
         this.terms = [];
     }
 
-    id: number;
+    id: number = 0;
     companyId: number;
     name: string;
     contactPersonName: string;
