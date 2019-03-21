@@ -20,7 +20,8 @@ export class JsonToCsvExporterService {
 
     data.forEach(item => {
       headers.forEach(header => {
-        dataToWrite += item[header] + ","
+        if (typeof(item[header]) !== "object")
+          dataToWrite += item[header] + ","
       });
       dataToWrite += String.fromCharCode(13);
     });

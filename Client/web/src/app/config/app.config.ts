@@ -12,7 +12,7 @@ export class AppConfigurations {
     supplierUri: string;
 
     initialize() {
-        this.apiServerHost = 'https://questapi.yellow-chips.com';
+        this.apiServerHost = 'http://questapi.yellow-chips.com';
 
         this.usersUri = '/users';
         this.partsUri = '/parts';
