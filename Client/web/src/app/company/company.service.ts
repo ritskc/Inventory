@@ -22,6 +22,7 @@ export class CompanyService {
     return this.apiService.get<Company>(this.config.Settings.apiServerHost + this.config.Settings.companyUri + '/' + id);
   }
 
+  //TODO: Replace the logic once the logged in companyId is determined
   getCurrentlyLoggedInCompanyId(): number {
     return 1;
   }
