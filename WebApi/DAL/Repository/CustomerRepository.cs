@@ -80,8 +80,7 @@ namespace DAL.Repository
                     while (dataReader1.Read())
                     {
                         var terms = new CustomerShippingInfo();
-                        terms.Id = Convert.ToInt32(dataReader1["Id"]);
-                        terms.CustomerID = Convert.ToInt32(dataReader1["CustomerID"]);
+                        terms.Id = Convert.ToInt32(dataReader1["Id"]);                        
                         terms.Name = Convert.ToString(dataReader1["Name"]);
                         terms.ContactPersonName = Convert.ToString(dataReader1["ContactPersonName"]);
                         terms.AddressLine1 = Convert.ToString(dataReader1["AddressLine1"]);
@@ -93,7 +92,7 @@ namespace DAL.Repository
                         lstTerms.Add(terms);
                     }
                 }
-                customer.ShjippingInfos = lstTerms;
+                customer.ShippingInfos = lstTerms;
                 conn.Close();
             }
 
@@ -156,8 +155,7 @@ namespace DAL.Repository
                 while (dataReader1.Read())
                 {
                     var terms = new CustomerShippingInfo();
-                    terms.Id = Convert.ToInt32(dataReader1["Id"]);
-                    terms.CustomerID = Convert.ToInt32(dataReader1["CustomerID"]);
+                    terms.Id = Convert.ToInt32(dataReader1["Id"]);                    
                     terms.Name = Convert.ToString(dataReader1["Name"]);
                     terms.ContactPersonName = Convert.ToString(dataReader1["ContactPersonName"]);
                     terms.AddressLine1 = Convert.ToString(dataReader1["AddressLine1"]);
@@ -169,7 +167,7 @@ namespace DAL.Repository
                     lstTerms.Add(terms);
                 }
             }
-            customer.ShjippingInfos = lstTerms;
+            customer.ShippingInfos = lstTerms;
             conn.Close();
 
 
@@ -191,10 +189,10 @@ namespace DAL.Repository
             var customerId = _sqlHelper.ExecuteScalar(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
 
-            foreach (CustomerShippingInfo term in customer.ShjippingInfos)
+            foreach (CustomerShippingInfo term in customer.ShippingInfos)
             {
                 sql = string.Format($"INSERT INTO [dbo].[customershippinginfo] ([CustomerID] ,[Name] ,[ContactPersonName] ,[AddressLine1] ,[City] ,[State],[ZIPCode],[IsDefault]) VALUES ( " +
-                    $"'{term.CustomerID}' , '{term.Name}' , '{term.ContactPersonName}' ,'{term.AddressLine1}', '{term.City}' , '{term.State}' , '{term.ZIPCode}' , '{term.IsDefault}')");
+                    $"'{customerId}' , '{term.Name}' , '{term.ContactPersonName}' ,'{term.AddressLine1}', '{term.City}' , '{term.State}' , '{term.ZIPCode}' , '{term.IsDefault}')");
 
                 await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
             }
@@ -218,10 +216,10 @@ namespace DAL.Repository
                     $"   ,[endcustomername] = '{customer.EndCustomerName}' ,[DisplayLineNo] = '{customer.DisplayLineNo}' WHERE[CompanyId] = '{customer.Id}' ");
                 await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
-                foreach (CustomerShippingInfo term in customer.ShjippingInfos)
+                foreach (CustomerShippingInfo term in customer.ShippingInfos)
                 {
                     sql = string.Format($"INSERT INTO [dbo].[customershippinginfo] ([CustomerID] ,[Name] ,[ContactPersonName] ,[AddressLine1] ,[City] ,[State],[ZIPCode],[IsDefault]) VALUES ( " +
-                    $"'{term.CustomerID}' , '{term.Name}' , '{term.ContactPersonName}' ,'{term.AddressLine1}', '{term.City}' , '{term.State}' , '{term.ZIPCode}' , '{term.IsDefault}')");
+                    $"'{customer.Id}' , '{term.Name}' , '{term.ContactPersonName}' ,'{term.AddressLine1}', '{term.City}' , '{term.State}' , '{term.ZIPCode}' , '{term.IsDefault}')");
                     await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
                 }
             }

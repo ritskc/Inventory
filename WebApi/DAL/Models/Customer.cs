@@ -31,6 +31,6 @@ namespace DAL.Models
        public string EndCustomerName { get; set; }
        public bool DisplayLineNo { get; set; }
 
-        public List<CustomerShippingInfo> ShjippingInfos { get; set; }
+        public List<CustomerShippingInfo> ShippingInfos { get; set; }
     }
 }
