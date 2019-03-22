@@ -21,6 +21,7 @@ namespace DAL.Models
         public bool DrawingUploaded { get; set; }
         public string DrawingFileName { get; set; }
         public bool IsActive { get; set; }
+        public bool IsSample { get; set; }
         public string Location { get; set; }
 
         public List<PartSupplierAssignment> partSupplierAssignments { get; set; }

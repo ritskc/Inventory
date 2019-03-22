@@ -1,0 +1,81 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using DAL.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using WebApi.IServices;
+
+namespace WebApi.Controllers
+{
+    [Authorize]
+    [Route("[controller]")]
+    [ApiController]
+    public class CustomersController : ControllerBase
+    {
+        private readonly ICustomerService _customerService;
+
+        public CustomersController(ICustomerService customerService)
+        {
+            this._customerService = customerService;
+        }
+
+        // GET: api/Todo
+        [HttpGet("{companyId}")]
+        public async Task<IEnumerable<Customer>> GetCustomers(int companyId) => await this._customerService.GetAllCustomerAsync(companyId);
+
+        // GET api/values/5
+        [HttpGet("{companyId}/{id}")]
+        public async Task<ActionResult<Customer>> Get(int companyId, int id)
+        {
+            var result = await this._customerService.GetCustomerAsync(id);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
+        }
+
+        // POST api/values
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody] Customer customer)
+        {
+            await this._customerService.AddCustomerAsync(customer);
+            return NoContent();
+        }
+
+        // PUT api/values/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] Customer customer)
+        {
+            if (id != customer.Id)
+            {
+                return BadRequest();
+            }
+
+            customer.Id = id;
+            await this._customerService.UpdateCustomerAsync(customer);
+
+            return NoContent();
+        }
+
+        //DELETE: api/Todo/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Customer>> DeleteTodoItem(int id)
+        {
+            var result = await this._customerService.GetCustomerAsync(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            await this._customerService.DeleteCustomerAsync(id);
+
+            return result;
+        }
+    }
+}

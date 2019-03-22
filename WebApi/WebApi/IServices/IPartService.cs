@@ -9,7 +9,7 @@ namespace WebApi.IServices
     public interface IPartService
     {
         Task<IEnumerable<Part>> GetAllPartsAsync(int companyId);
-        Task<Part> GetPartAsync(int companyId,long id);
+        Task<Part> GetPartAsync(long id);
         Task AddPartAsync(Part part);
         Task UpdatePartAsync(Part part);
         Task DeletePartAsync(long id);

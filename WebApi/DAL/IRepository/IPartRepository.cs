@@ -10,9 +10,9 @@ namespace DAL.IRepository
     public interface IPartRepository
     {
         Task<IEnumerable<Part>> GetAllPartsAsync(int companyId);
-        Task<Part> GetPartAsync(int companyId,int partId);
-        Task<int> AddPartAsync(Part part);
-        Task<int> UpdatePartAsync(Part part);
+        Task<Part> GetPartAsync(long partId);
+        Task AddPartAsync(Part part);
+        Task UpdatePartAsync(Part part);
         Task<int> DeletePartAsync(long id);
     }
 }

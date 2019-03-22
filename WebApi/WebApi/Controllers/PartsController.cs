@@ -37,7 +37,7 @@ namespace WebApi.Controllers
         [HttpGet("{companyId}/{id}")]
         public async Task<ActionResult<Part>> Get(int companyId,int id)
         {
-            var result = await this._partService.GetPartAsync(companyId,id);
+            var result = await this._partService.GetPartAsync(id);
 
             if (result == null)
             {
@@ -72,9 +72,9 @@ namespace WebApi.Controllers
 
         // DELETE: api/Todo/5
         [HttpGet("{companyId}/{id}")]
-        public async Task<ActionResult<Part>> DeleteTodoItem(int comnpanyId,long id)
+        public async Task<ActionResult<Part>> DeleteTodoItem(long id)
         {
-            var result = await this._partService.GetPartAsync(comnpanyId,id);
+            var result = await this._partService.GetPartAsync(id);
             if (result == null)
             {
                 return NotFound();

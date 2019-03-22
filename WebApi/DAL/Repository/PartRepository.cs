@@ -112,7 +112,7 @@ namespace DAL.Repository
                         partCustomerAssignment.Description = Convert.ToString(dataReader1["Description"]);
                         partCustomerAssignment.Weight = Convert.ToDecimal(dataReader1["Weight"]);
                         partCustomerAssignment.Rate = Convert.ToDecimal(dataReader1["Rate"]);
-                        partCustomerAssignment.SurchargeExist = Convert.ToBoolean(dataReader1["TotaSurchargeExistlQty"]);
+                        partCustomerAssignment.SurchargeExist = Convert.ToBoolean(dataReader1["SurchargeExist"]);
                         partCustomerAssignment.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);
                         partCustomerAssignment.OpeningQty = Convert.ToInt32(dataReader1["OpeningQty"]);
 
@@ -126,7 +126,7 @@ namespace DAL.Repository
             return parts;
         }
 
-        public async Task<Part> GetPartAsync(int companyId, int partId)
+        public async Task<Part> GetPartAsync(long partId)
         {
             var part = new Part();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
@@ -227,23 +227,72 @@ namespace DAL.Repository
             return part;
         }
 
-        public async Task<int> AddPartAsync(Part part)
+        public async Task AddPartAsync(Part part)
         {
-            string sql = "";//string.Format("INSERT INTO [tblPart] ([name] ,[description] ,[issample] ) VALUES ('{0}', '{1}','{2}')", part.Name, part.Description, part.IsSample);
+            string sql = string.Format($"INSERT INTO [dbo].[part]   ([Code]   ,[Description]   ,[CompanyId]   ,[WeightInKg]   ,[WeightInLb]   ,[IsSample]   ,[MinQty]   ,[MaxQty]   ,[DrawingNo]   ,[DrawingUploaded]   ,[DrawingFileName]   ,[IsActive]   ,[Location])     VALUES   ('{part.Code}'   ,'{part.Description}'   ,'{part.CompanyId}'   ,'{part.WeightInKg}'   ,'{part.WeightInLb}'   ,'{part.IsSample}'   ,'{part.MinQty}'   ,'{part.MaxQty}'   ,'{part.DrawingNo}'   ,'{part.DrawingUploaded}'   ,'{part.DrawingFileName}'   ,'{part.IsActive}'   ,'{part.Location}')");
 
-            return await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+            sql = sql + " Select Scope_Identity()";
+
+
+            var partId = _sqlHelper.ExecuteScalar(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+
+
+            foreach (PartSupplierAssignment partSupplierAssignment in part.partSupplierAssignments)
+            {
+                sql = string.Format($"INSERT INTO [dbo].[partsupplierassignment]   ([PartID]   ,[SupplierID]   ,[MapCode]   ,[Description]   ,[QtyInHand]   ,[QtyInTransit]   ,[TotalQty]   ,[UnitPrice])     VALUES   ('{partId}'   ,'{partSupplierAssignment.SupplierID}'   ,'{partSupplierAssignment.MapCode}'   ,'{partSupplierAssignment.Description}'   ,'{partSupplierAssignment.QtyInHand}'   ,'{partSupplierAssignment.QtyInTransit}'   ,'{partSupplierAssignment.TotalQty}'   ,'{partSupplierAssignment.UnitPrice}')");
+
+                await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+            }
+
+            foreach (PartCustomerAssignment partCustomerAssignment in part.partCustomerAssignments)
+            {
+                sql = string.Format($"INSERT INTO [dbo].[partcustomerassignment]   ([PartId]   ,[CustomerId]   ,[MapCode]   ,[Description]   ,[Weight]   ,[Rate]   ,[SurchargeExist]   ,[SurchargePerPound]   ,[OpeningQty])     VALUES   ('{part.Id}'   ,'{partCustomerAssignment.CustomerId}'   ,'{partCustomerAssignment.MapCode}'   ,'{partCustomerAssignment.Description}'   ,'{partCustomerAssignment.Weight}'   ,'{partCustomerAssignment.Rate}'   ,'{partCustomerAssignment.SurchargeExist}'   ,'{partCustomerAssignment.SurchargePerPound}'   ,'{partCustomerAssignment.OpeningQty}')");
+
+                await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+            }
         }
 
-        public async Task<int> UpdatePartAsync(Part part)
+        public async Task UpdatePartAsync(Part part)
         {
-            string sql = "";//string.Format("UPDATE [dbo].[tblPart] SET[name] = '{0}'  ,[description] ='{1}' ,[issample] ='{2}'  WHERE id = '{3}'", part.Name, part.Description, part.IsSample, part.Id);
+            var sql = string.Format("DELETE FROM [dbo].[partsupplierassignment]  WHERE partid = '{0}'", part.Id);
 
-            return await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+
+            sql = string.Format("DELETE FROM [dbo].[partcustomerassignment]  WHERE partid = '{0}'", part.Id);
+
+            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+            
+            sql = string.Format($"UPDATE [dbo].[part]   SET [Code] = '{part.Code}' ,[Description] = '{part.Description}' ,[CompanyId] = '{part.CompanyId}' ,[WeightInKg] = '{part.WeightInKg}' ,[WeightInLb] = '{part.WeightInLb}' ,[IsSample] = '{part.IsSample}' ,[MinQty] = '{part.MinQty}' ,[MaxQty] = '{part.MaxQty}' ,[DrawingNo] = '{part.DrawingNo}' ,[DrawingUploaded] = '{part.DrawingUploaded}' ,[DrawingFileName] = '{part.DrawingFileName}' ,[IsActive] = '{part.IsActive}' ,[Location] = '{part.Location}'  WHERE id = '{part.Id}' ");
+            await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+
+            foreach (PartSupplierAssignment partSupplierAssignment in part.partSupplierAssignments)
+            {
+                sql = string.Format($"INSERT INTO [dbo].[partsupplierassignment]   ([PartID]   ,[SupplierID]   ,[MapCode]   ,[Description]   ,[QtyInHand]   ,[QtyInTransit]   ,[TotalQty]   ,[UnitPrice])     VALUES   ('{part.Id}'   ,'{partSupplierAssignment.SupplierID}'   ,'{partSupplierAssignment.MapCode}'   ,'{partSupplierAssignment.Description}'   ,'{partSupplierAssignment.QtyInHand}'   ,'{partSupplierAssignment.QtyInTransit}'   ,'{partSupplierAssignment.TotalQty}'   ,'{partSupplierAssignment.UnitPrice}')");
+
+                await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+            }
+
+            foreach (PartCustomerAssignment partCustomerAssignment in part.partCustomerAssignments)
+            {
+                sql = string.Format($"INSERT INTO [dbo].[partcustomerassignment]   ([PartId]   ,[CustomerId]   ,[MapCode]   ,[Description]   ,[Weight]   ,[Rate]   ,[SurchargeExist]   ,[SurchargePerPound]   ,[OpeningQty])     VALUES   ('{part.Id}'   ,'{partCustomerAssignment.CustomerId}'   ,'{partCustomerAssignment.MapCode}'   ,'{partCustomerAssignment.Description}'   ,'{partCustomerAssignment.Weight}'   ,'{partCustomerAssignment.Rate}'   ,'{partCustomerAssignment.SurchargeExist}'   ,'{partCustomerAssignment.SurchargePerPound}'   ,'{partCustomerAssignment.OpeningQty}')");
+
+                await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+            }
         }
 
         public async Task<int> DeletePartAsync(long id)
         {
-            string sql = string.Format("DELETE FROM [dbo].[tblPart]  WHERE id = '{0}'", id);
+            var sql = string.Format("DELETE FROM [dbo].[partsupplierassignment]  WHERE partid = '{0}'", id);
+
+            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+
+            sql = string.Format("DELETE FROM [dbo].[partcustomerassignment]  WHERE partid = '{0}'", id);
+
+            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+
+            sql = string.Format("DELETE FROM [dbo].[part]  WHERE id = '{0}'", id);
+
+            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
             return await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
         }

@@ -24,9 +24,9 @@ namespace WebApi.Services
             return await this._partRepository.GetAllPartsAsync(companyId);
         }  
         
-        public async Task<Part> GetPartAsync(int companyId,long id)
+        public async Task<Part> GetPartAsync(long id)
         {
-            return await Task.Run(() => GetAllPartsAsync(companyId).Result.Where(p => p.Id == id).FirstOrDefault());           
+            return await this._partRepository.GetPartAsync(id);
         }       
 
         public async Task AddPartAsync(Part part)
