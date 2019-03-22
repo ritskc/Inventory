@@ -10,15 +10,17 @@ export class AppConfigurations {
     usersUri: string;
     gridDefinitionUri: string;
     supplierUri: string;
+    customerUri: string;
 
     initialize() {
-        this.apiServerHost = 'http://po.harisons.com/api';
+        this.apiServerHost = 'http://questapi.yellow-chips.com';
 
         this.usersUri = '/users';
         this.partsUri = '/parts';
         this.companyUri = '/companies';
         this.gridDefinitionUri = '/users';
         this.supplierUri = '/suppliers'
+        this.customerUri = '/customers'
     }
 }
 

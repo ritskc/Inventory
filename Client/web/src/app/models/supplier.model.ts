@@ -1,7 +1,12 @@
 import { Term } from './terms.model'
 
 export class Supplier {
-    id: number;
+
+    constructor() {
+        this.terms = [];
+    }
+
+    id: number = 0;
     companyId: number;
     name: string;
     contactPersonName: string;
