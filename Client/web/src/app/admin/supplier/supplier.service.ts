@@ -12,17 +12,17 @@ export class SupplierService {
   constructor(private apiService: ApiService, private configService: ConfigService) { }
 
   getAllSuppliers(companyId: number): Observable<Supplier[]> {
-    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.supplierUri }`)
+    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.supplierUri }/${ companyId }`)
   }
 
   getSupplier(companyId: number, supplierId: number): Observable<Supplier> {
-    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.supplierUri }/${ supplierId }`);
+    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.supplierUri }/${ companyId }/${ supplierId }`);
   }
 
   saveSupplier(supplier: Supplier) {
     if (supplier.id == 0) 
       return this.apiService.post(supplier, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri);
     else
-    return this.apiService.put(supplier, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri + `/${ supplier.id }`);
+      return this.apiService.put(supplier, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri + `/${ supplier.id }`);
   }
 }
