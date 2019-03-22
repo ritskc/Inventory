@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../customer.service';
-import { Customer } from '../../../models/customer.model';
-import { DataColumn } from '../../../models/dataColumn.model';
 import { CompanyService } from '../../../company/company.service';
-import { httpLoaderService } from '../../../common/services/httpLoader.service';
 import { Router } from '@angular/router';
+import { Customer } from '../../../models/customer.model';
+import { httpLoaderService } from '../../../common/services/httpLoader.service';
+import { DataColumn } from '../../../models/dataColumn.model';
+import { UserAction } from '../../../models/enum/userAction';
 
 @Component({
   selector: 'app-customer-list',
@@ -13,14 +14,12 @@ import { Router } from '@angular/router';
 })
 export class CustomerListComponent implements OnInit {
 
-  currentlyLoggedInCompanyId: number;
-  customers: Customer[];
+  customers: Customer[] = [];
   columns: DataColumn[] = [];
+  currentlyLoggedInCompanyId: number = 0;
 
-  constructor(private service: CustomerService, private companyService: CompanyService,
-              private loaderService: httpLoaderService, private router: Router) { 
-    this.customers = [];
-  }
+  constructor(private service: CustomerService, private companyService: CompanyService, 
+              private loaderService: httpLoaderService, private router: Router) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompanyId = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -38,16 +37,23 @@ export class CustomerListComponent implements OnInit {
   getAllCustomers() {
     this.loaderService.show();
     this.service.getAllCustomers(this.currentlyLoggedInCompanyId)
-      .subscribe(
-        (customers) => {
-          this.customers = customers;
-          this.loaderService.hide();
-        },
-        (error) => {
-          console.log(error);
-          this.loaderService.hide();
-        }
-      )
-    
+        .subscribe(
+          (customers) => {
+            this.customers = customers;
+            this.loaderService.hide();
+          },
+          (error) => {
+            console.log(error);
+            this.loaderService.hide();
+          }
+        );
+  }
+
+  rowSelected(row) {
+    this.router.navigateByUrl(`/customers/detail/${ UserAction.Edit }/${row.id}`);
+  }
+
+  addCustomer() {
+    this.router.navigateByUrl(`/customers/detail/${ UserAction.Add }/#`);
   }
 }

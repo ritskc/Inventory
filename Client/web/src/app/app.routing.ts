@@ -64,8 +64,7 @@ export const routes: Routes = [
       {
         path: 'suppliers',
         loadChildren: './admin/supplier/supplier.module#SupplierModule'
-      },
-      {
+      },{
         path: 'customers',
         loadChildren: './admin/customer/customer.module#CustomerModule'
       },
