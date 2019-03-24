@@ -14,4 +14,15 @@ export class CustomerService {
   getAllCustomers(companyId: number): Observable<Customer[]> {
     return this.apiService.get<Customer[]>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.customerUri }/${ companyId }`);
   }
+
+  getCustomer(companyId: number, customerId: number): Observable<Customer> {
+    return this.apiService.get<Customer>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.customerUri }/${ companyId }/${ customerId }`);
+  }
+
+  saveCustomer(customer: Customer) {
+    if (customer.id == 0) 
+      return this.apiService.post(customer, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri);
+    else
+      return this.apiService.put(customer, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri + `/${ customer.id }`);
+  }
 }

@@ -1,3 +1,189 @@
-<p>
-  customer-detail works!
-</p>
+<form [formGroup]="customerForm" (keydown)="clearAllValidations()">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-xs-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Customer Details</strong>
+        </div>
+
+        <div class="card-body">
+          <div class="form-group standard-top-margin">
+            <label>Name</label>
+            <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" [(ngModel)]="customer.name"/>
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+              <div *ngIf="f.name.errors.required">Customer Name is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Address</label>
+            <input type="text" formControlName="addressLine1" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.addressLine1.errors }" [(ngModel)]="customer.addressLine1"/>
+            <div *ngIf="submitted && f.addressLine1.errors" class="invalid-feedback">
+              <div *ngIf="f.addressLine1.errors.required">Customer Address is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>City</label>
+            <input type="text" formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" [(ngModel)]="customer.city"/>
+            <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+              <div *ngIf="f.city.errors.required">City Name is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>State</label>
+            <input type="text" formControlName="state" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" [(ngModel)]="customer.state"/>
+            <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+              <div *ngIf="f.state.errors.required">State is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Zipcode</label>
+            <input type="text" formControlName="zipCode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.zipCode.errors }" [(ngModel)]="customer.zipCode"/>
+            <div *ngIf="submitted && f.zipCode.errors" class="invalid-feedback">
+              <div *ngIf="f.zipCode.errors.required">Zipcode is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Phone Number</label>
+            <input type="tel" formControlName="telephoneNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.telephoneNumber.errors }" [(ngModel)]="customer.telephoneNumber"/>
+            <div *ngIf="submitted && f.telephoneNumber.errors" class="invalid-feedback">
+              <div *ngIf="f.telephoneNumber.errors.required">Customer Phone Number is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Fax Number</label>
+            <input type="tel" formControlName="faxNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.faxNumber.errors }" [(ngModel)]="customer.faxNumber"/>
+            <div *ngIf="submitted && f.faxNumber.errors" class="invalid-feedback">
+              <div *ngIf="f.faxNumber.errors.required">Customer Fax Number is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Email</label>
+            <input type="email" formControlName="emailAddress" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.emailAddress.errors }" [(ngModel)]="customer.emailAddress"/>
+            <div *ngIf="submitted && f.emailAddress.errors" class="invalid-feedback">
+              <div *ngIf="f.emailAddress.errors.required">Valid Customer Email is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-xs-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Shipping Information</strong>
+        </div>
+        <div class="card-body">
+          <div class="form-group standard-top-margin">
+            <label>Comments</label>
+            <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="customer.comments"/>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Truck Type</label>
+            <input type="text" formControlName="truckType" class="form-control" [(ngModel)]="customer.truckType"/>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>F.O.B</label>
+            <input type="text" formControlName="fob" class="form-control" [(ngModel)]="customer.fob" [ngClass]="{ 'is-invalid': submitted && f.fob.errors }"/>
+            <div *ngIf="submitted && f.fob.errors" class="invalid-feedback">
+              <div *ngIf="f.fob.errors.required">F.O.B is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Term</label>
+            <input type="text" formControlName="terms" class="form-control" [(ngModel)]="customer.terms" [ngClass]="{ 'is-invalid': submitted && f.terms.errors }"/>
+            <div *ngIf="submitted && f.terms.errors" class="invalid-feedback">
+              <div *ngIf="f.terms.errors.required">Term is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Invoice Type</label>
+            <input type="text" formControlName="invoicingtypeid" class="form-control" [(ngModel)]="customer.invoicingtypeid" [ngClass]="{ 'is-invalid': submitted && f.invoicingtypeid.errors }"/>
+            <div *ngIf="submitted && f.invoicingtypeid.errors" class="invalid-feedback">
+              <div *ngIf="f.invoicingtypeid.errors.required">Invoice Type is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Repackagin Charge</label>
+            <input type="text" formControlName="rePackingCharge" class="form-control" [(ngModel)]="customer.rePackingCharge" [ngClass]="{ 'is-invalid': submitted && f.rePackingCharge.errors }"/>
+            <div *ngIf="submitted && f.rePackingCharge.errors" class="invalid-feedback">
+              <div *ngIf="f.rePackingCharge.errors.required">Repackaging charge is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-xs-12">
+        <div class="card">
+          <div class="card-header">
+            <strong>Shipping Address(es)</strong>
+            <button class="btn btn-primary float-right" (click)="addMoreShippingAddress()">Add Shipping Address</button>
+          </div>
+          <div class="card-body">
+            <div *ngFor="let shippingAddress of customer.shjippingInfos; let i=index">
+              <div class="card" style="padding: 10px;">
+                <div class="form-group standard-top-margin">
+                  <label>Address</label>
+                  <input type="text" class="form-control standard-top-margin" [(ngModel)]="shippingAddress.name" [ngModelOptions]="{standalone: true}"/>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-3 col-xs-3">
+                    <div class="form-group standard-top-margin">
+                      <label>City</label>
+                      <input type="text" class="form-control standard-top-margin" [(ngModel)]="shippingAddress.city" [ngModelOptions]="{standalone: true}"/>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-xs-3">
+                    <div class="form-group standard-top-margin">
+                      <label>State</label>
+                      <input type="text" class="form-control standard-top-margin" [(ngModel)]="shippingAddress.state" [ngModelOptions]="{standalone: true}"/>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-xs-3">
+                    <div class="form-group standard-top-margin">
+                      <label>Zipcode</label>
+                      <input type="text" class="form-control standard-top-margin" [(ngModel)]="shippingAddress.zipCode" [ngModelOptions]="{standalone: true}"/>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-xs-3">
+                    <div class="form-group standard-top-margin">
+                      <label>Is Default</label>
+                      <input type="checkbox" class="form-control standard-top-margin" [(ngModel)]="shippingAddress.isDefault" [ngModelOptions]="{standalone: true}"/>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-xs-3" *ngIf="customer.shjippingInfos.length > 1">
+                      <button (click)="removeShippingAddress(i)" class="btn btn-danger btn-md btn-block" type="button"><i class="fa fa-remove"></i>&nbsp;Remove Shipping Address</button>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group">
+                <!-- <div class="input-group-append">
+                  <span [hidden]="customer.shjippingInfos.length === 1" class="btn btn-danger standard-top-margin" style="float: left; margin-left: 5px;" (click)=removeTermAndCondition(i)>
+                      <span class="cui-circle-x"></span>
+                  </span>
+                </div> -->
+                <div [hidden]="atleastOneShippingAddressPresent" style="display: block;" class="invalid-feedback">
+                    <div>At least one shipping address is mandatory</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-xs-12">
+      <div class="card">
+        <div class="card-footer">
+            <button class="btn btn-primary" (click)="save()"><i class="fa fa-save"></i> Save</button>
+            <span class="btn btn-warning" (click)="clear()" *ngIf="customer.id == 0"><span class="fa fa-eraser"></span> Clear</span>
+            <span class="btn btn-danger" (click)="delete()" *ngIf="customer.id > 0" ><span class="fa fa-remove"></span> Delete</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</form>

@@ -2,6 +2,7 @@ export class Customer {
 
     constructor() {
         this.shjippingInfos = [];
+        this.shjippingInfos.push(new ShippingInfo());
     }
 
     id: number = 0;
