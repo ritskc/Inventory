@@ -1,3 +1,9 @@
-<p>
-  part-list works!
-</p>
+<div class="standard-margin">
+  <simple-grid [data]="parts" [columns]="columns" 
+  (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="addPart()">
+
+  </simple-grid>
+</div>
+
+<loader>
+</loader>
