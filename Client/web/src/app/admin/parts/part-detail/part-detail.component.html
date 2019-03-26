@@ -1,3 +1,93 @@
-<p>
-  part-detail works!
-</p>
+<form [formGroup]="partForm" (keydown)="clearAllValidations()">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-xs-12">
+            <div class="card">
+                <div class="card-header">
+                  <strong>Part </strong>Details
+                </div>
+                <div class="card-body">
+                    <div class="form-group standard-top-margin">
+                      <label>Code</label>
+                      <input type="text" formControlName="code" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.code.errors }" [(ngModel)]="part.code"/>
+                      <div *ngIf="submitted && f.code.errors" class="invalid-feedback">
+                        <div *ngIf="f.code.errors.required">Part Code is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group standard-top-margin">
+                      <label>Description</label>
+                      <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" [(ngModel)]="part.description"/>
+                      <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Description is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group standard-top-margin">
+                      <label>Weight (Kgs)</label>
+                      <input type="text" formControlName="weightInKg" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.weightInKg.errors }" [(ngModel)]="part.weightInKg"/>
+                      <div *ngIf="submitted && f.weightInKg.errors" class="invalid-feedback">
+                        <div *ngIf="f.weightInKg.errors.required">Weight in Kgs is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group standard-top-margin">
+                      <label>Weight (Lbs)</label>
+                      <input type="text" formControlName="weightInLb" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.weightInLb.errors }" [(ngModel)]="part.weightInLb"/>
+                      <div *ngIf="submitted && f.weightInLb.errors" class="invalid-feedback">
+                        <div *ngIf="f.weightInLb.errors.required">Weight in Lbs is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group standard-top-margin">
+                      <label>Sample</label>
+                      <input type="checkbox" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="part.sample"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-xs-12">
+          <div class="card">
+            <div class="card-header">
+                <strong>Other </strong>Details
+            </div>
+            <div class="card-body">
+                <div class="form-group standard-top-margin">
+                  <label>Opening Quantity</label>
+                  <input type="text" formControlName="openingQty" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.openingQty.errors }" [(ngModel)]="part.openingQty"/>
+                  <div *ngIf="submitted && f.openingQty.errors" class="invalid-feedback">
+                    <div *ngIf="f.openingQty.errors.required">Opening Quantity is required</div>
+                  </div>
+                </div>
+                <div class="form-group standard-top-margin">
+                  <label>Minimum Quantity</label>
+                  <input type="text" formControlName="minQty" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.minQty.errors }" [(ngModel)]="part.minQty"/>
+                  <div *ngIf="submitted && f.minQty.errors" class="invalid-feedback">
+                    <div *ngIf="f.minQty.errors.required">Minimum Quantity is required</div>
+                  </div>
+                </div>
+                <div class="form-group standard-top-margin">
+                  <label>Maximum Quantity</label>
+                  <input type="text" formControlName="maxQty" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.maxQty.errors }" [(ngModel)]="part.maxQty"/>
+                  <div *ngIf="submitted && f.maxQty.errors" class="invalid-feedback">
+                    <div *ngIf="f.maxQty.errors.required">Maximum Quantity is required</div>
+                  </div>
+                </div>
+                <div class="form-group standard-top-margin">
+                  <label>Active</label>
+                  <input type="checkbox" class="form-control" [(ngModel)]="part.active" [ngModelOptions]="{standalone: true}"/>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <strong>Customer</strong> Details
+          </div>
+          <div class="card-body">
+
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
