@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CompanyService } from '../../../company/company.service';
 import { UserAction } from '../../../models/enum/userAction';
+import { DataColumn } from '../../../models/dataColumn.model';
 
 @Component({
   selector: 'app-part-detail',
@@ -19,6 +20,8 @@ export class PartDetailComponent implements OnInit {
   atleastOneSupplierPresent: boolean = false;
   atleastOneCustomerPresent: boolean = false;
   currentlyLoggedInCompanyId: number = 0;
+  customerGridDataColumns: DataColumn[] = [];
+  supplierGridDataColumns: DataColumn[] = [];
 
   constructor(private formBuilder: FormBuilder, private service: PartsService, private activatedRoute: ActivatedRoute,
               private companyService: CompanyService) {
@@ -38,8 +41,22 @@ export class PartDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getColumnsForDataSelection();
     if (this.activatedRoute.snapshot.params.action == UserAction.Edit)
       this.getPart();
+  }
+
+  getColumnsForDataSelection() {
+    this.customerGridDataColumns.push( new DataColumn({ headerText: "Customer", value: "name" }) );
+    this.customerGridDataColumns.push( new DataColumn({ headerText: "Map Code", value: "addressLine1" }) );
+    this.customerGridDataColumns.push( new DataColumn({ headerText: "Price", value: "telephoneNumber" }) );
+    this.customerGridDataColumns.push( new DataColumn({ headerText: "Surcharge", value: "emailAddress" }) );
+    this.customerGridDataColumns.push( new DataColumn({ headerText: "Surcharge Fee", value: "emailAddress" }) );
+
+    this.supplierGridDataColumns.push( new DataColumn({ headerText: "Supplier", value: "name" }) );
+    this.supplierGridDataColumns.push( new DataColumn({ headerText: "Map Code", value: "addressLine1" }) );
+    this.supplierGridDataColumns.push( new DataColumn({ headerText: "Price", value: "telephoneNumber" }) );
+    this.supplierGridDataColumns.push( new DataColumn({ headerText: "Hide on Update App", value: "emailAddress" }) );
   }
 
   f() {
@@ -56,5 +73,13 @@ export class PartDetailComponent implements OnInit {
 
   clearAllValidations() {
     this.submitted = false;
+  }
+
+  addCustomer() {
+
+  }
+
+  addSupplier() {
+
   }
 }
