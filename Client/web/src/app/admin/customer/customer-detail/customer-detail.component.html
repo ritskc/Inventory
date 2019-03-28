@@ -122,7 +122,7 @@
             <button class="btn btn-primary float-right" (click)="addMoreShippingAddress()">Add Shipping Address</button>
           </div>
           <div class="card-body">
-            <div *ngFor="let shippingAddress of customer.shjippingInfos; let i=index">
+            <div *ngFor="let shippingAddress of customer.shippingInfos; let i=index">
               <div class="card" style="padding: 10px;">
                 <div class="form-group standard-top-margin">
                   <label>Address</label>
@@ -153,14 +153,14 @@
                       <input type="checkbox" class="form-control standard-top-margin" [(ngModel)]="shippingAddress.isDefault" [ngModelOptions]="{standalone: true}"/>
                     </div>
                   </div>
-                  <div class="col-lg-3 col-md-3 col-xs-3" *ngIf="customer.shjippingInfos.length > 1">
+                  <div class="col-lg-3 col-md-3 col-xs-3" *ngIf="customer.shippingInfos.length > 1">
                       <button (click)="removeShippingAddress(i)" class="btn btn-danger btn-md btn-block" type="button"><i class="fa fa-remove"></i>&nbsp;Remove Shipping Address</button>
                   </div>
                 </div>
               </div>
               <div class="input-group">
                 <!-- <div class="input-group-append">
-                  <span [hidden]="customer.shjippingInfos.length === 1" class="btn btn-danger standard-top-margin" style="float: left; margin-left: 5px;" (click)=removeTermAndCondition(i)>
+                  <span [hidden]="customer.shippingInfos.length === 1" class="btn btn-danger standard-top-margin" style="float: left; margin-left: 5px;" (click)=removeTermAndCondition(i)>
                       <span class="cui-circle-x"></span>
                   </span>
                 </div> -->

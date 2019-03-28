@@ -50,7 +50,7 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   addMoreShippingAddress() {
-    this.customer.shjippingInfos.push(new ShippingInfo());
+    this.customer.shippingInfos.push(new ShippingInfo());
   }
 
   getCustomer() {
@@ -74,7 +74,7 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   removeShippingAddress(index: number) {
-    this.customer.shjippingInfos.splice(index, 1);
+    this.customer.shippingInfos.splice(index, 1);
   }
 
   clearAllValidations() {
@@ -82,11 +82,11 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   private verifyIfAValidTermAndConditionExist(): boolean {
-    if (this.customer.shjippingInfos.length == 0) return false;
+    if (this.customer.shippingInfos.length == 0) return false;
 
     var isValid = true;
     this.atleastOneShippingAddressPresent = isValid;
-    this.customer.shjippingInfos.forEach(shippingAddress => {
+    this.customer.shippingInfos.forEach(shippingAddress => {
       if (!shippingAddress.addressLine1 && !shippingAddress.city && !shippingAddress.state && !shippingAddress.zipCode) {
         this.atleastOneShippingAddressPresent = isValid = false;
       }

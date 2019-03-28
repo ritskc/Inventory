@@ -6,6 +6,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CompanyService } from '../../../company/company.service';
 import { UserAction } from '../../../models/enum/userAction';
 import { DataColumn } from '../../../models/dataColumn.model';
+import { Customer } from '../../../models/customer.model';
+import { CustomerService } from '../../customer/customer.service';
 
 @Component({
   selector: 'app-part-detail',
@@ -20,43 +22,31 @@ export class PartDetailComponent implements OnInit {
   atleastOneSupplierPresent: boolean = false;
   atleastOneCustomerPresent: boolean = false;
   currentlyLoggedInCompanyId: number = 0;
-  customerGridDataColumns: DataColumn[] = [];
-  supplierGridDataColumns: DataColumn[] = [];
+  customers: Customer[] = [];
 
   constructor(private formBuilder: FormBuilder, private service: PartsService, private activatedRoute: ActivatedRoute,
-              private companyService: CompanyService) {
+              private companyService: CompanyService, private customerService: CustomerService) {
     this.part = new Part();
     this.currentlyLoggedInCompanyId = this.companyService.getCurrentlyLoggedInCompanyId();
 
     this.partForm = this.formBuilder.group({
       code: ['', Validators.required],
       description: ['', Validators.required],
-      weightInKg: ['', Validators.required, Validators.min(0), Validators.max(1000)],
-      weightInLb: ['', Validators.required, Validators.min(0), Validators.max(3000)],
-      openingQty: ['', Validators.required, Validators.min(0), Validators.max(1000)],
-      minQty: ['', Validators.required, Validators.min(0), Validators.max(1000)],
-      maxQty: ['', Validators.required, Validators.min(0), Validators.max(1000)],
-      drawingNo: ['', Validators.required, Validators.min(0), Validators.max(1000)]
+      weightInKg: ['', Validators.required],
+      weightInLb: ['', Validators.required],
+      openingQty: ['', Validators.required],
+      minQty: ['', Validators.required],
+      maxQty: ['', Validators.required],
+      drawingNo: ['', Validators.required]
     })
   }
 
   ngOnInit() {
-    this.getColumnsForDataSelection();
+    this.customerService.getAllCustomers(this.currentlyLoggedInCompanyId)
+        .subscribe((customers) => this.customers = customers,
+                   (error) => console.log(error));
     if (this.activatedRoute.snapshot.params.action == UserAction.Edit)
       this.getPart();
-  }
-
-  getColumnsForDataSelection() {
-    this.customerGridDataColumns.push( new DataColumn({ headerText: "Customer", value: "name" }) );
-    this.customerGridDataColumns.push( new DataColumn({ headerText: "Map Code", value: "addressLine1" }) );
-    this.customerGridDataColumns.push( new DataColumn({ headerText: "Price", value: "telephoneNumber" }) );
-    this.customerGridDataColumns.push( new DataColumn({ headerText: "Surcharge", value: "emailAddress" }) );
-    this.customerGridDataColumns.push( new DataColumn({ headerText: "Surcharge Fee", value: "emailAddress" }) );
-
-    this.supplierGridDataColumns.push( new DataColumn({ headerText: "Supplier", value: "name" }) );
-    this.supplierGridDataColumns.push( new DataColumn({ headerText: "Map Code", value: "addressLine1" }) );
-    this.supplierGridDataColumns.push( new DataColumn({ headerText: "Price", value: "telephoneNumber" }) );
-    this.supplierGridDataColumns.push( new DataColumn({ headerText: "Hide on Update App", value: "emailAddress" }) );
   }
 
   f() {

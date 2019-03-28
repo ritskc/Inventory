@@ -83,24 +83,57 @@
         <div class="card">
           <div class="card-header">
             <strong>Customer</strong> Details
-            <button class="btn btn-primary float-right" (click)="addCustomer()">Add Customer</button>
+            <div class="row standard-margin">
+              <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                <tbody>
+                  <td>
+                    <select class="form-control">
+                      <option value="0">Select Customer</option>
+                      <option *ngFor="let customer of customers" value="{{customer.id}}">{{customer.name}}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" [(ngModel)]="mapCode" placeholder="Enter Map Code"/>
+                  </td>
+                  <td>
+                    <input type="checkbox" [(ngModel)]="surchargeExist"/> Surcharge Exists
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" [(ngModel)]="surchargePerPound" placeholder="Enter Surcharge per Pound">
+                  </td>
+                  <td class="center-align">
+                      <button class="btn btn-primary float-right" (click)="addCustomer()">Add Customer</button>
+                  </td>
+                </tbody>
+              </table>
+            </div>
           </div>
           <div class="card-body">
-            <table class="table table-responsive-sm table-bordered table-striped table-sm">
-              <thead>
-                <tr>
-                  <td>Customer</td>
-                  <td>Map Code</td>
-                  <td>Price</td>
-                  <td>Surcharge</td>
-                  <td>Surcharge Amount</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ngFor="let customer from part.partCustomerAssignments">
-                </tr>
-              </tbody>
-            </table>
+            <div class="row">
+                <ng-template ngFor let-customer [ngForOf]="part.partCustomerAssignments">
+                    <div class="col-sm-6 col-lg-3">
+                      <div class="card">
+                          <div class="card-header">{{customer.description}}</div>
+                          <div class="card-body">
+                            <div>
+                              <strong>Map Code</strong>
+                              <input type="text" class="form-control" value="{{customer.mapCode}}"/>
+                            </div>
+                            <div class="standard-margin">
+                              <strong>Surcharge Exists</strong>
+                              <label class="switch switch-3d switch-primary float-right">
+                                <input class="switch-input" type="checkbox" [checked]="customer.surchargeExist">
+                                <span class="switch-slider"></span>
+                              </label>      
+                            </div>
+                            <div class="standard-margin">
+                              <input type="text" class="form-control" value="{{customer.surchargePerPound}}"/>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                </ng-template>
+            </div>
           </div>
         </div>
       </div>

@@ -1,8 +1,8 @@
 export class Customer {
 
     constructor() {
-        this.shjippingInfos = [];
-        this.shjippingInfos.push(new ShippingInfo());
+        this.shippingInfos = [];
+        this.shippingInfos.push(new ShippingInfo());
     }
 
     id: number = 0;
@@ -27,7 +27,7 @@ export class Customer {
     invoicingtypeid: number;
     endCustomerName: string;
     displayLineNo: boolean;
-    shjippingInfos: ShippingInfo[];
+    shippingInfos: ShippingInfo[];
 }
 
 export class ShippingInfo {
