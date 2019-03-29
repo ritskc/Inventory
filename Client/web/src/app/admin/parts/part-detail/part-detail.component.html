@@ -79,88 +79,105 @@
     </div>
 
     <div class="row">
-      <div class="col-xs-12 col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <strong>Customer</strong> Details
-            <div class="row standard-margin">
-              <table class="table table-responsive-sm table-bordered table-striped table-sm">
-                <tbody>
-                  <td>
-                    <select class="form-control">
-                      <option value="0">Select Customer</option>
-                      <option *ngFor="let customer of customers" value="{{customer.id}}">{{customer.name}}</option>
-                    </select>
-                  </td>
-                  <td>
-                    <input type="text" class="form-control" [(ngModel)]="mapCode" placeholder="Enter Map Code"/>
-                  </td>
-                  <td>
-                    <input type="checkbox" [(ngModel)]="surchargeExist"/> Surcharge Exists
-                  </td>
-                  <td>
-                    <input type="text" class="form-control" [(ngModel)]="surchargePerPound" placeholder="Enter Surcharge per Pound">
-                  </td>
-                  <td class="center-align">
-                      <button class="btn btn-primary float-right" (click)="addCustomer()">Add Customer</button>
-                  </td>
-                </tbody>
-              </table>
+        <div class="col-lg-12 col-md-12 col-xs-12">
+          <div class="card">
+            <div class="card-header">
+              <strong>Supplier</strong> Details
+              <button class="btn btn-sm btn-primary float-right" (click)="addSupplierInfo()"><span class="fa fa-plus"></span> Add Supplier</button>
             </div>
-          </div>
-          <div class="card-body">
-            <div class="row">
-                <ng-template ngFor let-customer [ngForOf]="part.partCustomerAssignments">
-                    <div class="col-sm-6 col-lg-3">
-                      <div class="card">
-                          <div class="card-header">{{customer.description}}</div>
-                          <div class="card-body">
-                            <div>
-                              <strong>Map Code</strong>
-                              <input type="text" class="form-control" value="{{customer.mapCode}}"/>
-                            </div>
-                            <div class="standard-margin">
-                              <strong>Surcharge Exists</strong>
-                              <label class="switch switch-3d switch-primary float-right">
-                                <input class="switch-input" type="checkbox" [checked]="customer.surchargeExist">
-                                <span class="switch-slider"></span>
-                              </label>      
-                            </div>
-                            <div class="standard-margin">
-                              <input type="text" class="form-control" value="{{customer.surchargePerPound}}"/>
-                            </div>
-                        </div>
-                      </div>
-                    </div>
-                </ng-template>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="row">
-      <div class="col-xs-12 col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <strong>Supplier</strong> Details
-            <button class="btn btn-primary float-right" (click)="addSupplier()">Add Supplier</button>
-          </div>
-          <div class="card-body">
+            <div class="card-body">
               <table class="table table-responsive-sm table-bordered table-striped table-sm">
                 <thead>
                   <tr>
                     <td>Supplier</td>
                     <td>Map Code</td>
-                    <td>Price</td>
-                    <td>Update</td>
+                    <td>Amount</td>
+                    <td>Hide on Update App</td>
+                    <td>Action</td>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ngFor="let supplier from part.partSupplierAssignments">
+                  <tr *ngFor="let supplierAssignment of part.partSupplierAssignments; let index=index" >
+                    <td>
+                      <select class="form-control">
+                        <option *ngFor="let supplier of suppliers" value="{{supplierAssignment.id}}">{{supplier.name}}</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" value="{{supplierAssignment.mapCode}}"/>
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" value="{{supplierAssignment.unitPrice}}"/>
+                    </td>
+                    <td class="center-align">
+                      <input type="checkbox" [checked]="supplierAssignment.surchargeExist"/>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-danger" (click)="removeSupplierAssignment(index)"><span class="fa fa-remove"></span>Remove</button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-xs-12">
+          <div class="card">
+            <div class="card-header">
+              <strong>Customer</strong> Details
+              <button class="btn btn-sm btn-primary float-right" (click)="addCustomerInfo()"><span class="fa fa-plus"></span>Add Customer</button>
+            </div>
+            <div class="card-body">
+              <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                <thead>
+                  <tr>
+                    <td>Customer</td>
+                    <td>Map Code</td>
+                    <td>Price</td>
+                    <td>Surcharge</td>
+                    <td>Surcharge Amount</td>
+                    <td>Action</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let customerAssignment of part.partCustomerAssignments; let index=index">
+                    <td>
+                      <select class="form-control">
+                        <option *ngFor="let customer of customers" value="{{customerAssignment.id}}">{{customer.name}}</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" value="{{customerAssignment.mapCode}}"/>
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" value="{{customerAssignment.rate}}"/>
+                    </td>
+                    <td class="center-align">
+                        <input type="checkbox" [checked]="customerAssignment.surchargeExist"/>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" value="{{customerAssignment.surchargePerPound}}"/>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-danger" (click)="removeCustomerAssignment(index)"><span class="fa fa-remove"></span>Remove</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-xs-12">
+        <div class="card">
+          <div class="card-footer">
+              <button class="btn btn-primary" (click)="save()"><i class="fa fa-save"></i> Save</button>
+              <span class="btn btn-warning" (click)="clear()" *ngIf="part.id == 0"><span class="fa fa-eraser"></span> Clear</span>
+              <span class="btn btn-danger" (click)="delete()" *ngIf="part.id > 0" ><span class="fa fa-remove"></span> Delete</span>
           </div>
         </div>
       </div>

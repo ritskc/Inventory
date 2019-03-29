@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Part } from '../../../models/part.model';
+import { Part, PartCustomerAssignment, PartSupplierAssignment } from '../../../models/part.model';
 import { PartsService } from '../parts.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -8,6 +8,8 @@ import { UserAction } from '../../../models/enum/userAction';
 import { DataColumn } from '../../../models/dataColumn.model';
 import { Customer } from '../../../models/customer.model';
 import { CustomerService } from '../../customer/customer.service';
+import { Supplier } from '../../../models/supplier.model';
+import { SupplierService } from '../../supplier/supplier.service';
 
 @Component({
   selector: 'app-part-detail',
@@ -23,9 +25,11 @@ export class PartDetailComponent implements OnInit {
   atleastOneCustomerPresent: boolean = false;
   currentlyLoggedInCompanyId: number = 0;
   customers: Customer[] = [];
+  suppliers: Supplier[] = [];
 
   constructor(private formBuilder: FormBuilder, private service: PartsService, private activatedRoute: ActivatedRoute,
-              private companyService: CompanyService, private customerService: CustomerService) {
+              private companyService: CompanyService, private customerService: CustomerService,
+              private supplierService: SupplierService) {
     this.part = new Part();
     this.currentlyLoggedInCompanyId = this.companyService.getCurrentlyLoggedInCompanyId();
 
@@ -45,6 +49,11 @@ export class PartDetailComponent implements OnInit {
     this.customerService.getAllCustomers(this.currentlyLoggedInCompanyId)
         .subscribe((customers) => this.customers = customers,
                    (error) => console.log(error));
+
+    this.supplierService.getAllSuppliers(this.currentlyLoggedInCompanyId)
+        .subscribe((suppliers) => this.suppliers = suppliers, 
+                   (error) => console.log(error));
+
     if (this.activatedRoute.snapshot.params.action == UserAction.Edit)
       this.getPart();
   }
@@ -59,6 +68,22 @@ export class PartDetailComponent implements OnInit {
           (part) => this.part = part,
           (error) => console.log(error)
         );
+  }
+
+  addSupplierInfo() {
+    this.part.partSupplierAssignments.push(new PartSupplierAssignment());
+  }
+
+  removeSupplierAssignment(index) {
+    this.part.partSupplierAssignments.splice(index, 1);
+  }
+
+  addCustomerInfo() {
+    this.part.partCustomerAssignments.push(new PartCustomerAssignment());
+  }
+
+  removeCustomerAssignment(index) {
+    this.part.partCustomerAssignments.splice(index, 1);
   }
 
   clearAllValidations() {
