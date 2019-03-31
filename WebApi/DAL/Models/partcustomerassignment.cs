@@ -16,7 +16,6 @@ namespace DAL.Models
       public decimal Weight { get; set; }
       public decimal Rate { get; set; }
       public bool SurchargeExist { get; set; }
-      public decimal SurchargePerPound { get; set; }
-      public int OpeningQty { get; set; }
+      public decimal SurchargePerPound { get; set; }      
     }
 }

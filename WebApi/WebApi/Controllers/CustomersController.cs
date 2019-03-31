@@ -24,20 +24,46 @@ namespace WebApi.Controllers
 
         // GET: api/Todo
         [HttpGet("{companyId}")]
-        public async Task<IEnumerable<Customer>> GetCustomers(int companyId) => await this._customerService.GetAllCustomerAsync(companyId);
+        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers(int companyId)
+        {
+            try
+            {
+                var result = await this._customerService.GetAllCustomerAsync(companyId);
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+            
+        }
+               
 
         // GET api/values/5
         [HttpGet("{companyId}/{id}")]
         public async Task<ActionResult<Customer>> Get(int companyId, int id)
         {
-            var result = await this._customerService.GetCustomerAsync(id);
-
-            if (result == null)
+            try
             {
-                return NotFound();
-            }
+                var result = await this._customerService.GetCustomerAsync(id);
 
-            return result;
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
 
         // POST api/values
@@ -52,30 +78,45 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Customer customer)
         {
-            if (id != customer.Id)
+            try
             {
-                return BadRequest();
+                if (id != customer.Id)
+                {
+                    return BadRequest();
+                }
+
+                customer.Id = id;
+                await this._customerService.UpdateCustomerAsync(customer);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
             }
 
-            customer.Id = id;
-            await this._customerService.UpdateCustomerAsync(customer);
-
-            return NoContent();
         }
 
         //DELETE: api/Todo/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Customer>> DeleteTodoItem(int id)
+        public async Task<ActionResult<Customer>> Delete(int id)
         {
-            var result = await this._customerService.GetCustomerAsync(id);
-            if (result == null)
+            try
             {
-                return NotFound();
+                var result = await this._customerService.GetCustomerAsync(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                await this._customerService.DeleteCustomerAsync(id);
+
+                return Ok();
             }
-
-            await this._customerService.DeleteCustomerAsync(id);
-
-            return result;
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
     }
 }

@@ -27,58 +27,104 @@ namespace WebApi.Controllers
 
         // GET: api/Todo
         [HttpGet("{companyId}")]
-        public async Task<IEnumerable<Supplier>> GetSuppliers(int companyId) => await this._supplierService.GetAllSupplierAsync(companyId);
+        public async Task<ActionResult<IEnumerable<Supplier>>> GetSuppliers(int companyId)
+        {
+            try
+            {
+                var result = await this._supplierService.GetAllSupplierAsync(companyId); ;
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }           
+        }
 
         // GET api/values/5
         [HttpGet("{companyId}/{id}")]
         public async Task<ActionResult<Supplier>> Get(int companyId,int id)
         {
-            var result = await this._supplierService.GetSupplierAsync(id);
-
-            if (result == null)
+            try
             {
-                return NotFound();
-            }
+                var result = await this._supplierService.GetSupplierAsync(id);
 
-            return result;
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
 
         // POST api/values
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Supplier supplier)
         {
-            await this._supplierService.AddSupplierAsync(supplier);
-            return NoContent();
+            try
+            {
+                await this._supplierService.AddSupplierAsync(supplier);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Supplier supplier)
         {
-            if (id != supplier.Id)
+            try
             {
-                return BadRequest();
+                if (id != supplier.Id)
+                {
+                    return BadRequest();
+                }
+
+                supplier.Id = id;
+                await this._supplierService.UpdateSupplierAsync(supplier);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
             }
 
-            supplier.Id = id;
-            await this._supplierService.UpdateSupplierAsync(supplier);
-
-            return NoContent();
         }
 
         //DELETE: api/Todo/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Supplier>> DeleteTodoItem(int id)
+        public async Task<ActionResult<Supplier>> Delete(int id)
         {
-            var result = await this._supplierService.GetSupplierAsync(id);
-            if (result == null)
+            try
             {
-                return NotFound();
+                var result = await this._supplierService.GetSupplierAsync(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                await this._supplierService.DeleteSupplierAsync(id);
+
+                return result;
             }
-
-            await this._supplierService.DeleteSupplierAsync(id);
-
-            return result;
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
     }
 }

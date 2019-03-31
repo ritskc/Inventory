@@ -80,11 +80,13 @@ namespace WebApi
             services.AddScoped<IUserService, UserService>();
             services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
 
-            //add services here
-            services.AddTransient<IPartService, PartService>();
+            //add services here            
             services.AddTransient<ICompanyService, CompanyService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<ISupplierService, SupplierService>();
             services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IPartService, PartService>();
+            services.AddTransient<IPoService, PoService>();
 
             //add repositories here
             //services.AddScoped<IPartRepository, PartRepository>();
@@ -93,7 +95,7 @@ namespace WebApi
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IPartRepository, PartRepository>();
-
+            services.AddScoped<IPoRepository, PoRepository>();
 
             //add helpers here
             services.AddScoped<ISqlHelper, SqlHelper>();

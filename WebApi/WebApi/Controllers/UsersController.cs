@@ -26,34 +26,55 @@ namespace WebApi.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]User userParam)
         {
-            var user = _userService.Authenticate(userParam.UserName, userParam.Password);
+            try
+            {
+                var user = _userService.Authenticate(userParam.UserName, userParam.Password);
 
-            if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+                if (user == null)
+                    return BadRequest(new { message = "Username or password is incorrect" });
 
-            return Ok(user);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
 
         [Authorize]
         [HttpGet]
         public IActionResult GetAll()
         {
-            var users = _userService.GetAll();
-            return Ok(users);
+            try
+            {
+                var users = _userService.GetAll();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
 
         [Authorize]
         [HttpGet("{userName}")]
         public async Task<ActionResult<User>> Get(string userName)
         {
-            var result = await this._userService.GetUserAsync(userName);
-
-            if (result == null)
+            try
             {
-                return NotFound();
-            }
+                var result = await this._userService.GetUserAsync(userName);
 
-            return result;
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
     }
 }

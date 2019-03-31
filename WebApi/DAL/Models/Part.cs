@@ -17,6 +17,7 @@ namespace DAL.Models
         public int MinQty { get; set; }
         public int MaxQty { get; set; }
         public int OpeningQty { get; set; }
+        public int SafeQty { get; set; }
         public string DrawingNo { get; set; }
         public bool DrawingUploaded { get; set; }
         public string DrawingFileName { get; set; }

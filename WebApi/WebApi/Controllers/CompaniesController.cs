@@ -27,61 +27,104 @@ namespace WebApi.Controllers
 
         // GET: api/Todo
         [HttpGet]
-        public async Task<IEnumerable<Company>> GetCompanys()
+        public async Task<ActionResult<IEnumerable<Company>>> GetCompanys()
         {
-            return await this._companyService.GetAllCompanyAsync();
+            try
+            {
+                var result = await this._companyService.GetAllCompanyAsync();
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Company>> Get(int id)
         {
-            var result = await this._companyService.GetCompanyAsync(id);
-
-            if (result == null)
+            try
             {
-                return NotFound();
-            }
+                var result = await this._companyService.GetCompanyAsync(id);
 
-            return result;
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }            
         }
 
         // POST api/values
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Company company)
         {
-            await this._companyService.AddCompanyAsync(company);
-            return Ok();
+            try
+            {
+                await this._companyService.AddCompanyAsync(company);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Company company)
         {
-            if (id != company.Id)
+            try
             {
-                return BadRequest();
+                if (id != company.Id)
+                {
+                    return BadRequest();
+                }
+
+                company.Id = id;
+                await this._companyService.UpdateCompanyAsync(company);
+
+                return Ok();
             }
-
-            company.Id = id;
-            await this._companyService.UpdateCompanyAsync(company);
-
-            return Ok();
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
 
         // DELETE: api/Todo/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTodoItem(long id)
+        public async Task<ActionResult> Delete(long id)
         {
-            var result = await this._companyService.GetCompanyAsync(id);
-            if (result == null)
+            try
             {
-                return NotFound();
+                var result = await this._companyService.GetCompanyAsync(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                await this._companyService.DeleteCompanyAsync(id);
+
+                return Ok();
             }
-
-            await this._companyService.DeleteCompanyAsync(id);
-
-            return Ok();
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
     }
 }
