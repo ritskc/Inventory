@@ -1,0 +1,185 @@
+<form [formGroup]="partForm" (keydown)="clearAllValidations()">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-xs-12">
+            <div class="card">
+                <div class="card-header">
+                  <strong>Part </strong>Details
+                </div>
+                <div class="card-body">
+                    <div class="form-group standard-top-margin">
+                      <label>Code</label>
+                      <input type="text" formControlName="code" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.code.errors }" [(ngModel)]="part.code"/>
+                      <div *ngIf="submitted && f.code.errors" class="invalid-feedback">
+                        <div *ngIf="f.code.errors.required">Part Code is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group standard-top-margin">
+                      <label>Description</label>
+                      <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" [(ngModel)]="part.description"/>
+                      <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Description is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group standard-top-margin">
+                      <label>Weight (Kgs)</label>
+                      <input type="text" formControlName="weightInKg" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.weightInKg.errors }" [(ngModel)]="part.weightInKg"/>
+                      <div *ngIf="submitted && f.weightInKg.errors" class="invalid-feedback">
+                        <div *ngIf="f.weightInKg.errors.required">Weight in Kgs is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group standard-top-margin">
+                      <label>Weight (Lbs)</label>
+                      <input type="text" formControlName="weightInLb" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.weightInLb.errors }" [(ngModel)]="part.weightInLb"/>
+                      <div *ngIf="submitted && f.weightInLb.errors" class="invalid-feedback">
+                        <div *ngIf="f.weightInLb.errors.required">Weight in Lbs is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group standard-top-margin">
+                      <label>Sample</label>
+                      <input type="checkbox" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="part.sample"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-xs-12">
+          <div class="card">
+            <div class="card-header">
+                <strong>Other </strong>Details
+            </div>
+            <div class="card-body">
+                <div class="form-group standard-top-margin">
+                  <label>Opening Quantity</label>
+                  <input type="text" formControlName="openingQty" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.openingQty.errors }" [(ngModel)]="part.openingQty"/>
+                  <div *ngIf="submitted && f.openingQty.errors" class="invalid-feedback">
+                    <div *ngIf="f.openingQty.errors.required">Opening Quantity is required</div>
+                  </div>
+                </div>
+                <div class="form-group standard-top-margin">
+                  <label>Minimum Quantity</label>
+                  <input type="text" formControlName="minQty" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.minQty.errors }" [(ngModel)]="part.minQty"/>
+                  <div *ngIf="submitted && f.minQty.errors" class="invalid-feedback">
+                    <div *ngIf="f.minQty.errors.required">Minimum Quantity is required</div>
+                  </div>
+                </div>
+                <div class="form-group standard-top-margin">
+                  <label>Maximum Quantity</label>
+                  <input type="text" formControlName="maxQty" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.maxQty.errors }" [(ngModel)]="part.maxQty"/>
+                  <div *ngIf="submitted && f.maxQty.errors" class="invalid-feedback">
+                    <div *ngIf="f.maxQty.errors.required">Maximum Quantity is required</div>
+                  </div>
+                </div>
+                <div class="form-group standard-top-margin">
+                  <label>Active</label>
+                  <input type="checkbox" class="form-control" [(ngModel)]="part.active" [ngModelOptions]="{standalone: true}"/>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+          <div class="card">
+            <div class="card-header">
+              <strong>Supplier</strong> Details
+              <button class="btn btn-sm btn-primary float-right" (click)="addSupplierInfo()"><span class="fa fa-plus"></span> Add Supplier</button>
+            </div>
+            <div class="card-body">
+              <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                <thead>
+                  <tr>
+                    <td>Supplier</td>
+                    <td>Map Code</td>
+                    <td>Amount</td>
+                    <td>Hide on Update App</td>
+                    <td>Action</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let supplierAssignment of part.partSupplierAssignments; let index=index" >
+                    <td>
+                      <select class="form-control">
+                        <option *ngFor="let supplier of suppliers" value="{{supplierAssignment.id}}">{{supplier.name}}</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" value="{{supplierAssignment.mapCode}}"/>
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" value="{{supplierAssignment.unitPrice}}"/>
+                    </td>
+                    <td class="center-align">
+                      <input type="checkbox" [checked]="supplierAssignment.surchargeExist"/>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-danger" (click)="removeSupplierAssignment(index)"><span class="fa fa-remove"></span>Remove</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-xs-12">
+          <div class="card">
+            <div class="card-header">
+              <strong>Customer</strong> Details
+              <button class="btn btn-sm btn-primary float-right" (click)="addCustomerInfo()"><span class="fa fa-plus"></span>Add Customer</button>
+            </div>
+            <div class="card-body">
+              <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                <thead>
+                  <tr>
+                    <td>Customer</td>
+                    <td>Map Code</td>
+                    <td>Price</td>
+                    <td>Surcharge</td>
+                    <td>Surcharge Amount</td>
+                    <td>Action</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let customerAssignment of part.partCustomerAssignments; let index=index">
+                    <td>
+                      <select class="form-control">
+                        <option *ngFor="let customer of customers" value="{{customerAssignment.id}}">{{customer.name}}</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" value="{{customerAssignment.mapCode}}"/>
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" value="{{customerAssignment.rate}}"/>
+                    </td>
+                    <td class="center-align">
+                        <input type="checkbox" [checked]="customerAssignment.surchargeExist"/>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" value="{{customerAssignment.surchargePerPound}}"/>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-danger" (click)="removeCustomerAssignment(index)"><span class="fa fa-remove"></span>Remove</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-xs-12">
+        <div class="card">
+          <div class="card-footer">
+              <button class="btn btn-primary" (click)="save()"><i class="fa fa-save"></i> Save</button>
+              <span class="btn btn-warning" (click)="clear()" *ngIf="part.id == 0"><span class="fa fa-eraser"></span> Clear</span>
+              <span class="btn btn-danger" (click)="delete()" *ngIf="part.id > 0" ><span class="fa fa-remove"></span> Delete</span>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>

@@ -12,6 +12,8 @@ export class SimpleGridComponent implements OnInit, OnChanges {
 
   private _data: any[];
 
+  @Input() headerRequired: boolean = true;
+  @Input() footerRequired: boolean = true;
   @Input() addRequired: boolean = true;
   @Input() exportRequired: boolean = true;
   @Input() columns: DataColumn[] = [];

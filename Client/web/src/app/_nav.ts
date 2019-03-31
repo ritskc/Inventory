@@ -34,8 +34,8 @@ export const navItems: NavData[] = [
         icon: 'fa fa-building-o'
       },
       {
-        name: 'Product',
-        url: '/product',
+        name: 'Parts',
+        url: '/parts',
         icon: 'icon-puzzle'
       },
       {
