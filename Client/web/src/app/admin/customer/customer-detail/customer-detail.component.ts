@@ -61,7 +61,7 @@ export class CustomerDetailComponent implements OnInit {
 
   save() {
     this.submitted = true;
-    if (this.customerForm.invalid || !this.verifyIfAValidTermAndConditionExist()) return;
+    //if (this.customerForm.invalid || !this.verifyIfAValidTermAndConditionExist()) return;
 
     this.service.saveCustomer(this.customer)
       .subscribe((response) => { 
@@ -71,6 +71,16 @@ export class CustomerDetailComponent implements OnInit {
         this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
       }
     );
+  }
+
+  delete() {
+    this.service.delete(this.customer.id)
+        .subscribe((result) => {
+          this.toastr.successToastr("Customer removed successfully.");
+          this.router.navigateByUrl("/customers");
+        }, (error) => {
+          console.log(error);
+        });
   }
 
   removeShippingAddress(index: number) {

@@ -21,8 +21,12 @@ export class CustomerService {
 
   saveCustomer(customer: Customer) {
     if (customer.id == 0) 
-      return this.apiService.post(customer, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri);
+      return this.apiService.post(customer, this.configService.Settings.apiServerHost + this.configService.Settings.customerUri);
     else
-      return this.apiService.put(customer, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri + `/${ customer.id }`);
+      return this.apiService.put(customer, this.configService.Settings.apiServerHost + this.configService.Settings.customerUri + `/${ customer.id }`);
+  }
+
+  delete(id: number) {
+    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.customerUri }`)
   }
 }
