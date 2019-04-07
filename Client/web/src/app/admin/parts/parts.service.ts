@@ -27,4 +27,8 @@ export class PartsService {
     else
       return this.apiService.post<Part>(part, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }`);
   }
+
+  delete(id: number) {
+    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }`);
+  }
 }

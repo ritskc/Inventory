@@ -6,16 +6,16 @@ export class Part {
         this.partCustomerAssignments = [];
     }
 
-    id: number;
+    id: number = 0;
     code: string;
     description: string;
-    companyId: number;
-    weightInKg: number;
-    weightInLb: number;
-    openingQty: number;
-    minQty: number;
-    maxQty: number;
-    drawingNo: number;
+    companyId: number = 0;
+    weightInKg: number = 0;
+    weightInLb: number = 0;
+    openingQty: number = 0;
+    minQty: number = 0;
+    maxQty: number = 0;
+    drawingNo: number = 0;
     drawingUploaded: boolean;
     drawingFileName: string;
     location: string;
@@ -28,25 +28,25 @@ export class Part {
 
 export class PartSupplierAssignment
 {
-    id: number;
-    supplierID: number;
+    id: number = 0;
+    supplierID: number = 0;
     mapCode: string;
     description: string;
-    qtyInHand: number;
-    qtyInTransit: number;
-    totalQty: number;
-    unitPrice: number;
+    qtyInHand: number = 0;
+    qtyInTransit: number = 0;
+    totalQty: number = 0;
+    unitPrice: number = 0;
 }
 
 export class PartCustomerAssignment
 {
-    id: number;
-    customerId: number;
+    id: number = 0;
+    customerId: number = 0;
     mapCode: string;
     description: string;
-    weight: number;
-    rate: number;
-    surchargePerPound: number;
-    openingQty: number;
+    weight: number = 0;
+    rate: number = 0;
+    surchargePerPound: number = 0;
+    openingQty: number = 0;
     surchargeExist: boolean;
 }
