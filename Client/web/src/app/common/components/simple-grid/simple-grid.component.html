@@ -40,6 +40,11 @@
                     <td *ngFor="let item of columns">
                       <span *ngIf="!item.isLink">{{row[item.value]}}</span>
                       <span class="clickable" (click)="rowSelected(row)" *ngIf="item.isLink">{{row[item.value]}}</span>
+                      <div *ngIf="item.isActionColumn">
+                        <ul *ngFor="let action of item.actions">
+                          <button class="btn {{action.actionStyle}}" (click)="actionButtonClicked(action.event, row)">{{action.actionText}}</button>
+                        </ul>
+                      </div>
                     </td>
                   </tr>
                 </ng-template>
