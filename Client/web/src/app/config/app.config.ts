@@ -11,6 +11,7 @@ export class AppConfigurations {
     gridDefinitionUri: string;
     supplierUri: string;
     customerUri: string;
+    posUri: string;
 
     initialize() {
         this.apiServerHost = 'http://questapi.yellow-chips.com';
@@ -21,6 +22,7 @@ export class AppConfigurations {
         this.gridDefinitionUri = '/users';
         this.supplierUri = '/suppliers'
         this.customerUri = '/customers'
+        this.posUri = '/pos';
     }
 }
 

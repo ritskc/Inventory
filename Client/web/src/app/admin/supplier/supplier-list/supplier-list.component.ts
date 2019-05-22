@@ -63,7 +63,7 @@ export class SupplierListComponent implements OnInit {
   }
 
   redirectToSupplierPurchaseOrder(supplier) {
-    this.router.navigateByUrl(`/supplier-purchase-order/${ supplier.id }`);
+    this.router.navigateByUrl(`/suppliers/purchase-order/${ supplier.id }/${ UserAction.Details }`);
   }
 
   actionButtonClicked(data) {

@@ -3,6 +3,7 @@ import { ApiService } from '../../common/services/api.service';
 import { ConfigService } from '../../config/config.service';
 import { Observable } from 'rxjs';
 import { Supplier } from '../../models/supplier.model';
+import { PurchaseOrder } from '../../models/purchase-order';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,10 @@ export class SupplierService {
 
   getSupplier(companyId: number, supplierId: number): Observable<Supplier> {
     return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.supplierUri }/${ companyId }/${ supplierId }`);
+  }
+
+  getPurchaseOrders(supplierId: number): Observable<PurchaseOrder[]> {
+    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.posUri }/${ supplierId }`);
   }
 
   saveSupplier(supplier: Supplier) {

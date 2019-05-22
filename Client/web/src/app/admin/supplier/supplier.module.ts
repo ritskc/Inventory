@@ -15,11 +15,13 @@ import { LoaderComponent } from '../../common/components/loader/loader.component
 import { httpLoaderService } from '../../common/services/httpLoader.service';
 import { SharedModule } from '../../common/shared/shared.module';
 import { SupplierDetailComponent } from './supplier-detail/supplier-detail.component';
+import { PurchaseOrderListComponent } from './purchase-order-list/purchase-order-list.component';
 
 @NgModule({
   declarations: [
     SupplierListComponent,
-    SupplierDetailComponent
+    SupplierDetailComponent,
+    PurchaseOrderListComponent
   ],
   imports: [
     CommonModule,
