@@ -1,0 +1,9 @@
+<div class="row" [formGroup]="supplierPurchaseOrderDetailsForm">
+  <select formControlName="posList">
+    <option *ngFor="let pos of purchaseOrderList" [value]="pos.id">{{pos.poNo}}</option>
+  </select>
+</div>
+<div class="row">
+    <simple-grid [data]="purchaseOrder.poDetails" [columns]="gridColumns" (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="addPurchaseOrder()">
+    </simple-grid>
+</div>

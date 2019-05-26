@@ -24,6 +24,10 @@ export class SupplierService {
     return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.posUri }/${ supplierId }`);
   }
 
+  getPurchaseOrder(supplierId: number, purchaseOrderId: number): Observable<PurchaseOrder> {
+    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.posUri }/${ supplierId }/${ purchaseOrderId }`);
+  }
+
   saveSupplier(supplier: Supplier) {
     if (supplier.id == 0) 
       return this.apiService.post(supplier, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri);
