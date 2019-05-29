@@ -74,7 +74,7 @@ export const navItems: NavData[] = [
   },
   {
     name: 'Orders',
-    url: '/orders'
+    url: '/orders/detail/all/0'
   },
   {
     name: 'Sale',
