@@ -1,105 +1,111 @@
-<div class="row">
-  <div class="input-group col-xs-6 col-md-6">
-    <div class="input-group-prepend">
-      <div class="input-group-text">
-        <input type="radio" name="selection">
-      </div>
-    </div>
-    <select class="form-control" (change)="setFormForSupplierSelection()">
-      <option value="-1">Create Order by selecting Supplier</option>
-      <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{supplier.name}}</option>
-    </select>
-  </div>
-  <div class="input-group col-xs-6 col-md-6">
-    <div class="input-group-prepend">
-      <div class="input-group-text">
-        <input type="radio" name="selection">
-      </div>
-    </div>
-    <select class="form-control" (change)="setFormForCustomerSelection()">
-      <option value="-1">Create order by selecting Customer</option>
-      <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
-    </select>
-  </div>
-</div>
-
-<div class="row standard-margin-top">
-  <div class="col-lg-6 col-md-6 col-xs-12">
-    <div class="card">
-      <div class="card-header">
-          <strong>Order Details</strong>
-      </div>
-      <div class="card-body">
-        <div class="form-group standard-top-margin row">
-          <label class="col-md-3 col-xs-3 label-top-adjustment">PO Number</label>
-          <input type="text" class="form-control col-md-9 col-xs-9"/>
-        </div>
-        <div class="form-group standard-top-margin row">
-          <label class="col-md-3 col-xs-3 label-top-adjustment">PO Date</label>
-          <input type="date" class="form-control col-md-5 col-xs-5"/>
-        </div>
-        <div class="form-group standard-top-margin row">
-          <label class="col-md-3 col-xs-3 label-top-adjustment">Due Date</label>
-          <input type="date" class="form-control col-md-5 col-xs-5"/>
-        </div>
-        <div class="form-group standard-top-margin row">
-          <label class="col-md-3 col-xs-3 label-top-adjustment">Email</label>
-          <textarea rows="4" class="form-control col-md-9 col-xs-9"></textarea>
-        </div>
-        <div class="form-group standard-top-margin row">
-          <label class="col-md-3 col-xs-3 label-top-adjustment">Remarks</label>
-          <textarea rows="4" class="form-control col-md-9 col-xs-9"></textarea>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-6 col-md-6 col-xs-12">
-    <div class="card">
-      <div class="card-header">
-          <strong>Part Details</strong>
-      </div>
-      <div class="card-body">
-        <div class="form-group standard-top-margin row">
-          <label class="col-md-3 col-xs-3 label-top-adjustment">Part Number</label>
-          <select class="form-control col-md-9 col-xs-9">
-              <option value="-1">Select Part By Code</option>
-              <option *ngFor="let part of selectedParts" [value]="part.id">{{part.code}}</option>
-          </select>
-        </div>
-        <div class="form-group standard-top-margin row">
-          <label class="col-md-3 col-xs-3 label-top-adjustment">Part Name</label>
-          <select class="form-control col-md-9 col-xs-9">
-              <option value="-1">Select Part By Name</option>
-              <option *ngFor="let part of selectedParts" [value]="part.id">{{part.description}}</option>
-          </select>
-        </div>
-        <div class="form-group standard-top-margin row">
-          <label class="col-md-3 col-xs-3 label-top-adjustment">Reference</label>
-          <input type="text" class="form-control col-md-9 col-xs-9"/>
-        </div>
-        <div class="form-group standard-top-margin row">
-          <label class="col-md-3 col-xs-3 label-top-adjustment">Quantity</label>
-          <input type="text" class="form-control col-md-3 col-xs-3"/>
-          <label class="col-md-3 col-xs-3 label-top-adjustment">Price</label>
-          <input type="text" class="form-control col-md-3 col-xs-3"/>
-        </div>
-        <div class="form-group standard-top-margin row">
-          <label class="col-md-3 col-xs-3 label-top-adjustment">Due Date</label>
-          <input type="date" class="form-control col-md-5 col-xs-5"/>
-        </div>
-        <div class="form-group standard-top-margin row">
-          <label class="col-md-3 col-xs-3 label-top-adjustment">Notes</label>
-          <textarea rows="3" class="form-control col-md-9 col-xs-9"></textarea>
-        </div>
-        <button class="btn btn-primary pull-right">Add</button>
-      </div>
-    </div>
-  </div>
-
+<form [formGroup]="orderForm">
   <div class="row">
-      <simple-grid [data]="selectedParts" [columns]="partsGridColumns" [headerRequired]="false" [footerRequired]="false">
-
-      </simple-grid>
+    <div class="input-group col-xs-6 col-md-6">
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+          <input type="radio" name="selection">
+        </div>
+      </div>
+      <select class="form-control" (change)="setFormForSupplierSelection()" formControlName="suppliersList">
+        <option value="-1">Create Order by selecting Supplier</option>
+        <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{supplier.name}}</option>
+      </select>
+    </div>
+    <div class="input-group col-xs-6 col-md-6">
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+          <input type="radio" name="selection">
+        </div>
+      </div>
+      <select class="form-control" (change)="setFormForCustomerSelection()" formControlName="customersList">
+        <option value="-1">Create order by selecting Customer</option>
+        <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
+      </select>
+    </div>
   </div>
-</div>
+  
+  <div class="row standard-margin-top">
+    <div class="col-lg-6 col-md-6 col-xs-12">
+      <div class="card">
+        <div class="card-header">
+            <strong>Order Details</strong>
+        </div>
+        <div class="card-body">
+          <div class="form-group standard-top-margin row">
+            <label class="col-md-3 col-xs-3 label-top-adjustment">PO Number</label>
+            <input [attr.disabled]="disabled? '': null" type="text" formControlName="poNo" class="form-control col-md-9 col-xs-9" [(ngModel)]="purchaseOrder.poNo"/>
+          </div>
+          <div class="form-group standard-top-margin row">
+            <label class="col-md-3 col-xs-3 label-top-adjustment">PO Date</label>
+            <input [attr.disabled]="disabled? '': null" type="date" formControlName="poDate" class="form-control col-md-5 col-xs-5" [(ngModel)]="purchaseOrder.poDate"/>
+          </div>
+          <div class="form-group standard-top-margin row">
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Due Date</label>
+            <input [attr.disabled]="disabled? '': null" type="date" formControlName="closingDate" class="form-control col-md-5 col-xs-5" [(ngModel)]="purchaseOrder.closingDate"/>
+          </div>
+          <div class="form-group standard-top-margin row">
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Email</label>
+            <textarea [attr.disabled]="disabled? '': null" rows="4" formControlName="emailIds" class="form-control col-md-9 col-xs-9" [(ngModel)]="purchaseOrder.emailIds"></textarea>
+          </div>
+          <div class="form-group standard-top-margin row">
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Remarks</label>
+            <textarea [attr.disabled]="disabled? '': null" rows="4" formControlName="remarks" class="form-control col-md-9 col-xs-9" [(ngModel)]="purchaseOrder.remarks"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-lg-6 col-md-6 col-xs-12">
+      <div class="card">
+        <div class="card-header">
+            <strong>Part Details</strong>
+        </div>
+        <div class="card-body">
+          <div class="form-group standard-top-margin row">
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Part Number</label>
+            <select [attr.disabled]="disabled? '': null" class="form-control col-md-9 col-xs-9" (change)="partSelected('code')" formControlName="partCode">
+                <option value="-1">Select Part By Code</option>
+                <option *ngFor="let part of selectedParts" [value]="part.id">{{part.code}}</option>
+            </select>
+          </div>
+          <div class="form-group standard-top-margin row">
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Part Name</label>
+            <select [attr.disabled]="disabled? '': null" class="form-control col-md-9 col-xs-9" (change)="partSelected('description')" formControlName="partDescription" [(ngModel)]="partDescription">
+                <option value="-1">Select Part By Name</option>
+                <option *ngFor="let part of selectedParts" [value]="part.id">{{part.description}}</option>
+            </select>
+          </div>
+          <div class="form-group standard-top-margin row">
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Reference</label>
+            <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-9 col-xs-9" formControlName="reference" [(ngModel)]="reference"/>
+          </div>
+          <div class="form-group standard-top-margin row">
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Quantity</label>
+            <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-3 col-xs-3" formControlName="quantity" [(ngModel)]="quantity"/>
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Price</label>
+            <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-3 col-xs-3" formControlName="price" [(ngModel)]="price"/>
+          </div>
+          <div class="form-group standard-top-margin row">
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Due Date</label>
+            <input [attr.disabled]="disabled? '': null" type="date" class="form-control col-md-5 col-xs-5" formControlName="dueDate" [(ngModel)]="dueDate"/>
+          </div>
+          <div class="form-group standard-top-margin row">
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Notes</label>
+            <textarea [attr.disabled]="disabled? '': null" rows="3" class="form-control col-md-9 col-xs-9" formControlName="notes" [(ngModel)]="notes"></textarea>
+          </div>
+          <button class="btn btn-primary pull-right" (click)="addPartToOrder()">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <simple-grid [data]="purchaseOrder.poDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false">
+  
+    </simple-grid>
+  </div>
+
+  <div class="card-footer">
+      <button class="btn btn-primary" (click)="save()"><i class="fa fa-save"></i> Save</button>
+  </div>
+</form>

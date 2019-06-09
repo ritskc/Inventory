@@ -1,21 +1,23 @@
 export class PurchaseOrder {
-    id: number;
-    companyId: number;
-    supplierId: number;
+    id: number = 0;
+    companyId: number = 0;
+    supplierId: number = 0;
     poNo: string;
     emailIds: string;
     remarks: string;
     paymentTerms: string;
     deliveryTerms: string;
-    isClosed: boolean;
+    isClosed: boolean = false;
     isAcknowledged: boolean;
-    poDate: Date;
-    closingDate: Date;
-    acknowledgementDate: Date;
-    poDetails: PurchaseOrder[];
+    poDate: string;
+    closingDate: string;
+    acknowledgementDate: string;
+    poDetails: PurchaseOrderDetail[];
+    poTerms: PurchaseOrderTerm[];
 
     constructor() {
         this.poDetails = [];
+        this.poTerms = [];
     }
 }
 
@@ -30,7 +32,17 @@ export class PurchaseOrderDetail {
     receivedQty: string;
     referenceNo: string;
     note: string;
-    dueDate: Date;
+    dueDate: string;
     closingDate: Date;
     isClosed: boolean;
+    partCode: string;
+    description: string;
+    total: number;
+}
+
+export class PurchaseOrderTerm {
+    id: number = 0;
+    poId: number = 0;
+    sequenceNo: number = 1;
+    term: string = '';
 }
