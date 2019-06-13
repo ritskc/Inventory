@@ -3,10 +3,10 @@
     <div class="input-group col-xs-6 col-md-6">
       <div class="input-group-prepend">
         <div class="input-group-text">
-          <input type="radio" name="selection">
+          <input type="radio" name="selection" (change)="supplierOptionSelected()">
         </div>
       </div>
-      <select class="form-control" (change)="setFormForSupplierSelection()" formControlName="suppliersList">
+      <select [attr.disabled]="disableSupplierSelectedPurchaseOrder? '': null" class="form-control" (change)="setFormForSupplierSelection()" formControlName="suppliersList">
         <option value="-1">Create Order by selecting Supplier</option>
         <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{supplier.name}}</option>
       </select>
@@ -14,10 +14,10 @@
     <div class="input-group col-xs-6 col-md-6">
       <div class="input-group-prepend">
         <div class="input-group-text">
-          <input type="radio" name="selection">
+          <input type="radio" name="selection" (change)="customerOptionSelected()">
         </div>
       </div>
-      <select class="form-control" (change)="setFormForCustomerSelection()" formControlName="customersList">
+      <select [attr.disabled]="disableCustomerSelectedPurchaseOrder? '': null"  class="form-control" (change)="setFormForCustomerSelection()" formControlName="customersList">
         <option value="-1">Create order by selecting Customer</option>
         <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
       </select>
@@ -99,10 +99,47 @@
     </div>
   </div>
   
-  <div class="row">
-    <simple-grid [data]="purchaseOrder.poDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false">
-  
-    </simple-grid>
+  <div class="card">
+    <div class="card-header">
+        <strong>Part Details</strong>
+    </div>
+    <div class="card-body">
+        <simple-grid [data]="purchaseOrder.poDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false">
+        </simple-grid>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <strong>Terms</strong>
+      <button class="btn btn-primary float-right" (click)="addMoreTermAndCondition()">Add Term</button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-xs-6">
+            <div class="form-group standard-top-margin row">
+              <label class="col-md-3 col-xs-3 label-top-adjustment">Payment Term</label>
+              <input [attr.disabled]="disabled? '': null" type="text" formControlName="paymentTerms" class="form-control col-md-9 col-xs-9" [(ngModel)]="purchaseOrder.paymentTerms"/>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-xs-6">
+            <div class="form-group standard-top-margin row">
+              <label class="col-md-3 col-xs-3 label-top-adjustment">Delivery Term</label>
+              <input [attr.disabled]="disabled? '': null" type="text" formControlName="deliveryTerms" class="form-control col-md-9 col-xs-9" [(ngModel)]="purchaseOrder.deliveryTerms"/>
+            </div>
+        </div>
+      </div>
+      <div *ngFor="let term of purchaseOrder.poTerms; let i=index">
+        <div class="input-group standard-margin-top">
+          <input type="text" class="form-control" [(ngModel)]="term.term" [ngModelOptions]="{standalone: true}"/>
+          <div class="input-group-append">
+            <span [hidden]="purchaseOrder.poTerms.length === 1" class="btn btn-danger" (click)=removeTermAndCondition(i)>
+                <span class="cui-circle-x"></span>
+            </span>
+          </div>
+        </div> 
+      </div>
+    </div>
   </div>
 
   <div class="card-footer">

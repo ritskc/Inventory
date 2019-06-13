@@ -1,5 +1,6 @@
 <div class="row" [formGroup]="supplierForm">
   <select formControlName="supplierList">
+    <option value="-1">Please select a supplier</option>
     <option [value]="supplier.id" *ngFor="let supplier of suppliers">{{supplier.name}}</option>
   </select>
 </div>

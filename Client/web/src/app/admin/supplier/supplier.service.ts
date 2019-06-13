@@ -20,12 +20,12 @@ export class SupplierService {
     return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.supplierUri }/${ companyId }/${ supplierId }`);
   }
 
-  getPurchaseOrders(supplierId: number): Observable<PurchaseOrder[]> {
-    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.posUri }/${ supplierId }`);
+  getPurchaseOrders(companyId: number): Observable<PurchaseOrder[]> {
+    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.posUri }/${ companyId }`);
   }
 
-  getPurchaseOrder(supplierId: number, purchaseOrderId: number): Observable<PurchaseOrder> {
-    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.posUri }/${ supplierId }/${ purchaseOrderId }`);
+  getPurchaseOrder(companyId: number, purchaseOrderId: number): Observable<PurchaseOrder> {
+    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.posUri }/${ companyId }/${ purchaseOrderId }`);
   }
 
   saveSupplier(supplier: Supplier) {

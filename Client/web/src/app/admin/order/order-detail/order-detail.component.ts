@@ -11,6 +11,7 @@ import { CustomerService } from '../../customer/customer.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ClassConstants } from '../../../common/constants';
 import { PurchaseOrderDetail, PurchaseOrder, PurchaseOrderTerm } from '../../../models/purchase-order';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: "app-order-detail",
@@ -34,32 +35,18 @@ export class OrderDetailComponent implements OnInit {
   private partDescription: string = '';
   private disabled: boolean = true;
   private currentlyLoaddedInCompanyId: number = 0;
+  private disableSupplierSelectedPurchaseOrder: boolean = false;
+  private disableCustomerSelectedPurchaseOrder: boolean = false;
 
   constructor(
-    private partsService: PartsService,
-    private supplierService: SupplierService,
-    private companyService: CompanyService,
-    private customerService: CustomerService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private partsService: PartsService, private supplierService: SupplierService, private companyService: CompanyService, private customerService: CustomerService,
+    private router: Router, private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private toastr: ToastrManager
   ) {}
 
   ngOnInit() {
     this.currentlyLoaddedInCompanyId = this.companyService.getCurrentlyLoggedInCompanyId();
     this.purchaseOrder = new PurchaseOrder();
     this.purchaseOrder.companyId = this.currentlyLoaddedInCompanyId;
-
-    this.purchaseOrder.poNo = "TEST-09";
-    this.purchaseOrder.poDate = new Date("2019-Jun-10").toISOString().split('T')[0];
-    this.purchaseOrder.closingDate = new Date("2019-Jun-20").toISOString().split('T')[0];
-    this.purchaseOrder.emailIds = "sheshadrinath@gmail.com";
-    this.purchaseOrder.remarks = "Remarks";
-    this.purchaseOrder.paymentTerms = "Payment Terms";
-    this.purchaseOrder.deliveryTerms = "Delivery Terms";
-    var poTerm = new PurchaseOrderTerm();
-    poTerm.term = 'New term';
-    this.purchaseOrder.poTerms.push(poTerm);
     
     this.loadSuppliersList();
     this.loadPartsList();
@@ -80,7 +67,9 @@ export class OrderDetailComponent implements OnInit {
       dueDate: FormControl,
       notes: FormControl,
       reference: FormControl,
-      quantity: FormControl
+      quantity: FormControl,
+      paymentTerms: FormControl,
+      deliveryTerms: FormControl
     });
   }
 
@@ -100,63 +89,17 @@ export class OrderDetailComponent implements OnInit {
   }
 
   initializePartsGrid() {
-    this.gridColumns.push(
-      new DataColumn({
-        headerText: "Part Code",
-        value: "partCode",
-        sortable: true
-      })
-    );
-    this.gridColumns.push(
-      new DataColumn({
-        headerText: "Description",
-        value: "description",
-        sortable: true
-      })
-    );
-    this.gridColumns.push(
-      new DataColumn({
-        headerText: "Quantity",
-        value: "qty",
-        sortable: true
-      })
-    );
-    this.gridColumns.push(
-      new DataColumn({ headerText: "Price", value: "unitPrice", sortable: true })
-    );
-    this.gridColumns.push(
-      new DataColumn({ headerText: "Total", value: "total", sortable: true })
-    );
-    this.gridColumns.push(
-      new DataColumn({
-        headerText: "Reference",
-        value: "referenceNo",
-        sortable: true
-      })
-    );
-    this.gridColumns.push(
-      new DataColumn({
-        headerText: "Due Date",
-        value: "dueDate",
-        sortable: true
-      })
-    );
-    this.gridColumns.push(
-      new DataColumn({ headerText: "Notes", value: "note", sortable: true })
-    );
-    this.gridColumns.push(
-      new DataColumn({
-        headerText: "Actions",
-        isActionColumn: true,
-        actions: [
-          new DataColumnAction({
-            actionText: "Remove",
-            actionStyle: ClassConstants.Danger,
-            event: "removeSelectedPart"
-          })
-        ]
-      })
-    );
+    this.gridColumns.push(new DataColumn({headerText: "Part Code", value: "partCode", sortable: true }));
+    this.gridColumns.push(new DataColumn({headerText: "Description", value: "description", sortable: true}));
+    this.gridColumns.push(new DataColumn({headerText: "Quantity", value: "qty", sortable: true}));
+    this.gridColumns.push(new DataColumn({ headerText: "Price", value: "unitPrice", sortable: true }));
+    this.gridColumns.push(new DataColumn({ headerText: "Total", value: "total", sortable: true }));
+    this.gridColumns.push(new DataColumn({headerText: "Reference", value: "referenceNo", sortable: true}));
+    this.gridColumns.push(new DataColumn({headerText: "Due Date", value: "dueDate", sortable: true}));
+    this.gridColumns.push(new DataColumn({ headerText: "Notes", value: "note", sortable: true }));
+    this.gridColumns.push(new DataColumn({headerText: "Actions", isActionColumn: true, actions: [
+          new DataColumnAction({actionText: "Remove", actionStyle: ClassConstants.Danger, event: "removeSelectedPart"})
+        ]}));
   }
 
   loadSuppliersList() {
@@ -166,6 +109,16 @@ export class OrderDetailComponent implements OnInit {
         this.suppliers = suppliers;
         this.orderForm.get("suppliersList").setValue(-1);
       });
+  }
+
+  supplierOptionSelected() {
+    this.disableCustomerSelectedPurchaseOrder = true;
+    this.disableSupplierSelectedPurchaseOrder = false;
+  }
+
+  customerOptionSelected() {
+    this.disableSupplierSelectedPurchaseOrder = true;
+    this.disableCustomerSelectedPurchaseOrder = false;
   }
 
   loadCustomersList() {
@@ -195,6 +148,13 @@ export class OrderDetailComponent implements OnInit {
     if (selectedCustomer > 0) {
       this.disabled = false;
       this.selectedParts = [];
+      
+      this.parts.forEach(part => {
+        if (part.partCustomerAssignments.findIndex(p => p.customerId == selectedCustomer) > -1)
+          this.selectedParts.push(part);
+      });
+    } else {
+      this.disabled = true;
     }
   }
 
@@ -252,11 +212,22 @@ export class OrderDetailComponent implements OnInit {
     purchaseOrderDetail.note = this.notes;
     purchaseOrderDetail.unitPrice = this.price;
     purchaseOrderDetail.total = this.quantity * this.price;
+    
     var selectedPart = this.selectedParts.find(p => p.id == purchaseOrderDetail.partId);
     purchaseOrderDetail.partCode = selectedPart.code;
     purchaseOrderDetail.description = selectedPart.description;
 
     this.purchaseOrder.poDetails.push(purchaseOrderDetail); 
+  }
+
+  addMoreTermAndCondition() {
+    var purchaseOrder = new PurchaseOrderTerm();
+    purchaseOrder.sequenceNo = this.purchaseOrder.poTerms.length + 1;
+    this.purchaseOrder.poTerms.push(purchaseOrder);
+  }
+
+  removeTermAndCondition(index) {
+    this.purchaseOrder.poTerms.splice(index, 1);
   }
 
   save() {

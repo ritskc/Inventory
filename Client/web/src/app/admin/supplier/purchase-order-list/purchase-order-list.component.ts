@@ -31,16 +31,16 @@ export class PurchaseOrderListComponent implements OnInit {
     this.initializeSupplierForms();
     this.loadAllSuppliers();
     this.initializeGridColumns();
-    this.extractSupplierId();
-    this.loadAllPurchaseOrders();
+    //this.extractSupplierId();
+    //this.loadAllPurchaseOrders();
   }
 
   initializeSupplierForms() {
     this.supplierForm = this.formBuilder.group({
       supplierList: FormControl
     });
-    if (UserAction[this.activatedRoute.snapshot.params.action] != UserAction[UserAction.ListAll])
-      this.supplierForm.get('supplierList').disable();
+    // if (UserAction[this.activatedRoute.snapshot.params.action] != UserAction[UserAction.ListAll])
+    //   this.supplierForm.get('supplierList').disable();
   }
 
   initializeGridColumns() {
@@ -54,6 +54,8 @@ export class PurchaseOrderListComponent implements OnInit {
   extractSupplierId() {
     this.supplierId = this.activatedRoute.snapshot.params.id;
     this.supplierForm.get('supplierList').setValue(this.supplierId);
+    this.supplierForm.get('supplierList').disable();
+    this.loadAllPurchaseOrders();
   }
 
   loadAllSuppliers(){
@@ -62,6 +64,7 @@ export class PurchaseOrderListComponent implements OnInit {
         .subscribe((suppliers) => {
           this.suppliers = suppliers;
           this.loaderService.hide();
+          this.extractSupplierId();
         }, (error) => {
           console.log(error);
           this.loaderService.hide();
@@ -70,9 +73,9 @@ export class PurchaseOrderListComponent implements OnInit {
 
   loadAllPurchaseOrders() {
     this.loaderService.show();
-    this.service.getPurchaseOrders(this.supplierId)
+    this.service.getPurchaseOrders(this.currentlyLoggedInCompanyid)
         .subscribe((purchaseOrders) => {
-          this.purchaseOrders = purchaseOrders;
+          this.purchaseOrders = purchaseOrders.filter(p => p.supplierId == this.supplierId);
           this.loaderService.hide();
         }, (error) => {
           this.loaderService.hide();
@@ -85,6 +88,6 @@ export class PurchaseOrderListComponent implements OnInit {
   }
 
   redirectToPurchaseOrderDetails(row: any){
-    this.router.navigateByUrl(`/suppliers/pos/1/2`);
+    this.router.navigateByUrl(`/suppliers/pos/${ this.currentlyLoggedInCompanyid }/${ row.id }`);
   }
 }

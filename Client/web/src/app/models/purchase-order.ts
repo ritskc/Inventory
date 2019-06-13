@@ -43,6 +43,6 @@ export class PurchaseOrderDetail {
 export class PurchaseOrderTerm {
     id: number = 0;
     poId: number = 0;
-    sequenceNo: number = 1;
+    sequenceNo: number = 0;
     term: string = '';
 }

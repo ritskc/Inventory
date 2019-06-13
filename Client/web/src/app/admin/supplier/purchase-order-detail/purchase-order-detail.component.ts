@@ -51,7 +51,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
   loadAllPurchOrdersForSupplier() {
     this.supplierId = this.activatedRoute.snapshot.params.supplierId;
     this.posId = this.activatedRoute.snapshot.params.posId;
-    this.service.getPurchaseOrders(this.supplierId)
+    this.service.getPurchaseOrders(this.currentlyLoggedInCompanyId)
         .subscribe((posList) => {
           this.purchaseOrderList = posList;
           this.supplierPurchaseOrderDetailsForm.get('posList').setValue(this.posId);
@@ -60,7 +60,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
   }
 
   loadPurchaseOrderDetails() {
-    this.service.getPurchaseOrder(this.supplierId, this.posId)
+    this.service.getPurchaseOrder(this.currentlyLoggedInCompanyId, this.posId)
         .subscribe((purchaseOrder) => this.purchaseOrder = purchaseOrder ),
                   (error) => console.log(error);
   }
