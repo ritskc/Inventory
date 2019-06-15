@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Part, PartCustomerAssignment, PartSupplierAssignment } from '../../../models/part.model';
 import { PartsService } from '../parts.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CompanyService } from '../../../company/company.service';
 import { UserAction } from '../../../models/enum/userAction';
@@ -10,6 +10,7 @@ import { Customer } from '../../../models/customer.model';
 import { CustomerService } from '../../customer/customer.service';
 import { Supplier } from '../../../models/supplier.model';
 import { SupplierService } from '../../supplier/supplier.service';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-part-detail',
@@ -29,9 +30,11 @@ export class PartDetailComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private service: PartsService, private activatedRoute: ActivatedRoute,
               private companyService: CompanyService, private customerService: CustomerService,
-              private supplierService: SupplierService) {
+              private supplierService: SupplierService, private toastr: ToastrManager, private router: Router) {
+
     this.part = new Part();
     this.currentlyLoggedInCompanyId = this.companyService.getCurrentlyLoggedInCompanyId();
+    this.part.companyId = this.currentlyLoggedInCompanyId;
 
     this.partForm = this.formBuilder.group({
       code: ['', Validators.required],
@@ -90,11 +93,22 @@ export class PartDetailComponent implements OnInit {
     this.submitted = false;
   }
 
-  addCustomer() {
-
+  save() {
+    this.service.save(this.part)
+        .subscribe((result) => {
+          this.toastr.successToastr('Details saved successfully.');
+        },
+        (error) => {
+          console.log(error);
+          this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
+        });
   }
 
-  addSupplier() {
-
+  delete() {
+    this.service.delete(this.part.id)
+        .subscribe((result) => {
+          this.toastr.successToastr('Part deleted successfully.');
+          this.router.navigateByUrl('/parts');
+         }, (error) => { console.log(error) });
   }
 }

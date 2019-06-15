@@ -1,6 +1,6 @@
 <div class="standard-margin">
   <simple-grid [data]="suppliers" [columns]="columns" 
-    (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="addSupplier()">
+    (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="addSupplier()" (actionButtonClickedEvent)="actionButtonClicked($event)">
 
   </simple-grid>
 </div>

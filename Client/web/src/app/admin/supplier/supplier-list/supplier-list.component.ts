@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { SupplierService } from '../supplier.service';
 import { CompanyService } from '../../../company/company.service';
 import { Supplier } from '../../../models/supplier.model';
-import { DataColumn } from '../../../models/dataColumn.model';
+import { DataColumn, DataColumnAction } from '../../../models/dataColumn.model';
 import { httpLoaderService } from '../../../common/services/httpLoader.service';
 import { UserAction } from '../../../models/enum/userAction';
 import { Router } from '@angular/router';
+import { ClassConstants } from '../../../common/constants';
+import { EventEmitter } from 'protractor';
 
 @Component({
   selector: 'app-supplier-list',
@@ -32,6 +34,9 @@ export class SupplierListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Address", value: "address", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Phone No", value: "phoneNo", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Email", value: "emailID", sortable: true }) );
+    this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, actions: [
+      new DataColumnAction({ actionText: 'Manage PO', actionStyle: ClassConstants.Primary, event: 'managePurchaseOrder' })
+    ] }) );
   }
 
   getAllSuppliers() {
@@ -55,5 +60,17 @@ export class SupplierListComponent implements OnInit {
 
   addSupplier() {
     this.router.navigateByUrl(`/suppliers/detail/${ UserAction.Add }/#`);
+  }
+
+  redirectToSupplierPurchaseOrder(supplier) {
+    this.router.navigateByUrl(`/suppliers/purchase-order/${ supplier.id }/${ UserAction.Details }`);
+  }
+
+  actionButtonClicked(data) {
+    switch(data.eventName) {
+      case 'managePurchaseOrder':
+        this.redirectToSupplierPurchaseOrder(data);
+        break;
+    }
   }
 }

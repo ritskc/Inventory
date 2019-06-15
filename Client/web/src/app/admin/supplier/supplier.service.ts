@@ -3,6 +3,7 @@ import { ApiService } from '../../common/services/api.service';
 import { ConfigService } from '../../config/config.service';
 import { Observable } from 'rxjs';
 import { Supplier } from '../../models/supplier.model';
+import { PurchaseOrder } from '../../models/purchase-order';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +20,25 @@ export class SupplierService {
     return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.supplierUri }/${ companyId }/${ supplierId }`);
   }
 
+  getPurchaseOrders(companyId: number): Observable<PurchaseOrder[]> {
+    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.posUri }/${ companyId }`);
+  }
+
+  getPurchaseOrder(companyId: number, purchaseOrderId: number): Observable<PurchaseOrder> {
+    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.posUri }/${ companyId }/${ purchaseOrderId }`);
+  }
+
   saveSupplier(supplier: Supplier) {
     if (supplier.id == 0) 
       return this.apiService.post(supplier, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri);
     else
       return this.apiService.put(supplier, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri + `/${ supplier.id }`);
+  }
+
+  savePurchaseOrder(purchaseOrder: PurchaseOrder) {
+    if (purchaseOrder.id == 0)
+      return this.apiService.post(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.posUri);
+    else 
+      return this.apiService.put(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.posUri + `/${ purchaseOrder.id }`);
   }
 }

@@ -21,6 +21,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   @Input() defaultSortColumnName: string = 'name';
   @Output() selectedRow = new EventEmitter();
   @Output() addClickedEventEmitter = new EventEmitter();
+  @Output() actionButtonClickedEvent = new EventEmitter();
 
   dataToDisplay: any[] = [];
   pageNo: number = 1;
@@ -101,5 +102,10 @@ export class SimpleGridComponent implements OnInit, OnChanges {
 
   export() {
     this.jsonToCsvExporter.export(`Data Export ${Date.now()}`, 'csv', this._data);
+  }
+
+  actionButtonClicked(eventName: string, data: any) {
+    data.eventName = eventName;
+    this.actionButtonClickedEvent.emit(data);
   }
 }

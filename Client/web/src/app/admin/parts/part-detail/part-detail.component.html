@@ -34,10 +34,6 @@
                         <div *ngIf="f.weightInLb.errors.required">Weight in Lbs is required</div>
                       </div>
                     </div>
-                    <div class="form-group standard-top-margin">
-                      <label>Sample</label>
-                      <input type="checkbox" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="part.sample"/>
-                    </div>
                 </div>
             </div>
         </div>
@@ -70,8 +66,26 @@
                   </div>
                 </div>
                 <div class="form-group standard-top-margin">
-                  <label>Active</label>
-                  <input type="checkbox" class="form-control" [(ngModel)]="part.active" [ngModelOptions]="{standalone: true}"/>
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <label>Active</label>
+                        <div>
+                          <label class="switch switch-3d switch-primary">
+                            <input class="switch-input" type="checkbox" [(ngModel)]="part.isActive" [ngModelOptions]="{standalone: true}"/>
+                            <span class="switch-slider"></span>
+                          </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                      <label>Sample</label>
+                      <div>
+                        <label class="switch switch-3d switch-primary">
+                          <input class="switch-input" type="checkbox" [(ngModel)]="part.isSample" [ngModelOptions]="{standalone: true}"/>
+                          <span class="switch-slider"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
             </div>
           </div>
@@ -99,21 +113,21 @@
                 <tbody>
                   <tr *ngFor="let supplierAssignment of part.partSupplierAssignments; let index=index" >
                     <td>
-                      <select class="form-control">
-                        <option *ngFor="let supplier of suppliers" value="{{supplierAssignment.id}}">{{supplier.name}}</option>
+                      <select class="form-control" [(ngModel)]="supplierAssignment.supplierID" [ngModelOptions]="{standalone: true}">
+                        <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{supplier.name}}</option>
                       </select>
                     </td>
                     <td>
-                      <input type="text" class="form-control" value="{{supplierAssignment.mapCode}}"/>
+                      <input type="text" class="form-control" [(ngModel)]="supplierAssignment.mapCode" [ngModelOptions]="{standalone: true}"/>
                     </td>
                     <td>
-                      <input type="text" class="form-control" value="{{supplierAssignment.unitPrice}}"/>
+                      <input type="text" class="form-control" [(ngModel)]="supplierAssignment.unitPrice" [ngModelOptions]="{standalone: true}"/>
                     </td>
                     <td class="center-align">
-                      <input type="checkbox" [checked]="supplierAssignment.surchargeExist"/>
+                      <input type="checkbox" [ngModelOptions]="{standalone: true}" [(ngModel)]="supplierAssignment.surchargeExist"/>
                     </td>
-                    <td>
-                      <button class="btn btn-sm btn-danger" (click)="removeSupplierAssignment(index)"><span class="fa fa-remove"></span>Remove</button>
+                    <td class="action-buttons">
+                      <button class="btn btn-sm btn-danger" (click)="removeSupplierAssignment(index)"><span class="fa fa-remove"></span> Remove</button>
                     </td>
                   </tr>
                 </tbody>
@@ -127,7 +141,7 @@
           <div class="card">
             <div class="card-header">
               <strong>Customer</strong> Details
-              <button class="btn btn-sm btn-primary float-right" (click)="addCustomerInfo()"><span class="fa fa-plus"></span>Add Customer</button>
+              <button class="btn btn-sm btn-primary float-right" (click)="addCustomerInfo()"><span class="fa fa-plus"></span> Add Customer</button>
             </div>
             <div class="card-body">
               <table class="table table-responsive-sm table-bordered table-striped table-sm">
@@ -144,24 +158,24 @@
                 <tbody>
                   <tr *ngFor="let customerAssignment of part.partCustomerAssignments; let index=index">
                     <td>
-                      <select class="form-control">
-                        <option *ngFor="let customer of customers" value="{{customerAssignment.id}}">{{customer.name}}</option>
+                      <select class="form-control" [(ngModel)]="customerAssignment.customerId" [ngModelOptions]="{standalone: true}">
+                        <option *ngFor="let customer of customers" value="{{customer.id}}">{{customer.name}}</option>
                       </select>
                     </td>
                     <td>
-                      <input type="text" class="form-control" value="{{customerAssignment.mapCode}}"/>
+                      <input type="text" class="form-control" [(ngModel)]="customerAssignment.mapCode" [ngModelOptions]="{standalone: true}"/>
                     </td>
                     <td>
-                      <input type="text" class="form-control" value="{{customerAssignment.rate}}"/>
+                      <input type="text" class="form-control" [(ngModel)]="customerAssignment.rate" [ngModelOptions]="{standalone: true}"/>
                     </td>
                     <td class="center-align">
-                        <input type="checkbox" [checked]="customerAssignment.surchargeExist"/>
+                        <input type="checkbox" [(ngModel)]="customerAssignment.surchargeExist" [ngModelOptions]="{standalone: true}"/>
                     </td>
                     <td>
-                        <input type="text" class="form-control" value="{{customerAssignment.surchargePerPound}}"/>
+                        <input type="text" class="form-control" [(ngModel)]="customerAssignment.surchargePerPound" [ngModelOptions]="{standalone: true}"/>
                     </td>
-                    <td>
-                      <button class="btn btn-sm btn-danger" (click)="removeCustomerAssignment(index)"><span class="fa fa-remove"></span>Remove</button>
+                    <td class="action-buttons">
+                      <button class="btn btn-sm btn-danger" (click)="removeCustomerAssignment(index)"><span class="fa fa-remove"></span> Remove</button>
                     </td>
                   </tr>
                 </tbody>

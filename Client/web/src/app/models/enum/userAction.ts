@@ -1,5 +1,7 @@
 export enum UserAction {
     Add,
     Edit,
-    Delete
+    Delete,
+    ListAll,
+    Details
 }
