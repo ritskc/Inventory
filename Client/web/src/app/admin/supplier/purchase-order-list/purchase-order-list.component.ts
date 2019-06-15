@@ -31,16 +31,12 @@ export class PurchaseOrderListComponent implements OnInit {
     this.initializeSupplierForms();
     this.loadAllSuppliers();
     this.initializeGridColumns();
-    //this.extractSupplierId();
-    //this.loadAllPurchaseOrders();
   }
 
   initializeSupplierForms() {
     this.supplierForm = this.formBuilder.group({
       supplierList: FormControl
     });
-    // if (UserAction[this.activatedRoute.snapshot.params.action] != UserAction[UserAction.ListAll])
-    //   this.supplierForm.get('supplierList').disable();
   }
 
   initializeGridColumns() {
@@ -53,8 +49,10 @@ export class PurchaseOrderListComponent implements OnInit {
 
   extractSupplierId() {
     this.supplierId = this.activatedRoute.snapshot.params.id;
-    this.supplierForm.get('supplierList').setValue(this.supplierId);
-    this.supplierForm.get('supplierList').disable();
+    if (this.supplierId > 0) {
+      this.supplierForm.get('supplierList').setValue(this.supplierId);
+      this.supplierForm.get('supplierList').disable();
+    }
     this.loadAllPurchaseOrders();
   }
 
@@ -75,7 +73,7 @@ export class PurchaseOrderListComponent implements OnInit {
     this.loaderService.show();
     this.service.getPurchaseOrders(this.currentlyLoggedInCompanyid)
         .subscribe((purchaseOrders) => {
-          this.purchaseOrders = purchaseOrders.filter(p => p.supplierId == this.supplierId);
+          this.purchaseOrders = this.supplierId > 0? purchaseOrders.filter(p => p.supplierId == this.supplierId): purchaseOrders;
           this.loaderService.hide();
         }, (error) => {
           this.loaderService.hide();
@@ -89,5 +87,10 @@ export class PurchaseOrderListComponent implements OnInit {
 
   redirectToPurchaseOrderDetails(row: any){
     this.router.navigateByUrl(`/suppliers/pos/${ this.currentlyLoggedInCompanyid }/${ row.id }`);
+  }
+
+  supplierSelected() {
+    this.supplierId = this.supplierForm.get('supplierList').value;
+    this.loadAllPurchaseOrders();
   }
 }
