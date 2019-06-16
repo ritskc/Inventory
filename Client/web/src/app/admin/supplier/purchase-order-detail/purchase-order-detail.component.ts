@@ -38,13 +38,13 @@ export class PurchaseOrderDetailComponent implements OnInit {
   }
 
   initializeGridColumns() {
-    this.gridColumns.push( new DataColumn({ headerText: "Part Code", value: "partId", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Name", value: "partName", sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Part Code", value: "part", nested: "code", sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Name", value: "part", nested: "description", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Quantity", value: "qty", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Ack Quantity", value: "ackQty", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Total", value: "unitPrice", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "closingDate", sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Reference", value: "referenceNo", sortable: true }) );
   }
 

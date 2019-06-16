@@ -1,6 +1,6 @@
 <div class="row" [formGroup]="supplierPurchaseOrderDetailsForm">
   <select formControlName="posList">
-    <option *ngFor="let pos of purchaseOrderList" [value]="pos.id">{{pos.poNo}}</option>
+    <option *ngFor="let pos of purchaseOrderList" value="{{pos.id}}">{{pos.poNo}}</option>
   </select>
 </div>
 <div class="row">
