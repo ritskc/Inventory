@@ -169,6 +169,14 @@ export class OrderDetailComponent implements OnInit {
         if (part.partSupplierAssignments.findIndex(p => p.supplierID == selectedSupplier) > -1)
           this.selectedParts.push(part);
       });
+      var sequenceNo = 1;
+      this.suppliers.find(s => s.id == selectedSupplier).terms.forEach((term) => {
+        var poTerm = new PurchaseOrderTerm();
+        poTerm.sequenceNo = sequenceNo;
+        poTerm.term = term.terms;
+        this.purchaseOrder.poTerms.push(poTerm);
+        sequenceNo += 1;
+      });
     }
     else {
       this.disabled = true;

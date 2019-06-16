@@ -55,7 +55,7 @@ export const navItems: NavData[] = [
       },
       {
         name: 'Supplier PO',
-        url: '/suppliers/purchase-order/1/3',
+        url: '/suppliers/purchase-order/0/0',
         icon: 'icon-puzzle'
       },
       {
