@@ -70,8 +70,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Customer customer)
         {
-            await this._customerService.AddCustomerAsync(customer);
-            return NoContent();
+            try
+            {
+                await this._customerService.AddCustomerAsync(customer);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
 
         // PUT api/values/5

@@ -213,7 +213,7 @@ namespace DAL.Repository
                     $"      ,[TelephoneNumber] = '{customer.TelephoneNumber}' ,[FaxNumber] = '{customer.FaxNumber}',[EmailAddress] = '{customer.EmailAddress}' ,[TruckType] = '{customer.TruckType}'" +
                     $"  ,[CollectFreight] = '{customer.CollectFreight}',[Comments] = '{customer.Comments}' ,[Surcharge] = '{customer.Surcharge}' ,[FOB] = '{customer.FOB}'" +
                     $" ,[Terms] = '{customer.Terms}',[RePackingCharge] = '{customer.RePackingCharge}',[ShipVia] = '{customer.ShipVia}' ,[invoicingtypeid] = '{customer.Invoicingtypeid}'" +
-                    $"   ,[endcustomername] = '{customer.EndCustomerName}' ,[DisplayLineNo] = '{customer.DisplayLineNo}' WHERE[CompanyId] = '{customer.Id}' ");
+                    $"   ,[endcustomername] = '{customer.EndCustomerName}' ,[DisplayLineNo] = '{customer.DisplayLineNo}' WHERE[Id] = '{customer.Id}' ");
                 await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
                 foreach (CustomerShippingInfo term in customer.ShippingInfos)

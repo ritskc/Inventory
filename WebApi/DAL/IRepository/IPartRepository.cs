@@ -13,6 +13,6 @@ namespace DAL.IRepository
         Task<Part> GetPartAsync(long partId);
         Task AddPartAsync(Part part);
         Task UpdatePartAsync(Part part);
-        Task<int> DeletePartAsync(long id);
+        Task DeletePartAsync(long id);
     }
 }

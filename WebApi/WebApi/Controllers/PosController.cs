@@ -42,7 +42,7 @@ namespace WebApi.Controllers
             
         }
 
-        // GET api/values/5
+        // GET api/values/5        
         [HttpGet("{companyId}/{id}")]
         public async Task<ActionResult<Po>> Get(int companyId, int id)
         {
@@ -101,7 +101,7 @@ namespace WebApi.Controllers
         }
 
         // DELETE: api/Todo/5
-        [HttpGet("{companyId}/{id}")]
+        [HttpDelete("{companyId}/{id}")]
         public async Task<ActionResult<Po>> Delete(long id)
         {
             try

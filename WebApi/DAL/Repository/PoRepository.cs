@@ -44,10 +44,22 @@ namespace DAL.Repository
                     po.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
                     po.SupplierId = Convert.ToInt32(dataReader["SupplierId"]);
                     po.PoNo = Convert.ToString(dataReader["PoNo"]);
+                    po.PoDate = Convert.ToDateTime(dataReader["PoDate"]);
                     po.EmailIds = Convert.ToString(dataReader["EmailIds"]);
                     po.Remarks = Convert.ToString(dataReader["Remarks"]);
                     po.IsClosed = Convert.ToBoolean(dataReader["IsClosed"]);
+                    if (dataReader["ClosingDate"] != DBNull.Value)
+                        po.ClosingDate = Convert.ToDateTime(dataReader["ClosingDate"]);
+                    else
+                        po.ClosingDate = null;
+
+
                     po.IsAcknowledged = Convert.ToString(dataReader["IsAcknowledged"]);
+
+                    if (dataReader["AcknowledgementDate"] != DBNull.Value)
+                        po.AcknowledgementDate = Convert.ToDateTime(dataReader["AcknowledgementDate"]);
+                    else
+                        po.AcknowledgementDate = null;
                     po.PaymentTerms = Convert.ToString(dataReader["PaymentTerms"]);
                     po.DeliveryTerms = Convert.ToString(dataReader["DeliveryTerms"]);
 
@@ -59,7 +71,7 @@ namespace DAL.Repository
             foreach (Po po in pos)
             {
                 List<PoDetail> poDetails = new List<PoDetail>();
-                commandText = string.Format($"SELECT [id],[PoID],[SupplierID],[MapCode],[Description],[QtyInHand],[QtyInTransit],[TotalQty],[UnitPrice] FROM [posupplierassignment] SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
+                commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                 {
@@ -76,11 +88,16 @@ namespace DAL.Repository
                         poDetail.ReferenceNo = Convert.ToString(dataReader1["ReferenceNo"]);
                         poDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
                         poDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
+                        poDetail.DueDate = Convert.ToDateTime(dataReader1["DueDate"]);
                         poDetail.Note = Convert.ToString(dataReader1["Note"]);
                         poDetail.AckQty = Convert.ToInt32(dataReader1["AckQty"]);
                         poDetail.InTransitQty = Convert.ToInt32(dataReader1["InTransitQty"]);
                         poDetail.ReceivedQty = Convert.ToInt32(dataReader1["ReceivedQty"]);
                         poDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);
+                        if (dataReader1["ClosingDate"] != DBNull.Value)
+                            po.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
+                        else
+                            po.ClosingDate = null;
 
                         poDetails.Add(poDetail);
                     }
@@ -140,10 +157,22 @@ namespace DAL.Repository
                     po.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
                     po.SupplierId = Convert.ToInt32(dataReader["SupplierId"]);
                     po.PoNo = Convert.ToString(dataReader["PoNo"]);
+                    po.PoDate = Convert.ToDateTime(dataReader["PoDate"]);
                     po.EmailIds = Convert.ToString(dataReader["EmailIds"]);
                     po.Remarks = Convert.ToString(dataReader["Remarks"]);
                     po.IsClosed = Convert.ToBoolean(dataReader["IsClosed"]);
+                    if (dataReader["ClosingDate"] != DBNull.Value)
+                        po.ClosingDate = Convert.ToDateTime(dataReader["ClosingDate"]);
+                    else
+                        po.ClosingDate = null;
+                        
+                    
                     po.IsAcknowledged = Convert.ToString(dataReader["IsAcknowledged"]);
+                   
+                    if (dataReader["AcknowledgementDate"] != DBNull.Value)
+                        po.AcknowledgementDate = Convert.ToDateTime(dataReader["AcknowledgementDate"]);
+                    else
+                        po.AcknowledgementDate = null;
                     po.PaymentTerms = Convert.ToString(dataReader["PaymentTerms"]);
                     po.DeliveryTerms = Convert.ToString(dataReader["DeliveryTerms"]);
 
@@ -153,7 +182,7 @@ namespace DAL.Repository
 
 
             List<PoDetail> poDetails = new List<PoDetail>();
-            commandText = string.Format($"SELECT [id],[PoID],[SupplierID],[MapCode],[Description],[QtyInHand],[QtyInTransit],[TotalQty],[UnitPrice] FROM [posupplierassignment] SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
+            commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
             {
@@ -170,19 +199,24 @@ namespace DAL.Repository
                     poDetail.ReferenceNo = Convert.ToString(dataReader1["ReferenceNo"]);
                     poDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
                     poDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
+                    poDetail.DueDate = Convert.ToDateTime(dataReader1["DueDate"]);
                     poDetail.Note = Convert.ToString(dataReader1["Note"]);
                     poDetail.AckQty = Convert.ToInt32(dataReader1["AckQty"]);
                     poDetail.InTransitQty = Convert.ToInt32(dataReader1["InTransitQty"]);
                     poDetail.ReceivedQty = Convert.ToInt32(dataReader1["ReceivedQty"]);
-                    poDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);
+                    poDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);               
+
+                    if (dataReader1["ClosingDate"] != DBNull.Value)
+                        po.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
+                    else
+                        po.ClosingDate = null;
 
                     poDetails.Add(poDetail);
                 }
             }
             po.poDetails = poDetails;
             conn.Close();
-
-
+            
             List<PoTerm> poTerms = new List<PoTerm>();
             commandText = string.Format("SELECT [Id] ,[PoId] ,[SequenceNo] ,[Term]  FROM [dbo].[PoTerms] where poid = '{0}'", po.Id);
 
@@ -222,14 +256,14 @@ namespace DAL.Repository
 
             foreach (PoDetail poDetail in po.poDetails)
             {
-                sql = string.Format($"INSERT INTO [dbo].[PoDetails]   ([PoId]   ,[PartId]   ,[ReferenceNo]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note]   ,[AckQty]   ,[InTransitQty]   ,[ReceivedQty]   ,[IsClosed]   ,[ClosingDate]) VALUES   ('{poDetail.PoId}'   ,'{poDetail.PartId}'   ,'{poDetail.ReferenceNo}'   ,'{poDetail.Qty}'   ,'{poDetail.UnitPrice}'   ,'{poDetail.DueDate}'   ,'{poDetail.Note}'   ,'{poDetail.AckQty}'   ,'{poDetail.InTransitQty}'   ,'{poDetail.ReceivedQty}'   ,'{poDetail.IsClosed}'   ,'{poDetail.ClosingDate}')");
+                sql = string.Format($"INSERT INTO [dbo].[PoDetails]   ([PoId]   ,[PartId]   ,[ReferenceNo]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note]   ,[AckQty]   ,[InTransitQty]   ,[ReceivedQty]   ,[IsClosed]   ,[ClosingDate]) VALUES   ('{poId}'   ,'{poDetail.PartId}'   ,'{poDetail.ReferenceNo}'   ,'{poDetail.Qty}'   ,'{poDetail.UnitPrice}'   ,'{poDetail.DueDate}'   ,'{poDetail.Note}'   ,'{poDetail.AckQty}'   ,'{poDetail.InTransitQty}'   ,'{poDetail.ReceivedQty}'   ,'{poDetail.IsClosed}'   ,'{poDetail.ClosingDate}')");
 
                 await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
             }
 
             foreach (PoTerm poTerm in po.poTerms)
             {
-                sql = string.Format($"INSERT INTO [dbo].[PoTerms]   ([PoId]   ,[SequenceNo]   ,[Term]) VALUES   ('{poTerm.PoId}'   ,'{poTerm.SequenceNo}'   ,'{poTerm.Term}')");
+                sql = string.Format($"INSERT INTO [dbo].[PoTerms]   ([PoId]   ,[SequenceNo]   ,[Term]) VALUES   ('{poId}'   ,'{poTerm.SequenceNo}'   ,'{poTerm.Term}')");
 
                 await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
             }

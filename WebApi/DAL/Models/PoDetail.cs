@@ -21,5 +21,7 @@ namespace DAL.Models
         public int ReceivedQty { get; set; }
         public bool IsClosed { get; set; }
         public DateTime? ClosingDate { get; set; }
+
+        public Part part { get; set; }       
     }
 }
