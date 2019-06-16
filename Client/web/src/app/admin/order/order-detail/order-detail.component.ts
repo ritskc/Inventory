@@ -241,8 +241,9 @@ export class OrderDetailComponent implements OnInit {
   save() {
     this.supplierService.savePurchaseOrder(this.purchaseOrder)
         .subscribe((result) => {
-          console.log(result);
+          this.toastr.successToastr('Details saved successfully.');
         }, (error) => {
+          this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
           console.log(error);
         });
   }

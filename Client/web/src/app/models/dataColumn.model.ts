@@ -6,6 +6,7 @@ export class DataColumn {
     rightAlign: boolean = false;
     isActionColumn: boolean = false;
     actions: DataColumnAction[] = [];
+    nested:string = '';
 
     constructor(init?: Partial<DataColumn>) {
         Object.assign(this, init);
