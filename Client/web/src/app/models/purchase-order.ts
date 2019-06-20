@@ -1,7 +1,9 @@
 export class PurchaseOrder {
     id: number = 0;
     companyId: number = 0;
+    customerId: number = 0;
     supplierId: number = 0;
+    isBlanketPO: boolean = false;
     poNo: string;
     emailIds: string;
     remarks: string;
@@ -25,7 +27,10 @@ export class PurchaseOrderDetail {
     id: number;
     poId: number;
     partId: number;
+    blanketPOId: number;
     qty: number;
+    blanketPOAdjQty: number;
+    lineNumber: number;
     unitPrice: number;
     ackQty: number;
     inTransitQty: number;

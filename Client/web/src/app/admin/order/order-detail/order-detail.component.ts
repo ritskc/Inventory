@@ -12,6 +12,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ClassConstants } from '../../../common/constants';
 import { PurchaseOrderDetail, PurchaseOrder, PurchaseOrderTerm } from '../../../models/purchase-order';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: "app-order-detail",
@@ -33,8 +34,11 @@ export class OrderDetailComponent implements OnInit {
   private quantity: number = 0;
   private dueDate: string = "";
   private partDescription: string = '';
-  private disabled: boolean = true;
   private currentlyLoaddedInCompanyId: number = 0;
+  private blanketPOAdjQty: number = 0;
+  private lineNumber: number = 0;
+  private blanketPOId: number = 0;
+  private isBlanketPO: boolean = false;
   private disableSupplierSelectedPurchaseOrder: boolean = false;
   private disableCustomerSelectedPurchaseOrder: boolean = false;
 
@@ -69,7 +73,11 @@ export class OrderDetailComponent implements OnInit {
       reference: FormControl,
       quantity: FormControl,
       paymentTerms: FormControl,
-      deliveryTerms: FormControl
+      deliveryTerms: FormControl,
+      blanketPOAdjQty: FormControl,
+      isBlanketPO: FormControl,
+      lineNumber: FormControl,
+      blanketPOId: FormControl
     });
   }
 
@@ -89,14 +97,20 @@ export class OrderDetailComponent implements OnInit {
   }
 
   initializePartsGrid() {
+    this.gridColumns = [];
     this.gridColumns.push(new DataColumn({headerText: "Part Code", value: "partCode", sortable: true }));
     this.gridColumns.push(new DataColumn({headerText: "Description", value: "description", sortable: true}));
-    this.gridColumns.push(new DataColumn({headerText: "Quantity", value: "qty", sortable: true}));
+    this.gridColumns.push(new DataColumn({headerText: "Qty", value: "qty", sortable: true}));
     this.gridColumns.push(new DataColumn({ headerText: "Price", value: "unitPrice", sortable: true }));
     this.gridColumns.push(new DataColumn({ headerText: "Total", value: "total", sortable: true }));
-    this.gridColumns.push(new DataColumn({headerText: "Reference", value: "referenceNo", sortable: true}));
+    this.gridColumns.push(new DataColumn({headerText: "Reference", value: "referenceNo", sortable: false}));
     this.gridColumns.push(new DataColumn({headerText: "Due Date", value: "dueDate", sortable: true}));
-    this.gridColumns.push(new DataColumn({ headerText: "Notes", value: "note", sortable: true }));
+    this.gridColumns.push(new DataColumn({ headerText: "Notes", value: "note", sortable: false }));
+    if (this.SelectedCustomer > -1) {
+      this.gridColumns.push(new DataColumn({ headerText: "Blank PO", value: "blanketPOId", sortable: true }));
+      this.gridColumns.push(new DataColumn({ headerText: "Open Qty", value: "blanketPOAdjQty", sortable: true }));
+      this.gridColumns.push(new DataColumn({ headerText: "Line No", value: "lineNumber", sortable: true }));
+    }
     this.gridColumns.push(new DataColumn({headerText: "Actions", isActionColumn: true, actions: [
           new DataColumnAction({actionText: "Remove", actionStyle: ClassConstants.Danger, event: "removeSelectedPart"})
         ]}));
@@ -107,7 +121,7 @@ export class OrderDetailComponent implements OnInit {
       .getAllSuppliers(this.currentlyLoaddedInCompanyId)
       .subscribe((suppliers) => {
         this.suppliers = suppliers;
-        this.orderForm.get("suppliersList").setValue(-1);
+        this.SelectedSupplier = -1;
       });
   }
 
@@ -126,7 +140,7 @@ export class OrderDetailComponent implements OnInit {
       .getAllCustomers(this.currentlyLoaddedInCompanyId)
       .subscribe((customers) => {
         this.customers = customers;
-        this.orderForm.get("customersList").setValue(-1);
+        this.SelectedCustomer = -1;
       });
   }
 
@@ -144,25 +158,22 @@ export class OrderDetailComponent implements OnInit {
   }
 
   setFormForCustomerSelection() {
-    var selectedCustomer = this.orderForm.get('customersList').value;
-    if (selectedCustomer > 0) {
-      this.disabled = false;
+    this.SelectedSupplier = -1;
+    if (this.SelectedCustomer > 0) {
       this.selectedParts = [];
       
       this.parts.forEach(part => {
-        if (part.partCustomerAssignments.findIndex(p => p.customerId == selectedCustomer) > -1)
+        if (part.partCustomerAssignments.findIndex(p => p.customerId == this.SelectedCustomer) > -1)
           this.selectedParts.push(part);
       });
-    } else {
-      this.disabled = true;
     }
   }
 
   setFormForSupplierSelection() {
     var selectedSupplier = this.orderForm.get("suppliersList").value;
+    this.SelectedCustomer = -1;
     this.purchaseOrder.supplierId = +selectedSupplier;
     if (selectedSupplier > 0) {
-      this.disabled = false;
       this.selectedParts = [];
       
       this.parts.forEach(part => {
@@ -177,9 +188,6 @@ export class OrderDetailComponent implements OnInit {
         this.purchaseOrder.poTerms.push(poTerm);
         sequenceNo += 1;
       });
-    }
-    else {
-      this.disabled = true;
     }
   }
 
@@ -224,6 +232,12 @@ export class OrderDetailComponent implements OnInit {
     var selectedPart = this.selectedParts.find(p => p.id == purchaseOrderDetail.partId);
     purchaseOrderDetail.partCode = selectedPart.code;
     purchaseOrderDetail.description = selectedPart.description;
+    if (this.SelectedCustomer > -1) {
+      this.purchaseOrder.isBlanketPO = this.isBlanketPO;
+      purchaseOrderDetail.blanketPOId = this.blanketPOId;
+      purchaseOrderDetail.lineNumber = this.lineNumber;
+      purchaseOrderDetail.blanketPOAdjQty = this.blanketPOAdjQty;
+    }
 
     this.purchaseOrder.poDetails.push(purchaseOrderDetail); 
   }
@@ -238,13 +252,38 @@ export class OrderDetailComponent implements OnInit {
     this.purchaseOrder.poTerms.splice(index, 1);
   }
 
+  get SelectedSupplier() {
+    return this.orderForm ? this.orderForm.get("suppliersList").value : null;
+  }
+
+  set SelectedSupplier(value: any) {
+    this.orderForm.get('suppliersList').setValue(value);
+  }
+
+  get SelectedCustomer() {
+    return this.orderForm ? this.orderForm.get('customersList').value : null;
+  }
+
+  set SelectedCustomer(value: any) {
+    this.orderForm.get('customersList').setValue(value);
+  }
+
+  get disabled() {
+    return this.SelectedCustomer == -1 && this.SelectedSupplier == -1;
+  }
+
   save() {
-    this.supplierService.savePurchaseOrder(this.purchaseOrder)
-        .subscribe((result) => {
-          this.toastr.successToastr('Details saved successfully.');
-        }, (error) => {
-          this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
-          console.log(error);
-        });
+    var observableResult: any;
+    if (this.SelectedCustomer > -1) {
+      observableResult = this.customerService.savePurchaseOrder(this.purchaseOrder);
+    } else {
+      observableResult = this.supplierService.savePurchaseOrder(this.purchaseOrder);
+    }
+    observableResult.subscribe((result) => {
+      this.toastr.successToastr('Details saved successfully.');
+    }, (error) => {
+      this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
+      console.log(error);
+    });
   }
 }

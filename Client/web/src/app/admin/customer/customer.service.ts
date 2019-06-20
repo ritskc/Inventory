@@ -3,6 +3,7 @@ import { ApiService } from '../../common/services/api.service';
 import { ConfigService } from '../../config/config.service';
 import { Observable } from 'rxjs';
 import { Customer } from '../../models/customer.model';
+import { PurchaseOrder } from '../../models/purchase-order';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,11 @@ export class CustomerService {
       return this.apiService.post(customer, this.configService.Settings.apiServerHost + this.configService.Settings.customerUri);
     else
       return this.apiService.put(customer, this.configService.Settings.apiServerHost + this.configService.Settings.customerUri + `/${ customer.id }`);
+  }
+
+  savePurchaseOrder(purchaseOrder: PurchaseOrder) {
+    if (purchaseOrder.id == 0)
+      return this.apiService.post(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.ordersUri);
   }
 
   delete(id: number) {
