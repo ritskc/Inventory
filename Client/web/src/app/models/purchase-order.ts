@@ -15,10 +15,12 @@ export class PurchaseOrder {
     closingDate: string;
     acknowledgementDate: string;
     poDetails: PurchaseOrderDetail[];
+    orderDetails: PurchaseOrderDetail[];
     poTerms: PurchaseOrderTerm[];
 
     constructor() {
         this.poDetails = [];
+        this.orderDetails = [];
         this.poTerms = [];
     }
 }
@@ -43,6 +45,8 @@ export class PurchaseOrderDetail {
     partCode: string;
     description: string;
     total: number;
+
+    orderId: number = 0;
 }
 
 export class PurchaseOrderTerm {

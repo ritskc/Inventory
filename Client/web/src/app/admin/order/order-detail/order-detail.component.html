@@ -48,7 +48,7 @@
           </div>
           <div class="form-group standard-top-margin row">
             <label class="col-md-3 col-xs-3 label-top-adjustment">Due Date</label>
-            <input [attr.disabled]="disabled? '': null" type="date" formControlName="closingDate" class="form-control col-md-5 col-xs-5" [(ngModel)]="purchaseOrder.closingDate"/>
+            <input [attr.disabled]="disabled? '': null" type="date" formControlName="dueDate" class="form-control col-md-5 col-xs-5" [(ngModel)]="purchaseOrder.dueDate"/>
           </div>
           <div class="form-group standard-top-margin row" *ngIf="SelectedSupplier > -1">
             <label class="col-md-3 col-xs-3 label-top-adjustment">Email</label>
@@ -82,7 +82,7 @@
                 <option *ngFor="let part of selectedParts" [value]="part.id">{{part.description}}</option>
             </select>
           </div>
-          <div class="form-group standard-top-margin row" *ngIf="SelectedCustomer > -1">
+          <div class="form-group standard-top-margin row" *ngIf="SelectedCustomer > -1 && !isBlanketPO">
             <label class="col-md-3 col-xs-3 label-top-adjustment">Blank PO</label>
             <select [attr.disabled]="disabled? '': null" class="form-control col-md-3 col-xs-3" formControlName="blanketPOId" [(ngModel)]="blanketPOId">
                 <option value="-1">Select Blank PO</option>
@@ -120,8 +120,8 @@
     <div class="card-header">
         <strong>Part Details</strong>
     </div>
-    <simple-grid [data]="purchaseOrder.poDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false">
-    </simple-grid>
+    <simple-grid *ngIf="SelectedSupplier > -1" [data]="purchaseOrder.poDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false" (actionButtonClickedEvent)="removePart($event)"></simple-grid>
+    <simple-grid *ngIf="SelectedCustomer > -1" [data]="purchaseOrder.orderDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false" (actionButtonClickedEvent)="removePart($event)"></simple-grid>
   </div>
 
   <div class="card" *ngIf="SelectedSupplier > -1">

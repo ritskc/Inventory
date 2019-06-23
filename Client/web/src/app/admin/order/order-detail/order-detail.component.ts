@@ -10,7 +10,7 @@ import { Customer } from '../../../models/customer.model';
 import { CustomerService } from '../../customer/customer.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ClassConstants } from '../../../common/constants';
-import { PurchaseOrderDetail, PurchaseOrder, PurchaseOrderTerm } from '../../../models/purchase-order';
+import { PurchaseOrderDetail, PurchaseOrder, PurchaseOrderTerm, OrderDetails, CustomerOrderDetails } from '../../../models/purchase-order';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Observable } from 'rxjs';
 
@@ -55,7 +55,6 @@ export class OrderDetailComponent implements OnInit {
     this.loadSuppliersList();
     this.loadPartsList();
     this.loadCustomersList();
-    this.initializePartsGrid();
 
     this.orderForm = this.formBuilder.group({
       poNo: FormControl,
@@ -103,9 +102,11 @@ export class OrderDetailComponent implements OnInit {
     this.gridColumns.push(new DataColumn({headerText: "Qty", value: "qty", sortable: true}));
     this.gridColumns.push(new DataColumn({ headerText: "Price", value: "unitPrice", sortable: true }));
     this.gridColumns.push(new DataColumn({ headerText: "Total", value: "total", sortable: true }));
-    this.gridColumns.push(new DataColumn({headerText: "Reference", value: "referenceNo", sortable: false}));
     this.gridColumns.push(new DataColumn({headerText: "Due Date", value: "dueDate", sortable: true}));
     this.gridColumns.push(new DataColumn({ headerText: "Notes", value: "note", sortable: false }));
+    if (this.SelectedSupplier > -1) {
+      this.gridColumns.push(new DataColumn({headerText: "Reference", value: "referenceNo", sortable: false}));
+    }
     if (this.SelectedCustomer > -1) {
       this.gridColumns.push(new DataColumn({ headerText: "Blank PO", value: "blanketPOId", sortable: true }));
       this.gridColumns.push(new DataColumn({ headerText: "Open Qty", value: "blanketPOAdjQty", sortable: true }));
@@ -160,12 +161,14 @@ export class OrderDetailComponent implements OnInit {
   setFormForCustomerSelection() {
     this.SelectedSupplier = -1;
     if (this.SelectedCustomer > 0) {
+      this.purchaseOrder.customerId = +this.SelectedCustomer;
       this.selectedParts = [];
       
       this.parts.forEach(part => {
         if (part.partCustomerAssignments.findIndex(p => p.customerId == this.SelectedCustomer) > -1)
           this.selectedParts.push(part);
       });
+      this.initializePartsGrid();
     }
   }
 
@@ -188,19 +191,29 @@ export class OrderDetailComponent implements OnInit {
         this.purchaseOrder.poTerms.push(poTerm);
         sequenceNo += 1;
       });
+      this.initializePartsGrid();
     }
   }
 
   partSelected(selectedItem: any) {
     this.synchronizeParts(selectedItem);
+    var unitPrice: number = 0;
 
-    var selectedSupplier = this.orderForm.get("suppliersList").value;
-    this.selectedParts.forEach(part => {
-      var unitPrice = part.partSupplierAssignments.find(
-        p => p.supplierID == selectedSupplier
-      ).unitPrice;
-      this.orderForm.get("price").setValue(unitPrice);
-    });
+    if(this.SelectedSupplier > -1) {
+      var selectedSupplier = this.orderForm.get("suppliersList").value;
+      this.selectedParts.forEach(part => {
+        unitPrice = part.partSupplierAssignments.find(p => p.supplierID == selectedSupplier).unitPrice;
+      });
+    }
+
+    if (this.SelectedCustomer > -1) {
+      var selectedCustomer = this.orderForm.get("customersList").value;
+      this.selectedParts.forEach(part => {
+        unitPrice = part.partCustomerAssignments.find(p => p.customerId == selectedCustomer).rate;
+      });
+    }
+
+    this.orderForm.get("price").setValue(unitPrice);
   }
 
   synchronizeParts(selectedItem: any) {
@@ -218,34 +231,56 @@ export class OrderDetailComponent implements OnInit {
   }
 
   addPartToOrder() {
-    var purchaseOrderDetail = new PurchaseOrderDetail();
-    purchaseOrderDetail.id = 0;
-    purchaseOrderDetail.poId = 0;
-    purchaseOrderDetail.partId = +this.orderForm.get("partCode").value;
-    purchaseOrderDetail.qty = +this.quantity;
-    purchaseOrderDetail.referenceNo = this.reference;
-    purchaseOrderDetail.dueDate = new Date(this.dueDate).toLocaleDateString();
-    purchaseOrderDetail.note = this.notes;
-    purchaseOrderDetail.unitPrice = this.price;
-    purchaseOrderDetail.total = this.quantity * this.price;
-    
-    var selectedPart = this.selectedParts.find(p => p.id == purchaseOrderDetail.partId);
-    purchaseOrderDetail.partCode = selectedPart.code;
-    purchaseOrderDetail.description = selectedPart.description;
-    if (this.SelectedCustomer > -1) {
-      this.purchaseOrder.isBlanketPO = this.isBlanketPO;
-      purchaseOrderDetail.blanketPOId = this.blanketPOId;
-      purchaseOrderDetail.lineNumber = this.lineNumber;
-      purchaseOrderDetail.blanketPOAdjQty = this.blanketPOAdjQty;
+    if (this.SelectedSupplier > -1 ) {
+      var orderDetail = new PurchaseOrderDetail();
+      orderDetail.id = 0;
+      orderDetail.poId = 0;
+      orderDetail.partId = +this.orderForm.get("partCode").value;
+      orderDetail.qty = +this.quantity;
+      orderDetail.dueDate = new Date(this.dueDate).toLocaleDateString();
+      orderDetail.note = this.notes;
+      orderDetail.unitPrice = this.price;
+      orderDetail.total = this.quantity * this.price;
+      
+      var selectedPart = this.selectedParts.find(p => p.id == orderDetail.partId);
+      orderDetail.partCode = selectedPart.code;
+      orderDetail.description = selectedPart.description;
+      orderDetail.referenceNo = this.reference;
+      this.purchaseOrder.poDetails.push(orderDetail); 
     }
 
-    this.purchaseOrder.poDetails.push(purchaseOrderDetail); 
+    if (this.SelectedCustomer > -1) {
+      var customerOrderDetail = new PurchaseOrderDetail();
+      customerOrderDetail.id = 0;
+      customerOrderDetail.orderId = 0;
+      customerOrderDetail.partId = +this.orderForm.get("partCode").value;
+      customerOrderDetail.qty = +this.quantity;
+      customerOrderDetail.dueDate = new Date(this.dueDate).toLocaleDateString();
+      customerOrderDetail.note = this.notes;
+      customerOrderDetail.unitPrice = this.price;
+      customerOrderDetail.total = this.quantity * this.price;
+      
+      var selectedPart = this.selectedParts.find(p => p.id == customerOrderDetail.partId);
+      customerOrderDetail.partCode = selectedPart.code;
+      customerOrderDetail.description = selectedPart.description;
+      customerOrderDetail.blanketPOId = this.blanketPOId;
+      customerOrderDetail.lineNumber = this.lineNumber;
+      customerOrderDetail.blanketPOAdjQty = this.blanketPOAdjQty;
+
+      this.purchaseOrder.orderDetails.push(customerOrderDetail); 
+      this.purchaseOrder.isBlanketPO = this.isBlanketPO;
+    }
   }
 
   addMoreTermAndCondition() {
     var purchaseOrder = new PurchaseOrderTerm();
     purchaseOrder.sequenceNo = this.purchaseOrder.poTerms.length + 1;
     this.purchaseOrder.poTerms.push(purchaseOrder);
+  }
+
+  removePart(data) {
+    var index = this.purchaseOrder.poDetails.indexOf(data);
+    this.purchaseOrder.poDetails.splice(index, 1);
   }
 
   removeTermAndCondition(index) {
