@@ -10,7 +10,7 @@ import { Customer } from '../../../models/customer.model';
 import { CustomerService } from '../../customer/customer.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ClassConstants } from '../../../common/constants';
-import { PurchaseOrderDetail, PurchaseOrder, PurchaseOrderTerm, OrderDetails, CustomerOrderDetails } from '../../../models/purchase-order';
+import { PurchaseOrderDetail, PurchaseOrder, PurchaseOrderTerm } from '../../../models/purchase-order';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Observable } from 'rxjs';
 
