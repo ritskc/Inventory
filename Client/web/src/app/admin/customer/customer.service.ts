@@ -20,6 +20,14 @@ export class CustomerService {
     return this.apiService.get<Customer>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.customerUri }/${ companyId }/${ customerId }`);
   }
 
+  getAllPurchaseOrders(companyId: number): Observable<PurchaseOrder[]> {
+    return this.apiService.get<PurchaseOrder[]>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.ordersUri }/${ companyId }`)
+  }
+
+  getPurchaseOrder(companyId: number, orderId: number): Observable<PurchaseOrder> {
+    return this.apiService.get<PurchaseOrder>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.ordersUri }/${ companyId }/${ orderId }`)
+  }
+
   saveCustomer(customer: Customer) {
     if (customer.id == 0) 
       return this.apiService.post(customer, this.configService.Settings.apiServerHost + this.configService.Settings.customerUri);

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataColumn, DataColumnAction } from '../../../models/dataColumn.model';
 import { PartsService } from '../../parts/parts.service';
 import { SupplierService } from '../../supplier/supplier.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Supplier } from '../../../models/supplier.model';
 import { Part } from '../../../models/part.model';
 import { CompanyService } from '../../../company/company.service';
@@ -13,6 +13,7 @@ import { ClassConstants } from '../../../common/constants';
 import { PurchaseOrderDetail, PurchaseOrder, PurchaseOrderTerm } from '../../../models/purchase-order';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Observable } from 'rxjs';
+import { httpLoaderService } from '../../../common/services/httpLoader.service';
 
 @Component({
   selector: "app-order-detail",
@@ -27,6 +28,7 @@ export class OrderDetailComponent implements OnInit {
   private purchaseOrder: PurchaseOrder;
   private gridColumns: DataColumn[] = [];
   private selectedParts: Part[] = [];
+  private blankOrders: PurchaseOrder[] = [];
 
   private reference: string = "";
   private price: number = 0;
@@ -44,7 +46,8 @@ export class OrderDetailComponent implements OnInit {
 
   constructor(
     private partsService: PartsService, private supplierService: SupplierService, private companyService: CompanyService, private customerService: CustomerService,
-    private router: Router, private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private toastr: ToastrManager
+    private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private toastr: ToastrManager,
+    private loaderService: httpLoaderService
   ) {}
 
   ngOnInit() {
@@ -228,6 +231,36 @@ export class OrderDetailComponent implements OnInit {
         this.orderForm.get("partCode").setValue(value);
         break;
     }
+    this.loadBlankPurchaseOrdersForSelectedCustomer();
+  }
+
+  loadBlankPurchaseOrdersForSelectedCustomer() {
+    if (this.SelectedCustomer < 1) return;
+
+    this.loaderService.show();
+    this.customerService.getAllPurchaseOrders(this.currentlyLoaddedInCompanyId)
+      .subscribe((result) => {
+        this.blankOrders = [];
+        var selectedPartValue = this.orderForm.get("partCode").value;
+        result.filter(o => o.customerId == this.SelectedCustomer && o.orderDetails.findIndex(o => o.partId == selectedPartValue) >= 0
+          ).map(o => this.blankOrders.push(o));
+        this.blanketPOId = -1;
+      }, (error) => {
+        console.log(error);
+      }, () => {
+        this.loaderService.hide();
+      });
+  }
+
+  blankPOSelected() {
+    var poId = this.orderForm.get('blanketPOId').value;
+    this.loaderService.show();
+    this.customerService.getPurchaseOrder(this.currentlyLoaddedInCompanyId, poId)
+        .subscribe((result) => {
+          var selectedPartValue = this.orderForm.get("partCode").value;
+          this.orderForm.get('blanketPOAdjQty').setValue(result.orderDetails.find(p => p.partId == selectedPartValue).part.openingQty);
+        }, (error) => { console.log(error) }
+        , () => {})
   }
 
   addPartToOrder() {

@@ -1,3 +1,5 @@
+import { Part } from './part.model';
+
 export class PurchaseOrder {
     id: number = 0;
     companyId: number = 0;
@@ -45,6 +47,7 @@ export class PurchaseOrderDetail {
     partCode: string;
     description: string;
     total: number;
+    part: Part
 
     orderId: number = 0;
 }

@@ -84,8 +84,9 @@
           </div>
           <div class="form-group standard-top-margin row" *ngIf="SelectedCustomer > -1 && !isBlanketPO">
             <label class="col-md-3 col-xs-3 label-top-adjustment">Blank PO</label>
-            <select [attr.disabled]="disabled? '': null" class="form-control col-md-3 col-xs-3" formControlName="blanketPOId" [(ngModel)]="blanketPOId">
-                <option value="-1">Select Blank PO</option>
+            <select [attr.disabled]="disabled? '': null" class="form-control col-md-3 col-xs-3" formControlName="blanketPOId" [(ngModel)]="blanketPOId" (change)="blankPOSelected()">
+                <option value="-1">Blank PO</option>
+                <option *ngFor="let order of blankOrders" [value]="order.id">{{order.poNo}}</option>
             </select>
             <label class="col-md-3 col-xs-3 label-top-adjustment">Open Qty</label>
             <input class="col-md-3 col-xs-3 form-control" type="text" formControlName="blanketPOAdjQty" [(ngModel)]="blanketPOAdjQty"/>
