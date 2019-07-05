@@ -60,7 +60,7 @@ export const navItems: NavData[] = [
       },
       {
         name: 'Invoice',
-        url: '/supplier-invoice',
+        url: '/invoice',
         icon: 'icon-puzzle',
           children: [
             {

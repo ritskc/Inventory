@@ -39,6 +39,8 @@
                   <tr>
                     <td *ngFor="let item of columns">
                       <span *ngIf="!item.isLink && !item.nested">{{row[item.value]}}</span>
+                      <span *ngIf="item.constantText && !item.isLink">{{item.constantText}}</span>
+                      <span class="clickable" *ngIf="item.constantText && item.isLink">{{item.constantText}}</span>
                       <span class="clickable" (click)="rowSelected(row)" *ngIf="item.isLink">{{row[item.value]}}</span>
                       <span *ngIf="item.nested">{{row[item.value][item.nested]}}</span>
                       <div *ngIf="item.isActionColumn">
