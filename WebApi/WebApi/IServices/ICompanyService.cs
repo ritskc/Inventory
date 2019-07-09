@@ -9,7 +9,8 @@ namespace WebApi.IServices
     public interface ICompanyService
     {
         Task<IEnumerable<Company>> GetAllCompanyAsync();
-        Task<Company> GetCompanyAsync(long id);
+        Task<Company> GetCompanyAsync(long id);        
+        Task<Company> GetCompanyByNameAsync(string name);
         Task AddCompanyAsync(Company company);
         Task UpdateCompanyAsync(Company company);
         Task DeleteCompanyAsync(long id);

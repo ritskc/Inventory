@@ -54,8 +54,11 @@
     <Compile Include="IRepository\IOrderRepository.cs" />
     <Compile Include="IRepository\IPartRepository.cs" />
     <Compile Include="IRepository\IPoRepository.cs" />
+    <Compile Include="IRepository\ISupplierInvoiceRepository.cs" />
     <Compile Include="IRepository\ISupplierRepository.cs" />
+    <Compile Include="IRepository\ITransactionRepository.cs" />
     <Compile Include="IRepository\IUserRepository.cs" />
+    <Compile Include="Models\BusinessConstants.cs" />
     <Compile Include="Models\ConnectionInfo.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerShippingInfo.cs" />
@@ -68,11 +71,16 @@
     <Compile Include="Models\PoDetail.cs" />
     <Compile Include="Models\Po.cs" />
     <Compile Include="Models\PoTerm.cs" />
+    <Compile Include="Models\SupplierInvoiceDetail.cs" />
+    <Compile Include="Models\SupplierInvoice.cs" />
+    <Compile Include="Models\SupplierInvoicePoDetails.cs" />
+    <Compile Include="Models\TransactionDetail.cs" />
     <Compile Include="Repository\CustomerRepository.cs" />
     <Compile Include="Repository\EntityTrackerRepository.cs" />
     <Compile Include="Repository\OrderRepository.cs" />
     <Compile Include="Repository\PartRepository.cs" />
     <Compile Include="Repository\PoRepository.cs" />
+    <Compile Include="Repository\SupplierInvoiceRepository.cs" />
     <Compile Include="Repository\SupplierRepository.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Report.cs" />
@@ -83,8 +91,10 @@
     <Compile Include="Models\UserReportPriviledge.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CompanyRepository.cs" />
+    <Compile Include="Repository\TransactionRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Settings\ConnectionSettings.cs" />
+    <Compile Include="Util\DateTimeUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

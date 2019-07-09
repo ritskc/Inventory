@@ -11,5 +11,7 @@ namespace WebApi.IServices
         Task<IEnumerable<EntityTracker>> GetAllEntityTrackerAsync(int companyId);
         Task<EntityTracker> GetEntityTrackerAsync(int companyId, string FinYear);
         Task AddEntityTrackerAsyncAsync(EntityTracker entityTracker);
+        Task<EntityTracker> GetEntityAsync(int companyId, DateTime dateTime, string entity);
+        Task AddEntityAsync(int companyId, DateTime dateTime, string entity);
     }
 }

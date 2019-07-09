@@ -28,6 +28,11 @@ namespace WebApi.Services
             return await Task.Run(() => GetAllCompanyAsync().Result.Where(p => p.Id == id).FirstOrDefault());
         }
 
+        public async Task<Company> GetCompanyByNameAsync(string name)
+        {
+            return await Task.Run(() => GetAllCompanyAsync().Result.Where(p => p.Name == name).FirstOrDefault());
+        }
+
         public async Task AddCompanyAsync(Company company)
         {
             await this._companyRepository.AddCompanyAsync(company);

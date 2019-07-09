@@ -13,6 +13,7 @@ namespace WebApi.IServices
     {
         Task<IEnumerable<Supplier>> GetAllSupplierAsync(int companyId);
         Task<Supplier> GetSupplierAsync(int id);
+        Task<Supplier> GetSupplierByNameAsync(int companyId, string supplierName);
         Task AddSupplierAsync(Supplier supplier);
         Task UpdateSupplierAsync(Supplier supplier);
         Task DeleteSupplierAsync(long id);

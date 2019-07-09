@@ -12,11 +12,13 @@ namespace WebApi.Services
     {
         private readonly IPoRepository _poRepository;
         private readonly IPartRepository _partRepository;
+        private readonly IEntityTrackerRepository _entityTrackerRepository;
 
-        public PoService(IPoRepository poRepository,IPartRepository partRepository)
+        public PoService(IPoRepository poRepository,IPartRepository partRepository, IEntityTrackerRepository entityTrackerRepository)
         {
             _poRepository = poRepository;
             _partRepository = partRepository;
+            _entityTrackerRepository = entityTrackerRepository;
         }
 
 
@@ -47,7 +49,10 @@ namespace WebApi.Services
 
         public async Task AddPoAsync(Po po)
         {
+            var entity = await this._entityTrackerRepository.GetEntityAsync(po.CompanyId,po.PoDate,BusinessConstants.ENTITY_TRACKER_PO);
+            po.PoNo = entity.EntityNo;
             await this._poRepository.AddPoAsync(po);
+            await this._entityTrackerRepository.AddEntityAsync(po.CompanyId, po.PoDate, BusinessConstants.ENTITY_TRACKER_PO);
         }
 
         public async Task UpdatePoAsync(Po po)

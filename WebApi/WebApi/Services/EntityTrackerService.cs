@@ -29,6 +29,16 @@ namespace WebApi.Services
         public async Task<EntityTracker> GetEntityTrackerAsync(int companyId, string FinYear)
         {
             return await this.entityTrackerRepository.GetEntityTrackerAsync(companyId, FinYear);
-        }        
+        }
+
+        public async Task<EntityTracker> GetEntityAsync(int companyId, DateTime dateTime,string entity)
+        {
+            return await this.entityTrackerRepository.GetEntityAsync(companyId, dateTime,entity);
+        }
+
+        public async Task AddEntityAsync(int companyId, DateTime dateTime, string entity)
+        {
+            await this.entityTrackerRepository.AddEntityAsync(companyId, dateTime, entity);
+        }
     }
 }

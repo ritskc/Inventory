@@ -44,5 +44,10 @@ namespace WebApi.Services
         {
             await Task.Run(() => this._supplierRepository.DeleteSupplierAsync(id));
         }
+
+        public async Task<Supplier> GetSupplierByNameAsync(int companyId, string supplierName)
+        {
+            return await this._supplierRepository.GetSupplierByNameAsync(companyId,supplierName);
+        }
     }
 }
