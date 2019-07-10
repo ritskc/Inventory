@@ -8,7 +8,8 @@
     "paths": {
       "@angular/*": [
         "../node_modules/@angular/*"
-      ]
+      ],
+      "jszip": ["../node_modules/jszip/dist/jszip.min.js"]
     }
   },
   "exclude": [

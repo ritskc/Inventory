@@ -6,6 +6,7 @@ import { DataColumn, DataColumnAction } from '../../../models/dataColumn.model';
 import { Supplier } from '../../../models/supplier.model';
 import { SupplierService } from '../../supplier/supplier.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-invoice-list',
@@ -21,7 +22,7 @@ export class InvoiceListComponent implements OnInit {
   columns: DataColumn[] = [];
 
   constructor(private companyService: CompanyService, private invoiceService: InvoiceService, private supplierService: SupplierService,
-              private formBuilder: FormBuilder
+              private formBuilder: FormBuilder, private router: Router
     ) { }
 
   ngOnInit() {
@@ -72,5 +73,13 @@ export class InvoiceListComponent implements OnInit {
     console.log(supplierId);
     this.invoiceService.getAllSupplierInvoices(this.currentlyLoggedInCompany, supplierId)
         .subscribe((invoices) => this.invoices = invoices)
+  }
+
+  uploadInvoice() {
+    var selectedSupplierId = this.invoiceForm.get('supplierList').value;
+    if (selectedSupplierId > -1)
+      this.router.navigateByUrl(`/invoice/upload/${selectedSupplierId}`);
+    else
+      alert('Please select a supplier to proceed to upload');
   }
 }

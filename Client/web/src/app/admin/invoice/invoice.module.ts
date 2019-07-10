@@ -10,10 +10,12 @@ import { httpLoaderService } from '../../common/services/httpLoader.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../../common/services/api.service';
 import { InvoiceService } from './invoice.service';
+import { UploadInvoiceComponent } from './upload-invoice/upload-invoice.component';
 
 @NgModule({
   declarations: [
-    InvoiceListComponent
+    InvoiceListComponent,
+    UploadInvoiceComponent
   ],
   imports: [
     CommonModule,
