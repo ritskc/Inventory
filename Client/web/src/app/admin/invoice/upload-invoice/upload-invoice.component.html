@@ -68,7 +68,48 @@
               Upload Documents
             </div>
             <div class="card-body">
-              
+              <div class="row">
+                  <div class="col-lg-1 col-md-1">
+                    <span>Upload Invoice</span>
+                  </div>
+                  <div class="col-lg-4 col-md-4">
+                    <input type="file" class="btn btn-primary" (change)="uploadFile($event.target.files)" id="uploadInvoice"/>
+                  </div>
+                  <div class="col-lg-1 col-md-1">
+                    <span> </span>
+                  </div>
+                  <div class="col-lg-1 col-md-1">
+                    <span>Upload BL</span>
+                  </div>
+                  <div class="col-lg-4 col-md-4">
+                    <input type="file" class="btn btn-primary" (change)="uploadFile($event.target.files)" id="uploadBl"/>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-1 col-md-1">
+                    <span>Upload Packing</span>
+                  </div>
+                  <div class="col-lg-4 col-md-4">
+                    <input type="file" class="btn btn-primary" (change)="uploadFile($event.target.files)" id="uploadPacking"/>
+                  </div>
+                  <div class="col-lg-1 col-md-1">
+                    <span> </span>
+                  </div>
+                  <div class="col-lg-1 col-md-1">
+                    <span>Upload TC</span>
+                  </div>
+                  <div class="col-lg-4 col-md-4">
+                    <input type="file" class="btn btn-primary" (change)="uploadFile($event.target.files)" id="uploadTc"/>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-1 col-md-1">
+                    <span>Upload 10+2</span>
+                  </div>
+                  <div class="col-lg-4 col-md-4">
+                    <input type="file" class="btn btn-primary" (change)="uploadFile($event.target.files)" id="upload102"/>
+                  </div>
+              </div>
             </div>
         </div>
     </div>
