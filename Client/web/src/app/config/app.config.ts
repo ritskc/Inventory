@@ -16,7 +16,7 @@ export class AppConfigurations {
     invoiceUri: string;
 
     initialize() {
-        this.apiServerHost = 'http://questapi.yellow-chips.com';
+        this.apiServerHost = 'https://questapi.yellow-chips.com';
 
         this.usersUri = '/users';
         this.partsUri = '/parts';

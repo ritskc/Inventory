@@ -11,11 +11,13 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../../common/services/api.service';
 import { InvoiceService } from './invoice.service';
 import { UploadInvoiceComponent } from './upload-invoice/upload-invoice.component';
+import { ReceiveComponent } from './receive/receive.component';
 
 @NgModule({
   declarations: [
     InvoiceListComponent,
-    UploadInvoiceComponent
+    UploadInvoiceComponent,
+    ReceiveComponent
   ],
   imports: [
     CommonModule,

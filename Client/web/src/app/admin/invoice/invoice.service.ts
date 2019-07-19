@@ -22,4 +22,8 @@ export class InvoiceService {
   getSupplierInoice(companyId: number, invoiceId: number) : Observable<Invoice> {
     return this.apiService.get<Invoice>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/${ companyId }/${ invoiceId }`);
   }
+
+  receivedInvoice(supplierId: number, invoiceId: number) {
+    return this.apiService.post<number>(invoiceId, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/receive/${ invoiceId }`);
+  }
 }

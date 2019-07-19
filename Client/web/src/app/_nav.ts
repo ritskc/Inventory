@@ -67,6 +67,16 @@ export const navItems: NavData[] = [
               name: 'Barcode',
               url: '/supplier/barcode',
               icon: 'fa fa-barcode'
+            },
+            {
+              name: 'Invoice',
+              url: '/invoice',
+              icon: 'icon-puzzle'
+            },
+            {
+              name: 'Receive',
+              url: '/invoice/receive',
+              icon: 'icon-puzzle'
             }
           ]
       }
@@ -93,11 +103,6 @@ export const navItems: NavData[] = [
         name: 'Shipping',
         url: '/shipping',
         icon: 'fa fa-ship'
-      },
-      {
-        name: 'Invoice',
-        url: '/invoice',
-        icon: 'icon-puzzle'
       },
       {
         name: 'POS',
