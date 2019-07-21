@@ -15,6 +15,7 @@ namespace DAL.Models
         public int BlanketPOAdjQty { get; set; }
         public int LineNumber { get; set; }
         public int Qty { get; set; }
+        public int ShippedQty { get; set; }
         public decimal UnitPrice { get; set; }
         public DateTime DueDate { get; set; }
         public string Note { get; set; }

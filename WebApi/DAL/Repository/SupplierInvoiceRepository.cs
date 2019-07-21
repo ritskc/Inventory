@@ -81,16 +81,7 @@ namespace DAL.Repository
 
                         }
                     }
-
-                    //foreach (SupplierInvoicePoDetails supplierInvoicePoDetails in part.partCustomerAssignments)
-                    //{
-                    //    sql = string.Format($"INSERT INTO [dbo].[SupplierInvoicePoDetails]   ([InvoiceDetailId]   ,[PODetailId]   ,[PONo]   ,[Qty]) VALUES   ('{supplierInvoicePoDetails.InvoiceDetailId}'   ,'{supplierInvoicePoDetails.PODetailId}'   ,'{supplierInvoicePoDetails.PONo}'   ,'{supplierInvoicePoDetails.Qty}')");
-
-                    //    command.CommandText = sql;
-                    //    await command.ExecuteNonQueryAsync();
-                    //}
-
-                    // Attempt to commit the transaction.
+                   
                     transaction.Commit();
                 }
                 catch (Exception ex)

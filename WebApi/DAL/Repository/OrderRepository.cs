@@ -58,7 +58,7 @@ namespace DAL.Repository
             {
                 List<OrderDetail> orderDetails = new List<OrderDetail>();
                 commandText = string.Format("SELECT [Id] ,[OrderId] ,[PartId] ,[BlanketPOId] ,[BlanketPOAdjQty] ,[LineNumber] ,[Qty] ,[UnitPrice] " +
-                    ",[DueDate] ,[Note]  FROM [dbo].[OrderDetail]  where orderid = '{0}'", order.Id);
+                    ",[DueDate] ,[Note],[ShippedQty]  FROM [dbo].[OrderDetail]  where orderid = '{0}'", order.Id);
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                 {
@@ -75,6 +75,7 @@ namespace DAL.Repository
                         orderDetail.BlanketPOId = Convert.ToInt64(dataReader1["BlanketPOId"]);
                         orderDetail.LineNumber = Convert.ToInt32(dataReader1["LineNumber"]);
                         orderDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                        orderDetail.ShippedQty = Convert.ToInt32(dataReader1["ShippedQty"]);
                         orderDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
                         orderDetail.DueDate = Convert.ToDateTime(dataReader1["DueDate"]);
                         orderDetail.Note = Convert.ToString(dataReader1["Note"]);
@@ -122,7 +123,7 @@ namespace DAL.Repository
 
             List<OrderDetail> orderDetails = new List<OrderDetail>();
             commandText = string.Format("SELECT [Id] ,[OrderId] ,[PartId] ,[BlanketPOId] ,[BlanketPOAdjQty] ,[LineNumber] ,[Qty] ,[UnitPrice] " +
-                ",[DueDate] ,[Note]  FROM [dbo].[OrderDetail]  where orderid = '{0}'", order.Id);
+                ",[DueDate] ,[Note],[ShippedQty]  FROM [dbo].[OrderDetail]  where orderid = '{0}'", order.Id);
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
             {
@@ -139,6 +140,7 @@ namespace DAL.Repository
                     orderDetail.BlanketPOId = Convert.ToInt64(dataReader1["BlanketPOId"]);
                     orderDetail.LineNumber = Convert.ToInt32(dataReader1["LineNumber"]);
                     orderDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                    orderDetail.ShippedQty = Convert.ToInt32(dataReader1["ShippedQty"]);
                     orderDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
                     orderDetail.DueDate = Convert.ToDateTime(dataReader1["DueDate"]);
                     orderDetail.Note = Convert.ToString(dataReader1["Note"]);
@@ -177,7 +179,7 @@ namespace DAL.Repository
 
                     foreach (OrderDetail orderDetail in order.OrderDetails)
                     {
-                        sql = string.Format($"INSERT INTO [dbo].[OrderDetail]   ([OrderId]   ,[PartId]   ,[BlanketPOId]   ,[BlanketPOAdjQty]   ,[LineNumber]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note]) VALUES   ('{id}'   ,'{orderDetail.PartId}'   ,'{orderDetail.BlanketPOId}'   ,'{orderDetail.BlanketPOAdjQty}'   ,'{orderDetail.LineNumber}'   ,'{orderDetail.Qty}'   ,'{orderDetail.UnitPrice}'   ,'{orderDetail.DueDate}'   ,'{orderDetail.Note}')");
+                        sql = string.Format($"INSERT INTO [dbo].[OrderDetail]   ([OrderId]   ,[PartId]   ,[BlanketPOId]   ,[BlanketPOAdjQty]   ,[LineNumber]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note],[ShippedQty]) VALUES   ('{id}'   ,'{orderDetail.PartId}'   ,'{orderDetail.BlanketPOId}'   ,'{orderDetail.BlanketPOAdjQty}'   ,'{orderDetail.LineNumber}'   ,'{orderDetail.Qty}'   ,'{orderDetail.UnitPrice}'   ,'{orderDetail.DueDate}'   ,'{orderDetail.Note}','{0}')");
 
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
@@ -223,7 +225,7 @@ namespace DAL.Repository
 
                     foreach (OrderDetail orderDetail in order.OrderDetails)
                     {
-                        sql = string.Format($"INSERT INTO [dbo].[OrderDetail]   ([OrderId]   ,[PartId]   ,[BlanketPOId]   ,[BlanketPOAdjQty]   ,[LineNumber]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note]) VALUES   ('{order.Id}'   ,'{orderDetail.PartId}'   ,'{orderDetail.BlanketPOId}'   ,'{orderDetail.BlanketPOAdjQty}'   ,'{orderDetail.LineNumber}'   ,'{orderDetail.Qty}'   ,'{orderDetail.UnitPrice}'   ,'{orderDetail.DueDate}'   ,'{orderDetail.Note}')");
+                        sql = string.Format($"INSERT INTO [dbo].[OrderDetail]   ([OrderId]   ,[PartId]   ,[BlanketPOId]   ,[BlanketPOAdjQty]   ,[LineNumber]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note],[ShippedQty]) VALUES   ('{order.Id}'   ,'{orderDetail.PartId}'   ,'{orderDetail.BlanketPOId}'   ,'{orderDetail.BlanketPOAdjQty}'   ,'{orderDetail.LineNumber}'   ,'{orderDetail.Qty}'   ,'{orderDetail.UnitPrice}'   ,'{orderDetail.DueDate}'   ,'{orderDetail.Note}','{0}')");
 
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();

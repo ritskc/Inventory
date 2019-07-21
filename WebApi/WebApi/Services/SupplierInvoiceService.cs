@@ -105,6 +105,8 @@ namespace WebApi.Services
                 transactionDetail.TransactionDate = DateTime.Now;
                 transactionDetail.DirectionId = BusinessConstants.DIRECTION.IN;
                 transactionDetail.InventoryType = BusinessConstants.INVENTORY_TYPE.INTRANSIT_QTY;
+                transactionDetail.ReferenceNo = supplierInvoice.InvoiceNo;
+
                 await this._transactionRepository.AddTransactionAsync(transactionDetail);
             }
             

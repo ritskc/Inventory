@@ -90,6 +90,7 @@ namespace WebApi
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<ISupplierInvoiceService, SupplierInvoiceService>();
             services.AddTransient<IEntityTrackerService, EntityTrackerService>();
+            services.AddTransient<IPackingSlipService, PackingSlipService>();
 
             //add repositories here
             //services.AddScoped<IPartRepository, PartRepository>();
@@ -103,6 +104,7 @@ namespace WebApi
             services.AddTransient<ISupplierInvoiceRepository, SupplierInvoiceRepository>();
             services.AddTransient<IEntityTrackerRepository, EntityTrackerRepository>();
             services.AddTransient<ITransactionRepository, TransactionRepository>();
+            services.AddTransient<IPackingSlipRepository, PackingSlipRepository>();
 
             //add helpers here
             services.AddScoped<ISqlHelper, SqlHelper>();
