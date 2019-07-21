@@ -30,8 +30,23 @@ export const navItems: NavData[] = [
     children: [
       {
         name: 'Company',
-        url: '/companies',
-        icon: 'fa fa-building-o'
+        children: [
+          {
+            name: 'Company',
+            url: '/companies',
+            icon: 'fa fa-building-o'
+          }
+        ]
+      },
+      {
+        name: 'Shipping',
+        children: [
+          {
+            name: 'Create Shipment',
+            url: '/companies/create-shipment',
+            icon: 'icon-puzzle'
+          }
+        ]
       },
       {
         name: 'Parts',

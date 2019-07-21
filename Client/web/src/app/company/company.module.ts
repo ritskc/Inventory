@@ -15,12 +15,14 @@ import { httpLoaderService } from '../common/services/httpLoader.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../common/services/api.service';
 import { SharedModule } from '../common/shared/shared.module';
+import { CreateShipmentComponent } from './create-shipment/create-shipment.component';
 
 @NgModule({
   declarations: [
     CompanyListComponent, 
     CompanyDetailComponent,
-    ReportComponent
+    ReportComponent,
+    CreateShipmentComponent
   ],
   imports: [
     CommonModule,
