@@ -36,36 +36,36 @@
           </div>
           <div class="card-body">
               <div class="form-group standard-top-margin row">
-                <label class="col-md-4 col-xs-4 label-top-adjustment">Date</label>
-                <input type="date" class="form-control col-md-8 col-xs-8" [(ngModel)]="date"/>
+                <label class="col-md-4 col-xs-4 label-top-adjustment">Shipment Date</label>
+                <input type="date" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.ShippingDate"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Shipment Via</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipmentVia"/>
+                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.ShipVia"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">No of creates</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="noOfCrates"/>
+                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.Crates"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Total Boxes</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="totalBoxes"/>
+                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.Boxes"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Gross Weight</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="grossTotalWeight"/>
+                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.GrossWeight"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Shipping Charge</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shippingCharge"/>
+                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.ShippingCharge"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Customs Charge</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="customsCharge"/>
+                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.CustomCharge"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Payment Received</label>
-                <input type="checkbox" class="form-control col-md-8 col-xs-8" [(ngModel)]="paymentReceived"/>
+                <input type="checkbox" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.IsPaymentReceived"/>
               </div>
           </div>
         </div>
@@ -129,7 +129,7 @@
 <div class="card-footer">
   <div class="row">
       <span class="col-xs-10 col-md-10"> </span>
-      <button class="col-xs-2 col-md-2 btn btn-primary"><span class="fa fa-upload"></span> Create Shipment</button>
+      <button class="col-xs-2 col-md-2 btn btn-primary" (click)="createShipment()"><span class="fa fa-upload"></span> Create Shipment</button>
   </div>
 </div>
 

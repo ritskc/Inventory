@@ -14,6 +14,7 @@ export class AppConfigurations {
     posUri: string;
     ordersUri: string;
     invoiceUri: string;
+    shipmentUri: string;
 
     initialize() {
         this.apiServerHost = 'https://questapi.yellow-chips.com';
@@ -25,8 +26,9 @@ export class AppConfigurations {
         this.supplierUri = '/suppliers'
         this.customerUri = '/customers'
         this.posUri = '/pos';
-        this.ordersUri = '/orders'
-        this.invoiceUri = '/supplierinvoice'
+        this.ordersUri = '/orders';
+        this.invoiceUri = '/supplierinvoice';
+        this.shipmentUri = '/PackingSlips';
     }
 }
 
