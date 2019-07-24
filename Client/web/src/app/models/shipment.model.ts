@@ -1,30 +1,31 @@
 export class Shipment {
 
     constructor() {
-        this.PackingSlipDetails = [];
+        this.packingSlipDetails = [];
     }
 
     CompanyId: number = 0;
-    CustomerId: number = 0;
-    PackingSlipNo: string = '';
-    ShippingDate: string = '';
-    ShipVia: string = '';
-    Crates: number = 0;
-    Boxes: number = 0;
-    GrossWeight: number = 0;
-    ShippingCharge: number = 0;
-    CustomCharge: number = 0;
-    IsPaymentReceived: boolean = false;
-    PackingSlipDetails: PackingSlipDetail[] = [];
+    customerId: number = 0;
+    packingSlipNo: string = '';
+    shippingDate: string = '';
+    shipVia: string = '';
+    crates: number = 0;
+    boxes: number = 0;
+    grossWeight: number = 0;
+    shippingCharge: number = 0;
+    customCharge: number = 0;
+    isPaymentReceived: boolean = false;
+    packingSlipDetails: PackingSlipDetail[] = [];
 }
 
 export class PackingSlipDetail{
-    IsBlankOrder: boolean = false;
-    OrderId: number = 0;
-    OrderDetailId: number = 0;
-    PartId: number = 0;
-    OrderNumber: string = '';
-    PartDescription: string = '';
-    Qty: number = 0;
-    InBasket: boolean = false;
+    isBlankOrder: boolean = false;
+    orderId: number = 0;
+    orderDetailId: number = 0;
+    partId: number = 0;
+    orderNo: string = '';
+    partDescription: string = '';
+    qty: number = 0;
+    inBasket: boolean = false;
+    boxes: number = 0;
 }

@@ -37,35 +37,35 @@
           <div class="card-body">
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Shipment Date</label>
-                <input type="date" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.ShippingDate"/>
+                <input type="date" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.shippingDate"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Shipment Via</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.ShipVia"/>
+                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.shipVia"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">No of creates</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.Crates"/>
+                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.crates"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Total Boxes</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.Boxes"/>
+                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.boxes"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Gross Weight</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.GrossWeight"/>
+                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.grossWeight"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Shipping Charge</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.ShippingCharge"/>
+                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.shippingCharge"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Customs Charge</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.CustomCharge"/>
+                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.customCharge"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Payment Received</label>
-                <input type="checkbox" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.IsPaymentReceived"/>
+                <input type="checkbox" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.isPaymentReceived"/>
               </div>
           </div>
         </div>
@@ -104,12 +104,14 @@
               <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="quantity"/>
             </div>
             <div class="form-group standard-top-margin row">
-              <label class="col-md-4 col-xs-4 label-top-adjustment">Quantity In Hand</label>
-              <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="quantityInHand"/>
+              <label class="col-md-3 col-xs-3 label-top-adjustment">Qty In Hand</label>
+              <label class="col-md-3 col-xs-3 label-top-adjustment">Qty In Hand</label>
+              <label class="col-md-3 col-xs-3 label-top-adjustment">Open Qty</label>
+              <label class="col-md-3 col-xs-3 label-top-adjustment">Qty In Hand</label>
             </div>
             <div class="form-group standard-top-margin row">
               <label class="col-md-4 col-xs-4 label-top-adjustment">No of Boxes</label>
-              <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="noOfBoxes"/>
+              <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="boxes"/>
             </div>
             <div class="form-group standard-top-margin row">
               <label class="col-md-4 col-xs-4 label-top-adjustment">In Basket</label>
@@ -123,7 +125,7 @@
 </div>
 
 <div>
-  <simple-grid [addRequired]="false" [exportRequired]="false" [data]="shipment.PackingSlipDetails" [columns]="columnsForPartsGrid"></simple-grid>
+  <simple-grid [addRequired]="false" [exportRequired]="false" [data]="shipment.packingSlipDetails" [columns]="columnsForPartsGrid"></simple-grid>
 </div>
 
 <div class="card-footer">
@@ -133,6 +135,6 @@
   </div>
 </div>
 
-<div *ngIf="false" class="container-margin-top">
-  <simple-grid [addRequired]="false" [exportRequired]="false"></simple-grid>
+<div class="container-margin-top">
+  <simple-grid [addRequired]="false" [exportRequired]="false" [data]="shipmentsViewModel" [columns]="columnsForOrderGrid"></simple-grid>
 </div>

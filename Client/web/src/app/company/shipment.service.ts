@@ -11,8 +11,8 @@ export class ShipmentService {
 
   constructor(private apiService: ApiService, private config: ConfigService) { }
 
-  getAllShipments(): Observable<Shipment[]> {
-    return this.apiService.get<Shipment[]>(this.config.Settings.apiServerHost + this.config.Settings.shipmentUri);
+  getAllShipments(companyId: number): Observable<Shipment[]> {
+    return this.apiService.get<Shipment[]>(this.config.Settings.apiServerHost + this.config.Settings.shipmentUri + '/' + companyId);
   }
 
   getAShipment(shipmentId: number): Observable<Shipment> {

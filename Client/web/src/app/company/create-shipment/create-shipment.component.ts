@@ -23,7 +23,10 @@ export class CreateShipmentComponent implements OnInit {
   private customerAssociatedParts: Part[] = [];
   private customerPurchaseOrders: PurchaseOrder[] = [];
   private shipment: Shipment = new Shipment();
+  private shipments: Shipment[] = [];
   private columnsForPartsGrid: DataColumn[] = [];
+  private columnsForOrderGrid: DataColumn[] = [];
+  private shipmentsViewModel: ShipmentsViewModel[] = [];
 
   private selectedCustomer: Customer = new Customer();
 
@@ -32,6 +35,7 @@ export class CreateShipmentComponent implements OnInit {
   private partCode: number = 0;
   private quantity: number = 0;
   private inBasket: boolean = false;
+  private boxes: number = 0;
 
   constructor(private companyservice: CompanyService, private customerService: CustomerService, private partsService: PartsService,
               private shipmentService: ShipmentService, private toastr: ToastrManager) { }
@@ -72,7 +76,7 @@ export class CreateShipmentComponent implements OnInit {
     this.customerPurchaseOrders = [];
     this.columnsForPartsGrid = [];
     this.selectedCustomer = this.customers.find(c => c.id == event.target.value);
-    this.shipment.CustomerId = this.selectedCustomer.id;
+    this.shipment.customerId = this.selectedCustomer.id;
 
     this.customerService.getAllPurchaseOrders(this.currentlyLoggedInCompany)
         .subscribe((orders) => {
@@ -89,31 +93,61 @@ export class CreateShipmentComponent implements OnInit {
           this.customerAssociatedParts.push(part);
       });
     });
+
+    this.getAllShipmentsForSelectedCustomer();
+    this.createColumnsForShipmentGrid();
+  }
+
+  getAllShipmentsForSelectedCustomer() {
+    this.shipments = [];
+    this.shipmentService.getAllShipments(this.currentlyLoggedInCompany)
+        .subscribe(
+          (shipments) => { 
+            shipments.filter(s => s.customerId == this.selectedCustomer.id).forEach((shipment) => {
+              this.shipments.push(shipment);
+            });
+          },
+          (error) => { console.log(error); },
+          () => { this.transformShipmentListToViewModel(); }
+        );
   }
 
   addPart() {
-    if(this.shipment.PackingSlipDetails.length == 0) {
+    if(this.shipment.packingSlipDetails.length == 0) {
       this.createColumnsForPartsAddition();
     }
 
     var packagingSlipDetail = new PackingSlipDetail();
-    packagingSlipDetail.IsBlankOrder = this.blankOrder;
-    packagingSlipDetail.OrderId = this.orderId;
-    packagingSlipDetail.PartId = this.partCode;
-    packagingSlipDetail.PartDescription = this.parts.find(p => p.id == this.partCode).description;
-    packagingSlipDetail.OrderNumber = this.customerPurchaseOrders.find(o => o.id == this.orderId).poNo;
-    packagingSlipDetail.Qty = this.quantity;
-    packagingSlipDetail.InBasket = this.inBasket;
-    this.shipment.PackingSlipDetails.push(packagingSlipDetail);
+    packagingSlipDetail.isBlankOrder = this.blankOrder;
+    packagingSlipDetail.orderId = this.orderId;
+    packagingSlipDetail.partId = this.partCode;
+    packagingSlipDetail.partDescription = this.parts.find(p => p.id == this.partCode).description;
+    packagingSlipDetail.orderNo = this.customerPurchaseOrders.find(o => o.id == this.orderId).poNo;
+    packagingSlipDetail.qty = this.quantity;
+    packagingSlipDetail.boxes = this.boxes;
+    packagingSlipDetail.inBasket = this.inBasket;
+    this.shipment.packingSlipDetails.push(packagingSlipDetail);
   }
 
   createColumnsForPartsAddition() {
     this.columnsForPartsGrid = [];
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Blank Order", value: "IsBlankOrder" }) );
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Order Id", value: "OrderNumber" }) );
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Part", value: "PartDescription" }) );
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Quantity", value: "Qty" }) );
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "In Basket", value: "InBasket" }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Blank Order", value: "isBlankOrder" }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Order Id", value: "orderNo" }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Part", value: "partDescription" }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Quantity", value: "qty" }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "In Basket", value: "inBasket" }) );
+  }
+
+  createColumnsForShipmentGrid() {
+    this.columnsForOrderGrid = [];
+    this.columnsForOrderGrid.push( new DataColumn({ headerText: "Pack Slip No", value: "packagingSlipNumber" }) );
+    this.columnsForOrderGrid.push( new DataColumn({ headerText: "Date", value: "shippingDate" }) );
+    this.columnsForOrderGrid.push( new DataColumn({ headerText: "PO Number", value: "poNo" }) );
+    this.columnsForOrderGrid.push( new DataColumn({ headerText: "Part Code", value: "partCode" }) );
+    this.columnsForOrderGrid.push( new DataColumn({ headerText: "Quantity", value: "quantity" }) );
+    this.columnsForOrderGrid.push( new DataColumn({ headerText: "Boxes", value: "boxes" }) );
+    this.columnsForOrderGrid.push( new DataColumn({ headerText: "Creates", value: "crates" }) );
+    this.columnsForOrderGrid.push( new DataColumn({ headerText: "Shipment Via", value: "shipVia" }) );
   }
 
   createShipment() {
@@ -123,4 +157,33 @@ export class CreateShipmentComponent implements OnInit {
           (error) => { this.toastr.errorToastr('Error while creating shipment'); console.log(error); }
         );
   }
+
+  transformShipmentListToViewModel() {
+    this.shipmentsViewModel = [];
+    this.shipments.forEach((shipment) => {
+      shipment.packingSlipDetails.forEach((detail) => {
+        var shipmentViewModel = new ShipmentsViewModel();
+        shipmentViewModel.packagingSlipNumber = shipment.packingSlipNo;
+        shipmentViewModel.shippingDate = shipment.shippingDate;
+        shipmentViewModel.poNo = detail.orderNo;
+        shipmentViewModel.partCode = this.parts.find(p => p.id == detail.partId).code;
+        shipmentViewModel.quantity = detail.qty;
+        shipmentViewModel.boxes = detail.boxes;
+        shipmentViewModel.creates = shipment.crates;
+        shipmentViewModel.shipVia = shipment.shipVia;
+        this.shipmentsViewModel.push(shipmentViewModel);
+      });
+    });
+  }
+}
+
+export class ShipmentsViewModel {
+  packagingSlipNumber: string = '';
+  shippingDate: string = '';
+  poNo: string = '';
+  partCode: string = '';
+  quantity: number = 0;
+  boxes: number = 0;
+  creates: number = 0;
+  shipVia: string = '';
 }
