@@ -64,12 +64,12 @@ namespace WebApi.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] PackingSlip packingSlip)
+        public async Task<ActionResult<Int32>> Post([FromBody] PackingSlip packingSlip)
         {
             try
             {
-                await this.packingSlipService.AddPackingSlipAsync(packingSlip);
-                return Ok();
+                var result = await this.packingSlipService.AddPackingSlipAsync(packingSlip);
+                return result;
             }
             catch (Exception ex)
             {

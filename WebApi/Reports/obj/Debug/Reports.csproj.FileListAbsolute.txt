@@ -1,0 +1,15 @@
+C:\Ritesh\Projects\Inventory\WebApi\Reports\bin\Debug\Reports.dll
+C:\Ritesh\Projects\Inventory\WebApi\Reports\bin\Debug\Reports.pdb
+C:\Ritesh\Projects\Inventory\WebApi\Reports\bin\Debug\DAL.dll
+C:\Ritesh\Projects\Inventory\WebApi\Reports\bin\Debug\Newtonsoft.Json.dll
+C:\Ritesh\Projects\Inventory\WebApi\Reports\bin\Debug\netstandard.dll
+C:\Ritesh\Projects\Inventory\WebApi\Reports\bin\Debug\DAL.pdb
+C:\Ritesh\Projects\Inventory\WebApi\Reports\bin\Debug\DAL.dll.config
+C:\Ritesh\Projects\Inventory\WebApi\Reports\bin\Debug\Newtonsoft.Json.xml
+C:\Ritesh\Projects\Inventory\WebApi\Reports\obj\Debug\Reports.csprojAssemblyReference.cache
+C:\Ritesh\Projects\Inventory\WebApi\Reports\obj\Debug\RdlCompile.cache
+C:\Ritesh\Projects\Inventory\WebApi\Reports\obj\Debug\RdlCompile.compiled
+C:\Ritesh\Projects\Inventory\WebApi\Reports\obj\Debug\Reports.csproj.CoreCompileInputs.cache
+C:\Ritesh\Projects\Inventory\WebApi\Reports\obj\Debug\Reports.csproj.CopyComplete
+C:\Ritesh\Projects\Inventory\WebApi\Reports\obj\Debug\Reports.dll
+C:\Ritesh\Projects\Inventory\WebApi\Reports\obj\Debug\Reports.pdb

@@ -22,8 +22,9 @@ namespace DAL.Repository
             this._sqlHelper = sqlHelper;
             this._orderRepository = orderRepository;
         }
-        public async Task AddPackingSlipAsync(PackingSlip packingSlip)
+        public async Task<Int32> AddPackingSlipAsync(PackingSlip packingSlip)
         {
+            Int32 packingSlipId;
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
                 connection.Open();
@@ -45,7 +46,7 @@ namespace DAL.Repository
 
                     sql = sql + " Select Scope_Identity()";
                     command.CommandText = sql;
-                    var packingSlipId = command.ExecuteScalar();
+                    packingSlipId = Convert.ToInt32( command.ExecuteScalar());
                     packingSlip.Id =  Convert.ToInt32(packingSlipId);
 
                     foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
@@ -60,10 +61,16 @@ namespace DAL.Repository
                         {
                             var orderResult = await _orderRepository.GetOrderMasterAsync(packingSlipDetail.OrderId);
 
-                            var orderDetail = orderResult.OrderDetails.Where(x => x.Id == packingSlipDetail.OrderDetailId).FirstOrDefault();
+                            if (orderResult != null)
+                            {
+                                var orderDetail = orderResult.OrderDetails.Where(x => x.Id == packingSlipDetail.OrderDetailId).FirstOrDefault();
 
-                            sql = string.Format($"UPDATE [dbo].[OrderDetail]   SET [ShippedQty] = '{orderDetail.ShippedQty + packingSlipDetail.Qty - packingSlipDetail.ExcessQty}'  WHERE id = '{orderDetail.Id}' ");
-                            await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                                if (orderDetail != null)
+                                {
+                                    sql = string.Format($"UPDATE [dbo].[OrderDetail]   SET [ShippedQty] = '{orderDetail.ShippedQty + packingSlipDetail.Qty - packingSlipDetail.ExcessQty}'  WHERE id = '{orderDetail.Id}' ");
+                                    await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                                }
+                            }
                         }
                     }
                     
@@ -74,7 +81,8 @@ namespace DAL.Repository
                     transaction.Rollback();
                     throw ex;
                 }
-            }            
+            }
+            return packingSlipId;
         }
 
         public async  Task CreateInvoiceAsync(PackingSlip packingSlip)
@@ -249,6 +257,88 @@ namespace DAL.Repository
                     packingSlip.Terms = Convert.ToString(dataReader["Terms"]);
                     packingSlip.ShipmentInfoId = Convert.ToInt32(dataReader["ShipmentInfoId"]);
                     packingSlip.InvoiceDate = Convert.ToDateTime(dataReader["InvoiceDate"]);                   
+                }
+                conn.Close();
+            }
+
+            List<PackingSlipDetails> packingSlipDetails = new List<PackingSlipDetails>();
+            commandText = string.Format($"SELECT [Id] ,[PackingSlipId] ,[IsBlankOrder] ,[OrderNo] ,[OrderId] ,[OrderDetailId] ,[PartId] ,[Qty] ," +
+                $"[Boxes] ,[InBasket] ,[UnitPrice] ,[Price] ,[Surcharge] ,[SurchargePerPound] ,[SurchargePerUnit] ,[TotalSurcharge] ,[ExcessQty]  FROM [dbo].[PackingSlipDetails] where PackingSlipId = '{ packingSlip.Id}'");
+
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+            {
+                cmd1.CommandType = CommandType.Text;
+                conn.Open();
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader1.Read())
+                {
+                    var packingSlipDetail = new PackingSlipDetails();
+                    packingSlipDetail.Id = Convert.ToInt32(dataReader1["Id"]);
+                    packingSlipDetail.PackingSlipId = Convert.ToInt32(dataReader1["PackingSlipId"]);
+                    packingSlipDetail.IsBlankOrder = Convert.ToBoolean(dataReader1["IsBlankOrder"]);
+                    packingSlipDetail.OrderNo = Convert.ToString(dataReader1["OrderNo"]);
+                    packingSlipDetail.OrderId = Convert.ToInt32(dataReader1["OrderId"]);
+                    packingSlipDetail.OrderDetailId = Convert.ToInt32(dataReader1["OrderDetailId"]);
+                    packingSlipDetail.PartId = Convert.ToInt32(dataReader1["PartId"]);
+                    packingSlipDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                    packingSlipDetail.Boxes = Convert.ToInt32(dataReader1["Boxes"]);
+                    packingSlipDetail.InBasket = Convert.ToBoolean(dataReader1["InBasket"]);
+                    packingSlipDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
+                    packingSlipDetail.Price = Convert.ToDecimal(dataReader1["Price"]);
+                    packingSlipDetail.Surcharge = Convert.ToDecimal(dataReader1["Surcharge"]);
+                    packingSlipDetail.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);
+                    packingSlipDetail.SurchargePerUnit = Convert.ToDecimal(dataReader1["SurchargePerUnit"]);
+                    packingSlipDetail.TotalSurcharge = Convert.ToDecimal(dataReader1["TotalSurcharge"]);
+                    packingSlipDetail.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);
+
+                    packingSlipDetails.Add(packingSlipDetail);
+                }
+            }
+            packingSlip.PackingSlipDetails = packingSlipDetails;
+            conn.Close();
+
+            return packingSlip;
+        }
+
+        public PackingSlip GetPackingSlip(long id)
+        {
+            var packingSlip = new PackingSlip();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[CustomerId] ,[PackingSlipNo] ,[ShippingDate] ,[ShipVia] ,[Crates] ," +
+                $"[Boxes] ,[GrossWeight] ,[ShippingCharge] ,[CustomCharge] ,[SubTotal] ,[Total] ,[IsInvoiceCreated] ,[IsPaymentReceived] ,[FOB] ,[Terms] ," +
+                $"[ShipmentInfoId] ,[InvoiceDate]  FROM [dbo].[PackingSlipMaster] where Id = '{id}' ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    packingSlip.Id = Convert.ToInt32(dataReader["Id"]);
+                    packingSlip.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
+                    packingSlip.CustomerId = Convert.ToInt32(dataReader["CustomerId"]);
+                    packingSlip.PackingSlipNo = Convert.ToString(dataReader["PackingSlipNo"]);
+                    packingSlip.ShippingDate = Convert.ToDateTime(dataReader["ShippingDate"]);
+                    packingSlip.ShipVia = Convert.ToString(dataReader["ShipVia"]);
+                    packingSlip.Crates = Convert.ToInt32(dataReader["Crates"]);
+                    packingSlip.Boxes = Convert.ToInt32(dataReader["Boxes"]);
+                    packingSlip.GrossWeight = Convert.ToDecimal(dataReader["GrossWeight"]);
+                    packingSlip.ShippingCharge = Convert.ToDecimal(dataReader["ShippingCharge"]);
+                    packingSlip.CustomCharge = Convert.ToDecimal(dataReader["CustomCharge"]);
+                    packingSlip.SubTotal = Convert.ToDecimal(dataReader["SubTotal"]);
+                    packingSlip.Total = Convert.ToDecimal(dataReader["Total"]);
+                    packingSlip.IsInvoiceCreated = Convert.ToBoolean(dataReader["IsInvoiceCreated"]);
+                    packingSlip.IsPaymentReceived = Convert.ToBoolean(dataReader["IsPaymentReceived"]);
+                    packingSlip.FOB = Convert.ToString(dataReader["FOB"]);
+                    packingSlip.Terms = Convert.ToString(dataReader["Terms"]);
+                    packingSlip.ShipmentInfoId = Convert.ToInt32(dataReader["ShipmentInfoId"]);
+                    packingSlip.InvoiceDate = Convert.ToDateTime(dataReader["InvoiceDate"]);
                 }
                 conn.Close();
             }

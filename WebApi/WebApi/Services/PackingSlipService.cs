@@ -21,12 +21,12 @@ namespace WebApi.Services
             this.transactionRepository = transactionRepository;
         }
 
-        public async Task AddPackingSlipAsync(PackingSlip packingSlip)
+        public async Task<Int32> AddPackingSlipAsync(PackingSlip packingSlip)
         {
             var entity = await this.entityTrackerRepository.GetEntityAsync(packingSlip.CompanyId, packingSlip.ShippingDate, BusinessConstants.ENTITY_TRACKER_PACKING_SLIP);
             packingSlip.PackingSlipNo = entity.EntityNo;
 
-            await this.packingSlipRepository.AddPackingSlipAsync(packingSlip);
+            var result = await this.packingSlipRepository.AddPackingSlipAsync(packingSlip);
 
             await this.entityTrackerRepository.AddEntityAsync(packingSlip.CompanyId, packingSlip.ShippingDate, BusinessConstants.ENTITY_TRACKER_PACKING_SLIP);
 
@@ -42,6 +42,7 @@ namespace WebApi.Services
                 transactionDetail.ReferenceNo = packingSlip.PackingSlipNo;
                 await this.transactionRepository.AddTransactionAsync(transactionDetail);
             }
+            return result;
         }
 
         public async Task CreateInvoiceAsync(PackingSlip packingSlip)

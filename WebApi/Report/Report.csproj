@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReportViewer\CopmanyReport.aspx" />
+    <Content Include="ReportViewer\PackingSlip.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -95,11 +96,19 @@
     <Compile Include="ReportViewer\CopmanyReport.aspx.designer.cs">
       <DependentUpon>CopmanyReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ReportViewer\PackingSlip.aspx.cs">
+      <DependentUpon>PackingSlip.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportViewer\PackingSlip.aspx.designer.cs">
+      <DependentUpon>PackingSlip.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Services\DataSetService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="connection.json" />
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -110,6 +119,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Report1.rdlc" />
     <EmbeddedResource Include="Reports\Company.rdlc" />
+    <EmbeddedResource Include="Reports\PackingSlip.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">
@@ -117,6 +127,7 @@
       <Name>DAL</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

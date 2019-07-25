@@ -6,6 +6,7 @@ using DAL.Models;
 using DAL.IRepository;
 using DAL.Repository;
 using DAL.DBHelper;
+using System.Threading.Tasks;
 
 namespace Report.Services
 {
@@ -18,6 +19,29 @@ namespace Report.Services
            
             return companyRepository.GetAllCompany().ToList();
                      
+        }
+
+        public static async Task<PackingSlip> GetPackingSlipAsync(int id)
+        {
+            ISqlHelper sqlHelper = new SqlHelper();
+            IOrderRepository oRepository = new OrderRepository(sqlHelper);
+            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository);
+
+            return await pRepository.GetPackingSlipAsync(id);
+        }
+
+        public static List<PackingSlip> GetPackingSlip(int id)
+        {
+            ISqlHelper sqlHelper = new SqlHelper();
+            IOrderRepository oRepository = new OrderRepository(sqlHelper);
+            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository);
+
+            var result = pRepository.GetPackingSlip(id);
+
+            List<PackingSlip> packingSlips = new List<PackingSlip>();
+            packingSlips.Add(result);
+            //packingSlips.Add(GetPackingSlipAsync(id).Result);
+            return packingSlips.ToList();
         }
     }
 }

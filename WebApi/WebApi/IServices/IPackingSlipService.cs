@@ -10,7 +10,7 @@ namespace WebApi.IServices
     {
         Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId);
         Task<PackingSlip> GetPackingSlipAsync(long Id);
-        Task AddPackingSlipAsync(PackingSlip packingSlip);
+        Task<Int32> AddPackingSlipAsync(PackingSlip packingSlip);
         Task UpdatePackingSlipAsync(PackingSlip packingSlip);
         Task<int> DeleteSupplierInvoiceAsync(long id);
         Task CreateInvoiceAsync(PackingSlip packingSlip);
