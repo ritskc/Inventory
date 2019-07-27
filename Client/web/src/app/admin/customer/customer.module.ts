@@ -10,11 +10,13 @@ import { SharedModule } from '../../common/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
+import { PurchaseOrdersComponent } from './purchase-orders/purchase-orders.component';
 
 @NgModule({
   declarations: [
     CustomerListComponent,
-    CustomerDetailComponent
+    CustomerDetailComponent,
+    PurchaseOrdersComponent
   ],
   imports: [
     CommonModule,
