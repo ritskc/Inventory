@@ -10,13 +10,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/DAL.dll">
-      <publishTime>07/24/2019 21:26:08</publishTime>
+      <publishTime>07/28/2019 17:46:48</publishTime>
     </File>
     <File Include="bin/DAL.dll.config">
       <publishTime>02/17/2019 12:46:54</publishTime>
     </File>
     <File Include="bin/DAL.pdb">
-      <publishTime>07/24/2019 21:26:08</publishTime>
+      <publishTime>07/28/2019 17:46:48</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>05/24/2018 14:38:22</publishTime>
@@ -43,10 +43,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/12/2014 20:48:20</publishTime>
     </File>
     <File Include="bin/Report.dll">
-      <publishTime>07/24/2019 21:26:09</publishTime>
+      <publishTime>07/28/2019 17:46:50</publishTime>
     </File>
     <File Include="bin/Report.pdb">
-      <publishTime>07/24/2019 21:26:09</publishTime>
+      <publishTime>07/28/2019 17:46:50</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/24/2018 14:38:22</publishTime>
@@ -189,11 +189,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="connection.json">
       <publishTime>03/07/2019 14:06:47</publishTime>
     </File>
+    <File Include="Reports/Resource/HI.png">
+      <publishTime>07/28/2019 16:25:28</publishTime>
+    </File>
     <File Include="ReportViewer/CopmanyReport.aspx">
       <publishTime>07/24/2019 20:50:28</publishTime>
     </File>
     <File Include="ReportViewer/PackingSlip.aspx">
-      <publishTime>07/24/2019 20:57:34</publishTime>
+      <publishTime>07/28/2019 15:34:11</publishTime>
     </File>
     <File Include="Web.config">
       <publishTime>07/24/2019 21:26:10</publishTime>

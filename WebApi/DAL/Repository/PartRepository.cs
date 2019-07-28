@@ -128,6 +128,106 @@ namespace DAL.Repository
             return parts;
         }
 
+        public Part GetPart(long partId)
+        {
+            var part = new Part();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location] FROM [part] where id = '{0}' ", partId);
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+
+                    part.Id = Convert.ToInt64(dataReader["Id"]);
+                    part.Code = Convert.ToString(dataReader["Code"]);
+                    part.Description = Convert.ToString(dataReader["Description"]);
+                    part.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
+                    part.WeightInKg = Convert.ToDecimal(dataReader["WeightInKg"]);
+                    part.WeightInLb = Convert.ToDecimal(dataReader["WeightInLb"]);
+                    part.MinQty = Convert.ToInt32(dataReader["MinQty"]);
+                    part.MaxQty = Convert.ToInt32(dataReader["MaxQty"]);
+                    part.DrawingNo = Convert.ToString(dataReader["DrawingNo"]);
+                    part.DrawingUploaded = Convert.ToBoolean(dataReader["DrawingUploaded"]);
+                    part.DrawingFileName = Convert.ToString(dataReader["DrawingFileName"]);
+                    part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
+                    part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
+                    part.Location = Convert.ToString(dataReader["Location"]);
+
+                }
+                conn.Close();
+            }
+
+
+            List<PartSupplierAssignment> partSupplierAssignments = new List<PartSupplierAssignment>();
+            commandText = string.Format("SELECT [id],[PartID],[SupplierID],[MapCode],[Description],[QtyInHand],[QtyInTransit],[TotalQty],[UnitPrice] FROM [partsupplierassignment]  where partid = '{0}'", part.Id);
+
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+            {
+                cmd1.CommandType = CommandType.Text;
+                conn.Open();
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader1.Read())
+                {
+                    var partSupplierAssignment = new PartSupplierAssignment();
+                    partSupplierAssignment.Id = Convert.ToInt64(dataReader1["Id"]);
+                    partSupplierAssignment.PartID = Convert.ToInt64(dataReader1["PartID"]);
+                    partSupplierAssignment.SupplierID = Convert.ToInt32(dataReader1["SupplierID"]);
+                    partSupplierAssignment.MapCode = Convert.ToString(dataReader1["MapCode"]);
+                    partSupplierAssignment.Description = Convert.ToString(dataReader1["Description"]);
+                    partSupplierAssignment.QtyInHand = Convert.ToInt32(dataReader1["QtyInHand"]);
+                    partSupplierAssignment.QtyInTransit = Convert.ToInt32(dataReader1["QtyInTransit"]);
+                    partSupplierAssignment.TotalQty = Convert.ToInt32(dataReader1["TotalQty"]);
+                    partSupplierAssignment.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
+                    partSupplierAssignments.Add(partSupplierAssignment);
+                }
+
+                part.partSupplierAssignments = partSupplierAssignments;
+                conn.Close();
+            }
+
+
+            List<PartCustomerAssignment> partCustomerAssignments = new List<PartCustomerAssignment>();
+            commandText = string.Format("SELECT [id],[PartId] ,[CustomerId] ,[MapCode] ,[Description] ,[Weight] ,[Rate] ,[SurchargeExist] ,[SurchargePerPound]  FROM [partcustomerassignment]  where partid = '{0}'", part.Id);
+
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+            {
+                cmd1.CommandType = CommandType.Text;
+                conn.Open();
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader1.Read())
+                {
+                    var partCustomerAssignment = new PartCustomerAssignment();
+                    partCustomerAssignment.Id = Convert.ToInt64(dataReader1["Id"]);
+                    partCustomerAssignment.PartId = Convert.ToInt64(dataReader1["PartId"]);
+                    partCustomerAssignment.CustomerId = Convert.ToInt32(dataReader1["CustomerId"]);
+                    partCustomerAssignment.MapCode = Convert.ToString(dataReader1["MapCode"]);
+                    partCustomerAssignment.Description = Convert.ToString(dataReader1["Description"]);
+                    partCustomerAssignment.Weight = Convert.ToDecimal(dataReader1["Weight"]);
+                    partCustomerAssignment.Rate = Convert.ToDecimal(dataReader1["Rate"]);
+                    partCustomerAssignment.SurchargeExist = Convert.ToBoolean(dataReader1["SurchargeExist"]);
+                    partCustomerAssignment.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);                    
+
+                    partCustomerAssignments.Add(partCustomerAssignment);
+                }
+
+                part.partCustomerAssignments = partCustomerAssignments;
+                conn.Close();
+            }
+
+            return part;
+        }
+
         public async Task<Part> GetPartAsync(long partId)
         {
             var part = new Part();
@@ -216,7 +316,7 @@ namespace DAL.Repository
                     partCustomerAssignment.Weight = Convert.ToDecimal(dataReader1["Weight"]);
                     partCustomerAssignment.Rate = Convert.ToDecimal(dataReader1["Rate"]);
                     partCustomerAssignment.SurchargeExist = Convert.ToBoolean(dataReader1["SurchargeExist"]);
-                    partCustomerAssignment.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);                    
+                    partCustomerAssignment.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);
 
                     partCustomerAssignments.Add(partCustomerAssignment);
                 }

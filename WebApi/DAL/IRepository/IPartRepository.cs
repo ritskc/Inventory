@@ -11,6 +11,7 @@ namespace DAL.IRepository
     {
         Task<IEnumerable<Part>> GetAllPartsAsync(int companyId);
         Task<Part> GetPartAsync(long partId);
+        Part GetPart(long partId);
         Task<Part> GetPartByNameAsync(int companyId, string name);
         Task AddPartAsync(Part part);
         Task UpdatePartAsync(Part part);

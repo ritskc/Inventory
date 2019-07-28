@@ -55,6 +55,7 @@
     <Compile Include="IRepository\IPackingSlipRepository.cs" />
     <Compile Include="IRepository\IPartRepository.cs" />
     <Compile Include="IRepository\IPoRepository.cs" />
+    <Compile Include="IRepository\IReportRepository.cs" />
     <Compile Include="IRepository\ISupplierInvoiceRepository.cs" />
     <Compile Include="IRepository\ISupplierRepository.cs" />
     <Compile Include="IRepository\ITransactionRepository.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Models\OrderMaster.cs" />
     <Compile Include="Models\PackingSlip.cs" />
     <Compile Include="Models\PackingSlipDetails.cs" />
+    <Compile Include="Models\PackingSlipReport.cs" />
     <Compile Include="Models\Part.cs" />
     <Compile Include="Models\PartCustomerAssignment.cs" />
     <Compile Include="Models\PartSupplierAssignment.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Repository\PackingSlipRepository.cs" />
     <Compile Include="Repository\PartRepository.cs" />
     <Compile Include="Repository\PoRepository.cs" />
+    <Compile Include="Repository\ReportRepository.cs" />
     <Compile Include="Repository\SupplierInvoiceRepository.cs" />
     <Compile Include="Repository\SupplierRepository.cs" />
     <Compile Include="Models\Company.cs" />

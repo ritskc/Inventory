@@ -105,6 +105,7 @@ namespace WebApi
             services.AddTransient<IEntityTrackerRepository, EntityTrackerRepository>();
             services.AddTransient<ITransactionRepository, TransactionRepository>();
             services.AddTransient<IPackingSlipRepository, PackingSlipRepository>();
+            services.AddTransient<IReportRepository, ReportRepository>();
 
             //add helpers here
             services.AddScoped<ISqlHelper, SqlHelper>();

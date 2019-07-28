@@ -12,6 +12,7 @@ namespace DAL.IRepository
         Task<IEnumerable<Company>> GetAllCompanyAsync();
         IEnumerable<Company> GetAllCompany();
         Task<Company> GetCompanyAsync(int id);
+        Company GetCompany(int id);
         Task<Company> GetCompanyByNameAsync(string name);
         Task<int> AddCompanyAsync(Company company);
         Task<int> UpdateCompanyAsync(Company company);

@@ -137,6 +137,46 @@ namespace DAL.Repository
             }
         }
 
+        public Company GetCompany(int id)
+        {
+            try
+            {
+                Company company = new Company();
+                SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+                var commandText = string.Format("SELECT  [id] ,[Name]  ,[Address]  ,[PhoneNo]  ,[FaxNo]  ,[EMail] ,[ContactPersonName] ,[WHName] ,[WHAddress] ,[WHPhoneNo] ,[WHEmail] FROM [company] WITH(NOLOCK) WHERE id = '{0}'", id);
+                using (SqlCommand cmd = new SqlCommand(commandText, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    conn.Open();
+
+                    var dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                    while (dataReader.Read())
+                    {
+                        company.Id = Convert.ToInt32(dataReader["Id"]);
+                        company.Name = Convert.ToString(dataReader["Name"]);
+                        company.Address = Convert.ToString(dataReader["Address"]);
+                        company.PhoneNo = Convert.ToString(dataReader["PhoneNo"]);
+                        company.FaxNo = Convert.ToString(dataReader["FaxNo"]);
+                        company.EMail = Convert.ToString(dataReader["EMail"]);
+                        company.ContactPersonName = Convert.ToString(dataReader["ContactPersonName"]);
+                        company.WHName = Convert.ToString(dataReader["WHName"]);
+                        company.WHAddress = Convert.ToString(dataReader["WHAddress"]);
+                        company.WHPhoneNo = Convert.ToString(dataReader["WHPhoneNo"]);
+                        company.WHEmail = Convert.ToString(dataReader["WHEmail"]);
+
+                    }
+                    conn.Close();
+                }
+                return company;
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
         public async Task<Company> GetCompanyByNameAsync(string name)
         {
             try

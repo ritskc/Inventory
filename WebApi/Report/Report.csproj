@@ -83,6 +83,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Reports\Resource\HI.png" />
     <Content Include="ReportViewer\CopmanyReport.aspx" />
     <Content Include="ReportViewer\PackingSlip.aspx" />
     <Content Include="Web.config" />

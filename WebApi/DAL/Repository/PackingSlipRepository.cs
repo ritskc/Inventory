@@ -343,6 +343,32 @@ namespace DAL.Repository
                 conn.Close();
             }
 
+            packingSlip.customerShippingInfo = new CustomerShippingInfo();
+            commandText = string.Format($"SELECT  [id] ,[CustomerID] ,[Name] ,[ContactPersonName] ,[AddressLine1] " +
+                $",[City] ,[State] ,[ZIPCode] ,[IsDefault]  FROM [customershippinginfo] where Id = '{packingSlip.ShipmentInfoId}' ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    packingSlip.customerShippingInfo.Id = Convert.ToInt32(dataReader["Id"]);
+                    packingSlip.customerShippingInfo.Name = Convert.ToString(dataReader["Name"]);
+                    packingSlip.customerShippingInfo.ContactPersonName = Convert.ToString(dataReader["ContactPersonName"]);
+                    packingSlip.customerShippingInfo.AddressLine1 = Convert.ToString(dataReader["AddressLine1"]);
+                    packingSlip.customerShippingInfo.City = Convert.ToString(dataReader["City"]);
+                    packingSlip.customerShippingInfo.State = Convert.ToString(dataReader["State"]);
+                    packingSlip.customerShippingInfo.ZIPCode = Convert.ToString(dataReader["ZIPCode"]);
+                    packingSlip.customerShippingInfo.IsDefault = Convert.ToBoolean(dataReader["IsDefault"]);                    
+                }
+                conn.Close();
+            }
+
             List<PackingSlipDetails> packingSlipDetails = new List<PackingSlipDetails>();
             commandText = string.Format($"SELECT [Id] ,[PackingSlipId] ,[IsBlankOrder] ,[OrderNo] ,[OrderId] ,[OrderDetailId] ,[PartId] ,[Qty] ," +
                 $"[Boxes] ,[InBasket] ,[UnitPrice] ,[Price] ,[Surcharge] ,[SurchargePerPound] ,[SurchargePerUnit] ,[TotalSurcharge] ,[ExcessQty]  FROM [dbo].[PackingSlipDetails] where PackingSlipId = '{ packingSlip.Id}'");
