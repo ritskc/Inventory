@@ -49,6 +49,7 @@
                   <FontFamily>times New Roman</FontFamily>
                   <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
+                  <Format>MM/dd/yyyy</Format>
                 </Style>
               </TextRun>
             </TextRuns>
