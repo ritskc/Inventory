@@ -36,6 +36,8 @@ export class CreateShipmentComponent implements OnInit {
   private quantity: number = 0;
   private inBasket: boolean = false;
   private boxes: number = 0;
+  private iframeUrl: string = 'http://renovate.yellow-chips.com/ReportViewer/invoice.aspx?id=';
+  private displayiFrame: boolean = false;
 
   constructor(private companyservice: CompanyService, private customerService: CustomerService, private partsService: PartsService,
               private shipmentService: ShipmentService, private toastr: ToastrManager) { }
@@ -153,7 +155,12 @@ export class CreateShipmentComponent implements OnInit {
   createShipment() {
     this.shipmentService.createShipment(this.shipment)
         .subscribe(
-          (result) => { this.toastr.successToastr('Shipment Created Successfully!!') },
+          (result) => {
+            this.toastr.successToastr('Shipment Created Successfully!!');
+            this.iframeUrl += result;
+            this.displayiFrame = true;
+            this.shipment = new Shipment();
+          },
           (error) => { this.toastr.errorToastr('Error while creating shipment'); console.log(error); }
         );
   }
