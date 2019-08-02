@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-report',
@@ -9,16 +10,18 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class ReportComponent implements OnInit {
 
   private safeUrl: SafeResourceUrl = '';
+  private display: boolean = false;
   
-  @Input() display: boolean = false;
-
+  @Input() displayReportEvent: Observable<string>;
+  
   constructor(private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.reportSourceUrl);
+    this.displayReportEvent.subscribe((url: string) => {
+      this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+      this.display = true;
+    })
   }
-
-  @Input() reportSourceUrl: string = 'http://renovate.yellow-chips.com/ReportViewer/invoice.aspx?id=1008';
 
   close() {
     this.display = false;

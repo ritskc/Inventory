@@ -9,6 +9,7 @@ import { Shipment, PackingSlipDetail } from '../../models/shipment.model';
 import { DataColumn } from '../../models/dataColumn.model';
 import { ShipmentService } from '../shipment.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-create-shipment',
@@ -36,8 +37,7 @@ export class CreateShipmentComponent implements OnInit {
   private quantity: number = 0;
   private inBasket: boolean = false;
   private boxes: number = 0;
-  private iframeUrl: string = 'http://renovate.yellow-chips.com/ReportViewer/invoice.aspx?id=';
-  private displayiFrame: boolean = false;
+  private packagingSlipCreated: Subject<string> = new Subject<string>();
 
   constructor(private companyservice: CompanyService, private customerService: CustomerService, private partsService: PartsService,
               private shipmentService: ShipmentService, private toastr: ToastrManager) { }
@@ -157,8 +157,7 @@ export class CreateShipmentComponent implements OnInit {
         .subscribe(
           (result) => {
             this.toastr.successToastr('Shipment Created Successfully!!');
-            this.iframeUrl += result;
-            this.displayiFrame = true;
+            this.packagingSlipCreated.next(`http://renovate.yellow-chips.com/ReportViewer/PackingSlip.aspx?id=${result}`);
             this.shipment = new Shipment();
           },
           (error) => { this.toastr.errorToastr('Error while creating shipment'); console.log(error); }

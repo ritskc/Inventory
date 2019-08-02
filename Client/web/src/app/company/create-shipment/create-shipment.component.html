@@ -140,5 +140,5 @@
 </div>
 
 <div>
-  <app-report [reportSourceUrl]="iframeUrl" [display]="displayiFrame"></app-report>
+  <app-report [displayReportEvent]="packagingSlipCreated.asObservable()"></app-report>
 </div>
