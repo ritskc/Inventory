@@ -40,6 +40,29 @@ export class Invoice {
     supplierInvoiceDetails: InvoiceDetail[];
 }
 
+export class UploadInvoice {
+
+    constructor() {
+        this.supplierInvoiceDetails = [];
+    }
+
+    InvoiceNo: string = '';
+    InvoiceDate: string = '';
+    SupplierName: string = '';
+    PoNo: string = '';
+    CompanyName: string = '';
+    ETA: string = '';
+    UploadedDate: string = '';
+    supplierInvoiceDetails: UploadInvoiceDetail[];
+}
+
+export class UploadInvoiceDetail {
+    PartCode: string = '';
+    Qty: number = 0;
+    Price: number = 0;
+    Total: number = 0;
+}
+
 export class InvoiceDetail {
 
     constructor() {

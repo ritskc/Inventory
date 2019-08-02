@@ -16,7 +16,7 @@
                   </div>
                   <div class="form-group standard-top-margin row">
                     <label class="col-md-3 col-xs-3 label-top-adjustment">Invoice Date</label>
-                    <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-9 col-xs-9" [(ngModel)]="invoiceDate"/>
+                    <input [attr.disabled]="disabled? '': null" type="date" class="form-control col-md-9 col-xs-9" [(ngModel)]="invoiceDate"/>
                   </div>
                   <div class="form-group standard-top-margin row">
                     <label class="col-md-3 col-xs-3 label-top-adjustment">Supplier</label>
@@ -56,7 +56,7 @@
               Product Cart
             </div>
             <div class="card-body">
-              <simple-grid [data]="parts" [columns]="columns" [addRequired]="false" [exportRequired]="false"></simple-grid>
+              <simple-grid [data]="invoice.supplierInvoiceDetails" [columns]="columns" [addRequired]="false" [exportRequired]="false"></simple-grid>
             </div>
         </div>
     </div>
@@ -117,7 +117,7 @@
     <div class="col-lg-12 col-md-12 col-xs-12">
       <div class="card">
         <div class="card-footer">
-            <button class="btn btn-primary pull-right" (click)="save()"><i class="fa fa-save"></i> Upload</button>
+            <button class="btn btn-primary pull-right" (click)="uploadInvoice()"><i class="fa fa-save"></i> Upload</button>
         </div>
       </div>
     </div>

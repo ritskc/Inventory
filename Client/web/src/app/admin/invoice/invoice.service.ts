@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../../common/services/api.service';
 import { ConfigService } from '../../config/config.service';
 import { Observable } from 'rxjs';
-import { Invoice } from '../../models/invoice.model';
+import { Invoice, UploadInvoice } from '../../models/invoice.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +25,9 @@ export class InvoiceService {
 
   receivedInvoice(supplierId: number, invoiceId: number) {
     return this.apiService.post<number>(invoiceId, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/receive/${ invoiceId }`);
+  }
+
+  uploadInvoice(invoce: UploadInvoice) {
+    return this.apiService.post<UploadInvoice>(invoce, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }`);
   }
 }
