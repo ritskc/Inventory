@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CompanyListComponent } from './company-list/company-list.component';
 import { CompanyDetailComponent } from './company-detail/company-detail.component';
 import { CreateShipmentComponent } from './create-shipment/create-shipment.component';
+import { InventoryPartsListComponent } from './inventory-parts-list/inventory-parts-list.component';
 
 const routes: Routes = [{
   path: '',
@@ -26,6 +27,13 @@ const routes: Routes = [{
       component: CompanyDetailComponent,
       data: {
         title: 'Company Detail'
+      }
+    },
+    {
+      path: 'inventory',
+      component: InventoryPartsListComponent,
+      data: {
+        title: 'Inventory'
       }
     }
   ]

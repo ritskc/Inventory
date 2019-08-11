@@ -40,7 +40,7 @@ export const navItems: NavData[] = [
       },
       {
         name: 'Inventory',
-        url: '/inventory',
+        url: '/companies/inventory',
         icon: 'icon-puzzle'
       }
     ]
