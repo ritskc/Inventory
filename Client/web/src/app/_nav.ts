@@ -30,23 +30,8 @@ export const navItems: NavData[] = [
     children: [
       {
         name: 'Company',
-        children: [
-          {
-            name: 'Company',
-            url: '/companies',
-            icon: 'fa fa-building-o'
-          }
-        ]
-      },
-      {
-        name: 'Shipping',
-        children: [
-          {
-            name: 'Create Shipment',
-            url: '/companies/create-shipment',
-            icon: 'icon-puzzle'
-          }
-        ]
+        url: '/companies',
+        icon: 'fa fa-building-o'
       },
       {
         name: 'Parts',
@@ -79,11 +64,6 @@ export const navItems: NavData[] = [
         icon: 'icon-puzzle',
           children: [
             {
-              name: 'Barcode',
-              url: '/supplier/barcode',
-              icon: 'fa fa-barcode'
-            },
-            {
               name: 'Invoice',
               url: '/invoice',
               icon: 'icon-puzzle'
@@ -105,23 +85,13 @@ export const navItems: NavData[] = [
     name: 'Sale',
     children: [
       {
+        name: 'Create Shipment',
+        url: '/companies/create-shipment',
+        icon: 'icon-puzzle'
+      },
+      {
         name: 'Customer',
         url: '/customers',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: 'Order',
-        url: '/order',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: 'Shipping',
-        url: '/shipping',
-        icon: 'fa fa-ship'
-      },
-      {
-        name: 'POS',
-        url: '/pos',
         icon: 'icon-puzzle'
       }
     ]
