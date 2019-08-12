@@ -5,6 +5,7 @@ import { CompanyService } from '../../../company/company.service';
 import { SupplierService } from '../../supplier/supplier.service';
 import { InvoiceService } from '../invoice.service';
 import { DataColumn } from '../../../models/dataColumn.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-receive',
@@ -21,7 +22,8 @@ export class ReceiveComponent implements OnInit {
   private selectedSupplier = -1; 
   private selectedInvoice = -1;
 
-  constructor(private companyService: CompanyService, private supplierService: SupplierService, private service: InvoiceService) { }
+  constructor(private companyService: CompanyService, private supplierService: SupplierService, private service: InvoiceService,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompanyId = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -44,14 +46,20 @@ export class ReceiveComponent implements OnInit {
   loadSuppliers() {
     this.supplierService.getAllSuppliers(this.currentlyLoggedInCompanyId)
         .subscribe(
-          (suppliers) => { this.suppliers = suppliers; },
+          (suppliers) => { 
+            this.suppliers = suppliers;
+            if (this.activatedRoute.snapshot.params.id) {
+              this.selectedSupplier = this.activatedRoute.snapshot.params.id;
+              this.supplierSelected(null);
+            }            
+          },
           (error) => { console.log(error); },
           () => { }
         );
   }
 
   supplierSelected(event) {
-    var selectedSupplier = event.target.value;
+    var selectedSupplier = event ? event.target.value: this.activatedRoute.snapshot.params.id;
     this.supplierInvoices = [];
     this.supplierInvoice = new Invoice();
     

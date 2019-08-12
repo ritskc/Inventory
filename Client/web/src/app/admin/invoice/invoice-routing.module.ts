@@ -24,6 +24,13 @@ const routes: Routes = [{
       }
     },
     {
+      path: 'receive/:id',
+      component: ReceiveComponent,
+      data: {
+        title: 'Receive'
+      }
+    },
+    {
       path: 'upload/:id',
       component: UploadInvoiceComponent,
       data: {

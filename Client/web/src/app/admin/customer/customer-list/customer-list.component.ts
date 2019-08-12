@@ -34,7 +34,9 @@ export class CustomerListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Phone No", value: "telephoneNumber", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Email", value: "emailAddress", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, actions: [
-      new DataColumnAction({ actionText: 'Orders', actionStyle: ClassConstants.Primary, event: 'managePurchaseOrder' })
+      new DataColumnAction({ actionText: 'Orders', actionStyle: ClassConstants.Primary, event: 'managePurchaseOrder' }),
+      new DataColumnAction({ actionText: 'Shipment', actionStyle: ClassConstants.Primary, event: 'manageShipment' }),
+      new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'manageInvoice' })
     ] }) );
   }
 
@@ -66,10 +68,24 @@ export class CustomerListComponent implements OnInit {
       case 'managePurchaseOrder':
         this.redirectToCustomerPurchaseOrder(data);
         break;
+      case 'manageShipment':
+        this.redirectToCreateShipment(data);
+        break;
+      case 'manageInvoice':
+        this.redirectoToCustomerInvoice(data);
+        break;
     }
   }
 
   redirectToCustomerPurchaseOrder(customer: Customer) {
+    this.router.navigateByUrl(`/customers/purchase-order/${ customer.id }/${ UserAction.Details }`);
+  }
+
+  redirectToCreateShipment(customer: Customer) {
+    this.router.navigateByUrl(`/companies/create-shipment/${ customer.id }`);
+  }
+
+  redirectoToCustomerInvoice(customer: Customer) {
     this.router.navigateByUrl(`/customers/purchase-order/${ customer.id }/${ UserAction.Details }`);
   }
 }

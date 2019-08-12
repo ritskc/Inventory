@@ -23,6 +23,13 @@ const routes: Routes = [{
       }
     },
     {
+      path: 'create-shipment/:id',
+      component: CreateShipmentComponent,
+      data: {
+        title: 'Create Shipment'
+      }
+    },
+    {
       path: 'detail/:action/:id',
       component: CompanyDetailComponent,
       data: {

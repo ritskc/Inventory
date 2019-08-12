@@ -61,19 +61,7 @@ export const navItems: NavData[] = [
       {
         name: 'Invoice',
         url: '/invoice',
-        icon: 'icon-puzzle',
-          children: [
-            {
-              name: 'Invoice',
-              url: '/invoice',
-              icon: 'icon-puzzle'
-            },
-            {
-              name: 'Receive',
-              url: '/invoice/receive',
-              icon: 'icon-puzzle'
-            }
-          ]
+        icon: 'icon-puzzle'
       }
     ]
   },

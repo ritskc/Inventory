@@ -10,6 +10,7 @@ import { DataColumn } from '../../models/dataColumn.model';
 import { ShipmentService } from '../shipment.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-shipment',
@@ -19,6 +20,7 @@ import { Subject } from 'rxjs';
 export class CreateShipmentComponent implements OnInit {
 
   private currentlyLoggedInCompany: number = 0;
+  private selectedCustomerId: number = 0;
   private customers: Customer[] = [];
   private parts: Part[] = [];
   private customerAssociatedParts: Part[] = [];
@@ -40,9 +42,10 @@ export class CreateShipmentComponent implements OnInit {
   private packagingSlipCreated: Subject<string> = new Subject<string>();
 
   constructor(private companyservice: CompanyService, private customerService: CustomerService, private partsService: PartsService,
-              private shipmentService: ShipmentService, private toastr: ToastrManager) { }
+              private shipmentService: ShipmentService, private toastr: ToastrManager, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.selectedCustomerId = this.activatedRoute.snapshot.params.id;
     this.currentlyLoggedInCompany = this.companyservice.getCurrentlyLoggedInCompanyId();
     this.shipment = new Shipment();
     this.shipment.CompanyId = this.currentlyLoggedInCompany;
@@ -58,7 +61,10 @@ export class CreateShipmentComponent implements OnInit {
             dummyCustomer.id = -1; dummyCustomer.name = 'Select Customer'; this.customers.push(dummyCustomer);
             customers.forEach((customer) => {
               this.customers.push(customer);
-            })
+            });
+            if (this.selectedCustomerId) {
+              this.customerSelected(null);
+            }
           },
           (error) => console.log(error),
           () => { console.log('Create Shipment -> Customers Loaded'); }
@@ -77,7 +83,7 @@ export class CreateShipmentComponent implements OnInit {
     this.customerAssociatedParts = [];
     this.customerPurchaseOrders = [];
     this.columnsForPartsGrid = [];
-    this.selectedCustomer = this.customers.find(c => c.id == event.target.value);
+    this.selectedCustomer = this.customers.find(c => c.id == (event ? event.target.value: this.selectedCustomerId));
     this.shipment.customerId = this.selectedCustomer.id;
 
     this.customerService.getAllPurchaseOrders(this.currentlyLoggedInCompany)

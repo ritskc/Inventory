@@ -44,9 +44,12 @@
                       <span class="clickable" (click)="rowSelected(row)" *ngIf="item.isLink">{{row[item.value]}}</span>
                       <span *ngIf="item.nested">{{row[item.value][item.nested]}}</span>
                       <div *ngIf="item.isActionColumn">
-                        <ul *ngFor="let action of item.actions">
+                        <!-- <ul *ngFor="let action of item.actions">
                           <button class="btn {{action.actionStyle}}" (click)="actionButtonClicked(action.event, row)">{{action.actionText}}</button>
-                        </ul>
+                        </ul> -->
+                        <span *ngFor="let action of item.actions">
+                          <button class="btn {{action.actionStyle}}" (click)="actionButtonClicked(action.event, row)">{{action.actionText}}</button>
+                        </span>
                       </div>
                     </td>
                   </tr>
