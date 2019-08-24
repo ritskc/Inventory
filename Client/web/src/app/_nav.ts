@@ -40,7 +40,7 @@ export const navItems: NavData[] = [
       },
       {
         name: 'Inventory',
-        url: '/inventory',
+        url: '/companies/inventory',
         icon: 'icon-puzzle'
       }
     ]
@@ -60,15 +60,8 @@ export const navItems: NavData[] = [
       },
       {
         name: 'Invoice',
-        url: '/supplier-invoice',
-        icon: 'icon-puzzle',
-          children: [
-            {
-              name: 'Barcode',
-              url: '/supplier/barcode',
-              icon: 'fa fa-barcode'
-            }
-          ]
+        url: '/invoice',
+        icon: 'icon-puzzle'
       }
     ]
   },
@@ -80,28 +73,13 @@ export const navItems: NavData[] = [
     name: 'Sale',
     children: [
       {
+        name: 'Create Shipment',
+        url: '/companies/create-shipment',
+        icon: 'icon-puzzle'
+      },
+      {
         name: 'Customer',
         url: '/customers',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: 'Order',
-        url: '/order',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: 'Shipping',
-        url: '/shipping',
-        icon: 'fa fa-ship'
-      },
-      {
-        name: 'Invoice',
-        url: '/invoice',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: 'POS',
-        url: '/pos',
         icon: 'icon-puzzle'
       }
     ]

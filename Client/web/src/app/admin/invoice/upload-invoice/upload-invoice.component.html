@@ -1,0 +1,124 @@
+<div>
+  <input type="file" class="btn btn-primary" (change)="uploadFile($event.target.files)" id="supplierFile"/>
+</div>
+
+<div class="row label-top-adjustment">
+    <div class="col-lg-12 col-md-12 col-xs-12">
+        <div class="card">
+            <div class="card-header">
+              Invoice Information
+            </div>
+            <div class="card-body row">
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                  <div class="form-group standard-top-margin row">
+                    <label class="col-md-3 col-xs-3 label-top-adjustment">Invoice No</label>
+                    <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-9 col-xs-9" [(ngModel)]="invoiceNo"/>
+                  </div>
+                  <div class="form-group standard-top-margin row">
+                    <label class="col-md-3 col-xs-3 label-top-adjustment">Invoice Date</label>
+                    <input [attr.disabled]="disabled? '': null" type="date" class="form-control col-md-9 col-xs-9" [(ngModel)]="invoiceDate"/>
+                  </div>
+                  <div class="form-group standard-top-margin row">
+                    <label class="col-md-3 col-xs-3 label-top-adjustment">Supplier</label>
+                    <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-9 col-xs-9" [(ngModel)]="supplierName"/>
+                  </div>
+                  <div class="form-group standard-top-margin row">
+                    <label class="col-md-3 col-xs-3 label-top-adjustment">Company</label>
+                    <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-9 col-xs-9" [(ngModel)]="company"/>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <div class="form-group standard-top-margin row">
+                      <label class="col-md-3 col-xs-3 label-top-adjustment">PO No</label>
+                      <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-9 col-xs-9" [(ngModel)]="poNo"/>
+                    </div>
+                    <div class="form-group standard-top-margin row">
+                      <label class="col-md-3 col-xs-3 label-top-adjustment">Reference No</label>
+                      <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-9 col-xs-9" [(ngModel)]="referenceNo"/>
+                    </div>
+                    <div class="form-group standard-top-margin row">
+                      <label class="col-md-3 col-xs-3 label-top-adjustment">Emails</label>
+                      <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-9 col-xs-9" [(ngModel)]="emails"/>
+                    </div>
+                    <div class="form-group standard-top-margin row">
+                      <label class="col-md-3 col-xs-3 label-top-adjustment">ETA</label>
+                      <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-9 col-xs-9" [(ngModel)]="eta"/>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-xs-12">
+        <div class="card">
+            <div class="card-header">
+              Product Cart
+            </div>
+            <div class="card-body">
+              <simple-grid [data]="invoice.supplierInvoiceDetails" [columns]="columns" [addRequired]="false" [exportRequired]="false"></simple-grid>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-xs-12">
+        <div class="card">
+            <div class="card-header">
+              Upload Documents
+            </div>
+            <div class="card-body">
+              <div class="row">
+                  <div class="col-lg-1 col-md-1">
+                    <span>Upload Invoice</span>
+                  </div>
+                  <div class="col-lg-4 col-md-4">
+                    <input type="file" class="btn btn-primary" (change)="uploadFile($event.target.files)" id="uploadInvoice"/>
+                  </div>
+                  <div class="col-lg-1 col-md-1">
+                    <span> </span>
+                  </div>
+                  <div class="col-lg-1 col-md-1">
+                    <span>Upload BL</span>
+                  </div>
+                  <div class="col-lg-4 col-md-4">
+                    <input type="file" class="btn btn-primary" (change)="uploadFile($event.target.files)" id="uploadBl"/>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-1 col-md-1">
+                    <span>Upload Packing</span>
+                  </div>
+                  <div class="col-lg-4 col-md-4">
+                    <input type="file" class="btn btn-primary" (change)="uploadFile($event.target.files)" id="uploadPacking"/>
+                  </div>
+                  <div class="col-lg-1 col-md-1">
+                    <span> </span>
+                  </div>
+                  <div class="col-lg-1 col-md-1">
+                    <span>Upload TC</span>
+                  </div>
+                  <div class="col-lg-4 col-md-4">
+                    <input type="file" class="btn btn-primary" (change)="uploadFile($event.target.files)" id="uploadTc"/>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-1 col-md-1">
+                    <span>Upload 10+2</span>
+                  </div>
+                  <div class="col-lg-4 col-md-4">
+                    <input type="file" class="btn btn-primary" (change)="uploadFile($event.target.files)" id="upload102"/>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-xs-12">
+      <div class="card">
+        <div class="card-footer">
+            <button class="btn btn-primary pull-right" (click)="uploadInvoice()"><i class="fa fa-save"></i> Upload</button>
+        </div>
+      </div>
+    </div>
+</div>

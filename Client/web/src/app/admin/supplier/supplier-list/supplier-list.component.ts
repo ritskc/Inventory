@@ -31,11 +31,13 @@ export class SupplierListComponent implements OnInit {
 
   initializeGridColumns() {
     this.columns.push( new DataColumn({ headerText: "Name", value: "name", isLink: true, sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Address", value: "address", sortable: true }) );
+    //this.columns.push( new DataColumn({ headerText: "Address", value: "address", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Phone No", value: "phoneNo", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Email", value: "emailID", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, actions: [
-      new DataColumnAction({ actionText: 'Manage PO', actionStyle: ClassConstants.Primary, event: 'managePurchaseOrder' })
+      new DataColumnAction({ actionText: 'PO', actionStyle: ClassConstants.Primary, event: 'managePurchaseOrder' }),
+      new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'manageInvoice' }),
+      new DataColumnAction({ actionText: 'Receive', actionStyle: ClassConstants.Primary, event: 'manageReceiveInvoice' })
     ] }) );
   }
 
@@ -66,10 +68,24 @@ export class SupplierListComponent implements OnInit {
     this.router.navigateByUrl(`/suppliers/purchase-order/${ supplier.id }/${ UserAction.Details }`);
   }
 
+  redirectToSupplierInvoice(supplier) {
+    this.router.navigateByUrl(`/invoice/upload/${ supplier.id }`);
+  }
+
+  redirectToReceiveInvoice(supplier) {
+    this.router.navigateByUrl(`/invoice/receive/${ supplier.id }`);
+  }
+
   actionButtonClicked(data) {
     switch(data.eventName) {
       case 'managePurchaseOrder':
         this.redirectToSupplierPurchaseOrder(data);
+        break;
+      case 'manageInvoice':
+        this.redirectToSupplierInvoice(data);
+        break;
+      case 'manageReceiveInvoice':
+        this.redirectToReceiveInvoice(data);
         break;
     }
   }

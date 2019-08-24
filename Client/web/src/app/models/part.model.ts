@@ -21,6 +21,9 @@ export class Part {
     location: string;
     isActive: boolean;
     isSample: boolean;
+    safeQty: number = 0;
+    qtyInHand: number = 0;
+    intransitQty: number = 0;
     
     partSupplierAssignments: PartSupplierAssignment[];
     partCustomerAssignments: PartCustomerAssignment[];
@@ -49,4 +52,43 @@ export class PartCustomerAssignment
     surchargePerPound: number = 0;
     openingQty: number = 0;
     surchargeExist: boolean;
+}
+
+export class PartsViewModel {
+
+    constructor(private part: Part) {
+
+    }
+
+    get Code(): string {
+        return this.part.code;
+    }
+
+    get Description(): string {
+        return this.part.description;
+    }
+
+    get MinQty(): number {
+        return this.part.minQty;
+    }
+
+    get MaxQty(): number {
+        return this.part.maxQty;
+    }
+
+    get SafeQty(): number {
+        return this.part.safeQty;
+    }
+
+    get IntransitQty(): number {
+        return this.part.intransitQty;
+    }
+
+    get QuantityInHand(): number {
+        return this.part.openingQty + this.part.qtyInHand;
+    }
+
+    get Total(): number {
+        return this.part.openingQty + this.part.qtyInHand + this.part.intransitQty;
+    }
 }

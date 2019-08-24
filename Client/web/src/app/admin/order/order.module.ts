@@ -6,6 +6,7 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../common/shared/shared.module';
 import { ToastrModule } from 'ng6-toastr-notifications';
+import { httpLoaderService } from '../../common/services/httpLoader.service';
 
 @NgModule({
   declarations: [OrderDetailComponent],
@@ -16,6 +17,9 @@ import { ToastrModule } from 'ng6-toastr-notifications';
     ReactiveFormsModule,
     SharedModule,
     ToastrModule.forRoot()
+  ], 
+  providers: [
+    httpLoaderService
   ]
 })
 export class OrderModule { }

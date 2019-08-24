@@ -4,8 +4,9 @@ import { CompanyService } from '../../../company/company.service';
 import { Router } from '@angular/router';
 import { Customer } from '../../../models/customer.model';
 import { httpLoaderService } from '../../../common/services/httpLoader.service';
-import { DataColumn } from '../../../models/dataColumn.model';
+import { DataColumn, DataColumnAction } from '../../../models/dataColumn.model';
 import { UserAction } from '../../../models/enum/userAction';
+import { ClassConstants } from '../../../common/constants';
 
 @Component({
   selector: 'app-customer-list',
@@ -32,6 +33,11 @@ export class CustomerListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Address", value: "addressLine1", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Phone No", value: "telephoneNumber", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Email", value: "emailAddress", sortable: true }) );
+    this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, actions: [
+      new DataColumnAction({ actionText: 'Orders', actionStyle: ClassConstants.Primary, event: 'managePurchaseOrder' }),
+      new DataColumnAction({ actionText: 'Shipment', actionStyle: ClassConstants.Primary, event: 'manageShipment' }),
+      new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'manageInvoice' })
+    ] }) );
   }
 
   getAllCustomers() {
@@ -55,5 +61,31 @@ export class CustomerListComponent implements OnInit {
 
   addCustomer() {
     this.router.navigateByUrl(`/customers/detail/${ UserAction.Add }/#`);
+  }
+
+  actionButtonClicked(data) {
+    switch(data.eventName) {
+      case 'managePurchaseOrder':
+        this.redirectToCustomerPurchaseOrder(data);
+        break;
+      case 'manageShipment':
+        this.redirectToCreateShipment(data);
+        break;
+      case 'manageInvoice':
+        this.redirectoToCustomerInvoice(data);
+        break;
+    }
+  }
+
+  redirectToCustomerPurchaseOrder(customer: Customer) {
+    this.router.navigateByUrl(`/customers/purchase-order/${ customer.id }/${ UserAction.Details }`);
+  }
+
+  redirectToCreateShipment(customer: Customer) {
+    this.router.navigateByUrl(`/companies/create-shipment/${ customer.id }`);
+  }
+
+  redirectoToCustomerInvoice(customer: Customer) {
+    this.router.navigateByUrl(`/customers/purchase-order/${ customer.id }/${ UserAction.Details }`);
   }
 }
