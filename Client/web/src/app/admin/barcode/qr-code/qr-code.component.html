@@ -1,0 +1,5 @@
+<input type="text" [(ngModel)]="qrdata" placeholder="type here to generate QR code" style="width: 300px;"/>
+
+<div style="margin-top: 20px;">
+  <qrcode [qrdata]="qrdata" [size]="256" [level]="'M'"></qrcode>
+</div>

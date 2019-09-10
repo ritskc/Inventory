@@ -1,0 +1,12 @@
+<input type="text" [(ngModel)]="value" placeholder="Type here to generate barcode" style="width: 300px;"/>
+
+<div style="margin-top: 20px;">
+  <ngx-barcode [bc-value]="value" [bc-display-value]="true"></ngx-barcode>
+</div>
+
+<div style="margin-top: 20px; width: 640px; height: 480px;">
+  <barcode-scanner-livestream type="code_128" (valueChanges)="onValueChanges($event)"></barcode-scanner-livestream>
+    <div [hidden]="!barcodeValue">
+        {{barcodeValue}}
+    </div>
+</div>

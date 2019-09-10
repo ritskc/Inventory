@@ -81,6 +81,16 @@ export const navItems: NavData[] = [
         name: 'Customer',
         url: '/customers',
         icon: 'icon-puzzle'
+      },
+      {
+        name: 'Barcode',
+        url: '/barcode',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: 'QR Code',
+        url: '/barcode/qrcode',
+        icon: 'icon-puzzle'
       }
     ]
   },
