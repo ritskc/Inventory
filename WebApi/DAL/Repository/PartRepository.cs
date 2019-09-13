@@ -28,7 +28,7 @@ namespace DAL.Repository
 
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location] FROM [part] where CompanyId = '{0}' ", companyId);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand] FROM [part] where CompanyId = '{0}' ", companyId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -57,6 +57,8 @@ namespace DAL.Repository
                     part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
+                    part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);
+                    part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]);
 
                     parts.Add(part);
                 }
@@ -134,7 +136,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location] FROM [part] where id = '{0}' ", partId);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand] FROM [part] where id = '{0}' ", partId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -161,6 +163,8 @@ namespace DAL.Repository
                     part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
+                    part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);
+                    part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]);
 
                 }
                 conn.Close();
@@ -234,7 +238,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location] FROM [part] where id = '{0}' ", partId);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand] FROM [part] where id = '{0}' ", partId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -261,7 +265,8 @@ namespace DAL.Repository
                     part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
-
+                    part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);
+                    part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]);
                 }
                 conn.Close();
             }

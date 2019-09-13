@@ -19,6 +19,8 @@ namespace DAL.Models
         public int AdjustedPOQty { get; set; }
         public int ExcessQty { get; set; }
         public int BoxNo { get; set; }
+        public string Barcode { get; set; }
+        public bool IsBoxReceived { get; set; }
 
         public Part PartDetail { get; set; }
 

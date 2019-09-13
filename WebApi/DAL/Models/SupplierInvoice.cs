@@ -31,6 +31,7 @@ namespace DAL.Models
         public string TenPlusPath { get; set; }
         public string BLPath { get; set; }
         public bool IsInvoiceReceived { get; set; }
+        public string Barcode { get; set; }
         public DateTime UploadedDate { get; set; }
         public DateTime? ReceivedDate { get; set; }
 

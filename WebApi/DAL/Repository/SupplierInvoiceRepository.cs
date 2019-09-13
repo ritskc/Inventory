@@ -2,6 +2,7 @@
 using DAL.IRepository;
 using DAL.Models;
 using DAL.Settings;
+using DAL.Util;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -47,14 +48,15 @@ namespace DAL.Repository
                     sql = sql + " Select Scope_Identity()";
                     command.CommandText = sql;
                     var invoiceId = command.ExecuteScalar();
-
+                    supplierInvoice.Id = Convert.ToInt64(invoiceId.ToString());
+                    
                     foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
                     {
-                        sql = string.Format($"INSERT INTO [dbo].[SupplierInvoiceDetails]   ([InvoiceId]   ,[SrNo]   ,[PartId]   ,[Qty]   ,[Price]   ,[Total]   ,[AdjustedPOQty]   ,[ExcessQty]   ,[BoxNo]) VALUES   ('{invoiceId}'   ,'{supplierInvoiceDetail.SrNo}'   ,'{supplierInvoiceDetail.PartId}'   ,'{supplierInvoiceDetail.Qty}'   ,'{supplierInvoiceDetail.Price}'   ,'{supplierInvoiceDetail.Total}'   ,'{supplierInvoiceDetail.AdjustedPOQty}'   ,'{supplierInvoiceDetail.ExcessQty}'   ,'{supplierInvoiceDetail.BoxNo}')");
+                        sql = string.Format($"INSERT INTO [dbo].[SupplierInvoiceDetails]   ([InvoiceId]   ,[SrNo]   ,[PartId]   ,[Qty]   ,[Price]   ,[Total]   ,[AdjustedPOQty]   ,[ExcessQty]   ,[BoxNo],[IsBoxReceived]) VALUES   ('{invoiceId}'   ,'{supplierInvoiceDetail.SrNo}'   ,'{supplierInvoiceDetail.PartId}'   ,'{supplierInvoiceDetail.Qty}'   ,'{supplierInvoiceDetail.Price}'   ,'{supplierInvoiceDetail.Total}'   ,'{supplierInvoiceDetail.AdjustedPOQty}'   ,'{supplierInvoiceDetail.ExcessQty}'   ,'{supplierInvoiceDetail.BoxNo}','{false}')");
 
                         sql = sql + " Select Scope_Identity()";
                         command.CommandText = sql;
-                        supplierInvoiceDetail.Id = Convert.ToInt32(command.ExecuteScalar());
+                        supplierInvoiceDetail.Id = Convert.ToInt32(command.ExecuteScalar());                       
 
                         foreach (SupplierInvoicePoDetails supplierInvoicePoDetails in supplierInvoiceDetail.supplierInvoicePoDetails)
                         {
@@ -108,9 +110,13 @@ namespace DAL.Repository
 
                 try
                 {
+                    var sql = string.Format($"UPDATE [dbo].[SupplierInvoiceMaster]   SET [Barcode] =  '{BarCodeUtil.GetBarCodeString(supplierInvoice.Id)}' WHERE id = '{supplierInvoice.Id}' ");
+                    await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
                     foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
                     {
+                        sql = string.Format($"UPDATE [dbo].[SupplierInvoiceDetails]   SET [Barcode] =  '{BarCodeUtil.GetBarCodeString(supplierInvoiceDetail.Id)}' WHERE id = '{supplierInvoiceDetail.Id}' ");
+                        await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
                         foreach (SupplierInvoicePoDetails supplierInvoicePoDetails in supplierInvoiceDetail.supplierInvoicePoDetails)
                         {
@@ -120,7 +126,7 @@ namespace DAL.Repository
 
                             if (poDetail == null)
                             {
-                                string sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [IsClosed] = '{true}' ,[ClosingDate] = '{DateTime.Now}'  WHERE id = '{poResult.Id}' ");
+                                sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [IsClosed] = '{true}' ,[ClosingDate] = '{DateTime.Now}'  WHERE id = '{poResult.Id}' ");
 
                                 await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
                             }
@@ -153,7 +159,7 @@ namespace DAL.Repository
 
             var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[InvoiceNo] ,[InvoiceDate] ,[ETA] ,[IsAirShipment] ,[PoNo] ,[ReferenceNo] ,[Email] " +
                 $",[ByCourier] ,[IsInvoiceUploaded] ,[IsPackingSlipUploaded] ,[IsTenPlusUploaded] ,[IsBLUploaded] ,[IsTCUploaded] ," +
-                $"[InvoicePath] ,[PackingSlipPath] ,[TenPlusPath] ,[BLPath] ,[IsInvoiceReceived] ,[UploadedDate] ,[ReceivedDate]  FROM [SupplierInvoiceMaster] where CompanyId = '{companyId}' ");
+                $"[InvoicePath] ,[PackingSlipPath] ,[TenPlusPath] ,[BLPath] ,[IsInvoiceReceived] ,[UploadedDate] ,[ReceivedDate],[Barcode]  FROM [SupplierInvoiceMaster] where CompanyId = '{companyId}' ");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -189,6 +195,7 @@ namespace DAL.Repository
                     supplierInvoice.IsInvoiceReceived = Convert.ToBoolean(dataReader["IsInvoiceReceived"]);
                     supplierInvoice.UploadedDate = Convert.ToDateTime(dataReader["UploadedDate"]);
                     supplierInvoice.ReceivedDate = Convert.ToDateTime(dataReader["ReceivedDate"]);
+                    supplierInvoice.Barcode = DBNull.Value.Equals(dataReader["Barcode"]) ? string.Empty : Convert.ToString(dataReader["Barcode"]);
                     supplierInvoices.Add(supplierInvoice);
                 }
                 conn.Close();
@@ -197,7 +204,7 @@ namespace DAL.Repository
             foreach (SupplierInvoice supplierInvoice in supplierInvoices)
             {
                 List<SupplierInvoiceDetail> supplierInvoiceDetails = new List<SupplierInvoiceDetail>();
-                commandText = string.Format($"SELECT  [Id] ,[InvoiceId] ,[SrNo] ,[PartId] ,[Qty] ,[Price] ,[Total] ,[AdjustedPOQty] ,[ExcessQty] ,[BoxNo]  FROM [dbo].[SupplierInvoiceDetails] where InvoiceId = '{ supplierInvoice.Id}'");
+                commandText = string.Format($"SELECT  [Id] ,[InvoiceId] ,[SrNo] ,[PartId] ,[Qty] ,[Price] ,[Total] ,[AdjustedPOQty] ,[ExcessQty] ,[BoxNo],[Barcode]  FROM [dbo].[SupplierInvoiceDetails] where InvoiceId = '{ supplierInvoice.Id}'");
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                 {
@@ -218,7 +225,7 @@ namespace DAL.Repository
                         supplierInvoiceDetail.AdjustedPOQty = Convert.ToInt32(dataReader1["AdjustedPOQty"]);
                         supplierInvoiceDetail.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);
                         supplierInvoiceDetail.BoxNo = Convert.ToInt32(dataReader1["BoxNo"]);
-
+                        supplierInvoiceDetail.Barcode = DBNull.Value.Equals(dataReader1["Barcode"]) ? string.Empty : Convert.ToString(dataReader1["Barcode"]);
                         supplierInvoiceDetails.Add(supplierInvoiceDetail);
                     }
                 }
@@ -272,7 +279,7 @@ namespace DAL.Repository
 
             var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[InvoiceNo] ,[InvoiceDate] ,[ETA] ,[IsAirShipment] ,[PoNo] ,[ReferenceNo] ,[Email] " +
                 $",[ByCourier] ,[IsInvoiceUploaded] ,[IsPackingSlipUploaded] ,[IsTenPlusUploaded] ,[IsBLUploaded] ,[IsTCUploaded] ," +
-                $"[InvoicePath] ,[PackingSlipPath] ,[TenPlusPath] ,[BLPath] ,[IsInvoiceReceived] ,[UploadedDate] ,[ReceivedDate]  FROM [SupplierInvoiceMaster] where Id = '{supplierInvoiceId}' ");
+                $"[InvoicePath] ,[PackingSlipPath] ,[TenPlusPath] ,[BLPath] ,[IsInvoiceReceived] ,[UploadedDate] ,[ReceivedDate],[Barcode]  FROM [SupplierInvoiceMaster] where Id = '{supplierInvoiceId}' ");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -307,13 +314,14 @@ namespace DAL.Repository
                     supplierInvoice.IsInvoiceReceived = Convert.ToBoolean(dataReader["IsInvoiceReceived"]);
                     supplierInvoice.UploadedDate = Convert.ToDateTime(dataReader["UploadedDate"]);
                     supplierInvoice.ReceivedDate = Convert.ToDateTime(dataReader["ReceivedDate"]);
+                    supplierInvoice.Barcode = DBNull.Value.Equals(dataReader["Barcode"]) ? string.Empty : Convert.ToString(dataReader["Barcode"]);
                 }
                 conn.Close();
             }
 
 
             List<SupplierInvoiceDetail> supplierInvoiceDetails = new List<SupplierInvoiceDetail>();
-            commandText = string.Format($"SELECT  [Id] ,[InvoiceId] ,[SrNo] ,[PartId] ,[Qty] ,[Price] ,[Total] ,[AdjustedPOQty] ,[ExcessQty] ,[BoxNo]  FROM [dbo].[SupplierInvoiceDetails] where InvoiceId = '{ supplierInvoice.Id}'");
+            commandText = string.Format($"SELECT  [Id] ,[InvoiceId] ,[SrNo] ,[PartId] ,[Qty] ,[Price] ,[Total] ,[AdjustedPOQty] ,[ExcessQty] ,[BoxNo],[Barcode]  FROM [dbo].[SupplierInvoiceDetails] where InvoiceId = '{ supplierInvoice.Id}'");
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
             {
@@ -334,7 +342,7 @@ namespace DAL.Repository
                     supplierInvoiceDetail.AdjustedPOQty = Convert.ToInt32(dataReader1["AdjustedPOQty"]);
                     supplierInvoiceDetail.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);
                     supplierInvoiceDetail.BoxNo = Convert.ToInt32(dataReader1["BoxNo"]);
-
+                    supplierInvoiceDetail.Barcode = DBNull.Value.Equals(dataReader1["Barcode"]) ? string.Empty : Convert.ToString(dataReader1["Barcode"]);
                     supplierInvoiceDetails.Add(supplierInvoiceDetail);
                 }
             }
@@ -398,8 +406,12 @@ namespace DAL.Repository
                 {
                     var sql = string.Format($"UPDATE [dbo].[SupplierInvoiceMaster]   SET [IsInvoiceReceived] = '{true}'   ,[ReceivedDate] = '{DateTime.Now}' WHERE Id = '{supplierInvoiceId}'");
                     command.CommandText = sql;
-                    await command.ExecuteNonQueryAsync();                  
+                    await command.ExecuteNonQueryAsync();
 
+
+                    sql = string.Format($"UPDATE [dbo].[SupplierInvoiceDetails]   SET [IsBoxReceived] = '{true}'   WHERE [InvoiceId] = '{supplierInvoiceId}'");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
                     // Attempt to commit the transaction.
                     transaction.Commit();
                 }
@@ -409,6 +421,102 @@ namespace DAL.Repository
                     throw ex;
                 }
             }
+        }
+
+        public async Task ReceiveBoxInvoiceAsync(string barcode)
+        {
+            List<SupplierInvoiceDetail> supplierInvoiceDetails = new List<SupplierInvoiceDetail>();
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+                    var sql = string.Format($"UPDATE [dbo].[SupplierInvoiceDetails]   SET [IsBoxReceived] = '{true}'   WHERE [Barcode] = '{barcode}'");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+                    // Attempt to commit the transaction.
+                    transaction.Commit();
+
+                    connection.Close();
+
+                    var commandText = string.Format($"SELECT  *  FROM [dbo].[SupplierInvoiceDetails] where InvoiceId in (select invoiceid from [SupplierInvoiceDetails] where Barcode ='{barcode}')");
+
+                    using (SqlCommand cmd1 = new SqlCommand(commandText, connection))
+                    {
+                        cmd1.CommandType = CommandType.Text;
+                        connection.Open();
+                        var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+                        
+                        while (dataReader1.Read())
+                        {
+                            var supplierInvoiceDetail = new SupplierInvoiceDetail();
+                            supplierInvoiceDetail.Id = Convert.ToInt64(dataReader1["Id"]);
+                            supplierInvoiceDetail.InvoiceId = Convert.ToInt64(dataReader1["InvoiceId"]);
+                            supplierInvoiceDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
+                            supplierInvoiceDetail.PartId = Convert.ToInt64(dataReader1["PartId"]);
+                            supplierInvoiceDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                            supplierInvoiceDetail.Price = Convert.ToDecimal(dataReader1["Price"]);
+                            supplierInvoiceDetail.Total = Convert.ToDecimal(dataReader1["Total"]);
+                            supplierInvoiceDetail.AdjustedPOQty = Convert.ToInt32(dataReader1["AdjustedPOQty"]);
+                            supplierInvoiceDetail.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);
+                            supplierInvoiceDetail.BoxNo = Convert.ToInt32(dataReader1["BoxNo"]);
+                            supplierInvoiceDetail.IsBoxReceived = DBNull.Value.Equals(dataReader1["IsBoxReceived"]) ? false: Convert.ToBoolean(dataReader1["IsBoxReceived"]);
+                            supplierInvoiceDetails.Add(supplierInvoiceDetail);
+                        }
+                    }                    
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+
+            if (supplierInvoiceDetails.Count == supplierInvoiceDetails.Where(x => x.IsBoxReceived == true).Count())
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+                {
+                    connection.Open();
+
+                    SqlCommand command = connection.CreateCommand();
+                    SqlTransaction transaction;
+
+                    // Start a local transaction.
+                    transaction = connection.BeginTransaction("SampleTransaction");
+
+                    // Must assign both transaction object and connection
+                    // to Command object for a pending local transaction
+                    command.Connection = connection;
+                    command.Transaction = transaction;
+
+                    try
+                    {
+                        var sql = string.Format($"UPDATE [dbo].[SupplierInvoiceMaster]   SET [IsInvoiceReceived] = '{true}'   ,[ReceivedDate] = '{DateTime.Now}' WHERE Id = '{supplierInvoiceDetails.FirstOrDefault().InvoiceId}'");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+
         }
 
         public Task UpdateSupplierInvoiceAsync(SupplierInvoice supplierInvoice)
