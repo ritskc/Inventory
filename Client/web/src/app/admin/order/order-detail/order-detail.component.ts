@@ -105,7 +105,7 @@ export class OrderDetailComponent implements OnInit {
     this.gridColumns.push(new DataColumn({headerText: "Qty", value: "qty", sortable: true}));
     this.gridColumns.push(new DataColumn({ headerText: "Price", value: "unitPrice", sortable: true }));
     this.gridColumns.push(new DataColumn({ headerText: "Total", value: "total", sortable: true }));
-    this.gridColumns.push(new DataColumn({headerText: "Due Date", value: "dueDate", sortable: true}));
+    this.gridColumns.push(new DataColumn({headerText: "Due Date", value: "dueDate", sortable: true, isDate: true}));
     this.gridColumns.push(new DataColumn({ headerText: "Notes", value: "note", sortable: false }));
     if (this.SelectedSupplier > -1) {
       this.gridColumns.push(new DataColumn({headerText: "Reference", value: "referenceNo", sortable: false}));

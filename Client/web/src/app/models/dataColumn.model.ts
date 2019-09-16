@@ -8,6 +8,7 @@ export class DataColumn {
     actions: DataColumnAction[] = [];
     nested:string = '';
     constantText: string = '';
+    isDate: boolean = false;
 
     constructor(init?: Partial<DataColumn>) {
         Object.assign(this, init);

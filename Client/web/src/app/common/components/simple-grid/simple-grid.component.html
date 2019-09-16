@@ -28,9 +28,11 @@
               <thead>
                 <tr>
                   <th *ngFor="let column of columns" (click)="toggleSort(column)">
-                    {{column.headerText}}
-                    <span *ngIf="column.sortable && (isNotSortedOnThisColumn(column.value) || !descendingOrderSelected(column.value))" class="fa fa-sort-asc"></span>
-                    <span *ngIf="column.sortable && (isNotSortedOnThisColumn(column.value) || descendingOrderSelected(column.value))" class="fa fa-sort-desc" [ngClass]="{'descending-order-icon': isNotSortedOnThisColumn(column.value)}"></span>
+                    <span>{{column.headerText}}</span>
+                    <div class="pull-right">
+                      <div *ngIf="column.sortable && (isNotSortedOnThisColumn(column.value) || !descendingOrderSelected(column.value))" class="fa fa-sort-asc"></div>
+                      <div *ngIf="column.sortable && (isNotSortedOnThisColumn(column.value) || descendingOrderSelected(column.value))" class="fa fa-sort-desc" [ngClass]="{'descending-order-icon': isNotSortedOnThisColumn(column.value)}"></div>  
+                    </div>
                   </th>
                 </tr>
               </thead>
@@ -38,15 +40,13 @@
                 <ng-template ngFor let-row [ngForOf]="_data | search: searchText | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
                   <tr>
                     <td *ngFor="let item of columns">
-                      <span *ngIf="!item.isLink && !item.nested">{{row[item.value]}}</span>
+                      <span *ngIf="!item.isLink && !item.nested && !item.isDate">{{row[item.value]}}</span>
                       <span *ngIf="item.constantText && !item.isLink">{{item.constantText}}</span>
+                      <span *ngIf="item.isDate">{{row[item.value] | date}}</span>
                       <span class="clickable" *ngIf="item.constantText && item.isLink">{{item.constantText}}</span>
                       <span class="clickable" (click)="rowSelected(row)" *ngIf="item.isLink">{{row[item.value]}}</span>
                       <span *ngIf="item.nested">{{row[item.value][item.nested]}}</span>
                       <div *ngIf="item.isActionColumn">
-                        <!-- <ul *ngFor="let action of item.actions">
-                          <button class="btn {{action.actionStyle}}" (click)="actionButtonClicked(action.event, row)">{{action.actionText}}</button>
-                        </ul> -->
                         <span *ngFor="let action of item.actions">
                           <button class="btn {{action.actionStyle}}" (click)="actionButtonClicked(action.event, row)">{{action.actionText}}</button>
                         </span>

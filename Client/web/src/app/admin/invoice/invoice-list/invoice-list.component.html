@@ -4,7 +4,7 @@
     <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{supplier.name}}</option>
   </select>
   <div class="standard-margin">
-    <simple-grid [data]="invoices" [columns]="columns" (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="uploadInvoice()"></simple-grid>
+    <simple-grid [data]="invoices" [columns]="columns" (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="uploadInvoice()"  (actionButtonClickedEvent)="actionButtonClicked($event)"></simple-grid>
   </div>
   <loader>
     

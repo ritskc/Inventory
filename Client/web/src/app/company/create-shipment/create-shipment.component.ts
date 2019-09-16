@@ -149,7 +149,7 @@ export class CreateShipmentComponent implements OnInit {
   createColumnsForShipmentGrid() {
     this.columnsForOrderGrid = [];
     this.columnsForOrderGrid.push( new DataColumn({ headerText: "Pack Slip No", value: "packagingSlipNumber" }) );
-    this.columnsForOrderGrid.push( new DataColumn({ headerText: "Date", value: "shippingDate" }) );
+    this.columnsForOrderGrid.push( new DataColumn({ headerText: "Date", value: "shippingDate", isDate: true }) );
     this.columnsForOrderGrid.push( new DataColumn({ headerText: "PO Number", value: "poNo" }) );
     this.columnsForOrderGrid.push( new DataColumn({ headerText: "Part Code", value: "partCode" }) );
     this.columnsForOrderGrid.push( new DataColumn({ headerText: "Quantity", value: "quantity" }) );

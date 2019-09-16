@@ -44,7 +44,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Ack Quantity", value: "ackQty", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Total", value: "unitPrice", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Reference", value: "referenceNo", sortable: true }) );
   }
 
