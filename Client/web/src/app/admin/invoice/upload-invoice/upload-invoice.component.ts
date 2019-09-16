@@ -22,6 +22,7 @@ export class UploadInvoiceComponent implements OnInit {
   private supplierName: string = '';
   private company: string = '';
   private eta: string = '';
+  private invoiceTotal: number = 0;
 
   constructor(private companyService: CompanyService, private invoiceService: InvoiceService) { }
 
@@ -35,6 +36,7 @@ export class UploadInvoiceComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Quantity", value: "Qty" }) );
     this.columns.push( new DataColumn({ headerText: "Rate", value: "Price" }) );
     this.columns.push( new DataColumn({ headerText: "Amount", value: "Total" }) );
+    this.columns.push( new DataColumn({ headerText: "Box Number", value: "BoxNumber" }) );
   }
 
   uploadFile(files: FileList) {
@@ -49,14 +51,16 @@ export class UploadInvoiceComponent implements OnInit {
     this.invoiceDate = Utils.DateToString(new Date(rows[1][1]));
     this.supplierName = rows[1][2];
     this.poNo = rows[1][3];
-    this.company = rows[1][4];
+    this.invoiceTotal = rows[1][4];
+    this.company = rows[1][5];
     
     for (let index = 2; index < rows.length; index++) {
       var invoiceDetail = new UploadInvoiceDetail();
-      invoiceDetail.PartCode = rows[index][5];
-      invoiceDetail.Qty = rows[index][6];
-      invoiceDetail.Price = rows[index][7];
+      invoiceDetail.PartCode = rows[index][6];
+      invoiceDetail.Qty = rows[index][7];
+      invoiceDetail.Price = rows[index][8];
       invoiceDetail.Total = invoiceDetail.Qty * invoiceDetail.Price;
+      invoiceDetail.BoxNumber = rows[index][11];
       this.invoice.supplierInvoiceDetails.push(invoiceDetail);
     }
   }
@@ -66,6 +70,7 @@ export class UploadInvoiceComponent implements OnInit {
     this.invoice.InvoiceDate = this.invoiceDate.toString();
     this.invoice.SupplierName = this.supplierName;
     this.invoice.PoNo = this.poNo;
+    this.invoice.InvoiceTotal = this.invoiceTotal;
     this.invoice.CompanyName = this.company;
     this.invoice.ETA = this.eta ? this.eta: new Date().toLocaleString();
     this.invoice.UploadedDate = new Date().toLocaleString();

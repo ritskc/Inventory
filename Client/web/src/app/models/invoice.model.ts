@@ -53,6 +53,7 @@ export class UploadInvoice {
     CompanyName: string = '';
     ETA: string = '';
     UploadedDate: string = '';
+    InvoiceTotal: number = 0;
     supplierInvoiceDetails: UploadInvoiceDetail[];
 }
 
@@ -61,6 +62,7 @@ export class UploadInvoiceDetail {
     Qty: number = 0;
     Price: number = 0;
     Total: number = 0;
+    BoxNumber: string = '';
 }
 
 export class InvoiceDetail {
