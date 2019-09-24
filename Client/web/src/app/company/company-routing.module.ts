@@ -4,6 +4,7 @@ import { CompanyListComponent } from './company-list/company-list.component';
 import { CompanyDetailComponent } from './company-detail/company-detail.component';
 import { CreateShipmentComponent } from './create-shipment/create-shipment.component';
 import { InventoryPartsListComponent } from './inventory-parts-list/inventory-parts-list.component';
+import { ShipmentListComponent } from './shipment-list/shipment-list.component';
 
 const routes: Routes = [{
   path: '',
@@ -14,6 +15,13 @@ const routes: Routes = [{
     {
       path: '',
       component: CompanyListComponent
+    },
+    {
+      path: 'shipment-list',
+      component: ShipmentListComponent,
+      data: {
+        title: 'View Shipments'
+      }
     },
     {
       path: 'create-shipment',

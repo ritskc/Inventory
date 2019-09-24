@@ -73,15 +73,20 @@ export const navItems: NavData[] = [
     name: 'Sale',
     children: [
       {
-        name: 'Create Shipment',
-        url: '/companies/create-shipment',
-        icon: 'icon-puzzle'
-      },
-      {
         name: 'Customer',
         url: '/customers',
         icon: 'icon-puzzle'
       },
+      {
+        name: 'Shipments',
+        url: '/companies/shipment-list',
+        icon: 'icon-puzzle'
+      },
+      // {
+      //   name: 'Create Shipment',
+      //   url: '/companies/create-shipment',
+      //   icon: 'icon-puzzle'
+      // },
       {
         name: 'Barcode',
         url: '/barcode',

@@ -6,6 +6,7 @@ export class Shipment {
 
     CompanyId: number = 0;
     customerId: number = 0;
+    customerName: string = '';
     packingSlipNo: string = '';
     shippingDate: string = '';
     shipVia: string = '';

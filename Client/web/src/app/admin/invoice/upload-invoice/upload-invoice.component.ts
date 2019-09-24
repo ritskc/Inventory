@@ -5,6 +5,7 @@ import { DataColumn } from '../../../models/dataColumn.model';
 import { InvoiceDetail, UploadInvoice, UploadInvoiceDetail } from '../../../models/invoice.model';
 import { Utils } from '../../../common/utils/utils';
 import { InvoiceService } from '../invoice.service';
+import { FileUploadService } from '../../../common/services/file-upload.service';
 
 @Component({
   selector: 'app-upload-invoice',
@@ -24,7 +25,7 @@ export class UploadInvoiceComponent implements OnInit {
   private eta: string = '';
   private invoiceTotal: number = 0;
 
-  constructor(private companyService: CompanyService, private invoiceService: InvoiceService) { }
+  constructor(private companyService: CompanyService, private invoiceService: InvoiceService, private fileService: FileUploadService) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompany = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -44,6 +45,10 @@ export class UploadInvoiceComponent implements OnInit {
       console.log(rows);
       this.extractDataFromFile(rows);
     });
+  }
+
+  uploadAttachment(files: FileList) {
+    this.fileService.postFile(files.item(0));
   }
 
   extractDataFromFile(rows: any) {

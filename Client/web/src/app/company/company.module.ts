@@ -17,6 +17,7 @@ import { TokenInterceptor } from '../common/services/api.service';
 import { SharedModule } from '../common/shared/shared.module';
 import { CreateShipmentComponent } from './create-shipment/create-shipment.component';
 import { InventoryPartsListComponent } from './inventory-parts-list/inventory-parts-list.component';
+import { ShipmentListComponent } from './shipment-list/shipment-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { InventoryPartsListComponent } from './inventory-parts-list/inventory-pa
     CompanyDetailComponent,
     ReportComponent,
     CreateShipmentComponent,
-    InventoryPartsListComponent
+    InventoryPartsListComponent,
+    ShipmentListComponent
   ],
   imports: [
     CommonModule,
