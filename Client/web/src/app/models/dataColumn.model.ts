@@ -5,6 +5,7 @@ export class DataColumn {
     sortable: boolean = false;
     rightAlign: boolean = false;
     isActionColumn: boolean = false;
+    isEditable: boolean = false;
     actions: DataColumnAction[] = [];
     nested:string = '';
     constantText: string = '';
@@ -19,6 +20,7 @@ export class DataColumnAction {
     actionText: string = '';
     actionStyle: string = '';
     event: string = '';
+    icon: string = '';
 
     constructor(init?: Partial<DataColumnAction>) {
         Object.assign(this, init);

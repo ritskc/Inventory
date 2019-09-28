@@ -12,12 +12,15 @@ import { TokenInterceptor } from '../../common/services/api.service';
 import { InvoiceService } from './invoice.service';
 import { UploadInvoiceComponent } from './upload-invoice/upload-invoice.component';
 import { ReceiveComponent } from './receive/receive.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModalsComponent } from '../../views/notifications/modals.component';
 
 @NgModule({
   declarations: [
     InvoiceListComponent,
     UploadInvoiceComponent,
-    ReceiveComponent
+    ReceiveComponent,
+    ModalsComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +28,8 @@ import { ReceiveComponent } from './receive/receive.component';
     InvoiceRoutingModule,
     ReactiveFormsModule,
     SharedModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ModalModule.forRoot()
   ], 
   providers: [
     httpLoaderService,

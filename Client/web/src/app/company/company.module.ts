@@ -18,6 +18,7 @@ import { SharedModule } from '../common/shared/shared.module';
 import { CreateShipmentComponent } from './create-shipment/create-shipment.component';
 import { InventoryPartsListComponent } from './inventory-parts-list/inventory-parts-list.component';
 import { ShipmentListComponent } from './shipment-list/shipment-list.component';
+import { CompanyInvoiceComponent } from './company-invoice/company-invoice.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ShipmentListComponent } from './shipment-list/shipment-list.component';
     ReportComponent,
     CreateShipmentComponent,
     InventoryPartsListComponent,
-    ShipmentListComponent
+    ShipmentListComponent,
+    CompanyInvoiceComponent
   ],
   imports: [
     CommonModule,

@@ -5,6 +5,7 @@ import { CompanyDetailComponent } from './company-detail/company-detail.componen
 import { CreateShipmentComponent } from './create-shipment/create-shipment.component';
 import { InventoryPartsListComponent } from './inventory-parts-list/inventory-parts-list.component';
 import { ShipmentListComponent } from './shipment-list/shipment-list.component';
+import { CompanyInvoiceComponent } from './company-invoice/company-invoice.component';
 
 const routes: Routes = [{
   path: '',
@@ -49,6 +50,13 @@ const routes: Routes = [{
       component: InventoryPartsListComponent,
       data: {
         title: 'Inventory'
+      }
+    },
+    {
+      path: 'invoice',
+      component: CompanyInvoiceComponent,
+      data: {
+        title: 'Invoice'
       }
     }
   ]
