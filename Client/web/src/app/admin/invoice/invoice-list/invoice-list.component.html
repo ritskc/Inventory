@@ -4,16 +4,10 @@
     <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{supplier.name}}</option>
   </select>
   <div class="standard-margin">
-    <simple-grid [data]="invoices" [columns]="columns" (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="uploadInvoice()"  (actionButtonClickedEvent)="[actionButtonClicked($event), barcode.show()]"></simple-grid>
+    <simple-grid [data]="invoices" [columns]="columns" (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="uploadInvoice()"  (actionButtonClickedEvent)="[actionButtonClicked($event)]"></simple-grid>
   </div>
-  <loader>
-    
-  </loader>
+  <loader></loader>
 </form>
-
-<button type="button" class="btn btn-secondary mr-1" data-toggle="modal" (click)="barcode.show()">
-  Launch demo modal
-</button>
 
 <div bsModal #barcode="bs-modal" class="modal fade" id="print-section" tabindex="-1" role="dialog" aria-labelledby="barcodeLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -23,9 +17,6 @@
         <button type="button" class="close" (click)="barcode.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-      <div class="modal-body">
-        <button class="btn btn-primary" (click)="print()">Print</button>
       </div>
     </div>
   </div>

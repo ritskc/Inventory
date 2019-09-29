@@ -10,6 +10,7 @@ export class DataColumn {
     nested:string = '';
     constantText: string = '';
     isDate: boolean = false;
+    minWidth: boolean = false;
 
     constructor(init?: Partial<DataColumn>) {
         Object.assign(this, init);

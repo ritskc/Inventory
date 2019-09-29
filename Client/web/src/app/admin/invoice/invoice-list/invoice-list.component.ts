@@ -8,6 +8,7 @@ import { SupplierService } from '../../supplier/supplier.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClassConstants } from '../../../common/constants';
+import { AppConfigurations } from '../../../config/app.config';
 
 @Component({
   selector: 'app-invoice-list',
@@ -18,6 +19,8 @@ export class InvoiceListComponent implements OnInit {
 
   private invoiceForm: FormGroup;
   private currentlyLoggedInCompany: number = 0;
+  private appConfiguration: AppConfigurations;
+
   suppliers: Supplier[] = [];
   invoices: Invoice[] = [];
   columns: DataColumn[] = [];
@@ -27,20 +30,21 @@ export class InvoiceListComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.appConfiguration = new AppConfigurations();
     this.currentlyLoggedInCompany = this.companyService.getCurrentlyLoggedInCompanyId();
     this.initializeGridColumns();
     this.loadAllSuppliers();
     this.loadAllSupplierInvoices();
     this.invoiceForm = this.formBuilder.group({
       supplierList: FormControl
-    })
+    });
   }
 
   initializeGridColumns() {
     this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false, minWidth: true }) );
     this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "invoiceDate", sortable: true, isDate: true }) );
-    this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
     this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Products", constantText: "View", isLink: true }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", constantText: "View", isLink: true }) );
@@ -91,10 +95,14 @@ export class InvoiceListComponent implements OnInit {
   actionButtonClicked(data) {
     switch(data.eventName) {
       case 'printInvoiceBarcode':
-        alert('hello');
+        window.open(this.appConfiguration.barcodeUri + data.invoiceNo);
         break;
       case 'printBoxBarcode':
-        alert('pollo');
+        var boxNos = '';
+        data.supplierInvoiceDetails.forEach(detail => {
+          boxNos += `${ detail.boxNo }|`;
+        });
+        window.open(this.appConfiguration.barcodeUri + boxNos);
         break;
     }
   }

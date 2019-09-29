@@ -15,6 +15,7 @@ export class AppConfigurations {
     ordersUri: string;
     invoiceUri: string;
     shipmentUri: string;
+    barcodeUri: string;
 
     initialize() {
         this.apiServerHost = 'https://questapi.yellow-chips.com';
@@ -29,6 +30,7 @@ export class AppConfigurations {
         this.ordersUri = '/orders';
         this.invoiceUri = '/supplierinvoice';
         this.shipmentUri = '/PackingSlips';
+        this.barcodeUri = 'https://quest.yellow-chips.com/static/barcode.html?';
     }
 }
 

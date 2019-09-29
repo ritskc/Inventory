@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.8.0/dist/barcodes/JsBarcode.code128.min.js"></script>
+    </head>
+    <body>
+        <div>
+            <input type="button" value="Print" onclick="window.print();" style="float: right; width: 100px; height: 30px; font-size: 16px; background-color: #20a8d8; border-radius: 3px; border-color: #20a8d8; color: white;"/>
+            <div id="barcode-container"></div>
+            <script>
+                var hashes = location.href.split('?')[1];
+                if(hashes) {
+                    var barcodes = hashes.split('|');
+                    for(var index = 0; index < barcodes.length; index++) {
+                        $('#barcode-container').append(`<div><svg id="barcode-${index}"></svg></div>`);
+                        $("#barcode-" + index).JsBarcode(barcodes[index]);
+                    };
+                }
+            </script>
+        </div>
+    </body>
+</html>

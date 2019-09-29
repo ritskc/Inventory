@@ -27,7 +27,7 @@
             <table class="table table-responsive-sm table-bordered table-striped table-sm">
               <thead>
                 <tr>
-                  <th *ngFor="let column of columns" (click)="toggleSort(column)">
+                  <th *ngFor="let column of columns" (click)="toggleSort(column)" [ngClass]="{'min-width': column.minWidth}">
                     <span>{{column.headerText}}</span>
                     <div class="pull-right">
                       <div *ngIf="column.sortable && (isNotSortedOnThisColumn(column.value) || !descendingOrderSelected(column.value))" class="fa fa-sort-asc"></div>
