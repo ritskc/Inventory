@@ -47,7 +47,7 @@
                       <span class="clickable" (click)="rowSelected(row)" *ngIf="item.isLink">{{row[item.value]}}</span>
                       <span *ngIf="item.nested">{{row[item.value][item.nested]}}</span>
                       <span *ngIf="item.isEditable">
-                        <input type="text" value="{{row[item.value]}}"/>
+                        <input type="text" value="{{row[item.value]}}" (change)="itemValueEdited($event, row, item)"/>
                       </span>
                       <div *ngIf="item.isActionColumn">
                         <span *ngFor="let action of item.actions">

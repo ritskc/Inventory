@@ -8,6 +8,7 @@ import { NgxBarcodeModule } from 'ngx-barcode';
 import { FormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { BarecodeScannerLivestreamModule } from 'ngx-barcode-scanner';
+import { ToastrModule } from 'ng6-toastr-notifications';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { BarecodeScannerLivestreamModule } from 'ngx-barcode-scanner';
     CommonModule,
     FormsModule,
     NgxBarcodeModule,
-    QRCodeModule
+    QRCodeModule,
+    ToastrModule.forRoot(),
   ]
 })
 export class BarcodeModule { }

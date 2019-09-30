@@ -1,1 +1,36 @@
-<simple-grid [exportRequired]="false" (addClickedEventEmitter)="addInvoice()"></simple-grid>
+<div class="container-margin row">
+    <select class="form-control col-xs-4 col-md-4" (change)="customeSelected()" [(ngModel)]="customerId">
+        <option value="-1">Please select a Customer</option>
+        <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
+    </select>
+    <select class="form-control col-xs-3 col-md-3 standard-left-margin" (change)="shipmentSelected()" [(ngModel)]="shipmentId">
+        <option value="-1">Please select a Packaging Slip</option>
+        <option *ngFor="let shipment of shipments" [value]="shipment.id">{{shipment.packingSlipNo}}</option>
+    </select>
+</div>
+<div class="container-margin row" *ngIf="selectedShipment.id > 0">
+    <span class="font-weight-bold col-xs-2 col-md-2">Packing Date</span>
+    <span class="col-xs-2 col-md-2">{{selectedShipment.shippingDate | date}}</span>
+    <span class="font-weight-bold col-xs-2 col-md-2">Shipping Charge</span>
+    <span class="col-xs-2 col-md-2">{{selectedShipment.shippingCharge}}</span>
+    <span class="font-weight-bold col-xs-2 col-md-2">Shipping Via</span>
+    <span class="col-xs-2 col-md-2">{{selectedShipment.shipVia}}</span>
+    <span class="font-weight-bold col-xs-2 col-md-2">Custom Charge</span>
+    <span class="col-xs-2 col-md-2">{{selectedShipment.customCharge}}</span>
+    <span class="font-weight-bold col-xs-2 col-md-2">F.O.B</span>
+    <span class="col-xs-2 col-md-2">{{selectedShipment.fob}}</span>
+    <span class="font-weight-bold col-xs-2 col-md-2">Total Surcharge</span>
+    <span class="col-xs-2 col-md-2"></span>
+    <span class="font-weight-bold col-xs-2 col-md-2">Invoice Type</span>
+    <span class="col-xs-2 col-md-2"></span>
+</div>
+<simple-grid [data]="selectedShipment.packingSlipDetails" [columns]="columns" [exportRequired]="false" 
+            (addClickedEventEmitter)="addInvoice()" (valueEdited)="unitPriceChanged($event)">
+</simple-grid>
+
+<div class="card-footer">
+    <div class="row">
+        <span class="col-xs-10 col-md-10"></span>
+        <span class="col-xs-2 col-md-2 btn btn-primary" (click)="createInvoice()">Create Invoice</span>
+    </div>
+</div>

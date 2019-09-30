@@ -4,6 +4,7 @@ export class Shipment {
         this.packingSlipDetails = [];
     }
 
+    id: number = 0;
     CompanyId: number = 0;
     customerId: number = 0;
     customerName: string = '';
@@ -17,16 +18,27 @@ export class Shipment {
     customCharge: number = 0;
     isPaymentReceived: boolean = false;
     packingSlipDetails: PackingSlipDetail[] = [];
+    fob: string = '';
+    totalSurcharge: number = 0;
+    terms: string = '';
 }
 
-export class PackingSlipDetail{
+export class PackingSlipDetail {
     isBlankOrder: boolean = false;
     orderId: number = 0;
     orderDetailId: number = 0;
     partId: number = 0;
+    partCode: string = '';
     orderNo: string = '';
     partDescription: string = '';
     qty: number = 0;
     inBasket: boolean = false;
     boxes: number = 0;
+    unitPrice: number = 0;
+    total: number = 0;
+    surcharge: boolean = false;
+    surchargePerPound: number = 0;
+    surchargePerUnit: number = 0;
+    totalSurcharge: number = 0;
+    excessQty: number = 0;
 }

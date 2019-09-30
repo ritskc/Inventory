@@ -95,12 +95,12 @@ export class InvoiceListComponent implements OnInit {
   actionButtonClicked(data) {
     switch(data.eventName) {
       case 'printInvoiceBarcode':
-        window.open(this.appConfiguration.barcodeUri + data.invoiceNo);
+        window.open(this.appConfiguration.barcodeUri + data.barcode);
         break;
       case 'printBoxBarcode':
         var boxNos = '';
         data.supplierInvoiceDetails.forEach(detail => {
-          boxNos += `${ detail.boxNo }|`;
+          boxNos += `${ detail.barcode }|`;
         });
         window.open(this.appConfiguration.barcodeUri + boxNos);
         break;

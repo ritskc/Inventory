@@ -3,6 +3,7 @@ import { ApiService } from '../../common/services/api.service';
 import { ConfigService } from '../../config/config.service';
 import { Observable } from 'rxjs';
 import { Invoice, UploadInvoice } from '../../models/invoice.model';
+import { Shipment } from '../../models/shipment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,15 @@ export class InvoiceService {
     return this.apiService.post<number>(invoiceId, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/receive/${ invoiceId }`);
   }
 
+  receivedBox(box: string) {
+    return this.apiService.post<string>(box, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/receive/box/${ box }`);
+  }
+
   uploadInvoice(invoce: UploadInvoice) {
     return this.apiService.post<UploadInvoice>(invoce, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }`);
+  }
+
+  createCustomerInvoice(shipment: Shipment) {
+    return this.apiService.post<Shipment>(shipment, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.customerInvoiceUri }`);
   }
 }

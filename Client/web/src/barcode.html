@@ -12,8 +12,11 @@
                 if(hashes) {
                     var barcodes = hashes.split('|');
                     for(var index = 0; index < barcodes.length; index++) {
-                        $('#barcode-container').append(`<div><svg id="barcode-${index}"></svg></div>`);
-                        $("#barcode-" + index).JsBarcode(barcodes[index]);
+                        $('#barcode-container').append(`<div><svg style="width: 100vw; height: 100vh;" id="barcode-${index}"></svg></div>`);
+                        $("#barcode-" + index).JsBarcode(barcodes[index], {
+                            width: 5,
+                            height:400
+                        });
                     };
                 }
             </script>

@@ -83,4 +83,5 @@ export class InvoiceDetail {
     excessQty: number = 0;
     boxNo: number = 0;
     partDetail: Part;
+    barcode: string = '';
 }
