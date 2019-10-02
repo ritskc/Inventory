@@ -523,5 +523,56 @@ namespace DAL.Repository
         {
             throw new NotImplementedException();
         }
+
+        public async Task UploadFileAsync(int id, string docType, string path)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+                    string sql = string.Empty;
+                    switch (docType)
+                    {
+                        case "Invoice":
+                            sql = string.Format($"UPDATE [dbo].[SupplierInvoiceMaster]   SET [IsInvoiceUploaded] = '{true}' ,[InvoicePath] = '{path}'  WHERE Id = '{id}'");
+                            break;
+
+                        case "PackingSlip":
+                            sql = string.Format($"UPDATE [dbo].[SupplierInvoiceMaster]   SET [IsPackingSlipUploaded] = '{true}' ,[PackingSlipPath] = '{path}'  WHERE Id = '{id}'");
+                            break;
+
+                        case "TenPlus":
+                            sql = string.Format($"UPDATE [dbo].[SupplierInvoiceMaster]   SET [IsTenPlusUploaded] = '{true}' ,[TenPlusPath] = '{path}'  WHERE Id = '{id}'");
+                            break;
+
+                        case "BL":
+                            sql = string.Format($"UPDATE [dbo].[SupplierInvoiceMaster]   SET [IsBLUploaded] = '{true}' ,[BLPath] = '{path}'  WHERE Id = '{id}'");
+                            break;                        
+                    }                    
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
     }
 }

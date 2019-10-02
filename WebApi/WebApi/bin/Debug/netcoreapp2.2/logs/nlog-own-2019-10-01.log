@@ -1,0 +1,8 @@
+2019-10-01 20:08:33.6700||DEBUG|WebApi.Program|init main |url: |action: 
+2019-10-01 20:15:28.1689||DEBUG|WebApi.Program|init main |url: |action: 
+2019-10-01 20:16:44.9243||DEBUG|WebApi.Program|init main |url: |action: 
+2019-10-01 20:30:55.2420||DEBUG|WebApi.Program|init main |url: |action: 
+2019-10-01 20:31:44.7906||INFO|WebApi.Controllers.InvoicesController|customer invoice created |url: https://localhost/Invoices|action: Post
+2019-10-01 20:34:26.1253||INFO|WebApi.Controllers.InvoicesController|customer invoice created |url: https://localhost/Invoices|action: Post
+2019-10-01 20:37:38.6274||DEBUG|WebApi.Program|init main |url: |action: 
+2019-10-01 20:37:43.1249||INFO|WebApi.Controllers.InvoicesController|customer invoice created |url: https://localhost/Invoices|action: Post

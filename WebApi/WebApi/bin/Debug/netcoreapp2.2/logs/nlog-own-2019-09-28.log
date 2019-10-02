@@ -1,0 +1,4 @@
+2019-09-28 16:37:01.2587||DEBUG|WebApi.Program|init main |url: |action: 
+2019-09-28 16:37:07.6973||INFO|WebApi.Controllers.InvoicesController|customer invoice created |url: https://localhost/Invoices|action: Post
+2019-09-28 16:38:44.4580||DEBUG|WebApi.Program|init main |url: |action: 
+2019-09-28 16:38:52.8843||INFO|WebApi.Controllers.InvoicesController|customer invoice created |url: https://localhost/Invoices|action: Post

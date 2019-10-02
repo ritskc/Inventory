@@ -186,5 +186,10 @@ namespace WebApi.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task UploadFileAsync(int id, string docType, string path)
+        {
+            await this._supplierInvoiceRepository.UploadFileAsync(id,docType,path);
+        }
     }
 }

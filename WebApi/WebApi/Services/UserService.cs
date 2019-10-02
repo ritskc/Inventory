@@ -73,5 +73,30 @@ namespace WebApi.Services
         {
             return await this.userRepository.GetUserPropertyAsync(userName);            
         }
+
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        {
+            return await this.userRepository.GetAllUsersAsync();
+        }
+
+        public async Task<User> GeUserbyIdAsync(int userId)
+        {
+            return await this.userRepository.GeUserbyIdAsync(userId);
+        }
+
+        public async Task AddUserAsync(User user)
+        {
+            await this.userRepository.AddUserAsync(user);
+        }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            await this.userRepository.UpdateUserAsync(user);
+        }
+
+        public async Task DeleteUserAsync(long id)
+        {
+            await this.userRepository.DeleteUserAsync(id);
+        }
     }
 }

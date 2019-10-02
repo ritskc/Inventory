@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using WebApi.IServices;
 
 namespace WebApi.Controllers
@@ -13,11 +14,14 @@ namespace WebApi.Controllers
     [ApiController]
     public class InvoicesController : ControllerBase
     {
+        private readonly ILogger<InvoicesController> logger;
         private readonly IPackingSlipService packingSlipService;
         
-        public InvoicesController(IPackingSlipService packingSlipService)
+        public InvoicesController(IPackingSlipService packingSlipService,
+            ILogger<InvoicesController> logger)
         {
             this.packingSlipService = packingSlipService;
+            this.logger = logger;
         }
 
         // POST api/values
@@ -26,11 +30,13 @@ namespace WebApi.Controllers
         {
             try
             {
+                logger.LogInformation("customer invoice created");
                 await this.packingSlipService.CreateInvoiceAsync(packingSlip);
                 return Ok();
             }
             catch (Exception ex)
             {
+                logger.LogError("Error in invoice creation {0} ",ex.StackTrace);
                 return StatusCode(500, ex.ToString());
             }
         }

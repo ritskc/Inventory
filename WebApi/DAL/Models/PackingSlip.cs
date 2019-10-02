@@ -27,6 +27,9 @@ namespace DAL.Models
         public string Terms { get; set; }
         public int ShipmentInfoId { get; set; }
         public DateTime? InvoiceDate { get; set; }
+        public bool IsPOSUploaded { get; set; }
+        public string POSPath { get; set; }
+        public decimal TotalSurcharge { get; set; }
 
         public List<PackingSlipDetails> PackingSlipDetails { get; set; }
         public CustomerShippingInfo customerShippingInfo { get; set; }

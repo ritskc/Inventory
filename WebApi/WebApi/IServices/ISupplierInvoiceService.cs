@@ -15,5 +15,6 @@ namespace WebApi.IServices
         Task<int> DeleteSupplierInvoiceAsync(long supplierInvoiceId);
         Task ReceiveSupplierInvoiceAsync(long supplierInvoiceId);
         Task ReceiveBoxInvoiceAsync(string barcode);
+        Task UploadFileAsync(int id, string docType, string path);
     }
 }

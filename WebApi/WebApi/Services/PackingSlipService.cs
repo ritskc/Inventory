@@ -69,5 +69,10 @@ namespace WebApi.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task UpdatePOSAsync(int packingSlipId, string path)
+        {
+            await packingSlipRepository.UpdatePOSAsync(packingSlipId,path);
+        }
     }
 }

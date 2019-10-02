@@ -24,7 +24,7 @@ namespace DAL.Models
         public decimal SurchargePerPound { get; set; }
         public decimal SurchargePerUnit { get; set; }
         public decimal TotalSurcharge { get; set; }
-        public int ExcessQty { get; set; }
+        public int ExcessQty { get; set; }        
 
         public Part PartDetail { get; set; }
     }

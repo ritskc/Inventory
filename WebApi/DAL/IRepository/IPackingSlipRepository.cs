@@ -16,5 +16,6 @@ namespace DAL.IRepository
         Task UpdatePackingSlipAsync(PackingSlip packingSlip);
         Task<int> DeleteSupplierInvoiceAsync(long id);
         Task CreateInvoiceAsync(PackingSlip packingSlip);
+        Task UpdatePOSAsync(int packingSlipId, string path);
     }
 }
