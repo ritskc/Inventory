@@ -1,0 +1,10 @@
+<div class="row">
+  <select (change)="loadAllPurchaseOrders()" [(ngModel)]="customerId">
+    <option value="-1">Please select a Customer</option>
+    <option [value]="customer.id" *ngFor="let customer of customers">{{customer.name}}</option>
+  </select>
+</div>
+
+<div class="row">
+  <simple-grid [data]="purchaseOrders" [columns]="gridColumns" (selectedRow)="rowSelected($event)"></simple-grid>
+</div>

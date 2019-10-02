@@ -13,5 +13,13 @@ tbody tr:nth-of-type(odd) {
 }
 
 .descending-order-icon {
-    margin-left: -11px;
+    margin-left: -6px;
+}
+
+table, button, input {
+    font-size: smaller;
+}
+
+.min-width {
+    width: 100px;
 }

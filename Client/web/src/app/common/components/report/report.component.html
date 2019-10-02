@@ -1,5 +1,6 @@
-<div>
-  <iframe src="reportSourceUrl">
-
-  </iframe>
+<div class="iframe-back-container" *ngIf="display">
+  <div class="iframe-container">
+    <div class="header"><span class="fa fa-close pull-right" (click)="close()"></span></div>
+    <iframe [src]="safeUrl"></iframe>
+  </div>
 </div>

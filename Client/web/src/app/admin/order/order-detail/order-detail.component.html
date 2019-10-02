@@ -28,9 +28,16 @@
     <div class="col-lg-6 col-md-6 col-xs-12">
       <div class="card">
         <div class="card-header">
-            <strong>Order Details</strong>
+          <strong>Order Details</strong>
         </div>
         <div class="card-body">
+          <div class="form-group standard-top-margin row" *ngIf="SelectedCustomer > -1">
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Blank PO</label>
+            <label class="switch switch-3d switch-primary">
+              <input class="switch-input" type="checkbox" [(ngModel)]="isBlanketPO" [ngModelOptions]="{standalone: true}"/>
+              <span class="switch-slider"></span>
+            </label>
+          </div>
           <div class="form-group standard-top-margin row">
             <label class="col-md-3 col-xs-3 label-top-adjustment">PO Number</label>
             <input [attr.disabled]="disabled? '': null" type="text" formControlName="poNo" class="form-control col-md-9 col-xs-9" [(ngModel)]="purchaseOrder.poNo"/>
@@ -41,9 +48,9 @@
           </div>
           <div class="form-group standard-top-margin row">
             <label class="col-md-3 col-xs-3 label-top-adjustment">Due Date</label>
-            <input [attr.disabled]="disabled? '': null" type="date" formControlName="closingDate" class="form-control col-md-5 col-xs-5" [(ngModel)]="purchaseOrder.closingDate"/>
+            <input [attr.disabled]="disabled? '': null" type="date" formControlName="dueDate" class="form-control col-md-5 col-xs-5" [(ngModel)]="purchaseOrder.dueDate"/>
           </div>
-          <div class="form-group standard-top-margin row">
+          <div class="form-group standard-top-margin row" *ngIf="SelectedSupplier > -1">
             <label class="col-md-3 col-xs-3 label-top-adjustment">Email</label>
             <textarea [attr.disabled]="disabled? '': null" rows="4" formControlName="emailIds" class="form-control col-md-9 col-xs-9" [(ngModel)]="purchaseOrder.emailIds"></textarea>
           </div>
@@ -75,7 +82,16 @@
                 <option *ngFor="let part of selectedParts" [value]="part.id">{{part.description}}</option>
             </select>
           </div>
-          <div class="form-group standard-top-margin row">
+          <div class="form-group standard-top-margin row" *ngIf="SelectedCustomer > -1 && !isBlanketPO">
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Blank PO</label>
+            <select [attr.disabled]="disabled? '': null" class="form-control col-md-3 col-xs-3" formControlName="blanketPOId" [(ngModel)]="blanketPOId" (change)="blankPOSelected()">
+                <option value="-1">Blank PO</option>
+                <option *ngFor="let order of blankOrders" [value]="order.id">{{order.poNo}}</option>
+            </select>
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Open Qty</label>
+            <input class="col-md-3 col-xs-3 form-control" type="text" formControlName="blanketPOAdjQty" [(ngModel)]="blanketPOAdjQty"/>
+          </div>
+          <div class="form-group standard-top-margin row" *ngIf="SelectedSupplier > -1">
             <label class="col-md-3 col-xs-3 label-top-adjustment">Reference</label>
             <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-9 col-xs-9" formControlName="reference" [(ngModel)]="reference"/>
           </div>
@@ -87,7 +103,9 @@
           </div>
           <div class="form-group standard-top-margin row">
             <label class="col-md-3 col-xs-3 label-top-adjustment">Due Date</label>
-            <input [attr.disabled]="disabled? '': null" type="date" class="form-control col-md-5 col-xs-5" formControlName="dueDate" [(ngModel)]="dueDate"/>
+            <input [attr.disabled]="disabled? '': null" type="date" class="form-control col-md-3 col-xs-3" formControlName="dueDate" [(ngModel)]="dueDate"/>
+            <label class="col-md-3 col-xs-3 label-top-adjustment" *ngIf="SelectedCustomer > -1">Line No</label>
+            <input *ngIf="SelectedCustomer > -1" [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-3 col-xs-3" formControlName="lineNumber" [(ngModel)]="lineNumber"/>
           </div>
           <div class="form-group standard-top-margin row">
             <label class="col-md-3 col-xs-3 label-top-adjustment">Notes</label>
@@ -103,13 +121,11 @@
     <div class="card-header">
         <strong>Part Details</strong>
     </div>
-    <div class="card-body">
-        <simple-grid [data]="purchaseOrder.poDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false">
-        </simple-grid>
-    </div>
+    <simple-grid *ngIf="SelectedSupplier > -1" [data]="purchaseOrder.poDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false" (actionButtonClickedEvent)="removePart($event)"></simple-grid>
+    <simple-grid *ngIf="SelectedCustomer > -1" [data]="purchaseOrder.orderDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false" (actionButtonClickedEvent)="removePart($event)"></simple-grid>
   </div>
 
-  <div class="card">
+  <div class="card" *ngIf="SelectedSupplier > -1">
     <div class="card-header">
       <strong>Terms</strong>
       <button class="btn btn-primary float-right" (click)="addMoreTermAndCondition()">Add Term</button>

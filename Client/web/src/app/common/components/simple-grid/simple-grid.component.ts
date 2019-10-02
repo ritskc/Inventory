@@ -22,6 +22,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   @Output() selectedRow = new EventEmitter();
   @Output() addClickedEventEmitter = new EventEmitter();
   @Output() actionButtonClickedEvent = new EventEmitter();
+  @Output() valueEdited = new EventEmitter<any>();
 
   dataToDisplay: any[] = [];
   pageNo: number = 1;
@@ -107,5 +108,10 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   actionButtonClicked(eventName: string, data: any) {
     data.eventName = eventName;
     this.actionButtonClickedEvent.emit(data);
+  }
+
+  itemValueEdited(event, row, column) {
+    row[column.value] = typeof row[column.value] != "number" ? event.currentTarget.value : parseFloat(event.currentTarget.value);
+    this.valueEdited.emit(row);
   }
 }

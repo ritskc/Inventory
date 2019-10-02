@@ -1,7 +1,11 @@
+import { Part } from './part.model';
+
 export class PurchaseOrder {
     id: number = 0;
     companyId: number = 0;
+    customerId: number = 0;
     supplierId: number = 0;
+    isBlanketPO: boolean = false;
     poNo: string;
     emailIds: string;
     remarks: string;
@@ -13,10 +17,12 @@ export class PurchaseOrder {
     closingDate: string;
     acknowledgementDate: string;
     poDetails: PurchaseOrderDetail[];
+    orderDetails: PurchaseOrderDetail[];
     poTerms: PurchaseOrderTerm[];
 
     constructor() {
         this.poDetails = [];
+        this.orderDetails = [];
         this.poTerms = [];
     }
 }
@@ -25,7 +31,10 @@ export class PurchaseOrderDetail {
     id: number;
     poId: number;
     partId: number;
+    blanketPOId: number;
     qty: number;
+    blanketPOAdjQty: number;
+    lineNumber: number;
     unitPrice: number;
     ackQty: number;
     inTransitQty: number;
@@ -38,6 +47,9 @@ export class PurchaseOrderDetail {
     partCode: string;
     description: string;
     total: number;
+    part: Part
+
+    orderId: number = 0;
 }
 
 export class PurchaseOrderTerm {

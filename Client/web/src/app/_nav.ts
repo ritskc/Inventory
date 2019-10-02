@@ -40,7 +40,12 @@ export const navItems: NavData[] = [
       },
       {
         name: 'Inventory',
-        url: '/inventory',
+        url: '/companies/inventory',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: 'Invoice',
+        url: '/companies/invoice',
         icon: 'icon-puzzle'
       }
     ]
@@ -60,15 +65,8 @@ export const navItems: NavData[] = [
       },
       {
         name: 'Invoice',
-        url: '/supplier-invoice',
-        icon: 'icon-puzzle',
-          children: [
-            {
-              name: 'Barcode',
-              url: '/supplier/barcode',
-              icon: 'fa fa-barcode'
-            }
-          ]
+        url: '/invoice',
+        icon: 'icon-puzzle'
       }
     ]
   },
@@ -85,23 +83,23 @@ export const navItems: NavData[] = [
         icon: 'icon-puzzle'
       },
       {
-        name: 'Order',
-        url: '/order',
+        name: 'Shipments',
+        url: '/companies/shipment-list',
+        icon: 'icon-puzzle'
+      },
+      // {
+      //   name: 'Create Shipment',
+      //   url: '/companies/create-shipment',
+      //   icon: 'icon-puzzle'
+      // },
+      {
+        name: 'Barcode',
+        url: '/barcode',
         icon: 'icon-puzzle'
       },
       {
-        name: 'Shipping',
-        url: '/shipping',
-        icon: 'fa fa-ship'
-      },
-      {
-        name: 'Invoice',
-        url: '/invoice',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: 'POS',
-        url: '/pos',
+        name: 'QR Code',
+        url: '/barcode/qrcode',
         icon: 'icon-puzzle'
       }
     ]

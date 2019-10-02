@@ -1,0 +1,26 @@
+<div>
+  <div class="card-header">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-xs-12">
+        <select class="form form-control" (change)="supplierSelected($event)" [(ngModel)]="selectedSupplier">
+          <option *ngFor="let supplier of suppliers" value="{{supplier.id}}">{{supplier.name}}</option>
+        </select>
+      </div>
+      <div class="col-lg-6 col-md-6 col-xs-12" (change)="invoiceSelected($event)">
+        <select class="form form-control">
+          <option *ngFor="let invoice of supplierInvoices" value="{{invoice.id}}">{{invoice.invoiceNo}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card-body">
+      <simple-grid [columns]="columns" [data]="supplierInvoice.supplierInvoiceDetails" [addRequired]="false" [exportRequired]="false"></simple-grid>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn btn-primary" (click)="invoiceReceived()"><i class="fa fa-download"></i> Received Invoice</button>
+  </div>
+</div>

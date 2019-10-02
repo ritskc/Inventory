@@ -4,6 +4,6 @@
   </select>
 </div>
 <div class="row">
-    <simple-grid [data]="purchaseOrder.poDetails" [columns]="gridColumns" (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="addPurchaseOrder()">
+    <simple-grid [data]="purchaseOrder.poDetails" [columns]="gridColumns" [addRequired]="false" [exportRequired]="false" (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="addPurchaseOrder()">
     </simple-grid>
 </div>

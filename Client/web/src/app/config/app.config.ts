@@ -12,9 +12,14 @@ export class AppConfigurations {
     supplierUri: string;
     customerUri: string;
     posUri: string;
+    ordersUri: string;
+    invoiceUri: string;
+    shipmentUri: string;
+    barcodeUri: string;
+    customerInvoiceUri: string;
 
     initialize() {
-        this.apiServerHost = 'http://questapi.yellow-chips.com';
+        this.apiServerHost = 'https://questapi.yellow-chips.com';
 
         this.usersUri = '/users';
         this.partsUri = '/parts';
@@ -23,6 +28,11 @@ export class AppConfigurations {
         this.supplierUri = '/suppliers'
         this.customerUri = '/customers'
         this.posUri = '/pos';
+        this.ordersUri = '/orders';
+        this.invoiceUri = '/supplierinvoice';
+        this.shipmentUri = '/PackingSlips';
+        this.customerInvoiceUri =  '/Invoices';
+        this.barcodeUri = 'https://quest.yellow-chips.com/static/barcode.html?';
     }
 }
 
