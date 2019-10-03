@@ -59,7 +59,7 @@ export class UploadInvoiceComponent implements OnInit {
     this.invoiceTotal = rows[1][4];
     this.company = rows[1][5];
     
-    for (let index = 2; index < rows.length; index++) {
+    for (let index = 1; index < rows.length; index++) {
       var invoiceDetail = new UploadInvoiceDetail();
       invoiceDetail.PartCode = rows[index][6];
       invoiceDetail.Qty = rows[index][7];
@@ -81,7 +81,7 @@ export class UploadInvoiceComponent implements OnInit {
     this.invoice.UploadedDate = new Date().toLocaleString();
     this.invoiceService.uploadInvoice(this.invoice)
         .subscribe((invoiceNumber) => {
-          alert(invoiceNumber);
+          //alert(invoiceNumber);
         });
   }
 }

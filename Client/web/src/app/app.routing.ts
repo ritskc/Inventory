@@ -85,6 +85,10 @@ export const routes: Routes = [
         loadChildren: './admin/barcode/barcode.module#BarcodeModule'
       },
       {
+        path: 'upload',
+        loadChildren: './admin/upload/upload.module#UploadModule'
+      },
+      {
         path: 'reports',
         loadChildren: './reports/reports.module#ReportsModule'
       },

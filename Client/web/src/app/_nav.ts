@@ -42,11 +42,6 @@ export const navItems: NavData[] = [
         name: 'Inventory',
         url: '/companies/inventory',
         icon: 'icon-puzzle'
-      },
-      {
-        name: 'Invoice',
-        url: '/companies/invoice',
-        icon: 'icon-puzzle'
       }
     ]
   },
@@ -87,11 +82,16 @@ export const navItems: NavData[] = [
         url: '/companies/shipment-list',
         icon: 'icon-puzzle'
       },
-      // {
-      //   name: 'Create Shipment',
-      //   url: '/companies/create-shipment',
-      //   icon: 'icon-puzzle'
-      // },
+      {
+        name: 'Invoice',
+        url: '/companies/invoice',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: 'POS',
+        url: '/companies/pos',
+        icon: 'icon-puzzle'
+      },
       {
         name: 'Barcode',
         url: '/barcode',
@@ -130,6 +130,11 @@ export const navItems: NavData[] = [
       {
         name: 'User',
         url: '/admin',
+        icon: 'icon-user'
+      },
+      {
+        name: 'Upload',
+        url: '/upload',
         icon: 'icon-user'
       },
       {
