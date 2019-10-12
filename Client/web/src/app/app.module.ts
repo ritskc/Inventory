@@ -43,6 +43,7 @@ import { ConfigService } from './config/config.service';
 import { FormBuilder } from '@angular/forms';
 import { UserModule } from './user/user.module';
 import { TokenInterceptor } from './common/services/api.service';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   imports: [
@@ -59,6 +60,7 @@ import { TokenInterceptor } from './common/services/api.service';
     TabsModule.forRoot(),
     ChartsModule,
     HttpClientModule,
+    FileUploadModule,
 
     AdminModule,
     UserModule

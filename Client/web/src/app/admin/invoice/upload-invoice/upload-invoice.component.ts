@@ -6,6 +6,8 @@ import { InvoiceDetail, UploadInvoice, UploadInvoiceDetail } from '../../../mode
 import { Utils } from '../../../common/utils/utils';
 import { InvoiceService } from '../invoice.service';
 import { FileUploadService } from '../../../common/services/file-upload.service';
+import { HttpRequest, HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-upload-invoice',
@@ -24,8 +26,10 @@ export class UploadInvoiceComponent implements OnInit {
   private company: string = '';
   private eta: string = '';
   private invoiceTotal: number = 0;
+  private documents = [];
 
-  constructor(private companyService: CompanyService, private invoiceService: InvoiceService, private fileService: FileUploadService) { }
+  constructor(private companyService: CompanyService, private invoiceService: InvoiceService, private fileService: FileUploadService,
+              private http: HttpClient) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompany = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -47,8 +51,35 @@ export class UploadInvoiceComponent implements OnInit {
     });
   }
 
-  uploadAttachment(files: FileList) {
-    this.fileService.postFile(files.item(0));
+  uploadAttachment(files: FileList, folderName: string) {
+    this.documents.push({'type': folderName, 'file': files[0]});
+    return;
+
+
+    var formData = new FormData();
+    formData.append('file', files[0], files[0].name);
+    const req = new HttpRequest('POST', 'http://po.harisons.com/api/File/BL/10', formData, {
+      reportProgress: true
+    });
+    
+    const progress = new Subject<number>();
+
+    this.http.request(req).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress) {
+
+        // calculate the progress percentage
+        const percentDone = Math.round(100 * event.loaded / event.total);
+
+        // pass the percentage into the progress-stream
+        progress.next(percentDone);
+      } else if (event instanceof HttpResponse) {
+
+        // Close the progress-stream if we get an answer form the API
+        // The upload is complete
+        progress.complete();
+      }
+    });
+    //this.fileService.postFile(files.item(0));
   }
 
   extractDataFromFile(rows: any) {
@@ -81,7 +112,13 @@ export class UploadInvoiceComponent implements OnInit {
     this.invoice.UploadedDate = new Date().toLocaleString();
     this.invoiceService.uploadInvoice(this.invoice)
         .subscribe((invoiceNumber) => {
-          //alert(invoiceNumber);
+          
         });
+  }
+
+  uploadDocuments(invoiceNumber: string) {
+    this.documents.forEach((item) => {
+      this.fileService.uploadFile(item, invoiceNumber);
+    });
   }
 }

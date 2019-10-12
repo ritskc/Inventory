@@ -77,7 +77,7 @@
                     <span>Upload Invoice</span>
                   </div>
                   <div class="col-lg-4 col-md-4">
-                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files)" id="uploadInvoice"/>
+                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files, 'invoice')" id="uploadInvoice"/>
                   </div>
                   <div class="col-lg-1 col-md-1">
                     <span> </span>
@@ -86,7 +86,7 @@
                     <span>Upload BL</span>
                   </div>
                   <div class="col-lg-4 col-md-4">
-                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files)" id="uploadBl"/>
+                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files, 'bl')" id="uploadBl"/>
                   </div>
               </div>
               <div class="row">
@@ -94,7 +94,7 @@
                     <span>Upload Packing</span>
                   </div>
                   <div class="col-lg-4 col-md-4">
-                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files)" id="uploadPacking"/>
+                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files, 'packing')" id="uploadPacking"/>
                   </div>
                   <div class="col-lg-1 col-md-1">
                     <span> </span>
@@ -103,7 +103,7 @@
                     <span>Upload TC</span>
                   </div>
                   <div class="col-lg-4 col-md-4">
-                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files)" id="uploadTc"/>
+                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files, tc)" id="uploadTc"/>
                   </div>
               </div>
               <div class="row">
@@ -111,7 +111,7 @@
                     <span>Upload 10+2</span>
                   </div>
                   <div class="col-lg-4 col-md-4">
-                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files)" id="upload102"/>
+                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files, '102')" id="upload102"/>
                   </div>
               </div>
             </div>
