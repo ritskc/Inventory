@@ -24,6 +24,8 @@ namespace DAL.Models
         public bool IsActive { get; set; }
         public bool IsSample { get; set; }
         public string Location { get; set; }
+        public int IntransitQty { get; set; }
+        public int QtyInHand { get; set; }
 
         public List<PartSupplierAssignment> partSupplierAssignments { get; set; }
         public List<PartCustomerAssignment> partCustomerAssignments { get; set; }

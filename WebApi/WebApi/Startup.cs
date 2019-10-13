@@ -28,7 +28,7 @@ namespace WebApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            
+
         }
 
         public IConfiguration Configuration { get; }
@@ -36,10 +36,49 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<IISServerOptions>(options =>
+            services.AddCors(options =>
             {
-                options.AutomaticAuthentication = false;
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+
+                        builder.WithOrigins("http://yellow-chips.com",
+                                            "https://yellow-chips.com");
+                    });
+
+                options.AddPolicy("AnotherPolicy",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://yellow-chips.com",
+                            "https://yellow-chips.com")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                    });
+
+                options.AddPolicy("AllowSubdomain",
+    builder =>
+    {
+        builder.WithOrigins("http://*.yellow-chips.com", "https://*.yellow-chips.com")
+            .SetIsOriginAllowedToAllowWildcardSubdomains();
+    });
+
+                options.AddPolicy("AllowSubdomain",
+    builder =>
+    {
+        builder.WithOrigins("http://*.yellow-chips.com")
+            .SetIsOriginAllowedToAllowWildcardSubdomains();
+    });
+
+
             });
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.Configure<IISServerOptions>(option =>
+            {
+                option.AutomaticAuthentication = false;
+            });
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -52,7 +91,7 @@ namespace WebApi
             var connSettings = connSettingsSection.Get<ConnectionSettings>();
 
             var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);            
+            services.Configure<AppSettings>(appSettingsSection);
 
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
@@ -94,7 +133,7 @@ namespace WebApi
 
             //add repositories here
             //services.AddScoped<IPartRepository, PartRepository>();
-            services.AddScoped<ICompanyRepository,CompanyRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -111,9 +150,10 @@ namespace WebApi
             services.AddScoped<ISqlHelper, SqlHelper>();
         }
 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {            
+        {
             app.UseCors(x => x
                .AllowAnyOrigin()
                .AllowAnyMethod()
@@ -131,7 +171,7 @@ namespace WebApi
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMvc();            
         }
     }
 }

@@ -101,6 +101,7 @@
     <Compile Include="Repository\TransactionRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Settings\ConnectionSettings.cs" />
+    <Compile Include="Util\BarCodeUtil.cs" />
     <Compile Include="Util\DateTimeUtil.cs" />
   </ItemGroup>
   <ItemGroup>

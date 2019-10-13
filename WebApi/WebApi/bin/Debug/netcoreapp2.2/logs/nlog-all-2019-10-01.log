@@ -1,0 +1,179 @@
+2019-10-01 20:08:33.6700||DEBUG|WebApi.Program|init main 
+2019-10-01 20:08:35.4016||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-10-01 20:08:36.1294|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-10-01 20:08:36.1294|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-10-01 20:08:36.1684|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 38.2777ms 200  
+2019-10-01 20:08:36.2582|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 129.528ms 404  
+2019-10-01 20:08:40.0243|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/PackingSlips application/json 662 
+2019-10-01 20:08:40.1067|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-10-01 20:08:40.1714|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-10-01 20:08:40.1714|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2019-10-01 20:08:40.2192|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Post (WebApi) 
+2019-10-01 20:08:40.3446|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2019-10-01 20:08:40.6963|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 347.8326ms. 
+2019-10-01 20:08:40.7096|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2019-10-01 20:08:40.7278|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Post (WebApi) in 505.0002ms 
+2019-10-01 20:08:40.7298|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2019-10-01 20:08:40.7298|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 713.3028ms 500 application/json; charset=utf-8 
+2019-10-01 20:09:11.5896|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/PackingSlips application/json 662 
+2019-10-01 20:09:11.5896|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-10-01 20:09:11.5896|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-10-01 20:09:11.5896|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2019-10-01 20:09:11.5896|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Post (WebApi) 
+2019-10-01 20:09:11.5896|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2019-10-01 20:12:52.8322|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 221230.888ms. 
+2019-10-01 20:12:52.8322|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2019-10-01 20:12:52.8322|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Post (WebApi) in 221235.4755ms 
+2019-10-01 20:12:52.8322|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2019-10-01 20:12:52.8384|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 221248.838ms 500 application/json; charset=utf-8 
+2019-10-01 20:12:56.5634|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/PackingSlips application/json 662 
+2019-10-01 20:12:56.5634|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-10-01 20:12:56.5634|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-10-01 20:12:56.5634|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2019-10-01 20:12:56.5634|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Post (WebApi) 
+2019-10-01 20:12:56.5634|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2019-10-01 20:14:16.2008|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 79631.8421ms. 
+2019-10-01 20:14:16.2008|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2019-10-01 20:14:16.2008|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Post (WebApi) in 79635.1803ms 
+2019-10-01 20:14:16.2308|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2019-10-01 20:14:16.2658|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 79702.3741ms 500 application/json; charset=utf-8 
+2019-10-01 20:14:19.6949|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/PackingSlips application/json 662 
+2019-10-01 20:14:19.6949|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-10-01 20:14:19.6949|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-10-01 20:14:19.6949|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2019-10-01 20:14:19.6949|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Post (WebApi) 
+2019-10-01 20:14:19.6949|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2019-10-01 20:15:28.1689||DEBUG|WebApi.Program|init main 
+2019-10-01 20:15:30.0709||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-10-01 20:15:30.8668|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-10-01 20:15:30.8668|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-10-01 20:15:30.9061|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 39.5545ms 200  
+2019-10-01 20:15:30.9987|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 132.6434ms 404  
+2019-10-01 20:15:37.8452|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/PackingSlips application/json 662 
+2019-10-01 20:15:37.9085|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-10-01 20:15:37.9404|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-10-01 20:15:37.9404|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2019-10-01 20:15:37.9772|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Post (WebApi) 
+2019-10-01 20:15:38.0743|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2019-10-01 20:16:44.9243||DEBUG|WebApi.Program|init main 
+2019-10-01 20:16:46.1858||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-10-01 20:16:47.0133|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/PackingSlips application/json 662 
+2019-10-01 20:16:47.0133|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-10-01 20:16:47.0133|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-10-01 20:16:47.0581|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 43.7073ms 200  
+2019-10-01 20:16:47.2053|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 192.9093ms 404  
+2019-10-01 20:16:47.2053|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-10-01 20:16:47.2992|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-10-01 20:16:47.2992|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2019-10-01 20:16:47.3797|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Post (WebApi) 
+2019-10-01 20:16:47.4974|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2019-10-01 20:17:07.1671|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 19664.2388ms. 
+2019-10-01 20:17:07.1898|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Int32'. 
+2019-10-01 20:17:07.2288|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Post (WebApi) in 19841.3336ms 
+2019-10-01 20:17:07.2325|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2019-10-01 20:17:07.2325|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 20229.7875ms 200 application/json; charset=utf-8 
+2019-10-01 20:18:55.1617|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/PackingSlips/1/15 application/json 724 
+2019-10-01 20:18:55.1893|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-10-01 20:18:55.2172|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-10-01 20:18:55.2172|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Get (WebApi)' 
+2019-10-01 20:18:55.2579|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Get (WebApi) 
+2019-10-01 20:18:55.2579|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Get (WebApi) with arguments (1, 15) - Validation state: Valid 
+2019-10-01 20:18:55.2736|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 13.0239ms. 
+2019-10-01 20:18:55.2736|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.PackingSlip'. 
+2019-10-01 20:18:55.2920|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Get (WebApi) in 33.5589ms 
+2019-10-01 20:18:55.2920|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Get (WebApi)' 
+2019-10-01 20:18:55.2920|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 131.3525ms 200 application/json; charset=utf-8 
+2019-10-01 20:18:55.2920|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLQ6PN80G91T", Request id "0HLQ6PN80G91T:00000001": the application completed without reading the entire request body. 
+2019-10-01 20:30:55.2420||DEBUG|WebApi.Program|init main 
+2019-10-01 20:30:56.3952||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-10-01 20:30:57.3073|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-10-01 20:30:57.3075|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-10-01 20:30:57.3464|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 39.8433ms 200  
+2019-10-01 20:30:57.4747|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 168.5921ms 404  
+2019-10-01 20:31:34.7279|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/Invoices application/json 691 
+2019-10-01 20:31:34.7936|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-10-01 20:31:34.8256|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-10-01 20:31:34.8256|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.InvoicesController.Post (WebApi)' 
+2019-10-01 20:31:34.8668|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Invoices"}. Executing action WebApi.Controllers.InvoicesController.Post (WebApi) 
+2019-10-01 20:31:34.9565|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.InvoicesController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2019-10-01 20:31:44.7906||INFO|WebApi.Controllers.InvoicesController|customer invoice created 
+2019-10-01 20:31:44.9017|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.InvoicesController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 9941.9806ms. 
+2019-10-01 20:31:44.9017|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2019-10-01 20:31:44.9017|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.InvoicesController.Post (WebApi) in 10045.7676ms 
+2019-10-01 20:31:44.9017|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.InvoicesController.Post (WebApi)' 
+2019-10-01 20:31:44.9209|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 10193.0327ms 200  
+2019-10-01 20:34:26.1194|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/Invoices application/json 691 
+2019-10-01 20:34:26.1253|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-10-01 20:34:26.1253|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-10-01 20:34:26.1253|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.InvoicesController.Post (WebApi)' 
+2019-10-01 20:34:26.1253|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Invoices"}. Executing action WebApi.Controllers.InvoicesController.Post (WebApi) 
+2019-10-01 20:34:26.1253|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.InvoicesController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2019-10-01 20:34:26.1253||INFO|WebApi.Controllers.InvoicesController|customer invoice created 
+2019-10-01 20:37:38.6274||DEBUG|WebApi.Program|init main 
+2019-10-01 20:37:39.7893||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-10-01 20:37:40.4841|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-10-01 20:37:40.4841|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-10-01 20:37:40.5206|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 33.907ms 200  
+2019-10-01 20:37:40.6005|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 117.0172ms 404  
+2019-10-01 20:37:42.9267|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/Invoices application/json 691 
+2019-10-01 20:37:42.9886|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-10-01 20:37:43.0144|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-10-01 20:37:43.0144|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.InvoicesController.Post (WebApi)' 
+2019-10-01 20:37:43.0502|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Invoices"}. Executing action WebApi.Controllers.InvoicesController.Post (WebApi) 
+2019-10-01 20:37:43.1249|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.InvoicesController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2019-10-01 20:37:43.1249||INFO|WebApi.Controllers.InvoicesController|customer invoice created 
+2019-10-01 20:38:14.1184|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.InvoicesController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 30986.2415ms. 
+2019-10-01 20:38:14.1449|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2019-10-01 20:38:14.1649|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.InvoicesController.Post (WebApi) in 31109.9264ms 
+2019-10-01 20:38:14.1678|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.InvoicesController.Post (WebApi)' 
+2019-10-01 20:38:14.1678|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 31249.5683ms 200  

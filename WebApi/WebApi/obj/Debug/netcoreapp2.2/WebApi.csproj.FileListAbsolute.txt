@@ -34,3 +34,4 @@ C:\Ritesh\Projects\Inventory\WebApi\WebApi\obj\Debug\netcoreapp2.2\WebApi.RazorT
 C:\Ritesh\Projects\Inventory\WebApi\WebApi\obj\Debug\netcoreapp2.2\WebApi.csproj.CopyComplete
 C:\Ritesh\Projects\Inventory\WebApi\WebApi\obj\Debug\netcoreapp2.2\WebApi.dll
 C:\Ritesh\Projects\Inventory\WebApi\WebApi\obj\Debug\netcoreapp2.2\WebApi.pdb
+C:\Ritesh\Projects\Inventory\WebApi\WebApi\bin\Debug\netcoreapp2.2\nlog.config

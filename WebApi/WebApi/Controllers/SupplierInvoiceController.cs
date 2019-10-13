@@ -91,5 +91,20 @@ namespace WebApi.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
+
+        // POST api/values
+        [HttpPost("receive/box/{barcode}")]
+        public async Task<ActionResult> Post(string barcode)
+        {
+            try
+            {
+                await this.supplierInvoiceService.ReceiveBoxInvoiceAsync(barcode);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
     }
 }

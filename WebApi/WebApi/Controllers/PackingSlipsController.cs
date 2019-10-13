@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.IServices;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace WebApi.Controllers
 {
@@ -75,6 +77,30 @@ namespace WebApi.Controllers
             {
                 return StatusCode(500, ex.ToString());
             }
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Post(int id,IFormFile file)
+        {
+            long size = file.Length;
+
+            // full path to file in temp location
+            //var filePath = Path.GetTempFileName();            
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(),"POS", id.ToString()+ "_POS.pdf");
+
+            if (file.Length > 0)
+            {
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }        
+            
+            var relativeFilePath = "Docs\\POS\\" + id.ToString() + "_POS.pdf";
+
+            var result = packingSlipService.UpdatePOSAsync(id, relativeFilePath);
+
+            return Ok();
         }        
     }
 }

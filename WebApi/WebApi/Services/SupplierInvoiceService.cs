@@ -177,9 +177,19 @@ namespace WebApi.Services
             }
         }
 
+        public async Task ReceiveBoxInvoiceAsync(string barcode)
+        {
+            await this._supplierInvoiceRepository.ReceiveBoxInvoiceAsync(barcode);            
+        }
+
         public Task UpdateSupplierInvoiceAsync(SupplierInvoice supplierInvoice)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task UploadFileAsync(int id, string docType, string path)
+        {
+            await this._supplierInvoiceRepository.UploadFileAsync(id,docType,path);
         }
     }
 }

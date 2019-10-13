@@ -25,7 +25,8 @@ namespace Report.Services
         {
             ISqlHelper sqlHelper = new SqlHelper();
             IOrderRepository oRepository = new OrderRepository(sqlHelper);
-            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository);
+            IPartRepository partRepository = new PartRepository(sqlHelper);
+            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository);
 
             return await pRepository.GetPackingSlipAsync(id);
         }
@@ -34,7 +35,8 @@ namespace Report.Services
         {
             ISqlHelper sqlHelper = new SqlHelper();
             IOrderRepository oRepository = new OrderRepository(sqlHelper);
-            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository);
+            IPartRepository partRepository = new PartRepository(sqlHelper);
+            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository);
 
             var result = pRepository.GetPackingSlip(id);
 
@@ -48,7 +50,8 @@ namespace Report.Services
         {
             ISqlHelper sqlHelper = new SqlHelper();
             IOrderRepository oRepository = new OrderRepository(sqlHelper);
-            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository);
+            IPartRepository partRepository = new PartRepository(sqlHelper);
+            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository);
 
             var result = pRepository.GetPackingSlip(id);
 

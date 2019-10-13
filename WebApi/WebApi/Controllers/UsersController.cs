@@ -76,5 +76,106 @@ namespace WebApi.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
+
+        // GET: api/Todo
+        [HttpGet()]
+        public async Task<ActionResult<IEnumerable<User>>> GetAllUser()
+        {
+            try
+            {
+                var result = await this._userService.GetAllUsersAsync();
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        // GET: api/Todo
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<User>> GetUser(int userId)
+        {
+            try
+            {
+                var result = await this._userService.GeUserbyIdAsync(userId);
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        // POST api/values
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody] User user)
+        {
+            try
+            {
+                await this._userService.AddUserAsync(user);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        // PUT api/values/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] User user)
+        {
+            try
+            {
+                if (id != user.Id)
+                {
+                    return BadRequest();
+                }
+
+                user.Id = id;
+                await this._userService.UpdateUserAsync(user);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        //DELETE: api/Todo/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<User>> Delete(int id)
+        {
+            try
+            {
+                var result = await this._userService.GeUserbyIdAsync(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                await this._userService.DeleteUserAsync(id);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
     }
 }
