@@ -17,6 +17,7 @@ import { AppConfigurations } from '../../../config/app.config';
 })
 export class InvoiceListComponent implements OnInit {
 
+  private configuration: AppConfigurations = new AppConfigurations();
   private invoiceForm: FormGroup;
   private currentlyLoggedInCompany: number = 0;
   private appConfiguration: AppConfigurations;
@@ -46,12 +47,27 @@ export class InvoiceListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "invoiceDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
     this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isDate: true }) );
-    this.columns.push( new DataColumn({ headerText: "Products", constantText: "View", isLink: true }) );
-    this.columns.push( new DataColumn({ headerText: "Invoice", constantText: "View", isLink: true }) );
-    this.columns.push( new DataColumn({ headerText: "Packing", constantText: "View", isLink: true }) );
-    this.columns.push( new DataColumn({ headerText: "10+2", constantText: "View", isLink: true }) );
-    this.columns.push( new DataColumn({ headerText: "BL", constantText: "View", isLink: true }) );
-    this.columns.push( new DataColumn({ headerText: "TC", constantText: 'View', isLink: true }));
+    //this.columns.push( new DataColumn({ headerText: "Products", constantText: "View", isLink: true }) );
+    //this.columns.push( new DataColumn({ headerText: "Invoice", constantText: "View", isLink: true }) );
+    this.columns.push( new DataColumn({ headerText: "Invoice", isActionColumn: true, actions: [
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadInvoice', icon: 'fa fa-download' })
+    ] }) );
+    this.columns.push( new DataColumn({ headerText: "Packing", isActionColumn: true, actions: [
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadPackingSlip', icon: 'fa fa-download' })
+    ] }) );
+    //this.columns.push( new DataColumn({ headerText: "Packing", constantText: "View", isLink: true }) );
+    this.columns.push( new DataColumn({ headerText: "10+2", isActionColumn: true, actions: [
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTenPlus', icon: 'fa fa-download' })
+    ] }) );
+    //this.columns.push( new DataColumn({ headerText: "10+2", constantText: "View", isLink: true }) );
+    this.columns.push( new DataColumn({ headerText: "BL", isActionColumn: true, actions: [
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadBl', icon: 'fa fa-download' })
+    ] }) );
+    //this.columns.push( new DataColumn({ headerText: "BL", constantText: "View", isLink: true }) );
+    this.columns.push( new DataColumn({ headerText: "TC", isActionColumn: true, actions: [
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTc', icon: 'fa fa-download' })
+    ] }) );
+    //this.columns.push( new DataColumn({ headerText: "TC", constantText: 'View', isLink: true }));
     this.columns.push( new DataColumn({ headerText: "Received", value: "receivedDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, actions: [
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoiceBarcode', icon: 'fa fa-barcode' }),
@@ -71,7 +87,12 @@ export class InvoiceListComponent implements OnInit {
   loadAllSupplierInvoices() {
     this.invoiceService.getAllInvoices(this.currentlyLoggedInCompany)
         .subscribe(
-          (invoices) => {this.invoices = invoices; console.log(this.invoices); },
+          (invoices) => {
+            this.invoices = invoices;
+            this.invoices.forEach(invoice => {
+              invoice.blPath = invoice.isBLUploaded ? `${this.configuration.fileApiUri}/BL/${invoice.id}`: '';
+            });
+          },
           (error) => console.log(error),
           () => console.log('completed')
         );
@@ -103,6 +124,21 @@ export class InvoiceListComponent implements OnInit {
           boxNos += `${ detail.barcode }|`;
         });
         window.open(this.appConfiguration.barcodeUri + boxNos);
+        break;
+      case 'downloadInvoice':
+        window.open(`${this.configuration.fileApiUri}/Invoice/${data.id}`);
+        break;
+      case 'downloadPackingSlip':
+        window.open(`${this.configuration.fileApiUri}/PackingSlip/${data.id}`);
+        break;
+      case 'downloadTenPlus':
+        window.open(`${this.configuration.fileApiUri}/TenPlus/${data.id}`);
+        break;
+      case 'downloadBl':
+        window.open(`${this.configuration.fileApiUri}/BL/${data.id}`);
+        break;
+      case 'downloadTc':
+        window.open(`${this.configuration.fileApiUri}/TC/${data.id}`);
         break;
     }
   }

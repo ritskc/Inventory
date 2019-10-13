@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ApiService } from './api.service';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
+import { AppConfigurations } from '../../config/app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileUploadService {
+
+  private configurations: AppConfigurations = new AppConfigurations();
 
   constructor(private apService: ApiService, private httpClient: HttpClient) { }
 
@@ -21,7 +24,7 @@ export class FileUploadService {
   uploadFile(item: any, filename: string) {
     var formData = new FormData();
       formData.append('file', item.file, item.file.name);
-      const req = new HttpRequest('POST', `http://po.harisons.com/api/File/${item.type}/${filename}`, formData, {
+      const req = new HttpRequest('POST', `${this.configurations.fileApiUri}/${item.type}/${filename}`, formData, {
         reportProgress: true
       });
       

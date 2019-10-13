@@ -11,15 +11,15 @@
       <option value="-1">Select Customer</option>
       <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
     </select>
-    <select class="form-control standard-margin-top">
+    <select class="form-control standard-margin-top" [(ngModel)]="shipmentId">
       <option value="-1">Select Shipment</option>
       <option *ngFor="let shipment of shipments" [value]="shipment.id">{{shipment.packingSlipNo}}</option>
     </select>
-    <input *ngIf="selection == 1" class="form-control standard-margin-top input" type="text" placeholder="Enter the tracking number" [ngModel]="tracking"/>
-    <input *ngIf="selection == 1" class="form-control standard-margin-top input" type="file" placeholder="Select POS file to upload"/>
+    <input *ngIf="selection == 1" class="form-control standard-margin-top input" type="text" placeholder="Enter the tracking number" [(ngModel)]="tracking"/>
+    <input *ngIf="selection == 1" class="form-control standard-margin-top input" type="file" placeholder="Select POS file to upload" (change)="uploadFile($event.target.files)"/>
   </div>
   <div class="card-footer">
-    <button class="btn btn-primary pull-right" *ngIf="selection == 1">Upload</button>
+    <button class="btn btn-primary pull-right" (click)="upload()" *ngIf="selection == 1">Upload</button>
     <button class="btn btn-primary pull-right" *ngIf="selection == 2">Remove</button>
   </div>
 </div>

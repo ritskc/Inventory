@@ -8,6 +8,7 @@ import { InvoiceService } from '../invoice.service';
 import { FileUploadService } from '../../../common/services/file-upload.service';
 import { HttpRequest, HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-upload-invoice',
@@ -29,7 +30,7 @@ export class UploadInvoiceComponent implements OnInit {
   private documents = [];
 
   constructor(private companyService: CompanyService, private invoiceService: InvoiceService, private fileService: FileUploadService,
-              private http: HttpClient) { }
+              private http: HttpClient, private toastr: ToastrManager) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompany = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -112,13 +113,16 @@ export class UploadInvoiceComponent implements OnInit {
     this.invoice.UploadedDate = new Date().toLocaleString();
     this.invoiceService.uploadInvoice(this.invoice)
         .subscribe((invoiceNumber) => {
-          
+          var invoice = invoiceNumber as string;
+          this.uploadDocuments(invoice);
+          this.toastr.successToastr('Invoice uploaded successfully!!');
         });
   }
 
   uploadDocuments(invoiceNumber: string) {
     this.documents.forEach((item) => {
       this.fileService.uploadFile(item, invoiceNumber);
+      this.toastr.successToastr('File uploaded successfully!!');
     });
   }
 }

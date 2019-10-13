@@ -17,9 +17,12 @@ export class AppConfigurations {
     shipmentUri: string;
     barcodeUri: string;
     customerInvoiceUri: string;
+    fileApiUri: string;
 
     initialize() {
         this.apiServerHost = 'http://po.harisons.com/api';
+        //this.apiServerHost = 'https://questapi.yellow-chips.com';
+        this.fileApiUri = `${this.apiServerHost}/File`;
 
         this.usersUri = '/users';
         this.partsUri = '/parts';
