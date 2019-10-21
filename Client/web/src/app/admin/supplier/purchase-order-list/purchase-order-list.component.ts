@@ -93,4 +93,8 @@ export class PurchaseOrderListComponent implements OnInit {
     this.supplierId = this.supplierForm.get('supplierList').value;
     this.loadAllPurchaseOrders();
   }
+
+  addPurchaseOrder() {
+    this.router.navigateByUrl(`orders/detail/supplier/${this.supplierId}`)
+  }
 }

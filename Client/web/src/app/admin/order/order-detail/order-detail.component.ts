@@ -41,8 +41,6 @@ export class OrderDetailComponent implements OnInit {
   private lineNumber: number = 0;
   private blanketPOId: number = 0;
   private isBlanketPO: boolean = false;
-  private disableSupplierSelectedPurchaseOrder: boolean = false;
-  private disableCustomerSelectedPurchaseOrder: boolean = false;
 
   constructor(
     private partsService: PartsService, private supplierService: SupplierService, private companyService: CompanyService, private customerService: CustomerService,
@@ -55,9 +53,9 @@ export class OrderDetailComponent implements OnInit {
     this.purchaseOrder = new PurchaseOrder();
     this.purchaseOrder.companyId = this.currentlyLoaddedInCompanyId;
     
-    this.loadSuppliersList();
+    //this.loadSuppliersList();
     this.loadPartsList();
-    this.loadCustomersList();
+    //this.loadCustomersList();
 
     this.orderForm = this.formBuilder.group({
       poNo: FormControl,
@@ -81,6 +79,8 @@ export class OrderDetailComponent implements OnInit {
       lineNumber: FormControl,
       blanketPOId: FormControl
     });
+
+    this.initializeFormForSelection();
   }
 
   initializeFormForSelection() {
@@ -90,9 +90,11 @@ export class OrderDetailComponent implements OnInit {
         this.setFormForAllSelection();
         break;
       case "customer":
+        this.loadCustomersList();
         this.setFormForCustomerSelection();
         break;
       case "supplier":
+        this.loadSuppliersList();
         this.setFormForSupplierSelection();
         break;
     }
@@ -126,17 +128,13 @@ export class OrderDetailComponent implements OnInit {
       .subscribe((suppliers) => {
         this.suppliers = suppliers;
         this.SelectedSupplier = -1;
+
+        var suppliedSupplierId = parseInt(this.activatedRoute.snapshot.params.id);
+        if (suppliedSupplierId > -1) {
+          this.SelectedSupplier = suppliedSupplierId;
+          this.orderForm.get("suppliersList").setValue(suppliedSupplierId);
+        }
       });
-  }
-
-  supplierOptionSelected() {
-    this.disableCustomerSelectedPurchaseOrder = true;
-    this.disableSupplierSelectedPurchaseOrder = false;
-  }
-
-  customerOptionSelected() {
-    this.disableSupplierSelectedPurchaseOrder = true;
-    this.disableCustomerSelectedPurchaseOrder = false;
   }
 
   loadCustomersList() {
@@ -145,6 +143,12 @@ export class OrderDetailComponent implements OnInit {
       .subscribe((customers) => {
         this.customers = customers;
         this.SelectedCustomer = -1;
+
+        var suppliedCustomerId = parseInt(this.activatedRoute.snapshot.params.id);
+        if (suppliedCustomerId > -1) {
+          this.orderForm.get("customersList").setValue(this.SelectedCustomer);
+          this.SelectedCustomer = suppliedCustomerId;
+        }
       });
   }
 

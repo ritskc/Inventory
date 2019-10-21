@@ -31,7 +31,12 @@ export class PurchaseOrdersComponent implements OnInit {
 
   loadAllCustomers() {
     this.customerService.getAllCustomers(this.currentlyLoggedInCompanyid)
-      .subscribe((customers) => this.customers = customers);
+      .subscribe((customers) => {
+        this.customers = customers;
+        
+        this.customerId = this.activatedRoute.snapshot.params.id;
+        this.loadAllPurchaseOrders();        
+      });
   }
 
   initializeGridColumns() {
@@ -69,6 +74,10 @@ export class PurchaseOrdersComponent implements OnInit {
         this.purchaseOrders.push(customerPurchaseOrderViewModel);
       });
     });
+  }
+
+  addCustomerOrder() {
+    this.router.navigateByUrl(`orders/detail/customer/${this.customerId}`);
   }
 }
 

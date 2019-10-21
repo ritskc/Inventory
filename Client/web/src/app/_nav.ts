@@ -65,16 +65,21 @@ export const navItems: NavData[] = [
       }
     ]
   },
-  {
-    name: 'Orders',
-    url: '/orders/detail/all/0'
-  },
+  // {
+  //   name: 'Orders',
+  //   url: '/orders/detail/all/0'
+  // },
   {
     name: 'Sale',
     children: [
       {
         name: 'Customer',
         url: '/customers',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: 'Customer Orders',
+        url: '/customers/purchase-order/0/3',
         icon: 'icon-puzzle'
       },
       {

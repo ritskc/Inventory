@@ -86,6 +86,6 @@ export class CustomerListComponent implements OnInit {
   }
 
   redirectoToCustomerInvoice(customer: Customer) {
-    this.router.navigateByUrl(`/customers/purchase-order/${ customer.id }/${ UserAction.Details }`);
+    this.router.navigateByUrl(`/companies/invoice`);
   }
 }
