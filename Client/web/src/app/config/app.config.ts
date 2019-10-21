@@ -18,10 +18,14 @@ export class AppConfigurations {
     barcodeUri: string;
     customerInvoiceUri: string;
     fileApiUri: string;
+    reportsUri: string;
 
     initialize() {
-        this.apiServerHost = 'http://po.harisons.com/api';
         //this.apiServerHost = 'https://questapi.yellow-chips.com';
+        //this.reportsUri = 'http://renovate.yellow-chips.com/ReportViewer/PackingSlip.aspx?id=';
+        this.apiServerHost = 'http://po.harisons.com/api';
+        this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/PackingSlip.aspx?id=';
+
         this.fileApiUri = `${this.apiServerHost}/File`;
 
         this.usersUri = '/users';

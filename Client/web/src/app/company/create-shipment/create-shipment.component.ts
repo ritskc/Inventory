@@ -11,6 +11,7 @@ import { ShipmentService } from '../shipment.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { AppConfigurations } from '../../config/app.config';
 
 @Component({
   selector: 'app-create-shipment',
@@ -40,11 +41,13 @@ export class CreateShipmentComponent implements OnInit {
   private inBasket: boolean = false;
   private boxes: number = 0;
   private packagingSlipCreated: Subject<string> = new Subject<string>();
+  private appConfig: AppConfigurations;
 
   constructor(private companyservice: CompanyService, private customerService: CustomerService, private partsService: PartsService,
               private shipmentService: ShipmentService, private toastr: ToastrManager, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.appConfig = new AppConfigurations();
     this.selectedCustomerId = this.activatedRoute.snapshot.params.id;
     this.currentlyLoggedInCompany = this.companyservice.getCurrentlyLoggedInCompanyId();
     this.shipment = new Shipment();
@@ -163,7 +166,7 @@ export class CreateShipmentComponent implements OnInit {
         .subscribe(
           (result) => {
             this.toastr.successToastr('Shipment Created Successfully!!');
-            this.packagingSlipCreated.next(`http://renovate.yellow-chips.com/ReportViewer/PackingSlip.aspx?id=${result}`);
+            this.packagingSlipCreated.next(`${this.appConfig.reportsUri}${result}`);
             this.shipment = new Shipment();
           },
           (error) => { this.toastr.errorToastr('Error while creating shipment'); console.log(error); }
