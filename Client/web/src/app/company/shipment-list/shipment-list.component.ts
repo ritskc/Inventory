@@ -6,6 +6,7 @@ import { ShipmentService } from '../shipment.service';
 import { Shipment } from '../../models/shipment.model';
 import { CustomerService } from '../../admin/customer/customer.service';
 import { Customer } from '../../models/customer.model';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shipment-list',
@@ -40,16 +41,14 @@ export class ShipmentListComponent implements OnInit {
 
   loadAllCustomers() {
     this.customerService.getAllCustomers(this.currentlyLoggedInCompany)
-        .subscribe((customers) => {
-          this.customers = customers;
-          this.loadAllShipments();
-        });
-  }
-
-  loadAllShipments() {
-    this.shipmentService.getAllShipments(this.currentlyLoggedInCompany)
-        .subscribe((shipments) => {
-          shipments.map((shipment) => {
+        .pipe(
+          map(customers => {
+            this.customers = customers;
+            return customers;
+          }),
+          mergeMap(customers => this.shipmentService.getAllShipments(this.currentlyLoggedInCompany))
+        ).subscribe(shipments => {
+          shipments.map(shipment => {
             shipment.customerName = this.customers.find(c => c.id === shipment.customerId).name;
           });
           this.shipments = shipments;

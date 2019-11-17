@@ -14,6 +14,8 @@ import { PurchaseOrderDetail, PurchaseOrder, PurchaseOrderTerm } from '../../../
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Observable } from 'rxjs';
 import { httpLoaderService } from '../../../common/services/httpLoader.service';
+import * as DateHelper from '../../../common/helpers/dateHelper';
+import { Company } from '../../../models/company.model';
 
 @Component({
   selector: "app-order-detail",
@@ -29,7 +31,7 @@ export class OrderDetailComponent implements OnInit {
   private gridColumns: DataColumn[] = [];
   private selectedParts: Part[] = [];
   private blankOrders: PurchaseOrder[] = [];
-
+  private currentlyLoggedInCompany: Company;
   private reference: string = "";
   private price: number = 0;
   private notes: string = "";
@@ -41,6 +43,7 @@ export class OrderDetailComponent implements OnInit {
   private lineNumber: number = 0;
   private blanketPOId: number = 0;
   private isBlanketPO: boolean = false;
+  private idFromUrl: number = 0;
 
   constructor(
     private partsService: PartsService, private supplierService: SupplierService, private companyService: CompanyService, private customerService: CustomerService,
@@ -53,9 +56,7 @@ export class OrderDetailComponent implements OnInit {
     this.purchaseOrder = new PurchaseOrder();
     this.purchaseOrder.companyId = this.currentlyLoaddedInCompanyId;
     
-    //this.loadSuppliersList();
     this.loadPartsList();
-    //this.loadCustomersList();
 
     this.orderForm = this.formBuilder.group({
       poNo: FormControl,
@@ -85,6 +86,7 @@ export class OrderDetailComponent implements OnInit {
 
   initializeFormForSelection() {
     var userSelection = this.activatedRoute.snapshot.params.from;
+    this.idFromUrl = parseInt(this.activatedRoute.snapshot.params.id);
     switch (userSelection) {
       case "all":
         this.setFormForAllSelection();
@@ -98,13 +100,14 @@ export class OrderDetailComponent implements OnInit {
         this.setFormForSupplierSelection();
         break;
     }
+    this.loadDefaultValues();
   }
 
   initializePartsGrid() {
     this.gridColumns = [];
     this.gridColumns.push(new DataColumn({headerText: "Part Code", value: "partCode", sortable: true }));
     this.gridColumns.push(new DataColumn({headerText: "Description", value: "description", sortable: true}));
-    this.gridColumns.push(new DataColumn({headerText: "Qty", value: "qty", sortable: true}));
+    this.gridColumns.push(new DataColumn({headerText: "Qty", value: "qty", sortable: true, isEditable: true}));
     this.gridColumns.push(new DataColumn({ headerText: "Price", value: "unitPrice", sortable: true }));
     this.gridColumns.push(new DataColumn({ headerText: "Total", value: "total", sortable: true }));
     this.gridColumns.push(new DataColumn({headerText: "Due Date", value: "dueDate", sortable: true, isDate: true}));
@@ -180,24 +183,31 @@ export class OrderDetailComponent implements OnInit {
   }
 
   setFormForSupplierSelection() {
-    var selectedSupplier = this.orderForm.get("suppliersList").value;
     this.SelectedCustomer = -1;
-    this.purchaseOrder.supplierId = +selectedSupplier;
-    if (selectedSupplier > 0) {
+    this.purchaseOrder.supplierId = this.idFromUrl;
+    if (this.idFromUrl > 0) {
       this.selectedParts = [];
       
       this.parts.forEach(part => {
-        if (part.partSupplierAssignments.findIndex(p => p.supplierID == selectedSupplier) > -1)
+        if (part.partSupplierAssignments.findIndex(p => p.supplierID == this.idFromUrl) > -1)
           this.selectedParts.push(part);
       });
       var sequenceNo = 1;
-      this.suppliers.find(s => s.id == selectedSupplier).terms.forEach((term) => {
+      var supplier = this.suppliers.find(s => s.id == this.idFromUrl);
+      this.companyService.getCompany(this.currentlyLoaddedInCompanyId).subscribe(company => {
+        this.currentlyLoggedInCompany = company
+        this.purchaseOrder.emailIds = `${ supplier.emailID }, ${ this.currentlyLoggedInCompany.eMail }`;
+      });
+      supplier.terms.forEach((term) => {
         var poTerm = new PurchaseOrderTerm();
         poTerm.sequenceNo = sequenceNo;
         poTerm.term = term.terms;
         this.purchaseOrder.poTerms.push(poTerm);
         sequenceNo += 1;
       });
+      this.supplierService.getNewPurchaseOrderNumber(this.currentlyLoaddedInCompanyId).subscribe(po => 
+        this.purchaseOrder.poNo = po.entityNo
+      );
       this.initializePartsGrid();
     }
   }
@@ -268,6 +278,11 @@ export class OrderDetailComponent implements OnInit {
   }
 
   addPartToOrder() {
+    if (this.quantity < 1) {
+      alert('Part quantity should be more than 0 (zero)');
+      return;
+    }
+
     if (this.SelectedSupplier > -1 ) {
       var orderDetail = new PurchaseOrderDetail();
       orderDetail.id = 0;
@@ -357,5 +372,24 @@ export class OrderDetailComponent implements OnInit {
       this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
       console.log(error);
     });
+  }
+
+  loadDefaultValues() {
+    var userSelection = this.activatedRoute.snapshot.params.from;
+    switch(userSelection) {
+      case "customer":
+          this.purchaseOrder.poDate = DateHelper.getToday();
+          this.purchaseOrder.dueDate = DateHelper.getTomorrow();
+        break;
+      case "supplier":
+          this.purchaseOrder.poDate = DateHelper.getToday();
+          this.purchaseOrder.dueDate = DateHelper.getTomorrow();
+          this.dueDate = DateHelper.getTomorrow();
+          this.purchaseOrder.paymentTerms = '75 days from BL';
+          this.purchaseOrder.deliveryTerms = 'EX-WORKS';
+        break;
+      case "all":
+        break;
+    }
   }
 }

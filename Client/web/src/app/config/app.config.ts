@@ -19,12 +19,13 @@ export class AppConfigurations {
     customerInvoiceUri: string;
     fileApiUri: string;
     reportsUri: string;
+    entityTracker: string;
 
     initialize() {
-        //this.apiServerHost = 'https://questapi.yellow-chips.com';
-        //this.reportsUri = 'http://renovate.yellow-chips.com/ReportViewer/PackingSlip.aspx?id=';
-        this.apiServerHost = 'http://po.harisons.com/api';
-        this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/PackingSlip.aspx?id=';
+        this.apiServerHost = 'https://questapi.yellow-chips.com';
+        this.reportsUri = 'http://renovate.yellow-chips.com/ReportViewer/PackingSlip.aspx?id=';
+        //this.apiServerHost = 'http://po.harisons.com/api';
+        //this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/PackingSlip.aspx?id=';
 
         this.fileApiUri = `${this.apiServerHost}/File`;
 
@@ -39,6 +40,7 @@ export class AppConfigurations {
         this.invoiceUri = '/supplierinvoice';
         this.shipmentUri = '/PackingSlips';
         this.customerInvoiceUri =  '/Invoices';
+        this.entityTracker = '/EntityTracker';
         this.barcodeUri = 'https://quest.yellow-chips.com/static/barcode.html?';
     }
 }

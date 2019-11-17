@@ -91,6 +91,7 @@ export class UploadInvoiceComponent implements OnInit {
     this.invoiceTotal = rows[1][4];
     this.company = rows[1][5];
     
+    this.invoice.supplierInvoiceDetails = [];
     for (let index = 1; index < rows.length; index++) {
       var invoiceDetail = new UploadInvoiceDetail();
       invoiceDetail.PartCode = rows[index][6];
