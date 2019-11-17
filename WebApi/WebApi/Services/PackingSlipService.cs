@@ -70,9 +70,9 @@ namespace WebApi.Services
             throw new NotImplementedException();
         }
 
-        public async Task UpdatePOSAsync(int packingSlipId, string path)
+        public async Task UpdatePOSAsync(int packingSlipId, string path,string trackingNumber)
         {
-            await packingSlipRepository.UpdatePOSAsync(packingSlipId,path);
+            await packingSlipRepository.UpdatePOSAsync(packingSlipId,path, trackingNumber);
         }
     }
 }

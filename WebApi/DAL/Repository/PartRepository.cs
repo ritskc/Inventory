@@ -433,6 +433,110 @@ namespace DAL.Repository
             return part;
         }
 
+
+
+        public async Task<Part> GetPartByMapCodeAsync(int? supplierId, string mapCode)
+        {
+            var part = new Part();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+            
+            var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location] FROM [part]   where id in (SELECT[PartID] FROM[partsupplierassignment]  where[SupplierID] = '{0}' and REPLACE(Mapcode,' ','') = '{1}')", supplierId, mapCode.Replace(" ",""));
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+
+                    part.Id = Convert.ToInt64(dataReader["Id"]);
+                    part.Code = Convert.ToString(dataReader["Code"]);
+                    part.Description = Convert.ToString(dataReader["Description"]);
+                    part.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
+                    part.WeightInKg = Convert.ToDecimal(dataReader["WeightInKg"]);
+                    part.WeightInLb = Convert.ToDecimal(dataReader["WeightInLb"]);
+                    part.MinQty = Convert.ToInt32(dataReader["MinQty"]);
+                    part.MaxQty = Convert.ToInt32(dataReader["MaxQty"]);
+                    part.DrawingNo = Convert.ToString(dataReader["DrawingNo"]);
+                    part.DrawingUploaded = Convert.ToBoolean(dataReader["DrawingUploaded"]);
+                    part.DrawingFileName = Convert.ToString(dataReader["DrawingFileName"]);
+                    part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
+                    part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
+                    part.Location = Convert.ToString(dataReader["Location"]);
+
+                }
+                conn.Close();
+            }
+
+
+            List<PartSupplierAssignment> partSupplierAssignments = new List<PartSupplierAssignment>();
+            commandText = string.Format("SELECT [id],[PartID],[SupplierID],[MapCode],[Description],[QtyInHand],[QtyInTransit],[TotalQty],[UnitPrice] FROM [partsupplierassignment]  where partid = '{0}'", part.Id);
+
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+            {
+                cmd1.CommandType = CommandType.Text;
+                conn.Open();
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader1.Read())
+                {
+                    var partSupplierAssignment = new PartSupplierAssignment();
+                    partSupplierAssignment.Id = Convert.ToInt64(dataReader1["Id"]);
+                    partSupplierAssignment.PartID = Convert.ToInt64(dataReader1["PartID"]);
+                    partSupplierAssignment.SupplierID = Convert.ToInt32(dataReader1["SupplierID"]);
+                    partSupplierAssignment.MapCode = Convert.ToString(dataReader1["MapCode"]);
+                    partSupplierAssignment.Description = Convert.ToString(dataReader1["Description"]);
+                    partSupplierAssignment.QtyInHand = Convert.ToInt32(dataReader1["QtyInHand"]);
+                    partSupplierAssignment.QtyInTransit = Convert.ToInt32(dataReader1["QtyInTransit"]);
+                    partSupplierAssignment.TotalQty = Convert.ToInt32(dataReader1["TotalQty"]);
+                    partSupplierAssignment.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
+                    partSupplierAssignments.Add(partSupplierAssignment);
+                }
+
+                part.partSupplierAssignments = partSupplierAssignments;
+                conn.Close();
+            }
+
+
+            List<PartCustomerAssignment> partCustomerAssignments = new List<PartCustomerAssignment>();
+            commandText = string.Format("SELECT [id],[PartId] ,[CustomerId] ,[MapCode] ,[Description] ,[Weight] ,[Rate] ,[SurchargeExist] ,[SurchargePerPound]  FROM [partcustomerassignment]  where partid = '{0}'", part.Id);
+
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+            {
+                cmd1.CommandType = CommandType.Text;
+                conn.Open();
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader1.Read())
+                {
+                    var partCustomerAssignment = new PartCustomerAssignment();
+                    partCustomerAssignment.Id = Convert.ToInt64(dataReader1["Id"]);
+                    partCustomerAssignment.PartId = Convert.ToInt64(dataReader1["PartId"]);
+                    partCustomerAssignment.CustomerId = Convert.ToInt32(dataReader1["CustomerId"]);
+                    partCustomerAssignment.MapCode = Convert.ToString(dataReader1["MapCode"]);
+                    partCustomerAssignment.Description = Convert.ToString(dataReader1["Description"]);
+                    partCustomerAssignment.Weight = Convert.ToDecimal(dataReader1["Weight"]);
+                    partCustomerAssignment.Rate = Convert.ToDecimal(dataReader1["Rate"]);
+                    partCustomerAssignment.SurchargeExist = Convert.ToBoolean(dataReader1["SurchargeExist"]);
+                    partCustomerAssignment.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);
+
+                    partCustomerAssignments.Add(partCustomerAssignment);
+                }
+
+                part.partCustomerAssignments = partCustomerAssignments;
+                conn.Close();
+            }
+
+            return part;
+        }
+
+
+
         public async Task AddPartAsync(Part part)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
@@ -534,6 +638,79 @@ namespace DAL.Repository
 
                     // Attempt to commit the transaction.
                     transaction.Commit();                    
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+
+        public async Task UpdatePartCustomerPriceAsync(string customer, string partcode, decimal price)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {                   
+
+                    var sql = string.Format($"UPDATE pca SET pca.Rate = '{price}' FROM dbo.[partcustomerassignment] AS pca INNER JOIN dbo.customer AS cust    ON pca.CustomerId = cust.id INNER JOIN dbo.part AS part    ON pca.PartId = part.id WHERE part.Code= '{partcode}' AND cust.Name = '{customer}'");
+
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();           
+
+                    // Attempt to commit the transaction.
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+        public async Task UpdatePartSupplierPriceAsync(string supplier, string partcode, decimal price)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+
+                    var sql = string.Format($"UPDATE pca SET pca.UnitPrice = '{price}' FROM dbo.[partsupplierassignment] AS pca INNER JOIN dbo.supplier AS supp  ON pca.SupplierID = supp.id INNER JOIN dbo.part AS part    ON pca.PartId = part.id WHERE part.Code= '{partcode}' AND supp.Name = '{supplier}'");
+
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    // Attempt to commit the transaction.
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {

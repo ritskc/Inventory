@@ -11,7 +11,7 @@ namespace DAL.IRepository
     {
         Task<IEnumerable<SupplierInvoice>> GetAllSupplierInvoicesAsync(int companyId);
         Task<SupplierInvoice> GetSupplierInvoiceAsync(long supplierInvoiceId);
-        Task AddSupplierInvoiceAsync(SupplierInvoice supplierInvoice);
+        Task<Int64> AddSupplierInvoiceAsync(SupplierInvoice supplierInvoice);
         Task UpdateSupplierInvoiceAsync(SupplierInvoice supplierInvoice);
         Task<int> DeleteSupplierInvoiceAsync(long supplierInvoiceId);
         Task ReceiveSupplierInvoiceAsync(long supplierInvoiceId);

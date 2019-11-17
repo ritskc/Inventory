@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi.IServices;
 using System.IO;
 using System.Net.Http;
+using Microsoft.Extensions.Logging;
 
 namespace WebApi.Controllers
 {
@@ -16,24 +17,25 @@ namespace WebApi.Controllers
     {
         private readonly IPackingSlipService packingSlipService;
         private readonly ISupplierInvoiceService supplierInvoice;
+        private readonly ILogger<FileController> logger;
         public FileController(IPackingSlipService packingSlipService,
-            ISupplierInvoiceService supplierInvoice)
+            ISupplierInvoiceService supplierInvoice,
+            ILogger<FileController> logger)
         {
             this.packingSlipService = packingSlipService;
             this.supplierInvoice = supplierInvoice;
+            this.logger = logger;
         }
+
         [HttpPost("{docType}/{id}")]
-        public async Task<IActionResult> Post(string docType,int id, IFormFile file)
+        public async Task<IActionResult> Post(string docType, int id, IFormFile file)
         {
-            
+            logger.LogInformation("post file api called");
+
             long size = file.Length;
             string type = string.Empty;
             switch (docType)
-            {
-                case "POS":
-                    type = "POS";
-                    break;
-
+            {               
                 case "Invoice":
                     type = "Invoice";
                     break;
@@ -51,11 +53,10 @@ namespace WebApi.Controllers
                     break;
 
                 default:
-                    return BadRequest();                    
+                    return BadRequest();
             }
-            // full path to file in temp location
-            //var filePath = Path.GetTempFileName();            
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(),"Docs", type, id.ToString() + ".pdf");
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Docs", type, id.ToString() + ".pdf");
 
             if (file.Length > 0)
             {
@@ -65,24 +66,64 @@ namespace WebApi.Controllers
                 }
             }
             var relativeFilePath = "Docs\\" + type + "\\" + id.ToString() + ".pdf";
-            switch (docType)
-            {
-                case "POS":
-                                       
-                    var result = packingSlipService.UpdatePOSAsync(id, relativeFilePath);
-                    break;               
-
-                default:
-                    var result1 = supplierInvoice.UploadFileAsync(id, type, relativeFilePath);
-                    break;
-            }
-
-            
-
+            var result1 = supplierInvoice.UploadFileAsync(id, type, relativeFilePath);
             return Ok();
         }
 
-        
+        [HttpPost("{docType}/{id}/{trackingNumber}")]
+        public async Task<IActionResult> Post(string docType, int id, IFormFile file, string trackingNumber)
+        {
+            logger.LogInformation("post file api called");
+
+            long size = file.Length;
+            string type = "POS";
+            
+            
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Docs", type, id.ToString() + ".pdf");
+
+            if (file.Length > 0)
+            {
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
+            var relativeFilePath = "Docs\\" + type + "\\" + id.ToString() + ".pdf";
+            var result = packingSlipService.UpdatePOSAsync(id, relativeFilePath, trackingNumber);
+            return Ok();
+        }
+
+        //[HttpPost("{docType}/{id}")]
+        //public async Task<IActionResult> Post(string docType, int id, IFormFile file)
+        //{
+        //    try
+        //    {
+        //        logger.LogInformation("post file api called");
+
+        //        long size = file.Length;
+        //        string type = "BL";
+
+        //        // full path to file in temp location
+        //        //var filePath = Path.GetTempFileName();            
+        //        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Docs", type, id.ToString() + ".pdf");
+
+        //        if (file.Length > 0)
+        //        {
+        //            using (var stream = new FileStream(filePath, FileMode.Create))
+        //            {
+        //                await file.CopyToAsync(stream);
+        //            }
+        //        }
+        //        return Ok();
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        logger.LogError("error in executing " + ex.Message);
+        //        return BadRequest();
+        //    }
+        //}
+
+
         //public static async Task<byte[]> DownloadFile(string url)
         //{
         //    using (var client = new HttpClient())

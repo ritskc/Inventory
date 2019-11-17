@@ -52,7 +52,7 @@ namespace WebApi.Controllers
         public async Task<ActionResult<Part>> Get(int companyId, int id)
         {
             try
-            {
+            {               
                 var result = await this._partService.GetPartAsync(id);
 
                 if (result == null)
@@ -75,7 +75,10 @@ namespace WebApi.Controllers
         {
             try
             {
-                await this._partService.AddPartAsync(part);
+                var parts = await this._partService.GetAllPartsAsync(part.CompanyId);
+                if (parts.Where(x => x.Code == part.Code).Count() > 0)
+                    return StatusCode(302);
+                    await this._partService.AddPartAsync(part);
                 return Ok();
             }
             catch (Exception ex)
@@ -98,6 +101,26 @@ namespace WebApi.Controllers
                 part.Id = id;
                 await this._partService.UpdatePartAsync(part);
 
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        // PUT api/values/5
+        [HttpPut("{type}/{typeName}/{partCode}/{rate}")]
+        public async Task<IActionResult> Put(string type, string typeName, string partCode, decimal rate)
+        {
+            try
+            {               
+                if(type == "customer")
+                    await this._partService.UpdatePartCustomerPriceAsync(typeName, partCode, rate);
+                else if(type== "supplier" )
+                    await this._partService.UpdatePartSupplierPriceAsync(typeName, partCode, rate);
+                else
+                    return BadRequest();
                 return Ok();
             }
             catch (Exception ex)

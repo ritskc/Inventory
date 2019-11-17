@@ -23,8 +23,9 @@ namespace DAL.Repository
             _sqlHelper = sqlHelper;
             _poRepository = poRepository;
         }
-        public async Task AddSupplierInvoiceAsync(SupplierInvoice supplierInvoice)
+        public async Task<Int64> AddSupplierInvoiceAsync(SupplierInvoice supplierInvoice)
         {
+            Int64 supplierInvoiceId;
             //throw new NotImplementedException();
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
@@ -34,13 +35,13 @@ namespace DAL.Repository
                 SqlTransaction transaction;
 
                 // Start a local transaction.
-                transaction = connection.BeginTransaction("SampleTransaction");
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted,"SampleTransaction");
 
                 // Must assign both transaction object and connection
                 // to Command object for a pending local transaction
                 command.Connection = connection;
                 command.Transaction = transaction;
-
+                
                 try
                 {
                     string sql = string.Format($"INSERT INTO [dbo].[SupplierInvoiceMaster]   ([CompanyId]   ,[SupplierId]   ,[InvoiceNo]   ,[InvoiceDate]   ,[ETA]   ,[IsAirShipment]   ,[PoNo]   ,[ReferenceNo]   ,[Email]   ,[ByCourier]   ,[IsInvoiceUploaded]   ,[IsPackingSlipUploaded]   ,[IsTenPlusUploaded]   ,[IsBLUploaded]   ,[IsTCUploaded]   ,[InvoicePath]   ,[PackingSlipPath]   ,[TenPlusPath]   ,[BLPath]   ,[IsInvoiceReceived]   ,[UploadedDate]   ,[ReceivedDate]) VALUES   ('{supplierInvoice.CompanyId}'   ,'{supplierInvoice.SupplierId}'   ,'{supplierInvoice.InvoiceNo}'   ,'{supplierInvoice.InvoiceDate}'   ,'{supplierInvoice.ETA}'   ,'{supplierInvoice.IsAirShipment}'   ,'{supplierInvoice.PoNo}'   ,'{supplierInvoice.ReferenceNo}'   ,'{supplierInvoice.Email}'   ,'{supplierInvoice.ByCourier}'   ,'{supplierInvoice.IsInvoiceUploaded}'   ,'{supplierInvoice.IsPackingSlipUploaded}'   ,'{supplierInvoice.IsTenPlusUploaded}'   ,'{supplierInvoice.IsBLUploaded}'   ,'{supplierInvoice.IsTCUploaded}'   ,'{supplierInvoice.InvoicePath}'   ,'{supplierInvoice.PackingSlipPath}'   ,'{supplierInvoice.TenPlusPath}'   ,'{supplierInvoice.BLPath}'   ,'{supplierInvoice.IsInvoiceReceived}'   ,'{supplierInvoice.UploadedDate}'   ,'{supplierInvoice.ReceivedDate}')");
@@ -49,6 +50,7 @@ namespace DAL.Repository
                     command.CommandText = sql;
                     var invoiceId = command.ExecuteScalar();
                     supplierInvoice.Id = Convert.ToInt64(invoiceId.ToString());
+                    supplierInvoiceId = supplierInvoice.Id;
                     
                     foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
                     {
@@ -71,15 +73,26 @@ namespace DAL.Repository
 
                             var poDetail = poResult.poDetails.Where(x => x.Id == supplierInvoicePoDetails.PODetailId).FirstOrDefault();
 
-                            if (poDetail.AckQty >= supplierInvoicePoDetails.Qty + poDetail.InTransitQty + poDetail.ReceivedQty)
+                            var calQty = supplierInvoicePoDetails.Qty + poDetail.InTransitQty + poDetail.ReceivedQty;
+                            if (poDetail.AckQty <= calQty)
                             {
-                                sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [InTransitQty] = '{supplierInvoicePoDetails.Qty}' ,[IsClosed] = '{true}' ,[ClosingDate] = '{DateTime.Now}'  WHERE id = '{supplierInvoicePoDetails.PODetailId}' ");
+                                sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [InTransitQty] = '{supplierInvoicePoDetails.Qty + poDetail.InTransitQty}' ,[IsClosed] = '{true}' ,[ClosingDate] = '{DateTime.Now}'  WHERE id = '{supplierInvoicePoDetails.PODetailId}' ");
                             }
                             else
                             {
-                                sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [InTransitQty] = '{supplierInvoicePoDetails.Qty}'  WHERE id = '{supplierInvoicePoDetails.PODetailId}' ");
+                                sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [InTransitQty] = '{supplierInvoicePoDetails.Qty + poDetail.InTransitQty}'  WHERE id = '{supplierInvoicePoDetails.PODetailId}' ");
                             }
                             await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+
+                            poResult = await _poRepository.GetPoAsync(supplierInvoicePoDetails.PoId);
+                            var openPO = poResult.poDetails.Where(x => x.PoId == supplierInvoicePoDetails.PoId && x.IsClosed == false).FirstOrDefault();
+
+                            if (openPO == null)
+                            {
+                                sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [IsClosed] = '{true}' ,[ClosingDate] = '{DateTime.Now}'  WHERE id = '{supplierInvoicePoDetails.PoId}' ");
+
+                                await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                            }
 
                         }
                     }
@@ -113,27 +126,27 @@ namespace DAL.Repository
                     var sql = string.Format($"UPDATE [dbo].[SupplierInvoiceMaster]   SET [Barcode] =  '{BarCodeUtil.GetBarCodeString(supplierInvoice.Id)}' WHERE id = '{supplierInvoice.Id}' ");
                     await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
-                    foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
-                    {
-                        sql = string.Format($"UPDATE [dbo].[SupplierInvoiceDetails]   SET [Barcode] =  '{BarCodeUtil.GetBarCodeString(supplierInvoiceDetail.Id)}' WHERE id = '{supplierInvoiceDetail.Id}' ");
-                        await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                    //foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
+                    //{
+                    //    sql = string.Format($"UPDATE [dbo].[SupplierInvoiceDetails]   SET [Barcode] =  '{BarCodeUtil.GetBarCodeString(supplierInvoiceDetail.Id)}' WHERE id = '{supplierInvoiceDetail.Id}' ");
+                    //    await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
-                        foreach (SupplierInvoicePoDetails supplierInvoicePoDetails in supplierInvoiceDetail.supplierInvoicePoDetails)
-                        {
-                            var poResult = await _poRepository.GetPoAsync(supplierInvoicePoDetails.PoId);
+                    //    foreach (SupplierInvoicePoDetails supplierInvoicePoDetails in supplierInvoiceDetail.supplierInvoicePoDetails)
+                    //    {
+                    //        var poResult = await _poRepository.GetPoAsync(supplierInvoicePoDetails.PoId);
 
-                            var poDetail = poResult.poDetails.Where(x => x.IsClosed == false).FirstOrDefault();
+                    //        var poDetail = poResult.poDetails.Where(x => x.IsClosed == false).FirstOrDefault();
 
-                            if (poDetail == null)
-                            {
-                                sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [IsClosed] = '{true}' ,[ClosingDate] = '{DateTime.Now}'  WHERE id = '{poResult.Id}' ");
+                    //        if (poDetail == null)
+                    //        {
+                    //            sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [IsClosed] = '{true}' ,[ClosingDate] = '{DateTime.Now}'  WHERE id = '{poResult.Id}' ");
 
-                                await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
-                            }
+                    //            await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                    //        }
 
 
-                        }
-                    }
+                    //    }
+                    //}
 
 
                     transaction.Commit();
@@ -144,7 +157,9 @@ namespace DAL.Repository
                     throw ex;
                 }
             }
-        }
+
+            return supplierInvoiceId;
+        }        
 
         public Task<int> DeleteSupplierInvoiceAsync(long supplierInvoiceId)
         {

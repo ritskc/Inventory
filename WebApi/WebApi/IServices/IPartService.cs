@@ -13,5 +13,7 @@ namespace WebApi.IServices
         Task AddPartAsync(Part part);
         Task UpdatePartAsync(Part part);
         Task DeletePartAsync(long id);
+        Task UpdatePartCustomerPriceAsync(string customer, string partcode, decimal price);
+        Task UpdatePartSupplierPriceAsync(string supplier, string partcode, decimal price);
     }
 }

@@ -63,13 +63,21 @@ namespace WebApi.Controllers
             }
         }
         // POST api/values
-        [HttpPost]
-        public async Task<ActionResult> Post([FromBody] SupplierInvoice supplierInvoice)
+        [HttpPost("{step}")]
+        public async Task<ActionResult<SupplierInvoice>> Post(int step,[FromBody] SupplierInvoice supplierInvoice)
         {
             try
             {
-                await this.supplierInvoiceService.AddSupplierInvoiceAsync(supplierInvoice);
-                return Ok();
+                if (step == 1)
+                {
+                    var result = await this.supplierInvoiceService.GetSupplierInvoicePODetailAsync(supplierInvoice);
+                    return result;
+                }
+                else
+                {
+                    var result = await this.supplierInvoiceService.AddSupplierInvoiceAsync(supplierInvoice);
+                    return result;
+                }                
             }
             catch (Exception ex)
             {

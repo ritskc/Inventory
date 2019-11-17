@@ -80,7 +80,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("{id}")]
-        public async Task<IActionResult> Post(int id,IFormFile file)
+        public async Task<IActionResult> Post(int id,IFormFile file,string trackingNumber)
         {
             long size = file.Length;
 
@@ -98,7 +98,7 @@ namespace WebApi.Controllers
             
             var relativeFilePath = "Docs\\POS\\" + id.ToString() + "_POS.pdf";
 
-            var result = packingSlipService.UpdatePOSAsync(id, relativeFilePath);
+            var result = packingSlipService.UpdatePOSAsync(id, relativeFilePath,trackingNumber);
 
             return Ok();
         }        

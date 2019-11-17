@@ -43,6 +43,16 @@ namespace WebApi.Services
         {            
             await Task.Run(() => this._partRepository.DeletePartAsync(id));
         }
-          
+
+        public async Task UpdatePartCustomerPriceAsync(string customer, string partcode, decimal price)
+        {
+            await Task.Run(() => this._partRepository.UpdatePartCustomerPriceAsync(customer,partcode,price));
+        }
+
+        public async Task UpdatePartSupplierPriceAsync(string supplier, string partcode, decimal price)
+        {
+            await Task.Run(() => this._partRepository.UpdatePartSupplierPriceAsync(supplier, partcode, price));
+        }
+
     }
 }

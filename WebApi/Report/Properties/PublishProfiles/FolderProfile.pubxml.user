@@ -10,13 +10,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/DAL.dll">
-      <publishTime>07/28/2019 17:46:48</publishTime>
+      <publishTime>10/20/2019 10:43:32</publishTime>
     </File>
     <File Include="bin/DAL.dll.config">
       <publishTime>02/17/2019 12:46:54</publishTime>
     </File>
     <File Include="bin/DAL.pdb">
-      <publishTime>07/28/2019 17:46:48</publishTime>
+      <publishTime>10/20/2019 10:43:32</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>05/24/2018 14:38:22</publishTime>
@@ -43,10 +43,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/12/2014 20:48:20</publishTime>
     </File>
     <File Include="bin/Report.dll">
-      <publishTime>07/29/2019 21:07:15</publishTime>
+      <publishTime>10/20/2019 20:02:12</publishTime>
     </File>
     <File Include="bin/Report.pdb">
-      <publishTime>07/29/2019 21:07:15</publishTime>
+      <publishTime>10/20/2019 20:02:12</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/24/2018 14:38:22</publishTime>

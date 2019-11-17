@@ -13,8 +13,11 @@ namespace DAL.IRepository
         Task<Part> GetPartAsync(long partId);
         Part GetPart(long partId);
         Task<Part> GetPartByNameAsync(int companyId, string name);
+        Task<Part> GetPartByMapCodeAsync(int? supplierId, string mapCode);
         Task AddPartAsync(Part part);
         Task UpdatePartAsync(Part part);
         Task DeletePartAsync(long id);
+        Task UpdatePartCustomerPriceAsync(string customer, string partcode, decimal price);
+        Task UpdatePartSupplierPriceAsync(string supplier, string partcode, decimal price);
     }
 }

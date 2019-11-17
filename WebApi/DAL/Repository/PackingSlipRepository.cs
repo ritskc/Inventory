@@ -445,7 +445,7 @@ namespace DAL.Repository
             throw new NotImplementedException();
         }
 
-        public async Task UpdatePOSAsync(int packingSlipId,string path)
+        public async Task UpdatePOSAsync(int packingSlipId,string path,string trackingNumber)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
@@ -464,7 +464,7 @@ namespace DAL.Repository
 
                 try
                 {
-                    string sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [IsPOSUploaded] = '{true}' ,[POSPath] = '{path}'  WHERE Id = '{packingSlipId}'");
+                    string sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [IsPOSUploaded] = '{true}' ,[POSPath] = '{path}',[TrakingNumber]='{trackingNumber}'  WHERE Id = '{packingSlipId}'");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 

@@ -39,7 +39,7 @@ namespace WebApi
             WebHost.CreateDefaultBuilder(args)
 
                 .UseStartup<Startup>()
-                .UseUrls("https://localhost:44390")
+                .UseUrls("https://localhost:443")
             .ConfigureLogging(logging =>
             {
                 logging.ClearProviders();
