@@ -42,13 +42,11 @@ export class InvoiceListComponent implements OnInit {
   }
 
   initializeGridColumns() {
-    this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierDetail.name", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false, minWidth: true }) );
     this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "invoiceDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
     this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isDate: true }) );
-    //this.columns.push( new DataColumn({ headerText: "Products", constantText: "View", isLink: true }) );
-    //this.columns.push( new DataColumn({ headerText: "Invoice", constantText: "View", isLink: true }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", isActionColumn: true, actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadInvoice', icon: 'fa fa-download' })
     ] }) );

@@ -12,6 +12,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { AppConfigurations } from '../../config/app.config';
+import * as DateHelper from '../../common/helpers/dateHelper';
 
 @Component({
   selector: 'app-create-shipment',
@@ -31,7 +32,6 @@ export class CreateShipmentComponent implements OnInit {
   private columnsForPartsGrid: DataColumn[] = [];
   private columnsForOrderGrid: DataColumn[] = [];
   private shipmentsViewModel: ShipmentsViewModel[] = [];
-
   private selectedCustomer: Customer = new Customer();
 
   private blankOrder: boolean = false;
@@ -42,6 +42,7 @@ export class CreateShipmentComponent implements OnInit {
   private boxes: number = 0;
   private packagingSlipCreated: Subject<string> = new Subject<string>();
   private appConfig: AppConfigurations;
+  private previousPackingSlipNo: string;
 
   constructor(private companyservice: CompanyService, private customerService: CustomerService, private partsService: PartsService,
               private shipmentService: ShipmentService, private toastr: ToastrManager, private activatedRoute: ActivatedRoute) { }
@@ -54,6 +55,10 @@ export class CreateShipmentComponent implements OnInit {
     this.shipment.CompanyId = this.currentlyLoggedInCompany;
     this.loadAllCustomers();
     this.loadAllParts();
+    this.shipment.shippingDate = DateHelper.getToday();
+    this.shipmentService.getLatestShipment(this.currentlyLoggedInCompany, DateHelper.getToday()).subscribe(data => {
+        this.previousPackingSlipNo = data ? data.entityNo : 'Data Unavailable';
+    });
   }
 
   loadAllCustomers() {
@@ -128,6 +133,11 @@ export class CreateShipmentComponent implements OnInit {
       this.createColumnsForPartsAddition();
     }
 
+    if (this.quantity < 1) {
+      alert('Quantity should be more than 0(zero)');
+      return;
+    }
+
     var packagingSlipDetail = new PackingSlipDetail();
     packagingSlipDetail.isBlankOrder = this.blankOrder;
     packagingSlipDetail.orderId = this.orderId;
@@ -142,11 +152,11 @@ export class CreateShipmentComponent implements OnInit {
 
   createColumnsForPartsAddition() {
     this.columnsForPartsGrid = [];
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Blank Order", value: "isBlankOrder" }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Blank Order", value: "isBlankOrder", isBoolean: true }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Order Id", value: "orderNo" }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Part", value: "partDescription" }) );
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Quantity", value: "qty" }) );
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "In Basket", value: "inBasket" }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Quantity", value: "qty", isEditable: true }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "In Basket", value: "inBasket", isBoolean: true }) );
   }
 
   createColumnsForShipmentGrid() {

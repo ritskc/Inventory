@@ -84,4 +84,10 @@ export class InvoiceDetail {
     boxNo: number = 0;
     partDetail: Part;
     barcode: string = '';
+    isValid: boolean = false;
+}
+
+export enum UploadMode {
+    Validate = 1,
+    Confirm
 }

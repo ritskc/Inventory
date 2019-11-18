@@ -46,7 +46,7 @@
                     </div>
                     <div class="form-group standard-top-margin row">
                       <label class="col-md-3 col-xs-3 label-top-adjustment">ETA</label>
-                      <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-9 col-xs-9" [(ngModel)]="eta"/>
+                      <input [attr.disabled]="disabled? '': null" type="date" class="form-control col-md-9 col-xs-9" [(ngModel)]="eta"/>
                     </div>
                   </div>
             </div>
@@ -60,7 +60,7 @@
               Product Cart
             </div>
             <div class="card-body">
-              <simple-grid [data]="invoice.supplierInvoiceDetails" [columns]="columns" [addRequired]="false" [exportRequired]="false"></simple-grid>
+              <simple-grid [data]="invoice.supplierInvoiceDetails" [columns]="columns" [addRequired]="false" [exportRequired]="false" [pageSize]="50"></simple-grid>
             </div>
         </div>
     </div>
