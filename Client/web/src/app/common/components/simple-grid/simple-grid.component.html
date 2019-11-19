@@ -27,7 +27,7 @@
             <table class="table table-responsive-sm table-bordered table-striped table-sm">
               <thead>
                 <tr>
-                  <th *ngFor="let column of columns" (click)="toggleSort(column)" [ngClass]="{'min-width': column.minWidth}">
+                  <th class="center-aling" *ngFor="let column of columns" (click)="toggleSort(column)" [ngClass]="{'min-width': column.minWidth}">
                     <span>{{column.headerText}}</span>
                     <div class="pull-right">
                       <div *ngIf="column.sortable && (isNotSortedOnThisColumn(column.value) || !descendingOrderSelected(column.value))" class="fa fa-sort-asc"></div>
@@ -39,8 +39,8 @@
               <tbody>
                 <ng-template ngFor let-row [ngForOf]="_data | search: searchText | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
                   <tr>
-                    <td *ngFor="let item of columns">
-                      <span *ngIf="!item.isLink && !item.nested && !item.isDate && !item.isEditable">{{row[item.value]}}</span>
+                    <td *ngFor="let item of columns" [ngClass]="item.customStyling">
+                      <span *ngIf="!item.isLink && !item.nested && !item.isDate && !item.isEditable && !item.isBoolean">{{row[item.value]}}</span>
                       <span *ngIf="item.constantText && !item.isLink">{{item.constantText}}</span>
                       <span *ngIf="item.isDate">{{row[item.value] | date}}</span>
                       <span class="clickable" *ngIf="item.constantText && item.isLink">{{item.constantText}}</span>
@@ -48,6 +48,9 @@
                       <span *ngIf="item.nested">{{row[item.value][item.nested]}}</span>
                       <span *ngIf="item.isEditable">
                         <input type="text" value="{{row[item.value]}}" (change)="itemValueEdited($event, row, item)"/>
+                      </span>
+                      <span *ngIf="item.isBoolean">
+                        <input type="checkbox" [checked]="row[item.value]"/>
                       </span>
                       <div *ngIf="item.isActionColumn">
                         <span *ngFor="let action of item.actions">
@@ -63,7 +66,7 @@
             </table>
           </div>
           <div class="row" *ngIf="footerRequired">
-            <div class="col-lg-9 col-md-9 col-sm-9">
+            <div class="col-lg-9 col-md-9 col-sm-9 overflow-x">
               <ul class="pagination standard-top-left">
                 <li class="page-item">
                   <a class="page-link" (click)="setPageNo(1)">First</a>

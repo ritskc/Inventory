@@ -62,7 +62,7 @@ export class UploadInvoiceDetail {
     Qty: number = 0;
     Price: number = 0;
     Total: number = 0;
-    BoxNumber: string = '';
+    BoxNo: string = '';
 }
 
 export class InvoiceDetail {
@@ -84,4 +84,10 @@ export class InvoiceDetail {
     boxNo: number = 0;
     partDetail: Part;
     barcode: string = '';
+    isValid: boolean = false;
+}
+
+export enum UploadMode {
+    Validate = 1,
+    Confirm
 }

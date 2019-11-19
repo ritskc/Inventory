@@ -6,6 +6,7 @@ import { CustomerService } from '../customer.service';
 import { CompanyService } from '../../../company/company.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { httpLoaderService } from '../../../common/services/httpLoader.service';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-purchase-orders',
@@ -30,8 +31,16 @@ export class PurchaseOrdersComponent implements OnInit {
   }
 
   loadAllCustomers() {
-    this.customerService.getAllCustomers(this.currentlyLoggedInCompanyid)
-      .subscribe((customers) => this.customers = customers);
+    this.customerService.getAllCustomers(this.currentlyLoggedInCompanyid).pipe(
+      map(customers => {
+        this.customers = customers;
+        this.customerId = this.activatedRoute.snapshot.params.id;
+        return customers;
+      }),
+      mergeMap(customers => this.getAllPurchaseOrders())
+    ).subscribe(purchaseOrders => {
+      this.populatePurchaseOrderViewModel(purchaseOrders);
+    });
   }
 
   initializeGridColumns() {
@@ -45,7 +54,7 @@ export class PurchaseOrdersComponent implements OnInit {
 
   loadAllPurchaseOrders() {
     this.loaderService.show();
-    this.customerService.getAllPurchaseOrders(this.currentlyLoggedInCompanyid)
+    this.getAllPurchaseOrders()
         .subscribe((purchaseOrders) => {
           this.populatePurchaseOrderViewModel(purchaseOrders);
           this.loaderService.hide();
@@ -69,6 +78,14 @@ export class PurchaseOrdersComponent implements OnInit {
         this.purchaseOrders.push(customerPurchaseOrderViewModel);
       });
     });
+  }
+
+  addCustomerOrder() {
+    this.router.navigateByUrl(`orders/detail/customer/${this.customerId}`);
+  }
+
+  private getAllPurchaseOrders() {
+    return this.customerService.getAllPurchaseOrders(this.currentlyLoggedInCompanyid);
   }
 }
 

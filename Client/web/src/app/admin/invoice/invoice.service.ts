@@ -32,8 +32,12 @@ export class InvoiceService {
     return this.apiService.post<string>(box, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/receive/box/${ box }`);
   }
 
-  uploadInvoice(invoce: UploadInvoice) {
-    return this.apiService.post<UploadInvoice>(invoce, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }`);
+  validateInvoice(invoce: UploadInvoice) {
+    return this.apiService.post<UploadInvoice>(invoce, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/1`);
+  }
+
+  uploadInvoice(invoce: Invoice) {
+    return this.apiService.post<Invoice>(invoce, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/2`);
   }
 
   createCustomerInvoice(shipment: Shipment) {

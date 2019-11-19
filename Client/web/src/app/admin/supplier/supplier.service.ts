@@ -4,6 +4,7 @@ import { ConfigService } from '../../config/config.service';
 import { Observable } from 'rxjs';
 import { Supplier } from '../../models/supplier.model';
 import { PurchaseOrder } from '../../models/purchase-order';
+import * as DateHelper from '../../common/helpers/dateHelper';
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +41,9 @@ export class SupplierService {
       return this.apiService.post(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.posUri);
     else 
       return this.apiService.put(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.posUri + `/${ purchaseOrder.id }`);
+  }
+
+  getNewPurchaseOrderNumber(companyId: number): Observable<any> {
+    return this.apiService.get(`${this.configService.Settings.apiServerHost}/${this.configService.Settings.entityTracker}/po/${companyId}/${ DateHelper.getToday() }`)
   }
 }

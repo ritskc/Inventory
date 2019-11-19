@@ -6,6 +6,7 @@ import { ShipmentService } from '../shipment.service';
 import { Shipment } from '../../models/shipment.model';
 import { CustomerService } from '../../admin/customer/customer.service';
 import { Customer } from '../../models/customer.model';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shipment-list',
@@ -32,24 +33,22 @@ export class ShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Slip No", value: "packingSlipNo", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Shipped Date", value: "shippingDate", sortable: false, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Shipped Via", value: "shipVia", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Crates", value: "crates", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Boxes", value: "boxes", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Invoice", value: "isInvoiceCreated", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Crates", value: "crates", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Boxes", value: "boxes", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Invoice", value: "isInvoiceCreated", sortable: false, isBoolean: true, customStyling: 'center' }) );
+    this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false, isBoolean: true, customStyling: 'center' }) );
   }
 
   loadAllCustomers() {
     this.customerService.getAllCustomers(this.currentlyLoggedInCompany)
-        .subscribe((customers) => {
-          this.customers = customers;
-          this.loadAllShipments();
-        });
-  }
-
-  loadAllShipments() {
-    this.shipmentService.getAllShipments(this.currentlyLoggedInCompany)
-        .subscribe((shipments) => {
-          shipments.map((shipment) => {
+        .pipe(
+          map(customers => {
+            this.customers = customers;
+            return customers;
+          }),
+          mergeMap(customers => this.shipmentService.getAllShipments(this.currentlyLoggedInCompany))
+        ).subscribe(shipments => {
+          shipments.map(shipment => {
             shipment.customerName = this.customers.find(c => c.id === shipment.customerId).name;
           });
           this.shipments = shipments;

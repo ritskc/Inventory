@@ -7,6 +7,11 @@
             </div>
             <div class="card-body">
                 <div class="form-group row">
+                    <div class="col-xs-6 col-md-6">
+                      <span>Previous Packagin Slip: {{previousPackingSlipNo}}</span>
+                    </div>
+                </div>
+                <div class="form-group row">
                   <div class="col-xs-6 col-md-6">
                     <div class="form-group standard-top-margin row">
                       <select class="form-control col-xs-11 col-md-11 select-margin-left" [(ngModel)]="selectedCustomerId" (change)="customerSelected($event)">
