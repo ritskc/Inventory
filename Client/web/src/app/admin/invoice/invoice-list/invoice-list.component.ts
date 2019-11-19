@@ -42,7 +42,7 @@ export class InvoiceListComponent implements OnInit {
   }
 
   initializeGridColumns() {
-    this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierDetail.name", sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false, minWidth: true }) );
     this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "invoiceDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
@@ -53,19 +53,15 @@ export class InvoiceListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Packing", isActionColumn: true, actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadPackingSlip', icon: 'fa fa-download' })
     ] }) );
-    //this.columns.push( new DataColumn({ headerText: "Packing", constantText: "View", isLink: true }) );
     this.columns.push( new DataColumn({ headerText: "10+2", isActionColumn: true, actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTenPlus', icon: 'fa fa-download' })
     ] }) );
-    //this.columns.push( new DataColumn({ headerText: "10+2", constantText: "View", isLink: true }) );
     this.columns.push( new DataColumn({ headerText: "BL", isActionColumn: true, actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadBl', icon: 'fa fa-download' })
     ] }) );
-    //this.columns.push( new DataColumn({ headerText: "BL", constantText: "View", isLink: true }) );
     this.columns.push( new DataColumn({ headerText: "TC", isActionColumn: true, actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTc', icon: 'fa fa-download' })
     ] }) );
-    //this.columns.push( new DataColumn({ headerText: "TC", constantText: 'View', isLink: true }));
     this.columns.push( new DataColumn({ headerText: "Received", value: "receivedDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, actions: [
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoiceBarcode', icon: 'fa fa-barcode' }),

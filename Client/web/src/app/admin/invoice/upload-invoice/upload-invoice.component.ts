@@ -40,13 +40,13 @@ export class UploadInvoiceComponent implements OnInit {
 
   initializeColumns(mode: UploadMode = UploadMode.Confirm) {
     this.columns = [];
-    this.columns.push( new DataColumn({ headerText: "Valid", value: "isValid", isBoolean: true }) );
+    this.columns.push( new DataColumn({ headerText: "Valid", value: "isValid", isBoolean: true, customStyling: 'center' }) );
     this.columns.push( new DataColumn({ headerText: "Part Code", value: "partCode" }) );
-    this.columns.push( new DataColumn({ headerText: "Quantity", value: "qty" }) );
-    this.columns.push( new DataColumn({ headerText: "Rate", value: "price" }) );
-    this.columns.push( new DataColumn({ headerText: "Amount", value: "total" }) );
-    this.columns.push( new DataColumn({ headerText: "Adjusted Qty", value: "adjustedPOQty" }) );
-    this.columns.push( new DataColumn({ headerText: "Excess Qty", value: "excessQty" }) );
+    this.columns.push( new DataColumn({ headerText: "Quantity", value: "qty", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Rate", value: "price", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Amount", value: "total", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Adjusted Qty", value: "adjustedPOQty", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Excess Qty", value: "excessQty", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Box Number", value: "boxNo" }) );
   }
 
@@ -103,7 +103,7 @@ export class UploadInvoiceComponent implements OnInit {
       invoiceDetail.Qty = rows[index][7];
       invoiceDetail.Price = rows[index][8];
       invoiceDetail.Total = invoiceDetail.Qty * invoiceDetail.Price;
-      invoiceDetail.BoxNumber = rows[index][11];
+      invoiceDetail.BoxNo = rows[index][11];
       this.invoiceToValidate.supplierInvoiceDetails.push(invoiceDetail);
     }
   }

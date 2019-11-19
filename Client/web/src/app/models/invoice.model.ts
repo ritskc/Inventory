@@ -62,7 +62,7 @@ export class UploadInvoiceDetail {
     Qty: number = 0;
     Price: number = 0;
     Total: number = 0;
-    BoxNumber: string = '';
+    BoxNo: string = '';
 }
 
 export class InvoiceDetail {

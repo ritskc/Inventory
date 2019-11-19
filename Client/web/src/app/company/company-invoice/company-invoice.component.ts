@@ -51,16 +51,16 @@ export class CompanyInvoiceComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Part Code", value: "partCode", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Description", value: "partDescription", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "PO No", value: "orderNo", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Qty", value: "qty", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", sortable: false, isEditable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Total", value: "total", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "In Basket", value: "inBasket", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Surcharge", value: "surcharge", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Sur/Pound", value: "surchargePerPound", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Sur/Unit", value: "surchargePerUnit", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Sur/Pound", value: "surchargePerPound", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Total Sur", value: "totalSurcharge", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Excess Qty", value: "excessQty", sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Qty", value: "qty", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", sortable: false, isEditable: true, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Total", value: "total", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "In Basket", value: "inBasket", sortable: false, isBoolean: true, customStyling: 'center' }) );
+    this.columns.push( new DataColumn({ headerText: "Surcharge", value: "surcharge", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Sur/Pound", value: "surchargePerPound", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Sur/Unit", value: "surchargePerUnit", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Sur/Pound", value: "surchargePerPound", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Total Sur", value: "totalSurcharge", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Excess Qty", value: "excessQty", sortable: false, customStyling: 'right' }) );
   }
 
   customeSelected() {

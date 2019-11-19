@@ -30,12 +30,12 @@ export class PartListComponent implements OnInit {
   initializeGridColumns() {
     this.columns.push( new DataColumn({ headerText: "Code", value: "code", isLink: true, sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Description", value: "description", sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Weight (Kgs)", value: "weightInKg", sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Weight (Lbs)", value: "weightInLb", sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Min Qty", value: "minQty", sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "maxQty", sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Active", value: "isActive", sortable: true, isBoolean: true }) );
-    this.columns.push( new DataColumn({ headerText: "Sample", value: "isSample", sortable: true, isBoolean: true }) );
+    this.columns.push( new DataColumn({ headerText: "Weight (Kgs)", value: "weightInKg", sortable: true, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Weight (Lbs)", value: "weightInLb", sortable: true, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Min Qty", value: "minQty", sortable: true, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "maxQty", sortable: true, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Active", value: "isActive", sortable: true, isBoolean: true, customStyling: 'center' }) );
+    this.columns.push( new DataColumn({ headerText: "Sample", value: "isSample", sortable: true, isBoolean: true, customStyling: 'center' }) );
   }
 
   getAllPartsForCompany() {

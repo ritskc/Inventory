@@ -26,12 +26,12 @@ export class InventoryPartsListComponent implements OnInit {
   initializeGridColumns() {
     this.columns.push( new DataColumn({ headerText: "Code", value: "Code", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Description", value: "Description", sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Safe Qty", value: "SafeQty", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Qty In Hand", value: "QuantityInHand", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "In Transit", value: "IntransitQty", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Total", value: "Total", sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Safe Qty", value: "SafeQty", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Qty In Hand", value: "QuantityInHand", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "In Transit", value: "IntransitQty", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Total", value: "Total", sortable: false, customStyling: 'right' }) );
   }
 
   getAllPartsForCompany() {
