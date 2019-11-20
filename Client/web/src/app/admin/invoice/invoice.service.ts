@@ -43,4 +43,8 @@ export class InvoiceService {
   createCustomerInvoice(shipment: Shipment) {
     return this.apiService.post<Shipment>(shipment, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.customerInvoiceUri }`);
   }
+
+  deleteInvoice(id: number) {
+    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }`);
+  }
 }

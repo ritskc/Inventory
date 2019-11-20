@@ -47,25 +47,26 @@ export class InvoiceListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "invoiceDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
     this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isDate: true }) );
-    this.columns.push( new DataColumn({ headerText: "Invoice", isActionColumn: true, actions: [
+    this.columns.push( new DataColumn({ headerText: "Invoice", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadInvoice', icon: 'fa fa-download' })
     ] }) );
-    this.columns.push( new DataColumn({ headerText: "Packing", isActionColumn: true, actions: [
+    this.columns.push( new DataColumn({ headerText: "Packing", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadPackingSlip', icon: 'fa fa-download' })
     ] }) );
-    this.columns.push( new DataColumn({ headerText: "10+2", isActionColumn: true, actions: [
+    this.columns.push( new DataColumn({ headerText: "10+2", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTenPlus', icon: 'fa fa-download' })
     ] }) );
-    this.columns.push( new DataColumn({ headerText: "BL", isActionColumn: true, actions: [
+    this.columns.push( new DataColumn({ headerText: "BL", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadBl', icon: 'fa fa-download' })
     ] }) );
-    this.columns.push( new DataColumn({ headerText: "TC", isActionColumn: true, actions: [
+    this.columns.push( new DataColumn({ headerText: "TC", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTc', icon: 'fa fa-download' })
     ] }) );
     this.columns.push( new DataColumn({ headerText: "Received", value: "receivedDate", sortable: true, isDate: true }) );
-    this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, actions: [
+    this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoiceBarcode', icon: 'fa fa-barcode' }),
-      new DataColumnAction({ actionText: 'Box', actionStyle: ClassConstants.Primary, event: 'printBoxBarcode', icon: 'fa fa-barcode' })
+      new DataColumnAction({ actionText: 'Box', actionStyle: ClassConstants.Primary, event: 'printBoxBarcode', icon: 'fa fa-barcode' }),
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'deleteInvoice', icon: 'fa fa-trash' })
     ] }) );
   }
 
@@ -134,7 +135,16 @@ export class InvoiceListComponent implements OnInit {
       case 'downloadTc':
         window.open(`${this.configuration.fileApiUri}/TC/${data.id}`);
         break;
+      case 'deleteInvoice':
+        this.deleteInvoice(data);
+        break;
     }
+  }
+
+  deleteInvoice(data) {
+    this.invoiceService.deleteInvoice(data.id)
+        .subscribe(() => alert('Invoice deleted successfully'),
+                   (error) => alert(error));
   }
 
   print() {
