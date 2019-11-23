@@ -152,11 +152,11 @@ export class CreateShipmentComponent implements OnInit {
 
   createColumnsForPartsAddition() {
     this.columnsForPartsGrid = [];
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Blank Order", value: "isBlankOrder", isBoolean: true }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Blank Order", value: "isBlankOrder", isBoolean: true, customStyling: 'center' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Order Id", value: "orderNo" }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Part", value: "partDescription" }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Quantity", value: "qty", isEditable: true }) );
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "In Basket", value: "inBasket", isBoolean: true }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "In Basket", value: "inBasket", isBoolean: true, customStyling: 'center' }) );
   }
 
   createColumnsForShipmentGrid() {
@@ -179,7 +179,8 @@ export class CreateShipmentComponent implements OnInit {
             this.packagingSlipCreated.next(`${this.appConfig.reportsUri}${result}`);
             this.shipment = new Shipment();
           },
-          (error) => { this.toastr.errorToastr('Error while creating shipment'); console.log(error); }
+          (error) => { this.toastr.errorToastr('Error while creating shipment'); console.log(error); },
+          () => this.getAllShipmentsForSelectedCustomer()
         );
   }
 

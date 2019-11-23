@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { SupplierService } from '../supplier.service';
 import { CompanyService } from '../../../company/company.service';
-import { DataColumn } from '../../../models/dataColumn.model';
+import { DataColumn, DataColumnAction } from '../../../models/dataColumn.model';
 import { httpLoaderService } from '../../../common/services/httpLoader.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Supplier } from '../../../models/supplier.model';
 import { UserAction } from '../../../models/enum/userAction';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { PurchaseOrder } from '../../../models/purchase-order';
+import { ClassConstants } from '../../../common/constants';
 
 @Component({
   selector: 'app-purchase-order-list',
@@ -40,11 +41,14 @@ export class PurchaseOrderListComponent implements OnInit {
   }
 
   initializeGridColumns() {
-    this.gridColumns.push( new DataColumn({ headerText: "Number", value: "poNo", isLink: true, sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Email", value: "emailIds", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "closingDate", sortable: true, isDate: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", sortable: true, isBoolean: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", sortable: true, isBoolean: true, customStyling: 'center' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'deletePurchaseOrder', icon: 'fa fa-trash' })
+    ] }) );
   }
 
   extractSupplierId() {
@@ -81,7 +85,6 @@ export class PurchaseOrderListComponent implements OnInit {
   }
 
   rowSelected(event) {
-    console.log(event);
     this.redirectToPurchaseOrderDetails(event);
   }
 
@@ -96,5 +99,18 @@ export class PurchaseOrderListComponent implements OnInit {
 
   addPurchaseOrder() {
     this.router.navigateByUrl(`orders/detail/supplier/${this.supplierId}`)
+  }
+
+  actionButtonClicked(data) {
+    switch(data.eventName) {
+      case 'deletePurchaseOrder':
+        this.service.deletePurchaseOrder(data.id)
+            .subscribe(
+              () => alert('Purchase order removed successfully!'),
+              (error) => alert(error),
+              () => this.ngOnInit()
+            );
+        break;
+    }
   }
 }

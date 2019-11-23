@@ -1,5 +1,5 @@
 <form [formGroup]="invoiceForm">
-  <select (change)="supplierSelected()" formControlName="supplierList">
+  <select class="form-group" (change)="supplierSelected()" formControlName="supplierList">
     <option value="-1">Select Supplier</option>
     <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{supplier.name}}</option>
   </select>

@@ -43,6 +43,10 @@ export class SupplierService {
       return this.apiService.put(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.posUri + `/${ purchaseOrder.id }`);
   }
 
+  deletePurchaseOrder(id: number) {
+    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }${ this.configService.Settings.posUri }`);
+  }
+
   getNewPurchaseOrderNumber(companyId: number): Observable<any> {
     return this.apiService.get(`${this.configService.Settings.apiServerHost}/${this.configService.Settings.entityTracker}/po/${companyId}/${ DateHelper.getToday() }`)
   }

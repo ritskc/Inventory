@@ -44,9 +44,10 @@ export class InvoiceListComponent implements OnInit {
   initializeGridColumns() {
     this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false, minWidth: true }) );
-    this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "invoiceDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
+    this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "invoiceDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isDate: true }) );
+    this.columns.push( new DataColumn({ headerText: "Received", value: "receivedDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadInvoice', icon: 'fa fa-download' })
     ] }) );
@@ -62,7 +63,6 @@ export class InvoiceListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "TC", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTc', icon: 'fa fa-download' })
     ] }) );
-    this.columns.push( new DataColumn({ headerText: "Received", value: "receivedDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoiceBarcode', icon: 'fa fa-barcode' }),
       new DataColumnAction({ actionText: 'Box', actionStyle: ClassConstants.Primary, event: 'printBoxBarcode', icon: 'fa fa-barcode' }),
@@ -82,20 +82,13 @@ export class InvoiceListComponent implements OnInit {
   loadAllSupplierInvoices() {
     this.invoiceService.getAllInvoices(this.currentlyLoggedInCompany)
         .subscribe(
-          (invoices) => {
-            this.invoices = invoices;
-            this.invoices.forEach(invoice => {
-              invoice.blPath = invoice.isBLUploaded ? `${this.configuration.fileApiUri}/BL/${invoice.id}`: '';
-            });
-          },
-          (error) => console.log(error),
-          () => console.log('completed')
+          (invoices) => this.invoices = invoices,
+          (error) => console.log(error)
         );
   }
 
   supplierSelected() {
     var supplierId = this.invoiceForm.get('supplierList').value;
-    console.log(supplierId);
     this.invoiceService.getAllSupplierInvoices(this.currentlyLoggedInCompany, supplierId)
         .subscribe((invoices) => this.invoices = invoices)
   }
