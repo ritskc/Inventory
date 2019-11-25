@@ -45,9 +45,9 @@ export class InvoiceListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false, minWidth: true }) );
     this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
-    this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "invoiceDate", sortable: true, isDate: true }) );
+    this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "poDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isDate: true }) );
-    this.columns.push( new DataColumn({ headerText: "Received", value: "receivedDate", sortable: true, isDate: true }) );
+    //this.columns.push( new DataColumn({ headerText: "Received", value: "receivedDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadInvoice', icon: 'fa fa-download' })
     ] }) );
@@ -66,6 +66,7 @@ export class InvoiceListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoiceBarcode', icon: 'fa fa-barcode' }),
       new DataColumnAction({ actionText: 'Box', actionStyle: ClassConstants.Primary, event: 'printBoxBarcode', icon: 'fa fa-barcode' }),
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'receiveInvoice', icon: 'fa fa-download' }),
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'deleteInvoice', icon: 'fa fa-trash' })
     ] }) );
   }
@@ -128,6 +129,10 @@ export class InvoiceListComponent implements OnInit {
       case 'downloadTc':
         window.open(`${this.configuration.fileApiUri}/TC/${data.id}`);
         break;
+      case 'receiveInvoice':
+        this.invoiceService.receivedInvoice(data.supplierId, data.id)
+            .subscribe(() => alert('Invoice received successfully!!'));
+        break;
       case 'deleteInvoice':
         this.deleteInvoice(data);
         break;
@@ -135,9 +140,12 @@ export class InvoiceListComponent implements OnInit {
   }
 
   deleteInvoice(data) {
-    this.invoiceService.deleteInvoice(data.id)
-        .subscribe(() => alert('Invoice deleted successfully'),
-                   (error) => alert(error));
+    var response = confirm('Are you sure you want to remove this invoice?');
+    if (response) {
+      this.invoiceService.deleteInvoice(data.id)
+      .subscribe(() => alert('Invoice deleted successfully'),
+                 (error) => alert(error));
+    }
   }
 
   print() {

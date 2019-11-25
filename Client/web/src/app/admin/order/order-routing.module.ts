@@ -8,7 +8,7 @@ const routes: Routes = [{
     title: 'Orders'
   },
   children: [{
-    path: 'detail/:from/:id',
+    path: 'detail/:from/:id/:action/:orderId',
     component: OrderDetailComponent
   }]
 }];

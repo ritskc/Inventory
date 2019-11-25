@@ -13,6 +13,7 @@ export class DataColumn {
     isBoolean: boolean = false;
     minWidth: boolean = false;
     customStyling: string = '';
+    isDisabled: boolean = false;
 
     constructor(init?: Partial<DataColumn>) {
         Object.assign(this, init);

@@ -50,9 +50,9 @@
                         <input type="text" value="{{row[item.value]}}" (change)="itemValueEdited($event, row, item)"/>
                       </span>
                       <span *ngIf="item.isBoolean">
-                        <input type="checkbox" [checked]="row[item.value]"/>
+                        <input type="checkbox" [checked]="row[item.value]" [attr.disabled]="item.isDisabled? '': null"/>
                       </span>
-                      <div *ngIf="item.isActionColumn">
+                      <div *ngIf="item.isActionColumn" class="center">
                         <span *ngFor="let action of item.actions">
                           <button class="btn {{action.actionStyle}}" (click)="actionButtonClicked(action.event, row)">{{action.actionText}}
                             <i *ngIf="action.icon" class="{{action.icon}}"></i>

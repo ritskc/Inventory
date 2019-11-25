@@ -41,12 +41,15 @@ export class PurchaseOrderListComponent implements OnInit {
   }
 
   initializeGridColumns() {
+    this.gridColumns = [];
     this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Email", value: "emailIds", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "closingDate", sortable: true, isDate: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", sortable: true, isBoolean: true, customStyling: 'center' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", sortable: true, isBoolean: true, customStyling: 'center', isDisabled: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Closing Date", value: "closingDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'editPurchaseOrder', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'deletePurchaseOrder', icon: 'fa fa-trash' })
     ] }) );
   }
@@ -89,7 +92,8 @@ export class PurchaseOrderListComponent implements OnInit {
   }
 
   redirectToPurchaseOrderDetails(row: any){
-    this.router.navigateByUrl(`/suppliers/pos/${ this.currentlyLoggedInCompanyid }/${ row.id }`);
+    this.router.navigateByUrl(`orders/detail/supplier/${row.supplierId}/edit/${row.id}`);
+    //this.router.navigateByUrl(`/suppliers/pos/${ this.currentlyLoggedInCompanyid }/${ row.id }`);
   }
 
   supplierSelected() {
@@ -98,18 +102,28 @@ export class PurchaseOrderListComponent implements OnInit {
   }
 
   addPurchaseOrder() {
-    this.router.navigateByUrl(`orders/detail/supplier/${this.supplierId}`)
+    if (this.supplierId > 0) {
+      this.router.navigateByUrl(`orders/detail/supplier/${this.supplierId}/create/0`);
+      return;
+    }
+    alert('Please select a supplier id to proceed');
   }
 
   actionButtonClicked(data) {
     switch(data.eventName) {
       case 'deletePurchaseOrder':
-        this.service.deletePurchaseOrder(data.id)
-            .subscribe(
-              () => alert('Purchase order removed successfully!'),
-              (error) => alert(error),
-              () => this.ngOnInit()
-            );
+        var response = confirm('Are you sure you want to remove this purchase order?');
+        if (response) {
+          this.service.deletePurchaseOrder(data.id)
+          .subscribe(
+            () => alert('Purchase order removed successfully!'),
+            (error) => alert(error),
+            () => this.ngOnInit()
+          );
+        }
+        break;
+      case 'editPurchaseOrder':
+        this.router.navigateByUrl(`orders/detail/supplier/${data.supplierId}/edit/${data.id}`);
         break;
     }
   }

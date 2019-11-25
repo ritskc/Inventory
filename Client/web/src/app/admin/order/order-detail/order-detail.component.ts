@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataColumn, DataColumnAction } from '../../../models/dataColumn.model';
 import { PartsService } from '../../parts/parts.service';
 import { SupplierService } from '../../supplier/supplier.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Supplier } from '../../../models/supplier.model';
 import { Part } from '../../../models/part.model';
 import { CompanyService } from '../../../company/company.service';
@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 import { httpLoaderService } from '../../../common/services/httpLoader.service';
 import * as DateHelper from '../../../common/helpers/dateHelper';
 import { Company } from '../../../models/company.model';
+import { UserAction } from '../../../models/enum/userAction';
 
 @Component({
   selector: "app-order-detail",
@@ -44,11 +45,12 @@ export class OrderDetailComponent implements OnInit {
   private blanketPOId: number = 0;
   private isBlanketPO: boolean = false;
   private idFromUrl: number = 0;
+  private formMode: UserAction = UserAction.Add;
 
   constructor(
     private partsService: PartsService, private supplierService: SupplierService, private companyService: CompanyService, private customerService: CustomerService,
     private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private toastr: ToastrManager,
-    private loaderService: httpLoaderService
+    private loaderService: httpLoaderService, private router: Router
   ) {}
 
   ngOnInit() {
@@ -87,6 +89,11 @@ export class OrderDetailComponent implements OnInit {
   initializeFormForSelection() {
     var userSelection = this.activatedRoute.snapshot.params.from;
     this.idFromUrl = parseInt(this.activatedRoute.snapshot.params.id);
+    var orderId = this.activatedRoute.snapshot.params.orderId;
+    if (orderId > 0) {
+      this.formMode = UserAction.Edit;
+    }
+
     switch (userSelection) {
       case "all":
         this.setFormForAllSelection();
@@ -98,6 +105,9 @@ export class OrderDetailComponent implements OnInit {
       case "supplier":
         this.loadSuppliersList();
         this.setFormForSupplierSelection();
+        this.setFormForSupplierOrderEdit();
+        this.orderForm.get("partCode").setValue(-1);
+        this.orderForm.get("partDescription").setValue(-1);
         break;
     }
     this.loadDefaultValues();
@@ -120,7 +130,7 @@ export class OrderDetailComponent implements OnInit {
       this.gridColumns.push(new DataColumn({ headerText: "Open Qty", value: "blanketPOAdjQty", sortable: true }));
       this.gridColumns.push(new DataColumn({ headerText: "Line No", value: "lineNumber", sortable: true }));
     }
-    this.gridColumns.push(new DataColumn({headerText: "Actions", isActionColumn: true, actions: [
+    this.gridColumns.push(new DataColumn({headerText: "Actions", isActionColumn: true, customStyling: 'center', actions: [
           new DataColumnAction({actionText: "Remove", actionStyle: ClassConstants.Danger, event: "removeSelectedPart"})
         ]}));
   }
@@ -194,21 +204,44 @@ export class OrderDetailComponent implements OnInit {
       });
       var sequenceNo = 1;
       var supplier = this.suppliers.find(s => s.id == this.idFromUrl);
-      this.companyService.getCompany(this.currentlyLoaddedInCompanyId).subscribe(company => {
-        this.currentlyLoggedInCompany = company
-        this.purchaseOrder.emailIds = `${ supplier.emailID }, ${ this.currentlyLoggedInCompany.eMail }`;
-      });
-      supplier.terms.forEach((term) => {
-        var poTerm = new PurchaseOrderTerm();
-        poTerm.sequenceNo = sequenceNo;
-        poTerm.term = term.terms;
-        this.purchaseOrder.poTerms.push(poTerm);
-        sequenceNo += 1;
-      });
-      this.supplierService.getNewPurchaseOrderNumber(this.currentlyLoaddedInCompanyId).subscribe(po => 
-        this.purchaseOrder.poNo = po.entityNo
-      );
+      if (supplier) {
+        this.companyService.getCompany(this.currentlyLoaddedInCompanyId).subscribe(company => {
+          this.currentlyLoggedInCompany = company
+          this.purchaseOrder.emailIds = `${ supplier.emailID }, ${ this.currentlyLoggedInCompany.eMail }`;
+        });
+        supplier.terms.forEach((term) => {
+          var poTerm = new PurchaseOrderTerm();
+          poTerm.sequenceNo = sequenceNo;
+          poTerm.term = term.terms;
+          this.purchaseOrder.poTerms.push(poTerm);
+          sequenceNo += 1;
+        });
+      }
+      if (this.formMode === UserAction.Add) {
+        this.supplierService.getNewPurchaseOrderNumber(this.currentlyLoaddedInCompanyId, DateHelper.getToday()).subscribe(po => 
+          this.purchaseOrder.poNo = po.entityNo
+        );
+      }
       this.initializePartsGrid();
+    }
+  }
+
+  setFormForSupplierOrderEdit() {
+    var orderId = this.activatedRoute.snapshot.params.orderId;
+    if (this.formMode === UserAction.Edit ) {
+      this.supplierService.getPurchaseOrder(this.currentlyLoaddedInCompanyId, orderId)
+        .subscribe(order => {
+          this.purchaseOrder = order;
+          this.purchaseOrder.poDate = DateHelper.formatDate(new Date(this.purchaseOrder.poDate));
+          this.purchaseOrder.dueDate = DateHelper.formatDate(new Date(this.purchaseOrder.dueDate));
+          this.purchaseOrder.poDetails.forEach(poDetail => {
+            poDetail.partCode = poDetail.part.code;
+            poDetail.description = poDetail.part.description;
+            poDetail.total = poDetail.total;
+            poDetail.note = poDetail.note;
+            poDetail.referenceNo = poDetail.referenceNo;
+          });
+        });
     }
   }
 
@@ -218,16 +251,13 @@ export class OrderDetailComponent implements OnInit {
 
     if(this.SelectedSupplier > -1) {
       var selectedSupplier = this.orderForm.get("suppliersList").value;
-      this.selectedParts.forEach(part => {
-        unitPrice = part.partSupplierAssignments.find(p => p.supplierID == selectedSupplier).unitPrice;
-      });
+      var partSelected = this.orderForm.get("partDescription").value;
+      unitPrice = this.parts.find(p => p.id == partSelected).partSupplierAssignments.find(s => s.supplierID == selectedSupplier).unitPrice;
     }
 
     if (this.SelectedCustomer > -1) {
       var selectedCustomer = this.orderForm.get("customersList").value;
-      this.selectedParts.forEach(part => {
-        unitPrice = part.partCustomerAssignments.find(p => p.customerId == selectedCustomer).rate;
-      });
+      unitPrice = this.parts.find(p => p.id == partSelected).partCustomerAssignments.find(c => c.customerId == selectedCustomer).rate;
     }
 
     this.orderForm.get("price").setValue(unitPrice);
@@ -289,7 +319,8 @@ export class OrderDetailComponent implements OnInit {
       orderDetail.poId = 0;
       orderDetail.partId = +this.orderForm.get("partCode").value;
       orderDetail.qty = +this.quantity;
-      orderDetail.dueDate = new Date(this.dueDate).toLocaleDateString();
+      orderDetail.ackQty = orderDetail.qty;
+      orderDetail.dueDate = this.dueDate;
       orderDetail.note = this.notes;
       orderDetail.unitPrice = this.price;
       orderDetail.total = this.quantity * this.price;
@@ -307,7 +338,7 @@ export class OrderDetailComponent implements OnInit {
       customerOrderDetail.orderId = 0;
       customerOrderDetail.partId = +this.orderForm.get("partCode").value;
       customerOrderDetail.qty = +this.quantity;
-      customerOrderDetail.dueDate = new Date(this.dueDate).toLocaleDateString();
+      customerOrderDetail.dueDate = this.dueDate;
       customerOrderDetail.note = this.notes;
       customerOrderDetail.unitPrice = this.price;
       customerOrderDetail.total = this.quantity * this.price;
@@ -364,14 +395,36 @@ export class OrderDetailComponent implements OnInit {
     if (this.SelectedCustomer > -1) {
       observableResult = this.customerService.savePurchaseOrder(this.purchaseOrder);
     } else {
-      observableResult = this.supplierService.savePurchaseOrder(this.purchaseOrder);
+      if (this.validateSupplierOrder()) {
+        observableResult = this.supplierService.savePurchaseOrder(this.purchaseOrder);
+      }
     }
     observableResult.subscribe((result) => {
       this.toastr.successToastr('Details saved successfully.');
     }, (error) => {
       this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
       console.log(error);
+    }, () => {
+      setTimeout(() => {
+        this.router.navigateByUrl('suppliers/purchase-order/0/0');
+      }, 1000);
     });
+  }
+
+  validateSupplierOrder(): boolean {
+    if (new Date(this.purchaseOrder.dueDate) <= new Date(this.purchaseOrder.poDate)) {
+      alert('Due date cannot be less than purchase order date');
+      return false;
+    }
+    return true;
+  }
+
+  dueDateChanged(event) {
+    if (this.formMode !== UserAction.Edit) {
+      this.supplierService.getNewPurchaseOrderNumber(this.currentlyLoaddedInCompanyId, this.purchaseOrder.poDate).subscribe(po => 
+        this.purchaseOrder.poNo = po.entityNo
+      );
+    }
   }
 
   loadDefaultValues() {
