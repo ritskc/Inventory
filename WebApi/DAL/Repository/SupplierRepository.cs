@@ -85,7 +85,7 @@ namespace DAL.Repository
             }
 
 
-            return suppliers;
+            return suppliers.OrderBy(x => x.Name);
         }
 
         public async Task<Supplier> GetSupplierAsync(int id)

@@ -279,5 +279,38 @@ namespace DAL.Repository
                 }
             }
         }
+
+        public async Task UpdateOrderAsync(int id, string path)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+                    string sql = string.Format($"UPDATE [dbo].[OrderMaster]   SET [Attachment] = '{path}'  WHERE Id = '{id}'");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
     }
 }

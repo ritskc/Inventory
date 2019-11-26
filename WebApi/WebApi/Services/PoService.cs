@@ -25,11 +25,12 @@ namespace WebApi.Services
         public async Task<IEnumerable<Po>> GetAllPosAsync(int companyId)
         {            
             var result = await this._poRepository.GetAllPosAsync(companyId);
+            var partList = await this._partRepository.GetAllPartsAsync(companyId);
             foreach (Po pos in result)
             {
                 foreach (PoDetail poDetail in pos.poDetails)
                 {
-                    var partDetail = await this._partRepository.GetPartAsync(poDetail.PartId);
+                    var partDetail = partList.Where(p => p.Id == poDetail.PartId).FirstOrDefault();
                     poDetail.part = partDetail;
                 }                
             }
@@ -39,9 +40,10 @@ namespace WebApi.Services
         public async Task<Po> GetPoAsync(long id)
         {
             var result = await this._poRepository.GetPoAsync(id);
-            foreach(PoDetail poDetail in result.poDetails)
+            var partList = await this._partRepository.GetAllPartsAsync(result.CompanyId);
+            foreach (PoDetail poDetail in result.poDetails)
             {
-                var partDetail = await this._partRepository.GetPartAsync(poDetail.PartId);
+                var partDetail = partList.Where(p => p.Id == poDetail.PartId).FirstOrDefault();
                 poDetail.part = partDetail;
             }
             return result;            

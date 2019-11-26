@@ -97,7 +97,7 @@ namespace DAL.Repository
             }
 
 
-            return customers;
+            return customers.OrderBy(x => x.Name);
         }
 
         public async Task<Customer> GetCustomerAsync(int id)
@@ -169,8 +169,6 @@ namespace DAL.Repository
             }
             customer.ShippingInfos = lstTerms;
             conn.Close();
-
-
 
             return customer;
         }

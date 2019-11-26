@@ -124,7 +124,7 @@ namespace DAL.Repository
                     entityTracker.FinYear = Convert.ToString(dataReader["FinYear"]);
                     entityTracker.Entity = entity;
                     string entityNumber;
-                    if(Convert.ToInt32(dataReader["AvailableNo"]) < 9)
+                    if(Convert.ToInt32(dataReader["AvailableNo"]) < 10)
                     {
                         entityNumber = "00" + Convert.ToInt32(dataReader["AvailableNo"]);
                     }

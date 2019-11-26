@@ -14,5 +14,6 @@ namespace DAL.IRepository
         Task AddOrderMasterAsync(OrderMaster order);
         Task UpdateOrderMasterAsync(OrderMaster order);
         Task DeleteOrderMasterAsync(long orderId);
+        Task UpdateOrderAsync(int id, string path);
     }
 }

@@ -26,6 +26,7 @@ namespace DAL.Models
             CUSTOMER_PACKINGSLIP = 3,
             ADJUSTMENT_PLUS = 4,
             ADJUSTMENT_MINUS = 5,
+            REVERT_UPLOAD_SUPPLIER_INVOICE = 6,
         }
 
         public enum DIRECTION

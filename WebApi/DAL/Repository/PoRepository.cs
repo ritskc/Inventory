@@ -246,74 +246,170 @@ namespace DAL.Repository
 
         public async Task AddPoAsync(Po po)
         {
-            string sql = string.Format($"INSERT INTO [dbo].[PoMaster]   ([CompanyId]   ,[SupplierId]   ,[PoNo]   ,[PoDate]   ,[EmailIds]   ,[Remarks]   ,[IsClosed]   ,[ClosingDate]   ,[IsAcknowledged]   ,[AcknowledgementDate]   ,[PaymentTerms]   ,[DeliveryTerms]) VALUES   ('{po.CompanyId}'   ,'{po.SupplierId}'   ,'{po.PoNo}'   ,'{po.PoDate}'   ,'{po.EmailIds}'   ,'{po.Remarks}'   ,'{po.IsClosed}'   ,'{po.ClosingDate}'   ,'{po.IsAcknowledged}'   ,'{po.AcknowledgementDate}'   ,'{po.PaymentTerms}'   ,'{po.DeliveryTerms}')");
 
-            sql = sql + " Select Scope_Identity()";
-
-
-            var poId = _sqlHelper.ExecuteScalar(ConnectionSettings.ConnectionString, sql, CommandType.Text);
-
-
-            foreach (PoDetail poDetail in po.poDetails)
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
-                sql = string.Format($"INSERT INTO [dbo].[PoDetails]   ([PoId]   ,[PartId]   ,[ReferenceNo]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note]   ,[AckQty]   ,[InTransitQty]   ,[ReceivedQty]   ,[IsClosed]   ,[ClosingDate]) VALUES   ('{poId}'   ,'{poDetail.PartId}'   ,'{poDetail.ReferenceNo}'   ,'{poDetail.Qty}'   ,'{poDetail.UnitPrice}'   ,'{poDetail.DueDate}'   ,'{poDetail.Note}'   ,'{poDetail.AckQty}'   ,'{poDetail.InTransitQty}'   ,'{poDetail.ReceivedQty}'   ,'{poDetail.IsClosed}'   ,'{poDetail.ClosingDate}')");
+                connection.Open();
 
-                await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
-            }
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
 
-            foreach (PoTerm poTerm in po.poTerms)
-            {
-                sql = string.Format($"INSERT INTO [dbo].[PoTerms]   ([PoId]   ,[SequenceNo]   ,[Term]) VALUES   ('{poId}'   ,'{poTerm.SequenceNo}'   ,'{poTerm.Term}')");
+                // Start a local transaction.
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted, "SampleTransaction");
 
-                await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
-            }
+                //1. Get SupplierInvoicePoDetails po transaction detail
+                List<SupplierInvoicePoDetails> supplierInvoicePoDetailsList = new List<SupplierInvoicePoDetails>();
+                SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+                string sql = string.Empty;
+                try
+                {
+                    sql = string.Format($"INSERT INTO [dbo].[PoMaster]   ([CompanyId]   ,[SupplierId]   ,[PoNo]   ,[PoDate]   ,[EmailIds]   ,[Remarks]   ,[IsClosed]  ,[IsAcknowledged]   ,[PaymentTerms]   ,[DeliveryTerms]) VALUES   ('{po.CompanyId}'   ,'{po.SupplierId}'   ,'{po.PoNo}'   ,'{po.PoDate}'   ,'{po.EmailIds}'   ,'{po.Remarks}'   ,'{po.IsClosed}'   ,'{po.IsAcknowledged}'  ,'{po.PaymentTerms}'   ,'{po.DeliveryTerms}')");
+
+                    sql = sql + " Select Scope_Identity()";
+
+                    command.CommandText = sql;
+                    var poId = command.ExecuteScalar();
+
+
+                    //var poId = _sqlHelper.ExecuteScalar(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+
+
+                    foreach (PoDetail poDetail in po.poDetails)
+                    {
+                        sql = string.Format($"INSERT INTO [dbo].[PoDetails]   ([PoId]   ,[PartId]   ,[ReferenceNo]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note]   ,[AckQty]   ,[InTransitQty]   ,[ReceivedQty]   ,[IsClosed]  ) VALUES   ('{poId}'   ,'{poDetail.PartId}'   ,'{poDetail.ReferenceNo}'   ,'{poDetail.Qty}'   ,'{poDetail.UnitPrice}'   ,'{poDetail.DueDate}'   ,'{poDetail.Note}'   ,'{poDetail.AckQty}'   ,'{poDetail.InTransitQty}'   ,'{poDetail.ReceivedQty}'   ,'{poDetail.IsClosed}')");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                    }
+
+                    foreach (PoTerm poTerm in po.poTerms)
+                    {
+                        sql = string.Format($"INSERT INTO [dbo].[PoTerms]   ([PoId]   ,[SequenceNo]   ,[Term]) VALUES   ('{poId}'   ,'{poTerm.SequenceNo}'   ,'{poTerm.Term}')");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }            
         }
 
         public async Task UpdatePoAsync(Po po)
         {
-            var sql = string.Format("DELETE FROM [dbo].[PoDetails]  WHERE poid = '{0}'", po.Id);
-
-            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
-
-            sql = string.Format("DELETE FROM [dbo].[PoTerms]  WHERE poid = '{0}'", po.Id);
-
-            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
-
-            sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [CompanyId] = '{po.CompanyId}' ,[SupplierId] = '{po.SupplierId}' ,[PoNo] = '{po.PoNo}' ,[PoDate] = '{po.PoDate}' ,[EmailIds] = '{po.EmailIds}' ,[Remarks] = '{po.Remarks}' ,[IsClosed] = '{po.IsClosed}' ,[ClosingDate] = '{po.ClosingDate}' ,[IsAcknowledged] = '{po.IsAcknowledged}' ,[AcknowledgementDate] = '{po.AcknowledgementDate}' ,[PaymentTerms] = '{po.PaymentTerms}' ,[DeliveryTerms] = '{po.DeliveryTerms}' WHERE id = '{po.Id}' ");
-            await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
-
-            foreach (PoDetail poDetail in po.poDetails)
+            //start
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
-                sql = string.Format($"INSERT INTO [dbo].[PoDetails]   ([PoId]   ,[PartId]   ,[ReferenceNo]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note]   ,[AckQty]   ,[InTransitQty]   ,[ReceivedQty]   ,[IsClosed]   ,[ClosingDate]) VALUES   ('{poDetail.PoId}'   ,'{poDetail.PartId}'   ,'{poDetail.ReferenceNo}'   ,'{poDetail.Qty}'   ,'{poDetail.UnitPrice}'   ,'{poDetail.DueDate}'   ,'{poDetail.Note}'   ,'{poDetail.AckQty}'   ,'{poDetail.InTransitQty}'   ,'{poDetail.ReceivedQty}'   ,'{poDetail.IsClosed}'   ,'{poDetail.ClosingDate}')");
+                connection.Open();
 
-                await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted, "SampleTransaction");
+
+                //1. Get SupplierInvoicePoDetails po transaction detail
+                List<SupplierInvoicePoDetails> supplierInvoicePoDetailsList = new List<SupplierInvoicePoDetails>();
+                SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+                string sql = string.Empty;
+                try
+                {
+                    sql = string.Format("DELETE FROM [dbo].[PoTerms]  WHERE poid = '{0}'", po.Id);
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+                    
+                    sql = string.Format("DELETE FROM [dbo].[PoDetails]  WHERE poid = '{0}'", po.Id);
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [CompanyId] = '{po.CompanyId}' ,[SupplierId] = '{po.SupplierId}' ,[PoNo] = '{po.PoNo}' ,[PoDate] = '{po.PoDate}' ,[EmailIds] = '{po.EmailIds}' ,[Remarks] = '{po.Remarks}' ,[IsClosed] = '{po.IsClosed}' ,[IsAcknowledged] = '{po.IsAcknowledged}' ,[PaymentTerms] = '{po.PaymentTerms}' ,[DeliveryTerms] = '{po.DeliveryTerms}' WHERE id = '{po.Id}' ");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    foreach (PoDetail poDetail in po.poDetails)
+                    {
+                        sql = string.Format($"INSERT INTO [dbo].[PoDetails]   ([PoId]   ,[PartId]   ,[ReferenceNo]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note]   ,[AckQty]   ,[InTransitQty]   ,[ReceivedQty]   ,[IsClosed] ) VALUES   ('{po.Id}'   ,'{poDetail.PartId}'   ,'{poDetail.ReferenceNo}'   ,'{poDetail.Qty}'   ,'{poDetail.UnitPrice}'   ,'{poDetail.DueDate}'   ,'{poDetail.Note}'   ,'{poDetail.AckQty}'   ,'{poDetail.InTransitQty}'   ,'{poDetail.ReceivedQty}'   ,'{poDetail.IsClosed}')");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                    }
+
+                    foreach (PoTerm poTerm in po.poTerms)
+                    {
+                        sql = string.Format($"INSERT INTO [dbo].[PoTerms]   ([PoId]   ,[SequenceNo]   ,[Term]) VALUES   ('{po.Id}'   ,'{poTerm.SequenceNo}'   ,'{poTerm.Term}')");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
             }
-
-            foreach (PoTerm poTerm in po.poTerms)
-            {
-                sql = string.Format($"INSERT INTO [dbo].[PoTerms]   ([PoId]   ,[SequenceNo]   ,[Term]) VALUES   ('{poTerm.PoId}'   ,'{poTerm.SequenceNo}'   ,'{poTerm.Term}')");
-
-                await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
-            }
+            //end           
         }
 
         public async Task<int> DeletePoAsync(long id)
         {
-            var sql = string.Format("DELETE FROM [dbo].[posupplierassignment]  WHERE poid = '{0}'", id);
+            int result = 0;
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
 
-            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
 
-            sql = string.Format("DELETE FROM [dbo].[pocustomerassignment]  WHERE poid = '{0}'", id);
+                // Start a local transaction.
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted, "SampleTransaction");
 
-            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                //1. Get SupplierInvoicePoDetails po transaction detail
+                List<SupplierInvoicePoDetails> supplierInvoicePoDetailsList = new List<SupplierInvoicePoDetails>();
+                SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-            sql = string.Format("DELETE FROM [dbo].[po]  WHERE id = '{0}'", id);
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+                string sql = string.Empty;
+                
+                try
+                {
+                    sql = string.Format("DELETE FROM [dbo].[PoTerms]  WHERE poid = '{0}'", id);
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();                    
 
-            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                    sql = string.Format("DELETE FROM [dbo].[PoDetails]  WHERE poid = '{0}'", id);
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();                    
 
-            return await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                    sql = string.Format("DELETE FROM [dbo].[PoMaster]  WHERE id = '{0}'", id);
+                    command.CommandText = sql;
+                    result = await command.ExecuteNonQueryAsync();                                       
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+            return result;
         }
-
-
     }
 }

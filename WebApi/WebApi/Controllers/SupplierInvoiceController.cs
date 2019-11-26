@@ -14,10 +14,13 @@ namespace WebApi.Controllers
     public class SupplierInvoiceController : ControllerBase
     {
         private readonly ISupplierInvoiceService supplierInvoiceService;
+        private readonly ICompanyService companyService;
 
-        public SupplierInvoiceController(ISupplierInvoiceService supplierInvoiceService)
+        public SupplierInvoiceController(ISupplierInvoiceService supplierInvoiceService,
+            ICompanyService companyService)
         {
             this.supplierInvoiceService = supplierInvoiceService;
+            this.companyService = companyService;
         }
 
         // GET: api/Todo
@@ -68,6 +71,14 @@ namespace WebApi.Controllers
         {
             try
             {
+                var company = await this.companyService.GetCompanyByNameAsync(supplierInvoice.CompanyName);
+                supplierInvoice.CompanyId = company.Id;
+
+                var invoices = await this.supplierInvoiceService.GetAllSupplierInvoicesAsync(supplierInvoice.CompanyId);
+
+                var invoice = invoices.Where(x => x.InvoiceNo == supplierInvoice.InvoiceNo).FirstOrDefault();
+                if(invoice != null)
+                    return StatusCode(500, "Invoice already uploaded");
                 if (step == 1)
                 {
                     var result = await this.supplierInvoiceService.GetSupplierInvoicePODetailAsync(supplierInvoice);
@@ -107,6 +118,21 @@ namespace WebApi.Controllers
             try
             {
                 await this.supplierInvoiceService.ReceiveBoxInvoiceAsync(barcode);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        //DELETE: api/Todo/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                var result = await this.supplierInvoiceService.DeleteSupplierInvoiceAsync(id);
                 return Ok();
             }
             catch (Exception ex)

@@ -127,7 +127,7 @@ namespace DAL.Repository
                 conn.Close();
             }
 
-            return parts;
+            return parts.OrderBy(x=>x.Code);
         }
 
         public Part GetPart(long partId)

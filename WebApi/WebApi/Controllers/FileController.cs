@@ -17,13 +17,17 @@ namespace WebApi.Controllers
     {
         private readonly IPackingSlipService packingSlipService;
         private readonly ISupplierInvoiceService supplierInvoice;
+        private readonly IOrderService orderService;
         private readonly ILogger<FileController> logger;
+
         public FileController(IPackingSlipService packingSlipService,
             ISupplierInvoiceService supplierInvoice,
+            IOrderService orderService,
             ILogger<FileController> logger)
         {
             this.packingSlipService = packingSlipService;
             this.supplierInvoice = supplierInvoice;
+            this.orderService = orderService;
             this.logger = logger;
         }
 
@@ -34,22 +38,26 @@ namespace WebApi.Controllers
 
             long size = file.Length;
             string type = string.Empty;
-            switch (docType)
+            switch (docType.ToLower())
             {               
-                case "Invoice":
+                case "invoice":
                     type = "Invoice";
                     break;
 
-                case "PackingSlip":
+                case "packingslip":
                     type = "PackingSlip";
                     break;
 
-                case "TenPlus":
+                case "tenplus":
                     type = "TenPlus";
                     break;
 
-                case "BL":
+                case "bl":
                     type = "BL";
+                    break;
+
+                case "customerorder":
+                    type = "CustomerOrder";
                     break;
 
                 default:
@@ -66,7 +74,11 @@ namespace WebApi.Controllers
                 }
             }
             var relativeFilePath = "Docs\\" + type + "\\" + id.ToString() + ".pdf";
-            var result1 = supplierInvoice.UploadFileAsync(id, type, relativeFilePath);
+            if(type == "CustomerOrder")
+                await orderService.UpdateOrderAsync(id, relativeFilePath);
+            else            
+                await supplierInvoice.UploadFileAsync(id, type, relativeFilePath);
+
             return Ok();
         }
 
@@ -91,84 +103,7 @@ namespace WebApi.Controllers
             var relativeFilePath = "Docs\\" + type + "\\" + id.ToString() + ".pdf";
             var result = packingSlipService.UpdatePOSAsync(id, relativeFilePath, trackingNumber);
             return Ok();
-        }
-
-        //[HttpPost("{docType}/{id}")]
-        //public async Task<IActionResult> Post(string docType, int id, IFormFile file)
-        //{
-        //    try
-        //    {
-        //        logger.LogInformation("post file api called");
-
-        //        long size = file.Length;
-        //        string type = "BL";
-
-        //        // full path to file in temp location
-        //        //var filePath = Path.GetTempFileName();            
-        //        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Docs", type, id.ToString() + ".pdf");
-
-        //        if (file.Length > 0)
-        //        {
-        //            using (var stream = new FileStream(filePath, FileMode.Create))
-        //            {
-        //                await file.CopyToAsync(stream);
-        //            }
-        //        }
-        //        return Ok();
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        logger.LogError("error in executing " + ex.Message);
-        //        return BadRequest();
-        //    }
-        //}
-
-
-        //public static async Task<byte[]> DownloadFile(string url)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-
-        //        using (var result = await client.GetAsync(url))
-        //        {
-        //            if (result.IsSuccessStatusCode)
-        //            {
-        //                return await result.Content.ReadAsByteArrayAsync();
-        //            }
-
-        //        }
-        //    }
-        //    return null;
-        //}
-
-        //// GET: api/Todo
-        //[HttpGet("{docType}/{id}")]
-        //public async Task<ActionResult<byte[]>> Get(string docType,string id)
-        //{
-        //    string url = @"http://localhost:44390/Docs/BL/1.pdf";
-        //    try
-        //    {
-        //        using (var client = new HttpClient())
-        //        {
-
-        //            using (var result = await client.GetAsync(url))
-        //            {
-        //                if (result.IsSuccessStatusCode)
-        //                {
-        //                    return await result.Content.ReadAsByteArrayAsync();
-        //                }
-        //                else
-        //                    return null;
-
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, ex.ToString());
-        //    }
-
-        //}
+        }        
 
         // GET: api/Todo
         [HttpGet("{docType}/{id}")]

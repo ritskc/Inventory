@@ -57,6 +57,11 @@ namespace WebApi.Services
             return result;
         }
 
+        public async Task UpdateOrderAsync(int id, string path)
+        {
+            await this._orderRepository.UpdateOrderAsync(id,path);
+        }
+
         public async Task UpdateOrderMasterAsync(OrderMaster order)
         {
             await this._orderRepository.UpdateOrderMasterAsync(order);

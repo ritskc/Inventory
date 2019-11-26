@@ -14,10 +14,12 @@ namespace WebApi.Controllers
     public class PosController : ControllerBase
     {
         private readonly IPoService _poService;
+        private readonly IPartService _partService;
 
-        public PosController(IPoService poService)
+        public PosController(IPoService poService,IPartService partService)
         {
             this._poService = poService;
+            this._partService = partService;
         }
 
         // GET: api/Todo
@@ -69,6 +71,31 @@ namespace WebApi.Controllers
         {
             try
             {
+                var parts = await this._partService.GetAllPartsAsync(po.CompanyId);
+                if (po == null || po.poDetails == null)
+                    return BadRequest("Invalid PO");
+                foreach(PoDetail poDetail in po.poDetails)
+                {
+                    //foreach(Part tmpPart in parts)
+                    //{
+                    //    if(tmpPart.Id == poDetail.PartId)
+                    //    {
+                    //        tmpPart.partSupplierAssignments.Where(x=>x.SupplierID == po.SupplierId)
+                    //    }
+                    //}
+                    //var part = parts.Where(x => x.partSupplierAssignments.Select(p => p.PartID == poDetail.PartId && p.SupplierID == po.SupplierId).FirstOrDefault()).FirstOrDefault();
+                    var selectedParts = parts.Where(x => x.Id == poDetail.PartId);
+                    if (selectedParts == null)
+                    {
+                        return BadRequest(string.Format("Invalid part"));                        
+                    }
+                    var part = selectedParts.Select(x => x.partSupplierAssignments.Where(p => p.SupplierID == po.SupplierId).FirstOrDefault()).FirstOrDefault();
+                   
+                    if (part == null)
+                    {
+                        return BadRequest(string.Format("Invalid part : {0} does not belong to this supplier", selectedParts.Select(x=>x.Code).FirstOrDefault()));
+                    }
+                }
                 await this._poService.AddPoAsync(po);
                 return Ok();
             }
@@ -89,6 +116,32 @@ namespace WebApi.Controllers
                     return BadRequest();
                 }
 
+                var parts = await this._partService.GetAllPartsAsync(po.CompanyId);
+                if (po == null || po.poDetails == null)
+                    return BadRequest("Invalid PO");
+
+                var existingPo = await this._poService.GetPoAsync(po.Id);
+                if (existingPo != null && existingPo.IsClosed)
+                    return BadRequest("PO is already closed.PO is not editable");
+                if(existingPo !=null && existingPo.poDetails != null)
+                {
+                    var processedPoItems = existingPo.poDetails.Where(x => x.IsClosed || x.InTransitQty > 0 || x.ReceivedQty > 0);
+                    if(processedPoItems != null && processedPoItems.Count() > 0)
+                        return BadRequest("PO Detail(s) is already processed. PO is not editable");
+                }
+
+                foreach (PoDetail poDetail in po.poDetails)
+                {
+                    var part = parts.Where(x => x.partSupplierAssignments.Select(p => p.PartID == poDetail.PartId && p.SupplierID == po.SupplierId).FirstOrDefault()).FirstOrDefault();
+                    if (part == null)
+                    {
+                        part = parts.Where(p => p.Id == poDetail.PartId).FirstOrDefault();
+                        if (part == null)
+                            return BadRequest(string.Format("Invalid part"));
+                        else
+                            return BadRequest(string.Format("Invalid part : {0} does not belong to this supplier", part.Code));
+                    }
+                }
                 po.Id = id;
                 await this._poService.UpdatePoAsync(po);
 
@@ -101,7 +154,7 @@ namespace WebApi.Controllers
         }
 
         // DELETE: api/Todo/5
-        [HttpDelete("{companyId}/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<Po>> Delete(long id)
         {
             try
@@ -110,6 +163,16 @@ namespace WebApi.Controllers
                 if (result == null)
                 {
                     return NotFound();
+                }
+
+                var existingPo = await this._poService.GetPoAsync(id);
+                if (existingPo != null && existingPo.IsClosed)
+                    return BadRequest("PO is already closed. You can not delete this PO");
+                if (existingPo != null && existingPo.poDetails != null)
+                {
+                    var processedPoItems = existingPo.poDetails.Where(x => x.IsClosed || x.InTransitQty > 0 || x.ReceivedQty > 0);
+                    if (processedPoItems != null && processedPoItems.Count() > 0)
+                        return BadRequest("PO Detail(s) is already processed. You can not delete this PO");
                 }
 
                 await this._poService.DeletePoAsync(id);

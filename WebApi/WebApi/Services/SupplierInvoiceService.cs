@@ -38,77 +38,29 @@ namespace WebApi.Services
             supplierInvoice.SupplierId = supplier.Id;
 
             
-            foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
-            {
-                List<SupplierInvoicePoDetails> supplierInvoicePoDetails = new List<SupplierInvoicePoDetails>();
+            //foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
+            //{
+            //    List<SupplierInvoicePoDetails> supplierInvoicePoDetails = new List<SupplierInvoicePoDetails>();
 
-                var part = await _partRepository.GetPartByMapCodeAsync(supplierInvoice.SupplierId, supplierInvoiceDetail.PartCode);
-                supplierInvoiceDetail.PartId = part.Id;
+            //    var part = await _partRepository.GetPartByMapCodeAsync(supplierInvoice.SupplierId, supplierInvoiceDetail.PartCode);
+            //    supplierInvoiceDetail.PartId = part.Id;
 
-                //var adjustedQty = 0;
-                var pos = await _poRepository.GetAllPosAsync(supplierInvoice.CompanyId);
+            //    //var adjustedQty = 0;
+            //    var pos = await _poRepository.GetAllPosAsync(supplierInvoice.CompanyId);
 
-                var openPos = pos.Where(x => x.IsClosed == false && x.SupplierId == supplierInvoice.SupplierId).OrderBy(x => x.PoDate);
+            //    var openPos = pos.Where(x => x.IsClosed == false && x.SupplierId == supplierInvoice.SupplierId).OrderBy(x => x.PoDate);                
 
-                //foreach (Po po in pos)
-                //{
-                //    if (po.IsClosed == false && po.SupplierId == supplierInvoice.SupplierId)
-                //    {
-                //        foreach (PoDetail poDetail in po.poDetails)
-                //        {
-                //            if (poDetail.PartId == part.Id && poDetail.IsClosed == false && poDetail.AckQty > poDetail.InTransitQty + poDetail.ReceivedQty)
-                //            {
-                //                SupplierInvoicePoDetails supplierInvoicePoDetail = new SupplierInvoicePoDetails();
-                //                supplierInvoicePoDetail.PartId = poDetail.PartId;
-                //                supplierInvoicePoDetail.PoId = poDetail.PoId;
-                //                supplierInvoicePoDetail.PODetailId = poDetail.Id;
-                //                supplierInvoicePoDetail.PONo = po.PoNo;
+            //    var transactionDetail = new TransactionDetail();
+            //    transactionDetail.PartId = supplierInvoiceDetail.PartId;
+            //    transactionDetail.Qty = supplierInvoiceDetail.Qty;
+            //    transactionDetail.TransactionTypeId = BusinessConstants.TRANSACTION_TYPE.UPLOAD_SUPPLIER_INVOICE;
+            //    transactionDetail.TransactionDate = DateTime.Now;
+            //    transactionDetail.DirectionId = BusinessConstants.DIRECTION.IN;
+            //    transactionDetail.InventoryType = BusinessConstants.INVENTORY_TYPE.INTRANSIT_QTY;
+            //    transactionDetail.ReferenceNo = supplierInvoice.InvoiceNo;
 
-                //                var remainingPoQty = poDetail.AckQty - poDetail.InTransitQty + poDetail.ReceivedQty;
-
-
-                //                case 1 we found the podetail where ackqty is adjusted for all invoiceqty
-                //                case 2 we have to adjusted invoiceqty in different pos
-                //                case 3 we have invoiceqty greater than available poqty
-
-                //                case 1 we found the podetail where ackqty is adjusted for all invoiceqty
-                //                if (remainingPoQty >= supplierInvoiceDetail.Qty - adjustedQty)
-                //                        {
-                //                            supplierInvoicePoDetail.Qty = supplierInvoiceDetail.Qty - adjustedQty;
-                //                            adjustedQty = adjustedQty + supplierInvoiceDetail.Qty;
-                //                        }
-
-                //                case 2 we have to adjusted invoiceqty in different pos
-                //                if (remainingPoQty < supplierInvoiceDetail.Qty - adjustedQty)
-                //                {
-                //                    supplierInvoicePoDetail.Qty = remainingPoQty;
-                //                    adjustedQty = adjustedQty + remainingPoQty;
-                //                }
-
-                //                supplierInvoicePoDetails.Add(supplierInvoicePoDetail);
-                //                if (adjustedQty == supplierInvoiceDetail.Qty)
-                //                    break;
-                //            }
-                //        }
-                //    }
-                //    if (adjustedQty == supplierInvoiceDetail.Qty)
-                //        break;
-                //}
-                //supplierInvoiceDetail.AdjustedPOQty = adjustedQty;
-                //supplierInvoiceDetail.ExcessQty = supplierInvoiceDetail.Qty - adjustedQty;
-                //supplierInvoiceDetail.supplierInvoicePoDetails = supplierInvoicePoDetails;
-
-                var transactionDetail = new TransactionDetail();
-                transactionDetail.PartId = supplierInvoiceDetail.PartId;
-                transactionDetail.Qty = supplierInvoiceDetail.Qty;
-                transactionDetail.TransactionTypeId = BusinessConstants.TRANSACTION_TYPE.UPLOAD_SUPPLIER_INVOICE;
-                transactionDetail.TransactionDate = DateTime.Now;
-                transactionDetail.DirectionId = BusinessConstants.DIRECTION.IN;
-                transactionDetail.InventoryType = BusinessConstants.INVENTORY_TYPE.INTRANSIT_QTY;
-                transactionDetail.ReferenceNo = supplierInvoice.InvoiceNo;
-
-                await this._transactionRepository.AddTransactionAsync(transactionDetail);
-            }
+            //    await this._transactionRepository.AddTransactionAsync(transactionDetail);
+            //}
 
             supplierInvoice.Id= await _supplierInvoiceRepository.AddSupplierInvoiceAsync(supplierInvoice);
             return supplierInvoice;
@@ -215,25 +167,31 @@ namespace WebApi.Services
             return supplierInvoice;
         }
 
-        public Task<int> DeleteSupplierInvoiceAsync(long supplierInvoiceId)
+        public async Task<bool> DeleteSupplierInvoiceAsync(long supplierInvoiceId)
         {
-            throw new NotImplementedException();
+            return await this._supplierInvoiceRepository.DeleteSupplierInvoiceAsync(supplierInvoiceId);
         }
 
         public async Task<IEnumerable<SupplierInvoice>> GetAllSupplierInvoicesAsync(int companyId)
         {
            var result =  await this._supplierInvoiceRepository.GetAllSupplierInvoicesAsync(companyId);
-
-            foreach(SupplierInvoice supplierInvoice in result)
+            var companyList = await this._companyRepository.GetAllCompanyAsync();
+            var supplierList = await this._supplierRepository.GetAllSupplierAsync(companyId);
+            var partList = await this._partRepository.GetAllPartsAsync(companyId);
+            foreach (SupplierInvoice supplierInvoice in result)
             {
-                supplierInvoice.CompanyDetail = this._companyRepository.GetAllCompanyAsync().Result.Where(p => p.Id == supplierInvoice.CompanyId).FirstOrDefault();
-                supplierInvoice.SupplierDetail = this._supplierRepository.GetAllSupplierAsync(companyId).Result.Where(p => p.Id == supplierInvoice.SupplierId).FirstOrDefault();
+                supplierInvoice.CompanyDetail = companyList.Where(p => p.Id == supplierInvoice.CompanyId).FirstOrDefault();
+                if(supplierInvoice !=null  && supplierInvoice.CompanyDetail !=null)
+                    supplierInvoice.CompanyName = supplierInvoice.CompanyDetail.Name;
+                supplierInvoice.SupplierDetail = supplierList.Where(p => p.Id == supplierInvoice.SupplierId).FirstOrDefault();
+                if (supplierInvoice != null && supplierInvoice.SupplierDetail !=null)
+                    supplierInvoice.SupplierName = supplierInvoice.SupplierDetail.Name;
                 foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
                 {
-                    supplierInvoiceDetail.PartDetail = await this._partRepository.GetPartAsync(supplierInvoiceDetail.PartId);                    
+                    supplierInvoiceDetail.PartDetail = partList.Where(p => p.Id == supplierInvoiceDetail.PartId).FirstOrDefault(); //await this._partRepository.GetPartAsync(supplierInvoiceDetail.PartId);                    
                 }
             }
-
+            
             return result;
         }
 
@@ -243,9 +201,10 @@ namespace WebApi.Services
 
             supplierInvoice.CompanyDetail = this._companyRepository.GetAllCompanyAsync().Result.Where(p => p.Id == supplierInvoice.CompanyId).FirstOrDefault();
             supplierInvoice.SupplierDetail = this._supplierRepository.GetAllSupplierAsync(supplierInvoice.CompanyId).Result.Where(p => p.Id == supplierInvoice.SupplierId).FirstOrDefault();
+            var partList = await this._partRepository.GetAllPartsAsync(supplierInvoice.CompanyDetail.Id);
             foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
             {
-                supplierInvoiceDetail.PartDetail = await this._partRepository.GetPartAsync(supplierInvoiceDetail.PartId);
+                supplierInvoiceDetail.PartDetail = partList.Where(p => p.Id == supplierInvoiceDetail.PartId).FirstOrDefault(); 
             }
 
             return supplierInvoice;

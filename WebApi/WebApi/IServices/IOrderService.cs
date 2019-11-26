@@ -13,5 +13,6 @@ namespace WebApi.IServices
         Task AddOrderMasterAsync(OrderMaster order);
         Task UpdateOrderMasterAsync(OrderMaster order);
         Task DeleteOrderMasterAsync(long orderId);
+        Task UpdateOrderAsync(int id, string path);
     }
 }
