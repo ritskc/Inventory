@@ -44,7 +44,7 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Email", value: "emailIds", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "closingDate", sortable: true, isDate: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", sortable: true, isBoolean: true }) );
   }
 
   extractSupplierId() {
@@ -92,5 +92,9 @@ export class PurchaseOrderListComponent implements OnInit {
   supplierSelected() {
     this.supplierId = this.supplierForm.get('supplierList').value;
     this.loadAllPurchaseOrders();
+  }
+
+  addPurchaseOrder() {
+    this.router.navigateByUrl(`orders/detail/supplier/${this.supplierId}`)
   }
 }

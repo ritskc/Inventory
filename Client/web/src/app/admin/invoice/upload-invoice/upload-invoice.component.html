@@ -46,7 +46,7 @@
                     </div>
                     <div class="form-group standard-top-margin row">
                       <label class="col-md-3 col-xs-3 label-top-adjustment">ETA</label>
-                      <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-9 col-xs-9" [(ngModel)]="eta"/>
+                      <input [attr.disabled]="disabled? '': null" type="date" class="form-control col-md-9 col-xs-9" [(ngModel)]="eta"/>
                     </div>
                   </div>
             </div>
@@ -60,7 +60,7 @@
               Product Cart
             </div>
             <div class="card-body">
-              <simple-grid [data]="invoice.supplierInvoiceDetails" [columns]="columns" [addRequired]="false" [exportRequired]="false"></simple-grid>
+              <simple-grid [data]="invoice.supplierInvoiceDetails" [columns]="columns" [addRequired]="false" [exportRequired]="false" [pageSize]="50"></simple-grid>
             </div>
         </div>
     </div>
@@ -77,7 +77,7 @@
                     <span>Upload Invoice</span>
                   </div>
                   <div class="col-lg-4 col-md-4">
-                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files)" id="uploadInvoice"/>
+                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files, 'Invoice')" id="uploadInvoice"/>
                   </div>
                   <div class="col-lg-1 col-md-1">
                     <span> </span>
@@ -86,7 +86,7 @@
                     <span>Upload BL</span>
                   </div>
                   <div class="col-lg-4 col-md-4">
-                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files)" id="uploadBl"/>
+                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files, 'BL')" id="uploadBl"/>
                   </div>
               </div>
               <div class="row">
@@ -94,7 +94,7 @@
                     <span>Upload Packing</span>
                   </div>
                   <div class="col-lg-4 col-md-4">
-                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files)" id="uploadPacking"/>
+                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files, 'PackingSlip')" id="uploadPacking"/>
                   </div>
                   <div class="col-lg-1 col-md-1">
                     <span> </span>
@@ -103,7 +103,7 @@
                     <span>Upload TC</span>
                   </div>
                   <div class="col-lg-4 col-md-4">
-                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files)" id="uploadTc"/>
+                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files, 'TC')" id="uploadTc"/>
                   </div>
               </div>
               <div class="row">
@@ -111,7 +111,7 @@
                     <span>Upload 10+2</span>
                   </div>
                   <div class="col-lg-4 col-md-4">
-                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files)" id="upload102"/>
+                    <input type="file" class="btn btn-primary" (change)="uploadAttachment($event.target.files, 'TenPlus')" id="upload102"/>
                   </div>
               </div>
             </div>

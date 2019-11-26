@@ -14,6 +14,7 @@ export class PurchaseOrder {
     isClosed: boolean = false;
     isAcknowledged: boolean;
     poDate: string;
+    dueDate: string;
     closingDate: string;
     acknowledgementDate: string;
     poDetails: PurchaseOrderDetail[];

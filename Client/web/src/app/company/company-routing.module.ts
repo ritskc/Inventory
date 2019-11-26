@@ -6,6 +6,7 @@ import { CreateShipmentComponent } from './create-shipment/create-shipment.compo
 import { InventoryPartsListComponent } from './inventory-parts-list/inventory-parts-list.component';
 import { ShipmentListComponent } from './shipment-list/shipment-list.component';
 import { CompanyInvoiceComponent } from './company-invoice/company-invoice.component';
+import { POSUploadComponent } from './pos/upload/upload.component';
 
 const routes: Routes = [{
   path: '',
@@ -57,6 +58,13 @@ const routes: Routes = [{
       component: CompanyInvoiceComponent,
       data: {
         title: 'Invoice'
+      }
+    },
+    {
+      path: 'pos',
+      component: POSUploadComponent,
+      data: {
+        title: 'POS (Upload & Remove)'
       }
     }
   ]

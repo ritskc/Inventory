@@ -26,4 +26,8 @@ export class ShipmentService {
   deleteShipment(shipmentId: number) {
     return this.apiService.delete(shipmentId, this.config.Settings.apiServerHost + this.config.Settings.shipmentUri);
   }
+
+  getLatestShipment(companyId: number, date: string): Observable<any> {
+    return this.apiService.get(`${ this.config.Settings.apiServerHost }/${ this.config.Settings.entityTracker }/packing_slip/${ companyId }/${ date }`);
+  }
 }

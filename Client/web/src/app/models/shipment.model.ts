@@ -36,7 +36,7 @@ export class PackingSlipDetail {
     boxes: number = 0;
     unitPrice: number = 0;
     total: number = 0;
-    surcharge: boolean = false;
+    surcharge: number = 0;
     surchargePerPound: number = 0;
     surchargePerUnit: number = 0;
     totalSurcharge: number = 0;
