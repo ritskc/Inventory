@@ -69,6 +69,8 @@ export class PurchaseOrdersComponent implements OnInit {
     customerOrders.forEach((order) => {
       order.orderDetails.forEach((detail) => {
         var customerPurchaseOrderViewModel = new CustomerPurchaseOrderViewModel();
+        customerPurchaseOrderViewModel.customerId = order.customerId;
+        customerPurchaseOrderViewModel.id = order.id;
         customerPurchaseOrderViewModel.poNo = order.poNo;
         customerPurchaseOrderViewModel.poDate = order.poDate;
         customerPurchaseOrderViewModel.dueDate = order.closingDate;
@@ -81,7 +83,11 @@ export class PurchaseOrdersComponent implements OnInit {
   }
 
   addCustomerOrder() {
-    this.router.navigateByUrl(`orders/detail/customer/${this.customerId}`);
+    this.router.navigateByUrl(`orders/detail/customer/${this.customerId}/create/0`);
+  }
+
+  rowSelected(row: any) {
+    this.router.navigateByUrl(`orders/detail/customer/${row.customerId}/edit/${row.id}`);
   }
 
   private getAllPurchaseOrders() {
@@ -96,4 +102,6 @@ class CustomerPurchaseOrderViewModel {
   partCode: string = '';
   partDescription: string = '';
   openQuantity: number = 0;
+  customerId: number = 0;
+  id: number = 0
 }

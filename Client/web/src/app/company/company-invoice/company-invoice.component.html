@@ -34,3 +34,7 @@
         <span class="col-xs-2 col-md-2 btn btn-primary" (click)="createInvoice()">Create Invoice</span>
     </div>
 </div>
+
+<div>
+    <app-report [displayReportEvent]="invoiceCreated.asObservable()"></app-report>
+</div>

@@ -109,6 +109,7 @@ export class CreateShipmentComponent implements OnInit {
           this.customerAssociatedParts.push(part);
       });
     });
+    this.partCode = -1;
 
     this.getAllShipmentsForSelectedCustomer();
     this.createColumnsForShipmentGrid();
@@ -176,7 +177,7 @@ export class CreateShipmentComponent implements OnInit {
         .subscribe(
           (result) => {
             this.toastr.successToastr('Shipment Created Successfully!!');
-            this.packagingSlipCreated.next(`${this.appConfig.reportsUri}${result}`);
+            this.packagingSlipCreated.next(`${this.appConfig.reportsUri}/PackingSlip.aspx?id=${result}`);
             this.shipment = new Shipment();
           },
           (error) => { this.toastr.errorToastr('Error while creating shipment'); console.log(error); },

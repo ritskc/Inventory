@@ -10,6 +10,8 @@ import { PartsService } from '../../admin/parts/parts.service';
 import { Part } from '../../models/part.model';
 import { InvoiceService } from '../../admin/invoice/invoice.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { Subject } from 'rxjs';
+import { AppConfigurations } from '../../config/app.config';
 
 @Component({
   selector: 'app-company-invoice',
@@ -25,6 +27,7 @@ export class CompanyInvoiceComponent implements OnInit {
   private shipments: Shipment[];
   private selectedShipment: Shipment = new Shipment();
   private currentlyLoggedInCompany: number = 0;
+  private invoiceCreated: Subject<string> = new Subject<string>();
   columns: DataColumn[] = [];
 
   constructor(private companyService: CompanyService, private customerService: CustomerService, private invoiceService: InvoiceService,
@@ -89,6 +92,8 @@ export class CompanyInvoiceComponent implements OnInit {
   createInvoice() {
     this.invoiceService.createCustomerInvoice(this.selectedShipment)
         .subscribe((result) => {
+          let appConfig = new AppConfigurations();
+          this.invoiceCreated.next(`${appConfig.reportsUri}/Invoice.aspx?id=${this.selectedShipment.id}`);
           this.toastr.successToastr('Updated details successfully!!');
         })
   }

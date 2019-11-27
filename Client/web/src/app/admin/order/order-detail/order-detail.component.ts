@@ -101,8 +101,10 @@ export class OrderDetailComponent implements OnInit {
       case "customer":
         this.loadCustomersList();
         this.setFormForCustomerSelection();
+        this.setFormForCustomerOrderEdit();
         break;
       case "supplier":
+        this.orderForm.get('poNo').disable();
         this.loadSuppliersList();
         this.setFormForSupplierSelection();
         this.setFormForSupplierOrderEdit();
@@ -240,6 +242,22 @@ export class OrderDetailComponent implements OnInit {
             poDetail.total = poDetail.total;
             poDetail.note = poDetail.note;
             poDetail.referenceNo = poDetail.referenceNo;
+          });
+        });
+    }
+  }
+
+  setFormForCustomerOrderEdit() {
+    var orderId = this.activatedRoute.snapshot.params.orderId;
+    if (this.formMode === UserAction.Edit ) {
+      this.customerService.getPurchaseOrder(this.currentlyLoaddedInCompanyId, orderId)
+        .subscribe(order => {
+          this.purchaseOrder = order;
+          this.purchaseOrder.poDate = DateHelper.formatDate(new Date(this.purchaseOrder.poDate));
+          this.purchaseOrder.dueDate = DateHelper.formatDate(new Date(this.purchaseOrder.dueDate));
+          this.purchaseOrder.orderDetails.forEach(od => {
+            od.partCode = od.part.code;
+            od.description = od.part.description;
           });
         });
     }
@@ -406,7 +424,10 @@ export class OrderDetailComponent implements OnInit {
       console.log(error);
     }, () => {
       setTimeout(() => {
-        this.router.navigateByUrl('suppliers/purchase-order/0/0');
+        if (this.SelectedCustomer > -1)
+          this.router.navigateByUrl('customers/purchase-order/0/0');
+        else
+          this.router.navigateByUrl('suppliers/purchase-order/0/0');
       }, 1000);
     });
   }

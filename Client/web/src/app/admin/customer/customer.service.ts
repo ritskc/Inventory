@@ -38,6 +38,8 @@ export class CustomerService {
   savePurchaseOrder(purchaseOrder: PurchaseOrder) {
     if (purchaseOrder.id == 0)
       return this.apiService.post(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.ordersUri);
+    else
+      return this.apiService.put(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.ordersUri + `/${ purchaseOrder.id }`);
   }
 
   delete(id: number) {
