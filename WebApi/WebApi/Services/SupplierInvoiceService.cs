@@ -35,32 +35,7 @@ namespace WebApi.Services
             supplierInvoice.CompanyId = company.Id;
 
             var supplier = await _supplierRepository.GetSupplierByNameAsync(supplierInvoice.CompanyId, supplierInvoice.SupplierName);
-            supplierInvoice.SupplierId = supplier.Id;
-
-            
-            //foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
-            //{
-            //    List<SupplierInvoicePoDetails> supplierInvoicePoDetails = new List<SupplierInvoicePoDetails>();
-
-            //    var part = await _partRepository.GetPartByMapCodeAsync(supplierInvoice.SupplierId, supplierInvoiceDetail.PartCode);
-            //    supplierInvoiceDetail.PartId = part.Id;
-
-            //    //var adjustedQty = 0;
-            //    var pos = await _poRepository.GetAllPosAsync(supplierInvoice.CompanyId);
-
-            //    var openPos = pos.Where(x => x.IsClosed == false && x.SupplierId == supplierInvoice.SupplierId).OrderBy(x => x.PoDate);                
-
-            //    var transactionDetail = new TransactionDetail();
-            //    transactionDetail.PartId = supplierInvoiceDetail.PartId;
-            //    transactionDetail.Qty = supplierInvoiceDetail.Qty;
-            //    transactionDetail.TransactionTypeId = BusinessConstants.TRANSACTION_TYPE.UPLOAD_SUPPLIER_INVOICE;
-            //    transactionDetail.TransactionDate = DateTime.Now;
-            //    transactionDetail.DirectionId = BusinessConstants.DIRECTION.IN;
-            //    transactionDetail.InventoryType = BusinessConstants.INVENTORY_TYPE.INTRANSIT_QTY;
-            //    transactionDetail.ReferenceNo = supplierInvoice.InvoiceNo;
-
-            //    await this._transactionRepository.AddTransactionAsync(transactionDetail);
-            //}
+            supplierInvoice.SupplierId = supplier.Id;          
 
             supplierInvoice.Id= await _supplierInvoiceRepository.AddSupplierInvoiceAsync(supplierInvoice);
             return supplierInvoice;
@@ -102,7 +77,7 @@ namespace WebApi.Services
                                 supplierInvoicePoDetail.PODetailId = poDetail.Id;
                                 supplierInvoicePoDetail.PONo = po.PoNo;
 
-                                var remainingPoQty = poDetail.AckQty - poDetail.InTransitQty + poDetail.ReceivedQty;
+                                var remainingPoQty = poDetail.AckQty - (poDetail.InTransitQty + poDetail.ReceivedQty);
 
                                 foreach (SupplierInvoiceDetail tmpSupplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
                                 {
@@ -112,7 +87,9 @@ namespace WebApi.Services
                                         {
                                             if (tmpPoDetail.PartId == poDetail.PartId && tmpPoDetail.PODetailId == poDetail.Id)
                                             {
-                                                remainingPoQty = remainingPoQty - tmpPoDetail.Qty;
+                                                if(remainingPoQty - tmpPoDetail.Qty >= 0)
+                                                    remainingPoQty = remainingPoQty - tmpPoDetail.Qty;                                               
+
                                             }
                                         }
                                     }
@@ -150,18 +127,7 @@ namespace WebApi.Services
                 }
                 supplierInvoiceDetail.AdjustedPOQty = adjustedQty;
                 supplierInvoiceDetail.ExcessQty = supplierInvoiceDetail.Qty - adjustedQty;
-                supplierInvoiceDetail.supplierInvoicePoDetails = supplierInvoicePoDetails;
-
-                //var transactionDetail = new TransactionDetail();
-                //transactionDetail.PartId = supplierInvoiceDetail.PartId;
-                //transactionDetail.Qty = supplierInvoiceDetail.Qty;
-                //transactionDetail.TransactionTypeId = BusinessConstants.TRANSACTION_TYPE.UPLOAD_SUPPLIER_INVOICE;
-                //transactionDetail.TransactionDate = DateTime.Now;
-                //transactionDetail.DirectionId = BusinessConstants.DIRECTION.IN;
-                //transactionDetail.InventoryType = BusinessConstants.INVENTORY_TYPE.INTRANSIT_QTY;
-                //transactionDetail.ReferenceNo = supplierInvoice.InvoiceNo;
-
-                //await this._transactionRepository.AddTransactionAsync(transactionDetail);
+                supplierInvoiceDetail.supplierInvoicePoDetails = supplierInvoicePoDetails;               
             }
 
             return supplierInvoice;
@@ -210,32 +176,16 @@ namespace WebApi.Services
             return supplierInvoice;
         }
 
+        public async Task<SupplierInvoice> GetSupplierInvoiceAsync(string invoiceNo)
+        {
+            var supplierInvoice = await this._supplierInvoiceRepository.GetSupplierInvoiceAsync(invoiceNo);            
+
+            return supplierInvoice;
+        }
+
         public async Task ReceiveSupplierInvoiceAsync(long supplierInvoiceId)
         {
-            await this._supplierInvoiceRepository.ReceiveSupplierInvoiceAsync(supplierInvoiceId);
-
-            var supplierInvoice = await this._supplierInvoiceRepository.GetSupplierInvoiceAsync(supplierInvoiceId);
-
-            foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
-            {
-                var transactionDetail = new TransactionDetail();
-                transactionDetail.PartId = supplierInvoiceDetail.PartId;
-                transactionDetail.Qty = supplierInvoiceDetail.Qty;
-                transactionDetail.TransactionTypeId = BusinessConstants.TRANSACTION_TYPE.RECEIVE_SUPPLIER_INVOICE;
-                transactionDetail.TransactionDate =  DateTime.Now;
-                transactionDetail.DirectionId = BusinessConstants.DIRECTION.OUT;
-                transactionDetail.InventoryType = BusinessConstants.INVENTORY_TYPE.INTRANSIT_QTY;
-                await this._transactionRepository.AddTransactionAsync(transactionDetail);
-
-                transactionDetail = new TransactionDetail();
-                transactionDetail.PartId = supplierInvoiceDetail.PartId;
-                transactionDetail.Qty = supplierInvoiceDetail.Qty;
-                transactionDetail.TransactionTypeId = BusinessConstants.TRANSACTION_TYPE.RECEIVE_SUPPLIER_INVOICE;
-                transactionDetail.TransactionDate = DateTime.Now;
-                transactionDetail.DirectionId = BusinessConstants.DIRECTION.IN;
-                transactionDetail.InventoryType = BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND;
-                await this._transactionRepository.AddTransactionAsync(transactionDetail);
-            }
+            await this._supplierInvoiceRepository.ReceiveSupplierInvoiceAsync(supplierInvoiceId);                     
         }
 
         public async Task ReceiveBoxInvoiceAsync(string barcode)

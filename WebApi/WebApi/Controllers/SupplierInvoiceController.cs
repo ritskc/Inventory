@@ -74,10 +74,10 @@ namespace WebApi.Controllers
                 var company = await this.companyService.GetCompanyByNameAsync(supplierInvoice.CompanyName);
                 supplierInvoice.CompanyId = company.Id;
 
-                var invoices = await this.supplierInvoiceService.GetAllSupplierInvoicesAsync(supplierInvoice.CompanyId);
+                var invoice = await this.supplierInvoiceService.GetSupplierInvoiceAsync(supplierInvoice.InvoiceNo);
 
-                var invoice = invoices.Where(x => x.InvoiceNo == supplierInvoice.InvoiceNo).FirstOrDefault();
-                if(invoice != null)
+                //var invoice = invoices.Where(x => x.InvoiceNo == supplierInvoice.InvoiceNo).FirstOrDefault();
+                if(!(invoice == null || invoice.supplierInvoiceDetails == null || invoice.supplierInvoiceDetails.Count == 0))
                     return StatusCode(500, "Invoice already uploaded");
                 if (step == 1)
                 {
@@ -102,6 +102,13 @@ namespace WebApi.Controllers
         {
             try
             {
+                var result = await this.supplierInvoiceService.GetSupplierInvoiceAsync(id);
+                if (result == null)
+                    return NotFound();
+
+                if (result.IsInvoiceReceived)
+                    return StatusCode(500, "Invoice already received");
+
                 await this.supplierInvoiceService.ReceiveSupplierInvoiceAsync(id);
                 return Ok();
             }

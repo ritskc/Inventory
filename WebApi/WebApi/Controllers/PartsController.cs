@@ -75,6 +75,13 @@ namespace WebApi.Controllers
         {
             try
             {
+                if(part == null)
+                    return StatusCode(500,"invalid part");
+                if (string.IsNullOrEmpty(part.Code) || string.IsNullOrEmpty(part.Description))
+                    return StatusCode(500, "invalid partcode / description");
+                if(part.partSupplierAssignments == null || part.partSupplierAssignments.Count() < 1 ||
+                    part.partCustomerAssignments == null || part.partCustomerAssignments.Count() < 1)
+                    return StatusCode(500, "invalid part - Atleast one supplier and Customer requires to create a part");
                 var parts = await this._partService.GetAllPartsAsync(part.CompanyId);
                 if (parts.Where(x => x.Code == part.Code).Count() > 0)
                     return StatusCode(302);
@@ -97,6 +104,14 @@ namespace WebApi.Controllers
                 {
                     return BadRequest();
                 }
+
+                if (part == null)
+                    return StatusCode(500, "invalid part");
+                if (string.IsNullOrEmpty(part.Code) || string.IsNullOrEmpty(part.Description))
+                    return StatusCode(500, "invalid partcode / description");
+                if (part.partSupplierAssignments == null || part.partSupplierAssignments.Count() < 1 ||
+                    part.partCustomerAssignments == null || part.partCustomerAssignments.Count() < 1)
+                    return StatusCode(500, "invalid part - Atleast one supplier and Customer requires to create a part");
 
                 part.Id = id;
                 await this._partService.UpdatePartAsync(part);

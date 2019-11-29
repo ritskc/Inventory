@@ -213,9 +213,10 @@ namespace DAL.Repository
 
                     poDetails.Add(poDetail);
                 }
+                conn.Close();
             }
             po.poDetails = poDetails;
-            conn.Close();
+            
             
             List<PoTerm> poTerms = new List<PoTerm>();
             commandText = string.Format("SELECT [Id] ,[PoId] ,[SequenceNo] ,[Term]  FROM [dbo].[PoTerms] where poid = '{0}'", po.Id);
@@ -236,9 +237,10 @@ namespace DAL.Repository
 
                     poTerms.Add(poTerm);
                 }
+                conn.Close();
             }
             po.poTerms = poTerms;
-            conn.Close();
+           
         
 
             return po;

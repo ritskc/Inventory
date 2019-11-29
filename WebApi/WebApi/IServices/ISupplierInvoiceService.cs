@@ -10,6 +10,7 @@ namespace WebApi.IServices
     {
         Task<IEnumerable<SupplierInvoice>> GetAllSupplierInvoicesAsync(int companyId);
         Task<SupplierInvoice> GetSupplierInvoiceAsync(long supplierInvoiceId);
+        Task<SupplierInvoice> GetSupplierInvoiceAsync(string invoiceNo);
         Task<SupplierInvoice> AddSupplierInvoiceAsync(SupplierInvoice supplierInvoice);
         Task<SupplierInvoice> GetSupplierInvoicePODetailAsync(SupplierInvoice supplierInvoice);
         Task UpdateSupplierInvoiceAsync(SupplierInvoice supplierInvoice);

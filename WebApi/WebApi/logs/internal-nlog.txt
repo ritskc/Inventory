@@ -443,3 +443,63 @@
 2019-11-24 22:47:07.0651 Info Adding target FileTarget(Name=allfile)
 2019-11-24 22:47:07.0651 Info Adding target FileTarget(Name=ownFile-web)
 2019-11-24 22:47:07.1268 Info Found 45 configuration items
+2019-11-28 16:57:28.1671 Info Message Template Auto Format enabled
+2019-11-28 16:57:28.1908 Info Loading assembly: NLog.Web.AspNetCore
+2019-11-28 16:57:28.3244 Info Adding target FileTarget(Name=allfile)
+2019-11-28 16:57:28.3244 Info Adding target FileTarget(Name=ownFile-web)
+2019-11-28 16:57:28.4100 Info Found 45 configuration items
+2019-11-28 18:36:51.6118 Info Message Template Auto Format enabled
+2019-11-28 18:36:51.6328 Info Loading assembly: NLog.Web.AspNetCore
+2019-11-28 18:36:51.7446 Info Adding target FileTarget(Name=allfile)
+2019-11-28 18:36:51.7546 Info Adding target FileTarget(Name=ownFile-web)
+2019-11-28 18:36:51.8159 Info Found 45 configuration items
+2019-11-28 18:47:36.7234 Info Message Template Auto Format enabled
+2019-11-28 18:47:36.7409 Info Loading assembly: NLog.Web.AspNetCore
+2019-11-28 18:47:36.8938 Info Adding target FileTarget(Name=allfile)
+2019-11-28 18:47:36.9093 Info Adding target FileTarget(Name=ownFile-web)
+2019-11-28 18:47:36.9923 Info Found 45 configuration items
+2019-11-28 18:58:19.6489 Info Message Template Auto Format enabled
+2019-11-28 18:58:19.6673 Info Loading assembly: NLog.Web.AspNetCore
+2019-11-28 18:58:19.7782 Info Adding target FileTarget(Name=allfile)
+2019-11-28 18:58:19.8043 Info Adding target FileTarget(Name=ownFile-web)
+2019-11-28 18:58:19.8530 Info Found 45 configuration items
+2019-11-28 19:08:29.5476 Info Message Template Auto Format enabled
+2019-11-28 19:08:29.6205 Info Loading assembly: NLog.Web.AspNetCore
+2019-11-28 19:08:29.7889 Info Adding target FileTarget(Name=allfile)
+2019-11-28 19:08:29.7983 Info Adding target FileTarget(Name=ownFile-web)
+2019-11-28 19:08:29.8567 Info Found 45 configuration items
+2019-11-28 20:21:37.9195 Info Message Template Auto Format enabled
+2019-11-28 20:21:37.9388 Info Loading assembly: NLog.Web.AspNetCore
+2019-11-28 20:21:38.0462 Info Adding target FileTarget(Name=allfile)
+2019-11-28 20:21:38.0462 Info Adding target FileTarget(Name=ownFile-web)
+2019-11-28 20:21:38.1047 Info Found 45 configuration items
+2019-11-28 20:34:18.5356 Info Message Template Auto Format enabled
+2019-11-28 20:34:18.5735 Info Loading assembly: NLog.Web.AspNetCore
+2019-11-28 20:34:18.7382 Info Adding target FileTarget(Name=allfile)
+2019-11-28 20:34:18.7470 Info Adding target FileTarget(Name=ownFile-web)
+2019-11-28 20:34:18.8052 Info Found 45 configuration items
+2019-11-28 20:37:30.8998 Info Message Template Auto Format enabled
+2019-11-28 20:37:30.9208 Info Loading assembly: NLog.Web.AspNetCore
+2019-11-28 20:37:31.0300 Info Adding target FileTarget(Name=allfile)
+2019-11-28 20:37:31.0300 Info Adding target FileTarget(Name=ownFile-web)
+2019-11-28 20:37:31.0836 Info Found 45 configuration items
+2019-11-28 20:51:26.9597 Info Message Template Auto Format enabled
+2019-11-28 20:51:26.9694 Info Loading assembly: NLog.Web.AspNetCore
+2019-11-28 20:51:27.0411 Info Adding target FileTarget(Name=allfile)
+2019-11-28 20:51:27.0446 Info Adding target FileTarget(Name=ownFile-web)
+2019-11-28 20:51:27.0797 Info Found 45 configuration items
+2019-11-28 20:52:46.5540 Info Message Template Auto Format enabled
+2019-11-28 20:52:46.5766 Info Loading assembly: NLog.Web.AspNetCore
+2019-11-28 20:52:46.7094 Info Adding target FileTarget(Name=allfile)
+2019-11-28 20:52:46.7377 Info Adding target FileTarget(Name=ownFile-web)
+2019-11-28 20:52:46.8317 Info Found 45 configuration items
+2019-11-28 21:03:29.5161 Info Message Template Auto Format enabled
+2019-11-28 21:03:29.5384 Info Loading assembly: NLog.Web.AspNetCore
+2019-11-28 21:03:29.6566 Info Adding target FileTarget(Name=allfile)
+2019-11-28 21:03:29.6700 Info Adding target FileTarget(Name=ownFile-web)
+2019-11-28 21:03:29.7274 Info Found 45 configuration items
+2019-11-28 21:05:32.5339 Info Message Template Auto Format enabled
+2019-11-28 21:05:32.5544 Info Loading assembly: NLog.Web.AspNetCore
+2019-11-28 21:05:32.6730 Info Adding target FileTarget(Name=allfile)
+2019-11-28 21:05:32.6825 Info Adding target FileTarget(Name=ownFile-web)
+2019-11-28 21:05:32.7688 Info Found 45 configuration items
