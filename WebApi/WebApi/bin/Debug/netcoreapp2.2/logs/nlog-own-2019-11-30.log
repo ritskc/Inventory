@@ -1,0 +1,14 @@
+2019-11-30 12:48:04.9213||DEBUG|WebApi.Program|init main |url: |action: 
+2019-11-30 15:28:08.8771||DEBUG|WebApi.Program|init main |url: |action: 
+2019-11-30 15:30:42.9822||DEBUG|WebApi.Program|init main |url: |action: 
+2019-11-30 16:23:01.0715||DEBUG|WebApi.Program|init main |url: |action: 
+2019-11-30 16:23:01.9778||INFO|WebApi.Controllers.InvoicesController|customer invoice created |url: https://localhost/Invoices|action: Post
+2019-11-30 16:23:43.3044||INFO|WebApi.Controllers.InvoicesController|customer invoice created |url: https://localhost/Invoices|action: Post
+2019-11-30 16:24:23.2632||INFO|WebApi.Controllers.InvoicesController|customer invoice created |url: https://localhost/Invoices|action: Post
+2019-11-30 16:25:56.8507||DEBUG|WebApi.Program|init main |url: |action: 
+2019-11-30 16:26:15.6055||INFO|WebApi.Controllers.InvoicesController|customer invoice created |url: https://localhost/Invoices|action: Post
+2019-11-30 16:27:03.5870||DEBUG|WebApi.Program|init main |url: |action: 
+2019-11-30 16:27:09.1242||INFO|WebApi.Controllers.InvoicesController|customer invoice created |url: https://localhost/Invoices|action: Post
+2019-11-30 16:28:40.5036||INFO|WebApi.Controllers.InvoicesController|customer invoice created |url: https://localhost/Invoices|action: Post
+2019-11-30 16:29:54.6402||DEBUG|WebApi.Program|init main |url: |action: 
+2019-11-30 16:30:02.4582||INFO|WebApi.Controllers.InvoicesController|customer invoice created |url: https://localhost/Invoices|action: Post

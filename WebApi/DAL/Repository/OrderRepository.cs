@@ -51,6 +51,7 @@ namespace DAL.Repository
                     
                     orders.Add(order);
                 }
+                dataReader.Close();
                 conn.Close();
             }
 
@@ -81,7 +82,8 @@ namespace DAL.Repository
                         orderDetail.Note = Convert.ToString(dataReader1["Note"]);
                         orderDetails.Add(orderDetail);
                     }
-                }
+                    dataReader1.Close();
+                }                
                 order.OrderDetails = orderDetails;
                 conn.Close();
             }
@@ -93,8 +95,6 @@ namespace DAL.Repository
         {
             OrderMaster order = new OrderMaster();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
-
-
             var commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks]  FROM [dbo].[OrderMaster] where Id = '{0}' ", orderId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
@@ -115,8 +115,8 @@ namespace DAL.Repository
                     order.PoDate = Convert.ToDateTime(dataReader["PoDate"]);
                     order.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
                     order.Remarks = Convert.ToString(dataReader["Remarks"]);
-
                 }
+                dataReader.Close();
                 conn.Close();
             }
 
@@ -146,9 +146,68 @@ namespace DAL.Repository
                     orderDetail.Note = Convert.ToString(dataReader1["Note"]);
                     orderDetails.Add(orderDetail);
                 }
+                dataReader1.Close();
             }
             order.OrderDetails = orderDetails;
             conn.Close();
+            return order;
+        }
+
+        public async Task<OrderMaster> GetOrderMasterAsync(long orderId, SqlConnection conn, SqlTransaction transaction)
+        {
+            OrderMaster order = new OrderMaster();
+            var commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks]  FROM [dbo].[OrderMaster] where Id = '{0}' ", orderId);
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn,transaction))
+            {
+                cmd.CommandType = CommandType.Text;              
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
+
+                while (dataReader.Read())
+                {
+                    order.Id = Convert.ToInt64(dataReader["Id"]);
+                    order.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
+                    order.CustomerId = Convert.ToInt32(dataReader["CustomerId"]);
+                    order.IsBlanketPO = Convert.ToBoolean(dataReader["IsBlanketPO"]);
+                    order.PONo = Convert.ToString(dataReader["PONo"]);
+                    order.PoDate = Convert.ToDateTime(dataReader["PoDate"]);
+                    order.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
+                    order.Remarks = Convert.ToString(dataReader["Remarks"]);
+
+                }
+                dataReader.Close();
+            }
+
+
+            List<OrderDetail> orderDetails = new List<OrderDetail>();
+            commandText = string.Format("SELECT [Id] ,[OrderId] ,[PartId] ,[BlanketPOId] ,[BlanketPOAdjQty] ,[LineNumber] ,[Qty] ,[UnitPrice] " +
+                ",[DueDate] ,[Note],[ShippedQty]  FROM [dbo].[OrderDetail]  where orderid = '{0}'", order.Id);
+
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn,transaction))
+            {
+                cmd1.CommandType = CommandType.Text;               
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader1.Read())
+                {
+                    var orderDetail = new OrderDetail();
+                    orderDetail.Id = Convert.ToInt64(dataReader1["Id"]);
+                    orderDetail.OrderId = Convert.ToInt64(dataReader1["OrderId"]);
+                    orderDetail.PartId = Convert.ToInt64(dataReader1["PartId"]);
+                    orderDetail.BlanketPOId = Convert.ToInt64(dataReader1["BlanketPOId"]);
+                    orderDetail.LineNumber = Convert.ToInt32(dataReader1["LineNumber"]);
+                    orderDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                    orderDetail.ShippedQty = Convert.ToInt32(dataReader1["ShippedQty"]);
+                    orderDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
+                    orderDetail.DueDate = Convert.ToDateTime(dataReader1["DueDate"]);
+                    orderDetail.Note = Convert.ToString(dataReader1["Note"]);
+                    orderDetails.Add(orderDetail);
+                }
+                dataReader1.Close();
+            }
+            order.OrderDetails = orderDetails;
+            
             return order;
         }
 

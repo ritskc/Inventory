@@ -27,7 +27,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
 
-            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms]  FROM [dbo].[PoMaster] where CompanyId = '{companyId}' ");
+            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms],[DueDate]  FROM [dbo].[PoMaster] where CompanyId = '{companyId}' ");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -53,6 +53,10 @@ namespace DAL.Repository
                     else
                         po.ClosingDate = null;
 
+                    if (dataReader["DueDate"] != DBNull.Value)
+                        po.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
+                    else
+                        po.DueDate = null;
 
                     po.IsAcknowledged = Convert.ToString(dataReader["IsAcknowledged"]);
 
@@ -65,6 +69,7 @@ namespace DAL.Repository
 
                     pos.Add(po);
                 }
+                dataReader.Close();
                 conn.Close();
             }
 
@@ -101,6 +106,7 @@ namespace DAL.Repository
 
                         poDetails.Add(poDetail);
                     }
+                    dataReader1.Close();
                 }
                 po.poDetails = poDetails;
                 conn.Close();
@@ -132,7 +138,7 @@ namespace DAL.Repository
                 conn.Close();
             }
 
-            return pos;
+            return pos.OrderBy(x=>x.DueDate);
         }
 
         public async Task<Po> GetPoAsync(long poId)
@@ -140,7 +146,7 @@ namespace DAL.Repository
             var po = new Po();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms]  FROM [dbo].[PoMaster] where Id = '{poId}' ");
+            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms],[DueDate]  FROM [dbo].[PoMaster] where Id = '{poId}' ");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -165,8 +171,13 @@ namespace DAL.Repository
                         po.ClosingDate = Convert.ToDateTime(dataReader["ClosingDate"]);
                     else
                         po.ClosingDate = null;
-                        
-                    
+
+                    if (dataReader["DueDate"] != DBNull.Value)
+                        po.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
+                    else
+                        po.DueDate = null;
+
+
                     po.IsAcknowledged = Convert.ToString(dataReader["IsAcknowledged"]);
                    
                     if (dataReader["AcknowledgementDate"] != DBNull.Value)
@@ -177,6 +188,7 @@ namespace DAL.Repository
                     po.DeliveryTerms = Convert.ToString(dataReader["DeliveryTerms"]);
 
                 }
+                dataReader.Close();
                 conn.Close();
             }
 
@@ -213,6 +225,7 @@ namespace DAL.Repository
 
                     poDetails.Add(poDetail);
                 }
+                dataReader1.Close();
                 conn.Close();
             }
             po.poDetails = poDetails;
@@ -237,6 +250,7 @@ namespace DAL.Repository
 
                     poTerms.Add(poTerm);
                 }
+                dataReader1.Close();
                 conn.Close();
             }
             po.poTerms = poTerms;
@@ -250,7 +264,7 @@ namespace DAL.Repository
         {
             var po = new Po();           
 
-            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms]  FROM [dbo].[PoMaster] where Id = '{poId}' ");
+            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms],[DueDate]  FROM [dbo].[PoMaster] where Id = '{poId}' ");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn,transaction))
             {
@@ -274,6 +288,10 @@ namespace DAL.Repository
                     else
                         po.ClosingDate = null;
 
+                    if (dataReader["DueDate"] != DBNull.Value)
+                        po.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
+                    else
+                        po.DueDate = null;
 
                     po.IsAcknowledged = Convert.ToString(dataReader["IsAcknowledged"]);
 
@@ -377,7 +395,7 @@ namespace DAL.Repository
                 string sql = string.Empty;
                 try
                 {
-                    sql = string.Format($"INSERT INTO [dbo].[PoMaster]   ([CompanyId]   ,[SupplierId]   ,[PoNo]   ,[PoDate]   ,[EmailIds]   ,[Remarks]   ,[IsClosed]  ,[IsAcknowledged]   ,[PaymentTerms]   ,[DeliveryTerms]) VALUES   ('{po.CompanyId}'   ,'{po.SupplierId}'   ,'{po.PoNo}'   ,'{po.PoDate}'   ,'{po.EmailIds}'   ,'{po.Remarks}'   ,'{po.IsClosed}'   ,'{po.IsAcknowledged}'  ,'{po.PaymentTerms}'   ,'{po.DeliveryTerms}')");
+                    sql = string.Format($"INSERT INTO [dbo].[PoMaster]   ([CompanyId]   ,[SupplierId]   ,[PoNo]   ,[PoDate]   ,[EmailIds]   ,[Remarks]   ,[IsClosed]  ,[IsAcknowledged]   ,[PaymentTerms]   ,[DeliveryTerms],[DueDate]) VALUES   ('{po.CompanyId}'   ,'{po.SupplierId}'   ,'{po.PoNo}'   ,'{po.PoDate}'   ,'{po.EmailIds}'   ,'{po.Remarks}'   ,'{po.IsClosed}'   ,'{po.IsAcknowledged}'  ,'{po.PaymentTerms}'   ,'{po.DeliveryTerms}' ,'{po.DueDate}')");
 
                     sql = sql + " Select Scope_Identity()";
 
@@ -444,7 +462,7 @@ namespace DAL.Repository
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
-                    sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [CompanyId] = '{po.CompanyId}' ,[SupplierId] = '{po.SupplierId}' ,[PoNo] = '{po.PoNo}' ,[PoDate] = '{po.PoDate}' ,[EmailIds] = '{po.EmailIds}' ,[Remarks] = '{po.Remarks}' ,[IsClosed] = '{po.IsClosed}' ,[IsAcknowledged] = '{po.IsAcknowledged}' ,[PaymentTerms] = '{po.PaymentTerms}' ,[DeliveryTerms] = '{po.DeliveryTerms}' WHERE id = '{po.Id}' ");
+                    sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [CompanyId] = '{po.CompanyId}' ,[SupplierId] = '{po.SupplierId}' ,[PoNo] = '{po.PoNo}' ,[PoDate] = '{po.PoDate}' ,[EmailIds] = '{po.EmailIds}' ,[Remarks] = '{po.Remarks}' ,[IsClosed] = '{po.IsClosed}' ,[IsAcknowledged] = '{po.IsAcknowledged}' ,[PaymentTerms] = '{po.PaymentTerms}' ,[DeliveryTerms] = '{po.DeliveryTerms}',[DueDate] = '{po.DueDate}' WHERE id = '{po.Id}' ");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 

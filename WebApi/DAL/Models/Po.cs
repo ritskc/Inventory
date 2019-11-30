@@ -19,6 +19,7 @@ namespace DAL.Models
         public DateTime? ClosingDate { get; set; }
         public string IsAcknowledged { get; set; }
         public DateTime? AcknowledgementDate { get; set; }
+        public DateTime? DueDate { get; set; }
         public string PaymentTerms { get; set; }      
         public string DeliveryTerms { get; set; }
 

@@ -85,7 +85,14 @@ namespace WebApi.Controllers
                 var parts = await this._partService.GetAllPartsAsync(part.CompanyId);
                 if (parts.Where(x => x.Code == part.Code).Count() > 0)
                     return StatusCode(302);
-                    await this._partService.AddPartAsync(part);
+
+                if (part.partSupplierAssignments.Any(x=>x.MapCode == null || x.MapCode.Trim() == string.Empty))
+                    return StatusCode(500, "invalid Mapcode - mapcode can not be empty");
+
+                if (part.partCustomerAssignments.Any(x => x.MapCode == null || x.MapCode.Trim() == string.Empty))
+                    return StatusCode(500, "invalid Mapcode - mapcode can not be empty");
+
+                await this._partService.AddPartAsync(part);
                 return Ok();
             }
             catch (Exception ex)

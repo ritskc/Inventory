@@ -37,7 +37,7 @@ namespace DAL.Repository
                 SqlTransaction transaction;
 
                 // Start a local transaction.
-                transaction = connection.BeginTransaction("SampleTransaction");
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted, "SampleTransaction");
 
                 // Must assign both transaction object and connection
                 // to Command object for a pending local transaction
@@ -124,8 +124,8 @@ namespace DAL.Repository
                     string sql = "";
                     foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
                     {
-                        packingSlip.SubTotal = packingSlip.SubTotal + (packingSlipDetail.Price * packingSlipDetail.Qty);
-                        packingSlip.TotalSurcharge = packingSlip.TotalSurcharge + (packingSlipDetail.SurchargePerUnit * packingSlipDetail.Qty);
+                        packingSlip.SubTotal = packingSlip.SubTotal + (packingSlipDetail.UnitPrice * packingSlipDetail.Qty);
+                        //packingSlip.TotalSurcharge = packingSlip.TotalSurcharge + (packingSlipDetail.SurchargePerUnit * packingSlipDetail.Qty);
                         sql = string.Format($"UPDATE [dbo].[PackingSlipDetails]   SET [UnitPrice] = '{packingSlipDetail.UnitPrice}' ,[Price] = '{packingSlipDetail.Price}' ,[Surcharge] = '{packingSlipDetail.Surcharge}' ,[SurchargePerPound] = '{packingSlipDetail.SurchargePerPound}' ,[SurchargePerUnit] = '{packingSlipDetail.SurchargePerUnit}' ,[TotalSurcharge] = '{packingSlipDetail.TotalSurcharge}' WHERE Id = '{packingSlipDetail.Id}'");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();

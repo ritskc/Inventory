@@ -139,7 +139,11 @@ namespace WebApi.Controllers
         {
             try
             {
-                var result = await this.supplierInvoiceService.DeleteSupplierInvoiceAsync(id);
+                var result = await this.supplierInvoiceService.GetSupplierInvoiceAsync(id);
+                if (result.IsInvoiceReceived)
+                    return StatusCode(500, "Invoice already received");
+
+                await this.supplierInvoiceService.DeleteSupplierInvoiceAsync(id);
                 return Ok();
             }
             catch (Exception ex)
