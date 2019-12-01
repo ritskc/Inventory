@@ -74,7 +74,13 @@ export class PartDetailComponent implements OnInit {
   }
 
   addSupplierInfo() {
-    this.part.partSupplierAssignments.push(new PartSupplierAssignment());
+    if (!this.part.code || !this.part.description) {
+      alert('Part code and description are mandatory to proceed.');
+      return;
+    }
+    var partToAdd = new PartSupplierAssignment();
+    partToAdd.mapCode = this.part.code;
+    this.part.partSupplierAssignments.push(partToAdd);
   }
 
   removeSupplierAssignment(index) {
@@ -82,7 +88,13 @@ export class PartDetailComponent implements OnInit {
   }
 
   addCustomerInfo() {
-    this.part.partCustomerAssignments.push(new PartCustomerAssignment());
+    if (!this.part.code || !this.part.description) {
+      alert('Part code and description are mandatory to proceed.');
+      return;
+    }
+    var partToAdd = new PartCustomerAssignment();
+    partToAdd.mapCode = this.part.code;
+    this.part.partCustomerAssignments.push(partToAdd);
   }
 
   removeCustomerAssignment(index) {
@@ -94,13 +106,16 @@ export class PartDetailComponent implements OnInit {
   }
 
   save() {
+    if (!this.validatePart()) 
+      return;
+
     this.service.save(this.part)
         .subscribe((result) => {
           this.toastr.successToastr('Details saved successfully.');
+          this.router.navigateByUrl('/parts');
         },
         (error) => {
-          console.log(error);
-          this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
+          this.toastr.errorToastr(error.error);
         });
   }
 
@@ -110,5 +125,40 @@ export class PartDetailComponent implements OnInit {
           this.toastr.successToastr('Part deleted successfully.');
           this.router.navigateByUrl('/parts');
          }, (error) => { console.log(error) });
+  }
+
+  validatePart(): boolean {
+    if (this.part.partCustomerAssignments.some(c => !c.mapCode)) {
+      this.toastr.errorToastr('Not all parts added to customer have map codes. Please verify.');
+      return false;
+    }
+    if (this.part.partSupplierAssignments.some(s => !s.mapCode)) {
+      this.toastr.errorToastr('Not all parts added to supplier have map codes. Please verify.');
+      return false;
+    }
+
+    if (this.part.partCustomerAssignments.some(c => c.customerId < 1)) {
+      this.toastr.errorToastr('Some of the customer association are missing. Please verify.');
+      return false;
+    }
+    if (this.part.partSupplierAssignments.some(s => s.supplierID < 1)) {
+      this.toastr.errorToastr('Some of the customer association are missing. Please verify.');
+      return false;
+    }
+
+    if (this.part.partCustomerAssignments.some(c => c.rate < 0)) {
+      this.toastr.errorToastr('Some of the rates in customer association are invalid. Please verify.');
+      return false;
+    }
+    if (this.part.partCustomerAssignments.some(c => c.surchargePerPound < 0)) {
+      this.toastr.errorToastr('Some of the surcharge in customer association are invalid. Please verify.');
+      return false;
+    }
+    if (this.part.partSupplierAssignments.some(s => s.unitPrice < 0)) {
+      this.toastr.errorToastr('Some of the unit prices in supplier association are invalid. Please verify.');
+      return false;
+    }
+
+    return true;
   }
 }
