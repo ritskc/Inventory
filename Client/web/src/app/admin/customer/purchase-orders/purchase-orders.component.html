@@ -5,8 +5,6 @@
   </select>
 </div>
 
-<div class="row">
-  <simple-grid [data]="purchaseOrders" [columns]="gridColumns" (selectedRow)="rowSelected($event)"
-    (addClickedEventEmitter)="addCustomerOrder()"
-  ></simple-grid>
-</div>
+<simple-grid [data]="purchaseOrders" [columns]="gridColumns" (selectedRow)="rowSelected($event)"
+  (addClickedEventEmitter)="addCustomerOrder()">
+</simple-grid>

@@ -20,6 +20,8 @@ export class PurchaseOrder {
     poDetails: PurchaseOrderDetail[];
     orderDetails: PurchaseOrderDetail[];
     poTerms: PurchaseOrderTerm[];
+    supplierName: string;
+    customerName: string;
 
     constructor() {
         this.poDetails = [];

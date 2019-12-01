@@ -9,6 +9,7 @@ import { UserAction } from '../../../models/enum/userAction';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { PurchaseOrder } from '../../../models/purchase-order';
 import { ClassConstants } from '../../../common/constants';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-purchase-order-list',
@@ -25,7 +26,7 @@ export class PurchaseOrderListComponent implements OnInit {
   private supplierForm: FormGroup;
 
   constructor(private service: SupplierService, private companyService: CompanyService, private formBuilder: FormBuilder,
-              private loaderService: httpLoaderService, private router: Router, private activatedRoute: ActivatedRoute) { }
+              private loaderService: httpLoaderService, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrManager) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompanyid = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -42,6 +43,7 @@ export class PurchaseOrderListComponent implements OnInit {
 
   initializeGridColumns() {
     this.gridColumns = [];
+    this.gridColumns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Email", value: "emailIds", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
@@ -81,6 +83,9 @@ export class PurchaseOrderListComponent implements OnInit {
     this.service.getPurchaseOrders(this.currentlyLoggedInCompanyid)
         .subscribe((purchaseOrders) => {
           this.purchaseOrders = this.supplierId > 0? purchaseOrders.filter(p => p.supplierId == this.supplierId): purchaseOrders;
+          this.purchaseOrders.forEach(order => {
+            order.supplierName = this.suppliers.find(s => s.id === order.supplierId).name;
+          })
           this.loaderService.hide();
         }, (error) => {
           this.loaderService.hide();
@@ -116,13 +121,17 @@ export class PurchaseOrderListComponent implements OnInit {
         if (response) {
           this.service.deletePurchaseOrder(data.id)
           .subscribe(
-            () => alert('Purchase order removed successfully!'),
-            (error) => alert(error),
+            () => this.toastr.successToastr('Purchase order removed successfully!'),
+            (error) => this.toastr.errorToastr(error.error),
             () => this.ngOnInit()
           );
         }
         break;
       case 'editPurchaseOrder':
+        if (data.isClosed) {
+          this.toastr.errorToastr('This PO cannot be edited since this is already closed!!');
+          return;
+        }
         this.router.navigateByUrl(`orders/detail/supplier/${data.supplierId}/edit/${data.id}`);
         break;
     }

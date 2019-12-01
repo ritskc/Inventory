@@ -44,6 +44,7 @@ export class PurchaseOrdersComponent implements OnInit {
   }
 
   initializeGridColumns() {
+    this.gridColumns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Number", value: "poNo", isLink: true, sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
@@ -67,6 +68,7 @@ export class PurchaseOrdersComponent implements OnInit {
     this.purchaseOrders = [];
     var customerOrders = this.customerId > 0? purchaseOrders.filter(p => p.customerId == this.customerId): purchaseOrders;
     customerOrders.forEach((order) => {
+      order.customerName = this.customers.find(c => c.id == order.customerId).name;
       order.orderDetails.forEach((detail) => {
         var customerPurchaseOrderViewModel = new CustomerPurchaseOrderViewModel();
         customerPurchaseOrderViewModel.customerId = order.customerId;
@@ -77,6 +79,7 @@ export class PurchaseOrdersComponent implements OnInit {
         customerPurchaseOrderViewModel.partCode = detail.part.code;
         customerPurchaseOrderViewModel.partDescription = detail.part.description;
         customerPurchaseOrderViewModel.openQuantity = detail.part.openingQty;
+        customerPurchaseOrderViewModel.customerName = order.customerName;
         this.purchaseOrders.push(customerPurchaseOrderViewModel);
       });
     });
@@ -104,4 +107,5 @@ class CustomerPurchaseOrderViewModel {
   openQuantity: number = 0;
   customerId: number = 0;
   id: number = 0
+  customerName: string = '';
 }
