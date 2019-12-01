@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClassConstants } from '../../../common/constants';
 import { AppConfigurations } from '../../../config/app.config';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-invoice-list',
@@ -27,7 +28,7 @@ export class InvoiceListComponent implements OnInit {
   columns: DataColumn[] = [];
 
   constructor(private companyService: CompanyService, private invoiceService: InvoiceService, private supplierService: SupplierService,
-              private formBuilder: FormBuilder, private router: Router
+              private formBuilder: FormBuilder, private router: Router, private toastr: ToastrManager
     ) { }
 
   ngOnInit() {
@@ -130,6 +131,10 @@ export class InvoiceListComponent implements OnInit {
         window.open(`${this.configuration.fileApiUri}/TC/${data.id}`);
         break;
       case 'receiveInvoice':
+        if (data.isInvoiceReceived) {
+          this.toastr.errorToastr('This invoice has been received already');
+          return;
+        }
         this.invoiceService.receivedInvoice(data.supplierId, data.id)
             .subscribe(() => alert('Invoice received successfully!!'));
         break;
@@ -140,11 +145,15 @@ export class InvoiceListComponent implements OnInit {
   }
 
   deleteInvoice(data) {
+    if (data.isInvoiceReceived) {
+      this.toastr.errorToastr('Received invoices cannot be removed.');
+      return;
+    }
     var response = confirm('Are you sure you want to remove this invoice?');
     if (response) {
       this.invoiceService.deleteInvoice(data.id)
-      .subscribe(() => alert('Invoice deleted successfully'),
-                 (error) => alert(error));
+      .subscribe(() => this.toastr.successToastr('Invoice deleted successfully'),
+                 (error) => this.toastr.errorToastr(error.error));
     }
   }
 

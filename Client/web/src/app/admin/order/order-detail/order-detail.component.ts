@@ -214,7 +214,9 @@ export class OrderDetailComponent implements OnInit {
       if (supplier) {
         this.companyService.getCompany(this.currentlyLoaddedInCompanyId).subscribe(company => {
           this.currentlyLoggedInCompany = company
-          this.purchaseOrder.emailIds = `${ supplier.emailID }, ${ this.currentlyLoggedInCompany.eMail }`;
+          setTimeout(() => {
+            this.purchaseOrder.emailIds = `${ supplier.emailID }, ${ this.currentlyLoggedInCompany.eMail }`;
+          }, 100);
         });
         supplier.terms.forEach((term) => {
           var poTerm = new PurchaseOrderTerm();
