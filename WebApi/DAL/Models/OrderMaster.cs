@@ -15,6 +15,8 @@ namespace DAL.Models
         public string PONo { get; set; }
         public DateTime PoDate { get; set; }        
         public DateTime DueDate { get; set; }
+        public bool IsClosed { get; set; }
+        public DateTime? ClosingDate { get; set; }
         public string Remarks { get; set; }        
 
         public List<OrderDetail> OrderDetails { get; set; }

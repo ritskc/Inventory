@@ -18,6 +18,8 @@ namespace DAL.Models
         public int ShippedQty { get; set; }
         public decimal UnitPrice { get; set; }
         public DateTime DueDate { get; set; }
+        public bool IsClosed { get; set; }
+        public DateTime? ClosingDate { get; set; }
         public string Note { get; set; }
 
         public Part part { get; set; }

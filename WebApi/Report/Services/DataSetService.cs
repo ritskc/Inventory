@@ -26,7 +26,8 @@ namespace Report.Services
             ISqlHelper sqlHelper = new SqlHelper();
             IOrderRepository oRepository = new OrderRepository(sqlHelper);
             IPartRepository partRepository = new PartRepository(sqlHelper);
-            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository);
+            IEntityTrackerRepository entityTrackerRepository = new EntityTrackerRepository(sqlHelper);
+            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository);
 
             return await pRepository.GetPackingSlipAsync(id);
         }
@@ -36,7 +37,8 @@ namespace Report.Services
             ISqlHelper sqlHelper = new SqlHelper();
             IOrderRepository oRepository = new OrderRepository(sqlHelper);
             IPartRepository partRepository = new PartRepository(sqlHelper);
-            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository);
+            IEntityTrackerRepository entityTrackerRepository = new EntityTrackerRepository(sqlHelper);
+            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository);
 
             var result = pRepository.GetPackingSlip(id);
 
@@ -51,7 +53,8 @@ namespace Report.Services
             ISqlHelper sqlHelper = new SqlHelper();
             IOrderRepository oRepository = new OrderRepository(sqlHelper);
             IPartRepository partRepository = new PartRepository(sqlHelper);
-            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository);
+            IEntityTrackerRepository entityTrackerRepository = new EntityTrackerRepository(sqlHelper);
+            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository);
 
             var result = pRepository.GetPackingSlip(id);
 

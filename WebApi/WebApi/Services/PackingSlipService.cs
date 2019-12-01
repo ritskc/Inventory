@@ -26,22 +26,7 @@ namespace WebApi.Services
             var entity = await this.entityTrackerRepository.GetEntityAsync(packingSlip.CompanyId, packingSlip.ShippingDate, BusinessConstants.ENTITY_TRACKER_PACKING_SLIP);
             packingSlip.PackingSlipNo = entity.EntityNo;
 
-            var result = await this.packingSlipRepository.AddPackingSlipAsync(packingSlip);
-
-            await this.entityTrackerRepository.AddEntityAsync(packingSlip.CompanyId, packingSlip.ShippingDate, BusinessConstants.ENTITY_TRACKER_PACKING_SLIP);
-
-            foreach(PackingSlipDetails packingSlipDetails in packingSlip.PackingSlipDetails)
-            {
-                var transactionDetail = new TransactionDetail();
-                transactionDetail.PartId = packingSlipDetails.PartId;
-                transactionDetail.Qty = packingSlipDetails.Qty;
-                transactionDetail.TransactionTypeId = BusinessConstants.TRANSACTION_TYPE.CUSTOMER_PACKINGSLIP;
-                transactionDetail.TransactionDate = DateTime.Now;
-                transactionDetail.DirectionId = BusinessConstants.DIRECTION.OUT;
-                transactionDetail.InventoryType = BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND;
-                transactionDetail.ReferenceNo = packingSlip.PackingSlipNo;
-                await this.transactionRepository.AddTransactionAsync(transactionDetail);
-            }
+            var result = await this.packingSlipRepository.AddPackingSlipAsync(packingSlip);           
             return result;
         }
 

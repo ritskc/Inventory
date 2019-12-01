@@ -58,7 +58,8 @@ namespace DAL.Repository
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
                     part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);
-                    part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]);
+                    part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]) + Convert.ToInt32(dataReader["OpeningQty"]);
+                    part.OpeningQty = Convert.ToInt32(dataReader["OpeningQty"]);
 
                     parts.Add(part);
                 }
@@ -163,9 +164,9 @@ namespace DAL.Repository
                     part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
-                    part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);
-                    part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]);
-
+                    part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);                    
+                    part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]) + Convert.ToInt32(dataReader["OpeningQty"]);
+                    part.OpeningQty = Convert.ToInt32(dataReader["OpeningQty"]);
                 }
                 conn.Close();
             }
@@ -266,7 +267,8 @@ namespace DAL.Repository
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
                     part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);
-                    part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]);
+                    part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]) + Convert.ToInt32(dataReader["OpeningQty"]);
+                    part.OpeningQty = Convert.ToInt32(dataReader["OpeningQty"]);
                 }
                 conn.Close();
             }
@@ -339,7 +341,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location] FROM [part] where companyId = '{0}'  and Code = '{1}'", companyId,name);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand] FROM [part] where companyId = '{0}'  and Code = '{1}'", companyId,name);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -366,6 +368,8 @@ namespace DAL.Repository
                     part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
+                    part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]) + Convert.ToInt32(dataReader["OpeningQty"]);
+                    part.OpeningQty = Convert.ToInt32(dataReader["OpeningQty"]);
 
                 }
                 conn.Close();
@@ -432,16 +436,14 @@ namespace DAL.Repository
 
             return part;
         }
-
-
-
+               
         public async Task<Part> GetPartByMapCodeAsync(int? supplierId, string mapCode)
         {
             var part = new Part();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
             
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location] FROM [part]   where id in (SELECT[PartID] FROM[partsupplierassignment]  where[SupplierID] = '{0}' and REPLACE(Mapcode,' ','') = '{1}')", supplierId, mapCode.Replace(" ",""));
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand] FROM [part]   where id in (SELECT[PartID] FROM[partsupplierassignment]  where[SupplierID] = '{0}' and REPLACE(Mapcode,' ','') = '{1}')", supplierId, mapCode.Replace(" ",""));
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -468,7 +470,8 @@ namespace DAL.Repository
                     part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
-
+                    part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]) + Convert.ToInt32(dataReader["OpeningQty"]);
+                    part.OpeningQty = Convert.ToInt32(dataReader["OpeningQty"]);
                 }
                 conn.Close();
             }
@@ -534,8 +537,6 @@ namespace DAL.Repository
 
             return part;
         }
-
-
 
         public async Task AddPartAsync(Part part)
         {
@@ -646,7 +647,6 @@ namespace DAL.Repository
                 }
             }
         }
-
 
         public async Task UpdatePartCustomerPriceAsync(string customer, string partcode, decimal price)
         {

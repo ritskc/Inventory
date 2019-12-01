@@ -124,11 +124,11 @@ namespace DAL.Repository
                     entityTracker.FinYear = Convert.ToString(dataReader["FinYear"]);
                     entityTracker.Entity = entity;
                     string entityNumber;
-                    if(Convert.ToInt32(dataReader["AvailableNo"]) < 10)
+                    if (Convert.ToInt32(dataReader["AvailableNo"]) < 10)
                     {
                         entityNumber = "00" + Convert.ToInt32(dataReader["AvailableNo"]);
                     }
-                    else if(Convert.ToInt32(dataReader["AvailableNo"]) > 9 && Convert.ToInt32(dataReader["AvailableNo"]) < 100)
+                    else if (Convert.ToInt32(dataReader["AvailableNo"]) > 9 && Convert.ToInt32(dataReader["AvailableNo"]) < 100)
                     {
                         entityNumber = "0" + Convert.ToInt32(dataReader["AvailableNo"]);
                     }
@@ -186,11 +186,11 @@ namespace DAL.Repository
                     entityTracker.FinYear = Convert.ToString(dataReader["FinYear"]);
                     if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_PO.ToLower())
                     {
-                        entity = BusinessConstants.ENTITY_TRACKER_PO;                        
+                        entity = BusinessConstants.ENTITY_TRACKER_PO;
                     }
                     else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_PACKING_SLIP.ToLower())
                     {
-                        entity = BusinessConstants.ENTITY_TRACKER_PACKING_SLIP;                        
+                        entity = BusinessConstants.ENTITY_TRACKER_PACKING_SLIP;
                     }
                     entityTracker.Entity = entity;
                     entityTracker.EntityNo = entityTracker.FinYear + "-" + Convert.ToInt32(dataReader["AvailableNo"]);
@@ -255,6 +255,39 @@ namespace DAL.Repository
                     throw ex;
                 }
 
+            }
+        }
+
+        public async Task AddEntityAsync(int companyId, DateTime dateTime, string entity, SqlConnection connection, SqlTransaction transaction, SqlCommand command)
+        {
+            var entityTracker = GetEntity(companyId, dateTime, entity);
+
+            var finYear = string.Empty;
+            if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_PO.ToLower())
+            {
+                entity = BusinessConstants.ENTITY_TRACKER_PO;
+                finYear = DateTimeUtil.GetIndianFinancialYear(dateTime);
+            }
+            else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_PACKING_SLIP.ToLower())
+            {
+                entity = BusinessConstants.ENTITY_TRACKER_PACKING_SLIP;
+                finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
+            }
+            command.Connection = connection;
+            command.Transaction = transaction;
+
+            if (entityTracker == null)
+            {
+                var sql = string.Format($"INSERT INTO [dbo].[EntityTracker]   ([CompanyId]   ,[FinYear]   ,[Entity]   ,[AvailableNo]) VALUES   ('{companyId}'   ,'{finYear}'   ,'{entity}'   ,'{2}')");
+
+                command.CommandText = sql;
+                await command.ExecuteNonQueryAsync();
+            }
+            else
+            {
+                var sql = string.Format($"UPDATE [dbo].[EntityTracker]   SET  [AvailableNo] = '{Convert.ToInt32(entityTracker.EntityNo.Replace(entityTracker.FinYear, "").Replace("-", "")) + 1}' where CompanyId = '{companyId}'  and FinYear = '{finYear}' and Entity = '{entity}'");
+                command.CommandText = sql;
+                await command.ExecuteNonQueryAsync();
             }
         }
     }

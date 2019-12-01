@@ -65,12 +65,12 @@ namespace WebApi.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] OrderMaster po)
+        public async Task<ActionResult<long>> Post([FromBody] OrderMaster po)
         {
             try
             {
-                await this._orderService.AddOrderMasterAsync(po);
-                return Ok();
+                var result= await this._orderService.AddOrderMasterAsync(po);
+                return result;
             }
             catch (Exception ex)
             {

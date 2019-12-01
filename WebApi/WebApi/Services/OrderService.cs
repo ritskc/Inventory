@@ -18,9 +18,9 @@ namespace WebApi.Services
             _orderRepository = orderRepository;
             _partRepository = partRepository;
         }
-        public async Task AddOrderMasterAsync(OrderMaster order)
+        public async Task<long> AddOrderMasterAsync(OrderMaster order)
         {
-            await this._orderRepository.AddOrderMasterAsync(order);
+            return await this._orderRepository.AddOrderMasterAsync(order);
         }
 
         public async Task DeleteOrderMasterAsync(long orderId)

@@ -27,7 +27,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
 
-            var commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks]  FROM [dbo].[OrderMaster] where CompanyId = '{0}' ", companyId);
+            var commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks],[IsClosed] ,[ClosingDate]  FROM [dbo].[OrderMaster] where CompanyId = '{0}' ", companyId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -48,7 +48,14 @@ namespace DAL.Repository
                     order.PoDate = Convert.ToDateTime(dataReader["PoDate"]);
                     order.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
                     order.Remarks = Convert.ToString(dataReader["Remarks"]);
-                    
+                    if (dataReader["IsClosed"] != DBNull.Value)
+                        order.IsClosed = Convert.ToBoolean(dataReader["IsClosed"]);
+                    else
+                        order.IsClosed = false;
+                    if (dataReader["ClosingDate"] != DBNull.Value)
+                        order.ClosingDate = Convert.ToDateTime(dataReader["ClosingDate"]);
+                    else
+                        order.ClosingDate = null;
                     orders.Add(order);
                 }
                 dataReader.Close();
@@ -59,7 +66,7 @@ namespace DAL.Repository
             {
                 List<OrderDetail> orderDetails = new List<OrderDetail>();
                 commandText = string.Format("SELECT [Id] ,[OrderId] ,[PartId] ,[BlanketPOId] ,[BlanketPOAdjQty] ,[LineNumber] ,[Qty] ,[UnitPrice] " +
-                    ",[DueDate] ,[Note],[ShippedQty]  FROM [dbo].[OrderDetail]  where orderid = '{0}'", order.Id);
+                    ",[DueDate] ,[Note],[ShippedQty],[IsClosed] ,[ClosingDate]  FROM [dbo].[OrderDetail]  where orderid = '{0}'", order.Id);
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                 {
@@ -80,6 +87,14 @@ namespace DAL.Repository
                         orderDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
                         orderDetail.DueDate = Convert.ToDateTime(dataReader1["DueDate"]);
                         orderDetail.Note = Convert.ToString(dataReader1["Note"]);
+                        if (dataReader1["IsClosed"] != DBNull.Value)
+                            orderDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);
+                        else
+                            orderDetail.IsClosed = false;
+                        if (dataReader1["ClosingDate"] != DBNull.Value)
+                            order.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
+                        else
+                            order.ClosingDate = null;
                         orderDetails.Add(orderDetail);
                     }
                     dataReader1.Close();
@@ -95,7 +110,7 @@ namespace DAL.Repository
         {
             OrderMaster order = new OrderMaster();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
-            var commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks]  FROM [dbo].[OrderMaster] where Id = '{0}' ", orderId);
+            var commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks],[IsClosed] ,[ClosingDate]  FROM [dbo].[OrderMaster] where Id = '{0}' ", orderId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -115,6 +130,14 @@ namespace DAL.Repository
                     order.PoDate = Convert.ToDateTime(dataReader["PoDate"]);
                     order.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
                     order.Remarks = Convert.ToString(dataReader["Remarks"]);
+                    if (dataReader["IsClosed"] != DBNull.Value)
+                        order.IsClosed = Convert.ToBoolean(dataReader["IsClosed"]);
+                    else
+                        order.IsClosed = false;
+                    if (dataReader["ClosingDate"] != DBNull.Value)
+                        order.ClosingDate = Convert.ToDateTime(dataReader["ClosingDate"]);
+                    else
+                        order.ClosingDate = null;
                 }
                 dataReader.Close();
                 conn.Close();
@@ -123,7 +146,7 @@ namespace DAL.Repository
 
             List<OrderDetail> orderDetails = new List<OrderDetail>();
             commandText = string.Format("SELECT [Id] ,[OrderId] ,[PartId] ,[BlanketPOId] ,[BlanketPOAdjQty] ,[LineNumber] ,[Qty] ,[UnitPrice] " +
-                ",[DueDate] ,[Note],[ShippedQty]  FROM [dbo].[OrderDetail]  where orderid = '{0}'", order.Id);
+                ",[DueDate] ,[Note],[ShippedQty],[IsClosed] ,[ClosingDate]  FROM [dbo].[OrderDetail]  where orderid = '{0}'", order.Id);
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
             {
@@ -144,6 +167,14 @@ namespace DAL.Repository
                     orderDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
                     orderDetail.DueDate = Convert.ToDateTime(dataReader1["DueDate"]);
                     orderDetail.Note = Convert.ToString(dataReader1["Note"]);
+                    if (dataReader1["IsClosed"] != DBNull.Value)
+                        orderDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);
+                    else
+                        orderDetail.IsClosed = false;
+                    if (dataReader1["ClosingDate"] != DBNull.Value)
+                        order.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
+                    else
+                        order.ClosingDate = null;
                     orderDetails.Add(orderDetail);
                 }
                 dataReader1.Close();
@@ -156,7 +187,7 @@ namespace DAL.Repository
         public async Task<OrderMaster> GetOrderMasterAsync(long orderId, SqlConnection conn, SqlTransaction transaction)
         {
             OrderMaster order = new OrderMaster();
-            var commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks]  FROM [dbo].[OrderMaster] where Id = '{0}' ", orderId);
+            var commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks],[IsClosed] ,[ClosingDate]  FROM [dbo].[OrderMaster] where Id = '{0}' ", orderId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn,transaction))
             {
@@ -174,6 +205,14 @@ namespace DAL.Repository
                     order.PoDate = Convert.ToDateTime(dataReader["PoDate"]);
                     order.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
                     order.Remarks = Convert.ToString(dataReader["Remarks"]);
+                    if (dataReader["IsClosed"] != DBNull.Value)
+                        order.IsClosed = Convert.ToBoolean(dataReader["IsClosed"]);
+                    else
+                        order.IsClosed =false;
+                    if (dataReader["ClosingDate"] != DBNull.Value)
+                        order.ClosingDate = Convert.ToDateTime(dataReader["ClosingDate"]);
+                    else
+                        order.ClosingDate = null;
 
                 }
                 dataReader.Close();
@@ -182,12 +221,12 @@ namespace DAL.Repository
 
             List<OrderDetail> orderDetails = new List<OrderDetail>();
             commandText = string.Format("SELECT [Id] ,[OrderId] ,[PartId] ,[BlanketPOId] ,[BlanketPOAdjQty] ,[LineNumber] ,[Qty] ,[UnitPrice] " +
-                ",[DueDate] ,[Note],[ShippedQty]  FROM [dbo].[OrderDetail]  where orderid = '{0}'", order.Id);
+                ",[DueDate] ,[Note],[ShippedQty],[IsClosed] ,[ClosingDate]  FROM [dbo].[OrderDetail]  where orderid = '{0}'", order.Id);
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn,transaction))
             {
                 cmd1.CommandType = CommandType.Text;               
-                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.Default);
 
                 while (dataReader1.Read())
                 {
@@ -202,6 +241,14 @@ namespace DAL.Repository
                     orderDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
                     orderDetail.DueDate = Convert.ToDateTime(dataReader1["DueDate"]);
                     orderDetail.Note = Convert.ToString(dataReader1["Note"]);
+                    if (dataReader1["IsClosed"] != DBNull.Value)
+                        orderDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);
+                    else
+                        orderDetail.IsClosed = false;
+                    if (dataReader1["ClosingDate"] != DBNull.Value)
+                        orderDetail.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
+                    else
+                        orderDetail.ClosingDate = null;
                     orderDetails.Add(orderDetail);
                 }
                 dataReader1.Close();
@@ -211,8 +258,9 @@ namespace DAL.Repository
             return order;
         }
 
-        public async Task AddOrderMasterAsync(OrderMaster order)
+        public async Task<long> AddOrderMasterAsync(OrderMaster order)
         {
+            long orderId = 0;
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
                 connection.Open();
@@ -234,7 +282,9 @@ namespace DAL.Repository
 
                     sql = sql + " Select Scope_Identity()";
                     command.CommandText = sql;
+
                     var id = command.ExecuteScalar();
+                    orderId = Convert.ToInt64(id.ToString());
 
                     foreach (OrderDetail orderDetail in order.OrderDetails)
                     {
@@ -252,6 +302,7 @@ namespace DAL.Repository
                     transaction.Rollback();
                     throw ex;
                 }
+                return orderId;
             }
         }        
 
