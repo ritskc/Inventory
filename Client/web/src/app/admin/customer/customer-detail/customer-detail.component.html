@@ -97,7 +97,13 @@
           </div>
           <div class="form-group standard-top-margin">
             <label>Invoice Type</label>
-            <input type="text" formControlName="invoicingtypeid" class="form-control" [(ngModel)]="customer.invoicingtypeid" [ngClass]="{ 'is-invalid': submitted && f.invoicingtypeid.errors }"/>
+            <select class="form-control" formControlName="invoicingtypeid" [(ngModel)]="customer.invoicingtypeid">
+              <option value="-1">Please select invoice type</option>
+              <option value="1">Regular</option>
+              <option value="2">Quarterly</option>
+              <option value="3">Monthly</option>
+            </select>
+            <!-- <input type="text" formControlName="invoicingtypeid" class="form-control" [(ngModel)]="customer.invoicingtypeid" [ngClass]="{ 'is-invalid': submitted && f.invoicingtypeid.errors }"/> -->
             <div *ngIf="submitted && f.invoicingtypeid.errors" class="invalid-feedback">
               <div *ngIf="f.invoicingtypeid.errors.required">Invoice Type is required</div>
             </div>

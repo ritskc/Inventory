@@ -7,6 +7,8 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { Term } from '../../../models/terms.model';
 import * as _ from 'lodash';
 import { UserAction } from '../../../models/enum/userAction';
+import { CompanyService } from '../../../company/company.service';
+import { httpLoaderService } from '../../../common/services/httpLoader.service';
 
 @Component({
   selector: 'app-customer-detail',
@@ -21,10 +23,12 @@ export class CustomerDetailComponent implements OnInit {
   atleastOneShippingAddressPresent: boolean = true;
 
   constructor(private customerBuilder: FormBuilder, private activatedRoute: ActivatedRoute, private service: CustomerService,
-              private toastr: ToastrManager, private router: Router) { }
+              private toastr: ToastrManager, private router: Router, private companyService: CompanyService, private loader: httpLoaderService) { }
 
   ngOnInit() {
     this.customer = new Customer();
+    this.fillDefaultValues();
+
     if (this.activatedRoute.snapshot.params.action == UserAction.Edit)
       this.getCustomer();
 
@@ -61,16 +65,23 @@ export class CustomerDetailComponent implements OnInit {
 
   save() {
     this.submitted = true;
-    //if (this.customerForm.invalid || !this.verifyIfAValidTermAndConditionExist()) return;
+    this.customer.companyId = this.companyService.getCurrentlyLoggedInCompanyId();
 
-    this.service.saveCustomer(this.customer)
-      .subscribe((response) => { 
-        this.toastr.successToastr('Details saved successfully.');
-      },
-      (error) => { 
-        this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
-      }
-    );
+    if (this.validateForMandatoryFields()) {
+      this.loader.show();
+      this.service.saveCustomer(this.customer)
+        .subscribe((response) => { 
+          this.toastr.successToastr('Details saved successfully.');
+          setTimeout(() => {
+            this.router.navigateByUrl('customers');
+          }, 1000);
+        },
+        (error) => { 
+          this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
+        }, 
+        () => this.loader.hide()
+      );
+    }
   }
 
   delete() {
@@ -89,6 +100,18 @@ export class CustomerDetailComponent implements OnInit {
 
   clearAllValidations() {
     this.submitted = false;
+  }
+
+  private fillDefaultValues() {
+    this.customer.invoicingtypeid = -1;
+  }
+
+  private validateForMandatoryFields(): boolean {
+    if (this.customer.invoicingtypeid < 0) {
+      alert('Please select the invoice type');
+      return false;
+    }
+    return true;
   }
 
   private verifyIfAValidTermAndConditionExist(): boolean {

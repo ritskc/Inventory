@@ -17,6 +17,7 @@ import { httpLoaderService } from '../../../common/services/httpLoader.service';
 import * as DateHelper from '../../../common/helpers/dateHelper';
 import { Company } from '../../../models/company.model';
 import { UserAction } from '../../../models/enum/userAction';
+import { FileUploadService } from '../../../common/services/file-upload.service';
 
 @Component({
   selector: "app-order-detail",
@@ -46,11 +47,13 @@ export class OrderDetailComponent implements OnInit {
   private isBlanketPO: boolean = false;
   private idFromUrl: number = 0;
   private formMode: UserAction = UserAction.Add;
+  private orderFormMode: OrderFormMode;
+  private documents = [];
 
   constructor(
     private partsService: PartsService, private supplierService: SupplierService, private companyService: CompanyService, private customerService: CustomerService,
     private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private toastr: ToastrManager,
-    private loaderService: httpLoaderService, private router: Router
+    private loaderService: httpLoaderService, private router: Router, private fileService: FileUploadService
   ) {}
 
   ngOnInit() {
@@ -99,19 +102,21 @@ export class OrderDetailComponent implements OnInit {
         this.setFormForAllSelection();
         break;
       case "customer":
+        this.orderFormMode = OrderFormMode.Customer;
         this.loadCustomersList();
         this.setFormForCustomerSelection();
         this.setFormForCustomerOrderEdit();
         break;
       case "supplier":
+        this.orderFormMode = OrderFormMode.Supplier;
         this.orderForm.get('poNo').disable();
         this.loadSuppliersList();
         this.setFormForSupplierSelection();
         this.setFormForSupplierOrderEdit();
-        this.orderForm.get("partCode").setValue(-1);
-        this.orderForm.get("partDescription").setValue(-1);
         break;
     }
+    this.orderForm.get("partCode").setValue(-1);
+    this.orderForm.get("partDescription").setValue(-1);
     this.loadDefaultValues();
   }
 
@@ -267,9 +272,10 @@ export class OrderDetailComponent implements OnInit {
     this.synchronizeParts(selectedItem);
     var unitPrice: number = 0;
 
+    var partSelected = this.orderForm.get("partDescription").value;
+
     if(this.SelectedSupplier > -1) {
       var selectedSupplier = this.orderForm.get("suppliersList").value;
-      var partSelected = this.orderForm.get("partDescription").value;
       unitPrice = this.parts.find(p => p.id == partSelected).partSupplierAssignments.find(s => s.supplierID == selectedSupplier).unitPrice;
     }
 
@@ -381,7 +387,10 @@ export class OrderDetailComponent implements OnInit {
 
   removePart(data) {
     var index = this.purchaseOrder.poDetails.indexOf(data);
-    this.purchaseOrder.poDetails.splice(index, 1);
+    if (this.orderFormMode === OrderFormMode.Supplier)
+      this.purchaseOrder.poDetails.splice(index, 1);
+    else if (this.orderFormMode === OrderFormMode.Customer)
+      this.purchaseOrder.orderDetails.splice(index, 1);
   }
 
   removeTermAndCondition(index) {
@@ -411,14 +420,19 @@ export class OrderDetailComponent implements OnInit {
   save() {
     var observableResult: any;
     if (this.SelectedCustomer > -1) {
-      observableResult = this.customerService.savePurchaseOrder(this.purchaseOrder);
+      if (this.validateOrder()) {
+        observableResult = this.customerService.savePurchaseOrder(this.purchaseOrder);
+      }
     } else {
-      if (this.validateSupplierOrder()) {
+      if (this.validateOrder()) {
         observableResult = this.supplierService.savePurchaseOrder(this.purchaseOrder);
       }
     }
     observableResult.subscribe((result) => {
       this.toastr.successToastr('Details saved successfully.');
+      if (this.orderFormMode === OrderFormMode.Customer) {
+        this.uploadDocuments(result);
+      }
     }, (error) => {
       this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
       console.log(error);
@@ -432,12 +446,32 @@ export class OrderDetailComponent implements OnInit {
     });
   }
 
-  validateSupplierOrder(): boolean {
+  validateOrder(): boolean {
     if (new Date(this.purchaseOrder.dueDate) <= new Date(this.purchaseOrder.poDate)) {
       alert('Due date cannot be less than purchase order date');
       return false;
     }
+    if (!this.purchaseOrder.poNo) {
+      alert('PO number is mandatory');
+      return false;
+    }
+    if (!this.purchaseOrder.dueDate || !this.purchaseOrder.poDate) {
+      alert('PO date & Due date are mandatory');
+      return false;
+    }
     return true;
+  }
+
+  uploadDocuments(orderNumber: string) {
+    this.documents.forEach((item) => {
+      this.fileService.uploadFile(item, orderNumber);
+      this.toastr.successToastr('File(s) uploaded successfully!!');
+    });
+  }
+
+  addAttachment(files: FileList, folderName: string) {
+    this.documents.push({'type': folderName, 'file': files[0]});
+    return;
   }
 
   dueDateChanged(event) {
@@ -454,6 +488,7 @@ export class OrderDetailComponent implements OnInit {
       case "customer":
           this.purchaseOrder.poDate = DateHelper.getToday();
           this.purchaseOrder.dueDate = DateHelper.getTomorrow();
+          this.dueDate = DateHelper.getTomorrow();
         break;
       case "supplier":
           this.purchaseOrder.poDate = DateHelper.getToday();
@@ -466,4 +501,9 @@ export class OrderDetailComponent implements OnInit {
         break;
     }
   }
+}
+
+enum OrderFormMode {
+  Customer = 1,
+  Supplier
 }

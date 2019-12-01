@@ -7,6 +7,7 @@ import { Supplier } from '../../../models/supplier.model';
 import { Term } from '../../../models/terms.model';
 import { UserAction } from '../../../models/enum/userAction';
 import * as _ from 'lodash';
+import { CompanyService } from '../../../company/company.service';
 
 @Component({
   selector: 'app-supplier-detail',
@@ -21,7 +22,7 @@ export class SupplierDetailComponent implements OnInit {
   atleastOneTermPresent: boolean = true;
 
   constructor(private supplierBuilder: FormBuilder, private activeRoute: ActivatedRoute, private supplierService: SupplierService,
-              private toastr: ToastrManager, private router: Router) { 
+              private toastr: ToastrManager, private router: Router, private companyService: CompanyService) { 
     this.supplier = new Supplier();
     this.supplier.terms = [];
 
@@ -72,6 +73,8 @@ export class SupplierDetailComponent implements OnInit {
   
   save() {
     this.submitted = true;
+    this.supplier.companyId = this.companyService.getCurrentlyLoggedInCompanyId();
+    
     if (this.supplierForm.invalid || !this.verifyIfAValidTermAndConditionExist()) return;
 
     this.supplierService.saveSupplier(this.supplier)
