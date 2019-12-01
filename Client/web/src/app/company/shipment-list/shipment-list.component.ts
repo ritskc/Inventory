@@ -49,7 +49,9 @@ export class ShipmentListComponent implements OnInit {
           mergeMap(customers => this.shipmentService.getAllShipments(this.currentlyLoggedInCompany))
         ).subscribe(shipments => {
           shipments.map(shipment => {
-            shipment.customerName = this.customers.find(c => c.id === shipment.customerId).name;
+            var customer = this.customers.find(c => c.id === shipment.customerId);
+            if (customer)
+              shipment.customerName = customer.name;
           });
           this.shipments = shipments;
         });

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { ClassConstants } from '../../../common/constants';
 import { AppConfigurations } from '../../../config/app.config';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { httpLoaderService } from '../../../common/services/httpLoader.service';
 
 @Component({
   selector: 'app-invoice-list',
@@ -28,7 +29,7 @@ export class InvoiceListComponent implements OnInit {
   columns: DataColumn[] = [];
 
   constructor(private companyService: CompanyService, private invoiceService: InvoiceService, private supplierService: SupplierService,
-              private formBuilder: FormBuilder, private router: Router, private toastr: ToastrManager
+              private formBuilder: FormBuilder, private router: Router, private toastr: ToastrManager, private loaderService: httpLoaderService
     ) { }
 
   ngOnInit() {
@@ -65,7 +66,7 @@ export class InvoiceListComponent implements OnInit {
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTc', icon: 'fa fa-download' })
     ] }) );
     this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
-      new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoiceBarcode', icon: 'fa fa-barcode' }),
+      new DataColumnAction({ actionText: 'Inv', actionStyle: ClassConstants.Primary, event: 'printInvoiceBarcode', icon: 'fa fa-barcode' }),
       new DataColumnAction({ actionText: 'Box', actionStyle: ClassConstants.Primary, event: 'printBoxBarcode', icon: 'fa fa-barcode' }),
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'receiveInvoice', icon: 'fa fa-download' }),
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'deleteInvoice', icon: 'fa fa-trash' })
@@ -82,17 +83,23 @@ export class InvoiceListComponent implements OnInit {
   }
 
   loadAllSupplierInvoices() {
+    this.loaderService.show();
     this.invoiceService.getAllInvoices(this.currentlyLoggedInCompany)
         .subscribe(
           (invoices) => this.invoices = invoices,
-          (error) => console.log(error)
+          (error) => console.log(error),
+          () => this.loaderService.hide()
         );
   }
 
   supplierSelected() {
+    this.loaderService.show();
     var supplierId = this.invoiceForm.get('supplierList').value;
-    this.invoiceService.getAllSupplierInvoices(this.currentlyLoggedInCompany, supplierId)
-        .subscribe((invoices) => this.invoices = invoices)
+    this.invoiceService.getAllInvoices(this.currentlyLoggedInCompany)
+        .subscribe((invoices) => {
+          this.invoices = invoices.filter(s => s.supplierId == supplierId);
+        }, (error) => this.toastr.errorToastr(error.error),
+        () => this.loaderService.hide());
   }
 
   uploadInvoice() {

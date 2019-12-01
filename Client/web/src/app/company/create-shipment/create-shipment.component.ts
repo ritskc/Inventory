@@ -43,6 +43,9 @@ export class CreateShipmentComponent implements OnInit {
   private packagingSlipCreated: Subject<string> = new Subject<string>();
   private appConfig: AppConfigurations;
   private previousPackingSlipNo: string;
+  private partQuantityInHand: number = 0;
+  private partOpenQuantity: number = 0;
+  private OrderNo: string = '';
 
   constructor(private companyservice: CompanyService, private customerService: CustomerService, private partsService: PartsService,
               private shipmentService: ShipmentService, private toastr: ToastrManager, private activatedRoute: ActivatedRoute) { }
@@ -94,15 +97,14 @@ export class CreateShipmentComponent implements OnInit {
     this.selectedCustomer = this.customers.find(c => c.id == (event ? event.target.value: this.selectedCustomerId));
     this.shipment.customerId = this.selectedCustomer.id;
 
-    this.customerService.getAllPurchaseOrders(this.currentlyLoggedInCompany)
-        .subscribe((orders) => {
-          orders.forEach((order) => {
-            if (order.customerId == this.selectedCustomer.id)
-              this.customerPurchaseOrders.push(order);
-          });
-        }, (error) => console.log(error),
-        () => console.log('Orders loaded'));
+    this.loadAllPartsForCustomer();
+    this.loadAllOrdersForCustomer();
+    this.getAllShipmentsForSelectedCustomer();
+    this.createColumnsForShipmentGrid();
+  }
 
+  loadAllPartsForCustomer() {
+    this.customerAssociatedParts = [];
     this.parts.forEach((part) => {
       part.partCustomerAssignments.forEach((customer) => {
         if (customer.customerId == this.selectedCustomer.id)
@@ -110,9 +112,48 @@ export class CreateShipmentComponent implements OnInit {
       });
     });
     this.partCode = -1;
+  }
 
-    this.getAllShipmentsForSelectedCustomer();
-    this.createColumnsForShipmentGrid();
+  loadAllOrdersForCustomer() {
+    this.customerService.getAllPurchaseOrders(this.currentlyLoggedInCompany)
+      .subscribe((orders) => {
+        orders.forEach((order) => {
+          if (order.customerId == this.selectedCustomer.id)
+            this.customerPurchaseOrders.push(order);
+        });
+      }, (error) => console.log(error),
+      () => this.orderId = -1 );
+  }
+
+  orderSelected() {
+    this.customerAssociatedParts = [];
+    this.customerPurchaseOrders.filter(c => c.id == this.orderId)[0].orderDetails.forEach(orderDetail => {
+      this.customerAssociatedParts.push(orderDetail.part);
+    });
+    this.partCode = -1;
+  }
+
+  blankOrderChecked() {
+    if (this.blankOrder) {
+      this.loadAllPartsForCustomer();
+    }
+    this.orderId = -1;
+    this.resetPartDetail();
+  }
+
+  partSelected() {
+    this.displayPartQuantityStatus();
+    this.resetPartDetail();
+  }
+
+  shippedQuantityEntered() {
+    this.displayPartQuantityStatus();
+  }
+
+  displayPartQuantityStatus() {
+    var selectedPart = this.customerAssociatedParts.find(p => p.id == this.partCode);
+    this.partQuantityInHand = selectedPart.qtyInHand;
+    this.partOpenQuantity = this.partQuantityInHand - this.quantity;
   }
 
   getAllShipmentsForSelectedCustomer() {
@@ -139,25 +180,37 @@ export class CreateShipmentComponent implements OnInit {
       return;
     }
 
+    if (this.partOpenQuantity < 0) {
+      var response = confirm('Your inventory quantity is going to be negative. Are you sure to continue?');
+      if (!response) return;
+    }
+
     var packagingSlipDetail = new PackingSlipDetail();
     packagingSlipDetail.isBlankOrder = this.blankOrder;
-    packagingSlipDetail.orderId = this.orderId;
+    packagingSlipDetail.orderId = this.blankOrder ? 0: this.orderId;
     packagingSlipDetail.partId = this.partCode;
     packagingSlipDetail.partDescription = this.parts.find(p => p.id == this.partCode).description;
-    packagingSlipDetail.orderNo = this.customerPurchaseOrders.find(o => o.id == this.orderId).poNo;
+    packagingSlipDetail.orderNo = this.blankOrder? this.OrderNo : this.customerPurchaseOrders.find(o => o.id == this.orderId).poNo;
     packagingSlipDetail.qty = this.quantity;
     packagingSlipDetail.boxes = this.boxes;
     packagingSlipDetail.inBasket = this.inBasket;
+    packagingSlipDetail.excessQty = 0;
     this.shipment.packingSlipDetails.push(packagingSlipDetail);
+
+    this.orderId = -1;
+    this.partCode = -1;
+    this.partQuantityInHand = 0;
+    this.partOpenQuantity = 0;
+    this.resetPartDetail();
   }
 
   createColumnsForPartsAddition() {
     this.columnsForPartsGrid = [];
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Blank Order", value: "isBlankOrder", isBoolean: true, customStyling: 'center' }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Blank Order", value: "isBlankOrder", isDisabled: true, isBoolean: true, customStyling: 'center' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Order Id", value: "orderNo" }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Part", value: "partDescription" }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Quantity", value: "qty", isEditable: true }) );
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "In Basket", value: "inBasket", isBoolean: true, customStyling: 'center' }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "In Basket", value: "inBasket", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
   }
 
   createColumnsForShipmentGrid() {
@@ -183,6 +236,11 @@ export class CreateShipmentComponent implements OnInit {
           (error) => { this.toastr.errorToastr('Error while creating shipment'); console.log(error); },
           () => this.getAllShipmentsForSelectedCustomer()
         );
+  }
+
+  resetPartDetail() {
+    this.quantity = 0;
+    this.boxes = 0;
   }
 
   transformShipmentListToViewModel() {

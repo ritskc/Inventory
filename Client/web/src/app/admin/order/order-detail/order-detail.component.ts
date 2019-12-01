@@ -477,7 +477,7 @@ export class OrderDetailComponent implements OnInit {
   }
 
   dueDateChanged(event) {
-    if (this.formMode !== UserAction.Edit) {
+    if (this.formMode !== UserAction.Edit && this.orderFormMode === OrderFormMode.Supplier) {
       this.supplierService.getNewPurchaseOrderNumber(this.currentlyLoaddedInCompanyId, this.purchaseOrder.poDate).subscribe(po => 
         this.purchaseOrder.poNo = po.entityNo
       );

@@ -84,37 +84,39 @@
         <div class="card-body">
             <div class="form-group standard-top-margin row">
               <label class="col-md-4 col-xs-4 label-top-adjustment">Blank Order</label>
-              <input type="checkbox" class="form-control col-md-8 col-xs-8" [(ngModel)]="blankOrder"/>
+              <input type="checkbox" class="form-control col-md-8 col-xs-8" [(ngModel)]="blankOrder" (change)="blankOrderChecked()"/>
             </div>
             <div class="form-group standard-top-margin row">
               <label class="col-md-4 col-xs-4 label-top-adjustment">Order Number</label>
-              <select type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="orderId">
+              <select *ngIf="!blankOrder" type="text" class="form-control col-md-8 col-xs-8" (change)="orderSelected()" [(ngModel)]="orderId">
+                <option value="-1">Please select the order number</option>
                 <option *ngFor="let order of customerPurchaseOrders" value="{{order.id}}">{{order.poNo}}</option>
               </select>
+              <input *ngIf="blankOrder" type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="OrderNo"/>
             </div>
             <div class="form-group standard-top-margin row">
               <label class="col-md-4 col-xs-4 label-top-adjustment">Part Code</label>
-              <select class="form-control col-md-8 col-xs-8" [(ngModel)]="partCode">
+              <select class="form-control col-md-8 col-xs-8" [(ngModel)]="partCode" (change)="partSelected()">
                 <option value="-1">Select part by code</option>
                 <option *ngFor="let part of customerAssociatedParts" value="{{part.id}}">{{part.code}}</option>
               </select>
             </div>
             <div class="form-group standard-top-margin row">
               <label class="col-md-4 col-xs-4 label-top-adjustment">Part Name</label>
-              <select class="form-control col-md-8 col-xs-8" [(ngModel)]="partCode">
+              <select class="form-control col-md-8 col-xs-8" [(ngModel)]="partCode" (change)="partSelected()">
                   <option value="-1">Select part by description</option>
                   <option *ngFor="let part of customerAssociatedParts" value="{{part.id}}">{{part.description}}</option>
               </select>
             </div>
             <div class="form-group standard-top-margin row">
               <label class="col-md-4 col-xs-4 label-top-adjustment">Quantity</label>
-              <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="quantity"/>
+              <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="quantity" (change)="shippedQuantityEntered()"/>
             </div>
             <div class="form-group standard-top-margin row">
               <label class="col-md-3 col-xs-3 label-top-adjustment">Qty In Hand</label>
-              <label class="col-md-3 col-xs-3 label-top-adjustment">Qty In Hand</label>
+              <label class="col-md-3 col-xs-3 label-top-adjustment">{{partQuantityInHand}}</label>
               <label class="col-md-3 col-xs-3 label-top-adjustment">Open Qty</label>
-              <label class="col-md-3 col-xs-3 label-top-adjustment">Qty In Hand</label>
+              <label class="col-md-3 col-xs-3 label-top-adjustment">{{partOpenQuantity}}</label>
             </div>
             <div class="form-group standard-top-margin row">
               <label class="col-md-4 col-xs-4 label-top-adjustment">No of Boxes</label>

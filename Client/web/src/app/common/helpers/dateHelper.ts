@@ -4,7 +4,7 @@ export function formatDate(value: Date): string {
 
 export function getToday(): string {
     var value = new Date();
-    return `${ value.getFullYear() }-${ value.getMonth() + 1 }-${ value.getDate() }`;
+    return `${ value.getFullYear() }-${ value.getMonth() + 1 }-${ value.getDate() < 10 ? `0${value.getDate()}` : value.getDate() }`;
 }
 
 export function getTomorrow(): string {
