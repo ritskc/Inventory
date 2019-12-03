@@ -24,9 +24,8 @@
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
         <Top>0.00917in</Top>
-        <Left>0.10292in</Left>
         <Height>0.61458in</Height>
-        <Width>5.45833in</Width>
+        <Width>7.2107in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -59,7 +58,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>ShippingDate</rd:DefaultName>
-        <Left>5.89458in</Left>
+        <Top>0.00917in</Top>
+        <Left>6.26958in</Left>
         <Height>0.4375in</Height>
         <Width>1in</Width>
         <ZIndex>1</ZIndex>
@@ -90,7 +90,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>0.60292in</Top>
+        <Top>0.85292in</Top>
         <Height>0.25in</Height>
         <Width>1.02431in</Width>
         <ZIndex>2</ZIndex>
@@ -121,8 +121,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>0.60292in</Top>
-        <Left>3.81472in</Left>
+        <Top>0.85292in</Top>
+        <Left>3.93972in</Left>
         <Height>0.25in</Height>
         <Width>0.72917in</Width>
         <ZIndex>3</ZIndex>
@@ -151,10 +151,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CustomerContactPersonName</rd:DefaultName>
-        <Top>0.74875in</Top>
+        <Top>0.99875in</Top>
         <Left>1.02431in</Left>
         <Height>0.60417in</Height>
-        <Width>2.60417in</Width>
+        <Width>3.49764in</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
@@ -175,6 +175,7 @@
               <TextRun>
                 <Value>=First(Fields!CustomerContactPersonName.Value, "dsReport")</Value>
                 <Style>
+                  <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -183,10 +184,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CustomerContactPersonName1</rd:DefaultName>
-        <Top>0.60292in</Top>
+        <Top>0.85292in</Top>
         <Left>1.00917in</Left>
         <Height>0.25in</Height>
-        <Width>2.61931in</Width>
+        <Width>2.86111in</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -213,8 +214,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CustomerContactPersonName</rd:DefaultName>
-        <Top>0.76041in</Top>
-        <Left>4.48153in</Left>
+        <Top>1.01041in</Top>
+        <Left>4.60653in</Left>
         <Height>0.5925in</Height>
         <Width>2.60417in</Width>
         <ZIndex>6</ZIndex>
@@ -237,6 +238,7 @@
               <TextRun>
                 <Value>=First(Fields!ShipmentContactPersonName.Value, "dsReport")</Value>
                 <Style>
+                  <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -245,8 +247,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CustomerContactPersonName1</rd:DefaultName>
-        <Top>0.61458in</Top>
-        <Left>4.46639in</Left>
+        <Top>0.86458in</Top>
+        <Left>4.59139in</Left>
         <Height>0.25in</Height>
         <Width>2.61931in</Width>
         <ZIndex>7</ZIndex>
@@ -267,7 +269,15 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Packing Slip No. : </Value>
+                <Value>Packing Slip No. :</Value>
+                <Style>
+                  <FontFamily>times New Roman</FontFamily>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value xml:space="preserve"> </Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
                 </Style>
@@ -279,13 +289,15 @@
                 </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox13</rd:DefaultName>
-        <Top>1.53347in</Top>
+        <Top>2.40847in</Top>
         <Height>0.25in</Height>
-        <Width>2.45604in</Width>
+        <Width>2.62271in</Width>
         <ZIndex>8</ZIndex>
         <Style>
           <Border>
@@ -304,8 +316,17 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Ship via : </Value>
+                <Value>Ship via :</Value>
                 <Style>
+                  <FontFamily>times New Roman</FontFamily>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value xml:space="preserve"> </Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
@@ -317,14 +338,16 @@
                 </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox13</rd:DefaultName>
-        <Top>1.53347in</Top>
+        <Top>2.40847in</Top>
         <Left>2.5116in</Left>
         <Height>0.25in</Height>
-        <Width>2.49653in</Width>
+        <Width>2.87848in</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
@@ -343,7 +366,15 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>No. of Crates : </Value>
+                <Value>No. of Crates :</Value>
+                <Style>
+                  <FontFamily>times New Roman</FontFamily>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value xml:space="preserve"> </Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
                 </Style>
@@ -355,14 +386,16 @@
                 </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox13</rd:DefaultName>
-        <Top>1.53347in</Top>
-        <Left>5.06369in</Left>
+        <Top>2.40847in</Top>
+        <Left>5.45952in</Left>
         <Height>0.25in</Height>
-        <Width>1.51041in</Width>
+        <Width>1.73958in</Width>
         <ZIndex>10</ZIndex>
         <Style>
           <Border>
@@ -375,9 +408,9 @@
         </Style>
       </Textbox>
       <Line Name="Line1">
-        <Top>1.42236in</Top>
+        <Top>2.29736in</Top>
         <Height>0in</Height>
-        <Width>7.0857in</Width>
+        <Width>7.26958in</Width>
         <ZIndex>11</ZIndex>
         <Style>
           <Border>
@@ -393,7 +426,7 @@
               <Width>0.4884in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.38313in</Width>
+              <Width>3.56701in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.36577in</Width>
@@ -493,7 +526,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Order No</Value>
+                              <Value>PO Number</Value>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
                                 <FontSize>12pt</FontSize>
@@ -738,9 +771,9 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsReport</DataSetName>
-        <Top>1.98833in</Top>
+        <Top>2.73833in</Top>
         <Height>0.5in</Height>
-        <Width>7.0857in</Width>
+        <Width>7.26958in</Width>
         <ZIndex>12</ZIndex>
         <Style>
           <Border>
@@ -749,13 +782,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2.80209in</Height>
+    <Height>3.25916in</Height>
     <Style />
   </Body>
-  <Width>7.0857in</Width>
+  <Width>7.26958in</Width>
   <Page>
     <PageHeader>
-      <Height>1.28125in</Height>
+      <Height>1.21181in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -773,14 +806,16 @@
                   </Style>
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>CompanyName</rd:DefaultName>
           <Top>0.33681in</Top>
-          <Left>0.905in</Left>
+          <Left>1.37375in</Left>
           <Height>0.875in</Height>
-          <Width>5.98958in</Width>
+          <Width>5.83695in</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -794,11 +829,11 @@
         <Image Name="imgHI">
           <Source>Embedded</Source>
           <Value>HI1</Value>
-          <Sizing>Fit</Sizing>
-          <Top>0.31125in</Top>
-          <Left>0.10292in</Left>
-          <Height>0.70833in</Height>
-          <Width>0.73264in</Width>
+          <Sizing>FitProportional</Sizing>
+          <Top>0.4675in</Top>
+          <Left>0.37723in</Left>
+          <Height>0.53125in</Height>
+          <Width>0.92708in</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -813,10 +848,54 @@
         </Border>
       </Style>
     </PageHeader>
+    <PageFooter>
+      <Height>0.26389in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox1">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Discrepancy with the Quantity must be notified within 5 business day.</Value>
+                  <Style>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox1</rd:DefaultName>
+          <Top>0.01389in</Top>
+          <Height>0.25in</Height>
+          <Width>7.26958in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
+    <PageHeight>11.69in</PageHeight>
+    <PageWidth>8.27in</PageWidth>
     <LeftMargin>0.5in</LeftMargin>
     <RightMargin>0.5in</RightMargin>
-    <TopMargin>0.5in</TopMargin>
-    <BottomMargin>0.5in</BottomMargin>
+    <TopMargin>0.25in</TopMargin>
+    <BottomMargin>0.25in</BottomMargin>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -954,6 +1033,10 @@
         </Field>
         <Field Name="CustomerEndCustomerName">
           <DataField>CustomerEndCustomerName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Billing">
+          <DataField>Billing</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="ShipmentName">

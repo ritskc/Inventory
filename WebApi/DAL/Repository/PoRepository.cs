@@ -15,10 +15,12 @@ namespace DAL.Repository
     public class PoRepository : IPoRepository
     {
         private readonly ISqlHelper _sqlHelper;
+        private readonly IEntityTrackerRepository entityTrackerRepository;
 
-        public PoRepository(ISqlHelper sqlHelper)
+        public PoRepository(ISqlHelper sqlHelper, IEntityTrackerRepository entityTrackerRepository)
         {
             _sqlHelper = sqlHelper;
+            this.entityTrackerRepository = entityTrackerRepository;
         }
 
         public async Task<IEnumerable<Po>> GetAllPosAsync(int companyId)
@@ -419,7 +421,8 @@ namespace DAL.Repository
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                     }
-
+                    
+                    await this.entityTrackerRepository.AddEntityAsync(po.CompanyId, po.PoDate, BusinessConstants.ENTITY_TRACKER_PO, command.Connection, command.Transaction, command);
                     transaction.Commit();
                 }
                 catch (Exception ex)

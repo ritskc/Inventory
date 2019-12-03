@@ -39,6 +39,7 @@ namespace DAL.Models
         public string CustomerShipVia { get; set; }
         public int CustomerInvoicingtypeid { get; set; }
         public string CustomerEndCustomerName { get; set; }
+        public string Billing { get; set; }
 
         public string ShipmentName { get; set; }
         public string ShipmentContactPersonName { get; set; }

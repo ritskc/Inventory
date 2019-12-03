@@ -27,7 +27,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
             var commandText = string.Format($"SELECT [id],[CompanyId],[Name],[AddressLine1],[City],[State],[ZIPCode],[ContactPersonName],[TelephoneNumber],[FaxNumber]" +
                 ",[EmailAddress],[TruckType] ,[CollectFreight],[Comments] ,[Surcharge],[FOB],[Terms],[RePackingCharge],[ShipVia] ,[invoicingtypeid],[endcustomername]" +
-                $",[DisplayLineNo] FROM[customer] WITH(NOLOCK) WHERE[CompanyId] = '{companyId}'" );
+                $",[DisplayLineNo],[Billing] FROM[customer] WITH(NOLOCK) WHERE[CompanyId] = '{companyId}'" );
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
                 cmd.CommandType = CommandType.Text;
@@ -60,7 +60,8 @@ namespace DAL.Repository
                     customer.ShipVia = Convert.ToString(dataReader["ShipVia"]);
                     customer.Invoicingtypeid = Convert.ToInt32(dataReader["Invoicingtypeid"]);
                     customer.EndCustomerName = Convert.ToString(dataReader["EndCustomerName"]);
-                    customer.DisplayLineNo = Convert.ToBoolean(dataReader["DisplayLineNo"]);                    
+                    customer.DisplayLineNo = Convert.ToBoolean(dataReader["DisplayLineNo"]);
+                    customer.Billing = Convert.ToString(dataReader["Billing"]);
 
                     customers.Add(customer);
                 }
@@ -106,7 +107,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
             var commandText = string.Format($"SELECT [id],[CompanyId],[Name],[AddressLine1],[City],[State],[ZIPCode],[ContactPersonName],[TelephoneNumber],[FaxNumber]" +
                 ",[EmailAddress],[TruckType] ,[CollectFreight],[Comments] ,[Surcharge],[FOB],[Terms],[RePackingCharge],[ShipVia] ,[invoicingtypeid],[endcustomername]" +
-                $",[DisplayLineNo] FROM[customer] WITH(NOLOCK) WHERE [id] = '{id}'");
+                $",[DisplayLineNo],[Billing] FROM[customer] WITH(NOLOCK) WHERE [id] = '{id}'");
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
                 cmd.CommandType = CommandType.Text;
@@ -139,6 +140,7 @@ namespace DAL.Repository
                     customer.Invoicingtypeid = Convert.ToInt32(dataReader["Invoicingtypeid"]);
                     customer.EndCustomerName = Convert.ToString(dataReader["EndCustomerName"]);
                     customer.DisplayLineNo = Convert.ToBoolean(dataReader["DisplayLineNo"]);
+                    customer.Billing = Convert.ToString(dataReader["Billing"]);
                 }
                 conn.Close();
             }
@@ -179,7 +181,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
             var commandText = string.Format($"SELECT [id],[CompanyId],[Name],[AddressLine1],[City],[State],[ZIPCode],[ContactPersonName],[TelephoneNumber],[FaxNumber]" +
                 ",[EmailAddress],[TruckType] ,[CollectFreight],[Comments] ,[Surcharge],[FOB],[Terms],[RePackingCharge],[ShipVia] ,[invoicingtypeid],[endcustomername]" +
-                $",[DisplayLineNo] FROM[customer] WITH(NOLOCK) WHERE [id] = '{id}'");
+                $",[DisplayLineNo],[Billing] FROM[customer] WITH(NOLOCK) WHERE [id] = '{id}'");
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
                 cmd.CommandType = CommandType.Text;
@@ -212,6 +214,7 @@ namespace DAL.Repository
                     customer.Invoicingtypeid = Convert.ToInt32(dataReader["Invoicingtypeid"]);
                     customer.EndCustomerName = Convert.ToString(dataReader["EndCustomerName"]);
                     customer.DisplayLineNo = Convert.ToBoolean(dataReader["DisplayLineNo"]);
+                    customer.Billing = Convert.ToString(dataReader["Billing"]);
                 }
                 conn.Close();
             }
@@ -250,11 +253,11 @@ namespace DAL.Repository
 
         public async Task AddCustomerAsync(Customer customer)
         {
-            string sql = string.Format($"INSERT INTO [dbo].[customer] ([CompanyId],[Name],[AddressLine1],[City],[State],[ZIPCode],[ContactPersonName],[TelephoneNumber],[FaxNumber],[EmailAddress],[TruckType],[CollectFreight],[Comments],[Surcharge],[FOB],[Terms],[RePackingCharge],[ShipVia],[invoicingtypeid],[endcustomername],[DisplayLineNo])  VALUES ('{customer.CompanyId}', " +
+            string sql = string.Format($"INSERT INTO [dbo].[customer] ([CompanyId],[Name],[AddressLine1],[City],[State],[ZIPCode],[ContactPersonName],[TelephoneNumber],[FaxNumber],[EmailAddress],[TruckType],[CollectFreight],[Comments],[Surcharge],[FOB],[Terms],[RePackingCharge],[ShipVia],[invoicingtypeid],[endcustomername],[DisplayLineNo],[Billing])  VALUES ('{customer.CompanyId}', " +
                 $"'{customer.Name}', '{customer.AddressLine1}', '{customer.City}', '{customer.State}', '{customer.ZIPCode}', '{customer.ContactPersonName}', '{customer.TelephoneNumber}',     " +
                 $"'{customer.FaxNumber}', '{customer.EmailAddress}', '{customer.TruckType}', '{customer.CollectFreight}', " +
                 $"'{customer.Comments}', '{customer.Surcharge}', '{customer.FOB}', '{customer.Terms}',  '{customer.RePackingCharge}', " +
-                $"'{customer.ShipVia}', '{customer.Invoicingtypeid}', '{customer.EndCustomerName}','{ customer.DisplayLineNo}')");
+                $"'{customer.ShipVia}', '{customer.Invoicingtypeid}', '{customer.EndCustomerName}','{ customer.DisplayLineNo}',,'{ customer.Billing}')");
 
             sql = sql + " Select Scope_Identity()";
 
@@ -286,7 +289,7 @@ namespace DAL.Repository
                     $"      ,[TelephoneNumber] = '{customer.TelephoneNumber}' ,[FaxNumber] = '{customer.FaxNumber}',[EmailAddress] = '{customer.EmailAddress}' ,[TruckType] = '{customer.TruckType}'" +
                     $"  ,[CollectFreight] = '{customer.CollectFreight}',[Comments] = '{customer.Comments}' ,[Surcharge] = '{customer.Surcharge}' ,[FOB] = '{customer.FOB}'" +
                     $" ,[Terms] = '{customer.Terms}',[RePackingCharge] = '{customer.RePackingCharge}',[ShipVia] = '{customer.ShipVia}' ,[invoicingtypeid] = '{customer.Invoicingtypeid}'" +
-                    $"   ,[endcustomername] = '{customer.EndCustomerName}' ,[DisplayLineNo] = '{customer.DisplayLineNo}' WHERE[Id] = '{customer.Id}' ");
+                    $"   ,[endcustomername] = '{customer.EndCustomerName}' ,[DisplayLineNo] = '{customer.DisplayLineNo}',[Billing] = '{customer.Billing}' WHERE[Id] = '{customer.Id}' ");
                 await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
                 foreach (CustomerShippingInfo term in customer.ShippingInfos)

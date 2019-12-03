@@ -68,3 +68,4 @@ C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\Report.csproj.CoreCompile
 C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\Report.csproj.CopyComplete
 C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\Report.dll
 C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\Report.pdb
+C:\Ritesh\Projects\Inventory\WebApi\Report\bin\Microsoft.SqlServer.Types.dll

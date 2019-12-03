@@ -187,6 +187,16 @@ namespace DAL.Repository
                 packingSlipReport.CustomerShipVia = customer.ShipVia;
                 packingSlipReport.CustomerInvoicingtypeid = customer.Invoicingtypeid;
                 packingSlipReport.CustomerEndCustomerName = customer.EndCustomerName;
+                packingSlipReport.Billing = customer.Billing;
+
+                
+                packingSlipReport.ShipmentName = packingSlip.customerShippingInfo.Name;
+                packingSlipReport.ShipmentContactPersonName = packingSlip.customerShippingInfo.ContactPersonName;
+                packingSlipReport.ShipmentAddressLine1 = packingSlip.customerShippingInfo.AddressLine1;
+                packingSlipReport.ShipmentCity = packingSlip.customerShippingInfo.City;
+                packingSlipReport.ShipmentState = packingSlip.customerShippingInfo.State;
+                packingSlipReport.ShipmentZIPCode = packingSlip.customerShippingInfo.ZIPCode;
+                packingSlipReport.ShipmentIsDefault = packingSlip.customerShippingInfo.IsDefault;
 
                 var part = partRepository.GetPart(packingSlipReport.PartId);
                 packingSlipReport.PartCode = part.Code;

@@ -53,8 +53,7 @@ namespace WebApi.Services
         {
             var entity = await this._entityTrackerRepository.GetEntityAsync(po.CompanyId,po.PoDate,BusinessConstants.ENTITY_TRACKER_PO);
             po.PoNo = entity.EntityNo;
-            await this._poRepository.AddPoAsync(po);
-            await this._entityTrackerRepository.AddEntityAsync(po.CompanyId, po.PoDate, BusinessConstants.ENTITY_TRACKER_PO);
+            await this._poRepository.AddPoAsync(po);            
         }
 
         public async Task UpdatePoAsync(Po po)
