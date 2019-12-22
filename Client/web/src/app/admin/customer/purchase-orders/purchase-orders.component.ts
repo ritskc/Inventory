@@ -7,6 +7,7 @@ import { CompanyService } from '../../../company/company.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { httpLoaderService } from '../../../common/services/httpLoader.service';
 import { map, mergeMap } from 'rxjs/operators';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-purchase-orders',
@@ -22,7 +23,7 @@ export class PurchaseOrdersComponent implements OnInit {
   private customerId: number;
 
   constructor(private customerService: CustomerService, private companyService: CompanyService, private router: Router, 
-    private loaderService: httpLoaderService, private activatedRoute: ActivatedRoute) { }
+    private loaderService: httpLoaderService, private activatedRoute: ActivatedRoute, private toastr: ToastrManager) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompanyid = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -31,6 +32,7 @@ export class PurchaseOrdersComponent implements OnInit {
   }
 
   loadAllCustomers() {
+    this.loaderService.show();
     this.customerService.getAllCustomers(this.currentlyLoggedInCompanyid).pipe(
       map(customers => {
         this.customers = customers;
@@ -40,7 +42,8 @@ export class PurchaseOrdersComponent implements OnInit {
       mergeMap(customers => this.getAllPurchaseOrders())
     ).subscribe(purchaseOrders => {
       this.populatePurchaseOrderViewModel(purchaseOrders);
-    });
+    }, (error) => this.toastr.errorToastr(error.error)
+    ,() => this.loaderService.hide());
   }
 
   initializeGridColumns() {
@@ -86,6 +89,10 @@ export class PurchaseOrdersComponent implements OnInit {
   }
 
   addCustomerOrder() {
+    if (this.customerId < 1) {
+      this.toastr.errorToastr('Please select the customer to proceed');
+      return;
+    }
     this.router.navigateByUrl(`orders/detail/customer/${this.customerId}/create/0`);
   }
 

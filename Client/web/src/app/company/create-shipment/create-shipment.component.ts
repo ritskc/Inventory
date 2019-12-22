@@ -117,8 +117,9 @@ export class CreateShipmentComponent implements OnInit {
   loadAllOrdersForCustomer() {
     this.customerService.getAllPurchaseOrders(this.currentlyLoggedInCompany)
       .subscribe((orders) => {
+        this.customerPurchaseOrders = [];
         orders.forEach((order) => {
-          if (order.customerId == this.selectedCustomer.id)
+          if (order.customerId == this.selectedCustomer.id && !order.isClosed)
             this.customerPurchaseOrders.push(order);
         });
       }, (error) => console.log(error),
@@ -127,7 +128,9 @@ export class CreateShipmentComponent implements OnInit {
 
   orderSelected() {
     this.customerAssociatedParts = [];
-    this.customerPurchaseOrders.filter(c => c.id == this.orderId)[0].orderDetails.forEach(orderDetail => {
+    this.customerPurchaseOrders.filter(c => c.id == this.orderId)[0].orderDetails
+        .filter(o => !o.isClosed)
+        .forEach(orderDetail => {
       this.customerAssociatedParts.push(orderDetail.part);
     });
     this.partCode = -1;
@@ -139,7 +142,9 @@ export class CreateShipmentComponent implements OnInit {
     }
     this.orderId = -1;
     this.resetPartDetail();
-  }
+    this.partQuantityInHand = 0;
+    this.partOpenQuantity = 0;
+}
 
   partSelected() {
     this.displayPartQuantityStatus();
@@ -151,9 +156,18 @@ export class CreateShipmentComponent implements OnInit {
   }
 
   displayPartQuantityStatus() {
-    var selectedPart = this.customerAssociatedParts.find(p => p.id == this.partCode);
-    this.partQuantityInHand = selectedPart.qtyInHand;
-    this.partOpenQuantity = this.partQuantityInHand - this.quantity;
+    if (this.blankOrder) {
+      var selectedPart = this.customerAssociatedParts.find(p => p.id == this.partCode);
+      this.partQuantityInHand = selectedPart.qtyInHand;
+      this.partOpenQuantity = 0;
+    }
+    else {
+      var selectedOrder = this.customerPurchaseOrders.find(o => o.id == this.orderId);
+      var selectedPart = this.customerAssociatedParts.find(p => p.id == this.partCode);
+      var partDetail = selectedOrder.orderDetails.find(p => p.partId == selectedPart.id);
+      this.partQuantityInHand = selectedPart.qtyInHand;
+      this.partOpenQuantity = partDetail.qty - partDetail.shippedQty;
+    }
   }
 
   getAllShipmentsForSelectedCustomer() {
@@ -176,7 +190,7 @@ export class CreateShipmentComponent implements OnInit {
     }
 
     if (this.quantity < 1) {
-      alert('Quantity should be more than 0(zero)');
+      this.toastr.errorToastr('Quantity should be more than 0(zero)');
       return;
     }
 
@@ -188,6 +202,13 @@ export class CreateShipmentComponent implements OnInit {
     var packagingSlipDetail = new PackingSlipDetail();
     packagingSlipDetail.isBlankOrder = this.blankOrder;
     packagingSlipDetail.orderId = this.blankOrder ? 0: this.orderId;
+    if (!this.blankOrder) {
+      var selectedOrder = this.customerPurchaseOrders.find(o => o.id == this.orderId);
+      var partInTheOrder = selectedOrder.orderDetails.find(p => p.partId == this.partCode);
+      packagingSlipDetail.orderDetailId = partInTheOrder.id;
+    } else {
+      packagingSlipDetail.orderDetailId = 0;
+    }
     packagingSlipDetail.partId = this.partCode;
     packagingSlipDetail.partDescription = this.parts.find(p => p.id == this.partCode).description;
     packagingSlipDetail.orderNo = this.blankOrder? this.OrderNo : this.customerPurchaseOrders.find(o => o.id == this.orderId).poNo;
@@ -226,11 +247,15 @@ export class CreateShipmentComponent implements OnInit {
   }
 
   createShipment() {
+    if (!this.validateShipment())
+      return;
+
     this.shipmentService.createShipment(this.shipment)
         .subscribe(
           (result) => {
             this.toastr.successToastr('Shipment Created Successfully!!');
             this.packagingSlipCreated.next(`${this.appConfig.reportsUri}/PackingSlip.aspx?id=${result}`);
+            this.loadAllOrdersForCustomer();
             this.shipment = new Shipment();
           },
           (error) => { this.toastr.errorToastr('Error while creating shipment'); console.log(error); },
@@ -259,6 +284,27 @@ export class CreateShipmentComponent implements OnInit {
         this.shipmentsViewModel.push(shipmentViewModel);
       });
     });
+  }
+
+  validateShipment(): boolean {
+    if (!this.shipment.shipVia) {
+      this.toastr.errorToastr('Please enter valid shipment via detail');
+      return false;
+    }
+    if (this.shipment.customerId < 1) {
+      this.toastr.errorToastr('Please select the customer');
+      return false;
+    }
+    if (this.shipment.shipmentInfoId < 1) {
+      this.toastr.errorToastr('Please select valid shipment address');
+      return false;
+    }
+    if (!this.shipment.packingSlipDetails) {
+      this.toastr.errorToastr('Add at least one part detail to create shipment');
+      return false;
+    }
+
+    return true;
   }
 }
 

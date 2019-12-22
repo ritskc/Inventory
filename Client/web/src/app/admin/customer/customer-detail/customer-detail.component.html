@@ -16,7 +16,7 @@
           </div>
           <div class="form-group standard-top-margin">
             <label>Address</label>
-            <input type="text" formControlName="addressLine1" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.addressLine1.errors }" [(ngModel)]="customer.addressLine1"/>
+            <textarea type="text" formControlName="addressLine1" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.addressLine1.errors }" [(ngModel)]="customer.addressLine1"></textarea>
             <div *ngIf="submitted && f.addressLine1.errors" class="invalid-feedback">
               <div *ngIf="f.addressLine1.errors.required">Customer Address is required</div>
             </div>
@@ -75,7 +75,7 @@
         <div class="card-body">
           <div class="form-group standard-top-margin">
             <label>Comments</label>
-            <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="customer.comments"/>
+            <textarea type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="customer.comments"></textarea>
           </div>
           <div class="form-group standard-top-margin">
             <label>Truck Type</label>
@@ -115,6 +115,20 @@
               <div *ngIf="f.rePackingCharge.errors.required">Repackaging charge is required</div>
             </div>
           </div>
+          <div class="form-group standard-top-margin">
+            <label>Billing</label>
+            <input type="text" formControlName="billing" class="form-control" [(ngModel)]="customer.billing" [ngClass]="{ 'is-invalid': submitted && f.billing.errors }"/>
+            <div *ngIf="submitted && f.billing.errors" class="invalid-feedback">
+              <div *ngIf="f.billing.errors.required">Billing information is required</div>
+            </div>
+          </div>
+          <div class="form-group standard-top-margin">
+            <label>Contact Person Name</label>
+            <input type="text" formControlName="contactPersonName" class="form-control" [(ngModel)]="customer.contactPersonName" [ngClass]="{ 'is-invalid': submitted && f.contactPersonName.errors }"/>
+            <div *ngIf="submitted && f.contactPersonName.errors" class="invalid-feedback">
+              <div *ngIf="f.contactPersonName.errors.required">Contact person name is required</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -130,9 +144,27 @@
           <div class="card-body">
             <div *ngFor="let shippingAddress of customer.shippingInfos; let i=index">
               <div class="card" style="padding: 10px;">
-                <div class="form-group standard-top-margin">
-                  <label>Address</label>
-                  <input type="text" class="form-control standard-top-margin" [(ngModel)]="shippingAddress.name" [ngModelOptions]="{standalone: true}"/>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-xs-6">
+                        <div class="form-group standard-top-margin">
+                          <label>Shipping Name</label>
+                          <input type="text" class="form-control standard-top-margin" [(ngModel)]="shippingAddress.name" [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-6">
+                        <div class="form-group standard-top-margin">
+                          <label>Contact Person Name</label>
+                          <input type="text" class="form-control standard-top-margin" [(ngModel)]="shippingAddress.contactPersonName" [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        <div class="form-group standard-top-margin">
+                          <label>Address</label>
+                          <textarea class="form-control standard-top-margin" [(ngModel)]="shippingAddress.addressLine1" [ngModelOptions]="{standalone: true}"></textarea>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-xs-3">

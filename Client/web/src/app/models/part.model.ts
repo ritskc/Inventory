@@ -85,7 +85,8 @@ export class PartsViewModel {
     }
 
     get QuantityInHand(): number {
-        return this.part.openingQty + this.part.qtyInHand;
+        //return this.part.openingQty + this.part.qtyInHand;
+        return this.part.qtyInHand;
     }
 
     get Total(): number {

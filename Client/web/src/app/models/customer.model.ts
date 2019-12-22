@@ -27,6 +27,7 @@ export class Customer {
     invoicingtypeid: number;
     endCustomerName: string;
     displayLineNo: boolean;
+    billing: string;
     shippingInfos: ShippingInfo[];
 }
 

@@ -1,5 +1,5 @@
 export function formatDate(value: Date): string {
-    return `${ value.getFullYear() }-${ value.getMonth() + 1 }-${ value.getDate() }`;
+    return `${ value.getFullYear() }-${ value.getMonth() + 1 }-${ value.getDate() < 10 ? `0${value.getDate()}` : value.getDate() }`;
 }
 
 export function getToday(): string {

@@ -35,8 +35,8 @@ export class ShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Shipped Via", value: "shipVia", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Crates", value: "crates", sortable: false, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Boxes", value: "boxes", sortable: false, customStyling: 'right' }) );
-    this.columns.push( new DataColumn({ headerText: "Invoice", value: "isInvoiceCreated", sortable: false, isBoolean: true, customStyling: 'center' }) );
-    this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false, isBoolean: true, customStyling: 'center' }) );
+    this.columns.push( new DataColumn({ headerText: "Invoice", value: "isInvoiceCreated", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
+    this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
   }
 
   loadAllCustomers() {

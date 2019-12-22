@@ -10,7 +10,7 @@
         <option value="-1">Create Order by selecting Supplier</option>
         <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{supplier.name}}</option>
       </select>
-      <select *ngIf='SelectedCustomer >= 0' class="form-control" (change)="setFormForCustomerSelection()" formControlName="customersList">
+      <select disabled *ngIf='SelectedCustomer >= 0' class="form-control" (change)="setFormForCustomerSelection()" formControlName="customersList">
         <option value="-1">Create order by selecting Customer</option>
         <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
       </select>

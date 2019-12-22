@@ -51,7 +51,7 @@ export class PurchaseOrderDetail {
     description: string;
     total: number;
     part: Part
-
+    shippedQty: number = 0;
     orderId: number = 0;
 }
 

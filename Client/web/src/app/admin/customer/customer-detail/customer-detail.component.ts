@@ -45,7 +45,9 @@ export class CustomerDetailComponent implements OnInit {
       invoicingtypeid: ['', Validators.required],
       rePackingCharge: ['', Validators.required],
       truckType: ['', Validators.required],
-      emailAddress: ['', Validators.required]
+      emailAddress: ['', Validators.required],
+      billing: ['', Validators.required],
+      contactPersonName: ['', Validators.required]
     });
   }
 
@@ -103,6 +105,8 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   private fillDefaultValues() {
+    if (this.customer.id < 0)
+      this.customer.billing = "Account's Payable";
     this.customer.invoicingtypeid = -1;
   }
 

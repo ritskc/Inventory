@@ -70,7 +70,7 @@ export class CompanyInvoiceComponent implements OnInit {
     this.selectedShipment = new Shipment();
     this.shipmentService.getAllShipments(this.currentlyLoggedInCompany)
         .subscribe((shipments) => {
-          this.shipments = shipments.filter(s => s.customerId == this.customerId && !s.isPaymentReceived);
+          this.shipments = shipments.filter(s => s.customerId == this.customerId && !s.isInvoiceCreated);
         });
   }
 
@@ -95,6 +95,7 @@ export class CompanyInvoiceComponent implements OnInit {
           let appConfig = new AppConfigurations();
           this.invoiceCreated.next(`${appConfig.reportsUri}/Invoice.aspx?id=${this.selectedShipment.id}`);
           this.toastr.successToastr('Updated details successfully!!');
+          this.customeSelected();
         })
   }
 }

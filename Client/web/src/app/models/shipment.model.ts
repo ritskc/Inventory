@@ -21,6 +21,8 @@ export class Shipment {
     fob: string = '';
     totalSurcharge: number = 0;
     terms: string = '';
+    shipmentInfoId: number = 0;
+    isInvoiceCreated: boolean;
 }
 
 export class PackingSlipDetail {

@@ -102,33 +102,33 @@ export const navItems: NavData[] = [
         url: '/barcode',
         icon: 'icon-puzzle'
       },
-      {
-        name: 'QR Code',
-        url: '/barcode/qrcode',
-        icon: 'icon-puzzle'
-      }
+      // {
+      //   name: 'QR Code',
+      //   url: '/barcode/qrcode',
+      //   icon: 'icon-puzzle'
+      // }
     ]
   },
-  {
-    name: 'Report',
-    children: [
-      {
-        name: 'Purchase',
-        url: '/report/purchase',
-        icon: 'icon-user'
-      },
-      {
-        name: 'Sale',
-        url: '/report/sale',
-        icon: 'icon-user'
-      },
-      {
-        name: 'Admin',
-        url: '/report/admin',
-        icon: 'icon-user'
-      }
-    ]
-  },
+  // {
+  //   name: 'Report',
+  //   children: [
+  //     {
+  //       name: 'Purchase',
+  //       url: '/report/purchase',
+  //       icon: 'icon-user'
+  //     },
+  //     {
+  //       name: 'Sale',
+  //       url: '/report/sale',
+  //       icon: 'icon-user'
+  //     },
+  //     {
+  //       name: 'Admin',
+  //       url: '/report/admin',
+  //       icon: 'icon-user'
+  //     }
+  //   ]
+  // },
   {
     name: 'Admin',
     children: [
