@@ -19,7 +19,7 @@ export class Part {
     drawingUploaded: boolean;
     drawingFileName: string;
     location: string;
-    isActive: boolean;
+    isActive: boolean = true;
     isSample: boolean;
     safeQty: number = 0;
     qtyInHand: number = 0;
@@ -85,7 +85,6 @@ export class PartsViewModel {
     }
 
     get QuantityInHand(): number {
-        //return this.part.openingQty + this.part.qtyInHand;
         return this.part.qtyInHand;
     }
 

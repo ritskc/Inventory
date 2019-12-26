@@ -1,5 +1,17 @@
 <div class="standard-margin">
-  <simple-grid [data]="parts" [columns]="columns" [addRequired]="false" [exportRequired]="false"
+  <div class="row" style="margin-left: 1px; margin-bottom: 5px;">
+    <select class="form-control" style="width: 300px; float: left;" (change)="optionSelected($event)">
+      <option value="1">Show all Parts</option>
+      <option value="2">Select by Customer</option>
+      <option value="3">Select by Supplier</option>
+    </select>
+    <select class="form-control" style="width: 300px; float: left;" (change)="filterBySelection($event)" *ngIf="filterOption > 1">
+      <option value="-1">Please select the option</option>
+      <option *ngFor="let item of filter" [value]="item.id">{{item.name}}</option>
+    </select>
+  </div>
+  
+<simple-grid [data]="parts" [columns]="columns" [addRequired]="false" [exportRequired]="false"
   (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="addPart()">
 
   </simple-grid>

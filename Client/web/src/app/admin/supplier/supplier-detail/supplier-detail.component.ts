@@ -30,7 +30,7 @@ export class SupplierDetailComponent implements OnInit {
       name: ['', Validators.required],
       address: ['', Validators.required],
       phoneNo: ['', Validators.required],
-      faxNo: ['', Validators.required],
+      faxNo: [''],
       emailID: ['', Validators.required],
       contactPersonName: ['', Validators.required],
       city: ['', Validators.required],
@@ -80,6 +80,7 @@ export class SupplierDetailComponent implements OnInit {
     this.supplierService.saveSupplier(this.supplier)
       .subscribe((response) => { 
         this.toastr.successToastr('Details saved successfully.');
+        this.router.navigateByUrl('/suppliers');
       },
       (error) => { 
         this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')

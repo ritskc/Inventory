@@ -379,6 +379,21 @@ export class OrderDetailComponent implements OnInit {
       this.purchaseOrder.orderDetails.push(customerOrderDetail); 
       this.purchaseOrder.isBlanketPO = this.isBlanketPO;
     }
+
+    this.clearPartDetailSection();
+  }
+
+  clearPartDetailSection() {
+    this.orderForm.get('partCode').setValue(-1);
+    this.orderForm.get("partDescription").setValue(-1);
+    this.quantity = 0;
+    this.dueDate = DateHelper.getToday();
+    this.notes = '';
+    this.price = 0;
+    this.reference = '';
+    this.blanketPOId = -1;
+    this.lineNumber = 0;
+    this.blanketPOAdjQty = 0;
   }
 
   addMoreTermAndCondition() {
@@ -450,15 +465,19 @@ export class OrderDetailComponent implements OnInit {
 
   validateOrder(): boolean {
     if (new Date(this.purchaseOrder.dueDate) <= new Date(this.purchaseOrder.poDate)) {
-      alert('Due date cannot be less than purchase order date');
+      this.toastr.errorToastr('Due date cannot be less than purchase order date');
       return false;
     }
     if (!this.purchaseOrder.poNo) {
-      alert('PO number is mandatory');
+      this.toastr.errorToastr('PO number is mandatory');
       return false;
     }
     if (!this.purchaseOrder.dueDate || !this.purchaseOrder.poDate) {
-      alert('PO date & Due date are mandatory');
+      this.toastr.errorToastr('PO date & Due date are mandatory');
+      return false;
+    }
+    if (this.purchaseOrder.orderDetails.length < 1) {
+      this.toastr.errorToastr('Add at least one part detail to create this order.');
       return false;
     }
     return true;

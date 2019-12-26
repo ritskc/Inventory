@@ -26,12 +26,16 @@
       <a class="nav-link" href="#"><i class="icon-location-pin"></i></a>
     </li> -->
     <li class="nav-item dropdown" dropdown placement="bottom right">
-      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
+      <!-- <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
         <div style="height: 35px; width: 35px; text-align: center; border-radius: 50%; padding-top: 5px; background-color: #347AE8; color: white; font-weight: bold;">
           H I
         </div>
-      </a>
-      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+      </a> -->
+      <select (change)="setCompany($event)">
+        <option value="1">Harisons Industries</option>
+        <option value="2">Cast & Forge</option>
+      </select>
+      <!-- <div style="display: none;" class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <a class="dropdown-item">
             <div style="margin-left: -10px; height: 35px; width: 35px; text-align: center; border-radius: 50%; padding-top: 5px; background-color: #347AE8; color: white; font-weight: bold;">
               H I
@@ -41,14 +45,14 @@
             </div>
            </a>
         <a class="dropdown-item">
-          <div style="margin-left: -10px; height: 35px; width: 35px; text-align: center; border-radius: 50%; padding-top: 5px; background-color: rgb(236, 72, 22); color: white; font-weight: bold;">
+          <div style="margin-left: -10px; height: 35px; width: 35px; text-align: center; border-radius: 50%; padding-top: 5px; background-color: rgb(236, 72, 22); color: white; font-weight: bold;" (click)="setHarrisons()">
             C F
           </div>
-          <div style="position: absolute; top: 18px; left: 50px;">
+          <div style="position: absolute; top: 18px; left: 50px;" (click)="setCastAndForge()">
               Cast & Forge
           </div>
         </a>
-      </div>
+      </div> -->
     </li>
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">

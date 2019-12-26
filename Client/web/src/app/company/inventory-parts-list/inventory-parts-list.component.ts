@@ -3,6 +3,11 @@ import { Part, PartsViewModel } from '../../models/part.model';
 import { DataColumn } from '../../models/dataColumn.model';
 import { PartsService } from '../../admin/parts/parts.service';
 import { CompanyService } from '../company.service';
+import { httpLoaderService } from '../../common/services/httpLoader.service';
+import { FilterOption } from '../../admin/parts/part-list/part-list.component';
+import { CustomerService } from '../../admin/customer/customer.service';
+import { SupplierService } from '../../admin/supplier/supplier.service';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-inventory-parts-list',
@@ -14,8 +19,11 @@ export class InventoryPartsListComponent implements OnInit {
   parts: PartsViewModel[] = [];
   columns: DataColumn[] = [];
   currentlyLoggedInCompanyId: number = 0;
+  filter: any;
+  filterOption: FilterOption;
 
-  constructor(private service: PartsService, private companyService: CompanyService) { }
+  constructor(private service: PartsService, private companyService: CompanyService, private httpLoaderService: httpLoaderService, private customerService: CustomerService,
+    private supplierService: SupplierService, private httpLoader: httpLoaderService, private toastr: ToastrManager) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompanyId = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -35,17 +43,80 @@ export class InventoryPartsListComponent implements OnInit {
   }
 
   getAllPartsForCompany() {
+    this.httpLoaderService.show();
     this.service.getAllParts(this.currentlyLoggedInCompanyId)
         .subscribe((parts) => {
+          var partsToDisplay = [];
           parts.forEach((part) => {
-            this.parts.push(new PartsViewModel(part));
-            console.log(this.parts);
-          })
+            partsToDisplay.push(new PartsViewModel(part));
+          });
+          this.parts = partsToDisplay;
         },
-        (error) => {
-          console.log(error);
-        }
+        (error) => { console.log(error); },
+        () => this.httpLoaderService.hide()
       );
   }
 
+  optionSelected(event) {
+    this.parts = [];
+    switch (event.target.value) {
+      case "1":
+        this.filterOption = FilterOption.SelectAll;
+        this.getAllPartsForCompany();
+        break;
+      case "2":
+        this.filterOption = FilterOption.Customer;
+        this.loadAllCustomers();
+        break;
+      case "3":
+        this.filterOption = FilterOption.Supplier;
+        this.loadAllSuppliers();
+        break;
+    }
+  }
+
+  loadAllCustomers() {
+    this.httpLoader.show();
+    this.customerService.getAllCustomers(this.currentlyLoggedInCompanyId)
+        .subscribe(
+          (customers) => this.filter = customers,
+          (error) => this.toastr.errorToastr(error),
+          () => this.httpLoader.hide()
+        );
+  }
+
+  loadAllSuppliers() {
+    this.httpLoader.show();
+    this.supplierService.getAllSuppliers(this.currentlyLoggedInCompanyId)
+        .subscribe(
+          (suppliers) => this.filter = suppliers,
+          (error) => this.toastr.errorToastr(error),
+          () => this.httpLoader.hide()
+        );
+  }
+
+  filterBySelection(event) {
+    this.parts = [];
+    let selectedValue = parseInt(event.target.value);
+    var partsToDisplay = [];
+    let observable = this.service.getAllParts(this.currentlyLoggedInCompanyId);
+
+    if (this.filterOption === FilterOption.Customer) {
+      observable.subscribe((parts) => {
+        var filteredParts = parts.filter(p => p.partCustomerAssignments.find(c => c.customerId === selectedValue));
+        filteredParts.forEach((part) => {
+          partsToDisplay.push(new PartsViewModel(part));
+        });
+        this.parts = partsToDisplay;
+      });
+    } else {
+      observable.subscribe((parts) => {
+        var filteredParts = parts.filter(p => p.partSupplierAssignments.find(s => s.supplierID === selectedValue));
+        filteredParts.forEach((part) => {
+          partsToDisplay.push(new PartsViewModel(part));
+        });
+        this.parts = partsToDisplay;
+      });
+    }
+  }
 }
