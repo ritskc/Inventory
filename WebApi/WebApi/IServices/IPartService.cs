@@ -10,6 +10,8 @@ namespace WebApi.IServices
     {
         Task<IEnumerable<Part>> GetAllPartsAsync(int companyId);
         Task<Part> GetPartAsync(long id);
+        Task<IEnumerable<Part>> GetPartBySupplierIdAsync(int supplierId);
+        Task<IEnumerable<Part>> GetPartByCustomerIdAsync(int customerId);
         Task AddPartAsync(Part part);
         Task UpdatePartAsync(Part part);
         Task DeletePartAsync(long id);

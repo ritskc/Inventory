@@ -16,9 +16,9 @@ namespace DAL.Models
         public string Email { get; set; }
         public int PriviledgeId { get; set; }
         public string PriviledgeName { get; set; }
-        public int UserTypeId { get; set; }
+        public int UserTypeId { get; set; } //1 = company, 2= Customer, 3 = Supplier
         public string UserType { get; set; }
-        public int MapId { get; set; }
+        public int MapId { get; set; } // supplierid / customer id incase of UserType not 1
         public string Token { get; set; }
         public DateTime? TokenExpires { get; set; }
 

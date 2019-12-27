@@ -14,6 +14,7 @@ namespace DAL.Models
         public string OrderNo { get; set; }
         public int OrderId { get; set; }
         public int? OrderDetailId { get; set; }
+        public int SrNo { get; set; }
         public int PartId { get; set; }
         public int Qty { get; set; }
         public int Boxes { get; set; }

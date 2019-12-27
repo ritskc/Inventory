@@ -134,7 +134,7 @@ namespace DAL.Repository
                         //var partDetail = await this.partRepository.GetPartAsync(packingSlipDetail.PartId);
                         //packingSlipDetail.SurchargePerUnit = partDetail.partCustomerAssignments.Where(x => x.CustomerId == packingSlip.CustomerId).Select(x => x.SurchargePerPound).FirstOrDefault();
                         //packingSlipDetail.TotalSurcharge = packingSlipDetail.SurchargePerUnit * packingSlipDetail.Qty;
-                        sql = string.Format($"INSERT INTO [dbo].[PackingSlipDetails]   ([PackingSlipId]   ,[IsBlankOrder]   ,[OrderNo]   ,[OrderId]   ,[OrderDetailId]   ,[PartId]   ,[Qty]   ,[Boxes]   ,[InBasket]   ,[UnitPrice]   ,[Price]   ,[Surcharge]   ,[SurchargePerPound]   ,[SurchargePerUnit]   ,[TotalSurcharge]   ,[ExcessQty]) VALUES   ('{packingSlipId}'   ,'{packingSlipDetail.IsBlankOrder}'   ,'{packingSlipDetail.OrderNo}'   ,'{packingSlipDetail.OrderId}'   ,'{packingSlipDetail.OrderDetailId}'   ,'{packingSlipDetail.PartId}'   ,'{packingSlipDetail.Qty}'   ,'{packingSlipDetail.Boxes}'   ,'{packingSlipDetail.InBasket}'   ,'{packingSlipDetail.UnitPrice}'   ,'{packingSlipDetail.Price}'   ,'{packingSlipDetail.Surcharge}'   ,'{packingSlipDetail.SurchargePerPound}'   ,'{packingSlipDetail.SurchargePerUnit}'   ,'{packingSlipDetail.TotalSurcharge}'   ,'{packingSlipDetail.ExcessQty}')");
+                        sql = string.Format($"INSERT INTO [dbo].[PackingSlipDetails]   ([PackingSlipId]   ,[IsBlankOrder]   ,[OrderNo]   ,[OrderId]   ,[OrderDetailId]   ,[PartId]   ,[Qty]   ,[Boxes]   ,[InBasket]   ,[UnitPrice]   ,[Price]   ,[Surcharge]   ,[SurchargePerPound]   ,[SurchargePerUnit]   ,[TotalSurcharge]   ,[ExcessQty],[SrNo]) VALUES   ('{packingSlipId}'   ,'{packingSlipDetail.IsBlankOrder}'   ,'{packingSlipDetail.OrderNo}'   ,'{packingSlipDetail.OrderId}'   ,'{packingSlipDetail.OrderDetailId}'   ,'{packingSlipDetail.PartId}'   ,'{packingSlipDetail.Qty}'   ,'{packingSlipDetail.Boxes}'   ,'{packingSlipDetail.InBasket}'   ,'{packingSlipDetail.UnitPrice}'   ,'{packingSlipDetail.Price}'   ,'{packingSlipDetail.Surcharge}'   ,'{packingSlipDetail.SurchargePerPound}'   ,'{packingSlipDetail.SurchargePerUnit}'   ,'{packingSlipDetail.TotalSurcharge}'   ,'{packingSlipDetail.ExcessQty}','{packingSlipDetail.SrNo}')");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
 
@@ -276,7 +276,7 @@ namespace DAL.Repository
             {
                 List<PackingSlipDetails> packingSlipDetails = new List<PackingSlipDetails>();
                 commandText = string.Format($"SELECT [Id] ,[PackingSlipId] ,[IsBlankOrder] ,[OrderNo] ,[OrderId] ,[OrderDetailId] ,[PartId] ,[Qty] ," +
-                    $"[Boxes] ,[InBasket] ,[UnitPrice] ,[Price] ,[Surcharge] ,[SurchargePerPound] ,[SurchargePerUnit] ,[TotalSurcharge] ,[ExcessQty]  FROM [dbo].[PackingSlipDetails] where PackingSlipId = '{ packingSlip.Id}'");
+                    $"[Boxes] ,[InBasket] ,[UnitPrice] ,[Price] ,[Surcharge] ,[SurchargePerPound] ,[SurchargePerUnit] ,[TotalSurcharge] ,[ExcessQty],[SrNo]  FROM [dbo].[PackingSlipDetails] where PackingSlipId = '{ packingSlip.Id}'");
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                 {
@@ -304,7 +304,12 @@ namespace DAL.Repository
                         packingSlipDetail.SurchargePerUnit = Convert.ToDecimal(dataReader1["SurchargePerUnit"]);
                         packingSlipDetail.TotalSurcharge = Convert.ToDecimal(dataReader1["TotalSurcharge"]);
                         packingSlipDetail.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);
-                        
+
+                        if (dataReader1["SrNo"] != DBNull.Value)
+                            packingSlipDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
+                        else
+                            packingSlipDetail.SrNo = 0;
+
                         packingSlipDetails.Add(packingSlipDetail);
                     }
                     dataReader1.Close();
@@ -364,7 +369,7 @@ namespace DAL.Repository
 
             List<PackingSlipDetails> packingSlipDetails = new List<PackingSlipDetails>();
             commandText = string.Format($"SELECT [Id] ,[PackingSlipId] ,[IsBlankOrder] ,[OrderNo] ,[OrderId] ,[OrderDetailId] ,[PartId] ,[Qty] ," +
-                $"[Boxes] ,[InBasket] ,[UnitPrice] ,[Price] ,[Surcharge] ,[SurchargePerPound] ,[SurchargePerUnit] ,[TotalSurcharge] ,[ExcessQty]  FROM [dbo].[PackingSlipDetails] where PackingSlipId = '{ packingSlip.Id}'");
+                $"[Boxes] ,[InBasket] ,[UnitPrice] ,[Price] ,[Surcharge] ,[SurchargePerPound] ,[SurchargePerUnit] ,[TotalSurcharge] ,[ExcessQty],[SrNo]  FROM [dbo].[PackingSlipDetails] where PackingSlipId = '{ packingSlip.Id}'");
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
             {
@@ -392,6 +397,11 @@ namespace DAL.Repository
                     packingSlipDetail.SurchargePerUnit = Convert.ToDecimal(dataReader1["SurchargePerUnit"]);
                     packingSlipDetail.TotalSurcharge = Convert.ToDecimal(dataReader1["TotalSurcharge"]);
                     packingSlipDetail.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);
+
+                    if (dataReader1["SrNo"] != DBNull.Value)
+                        packingSlipDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
+                    else
+                        packingSlipDetail.SrNo = 0;
 
                     packingSlipDetails.Add(packingSlipDetail);
                 }
@@ -477,7 +487,7 @@ namespace DAL.Repository
 
             List<PackingSlipDetails> packingSlipDetails = new List<PackingSlipDetails>();
             commandText = string.Format($"SELECT [Id] ,[PackingSlipId] ,[IsBlankOrder] ,[OrderNo] ,[OrderId] ,[OrderDetailId] ,[PartId] ,[Qty] ," +
-                $"[Boxes] ,[InBasket] ,[UnitPrice] ,[Price] ,[Surcharge] ,[SurchargePerPound] ,[SurchargePerUnit] ,[TotalSurcharge] ,[ExcessQty]  FROM [dbo].[PackingSlipDetails] where PackingSlipId = '{ packingSlip.Id}'");
+                $"[Boxes] ,[InBasket] ,[UnitPrice] ,[Price] ,[Surcharge] ,[SurchargePerPound] ,[SurchargePerUnit] ,[TotalSurcharge] ,[ExcessQty],[SrNo]  FROM [dbo].[PackingSlipDetails] where PackingSlipId = '{ packingSlip.Id}'");
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
             {
@@ -505,6 +515,10 @@ namespace DAL.Repository
                     packingSlipDetail.SurchargePerUnit = Convert.ToDecimal(dataReader1["SurchargePerUnit"]);
                     packingSlipDetail.TotalSurcharge = Convert.ToDecimal(dataReader1["TotalSurcharge"]);
                     packingSlipDetail.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);
+                    if (dataReader1["SrNo"] != DBNull.Value)
+                        packingSlipDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
+                    else
+                        packingSlipDetail.SrNo = 0;
 
                     packingSlipDetails.Add(packingSlipDetail);
                 }

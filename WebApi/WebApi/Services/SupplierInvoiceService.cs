@@ -161,6 +161,79 @@ namespace WebApi.Services
             return result;
         }
 
+        public async Task<IEnumerable<SupplierInvoice>> GetIntransitSupplierInvoicesAsync(int companyId)
+        {
+            var result = await this._supplierInvoiceRepository.GetIntransitSupplierInvoicesAsync(companyId);
+            var companyList = await this._companyRepository.GetAllCompanyAsync();
+            var supplierList = await this._supplierRepository.GetAllSupplierAsync(companyId);
+            var partList = await this._partRepository.GetAllPartsAsync(companyId);
+            foreach (SupplierInvoice supplierInvoice in result)
+            {
+                supplierInvoice.CompanyDetail = companyList.Where(p => p.Id == supplierInvoice.CompanyId).FirstOrDefault();
+                if (supplierInvoice != null && supplierInvoice.CompanyDetail != null)
+                    supplierInvoice.CompanyName = supplierInvoice.CompanyDetail.Name;
+                supplierInvoice.SupplierDetail = supplierList.Where(p => p.Id == supplierInvoice.SupplierId).FirstOrDefault();
+                if (supplierInvoice != null && supplierInvoice.SupplierDetail != null)
+                    supplierInvoice.SupplierName = supplierInvoice.SupplierDetail.Name;
+                foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
+                {
+                    supplierInvoiceDetail.PartDetail = partList.Where(p => p.Id == supplierInvoiceDetail.PartId).FirstOrDefault(); //await this._partRepository.GetPartAsync(supplierInvoiceDetail.PartId);                    
+                }
+            }
+
+            return result;
+        }
+
+        public async Task<IEnumerable<SupplierIntransitInvoice>> GetIntransitSupplierInvoicesByPartIdAsync(int companyId, int partId)
+        {
+            var result = await this._supplierInvoiceRepository.GetIntransitSupplierInvoicesByPartIdAsync(companyId,partId);
+            var companyList = await this._companyRepository.GetAllCompanyAsync();
+            var supplierList = await this._supplierRepository.GetAllSupplierAsync(companyId);
+            //var partList = await this._partRepository.GetAllPartsAsync(companyId);
+
+            List<SupplierIntransitInvoice> supplierIntransitInvoices = new List<SupplierIntransitInvoice>();
+            foreach (SupplierInvoice supplierInvoice in result)
+            {
+                SupplierIntransitInvoice supplierIntransitInvoice = new SupplierIntransitInvoice();
+                supplierInvoice.CompanyDetail = companyList.Where(p => p.Id == supplierInvoice.CompanyId).FirstOrDefault();
+                if (supplierInvoice != null && supplierInvoice.CompanyDetail != null)
+                    supplierInvoice.CompanyName = supplierInvoice.CompanyDetail.Name;
+                supplierInvoice.SupplierDetail = supplierList.Where(p => p.Id == supplierInvoice.SupplierId).FirstOrDefault();
+                if (supplierInvoice != null && supplierInvoice.SupplierDetail != null)
+                    supplierInvoice.SupplierName = supplierInvoice.SupplierDetail.Name;
+
+                foreach(SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
+                {
+                    supplierIntransitInvoice.Id = supplierInvoice.Id;
+                    supplierIntransitInvoice.CompanyId = supplierInvoice.CompanyId;
+                    supplierIntransitInvoice.CompanyName = supplierInvoice.CompanyName;
+                    supplierIntransitInvoice.SupplierId = supplierInvoice.SupplierId;
+                    supplierIntransitInvoice.SupplierName = supplierInvoice.SupplierName;
+                    supplierIntransitInvoice.InvoiceNo = supplierInvoice.InvoiceNo;
+                    supplierIntransitInvoice.InvoiceDate = supplierInvoice.InvoiceDate;
+                    supplierIntransitInvoice.ETA = supplierInvoice.ETA;
+                    supplierIntransitInvoice.IsAirShipment = supplierInvoice.IsAirShipment;
+                    supplierIntransitInvoice.PoNo = supplierInvoice.PoNo;
+                    supplierIntransitInvoice.ReferenceNo = supplierInvoice.ReferenceNo;
+                    supplierIntransitInvoice.ByCourier = supplierInvoice.ByCourier;
+                    supplierIntransitInvoice.UploadedDate = supplierInvoice.UploadedDate;
+                    supplierIntransitInvoice.ReceivedDate = supplierInvoice.ReceivedDate;
+
+
+                    supplierIntransitInvoice.InvoiceDetailId = supplierInvoiceDetail.Id;
+                    supplierIntransitInvoice.SrNo = supplierInvoiceDetail.SrNo;
+                    supplierIntransitInvoice.PartId = supplierInvoiceDetail.PartId;
+                    supplierIntransitInvoice.PartCode = supplierInvoiceDetail.PartCode;
+                    supplierIntransitInvoice.Qty = supplierInvoiceDetail.Qty;
+                    supplierIntransitInvoice.BoxNo = supplierInvoiceDetail.BoxNo;                  
+
+                    supplierIntransitInvoices.Add(supplierIntransitInvoice);
+                }               
+            }
+
+            return supplierIntransitInvoices;
+        }
+
         public async Task<SupplierInvoice> GetSupplierInvoiceAsync(long supplierInvoiceId)
         {
             var supplierInvoice = await this._supplierInvoiceRepository.GetSupplierInvoiceAsync(supplierInvoiceId);

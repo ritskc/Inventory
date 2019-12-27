@@ -13,6 +13,7 @@ namespace DAL.Models
         public long PartId { get; set; }
         public long BlanketPOId { get; set; }
         public int BlanketPOAdjQty { get; set; }
+        public int SrNo { get; set; }
         public int LineNumber { get; set; }
         public int Qty { get; set; }
         public int ShippedQty { get; set; }

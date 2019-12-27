@@ -76,6 +76,7 @@
     <Compile Include="Models\PoDetail.cs" />
     <Compile Include="Models\Po.cs" />
     <Compile Include="Models\PoTerm.cs" />
+    <Compile Include="Models\SupplierIntransitInvoice.cs" />
     <Compile Include="Models\SupplierInvoiceDetail.cs" />
     <Compile Include="Models\SupplierInvoice.cs" />
     <Compile Include="Models\SupplierInvoicePoDetails.cs" />

@@ -45,6 +45,50 @@ namespace WebApi.Controllers
 
         }
 
+        // GET: api/Todo
+        [HttpGet("intransit/{companyId}")]
+        public async Task<ActionResult<IEnumerable<SupplierInvoice>>> GetIntansitPos(int companyId)
+        {
+            try
+            {
+                var result = await this.supplierInvoiceService.GetIntransitSupplierInvoicesAsync(companyId);
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+
+        }
+
+        // GET: api/Todo
+        [HttpGet("intransit/{companyId}/{partId}")]
+        public async Task<ActionResult<IEnumerable<SupplierIntransitInvoice>>> GetIntansitPos(int companyId,int partId)
+        {
+            try
+            {
+                var result = await this.supplierInvoiceService.GetIntransitSupplierInvoicesByPartIdAsync(companyId,partId);
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+
+        }
+
         // GET api/values/5        
         [HttpGet("{companyId}/{id}")]
         public async Task<ActionResult<SupplierInvoice>> Get(int companyId, int id)

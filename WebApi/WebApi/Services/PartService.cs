@@ -12,18 +12,53 @@ namespace WebApi.Services
     {
 
         private readonly IPartRepository _partRepository;
+        private readonly ISupplierRepository _supplierRepository;
+        private readonly ICustomerRepository _customerRepository;
 
-        public PartService(IPartRepository partRepository)
+        public PartService(IPartRepository partRepository, ISupplierRepository supplierRepository, ICustomerRepository customerRepository)
         {
             _partRepository = partRepository;
+            _supplierRepository = supplierRepository;
+            _customerRepository = customerRepository;
         }
 
        
         public async Task<IEnumerable<Part>> GetAllPartsAsync(int companyId)
         {
-            return await this._partRepository.GetAllPartsAsync(companyId);
-        }  
-        
+            var suppliers = await _supplierRepository.GetAllSupplierAsync(companyId);
+            var customers = await _customerRepository.GetAllCustomerAsync(companyId);
+
+            var parts=  await this._partRepository.GetAllPartsAsync(companyId);
+            foreach(Part part in parts)
+            {
+                foreach(PartSupplierAssignment partSupplierAssignment in part.partSupplierAssignments)
+                {
+                    partSupplierAssignment.SupplierName = suppliers.Where(x => x.Id == partSupplierAssignment.SupplierID).Select(x => x.Name).FirstOrDefault();
+                }
+            }
+
+            foreach (Part part in parts)
+            {
+                foreach (PartCustomerAssignment partCustomerAssignments in part.partCustomerAssignments)
+                {
+                    partCustomerAssignments.CustomerName = suppliers.Where(x => x.Id == partCustomerAssignments.CustomerId).Select(x => x.Name).FirstOrDefault();
+                }
+            }
+
+            return parts;
+        }
+
+        public async Task<IEnumerable<Part>> GetPartBySupplierIdAsync(int supplierId)
+        {
+            return await this._partRepository.GetPartBySupplierIdAsync(supplierId);
+        }
+
+        public async Task<IEnumerable<Part>> GetPartByCustomerIdAsync(int customerId)
+        {
+            return await this._partRepository.GetPartByCustomerIdAsync(customerId);
+        }
+
+
         public async Task<Part> GetPartAsync(long id)
         {
             return await this._partRepository.GetPartAsync(id);

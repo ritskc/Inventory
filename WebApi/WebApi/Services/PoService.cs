@@ -13,19 +13,22 @@ namespace WebApi.Services
         private readonly IPoRepository _poRepository;
         private readonly IPartRepository _partRepository;
         private readonly IEntityTrackerRepository _entityTrackerRepository;
+        private readonly IPartService _partService;
 
-        public PoService(IPoRepository poRepository,IPartRepository partRepository, IEntityTrackerRepository entityTrackerRepository)
+        public PoService(IPoRepository poRepository,IPartRepository partRepository, IEntityTrackerRepository entityTrackerRepository,
+            IPartService partService)
         {
             _poRepository = poRepository;
             _partRepository = partRepository;
             _entityTrackerRepository = entityTrackerRepository;
+            _partService = partService;
         }
 
 
         public async Task<IEnumerable<Po>> GetAllPosAsync(int companyId)
         {            
             var result = await this._poRepository.GetAllPosAsync(companyId);
-            var partList = await this._partRepository.GetAllPartsAsync(companyId);
+            var partList = await this._partService.GetAllPartsAsync(companyId);
             foreach (Po pos in result)
             {
                 foreach (PoDetail poDetail in pos.poDetails)
@@ -40,7 +43,7 @@ namespace WebApi.Services
         public async Task<Po> GetPoAsync(long id)
         {
             var result = await this._poRepository.GetPoAsync(id);
-            var partList = await this._partRepository.GetAllPartsAsync(result.CompanyId);
+            var partList = await this._partService.GetAllPartsAsync(result.CompanyId);
             foreach (PoDetail poDetail in result.poDetails)
             {
                 var partDetail = partList.Where(p => p.Id == poDetail.PartId).FirstOrDefault();

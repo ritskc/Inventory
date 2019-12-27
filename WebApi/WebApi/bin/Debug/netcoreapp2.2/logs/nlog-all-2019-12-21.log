@@ -1,0 +1,80 @@
+2019-12-21 12:50:08.0130||DEBUG|WebApi.Program|init main 
+2019-12-21 12:50:10.1324||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-12-21 12:50:11.2534|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-12-21 12:50:11.2534|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-12-21 12:50:11.3026|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 50.4629ms 200  
+2019-12-21 12:50:11.4192|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 167.6551ms 404  
+2019-12-21 12:51:43.2427|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/supplierinvoice/1 application/json 1265 
+2019-12-21 12:51:43.3643|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-12-21 12:51:43.4279|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-12-21 12:51:43.4315|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-12-21 12:51:43.4730|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) 
+2019-12-21 12:51:43.4950|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2019-12-21 12:51:57.6790|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 14178.6042ms. 
+2019-12-21 12:51:57.7273|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.SupplierInvoice, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-12-21 12:51:57.8700|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) in 14394.3186ms 
+2019-12-21 12:51:57.8700|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-12-21 12:51:57.8700|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 14636.7208ms 200 application/json; charset=utf-8 
+2019-12-21 12:51:57.8889|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLS67OSRSSHT", Request id "0HLS67OSRSSHT:00000001": the application completed without reading the entire request body. 
+2019-12-21 12:52:08.1936|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/supplierinvoice/intransit/1 application/json 1265 
+2019-12-21 12:52:08.1956|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-12-21 12:52:08.1956|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-12-21 12:52:08.1956|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi)' 
+2019-12-21 12:52:08.1956|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetIntansitPos", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi) 
+2019-12-21 12:52:08.1956|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi) with arguments (1) - Validation state: Valid 
+2019-12-21 12:52:18.1536|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 9946.6515ms. 
+2019-12-21 12:52:18.1536|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.SupplierInvoice, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-12-21 12:52:18.1536|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi) in 9955.2525ms 
+2019-12-21 12:52:18.1536|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi)' 
+2019-12-21 12:52:18.1536|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 9968.8477ms 200 application/json; charset=utf-8 
+2019-12-21 12:52:18.1638|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLS67OSRSSHT", Request id "0HLS67OSRSSHT:00000002": the application completed without reading the entire request body. 
+2019-12-21 12:54:16.5164|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/supplierinvoice/intransit/1/1 application/json 1265 
+2019-12-21 12:54:16.5240|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-12-21 12:54:16.5240|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-12-21 12:54:16.5240|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi)' 
+2019-12-21 12:54:16.5379|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetIntansitPos", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi) 
+2019-12-21 12:54:16.5379|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi) with arguments (1, 1) - Validation state: Valid 
+2019-12-21 12:54:18.3494|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1810.0192ms. 
+2019-12-21 12:54:18.3494|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.SupplierInvoice, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-12-21 12:54:18.3507|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi) in 1812.1522ms 
+2019-12-21 12:54:18.3507|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi)' 
+2019-12-21 12:54:18.3507|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 1835.4771ms 200 application/json; charset=utf-8 
+2019-12-21 12:54:18.3507|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLS67OSRSSHU", Request id "0HLS67OSRSSHU:00000001": the application completed without reading the entire request body. 
+2019-12-21 15:07:51.0908||DEBUG|WebApi.Program|init main 
+2019-12-21 15:07:52.4614||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-12-21 15:07:53.1346|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-12-21 15:07:53.1346|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-12-21 15:07:53.1794|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 45.8497ms 200  
+2019-12-21 15:07:53.2834|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 150.3882ms 404  
+2019-12-21 15:09:44.1429|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/supplierinvoice/intransit/1/3 application/json 1265 
+2019-12-21 15:09:44.2026|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-12-21 15:09:44.2369|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-12-21 15:09:44.2369|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi)' 
+2019-12-21 15:09:44.2770|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetIntansitPos", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi) 
+2019-12-21 15:09:44.2982|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi) with arguments (1, 3) - Validation state: Valid 
+2019-12-21 15:09:47.4183|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 3117.5652ms. 
+2019-12-21 15:09:47.4183|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.SupplierInvoice, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-12-21 15:09:47.4933|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi) in 3212.1497ms 
+2019-12-21 15:09:47.4933|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi)' 
+2019-12-21 15:09:47.4933|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 3359.2075ms 200 application/json; charset=utf-8 
+2019-12-21 15:09:47.5142|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLS6A5R3KH2F", Request id "0HLS6A5R3KH2F:00000001": the application completed without reading the entire request body. 

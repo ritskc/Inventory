@@ -14,6 +14,8 @@ namespace DAL.IRepository
         Part GetPart(long partId);
         Task<Part> GetPartByNameAsync(int companyId, string name);
         Task<Part> GetPartByMapCodeAsync(int? supplierId, string mapCode);
+        Task<IEnumerable<Part>> GetPartBySupplierIdAsync(int supplierId);
+        Task<IEnumerable<Part>> GetPartByCustomerIdAsync(int customerId);
         Task AddPartAsync(Part part);
         Task UpdatePartAsync(Part part);
         Task DeletePartAsync(long id);

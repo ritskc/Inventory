@@ -257,7 +257,7 @@ namespace DAL.Repository
                 $"'{customer.Name}', '{customer.AddressLine1}', '{customer.City}', '{customer.State}', '{customer.ZIPCode}', '{customer.ContactPersonName}', '{customer.TelephoneNumber}',     " +
                 $"'{customer.FaxNumber}', '{customer.EmailAddress}', '{customer.TruckType}', '{customer.CollectFreight}', " +
                 $"'{customer.Comments}', '{customer.Surcharge}', '{customer.FOB}', '{customer.Terms}',  '{customer.RePackingCharge}', " +
-                $"'{customer.ShipVia}', '{customer.Invoicingtypeid}', '{customer.EndCustomerName}','{ customer.DisplayLineNo}',,'{ customer.Billing}')");
+                $"'{customer.ShipVia}', '{customer.Invoicingtypeid}', '{customer.EndCustomerName}','{ customer.DisplayLineNo}','{ customer.Billing}')");
 
             sql = sql + " Select Scope_Identity()";
 

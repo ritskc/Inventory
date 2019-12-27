@@ -69,6 +69,33 @@ namespace WebApi.Controllers
 
         }
 
+        [HttpGet("{companyId}/{type}/{typeId}")]
+        public async Task<ActionResult<IEnumerable<Part>>> GetPartsByType(int companyId,string type, int typeId)
+        {
+            try
+            {
+
+                if (type == "customer")
+                {
+                    var result = await this._partService.GetPartByCustomerIdAsync(typeId);
+                    return result.ToList();
+                }
+                else if (type == "supplier")
+                {
+                    var result = await this._partService.GetPartBySupplierIdAsync(typeId);
+                    return result.ToList();
+                }
+                else
+                    return BadRequest();
+                
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+
+        }
+
         // POST api/values
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Part part)
