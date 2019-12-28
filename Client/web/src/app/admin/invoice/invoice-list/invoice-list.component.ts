@@ -44,7 +44,7 @@ export class InvoiceListComponent implements OnInit {
   }
 
   initializeGridColumns() {
-    this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false, minWidth: true }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false, minWidth: true }) );
     this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
     this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "poDate", sortable: true, isDate: true }) );
@@ -123,18 +123,38 @@ export class InvoiceListComponent implements OnInit {
         window.open(this.appConfiguration.barcodeUri + boxNos);
         break;
       case 'downloadInvoice':
+        if (!data.isInvoiceUploaded) {
+          this.toastr.errorToastr('Document unavailable for download!!');
+          return;
+        }
         window.open(`${this.configuration.fileApiUri}/Invoice/${data.id}`);
         break;
       case 'downloadPackingSlip':
+        if (!data.isPackingSlipUploaded) {
+          this.toastr.errorToastr('Document unavailable for download!!');
+          return;
+        }
         window.open(`${this.configuration.fileApiUri}/PackingSlip/${data.id}`);
         break;
       case 'downloadTenPlus':
+        if (!data.isTenPlusUploaded) {
+          this.toastr.errorToastr('Document unavailable for download!!');
+          return;
+        }
         window.open(`${this.configuration.fileApiUri}/TenPlus/${data.id}`);
         break;
       case 'downloadBl':
+        if (!data.isBLUploaded) {
+          this.toastr.errorToastr('Document unavailable for download!!');
+          return;
+        }
         window.open(`${this.configuration.fileApiUri}/BL/${data.id}`);
         break;
       case 'downloadTc':
+        if (!data.isTCUploaded) {
+          this.toastr.errorToastr('Document unavailable for download!!');
+          return;
+        }
         window.open(`${this.configuration.fileApiUri}/TC/${data.id}`);
         break;
       case 'receiveInvoice':

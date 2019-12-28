@@ -137,11 +137,11 @@ export const navItems: NavData[] = [
         url: '/admin',
         icon: 'icon-user'
       },
-      {
-        name: 'Upload',
-        url: '/upload',
-        icon: 'icon-user'
-      },
+      // {
+      //   name: 'Upload',
+      //   url: '/upload',
+      //   icon: 'icon-user'
+      // },
       {
         name: 'Privilages',
         url: '/admin',

@@ -122,20 +122,21 @@ export class OrderDetailComponent implements OnInit {
 
   initializePartsGrid() {
     this.gridColumns = [];
+    this.gridColumns.push(new DataColumn({headerText: "Sr No", value: "srNo", sortable: false }));
     this.gridColumns.push(new DataColumn({headerText: "Part Code", value: "partCode", sortable: true }));
     this.gridColumns.push(new DataColumn({headerText: "Description", value: "description", sortable: true}));
-    this.gridColumns.push(new DataColumn({headerText: "Qty", value: "qty", sortable: true, isEditable: true}));
-    this.gridColumns.push(new DataColumn({ headerText: "Price", value: "unitPrice", sortable: true }));
-    this.gridColumns.push(new DataColumn({ headerText: "Total", value: "total", sortable: true }));
+    this.gridColumns.push(new DataColumn({headerText: "Qty", value: "qty",  isEditable: true}));
+    this.gridColumns.push(new DataColumn({ headerText: "Price", value: "unitPrice" }));
+    this.gridColumns.push(new DataColumn({ headerText: "Total", value: "total" }));
     this.gridColumns.push(new DataColumn({headerText: "Due Date", value: "dueDate", sortable: true, isDate: true}));
-    this.gridColumns.push(new DataColumn({ headerText: "Notes", value: "note", sortable: false }));
+    this.gridColumns.push(new DataColumn({ headerText: "Notes", value: "note" }));
     if (this.SelectedSupplier > -1) {
-      this.gridColumns.push(new DataColumn({headerText: "Reference", value: "referenceNo", sortable: false}));
+      this.gridColumns.push(new DataColumn({headerText: "Reference", value: "referenceNo"}));
     }
     if (this.SelectedCustomer > -1) {
-      this.gridColumns.push(new DataColumn({ headerText: "Blank PO", value: "blanketPOId", sortable: true }));
-      this.gridColumns.push(new DataColumn({ headerText: "Open Qty", value: "blanketPOAdjQty", sortable: true }));
-      this.gridColumns.push(new DataColumn({ headerText: "Line No", value: "lineNumber", sortable: true }));
+      this.gridColumns.push(new DataColumn({ headerText: "Blank PO", value: "blanketPOId" }));
+      this.gridColumns.push(new DataColumn({ headerText: "Open Qty", value: "blanketPOAdjQty" }));
+      this.gridColumns.push(new DataColumn({ headerText: "Line No", value: "lineNumber" }));
     }
     this.gridColumns.push(new DataColumn({headerText: "Actions", isActionColumn: true, customStyling: 'center', actions: [
           new DataColumnAction({actionText: "Remove", actionStyle: ClassConstants.Danger, event: "removeSelectedPart"})
@@ -335,7 +336,7 @@ export class OrderDetailComponent implements OnInit {
 
   addPartToOrder() {
     if (this.quantity < 1) {
-      alert('Part quantity should be more than 0 (zero)');
+      this.toastr.errorToastr('Part quantity should be more than 0 (zero)');
       return;
     }
 
@@ -380,14 +381,22 @@ export class OrderDetailComponent implements OnInit {
       this.purchaseOrder.isBlanketPO = this.isBlanketPO;
     }
 
+    this.resetSerialNumber();
     this.clearPartDetailSection();
+  }
+
+  resetSerialNumber() {
+    var srNo: number = 0;
+    if (this.purchaseOrder.poDetails)
+      this.purchaseOrder.poDetails.forEach(item => item.srNo = ++srNo);
+    if (this.purchaseOrder.orderDetails)
+      this.purchaseOrder.orderDetails.forEach(item => item.srNo = ++srNo);
   }
 
   clearPartDetailSection() {
     this.orderForm.get('partCode').setValue(-1);
     this.orderForm.get("partDescription").setValue(-1);
     this.quantity = 0;
-    this.dueDate = DateHelper.getToday();
     this.notes = '';
     this.price = 0;
     this.reference = '';
@@ -403,11 +412,16 @@ export class OrderDetailComponent implements OnInit {
   }
 
   removePart(data) {
-    var index = this.purchaseOrder.poDetails.indexOf(data);
-    if (this.orderFormMode === OrderFormMode.Supplier)
+    if (this.orderFormMode === OrderFormMode.Supplier) {
+      var index = this.purchaseOrder.poDetails.indexOf(data);
       this.purchaseOrder.poDetails.splice(index, 1);
-    else if (this.orderFormMode === OrderFormMode.Customer)
+    }
+    else if (this.orderFormMode === OrderFormMode.Customer) {
+      var index = this.purchaseOrder.orderDetails.indexOf(data);
       this.purchaseOrder.orderDetails.splice(index, 1);
+    }
+    
+    this.resetSerialNumber();
   }
 
   removeTermAndCondition(index) {
@@ -451,8 +465,7 @@ export class OrderDetailComponent implements OnInit {
         this.uploadDocuments(result);
       }
     }, (error) => {
-      this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
-      console.log(error);
+      this.toastr.errorToastr(error.error);
     }, () => {
       setTimeout(() => {
         if (this.SelectedCustomer > -1)
@@ -476,7 +489,11 @@ export class OrderDetailComponent implements OnInit {
       this.toastr.errorToastr('PO date & Due date are mandatory');
       return false;
     }
-    if (this.purchaseOrder.orderDetails.length < 1) {
+    if (this.orderFormMode === OrderFormMode.Customer && this.purchaseOrder.orderDetails.length < 1) {
+      this.toastr.errorToastr('Add at least one part detail to create this order.');
+      return false;
+    }
+    if (this.orderFormMode === OrderFormMode.Supplier && this.purchaseOrder.poDetails.length < 1) {
       this.toastr.errorToastr('Add at least one part detail to create this order.');
       return false;
     }

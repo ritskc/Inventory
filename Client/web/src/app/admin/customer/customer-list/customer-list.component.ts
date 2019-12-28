@@ -29,10 +29,10 @@ export class CustomerListComponent implements OnInit {
   }
 
   initializeGridColumns() {
-    this.columns.push( new DataColumn({ headerText: "Name", value: "name", isLink: true, sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Address", value: "addressLine1", sortable: true, minWidth: true }) );
+    this.columns.push( new DataColumn({ headerText: "Name", value: "name", isLink: true, sortable: true, customStyling: 'column-width-200' }) );
+    this.columns.push( new DataColumn({ headerText: "Address", value: "addressLine1", sortable: true, customStyling: 'column-width-200' }) );
     this.columns.push( new DataColumn({ headerText: "Phone No", value: "telephoneNumber", sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Email", value: "emailAddress", sortable: true, minWidth: true }) );
+    this.columns.push( new DataColumn({ headerText: "Email", value: "emailAddress", sortable: true, customStyling: 'column-width-200' }) );
     this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, actions: [
       new DataColumnAction({ actionText: 'Orders', actionStyle: ClassConstants.Primary, event: 'managePurchaseOrder' }),
       new DataColumnAction({ actionText: 'Shipment', actionStyle: ClassConstants.Primary, event: 'manageShipment' }),

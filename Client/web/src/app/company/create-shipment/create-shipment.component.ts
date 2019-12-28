@@ -223,10 +223,17 @@ export class CreateShipmentComponent implements OnInit {
     this.partQuantityInHand = 0;
     this.partOpenQuantity = 0;
     this.resetPartDetail();
+    this.resetSerialNumber();
+  }
+
+  resetSerialNumber() {
+    var serialNo: number = 0;
+    this.shipment.packingSlipDetails.forEach(item => item.srNo = ++serialNo);
   }
 
   createColumnsForPartsAddition() {
     this.columnsForPartsGrid = [];
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Sr No", value: "srNo", customStyling: 'center' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Blank Order", value: "isBlankOrder", isDisabled: true, isBoolean: true, customStyling: 'center' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Order Id", value: "orderNo" }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Part", value: "partDescription" }) );

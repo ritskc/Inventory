@@ -19,50 +19,50 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 export class PurchaseOrderListComponent implements OnInit {
 
   private purchaseOrders: PurchaseOrder[] = [];
+  private purchaseOrderViewModels: SupplierPurchaseOrderViewModel[] = [];
   private gridColumns: DataColumn[] = [];
   private currentlyLoggedInCompanyid: number = 0;
-  private supplierId: number = 0;
+  private supplierId: number = -1;
   private suppliers: Supplier[];
-  private supplierForm: FormGroup;
+  private showFullDetails: boolean = false;
 
   constructor(private service: SupplierService, private companyService: CompanyService, private formBuilder: FormBuilder,
               private loaderService: httpLoaderService, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrManager) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompanyid = this.companyService.getCurrentlyLoggedInCompanyId();
-    this.initializeSupplierForms();
     this.loadAllSuppliers();
     this.initializeGridColumns();
-  }
-
-  initializeSupplierForms() {
-    this.supplierForm = this.formBuilder.group({
-      supplierList: FormControl
-    });
   }
 
   initializeGridColumns() {
     this.gridColumns = [];
     this.gridColumns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Email", value: "emailIds", sortable: true, customStyling: 'column-width-100' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Email", value: "email", customStyling: 'column-width-100' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", sortable: true, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closing Date", value: "closingDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Edit', actionStyle: ClassConstants.Primary, event: 'editPurchaseOrder', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deletePurchaseOrder', icon: 'fa fa-trash' })
     ] }) );
   }
 
-  extractSupplierId() {
-    this.supplierId = this.activatedRoute.snapshot.params.id;
-    if (this.supplierId > 0) {
-      this.supplierForm.get('supplierList').setValue(this.supplierId);
-      this.supplierForm.get('supplierList').disable();
-    }
-    this.loadAllPurchaseOrders();
+  initializeGridColumnsForDetails() {
+    this.gridColumns = [];
+    this.gridColumns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Closing Date", value: "closingDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Part Code", value: "partCode"}) );
+    this.gridColumns.push( new DataColumn({ headerText: "Part Desc", value: "partDescription", minWidth: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Qty", value: "qty"}) );
+    this.gridColumns.push( new DataColumn({ headerText: "Price", value: "unitPrice"}) );
+    this.gridColumns.push( new DataColumn({ headerText: "Total", value: "total"}) );
+    this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
   }
 
   loadAllSuppliers(){
@@ -70,26 +70,54 @@ export class PurchaseOrderListComponent implements OnInit {
     this.service.getAllSuppliers(this.currentlyLoggedInCompanyid)
         .subscribe((suppliers) => {
           this.suppliers = suppliers;
-          this.loaderService.hide();
-          this.extractSupplierId();
+          this.loadAllPurchaseOrders();
         }, (error) => {
-          console.log(error);
-          this.loaderService.hide();
-        });
+          this.toastr.errorToastr(error.error);
+        }, () => this.loaderService.hide());
   }
 
   loadAllPurchaseOrders() {
     this.loaderService.show();
     this.service.getPurchaseOrders(this.currentlyLoggedInCompanyid)
         .subscribe((purchaseOrders) => {
+          this.purchaseOrderViewModels = [];
           this.purchaseOrders = this.supplierId > 0? purchaseOrders.filter(p => p.supplierId == this.supplierId): purchaseOrders;
           this.purchaseOrders.forEach(order => {
-            order.supplierName = this.suppliers.find(s => s.id === order.supplierId).name;
+            if (this.showFullDetails) {
+              order.poDetails.forEach(detail => {
+                var viewModel = new SupplierPurchaseOrderViewModel();
+                viewModel.id = order.id;
+                viewModel.supplierId = order.supplierId;
+                viewModel.supplierName = this.suppliers.find(s => s.id === order.supplierId).name;
+                viewModel.poNo = order.poNo;
+                viewModel.email = order.emailIds;
+                viewModel.poDate = order.poDate;
+                viewModel.dueDate = order.dueDate;
+                viewModel.closingDate = order.closingDate;
+                viewModel.closed = detail.isClosed;
+                viewModel.partCode = detail.part.code;
+                viewModel.partDescription = detail.part.description;
+                viewModel.qty = detail.qty;
+                viewModel.unitPrice = detail.unitPrice;
+                viewModel.total = detail.qty * detail.unitPrice;
+                this.purchaseOrderViewModels.push(viewModel);
+              })
+            } else {
+              var viewModel = new SupplierPurchaseOrderViewModel();
+                viewModel.id = order.id;
+                viewModel.supplierId = order.supplierId;
+                viewModel.supplierName = this.suppliers.find(s => s.id === order.supplierId).name;
+                viewModel.poNo = order.poNo;
+                viewModel.email = order.emailIds;
+                viewModel.poDate = order.poDate;
+                viewModel.dueDate = order.dueDate;
+                viewModel.closingDate = order.closingDate;
+                viewModel.closed = order.isClosed;
+              this.purchaseOrderViewModels.push(viewModel);
+            }
           })
-          this.loaderService.hide();
-        }, (error) => {
-          this.loaderService.hide();
-        });
+        }, (error) => this.toastr.errorToastr(error.error),
+        () => this.loaderService.hide());
   }
 
   rowSelected(event) {
@@ -98,11 +126,9 @@ export class PurchaseOrderListComponent implements OnInit {
 
   redirectToPurchaseOrderDetails(row: any){
     this.router.navigateByUrl(`orders/detail/supplier/${row.supplierId}/edit/${row.id}`);
-    //this.router.navigateByUrl(`/suppliers/pos/${ this.currentlyLoggedInCompanyid }/${ row.id }`);
   }
 
   supplierSelected() {
-    this.supplierId = this.supplierForm.get('supplierList').value;
     this.loadAllPurchaseOrders();
   }
 
@@ -136,4 +162,30 @@ export class PurchaseOrderListComponent implements OnInit {
         break;
     }
   }
+
+  showFullOrderDetails(event) {
+    if (this.showFullDetails) {
+      this.initializeGridColumnsForDetails();
+    } else {
+      this.initializeGridColumns();
+    }
+    this.loadAllPurchaseOrders();
+  }
+}
+
+class SupplierPurchaseOrderViewModel {
+  id: number;
+  supplierId: number;
+  supplierName: string;
+  poNo: string;
+  email: string;
+  poDate: string;
+  dueDate: string;
+  closingDate: string;
+  closed: boolean;
+  partCode: string;
+  partDescription: string;
+  qty: number;
+  unitPrice: number;
+  total: number;
 }

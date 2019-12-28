@@ -18,9 +18,11 @@ export class PurchaseOrdersComponent implements OnInit {
 
   private currentlyLoggedInCompanyid: number = 0;
   private customers: Customer[] = [];
+  private pos: PurchaseOrder[] = [];
   private purchaseOrders: CustomerPurchaseOrderViewModel[] = [];
   private gridColumns: DataColumn[] = [];
   private customerId: number;
+  private showFullDetails: boolean = false;
 
   constructor(private customerService: CustomerService, private companyService: CompanyService, private router: Router, 
     private loaderService: httpLoaderService, private activatedRoute: ActivatedRoute, private toastr: ToastrManager) { }
@@ -41,51 +43,78 @@ export class PurchaseOrdersComponent implements OnInit {
       }),
       mergeMap(customers => this.getAllPurchaseOrders())
     ).subscribe(purchaseOrders => {
+      this.pos = purchaseOrders;
       this.populatePurchaseOrderViewModel(purchaseOrders);
+      this.customerId = -1;
     }, (error) => this.toastr.errorToastr(error.error)
     ,() => this.loaderService.hide());
   }
 
   initializeGridColumns() {
+    this.gridColumns = [];
     this.gridColumns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Number", value: "poNo", isLink: true, sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Number", value: "poNo", isLink: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Part Code", value: "partCode", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Part Description", value: "partDescription", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Open Qty", value: "openQuantity", sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Due", value: "dueDate", sortable: true, isDate: true }) );
+  }
+
+  initializeGridForDetails() {
+    this.gridColumns = [];
+    this.gridColumns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Number", value: "poNo", isLink: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Due", value: "dueDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Code", value: "partCode", sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Description", value: "partDescription", sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Open Qty", value: "openQuantity" }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Order Qty", value: "orderedQty" }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Line No", value: "lineNo" }) );
   }
 
   loadAllPurchaseOrders() {
     this.loaderService.show();
     this.getAllPurchaseOrders()
         .subscribe((purchaseOrders) => {
+          this.pos = purchaseOrders;
           this.populatePurchaseOrderViewModel(purchaseOrders);
-          this.loaderService.hide();
-        }, (error) => {
-          this.loaderService.hide();
-        });
+        }, (error) => this.toastr.errorToastr(error.error),
+        () => this.loaderService.hide());
   }
 
   populatePurchaseOrderViewModel(purchaseOrders: PurchaseOrder[]) {
+    this.loaderService.show();
     this.purchaseOrders = [];
     var customerOrders = this.customerId > 0? purchaseOrders.filter(p => p.customerId == this.customerId): purchaseOrders;
     customerOrders.forEach((order) => {
       order.customerName = this.customers.find(c => c.id == order.customerId).name;
-      order.orderDetails.forEach((detail) => {
+      if (this.showFullDetails) {
+        order.orderDetails.forEach((detail) => {
+          var customerPurchaseOrderViewModel = new CustomerPurchaseOrderViewModel();
+          customerPurchaseOrderViewModel.customerId = order.customerId;
+          customerPurchaseOrderViewModel.id = order.id;
+          customerPurchaseOrderViewModel.poNo = order.poNo;
+          customerPurchaseOrderViewModel.poDate = order.poDate;
+          customerPurchaseOrderViewModel.dueDate = order.closingDate;
+          customerPurchaseOrderViewModel.partCode = detail.part.code;
+          customerPurchaseOrderViewModel.partDescription = detail.part.description;
+          customerPurchaseOrderViewModel.openQuantity = detail.part.openingQty;
+          customerPurchaseOrderViewModel.customerName = order.customerName;
+          customerPurchaseOrderViewModel.orderedQty = detail.qty;
+          customerPurchaseOrderViewModel.lineNo = detail.lineNumber;
+          this.purchaseOrders.push(customerPurchaseOrderViewModel);
+        });
+      } else {
         var customerPurchaseOrderViewModel = new CustomerPurchaseOrderViewModel();
-        customerPurchaseOrderViewModel.customerId = order.customerId;
-        customerPurchaseOrderViewModel.id = order.id;
-        customerPurchaseOrderViewModel.poNo = order.poNo;
-        customerPurchaseOrderViewModel.poDate = order.poDate;
-        customerPurchaseOrderViewModel.dueDate = order.closingDate;
-        customerPurchaseOrderViewModel.partCode = detail.part.code;
-        customerPurchaseOrderViewModel.partDescription = detail.part.description;
-        customerPurchaseOrderViewModel.openQuantity = detail.part.openingQty;
-        customerPurchaseOrderViewModel.customerName = order.customerName;
-        this.purchaseOrders.push(customerPurchaseOrderViewModel);
-      });
+          customerPurchaseOrderViewModel.customerId = order.customerId;
+          customerPurchaseOrderViewModel.id = order.id;
+          customerPurchaseOrderViewModel.poNo = order.poNo;
+          customerPurchaseOrderViewModel.poDate = order.poDate;
+          customerPurchaseOrderViewModel.dueDate = order.closingDate;
+          customerPurchaseOrderViewModel.customerName = order.customerName;
+          this.purchaseOrders.push(customerPurchaseOrderViewModel);
+      }
     });
+    this.loaderService.hide();
   }
 
   addCustomerOrder() {
@@ -103,6 +132,16 @@ export class PurchaseOrdersComponent implements OnInit {
   private getAllPurchaseOrders() {
     return this.customerService.getAllPurchaseOrders(this.currentlyLoggedInCompanyid);
   }
+
+  showFullOrderDetails(event) {
+    console.log(event);
+    if (this.showFullDetails)
+      this.initializeGridForDetails();
+    else
+      this.initializeGridColumns();
+    
+    this.populatePurchaseOrderViewModel(this.pos);
+  }
 }
 
 class CustomerPurchaseOrderViewModel {
@@ -115,4 +154,7 @@ class CustomerPurchaseOrderViewModel {
   customerId: number = 0;
   id: number = 0
   customerName: string = '';
+  orderedQty: number = 0;
+  lineNo: number = 0;
+  serialNo: number = 0;
 }

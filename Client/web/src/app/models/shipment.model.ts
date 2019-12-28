@@ -43,4 +43,5 @@ export class PackingSlipDetail {
     surchargePerUnit: number = 0;
     totalSurcharge: number = 0;
     excessQty: number = 0;
+    srNo: number = 0;
 }

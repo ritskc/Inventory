@@ -53,6 +53,7 @@ export class PurchaseOrderDetail {
     part: Part
     shippedQty: number = 0;
     orderId: number = 0;
+    srNo: number = 0;
 }
 
 export class PurchaseOrderTerm {
