@@ -12,7 +12,9 @@
   </div>
   
 <simple-grid [data]="parts" [columns]="columns" [addRequired]="false" [exportRequired]="false"
-  (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="addPart()">
+  (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="addPart()" (actionButtonClickedEvent)="[actionButtonClicked($event)]">
 
   </simple-grid>
 </div>
+
+<loader></loader>

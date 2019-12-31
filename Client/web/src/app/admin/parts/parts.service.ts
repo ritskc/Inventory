@@ -31,4 +31,12 @@ export class PartsService {
   delete(id: number) {
     return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }`);
   }
+
+  updateOpeningQuantity(part: Part, companyId: number, partId: number, quantity: number) {
+    return this.apiService.put<Part>(part, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }/${ companyId }/OpeningQty/${ partId }/${ quantity }`);
+  }
+
+  updateOpeningQuantityByPartCode(part: Part, companyId: number, partId: number, quantity: number) {
+    return this.apiService.put<Part>(part, `${ this.configService.Settings.apiServerHost }${ this.configService.Settings.partsUri }/${ companyId }/${ partId }/${ quantity }`);
+  }
 }

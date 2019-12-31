@@ -10,6 +10,7 @@ import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { PurchaseOrder } from '../../../models/purchase-order';
 import { ClassConstants } from '../../../common/constants';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import * as DateHelper from '../../../common/helpers/dateHelper';
 
 @Component({
   selector: 'app-purchase-order-list',
@@ -25,6 +26,8 @@ export class PurchaseOrderListComponent implements OnInit {
   private supplierId: number = -1;
   private suppliers: Supplier[];
   private showFullDetails: boolean = false;
+  private showOnlyOpenOrders: boolean = false;
+  private showLateOrders: boolean = false;
 
   constructor(private service: SupplierService, private companyService: CompanyService, private formBuilder: FormBuilder,
               private loaderService: httpLoaderService, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrManager) { }
@@ -44,6 +47,7 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closing Date", value: "closingDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
+    //this.gridColumns.push( new DataColumn({ headerText: "Late", value: "lateOrder", customStyling: 'center', isDisabled: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Edit', actionStyle: ClassConstants.Primary, event: 'editPurchaseOrder', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deletePurchaseOrder', icon: 'fa fa-trash' })
@@ -59,9 +63,10 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Closing Date", value: "closingDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Part Code", value: "partCode"}) );
     this.gridColumns.push( new DataColumn({ headerText: "Part Desc", value: "partDescription", minWidth: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Qty", value: "qty"}) );
-    this.gridColumns.push( new DataColumn({ headerText: "Price", value: "unitPrice"}) );
-    this.gridColumns.push( new DataColumn({ headerText: "Total", value: "total"}) );
+    this.gridColumns.push( new DataColumn({ headerText: "Qty", value: "qty", customStyling: 'right' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Transit", value: "inTransitQty", customStyling: 'right' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Rcvd", value: "receivedQty", customStyling: 'right' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Ack", value: "acknowledgedQty", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
   }
 
@@ -82,6 +87,8 @@ export class PurchaseOrderListComponent implements OnInit {
         .subscribe((purchaseOrders) => {
           this.purchaseOrderViewModels = [];
           this.purchaseOrders = this.supplierId > 0? purchaseOrders.filter(p => p.supplierId == this.supplierId): purchaseOrders;
+          this.purchaseOrders = this.showOnlyOpenOrders ? this.purchaseOrders.filter(p => p.isClosed === false): this.purchaseOrders;
+
           this.purchaseOrders.forEach(order => {
             if (this.showFullDetails) {
               order.poDetails.forEach(detail => {
@@ -93,15 +100,17 @@ export class PurchaseOrderListComponent implements OnInit {
                 viewModel.email = order.emailIds;
                 viewModel.poDate = order.poDate;
                 viewModel.dueDate = order.dueDate;
+                viewModel.lateOrder = viewModel.dueDate && DateHelper.convertToDateTime(viewModel.dueDate) < new Date()? true: false;
                 viewModel.closingDate = order.closingDate;
                 viewModel.closed = detail.isClosed;
                 viewModel.partCode = detail.part.code;
                 viewModel.partDescription = detail.part.description;
                 viewModel.qty = detail.qty;
-                viewModel.unitPrice = detail.unitPrice;
-                viewModel.total = detail.qty * detail.unitPrice;
+                viewModel.acknowledgedQty = detail.ackQty;
+                viewModel.receivedQty = parseInt(detail.receivedQty);
+                viewModel.inTransitQty = detail.inTransitQty;
                 this.purchaseOrderViewModels.push(viewModel);
-              })
+              });
             } else {
               var viewModel = new SupplierPurchaseOrderViewModel();
                 viewModel.id = order.id;
@@ -113,11 +122,14 @@ export class PurchaseOrderListComponent implements OnInit {
                 viewModel.dueDate = order.dueDate;
                 viewModel.closingDate = order.closingDate;
                 viewModel.closed = order.isClosed;
-              this.purchaseOrderViewModels.push(viewModel);
+                viewModel.lateOrder = viewModel.dueDate && DateHelper.convertToDateTime(viewModel.dueDate) < new Date()? true: false;
+                this.purchaseOrderViewModels.push(viewModel);
             }
           })
         }, (error) => this.toastr.errorToastr(error.error),
         () => this.loaderService.hide());
+
+        this.purchaseOrderViewModels = this.showLateOrders? this.purchaseOrderViewModels.filter(p => p.lateOrder === true): this.purchaseOrderViewModels;
   }
 
   rowSelected(event) {
@@ -171,6 +183,14 @@ export class PurchaseOrderListComponent implements OnInit {
     }
     this.loadAllPurchaseOrders();
   }
+
+  showOnlyOpenOrdersEvent(event) {
+    this.loadAllPurchaseOrders();
+  }
+
+  showLateOrdersEvent(event) {
+    this.loadAllPurchaseOrders();
+  }
 }
 
 class SupplierPurchaseOrderViewModel {
@@ -188,4 +208,8 @@ class SupplierPurchaseOrderViewModel {
   qty: number;
   unitPrice: number;
   total: number;
+  lateOrder: boolean = false;
+  inTransitQty: number;
+  receivedQty: number;
+  acknowledgedQty: number;
 }

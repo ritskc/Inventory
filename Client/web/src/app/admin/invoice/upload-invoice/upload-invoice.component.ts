@@ -10,6 +10,7 @@ import { HttpRequest, HttpClient, HttpEventType, HttpResponse } from '@angular/c
 import { Subject } from 'rxjs';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import * as DateHelper from '../../../common/helpers/dateHelper';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-upload-invoice',
@@ -32,10 +33,13 @@ export class UploadInvoiceComponent implements OnInit {
   private documents = [];
 
   constructor(private companyService: CompanyService, private invoiceService: InvoiceService, private fileService: FileUploadService,
-              private http: HttpClient, private toastr: ToastrManager) { }
+              private http: HttpClient, private toastr: ToastrManager, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompany = this.companyService.getCurrentlyLoggedInCompanyId();
+    if (this.activatedRoute.snapshot.params.mode == 1) {
+      this.loadInvoice()
+    }
   }
 
   initializeColumns(mode: UploadMode = UploadMode.Confirm) {
@@ -125,6 +129,19 @@ export class UploadInvoiceComponent implements OnInit {
       this.fileService.uploadFile(item, invoiceNumber);
       this.toastr.successToastr('File(s) uploaded successfully!!');
     });
+  }
+
+  loadInvoice() {
+    var selectedInvoice = this.activatedRoute.snapshot.params.invoiceId;
+    this.invoiceService.getInvoice(this.currentlyLoggedInCompany, selectedInvoice)
+        .subscribe(
+          invoice => {
+            this.invoice = invoice;
+            
+          },
+          error => this.toastr.errorToastr(error.error),
+          () => {}
+        );
   }
 
   private checkForInvalidParts() {

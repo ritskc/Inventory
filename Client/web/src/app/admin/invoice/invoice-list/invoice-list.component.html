@@ -1,6 +1,6 @@
 <form [formGroup]="invoiceForm">
-  <select class="form-group" (change)="supplierSelected()" formControlName="supplierList">
-    <option value="-1">Select Supplier</option>
+  <select class="form-group" (change)="supplierSelected()" formControlName="supplierList" class="form-control" style="width: 350px; margin-bottom: 5px;">
+    <option value="-1">Show for all Suppliers</option>
     <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{supplier.name}}</option>
   </select>
   <div class="standard-margin">

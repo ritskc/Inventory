@@ -23,6 +23,7 @@ export class PurchaseOrdersComponent implements OnInit {
   private gridColumns: DataColumn[] = [];
   private customerId: number;
   private showFullDetails: boolean = false;
+  private showOpenOrders: boolean = false;
 
   constructor(private customerService: CustomerService, private companyService: CompanyService, private router: Router, 
     private loaderService: httpLoaderService, private activatedRoute: ActivatedRoute, private toastr: ToastrManager) { }
@@ -56,6 +57,7 @@ export class PurchaseOrdersComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Number", value: "poNo", isLink: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due", value: "dueDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
   }
 
   initializeGridForDetails() {
@@ -66,9 +68,10 @@ export class PurchaseOrdersComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Due", value: "dueDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Code", value: "partCode", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Description", value: "partDescription", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Open Qty", value: "openQuantity" }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Order Qty", value: "orderedQty" }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Line No", value: "lineNo" }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Open", value: "openQuantity" }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Order", value: "orderedQty" }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Shipped", value: "shippedQty" }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
   }
 
   loadAllPurchaseOrders() {
@@ -85,6 +88,8 @@ export class PurchaseOrdersComponent implements OnInit {
     this.loaderService.show();
     this.purchaseOrders = [];
     var customerOrders = this.customerId > 0? purchaseOrders.filter(p => p.customerId == this.customerId): purchaseOrders;
+    customerOrders = this.showOpenOrders ? customerOrders.filter(p => p.isClosed === false): customerOrders;
+
     customerOrders.forEach((order) => {
       order.customerName = this.customers.find(c => c.id == order.customerId).name;
       if (this.showFullDetails) {
@@ -100,7 +105,8 @@ export class PurchaseOrdersComponent implements OnInit {
           customerPurchaseOrderViewModel.openQuantity = detail.part.openingQty;
           customerPurchaseOrderViewModel.customerName = order.customerName;
           customerPurchaseOrderViewModel.orderedQty = detail.qty;
-          customerPurchaseOrderViewModel.lineNo = detail.lineNumber;
+          customerPurchaseOrderViewModel.isClosed = detail.isClosed;
+          customerPurchaseOrderViewModel.shippedQty = detail.shippedQty;
           this.purchaseOrders.push(customerPurchaseOrderViewModel);
         });
       } else {
@@ -111,6 +117,7 @@ export class PurchaseOrdersComponent implements OnInit {
           customerPurchaseOrderViewModel.poDate = order.poDate;
           customerPurchaseOrderViewModel.dueDate = order.closingDate;
           customerPurchaseOrderViewModel.customerName = order.customerName;
+          customerPurchaseOrderViewModel.isClosed = order.isClosed;
           this.purchaseOrders.push(customerPurchaseOrderViewModel);
       }
     });
@@ -142,6 +149,10 @@ export class PurchaseOrdersComponent implements OnInit {
     
     this.populatePurchaseOrderViewModel(this.pos);
   }
+
+  showOnlyOpenOrdersEvent() {
+    this.populatePurchaseOrderViewModel(this.pos);
+  }
 }
 
 class CustomerPurchaseOrderViewModel {
@@ -155,6 +166,6 @@ class CustomerPurchaseOrderViewModel {
   id: number = 0
   customerName: string = '';
   orderedQty: number = 0;
-  lineNo: number = 0;
-  serialNo: number = 0;
+  isClosed: boolean = false;
+  shippedQty: number = 0;
 }

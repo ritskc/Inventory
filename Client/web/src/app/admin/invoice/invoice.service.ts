@@ -16,6 +16,10 @@ export class InvoiceService {
     return this.apiService.get<Invoice[]>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/${ companyId }`);
   }
 
+  getInvoice(companyId: number, invoiceId: number): Observable<Invoice> {
+    return this.apiService.get<Invoice>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/${ companyId }/${ invoiceId }`);
+  }
+
   getAllSupplierInvoices(companyId: number, supplierId: number): Observable<Invoice[]> {
     return this.apiService.get<Invoice[]>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/${ companyId }/${ supplierId }`);
   }

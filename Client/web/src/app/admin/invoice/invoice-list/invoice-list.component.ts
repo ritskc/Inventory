@@ -45,7 +45,7 @@ export class InvoiceListComponent implements OnInit {
 
   initializeGridColumns() {
     this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false, minWidth: true }) );
-    this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false, minWidth: true }) );
+    this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false, minWidth: true, isLink: true }) );
     this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
     this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "poDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isDate: true }) );
@@ -86,7 +86,10 @@ export class InvoiceListComponent implements OnInit {
     this.loaderService.show();
     this.invoiceService.getAllInvoices(this.currentlyLoggedInCompany)
         .subscribe(
-          (invoices) => this.invoices = invoices,
+          (invoices) => { 
+            this.invoices = invoices;
+            this.invoiceForm.get('supplierList').setValue(-1);
+          },
           (error) => console.log(error),
           () => this.loaderService.hide()
         );
@@ -97,7 +100,7 @@ export class InvoiceListComponent implements OnInit {
     var supplierId = this.invoiceForm.get('supplierList').value;
     this.invoiceService.getAllInvoices(this.currentlyLoggedInCompany)
         .subscribe((invoices) => {
-          this.invoices = invoices.filter(s => s.supplierId == supplierId);
+          this.invoices = supplierId > 0 ? invoices.filter(s => s.supplierId == supplierId): invoices;
         }, (error) => this.toastr.errorToastr(error.error),
         () => this.loaderService.hide());
   }
@@ -105,9 +108,9 @@ export class InvoiceListComponent implements OnInit {
   uploadInvoice() {
     var selectedSupplierId = this.invoiceForm.get('supplierList').value;
     if (selectedSupplierId > -1)
-      this.router.navigateByUrl(`/invoice/upload/${selectedSupplierId}`);
+      this.router.navigateByUrl(`/invoice/upload/${selectedSupplierId}/0`);
     else
-      alert('Please select a supplier to proceed to upload');
+      this.toastr.errorToastr('Please select a supplier to proceed to upload');
   }
 
   actionButtonClicked(data) {
@@ -182,6 +185,10 @@ export class InvoiceListComponent implements OnInit {
       .subscribe(() => this.toastr.successToastr('Invoice deleted successfully'),
                  (error) => this.toastr.errorToastr(error.error));
     }
+  }
+
+  rowSelected(row: any) {
+    this.router.navigateByUrl(`/invoice/upload/${row.supplierId}/1/${row.id}`);
   }
 
   print() {

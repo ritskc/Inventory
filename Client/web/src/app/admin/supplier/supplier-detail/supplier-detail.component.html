@@ -118,7 +118,7 @@
               <div class="input-group">
                 <input type="text" class="form-control standard-top-margin" [(ngModel)]="term.terms" [ngModelOptions]="{standalone: true}"  [ngClass]="{ 'is-invalid': !atleastOneTermPresent }"/>
                 <div class="input-group-append">
-                  <span [hidden]="supplier.terms.length === 1" class="btn btn-danger standard-top-margin" style="float: left; margin-left: 5px;" (click)=removeTermAndCondition(i)>
+                  <span class="btn btn-danger standard-top-margin" style="float: left; margin-left: 5px;" (click)=removeTermAndCondition(i)>
                       <span class="cui-circle-x"></span>
                   </span>
                 </div>
@@ -139,6 +139,7 @@
             <button class="btn btn-primary" (click)="save()"><i class="fa fa-save"></i> Save</button>
             <span class="btn btn-warning" (click)="clear()" *ngIf="supplier.id == 0"><span class="fa fa-eraser"></span> Clear</span>
             <span class="btn btn-danger" (click)="delete()" *ngIf="supplier.id > 0" ><span class="fa fa-remove"></span> Delete</span>
+            <span class="btn btn-dark" (click)="cancel()"> Cancel</span>
         </div>
       </div>
     </div>

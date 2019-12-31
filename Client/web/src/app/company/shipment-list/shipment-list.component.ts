@@ -93,7 +93,8 @@ export class ShipmentListComponent implements OnInit {
 
   downloadPOS(data) {
     if (data.posPath) {
-      window.open(`${this.configuration.fileApiUri}/${data.posPath}`);
+      //https://questapi.yellow-chips.com/File/POS/26/123456
+      window.open(`${this.configuration.fileApiUri}/POS/${data.id}`);
     } else {
       this.toastr.errorToastr('POS is not uploaded for this shipment');
     }

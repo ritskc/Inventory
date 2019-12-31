@@ -158,7 +158,7 @@ export class CreateShipmentComponent implements OnInit {
   displayPartQuantityStatus() {
     if (this.blankOrder) {
       var selectedPart = this.customerAssociatedParts.find(p => p.id == this.partCode);
-      this.partQuantityInHand = selectedPart.qtyInHand;
+      this.partQuantityInHand = selectedPart.qtyInHand + selectedPart.openingQty;
       this.partOpenQuantity = 0;
     }
     else {

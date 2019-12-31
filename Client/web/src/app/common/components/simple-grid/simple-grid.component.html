@@ -47,7 +47,7 @@
                       <span class="clickable" (click)="rowSelected(row)" *ngIf="item.isLink">{{row[item.value]}}</span>
                       <span *ngIf="item.nested">{{row[item.value][item.nested]}}</span>
                       <span *ngIf="item.isEditable">
-                        <input type="text" value="{{row[item.value]}}" (change)="itemValueEdited($event, row, item)"/>
+                        <input type="text" style="text-align: right; width: 50px;" value="{{row[item.value]}}" (change)="itemValueEdited($event, row, item)"/>
                       </span>
                       <span *ngIf="item.isBoolean">
                         <input type="checkbox" [checked]="row[item.value]" [attr.disabled]="item.isDisabled? '': null"/>

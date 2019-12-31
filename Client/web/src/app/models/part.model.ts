@@ -88,6 +88,14 @@ export class PartsViewModel {
         return this.part.qtyInHand;
     }
 
+    get OpeningQty(): number {
+        return this.part.openingQty;
+    }
+
+    set OpeningQty(value: number) {
+        this.part.openingQty = value;
+    }
+
     get Total(): number {
         return this.part.openingQty + this.part.qtyInHand + this.part.intransitQty;
     }
