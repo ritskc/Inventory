@@ -14,7 +14,7 @@
                 <div class="form-group row">
                   <div class="col-xs-6 col-md-6">
                     <div class="form-group standard-top-margin row">
-                      <select class="form-control col-xs-11 col-md-11 select-margin-left" [(ngModel)]="selectedCustomerId" (change)="customerSelected($event)">
+                      <select disabled class="form-control col-xs-11 col-md-11 select-margin-left" [(ngModel)]="selectedCustomerId" (change)="customerSelected($event)">
                         <option *ngFor="let customer of customers" value="{{customer.id}}">{{customer.name}}</option>
                       </select>
                     </div>

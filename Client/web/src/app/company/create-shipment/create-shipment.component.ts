@@ -218,6 +218,7 @@ export class CreateShipmentComponent implements OnInit {
     packagingSlipDetail.excessQty = 0;
     this.shipment.packingSlipDetails.push(packagingSlipDetail);
 
+    this.OrderNo = '';
     this.orderId = -1;
     this.partCode = -1;
     this.partQuantityInHand = 0;

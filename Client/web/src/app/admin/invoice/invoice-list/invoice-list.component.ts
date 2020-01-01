@@ -26,6 +26,7 @@ export class InvoiceListComponent implements OnInit {
 
   suppliers: Supplier[] = [];
   invoices: Invoice[] = [];
+  filteredInvoices: Invoice[] = [];
   columns: DataColumn[] = [];
 
   constructor(private companyService: CompanyService, private invoiceService: InvoiceService, private supplierService: SupplierService,
@@ -39,8 +40,10 @@ export class InvoiceListComponent implements OnInit {
     this.loadAllSuppliers();
     this.loadAllSupplierInvoices();
     this.invoiceForm = this.formBuilder.group({
-      supplierList: FormControl
+      supplierList: FormControl,
+      showNotReceivedOrders: FormControl
     });
+    this.invoiceForm.get('showNotReceivedOrders').setValue(false);
   }
 
   initializeGridColumns() {
@@ -88,6 +91,7 @@ export class InvoiceListComponent implements OnInit {
         .subscribe(
           (invoices) => { 
             this.invoices = invoices;
+            this.filteredInvoices = this.invoices;
             this.invoiceForm.get('supplierList').setValue(-1);
           },
           (error) => console.log(error),
@@ -208,5 +212,13 @@ export class InvoiceListComponent implements OnInit {
       </html>`
     );
     popupWin.document.close();
+  }
+
+  showNotReceivedOrdersEvent(event) {
+    if (this.invoiceForm.get('showNotReceivedOrders').value) {
+      this.filteredInvoices = this.invoices.filter(i => i.isInvoiceReceived === false);
+    } else {
+      this.filteredInvoices = this.invoices;
+    }
   }
 }

@@ -1,8 +1,14 @@
 <div class="row" style="margin-left: 1px; margin-bottom: 5px;">
-    <select class="form-control" style="width: 300px; float: left;" (change)="filterByCustomer($event)">
+    <select class="form-control" style="width: 300px; float: left;" (change)="filterByCustomer($event)" [(ngModel)]='customerId'>
         <option value="-1">Show for all customers</option>
         <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
     </select>
+    <div class="form-check" style="margin-left: 15px; padding-top: 5px;">
+      <input class="form-check-input" type="checkbox" id="showFullDetailsCheckbox" (change)="showFullOrderDetails($event)" [(ngModel)]="showFullDetails">
+      <label class="form-check-label" for="showFullDetailsCheckbox">
+        Show Full Details
+      </label>
+    </div>
 </div>
 
 <simple-grid [data]="filteredShipments" [columns]="columns" [exportRequired]="false" (addClickedEventEmitter)="addShipment()"

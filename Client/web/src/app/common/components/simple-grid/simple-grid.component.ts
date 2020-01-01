@@ -46,12 +46,16 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   @Input() 
   set data(data: any[]) {
     this._data = Utils.sortArray(data, this.defaultSortColumnName, true);
+    this.setPageNo(1);
     this.calculatePages();
     this.createRange();
   }
 
-  calculatePages() {
-    this.pageNo = Math.ceil(this._data.length / this.pageSize);
+  calculatePages(filtered: any[] = null) {
+    if (filtered)
+      this.pageNo = Math.ceil(filtered.length / this.pageSize);
+    else 
+      this.pageNo = Math.ceil(this._data.length / this.pageSize);
   }
 
   createRange(){
@@ -76,8 +80,10 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   }
 
   dataChanges() {
+    var filtered = this._data.filter(d => JSON.stringify(d).toUpperCase().indexOf(this.searchText.toUpperCase()) > -1);
+
     this.page = 1;
-    this.calculatePages();
+    this.calculatePages(filtered);
     this.createRange();
   }
 
