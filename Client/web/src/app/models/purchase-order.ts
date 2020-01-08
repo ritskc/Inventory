@@ -49,11 +49,12 @@ export class PurchaseOrderDetail {
     isClosed: boolean;
     partCode: string;
     description: string;
-    total: number;
+    total: string;
     part: Part
     shippedQty: number = 0;
     orderId: number = 0;
     srNo: number = 0;
+    openQty: number = 0;
 }
 
 export class PurchaseOrderTerm {

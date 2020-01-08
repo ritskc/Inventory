@@ -54,18 +54,18 @@ export class PurchaseOrdersComponent implements OnInit {
   initializeGridColumns() {
     this.gridColumns = [];
     this.gridColumns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Number", value: "poNo", isLink: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Due", value: "dueDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "PO Date", value: "poDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
   }
 
   initializeGridForDetails() {
     this.gridColumns = [];
     this.gridColumns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Number", value: "poNo", isLink: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Due", value: "dueDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "PO Date", value: "poDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Code", value: "partCode", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Description", value: "partDescription", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Open", value: "openQuantity" }) );
@@ -99,10 +99,10 @@ export class PurchaseOrdersComponent implements OnInit {
           customerPurchaseOrderViewModel.id = order.id;
           customerPurchaseOrderViewModel.poNo = order.poNo;
           customerPurchaseOrderViewModel.poDate = order.poDate;
-          customerPurchaseOrderViewModel.dueDate = order.closingDate;
+          customerPurchaseOrderViewModel.dueDate = order.dueDate;
           customerPurchaseOrderViewModel.partCode = detail.part.code;
           customerPurchaseOrderViewModel.partDescription = detail.part.description;
-          customerPurchaseOrderViewModel.openQuantity = detail.part.openingQty;
+          customerPurchaseOrderViewModel.openQuantity = detail.qty - detail.shippedQty;
           customerPurchaseOrderViewModel.customerName = order.customerName;
           customerPurchaseOrderViewModel.orderedQty = detail.qty;
           customerPurchaseOrderViewModel.isClosed = detail.isClosed;
@@ -115,7 +115,7 @@ export class PurchaseOrdersComponent implements OnInit {
           customerPurchaseOrderViewModel.id = order.id;
           customerPurchaseOrderViewModel.poNo = order.poNo;
           customerPurchaseOrderViewModel.poDate = order.poDate;
-          customerPurchaseOrderViewModel.dueDate = order.closingDate;
+          customerPurchaseOrderViewModel.dueDate = order.dueDate;
           customerPurchaseOrderViewModel.customerName = order.customerName;
           customerPurchaseOrderViewModel.isClosed = order.isClosed;
           this.purchaseOrders.push(customerPurchaseOrderViewModel);

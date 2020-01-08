@@ -1,3 +1,5 @@
+import { Part } from './part.model';
+
 export class Shipment {
 
     constructor() {
@@ -44,4 +46,5 @@ export class PackingSlipDetail {
     totalSurcharge: number = 0;
     excessQty: number = 0;
     srNo: number = 0;
+    partDetail: Part;
 }

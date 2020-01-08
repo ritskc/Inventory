@@ -194,8 +194,13 @@ export class CreateShipmentComponent implements OnInit {
       return;
     }
 
-    if (this.partOpenQuantity < 0) {
+    if ((this.partQuantityInHand - this.quantity) < 0) {
       var response = confirm('Your inventory quantity is going to be negative. Are you sure to continue?');
+      if (!response) return;
+    }
+
+    if (this.boxes <= 0) {
+      var response = confirm('Number of boxes is 0. Are you sure to continue?');
       if (!response) return;
     }
 
@@ -238,7 +243,7 @@ export class CreateShipmentComponent implements OnInit {
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Blank Order", value: "isBlankOrder", isDisabled: true, isBoolean: true, customStyling: 'center' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Order Id", value: "orderNo" }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Part", value: "partDescription" }) );
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Quantity", value: "qty", isEditable: true }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Quantity", value: "qty", isEditable: true, customStyling: 'right' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "In Basket", value: "inBasket", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
   }
 

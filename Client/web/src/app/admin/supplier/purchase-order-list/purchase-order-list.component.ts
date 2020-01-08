@@ -60,13 +60,15 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Closing Date", value: "closingDate", sortable: true, isDate: true }) );
+    //this.gridColumns.push( new DataColumn({ headerText: "Closing Date", value: "closingDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Part Code", value: "partCode"}) );
     this.gridColumns.push( new DataColumn({ headerText: "Part Desc", value: "partDescription", minWidth: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Qty", value: "qty", customStyling: 'right' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Price", value: "unitPrice", customStyling: 'right' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Total", value: "total", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Transit", value: "inTransitQty", customStyling: 'right' }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Rcvd", value: "receivedQty", customStyling: 'right' }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Ack", value: "acknowledgedQty", customStyling: 'right' }) );
+    // this.gridColumns.push( new DataColumn({ headerText: "Rcvd", value: "receivedQty", customStyling: 'right' }) );
+    // this.gridColumns.push( new DataColumn({ headerText: "Ack", value: "acknowledgedQty", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
   }
 
@@ -106,6 +108,8 @@ export class PurchaseOrderListComponent implements OnInit {
                 viewModel.partCode = detail.part.code;
                 viewModel.partDescription = detail.part.description;
                 viewModel.qty = detail.qty;
+                viewModel.unitPrice = detail.unitPrice;
+                viewModel.total = (viewModel.qty * viewModel.unitPrice).toFixed(2);
                 viewModel.acknowledgedQty = detail.ackQty;
                 viewModel.receivedQty = parseInt(detail.receivedQty);
                 viewModel.inTransitQty = detail.inTransitQty;
@@ -207,7 +211,7 @@ class SupplierPurchaseOrderViewModel {
   partDescription: string;
   qty: number;
   unitPrice: number;
-  total: number;
+  total: string;
   lateOrder: boolean = false;
   inTransitQty: number;
   receivedQty: number;

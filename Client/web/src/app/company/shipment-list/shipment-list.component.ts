@@ -11,6 +11,7 @@ import { httpLoaderService } from '../../common/services/httpLoader.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { ClassConstants } from '../../common/constants';
 import { AppConfigurations } from '../../config/app.config';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-shipment-list',
@@ -27,6 +28,7 @@ export class ShipmentListComponent implements OnInit {
   columns: DataColumn[] = [];
   customerId: number = -1;
   showFullDetails: boolean = false;
+  printDocument: Subject<string> = new Subject<string>();
 
   constructor(private companyService: CompanyService, private shipmentService: ShipmentService, private customerService: CustomerService, 
     private router: Router, private httpLoader: httpLoaderService, private toastr: ToastrManager) { }
@@ -39,7 +41,7 @@ export class ShipmentListComponent implements OnInit {
 
   initializeGridColumns() {
     this.columns = [];
-    this.columns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true }) );
+    this.columns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true, customStyling: 'column-width-200' }) );
     this.columns.push( new DataColumn({ headerText: "Slip No", value: "packingSlipNo", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Shipped Date", value: "shippingDate", sortable: false, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Shipped Via", value: "shipVia", sortable: false }) );
@@ -47,12 +49,13 @@ export class ShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Boxes", value: "boxes", sortable: false, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "isInvoiceCreated", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
-    this.columns.push( new DataColumn({ headerText: "POS", isActionColumn: true, customStyling: 'center', actions: [
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadPOS', icon: 'fa fa-download' })
+    this.columns.push( new DataColumn({ headerText: "Actions", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: 'Shipment', actionStyle: ClassConstants.Primary, event: 'printShipment', icon: 'fa fa-print' }),
+      new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoice', icon: 'fa fa-print' }),
+      new DataColumnAction({ actionText: 'POS', actionStyle: ClassConstants.Primary, event: 'downloadPOS', icon: 'fa fa-download' }),
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'delete', icon: 'fa fa-trash' })
     ] }) );
   }
-
-
 
   initializeGridColumnsForDetails() {
     this.columns = [];
@@ -81,7 +84,7 @@ export class ShipmentListComponent implements OnInit {
               shipment.customerName = customer.name;
           });
           this.shipments = shipments;
-          this.filteredShipments = shipments;
+          this.filteredShipments = this.customerId > 0 ? this.shipments.filter(s => s.customerId == this.customerId): this.shipments;
         }, (error) => this.toastr.errorToastr(error),
         () => this.httpLoader.hide());
   }
@@ -94,12 +97,10 @@ export class ShipmentListComponent implements OnInit {
   }
 
   filterByCustomer(event) {
-    let selectedCustomer = parseInt(event.target.value);
-    if (selectedCustomer == -1) {
+    if (this.customerId == -1) {
       this.filteredShipments = this.shipments;
       return;
     }
-    this.filteredShipments = this.shipments.filter(s => s.customerId === selectedCustomer);
     this.showFullOrderDetails();
   }
 
@@ -107,6 +108,15 @@ export class ShipmentListComponent implements OnInit {
     switch(data.eventName) {
       case 'downloadPOS':
         this.downloadPOS(data);
+        break;
+      case 'printInvoice':
+        this.print('invoice', data);
+        break;
+      case 'printShipment':
+        this.print('shipment', data);
+        break;
+      case 'delete':
+        this.delete(data);
         break;
     }
   }
@@ -120,10 +130,39 @@ export class ShipmentListComponent implements OnInit {
     }
   }
 
+  print(type: string, data: any) {
+    var appConfig = new AppConfigurations();
+    if (type === 'shipment') {
+      this.printDocument.next(`${appConfig.reportsUri}/PackingSlip.aspx?id=${data.id}`);
+    } else if (type === 'invoice') {
+      this.printDocument.next(`${appConfig.reportsUri}/Invoice.aspx?id=${data.id}`);
+    }
+  }
+
+  delete(data: any) {
+    var confirmation = confirm('Are you sure you want to remove this shipment?');
+    if (!confirmation) 
+      return;
+
+    this.httpLoader.show();
+    this.shipmentService.deleteShipment(data.id)
+        .subscribe(
+          () => {
+            this.toastr.successToastr('Shipment removed successfully!!');
+            this.loadAllCustomers();
+          },
+          (error) => {
+            this.toastr.errorToastr(error.error);
+            this.httpLoader.hide();
+          },
+          () => { this.httpLoader.hide(); }
+        );
+  }
+
   showFullOrderDetails() {
     if (this.showFullDetails) {
       this.initializeGridColumnsForDetails();
-      var shipmentsList = this.filteredShipments;
+      var shipmentsList = this.customerId > 0 ? this.shipments.filter(s => s.customerId == this.customerId): this.shipments;
       this.filteredShipments = [];
       shipmentsList.forEach(shipment => {
         shipment.packingSlipDetails.forEach(detail => {
@@ -132,15 +171,15 @@ export class ShipmentListComponent implements OnInit {
           viewModel.packingSlipNo = shipment.packingSlipNo;
           viewModel.shippingDate = shipment.shippingDate;
           viewModel.orderNo = detail.orderNo;
-          viewModel.partCode = detail.partDetail? detail.partDetail.partCode: '';
-          viewModel.partDescription = detail.partDetail? detail.partDetail.partDetail: '';
-          viewModel.shippingDate = detail.qty;
+          viewModel.partCode = detail.partDetail? detail.partDetail.code: '';
+          viewModel.partDescription = detail.partDetail? detail.partDetail.description: '';
+          viewModel.shippedQty = detail.qty;
           this.filteredShipments.push(viewModel);
         });
       });
     } else {
       this.initializeGridColumns();
-      this.filteredShipments = this.shipments;
+      this.filteredShipments = this.customerId > 0 ? this.shipments.filter(s => s.customerId == this.customerId): this.shipments;
     }
   }
 }

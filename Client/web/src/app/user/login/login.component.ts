@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         this.authService.isLoggedIn = true;
         localStorage.setItem('token', user.token);
         localStorage.setItem('username', this.loginname);
-        let redirectUrl = this.authService.redirectUrl ? this.authService.redirectUrl : '/dashboard';
+        let redirectUrl = this.authService.redirectUrl ? this.authService.redirectUrl : '/companies';
         this.router.navigate([redirectUrl]);
       } else {
         this.invalidCredentials = true;

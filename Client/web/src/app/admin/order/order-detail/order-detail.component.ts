@@ -125,9 +125,9 @@ export class OrderDetailComponent implements OnInit {
     this.gridColumns.push(new DataColumn({headerText: "Sr No", value: "srNo", sortable: false }));
     this.gridColumns.push(new DataColumn({headerText: "Part Code", value: "partCode", sortable: true }));
     this.gridColumns.push(new DataColumn({headerText: "Description", value: "description", sortable: true}));
-    this.gridColumns.push(new DataColumn({headerText: "Qty", value: "qty",  isEditable: true}));
-    this.gridColumns.push(new DataColumn({ headerText: "Price", value: "unitPrice" }));
-    this.gridColumns.push(new DataColumn({ headerText: "Total", value: "total" }));
+    this.gridColumns.push(new DataColumn({headerText: "Qty", value: "qty",  isEditable: true, customStyling: 'right'}));
+    this.gridColumns.push(new DataColumn({ headerText: "Price", value: "unitPrice", customStyling: 'right' }));
+    this.gridColumns.push(new DataColumn({ headerText: "Total", value: "total", customStyling: 'right' }));
     this.gridColumns.push(new DataColumn({headerText: "Due Date", value: "dueDate", sortable: true, isDate: true}));
     this.gridColumns.push(new DataColumn({ headerText: "Notes", value: "note" }));
     if (this.SelectedSupplier > -1) {
@@ -135,7 +135,7 @@ export class OrderDetailComponent implements OnInit {
     }
     if (this.SelectedCustomer > -1) {
       this.gridColumns.push(new DataColumn({ headerText: "Blank PO", value: "blanketPOId" }));
-      this.gridColumns.push(new DataColumn({ headerText: "Open Qty", value: "blanketPOAdjQty" }));
+      this.gridColumns.push(new DataColumn({ headerText: "Open Qty", value: "openQty" }));
       this.gridColumns.push(new DataColumn({ headerText: "Line No", value: "lineNumber" }));
     }
     this.gridColumns.push(new DataColumn({headerText: "Actions", isActionColumn: true, customStyling: 'center', actions: [
@@ -247,7 +247,7 @@ export class OrderDetailComponent implements OnInit {
           this.purchaseOrder.poDetails.forEach(poDetail => {
             poDetail.partCode = poDetail.part.code;
             poDetail.description = poDetail.part.description;
-            poDetail.total = poDetail.total;
+            poDetail.total = (poDetail.qty * poDetail.unitPrice).toFixed(2);
             poDetail.note = poDetail.note;
             poDetail.referenceNo = poDetail.referenceNo;
           });
@@ -266,6 +266,8 @@ export class OrderDetailComponent implements OnInit {
           this.purchaseOrder.orderDetails.forEach(od => {
             od.partCode = od.part.code;
             od.description = od.part.description;
+            od.openQty = od.qty - od.shippedQty;
+            od.total = (od.qty * od.unitPrice).toFixed(2);
           });
         });
     }
@@ -350,7 +352,7 @@ export class OrderDetailComponent implements OnInit {
       orderDetail.dueDate = this.dueDate;
       orderDetail.note = this.notes;
       orderDetail.unitPrice = this.price;
-      orderDetail.total = this.quantity * this.price;
+      orderDetail.total = (this.quantity * this.price).toFixed(2);
       
       var selectedPart = this.selectedParts.find(p => p.id == orderDetail.partId);
       orderDetail.partCode = selectedPart.code;
@@ -368,7 +370,7 @@ export class OrderDetailComponent implements OnInit {
       customerOrderDetail.dueDate = this.dueDate;
       customerOrderDetail.note = this.notes;
       customerOrderDetail.unitPrice = this.price;
-      customerOrderDetail.total = this.quantity * this.price;
+      customerOrderDetail.total = (this.quantity * this.price).toFixed(2);
       
       var selectedPart = this.selectedParts.find(p => p.id == customerOrderDetail.partId);
       customerOrderDetail.partCode = selectedPart.code;
@@ -376,6 +378,7 @@ export class OrderDetailComponent implements OnInit {
       customerOrderDetail.blanketPOId = this.blanketPOId;
       customerOrderDetail.lineNumber = this.lineNumber;
       customerOrderDetail.blanketPOAdjQty = this.blanketPOAdjQty;
+      customerOrderDetail.openQty = customerOrderDetail.qty - customerOrderDetail.shippedQty;
 
       this.purchaseOrder.orderDetails.push(customerOrderDetail); 
       this.purchaseOrder.isBlanketPO = this.isBlanketPO;
