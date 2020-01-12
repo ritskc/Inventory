@@ -33,7 +33,14 @@ const routes: Routes = [{
       }
     },
     {
-      path: 'create-shipment/:id',
+      path: 'create-shipment/:id/:action/0',
+      component: CreateShipmentComponent,
+      data: {
+        title: 'Create Shipment'
+      }
+    },
+    {
+      path: 'create-shipment/:id/:action/:shipmentId',
       component: CreateShipmentComponent,
       data: {
         title: 'Create Shipment'

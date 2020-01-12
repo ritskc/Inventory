@@ -42,14 +42,13 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns = [];
     this.gridColumns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Email", value: "email", customStyling: 'column-width-100' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Email", value: "email", minWidth: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closing Date", value: "closingDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
-    //this.gridColumns.push( new DataColumn({ headerText: "Late", value: "lateOrder", customStyling: 'center', isDisabled: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
-      new DataColumnAction({ actionText: 'Edit', actionStyle: ClassConstants.Primary, event: 'editPurchaseOrder', icon: 'fa fa-edit' }),
+      new DataColumnAction({ actionText: 'Edit', actionStyle: ClassConstants.Warning, event: 'editPurchaseOrder', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deletePurchaseOrder', icon: 'fa fa-trash' })
     ] }) );
   }
@@ -60,15 +59,12 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
-    //this.gridColumns.push( new DataColumn({ headerText: "Closing Date", value: "closingDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Part Code", value: "partCode"}) );
     this.gridColumns.push( new DataColumn({ headerText: "Part Desc", value: "partDescription", minWidth: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Qty", value: "qty", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Price", value: "unitPrice", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Total", value: "total", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Transit", value: "inTransitQty", customStyling: 'right' }) );
-    // this.gridColumns.push( new DataColumn({ headerText: "Rcvd", value: "receivedQty", customStyling: 'right' }) );
-    // this.gridColumns.push( new DataColumn({ headerText: "Ack", value: "acknowledgedQty", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
   }
 

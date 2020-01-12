@@ -15,12 +15,15 @@ export class ShipmentService {
     return this.apiService.get<Shipment[]>(this.config.Settings.apiServerHost + this.config.Settings.shipmentUri + '/' + companyId);
   }
 
-  getAShipment(shipmentId: number): Observable<Shipment> {
-    return this.apiService.get<Shipment>(this.config.Settings.apiServerHost + this.config.Settings.shipmentUri + '/' + shipmentId);
+  getAShipment(companyId: number, shipmentId: number): Observable<Shipment> {
+    return this.apiService.get<Shipment>(this.config.Settings.apiServerHost + this.config.Settings.shipmentUri + '/1/' + shipmentId);
   }
 
   createShipment(shipment: Shipment) {
-    return this.apiService.post(shipment, this.config.Settings.apiServerHost + this.config.Settings.shipmentUri);
+    if (shipment.id < 1) 
+      return this.apiService.post(shipment, this.config.Settings.apiServerHost + this.config.Settings.shipmentUri);
+    else
+      return this.apiService.put(shipment, this.config.Settings.apiServerHost + this.config.Settings.shipmentUri + `/${ shipment.id }`);
   }
 
   deleteShipment(shipmentId: number) {

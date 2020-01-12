@@ -13,6 +13,8 @@ import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { AppConfigurations } from '../../config/app.config';
 import * as DateHelper from '../../common/helpers/dateHelper';
+import { UserAction } from '../../models/enum/userAction';
+import { httpLoaderService } from '../../common/services/httpLoader.service';
 
 @Component({
   selector: 'app-create-shipment',
@@ -47,7 +49,7 @@ export class CreateShipmentComponent implements OnInit {
   private partOpenQuantity: number = 0;
   private OrderNo: string = '';
 
-  constructor(private companyservice: CompanyService, private customerService: CustomerService, private partsService: PartsService,
+  constructor(private companyservice: CompanyService, private customerService: CustomerService, private partsService: PartsService, private httpLoaderService: httpLoaderService, 
               private shipmentService: ShipmentService, private toastr: ToastrManager, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -56,8 +58,8 @@ export class CreateShipmentComponent implements OnInit {
     this.currentlyLoggedInCompany = this.companyservice.getCurrentlyLoggedInCompanyId();
     this.shipment = new Shipment();
     this.shipment.CompanyId = this.currentlyLoggedInCompany;
-    this.loadAllCustomers();
     this.loadAllParts();
+    this.loadAllCustomers();
     this.shipment.shippingDate = DateHelper.getToday();
     this.shipmentService.getLatestShipment(this.currentlyLoggedInCompany, DateHelper.getToday()).subscribe(data => {
         this.previousPackingSlipNo = data ? data.entityNo : 'Data Unavailable';
@@ -99,8 +101,8 @@ export class CreateShipmentComponent implements OnInit {
 
     this.loadAllPartsForCustomer();
     this.loadAllOrdersForCustomer();
-    this.getAllShipmentsForSelectedCustomer();
     this.createColumnsForShipmentGrid();
+    this.getAllShipmentsForSelectedCustomer();
   }
 
   loadAllPartsForCustomer() {
@@ -171,6 +173,7 @@ export class CreateShipmentComponent implements OnInit {
   }
 
   getAllShipmentsForSelectedCustomer() {
+    this.httpLoaderService.show();
     this.shipments = [];
     this.shipmentService.getAllShipments(this.currentlyLoggedInCompany)
         .subscribe(
@@ -180,8 +183,32 @@ export class CreateShipmentComponent implements OnInit {
             });
           },
           (error) => { console.log(error); },
-          () => { this.transformShipmentListToViewModel(); }
+          () => { 
+            this.httpLoaderService.hide();
+            this.transformShipmentListToViewModel();
+            this.loadShipmentForEditMode();
+          }
         );
+  }
+
+  loadShipmentForEditMode() {
+    if (this.activatedRoute.snapshot.params.action == UserAction.Edit) {
+      this.httpLoaderService.show();
+      this.shipmentService.getAShipment(this.currentlyLoggedInCompany, this.activatedRoute.snapshot.params.shipmentId)
+          .subscribe((shipment) => {
+              this.loadAllParts();
+              this.createColumnsForPartsAddition();
+              this.previousPackingSlipNo = this.shipment.packingSlipNo;
+              shipment.packingSlipDetails.forEach(item => {
+                item.partDescription = item.partDetail.description;
+              });
+              this.shipment = shipment;
+              this.shipment.shippingDate = DateHelper.formatDate(new Date(shipment.shippingDate));
+            },
+            (error) => this.toastr.errorToastr(error.error),
+            () => this.httpLoaderService.hide());
+      return;
+    }
   }
 
   addPart() {
@@ -263,6 +290,7 @@ export class CreateShipmentComponent implements OnInit {
     if (!this.validateShipment())
       return;
 
+    this.httpLoaderService.show();
     this.shipmentService.createShipment(this.shipment)
         .subscribe(
           (result) => {
@@ -272,7 +300,10 @@ export class CreateShipmentComponent implements OnInit {
             this.shipment = new Shipment();
           },
           (error) => { this.toastr.errorToastr('Error while creating shipment'); console.log(error); },
-          () => this.getAllShipmentsForSelectedCustomer()
+          () => {
+            this.getAllShipmentsForSelectedCustomer();
+            this.httpLoaderService.hide();
+          }
         );
   }
 
@@ -289,7 +320,7 @@ export class CreateShipmentComponent implements OnInit {
         shipmentViewModel.packagingSlipNumber = shipment.packingSlipNo;
         shipmentViewModel.shippingDate = shipment.shippingDate;
         shipmentViewModel.poNo = detail.orderNo;
-        shipmentViewModel.partCode = this.parts.find(p => p.id == detail.partId).code;
+        shipmentViewModel.partCode = detail.partDetail? detail.partDetail.code: this.parts.find(p => p.id == detail.partId).code;
         shipmentViewModel.quantity = detail.qty;
         shipmentViewModel.boxes = detail.boxes;
         shipmentViewModel.creates = shipment.crates;

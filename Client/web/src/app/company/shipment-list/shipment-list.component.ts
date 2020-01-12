@@ -45,11 +45,11 @@ export class ShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Slip No", value: "packingSlipNo", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Shipped Date", value: "shippingDate", sortable: false, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Shipped Via", value: "shipVia", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Crates", value: "crates", sortable: false, customStyling: 'right' }) );
-    this.columns.push( new DataColumn({ headerText: "Boxes", value: "boxes", sortable: false, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "isInvoiceCreated", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Actions", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: 'Shipment', actionStyle: ClassConstants.Warning, event: 'editShipment', icon: 'fa fa-edit' }),
+      new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Warning, event: 'editInvoice', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Shipment', actionStyle: ClassConstants.Primary, event: 'printShipment', icon: 'fa fa-print' }),
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoice', icon: 'fa fa-print' }),
       new DataColumnAction({ actionText: 'POS', actionStyle: ClassConstants.Primary, event: 'downloadPOS', icon: 'fa fa-download' }),
@@ -91,7 +91,7 @@ export class ShipmentListComponent implements OnInit {
 
   addShipment() {
     if (this.customerId > 0)
-      this.router.navigateByUrl(`/companies/create-shipment/${ this.customerId }`);
+      this.router.navigateByUrl(`/companies/create-shipment/${ this.customerId }/0/0`);
     else 
       this.toastr.errorToastr('Please select the customer to proceed with shipment creation');
   }
@@ -118,16 +118,30 @@ export class ShipmentListComponent implements OnInit {
       case 'delete':
         this.delete(data);
         break;
+      case 'editShipment':
+        this.editShipment(data);
+        break;
+      case 'editInvoice':
+        this.editInvoice(data);
+        break;
     }
   }
 
   downloadPOS(data) {
     if (data.posPath) {
-      //https://questapi.yellow-chips.com/File/POS/26/123456
       window.open(`${this.configuration.fileApiUri}/POS/${data.id}`);
     } else {
       this.toastr.errorToastr('POS is not uploaded for this shipment');
     }
+  }
+
+  editShipment(data) {
+    console.log(data);
+    this.router.navigateByUrl(`companies/create-shipment/${data.customerId}/1/${data.id}`);
+  }
+
+  editInvoice(data) {
+
   }
 
   print(type: string, data: any) {
