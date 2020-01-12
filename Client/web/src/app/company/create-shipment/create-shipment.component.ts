@@ -6,7 +6,7 @@ import { PartsService } from '../../admin/parts/parts.service';
 import { Part } from '../../models/part.model';
 import { PurchaseOrder } from '../../models/purchase-order';
 import { Shipment, PackingSlipDetail } from '../../models/shipment.model';
-import { DataColumn } from '../../models/dataColumn.model';
+import { DataColumn, DataColumnAction } from '../../models/dataColumn.model';
 import { ShipmentService } from '../shipment.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Subject } from 'rxjs';
@@ -15,6 +15,7 @@ import { AppConfigurations } from '../../config/app.config';
 import * as DateHelper from '../../common/helpers/dateHelper';
 import { UserAction } from '../../models/enum/userAction';
 import { httpLoaderService } from '../../common/services/httpLoader.service';
+import { ClassConstants } from '../../common/constants';
 
 @Component({
   selector: 'app-create-shipment',
@@ -48,6 +49,7 @@ export class CreateShipmentComponent implements OnInit {
   private partQuantityInHand: number = 0;
   private partOpenQuantity: number = 0;
   private OrderNo: string = '';
+  private unitPrice: number = 0;
 
   constructor(private companyservice: CompanyService, private customerService: CustomerService, private partsService: PartsService, private httpLoaderService: httpLoaderService, 
               private shipmentService: ShipmentService, private toastr: ToastrManager, private activatedRoute: ActivatedRoute) { }
@@ -162,6 +164,7 @@ export class CreateShipmentComponent implements OnInit {
       var selectedPart = this.customerAssociatedParts.find(p => p.id == this.partCode);
       this.partQuantityInHand = selectedPart.qtyInHand + selectedPart.openingQty;
       this.partOpenQuantity = 0;
+      this.unitPrice = selectedPart.partCustomerAssignments.find(c => c.customerId == this.selectedCustomerId).rate;
     }
     else {
       var selectedOrder = this.customerPurchaseOrders.find(o => o.id == this.orderId);
@@ -169,6 +172,7 @@ export class CreateShipmentComponent implements OnInit {
       var partDetail = selectedOrder.orderDetails.find(p => p.partId == selectedPart.id);
       this.partQuantityInHand = selectedPart.qtyInHand;
       this.partOpenQuantity = partDetail.qty - partDetail.shippedQty;
+      this.unitPrice = selectedPart.partCustomerAssignments.find(c => c.customerId == this.selectedCustomerId).rate;
     }
   }
 
@@ -248,6 +252,7 @@ export class CreateShipmentComponent implements OnInit {
     packagingSlipDetail.boxes = this.boxes;
     packagingSlipDetail.inBasket = this.inBasket;
     packagingSlipDetail.excessQty = 0;
+    packagingSlipDetail.unitPrice = this.unitPrice;
     this.shipment.packingSlipDetails.push(packagingSlipDetail);
 
     this.OrderNo = '';
@@ -255,6 +260,7 @@ export class CreateShipmentComponent implements OnInit {
     this.partCode = -1;
     this.partQuantityInHand = 0;
     this.partOpenQuantity = 0;
+    this.unitPrice = 0;
     this.resetPartDetail();
     this.resetSerialNumber();
   }
@@ -271,8 +277,11 @@ export class CreateShipmentComponent implements OnInit {
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Order Id", value: "orderNo" }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Part", value: "partDescription" }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Quantity", value: "qty", isEditable: true, customStyling: 'right' }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", isEditable: true, customStyling: 'right' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "In Basket", value: "inBasket", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
-  }
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'removePart', icon: 'fa fa-trash' })
+    ] }) );  }
 
   createColumnsForShipmentGrid() {
     this.columnsForOrderGrid = [];
@@ -349,6 +358,15 @@ export class CreateShipmentComponent implements OnInit {
     }
 
     return true;
+  }
+
+  actionButtonClicked(data) {
+    switch(data.eventName) {
+      case 'removePart':
+        var index = this.shipment.packingSlipDetails.findIndex(d => d.srNo == data.srNo);
+        this.shipment.packingSlipDetails.splice(index, 1);
+        break;
+    }
   }
 }
 

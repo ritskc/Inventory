@@ -9,6 +9,12 @@
         Show Full Details
       </label>
     </div>
+    <div class="form-check" style="margin-left: 15px; padding-top: 5px;">
+      <input class="form-check-input" type="checkbox" id="showInvoicedCheckbox" (change)="showInvoicedOnly($event)" [(ngModel)]="showInvoiced">
+      <label class="form-check-label" for="showInvoicedCheckbox">
+        Show Invoiced only
+      </label>
+    </div>
 </div>
 
 <simple-grid [data]="filteredShipments" [columns]="columns" [exportRequired]="false" (addClickedEventEmitter)="addShipment()"

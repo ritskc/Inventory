@@ -39,9 +39,8 @@ export class InventoryPartsListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", sortable: false, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Safe Qty", value: "SafeQty", sortable: false, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Opening Qty", value: "OpeningQty", isEditable: true, sortable: false, customStyling: 'right' }) );
-    this.columns.push( new DataColumn({ headerText: "In Hand Qty", value: "QuantityInHand", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Open + In Hand Qty", value: "QuantityInHand", sortable: false, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "In Transit Qty", value: "IntransitQty", sortable: false, customStyling: 'right' }) );
-    //this.columns.push( new DataColumn({ headerText: "Total Qty", value: "Total", sortable: false, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'editOpeningQuantity', icon: 'fa fa-edit' })
     ] }) );

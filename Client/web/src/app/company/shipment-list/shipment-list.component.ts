@@ -28,6 +28,7 @@ export class ShipmentListComponent implements OnInit {
   columns: DataColumn[] = [];
   customerId: number = -1;
   showFullDetails: boolean = false;
+  showInvoiced: boolean = false;
   printDocument: Subject<string> = new Subject<string>();
 
   constructor(private companyService: CompanyService, private shipmentService: ShipmentService, private customerService: CustomerService, 
@@ -110,6 +111,10 @@ export class ShipmentListComponent implements OnInit {
         this.downloadPOS(data);
         break;
       case 'printInvoice':
+        if (!data.isInvoiceCreated) {
+          this.toastr.errorToastr('Cannot be printed since the invoice is not yet created!!');
+          return;
+        }
         this.print('invoice', data);
         break;
       case 'printShipment':
@@ -136,12 +141,15 @@ export class ShipmentListComponent implements OnInit {
   }
 
   editShipment(data) {
-    console.log(data);
     this.router.navigateByUrl(`companies/create-shipment/${data.customerId}/1/${data.id}`);
   }
 
   editInvoice(data) {
-
+    if (data.isInvoiceCreated) {
+      this.toastr.errorToastr('This cannot be edited since it is already invoiced');
+      return;
+    }
+    this.router.navigateByUrl(`companies/invoice/${data.customerId}/${data.id}`);
   }
 
   print(type: string, data: any) {
@@ -194,6 +202,14 @@ export class ShipmentListComponent implements OnInit {
     } else {
       this.initializeGridColumns();
       this.filteredShipments = this.customerId > 0 ? this.shipments.filter(s => s.customerId == this.customerId): this.shipments;
+    }
+  }
+
+  showInvoicedOnly() {
+    if (this.showInvoiced) {
+      this.filteredShipments = this.shipments.filter(i => i.isInvoiceCreated == true);
+    } else {
+      this.filteredShipments = this.shipments;
     }
   }
 }

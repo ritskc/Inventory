@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyService } from '../company.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DataColumn } from '../../models/dataColumn.model';
 import { Customer } from '../../models/customer.model';
 import { Shipment, PackingSlipDetail } from '../../models/shipment.model';
@@ -12,6 +12,7 @@ import { InvoiceService } from '../../admin/invoice/invoice.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Subject } from 'rxjs';
 import { AppConfigurations } from '../../config/app.config';
+import { httpLoaderService } from '../../common/services/httpLoader.service';
 
 @Component({
   selector: 'app-company-invoice',
@@ -30,8 +31,8 @@ export class CompanyInvoiceComponent implements OnInit {
   private invoiceCreated: Subject<string> = new Subject<string>();
   columns: DataColumn[] = [];
 
-  constructor(private companyService: CompanyService, private customerService: CustomerService, private invoiceService: InvoiceService,
-              private shipmentService: ShipmentService, private partsService: PartsService, private toastr: ToastrManager, private router: Router) { }
+  constructor(private companyService: CompanyService, private customerService: CustomerService, private invoiceService: InvoiceService, private loaderService: httpLoaderService,
+              private shipmentService: ShipmentService, private partsService: PartsService, private toastr: ToastrManager, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompany = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -41,13 +42,25 @@ export class CompanyInvoiceComponent implements OnInit {
   }
 
   loadAllCustomers() {
+    this.loaderService.show();
     this.customerService.getAllCustomers(this.currentlyLoggedInCompany)
-        .subscribe((customers) => this.customers = customers);
+        .subscribe((customers) => {
+          this.customers = customers;
+          this.loaderService.hide();
+          if (this.activatedRoute.snapshot.params.customerId) {
+            this.customerId = this.activatedRoute.snapshot.params.customerId;
+            this.customeSelected();
+          }
+        });
   }
 
   loadAllParts() {
+    this.loaderService.show();
     this.partsService.getAllParts(this.currentlyLoggedInCompany)
-        .subscribe((parts) => this.parts = parts);
+        .subscribe((parts) => {
+          this.parts = parts;
+          this.loaderService.hide();
+        });
   }
 
   initializeGridColumns() {
@@ -68,9 +81,15 @@ export class CompanyInvoiceComponent implements OnInit {
 
   customeSelected() {
     this.selectedShipment = new Shipment();
+    this.loaderService.show();
     this.shipmentService.getAllShipments(this.currentlyLoggedInCompany)
         .subscribe((shipments) => {
           this.shipments = shipments.filter(s => s.customerId == this.customerId && !s.isInvoiceCreated);
+          if (this.activatedRoute.snapshot.params.shipmentId) {
+            this.shipmentId = this.activatedRoute.snapshot.params.shipmentId;
+            this.shipmentSelected();
+          }
+          this.loaderService.hide();
         });
   }
 
@@ -90,12 +109,14 @@ export class CompanyInvoiceComponent implements OnInit {
   }
 
   createInvoice() {
+    this.loaderService.show();
     this.invoiceService.createCustomerInvoice(this.selectedShipment)
         .subscribe((result) => {
           let appConfig = new AppConfigurations();
           this.invoiceCreated.next(`${appConfig.reportsUri}/Invoice.aspx?id=${this.selectedShipment.id}`);
           this.toastr.successToastr('Updated details successfully!!');
           this.customeSelected();
+          this.loaderService.hide();
         })
   }
 }

@@ -68,6 +68,13 @@ const routes: Routes = [{
       }
     },
     {
+      path: 'invoice/:customerId/:shipmentId',
+      component: CompanyInvoiceComponent,
+      data: {
+        title: 'Invoice'
+      }
+    },
+    {
       path: 'pos',
       component: POSUploadComponent,
       data: {
