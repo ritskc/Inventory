@@ -155,8 +155,8 @@ namespace DAL.Repository
         {
             string sql = string.Format("INSERT INTO [Supplier] ([CompanyId],[Name],[ContactPersonName],[PhoneNo],[EmailID],[Address],[City],[State],[Country]," +
                                  "[ZIPCode],[FAXNo],[DateFormat],[noofstages],[CompanyProfileID]) VALUES ('{0}', '{1}','{2}','{3}', '{4}','{5}','{6}', '{7}','{8}','{9}','{10}', '{11}','{12}','{13}')",
-                                        supplier.CompanyId, supplier.Name, supplier.ContactPersonName, supplier.PhoneNo, supplier.EmailID, supplier.Address, supplier.City, supplier.State, supplier.Country,
-                                        supplier.ZIPCode, supplier.FAXNo, supplier.DateFormat, supplier.noofstages, supplier.CompanyProfileID);
+                                        supplier.CompanyId, supplier.Name.Replace("'", "''"), supplier.ContactPersonName.Replace("'", "''"), supplier.PhoneNo, supplier.EmailID.Replace("'", "''"), supplier.Address.Replace("'", "''"), supplier.City.Replace("'", "''"), supplier.State.Replace("'", "''"), supplier.Country.Replace("'", "''"),
+                                        supplier.ZIPCode.Replace("'", "''"), supplier.FAXNo, supplier.DateFormat, supplier.noofstages, supplier.CompanyProfileID);
 
             sql = sql + " Select Scope_Identity()";
 
@@ -167,7 +167,7 @@ namespace DAL.Repository
             foreach (SupplierTerms term in supplier.Terms)
             {
                 sql = string.Format("INSERT INTO [dbo].[supplierterms]([supplierId],[sequenceNo],[terms]) VALUES ('{0}', '{1}','{2}')",
-                                            supplierId, term.SequenceNo, term.Terms);
+                                            supplierId, term.SequenceNo, term.Terms.Replace("'", "''"));
 
                 await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
             }
@@ -183,13 +183,13 @@ namespace DAL.Repository
 
                 //sql = "UPDATE [dbo].[Supplier] SET [CompanyId] = '{0}',[Name]= '{1}',[ContactPersonName]= '{2}',[PhoneNo]= '{3}',[EmailID]= '{4}',[Address]= '{5}',[City]= '{6}',[State]= '{7}',[Country]= '{8}',[ZIPCode]= '{9}',[FAXNo]= '{10}',[DateFormat]= '{11}',[noofstages]= '{12}',[CompanyProfileID] = '{13}'  WHERE id = '{14}'";
 
-                sql = string.Format($"UPDATE [dbo].[Supplier] SET [CompanyId] = '{supplier.CompanyId}',[Name]= '{supplier.Name}',[ContactPersonName]= '{supplier.ContactPersonName}',[PhoneNo]= '{supplier.PhoneNo}',[EmailID]= '{supplier.EmailID}',[Address]= '{supplier.Address}',[City]= '{supplier.City}'," +
-                                            $"[State]= '{supplier.State}',[Country]= '{supplier.Country}',[ZIPCode]= '{supplier.ZIPCode}',[FAXNo]= '{supplier.FAXNo}',[DateFormat]= '{supplier.DateFormat}',[noofstages]= '{supplier.noofstages}',[CompanyProfileID] = '{supplier.CompanyProfileID}'  WHERE id = '{supplier.Id}' ");
+                sql = string.Format($"UPDATE [dbo].[Supplier] SET [CompanyId] = '{supplier.CompanyId}',[Name]= '{supplier.Name.Replace("'", "''")}',[ContactPersonName]= '{supplier.ContactPersonName.Replace("'", "''")}',[PhoneNo]= '{supplier.PhoneNo.Replace("'", "''")}',[EmailID]= '{supplier.EmailID.Replace("'", "''")}',[Address]= '{supplier.Address.Replace("'", "''")}',[City]= '{supplier.City.Replace("'", "''")}'," +
+                                            $"[State]= '{supplier.State.Replace("'", "''")}',[Country]= '{supplier.Country.Replace("'", "''")}',[ZIPCode]= '{supplier.ZIPCode.Replace("'", "''")}',[FAXNo]= '{supplier.FAXNo}',[DateFormat]= '{supplier.DateFormat}',[noofstages]= '{supplier.noofstages}',[CompanyProfileID] = '{supplier.CompanyProfileID}'  WHERE id = '{supplier.Id}' ");
                 await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
                 foreach (SupplierTerms term in supplier.Terms)
                 {
-                    sql = string.Format($"INSERT INTO [dbo].[supplierterms] ([supplierId],[sequenceNo],[terms]) VALUES ('{supplier.Id}', '{term.SequenceNo}','{term.Terms}')" );
+                    sql = string.Format($"INSERT INTO [dbo].[supplierterms] ([supplierId],[sequenceNo],[terms]) VALUES ('{supplier.Id}', '{term.SequenceNo}','{term.Terms.Replace("'", "''")}')" );
                     await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
                 }
             }

@@ -101,6 +101,65 @@ namespace WebApi.Controllers
             var result = packingSlipService.UpdatePOSAsync(id, relativeFilePath,trackingNumber);
 
             return Ok();
-        }        
+        }
+
+        // DELETE: api/Todo/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult<long>> Put(long id, [FromBody] PackingSlip packingSlip)
+        {
+            try
+            {
+                if (id != packingSlip.Id)
+                {
+                    return BadRequest();
+                }
+
+                var result = await this.packingSlipService.GetPackingSlipAsync(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+
+                //if (result.IsInvoiceCreated)
+                //    return BadRequest("Invoice is already created. You can not update this Packing slip");
+
+
+                await this.packingSlipService.UpdatePackingSlipAsync(packingSlip);
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        // DELETE: api/Todo/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<bool>> Delete(long id)
+        {
+            try
+            {
+                var result = await this.packingSlipService.GetPackingSlipAsync(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                
+                if (result.IsInvoiceCreated)
+                    return BadRequest("Invoice is already created. You can not delete this Packing slip");
+                
+
+                await this.packingSlipService.DeletePackingSlipAsync(id);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
     }
 }

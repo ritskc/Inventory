@@ -253,11 +253,47 @@ namespace DAL.Repository
 
         public async Task AddCustomerAsync(Customer customer)
         {
+            if (customer.Name == null)
+                customer.Name = string.Empty;
+            if (customer.AddressLine1 == null)
+                customer.AddressLine1 = string.Empty;
+            if (customer.City == null)
+                customer.City = string.Empty;
+            if (customer.State == null)
+                customer.State = string.Empty;
+            if (customer.ZIPCode == null)
+                customer.ZIPCode = string.Empty;
+            if (customer.ContactPersonName == null)
+                customer.ContactPersonName = string.Empty;
+            if (customer.TelephoneNumber == null)
+                customer.TelephoneNumber = string.Empty;
+            if (customer.FaxNumber == null)
+                customer.FaxNumber = string.Empty;
+            if (customer.EmailAddress == null)
+                customer.EmailAddress = string.Empty;
+            if (customer.TruckType == null)
+                customer.TruckType = string.Empty;
+            if (customer.CollectFreight == null)
+                customer.CollectFreight = string.Empty;
+            if (customer.Comments == null)
+                customer.Comments = string.Empty;
+            if (customer.FOB == null)
+                customer.FOB = string.Empty;
+            if (customer.Terms == null)
+                customer.Terms = string.Empty;
+            if (customer.ShipVia == null)
+                customer.ShipVia = string.Empty;
+            if (customer.EndCustomerName == null)
+                customer.EndCustomerName = string.Empty;
+            if (customer.Billing == null)
+                customer.Billing = string.Empty;
+           
+
             string sql = string.Format($"INSERT INTO [dbo].[customer] ([CompanyId],[Name],[AddressLine1],[City],[State],[ZIPCode],[ContactPersonName],[TelephoneNumber],[FaxNumber],[EmailAddress],[TruckType],[CollectFreight],[Comments],[Surcharge],[FOB],[Terms],[RePackingCharge],[ShipVia],[invoicingtypeid],[endcustomername],[DisplayLineNo],[Billing])  VALUES ('{customer.CompanyId}', " +
-                $"'{customer.Name}', '{customer.AddressLine1}', '{customer.City}', '{customer.State}', '{customer.ZIPCode}', '{customer.ContactPersonName}', '{customer.TelephoneNumber}',     " +
-                $"'{customer.FaxNumber}', '{customer.EmailAddress}', '{customer.TruckType}', '{customer.CollectFreight}', " +
-                $"'{customer.Comments}', '{customer.Surcharge}', '{customer.FOB}', '{customer.Terms}',  '{customer.RePackingCharge}', " +
-                $"'{customer.ShipVia}', '{customer.Invoicingtypeid}', '{customer.EndCustomerName}','{ customer.DisplayLineNo}','{ customer.Billing}')");
+                $"'{customer.Name.Replace("'", "''")}', '{customer.AddressLine1.Replace("'", "''")}', '{customer.City.Replace("'", "''")}', '{customer.State.Replace("'", "''")}', '{customer.ZIPCode.Replace("'", "''")}', '{customer.ContactPersonName.Replace("'", "''")}', '{customer.TelephoneNumber.Replace("'", "''")}',     " +
+                $"'{customer.FaxNumber.Replace("'", "''")}', '{customer.EmailAddress.Replace("'", "''")}', '{customer.TruckType.Replace("'", "''")}', '{customer.CollectFreight.Replace("'", "''")}', " +
+                $"'{customer.Comments.Replace("'", "''")}', '{customer.Surcharge}', '{customer.FOB.Replace("'", "''")}', '{customer.Terms.Replace("'", "''")}',  '{customer.RePackingCharge}', " +
+                $"'{customer.ShipVia.Replace("'", "''")}', '{customer.Invoicingtypeid}', '{customer.EndCustomerName.Replace("'", "''")}','{ customer.DisplayLineNo}','{ customer.Billing.Replace("'", "''")}')");
 
             sql = sql + " Select Scope_Identity()";
 
@@ -267,8 +303,22 @@ namespace DAL.Repository
 
             foreach (CustomerShippingInfo term in customer.ShippingInfos)
             {
+                if (term.Name == null)
+                    term.Name = string.Empty;
+                if (term.ContactPersonName == null)
+                    term.ContactPersonName = string.Empty;
+                if (term.AddressLine1 == null)
+                    term.AddressLine1 = string.Empty;
+                if (term.City == null)
+                    term.City = string.Empty;
+                if (term.State == null)
+                    term.State = string.Empty;
+                if (term.ZIPCode == null)
+                    term.ZIPCode = string.Empty;
+               
+
                 sql = string.Format($"INSERT INTO [dbo].[customershippinginfo] ([CustomerID] ,[Name] ,[ContactPersonName] ,[AddressLine1] ,[City] ,[State],[ZIPCode],[IsDefault]) VALUES ( " +
-                    $"'{customerId}' , '{term.Name}' , '{term.ContactPersonName}' ,'{term.AddressLine1}', '{term.City}' , '{term.State}' , '{term.ZIPCode}' , '{term.IsDefault}')");
+                    $"'{customerId}' , '{term.Name.Replace("'", "''")}' , '{term.ContactPersonName.Replace("'", "''")}' ,'{term.AddressLine1.Replace("'", "''")}', '{term.City.Replace("'", "''")}' , '{term.State.Replace("'", "''")}' , '{term.ZIPCode.Replace("'", "''")}' , '{term.IsDefault}')");
 
                 await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
             }
@@ -284,18 +334,68 @@ namespace DAL.Repository
 
                 //sql = "UPDATE [dbo].[Customer] SET [CompanyId] = '{0}',[Name]= '{1}',[ContactPersonName]= '{2}',[PhoneNo]= '{3}',[EmailID]= '{4}',[Address]= '{5}',[City]= '{6}',[State]= '{7}',[Country]= '{8}',[ZIPCode]= '{9}',[FAXNo]= '{10}',[DateFormat]= '{11}',[noofstages]= '{12}',[CompanyProfileID] = '{13}'  WHERE id = '{14}'";
 
-                sql = string.Format($"UPDATE [dbo].[customer]SET[CompanyId] = '{customer.CompanyId}' ,[Name] = '{customer.Name}',[AddressLine1] = '{customer.AddressLine1}'" +
-                    $",[City] = '{customer.City}',[State] = '{customer.State}',[ZIPCode] = '{customer.ZIPCode}' ,[ContactPersonName] = '{customer.ContactPersonName}'" +
+                if (customer.Name == null)
+                    customer.Name = string.Empty;
+                if (customer.AddressLine1 == null)
+                    customer.AddressLine1 = string.Empty;
+                if (customer.City == null)
+                    customer.City = string.Empty;
+                if (customer.State == null)
+                    customer.State = string.Empty;
+                if (customer.ZIPCode == null)
+                    customer.ZIPCode = string.Empty;
+                if (customer.ContactPersonName == null)
+                    customer.ContactPersonName = string.Empty;
+                if (customer.TelephoneNumber == null)
+                    customer.TelephoneNumber = string.Empty;
+                if (customer.FaxNumber == null)
+                    customer.FaxNumber = string.Empty;
+                if (customer.EmailAddress == null)
+                    customer.EmailAddress = string.Empty;
+                if (customer.TruckType == null)
+                    customer.TruckType = string.Empty;
+                if (customer.CollectFreight == null)
+                    customer.CollectFreight = string.Empty;
+                if (customer.Comments == null)
+                    customer.Comments = string.Empty;
+                if (customer.FOB == null)
+                    customer.FOB = string.Empty;
+                if (customer.Terms == null)
+                    customer.Terms = string.Empty;
+                if (customer.ShipVia == null)
+                    customer.ShipVia = string.Empty;
+                if (customer.EndCustomerName == null)
+                    customer.EndCustomerName = string.Empty;
+                if (customer.Billing == null)
+                    customer.Billing = string.Empty;
+
+                sql = string.Format($"UPDATE [dbo].[customer]SET[CompanyId] = '{customer.CompanyId}' ,[Name] = '{customer.Name.Replace("'", "''")}',[AddressLine1] = '{customer.AddressLine1.Replace("'", "''")}'" +
+                    $",[City] = '{customer.City.Replace("'", "''")}',[State] = '{customer.State.Replace("'", "''")}',[ZIPCode] = '{customer.ZIPCode.Replace("'", "''")}' ,[ContactPersonName] = '{customer.ContactPersonName.Replace("'", "''")}'" +
                     $"      ,[TelephoneNumber] = '{customer.TelephoneNumber}' ,[FaxNumber] = '{customer.FaxNumber}',[EmailAddress] = '{customer.EmailAddress}' ,[TruckType] = '{customer.TruckType}'" +
-                    $"  ,[CollectFreight] = '{customer.CollectFreight}',[Comments] = '{customer.Comments}' ,[Surcharge] = '{customer.Surcharge}' ,[FOB] = '{customer.FOB}'" +
-                    $" ,[Terms] = '{customer.Terms}',[RePackingCharge] = '{customer.RePackingCharge}',[ShipVia] = '{customer.ShipVia}' ,[invoicingtypeid] = '{customer.Invoicingtypeid}'" +
-                    $"   ,[endcustomername] = '{customer.EndCustomerName}' ,[DisplayLineNo] = '{customer.DisplayLineNo}',[Billing] = '{customer.Billing}' WHERE[Id] = '{customer.Id}' ");
+                    $"  ,[CollectFreight] = '{customer.CollectFreight}',[Comments] = '{customer.Comments.Replace("'", "''")}' ,[Surcharge] = '{customer.Surcharge}' ,[FOB] = '{customer.FOB}'" +
+                    $" ,[Terms] = '{customer.Terms}',[RePackingCharge] = '{customer.RePackingCharge}',[ShipVia] = '{customer.ShipVia.Replace("'", "''")}' ,[invoicingtypeid] = '{customer.Invoicingtypeid}'" +
+                    $"   ,[endcustomername] = '{customer.EndCustomerName.Replace("'", "''")}' ,[DisplayLineNo] = '{customer.DisplayLineNo}',[Billing] = '{customer.Billing.Replace("'","''")}' WHERE[Id] = '{customer.Id}' ");
                 await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
                 foreach (CustomerShippingInfo term in customer.ShippingInfos)
                 {
+                    if (term.Name == null)
+                        term.Name = string.Empty;
+                    if (term.ContactPersonName == null)
+                        term.ContactPersonName = string.Empty;
+                    if (term.AddressLine1 == null)
+                        term.AddressLine1 = string.Empty;
+                    if (term.City == null)
+                        term.City = string.Empty;
+                    if (term.State == null)
+                        term.State = string.Empty;
+                    if (term.ZIPCode == null)
+                        term.ZIPCode = string.Empty;
+
+
                     sql = string.Format($"INSERT INTO [dbo].[customershippinginfo] ([CustomerID] ,[Name] ,[ContactPersonName] ,[AddressLine1] ,[City] ,[State],[ZIPCode],[IsDefault]) VALUES ( " +
-                    $"'{customer.Id}' , '{term.Name}' , '{term.ContactPersonName}' ,'{term.AddressLine1}', '{term.City}' , '{term.State}' , '{term.ZIPCode}' , '{term.IsDefault}')");
+                        $"'{customer.Id}' , '{term.Name.Replace("'", "''")}' , '{term.ContactPersonName.Replace("'", "''")}' ,'{term.AddressLine1.Replace("'", "''")}', '{term.City.Replace("'", "''")}' , '{term.State.Replace("'", "''")}' , '{term.ZIPCode.Replace("'", "''")}' , '{term.IsDefault}')");
+
                     await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
                 }
             }

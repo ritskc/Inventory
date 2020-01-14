@@ -132,15 +132,19 @@ namespace WebApi.Controllers
 
                 foreach (PoDetail poDetail in po.poDetails)
                 {
-                    var part = parts.Where(x => x.partSupplierAssignments.Select(p => p.PartID == poDetail.PartId && p.SupplierID == po.SupplierId).FirstOrDefault()).FirstOrDefault();
+                    var part = parts.Where(p => p.Id == poDetail.PartId).FirstOrDefault();
+                    //var part = parts.Where(x => x.partSupplierAssignments.Select(p => p.PartID == poDetail.PartId && p.SupplierID == po.SupplierId).FirstOrDefault()).FirstOrDefault();
                     if (part == null)
                     {
                         part = parts.Where(p => p.Id == poDetail.PartId).FirstOrDefault();
                         if (part == null)
-                            return BadRequest(string.Format("Invalid part"));
-                        else
-                            return BadRequest(string.Format("Invalid part : {0} does not belong to this supplier", part.Code));
+                            return BadRequest(string.Format("Invalid part"));                        
+                            
                     }
+                    var supplier = part.partSupplierAssignments.Where(x => x.SupplierID == po.SupplierId).FirstOrDefault();
+                    if(supplier == null)
+                        return BadRequest(string.Format("Invalid part : {0} does not belong to this supplier", part.Code));
+
                 }
                 po.Id = id;
                 await this._poService.UpdatePoAsync(po);

@@ -13,12 +13,16 @@ namespace WebApi.Services
         private readonly IPackingSlipRepository packingSlipRepository;
         private readonly IEntityTrackerRepository entityTrackerRepository;
         private readonly ITransactionRepository transactionRepository;
+        private readonly IPartService partService;
 
-        public PackingSlipService(IPackingSlipRepository packingSlipRepository, IEntityTrackerRepository entityTrackerRepository,ITransactionRepository transactionRepository)
+        public PackingSlipService(IPackingSlipRepository packingSlipRepository, 
+            IEntityTrackerRepository entityTrackerRepository,ITransactionRepository transactionRepository
+            ,IPartService partService)
         {
             this.packingSlipRepository = packingSlipRepository;
             this.entityTrackerRepository = entityTrackerRepository;
             this.transactionRepository = transactionRepository;
+            this.partService = partService;
         }
 
         public async Task<Int32> AddPackingSlipAsync(PackingSlip packingSlip)
@@ -35,29 +39,49 @@ namespace WebApi.Services
             await this.packingSlipRepository.CreateInvoiceAsync(packingSlip);
         }
 
-        public Task<int> DeleteSupplierInvoiceAsync(long id)
+        public async Task<bool> DeletePackingSlipAsync(long id)
         {
-            throw new NotImplementedException();
-        }
+            var result= await this.packingSlipRepository.DeletePackingSlipAsync(id);
+            return result;
+        }       
 
         public async Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId)
         {
-            return await this.packingSlipRepository.GetAllPackingSlipsAsync(companyId);
+            var partList = await this.partService.GetAllPartsAsync(companyId);
+            var result =  await this.packingSlipRepository.GetAllPackingSlipsAsync(companyId);
+
+            foreach(PackingSlip packingSlip in result)
+            {
+                foreach(PackingSlipDetails packingSlipDetails in packingSlip.PackingSlipDetails)
+                {
+                    var partDetail = partList.Where(p => p.Id == packingSlipDetails.PartId).FirstOrDefault();
+                    packingSlipDetails.PartDetail = partDetail;
+                }
+            }
+            return result;
         }
 
         public async Task<PackingSlip> GetPackingSlipAsync(long Id)
-        {
-            return await this.packingSlipRepository.GetPackingSlipAsync(Id);
+        {            
+            var result= await this.packingSlipRepository.GetPackingSlipAsync(Id);
+            var partList = await this.partService.GetAllPartsAsync(result.CompanyId);
+            foreach (PackingSlipDetails packingSlipDetails in result.PackingSlipDetails)
+            {
+                var partDetail = partList.Where(p => p.Id == packingSlipDetails.PartId).FirstOrDefault();
+                packingSlipDetails.PartDetail = partDetail;
+            }
+            return result;
         }
 
-        public Task UpdatePackingSlipAsync(PackingSlip packingSlip)
+        public async Task<bool> UpdatePackingSlipAsync(PackingSlip packingSlip)
         {
-            throw new NotImplementedException();
+            var result = await this.packingSlipRepository.UpdatePackingSlipAsync(packingSlip);
+            return result;
         }
 
         public async Task UpdatePOSAsync(int packingSlipId, string path,string trackingNumber)
         {
             await packingSlipRepository.UpdatePOSAsync(packingSlipId,path, trackingNumber);
-        }
+        }       
     }
 }

@@ -1,6 +1,7 @@
 ﻿using DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace DAL.IRepository
     {
         Task<IEnumerable<Part>> GetAllPartsAsync(int companyId);
         Task<Part> GetPartAsync(long partId);
+        Task<Part> GetPartAsync(long partId, SqlConnection conn, SqlTransaction transaction);
         Part GetPart(long partId);
         Task<Part> GetPartByNameAsync(int companyId, string name);
         Task<Part> GetPartByMapCodeAsync(int? supplierId, string mapCode);
@@ -19,7 +21,11 @@ namespace DAL.IRepository
         Task AddPartAsync(Part part);
         Task UpdatePartAsync(Part part);
         Task DeletePartAsync(long id);
-        Task UpdatePartCustomerPriceAsync(string customer, string partcode, decimal price);
-        Task UpdatePartSupplierPriceAsync(string supplier, string partcode, decimal price);
+        Task UpdatePartCustomerPriceAsync(int companyId, string customer, string partcode, decimal price);
+        Task UpdatePartSupplierPriceAsync(int companyId, string supplier, string partcode, decimal price);
+
+        Task UpdateOpeningQtyByPartCodeAsync(int companyId, string partcode, int openingQty);
+        Task UpdateOpeningQtyByPartIdAsync(int companyId, int partId, int openingQty);
+        Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand);
     }
 }

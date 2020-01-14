@@ -79,15 +79,29 @@ namespace WebApi.Services
             await Task.Run(() => this._partRepository.DeletePartAsync(id));
         }
 
-        public async Task UpdatePartCustomerPriceAsync(string customer, string partcode, decimal price)
+        public async Task UpdatePartCustomerPriceAsync(int companyId, string customer, string partcode, decimal price)
         {
-            await Task.Run(() => this._partRepository.UpdatePartCustomerPriceAsync(customer,partcode,price));
+            await Task.Run(() => this._partRepository.UpdatePartCustomerPriceAsync(companyId,customer, partcode,price));
         }
 
-        public async Task UpdatePartSupplierPriceAsync(string supplier, string partcode, decimal price)
+        public async Task UpdatePartSupplierPriceAsync(int companyId, string supplier, string partcode, decimal price)
         {
-            await Task.Run(() => this._partRepository.UpdatePartSupplierPriceAsync(supplier, partcode, price));
+            await Task.Run(() => this._partRepository.UpdatePartSupplierPriceAsync(companyId,supplier, partcode, price));
         }
 
+        public async Task UpdateOpeningQtyByPartCodeAsync(int companyId, string partcode, int openingQty)
+        {
+            await Task.Run(() => this._partRepository.UpdateOpeningQtyByPartCodeAsync(companyId,  partcode, openingQty));
+        }
+
+        public async Task UpdateOpeningQtyByPartIdAsync(int companyId, int partId, int openingQty)
+        {
+            await Task.Run(() => this._partRepository.UpdateOpeningQtyByPartIdAsync(companyId, partId, openingQty));
+        }
+
+        public async Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand)
+        {
+            await Task.Run(() => this._partRepository.UpdateQtyInHandByPartIdAsync(companyId, partId, QtyInHand));
+        }
     }
 }

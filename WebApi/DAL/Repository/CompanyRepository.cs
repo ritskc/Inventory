@@ -220,7 +220,7 @@ namespace DAL.Repository
         public async Task<int> AddCompanyAsync(Company company)
         {
             string sql = string.Format("INSERT INTO [Company] ([Name],[Address],[PhoneNo] ,[FaxNo] ,[EMail] ,[ContactPersonName] ,[WHName] ,[WHAddress] ,[WHPhoneNo] ,[WHEmail]) VALUES ('{0}', '{1}','{2}','{3}', '{4}','{5}','{6}', '{7}','{8}','{9}')",
-                                        company.Name, company.Address, company.PhoneNo, company.PhoneNo, company.FaxNo, company.EMail, company.ContactPersonName, company.WHName, company.WHAddress, company.PhoneNo, company.WHEmail);
+                                        company.Name.Replace("'", "''"), company.Address.Replace("'", "''"), company.PhoneNo, company.FaxNo, company.EMail.Replace("'", "''"), company.ContactPersonName.Replace("'", "''"), company.WHName.Replace("'", "''"), company.WHAddress.Replace("'", "''"), company.PhoneNo.Replace("'", "''"), company.WHEmail.Replace("'", "''"));
 
             return await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
         }
@@ -228,7 +228,7 @@ namespace DAL.Repository
         public async Task<int> UpdateCompanyAsync(Company company)
         {
             string sql = string.Format("UPDATE [dbo].[Company] SET [name] = '{0}'  ,[Address] ='{1}' ,[PhoneNo] ='{2}' ,[FaxNo] = '{3}'  ,[EMail] ='{4}' ,[ContactPersonName] ='{5}',[WHName] = '{6}'  ,[WHAddress] ='{7}' ,[WHPhoneNo] ='{8}',[WHEmail] ='{9}'" +
-                " WHERE id = '{10}'", company.Name, company.Address, company.PhoneNo, company.FaxNo, company.EMail, company.ContactPersonName, company.WHName, company.WHAddress, company.WHPhoneNo, company.WHEmail, company.Id);
+                " WHERE id = '{10}'", company.Name.Replace("'", "''"), company.Address.Replace("'", "''"), company.PhoneNo, company.FaxNo, company.EMail.Replace("'", "''"), company.ContactPersonName.Replace("'", "''"), company.WHName.Replace("'", "''"), company.WHAddress.Replace("'", "''"), company.WHPhoneNo, company.WHEmail.Replace("'", "''"), company.Id);
 
             return await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
         }

@@ -159,17 +159,53 @@ namespace WebApi.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{type}/{typeName}/{partCode}/{rate}")]
-        public async Task<IActionResult> Put(string type, string typeName, string partCode, decimal rate)
+        [HttpPut("{companyId}/{type}/{typeName}/{partCode}/{rate}")]
+        public async Task<IActionResult> Put(int companyId, string type, string typeName, string partCode, decimal rate)
         {
             try
             {               
                 if(type == "customer")
-                    await this._partService.UpdatePartCustomerPriceAsync(typeName, partCode, rate);
+                    await this._partService.UpdatePartCustomerPriceAsync(companyId,typeName, partCode, rate);
                 else if(type== "supplier" )
-                    await this._partService.UpdatePartSupplierPriceAsync(typeName, partCode, rate);
+                    await this._partService.UpdatePartSupplierPriceAsync(companyId,typeName, partCode, rate);
                 else
                     return BadRequest();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        // PUT api/values/5
+        [HttpPut("{companyId}/{type}/{partId}/{qty}")]
+        public async Task<IActionResult> Put(int companyId, string type, int partId, int qty)
+        {
+            try
+            {
+                if (type.ToLower() == "OpeningQty".ToLower())
+                    await this._partService.UpdateOpeningQtyByPartIdAsync(companyId, partId, qty);
+                else if (type.ToLower() == "QtyInHand".ToLower())
+                    await this._partService.UpdateQtyInHandByPartIdAsync(companyId, partId, qty);
+                else
+                    return BadRequest();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        // PUT api/values/5
+        [HttpPut("{companyId}/{partCode}/{qty}")]
+        public async Task<IActionResult> Put(int companyId, string partCode, int qty)
+        {
+            try
+            {
+                await this._partService.UpdateOpeningQtyByPartCodeAsync(companyId, partCode, qty);
+               
                 return Ok();
             }
             catch (Exception ex)
