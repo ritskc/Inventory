@@ -1149,6 +1149,58 @@ namespace DAL.Repository
             }
         }
 
+        public async Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand,string direction,string note)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+                    var sql = string.Empty;
+                    if (direction.ToLower() == BusinessConstants.DIRECTION.IN.ToString().ToLower())
+                    {
+                        sql = string.Format($"UPDATE [part]   SET  [QtyInHand] = QtyInHand + '{QtyInHand}'  WHERE  id= '{partId}' AND CompanyId = '{companyId}'");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+
+                        sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{partId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.ADJUSTMENT_PLUS)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.IN)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{"Inventory Adjustment"}'   ,'{QtyInHand}')");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                    }
+                    else
+                    {
+                        sql = string.Format($"UPDATE [part]   SET  [QtyInHand] = QtyInHand - '{QtyInHand}'  WHERE  id= '{partId}' AND CompanyId = '{companyId}'");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+
+                        sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{partId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.ADJUSTMENT_MINUS)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.OUT)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{"Inventory Adjustment"}'   ,'{QtyInHand}')");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                    }
+
+                    // Attempt to commit the transaction.
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
         public async Task UpdatePartSupplierPriceAsync(int companyId, string supplier, string partcode, decimal price)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))

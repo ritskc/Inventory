@@ -89,6 +89,7 @@
     <Content Include="Reports\Resource\HI.png" />
     <Content Include="ReportViewer\CopmanyReport.aspx" />
     <Content Include="ReportViewer\Invoice.aspx" />
+    <Content Include="ReportViewer\BL.aspx" />
     <Content Include="ReportViewer\PackingSlip.aspx" />
     <Content Include="SqlServerTypes\x64\SqlServerSpatial110.dll" />
     <Content Include="SqlServerTypes\x86\SqlServerSpatial110.dll" />
@@ -111,6 +112,13 @@
     </Compile>
     <Compile Include="ReportViewer\Invoice.aspx.designer.cs">
       <DependentUpon>Invoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportViewer\BL.aspx.cs">
+      <DependentUpon>BL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportViewer\BL.aspx.designer.cs">
+      <DependentUpon>BL.aspx</DependentUpon>
     </Compile>
     <Compile Include="ReportViewer\PackingSlip.aspx.cs">
       <DependentUpon>PackingSlip.aspx</DependentUpon>
@@ -136,6 +144,7 @@
     <EmbeddedResource Include="Report1.rdlc" />
     <EmbeddedResource Include="Reports\Company.rdlc" />
     <EmbeddedResource Include="Reports\Invoice.rdlc" />
+    <EmbeddedResource Include="Reports\BL.rdlc" />
     <EmbeddedResource Include="Reports\PackingSlip.rdlc" />
   </ItemGroup>
   <ItemGroup>

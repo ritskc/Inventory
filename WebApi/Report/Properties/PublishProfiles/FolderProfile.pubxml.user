@@ -10,13 +10,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/DAL.dll">
-      <publishTime>12/29/2019 13:00:07</publishTime>
+      <publishTime>01/19/2020 15:26:40</publishTime>
     </File>
     <File Include="bin/DAL.dll.config">
       <publishTime>11/24/2019 22:11:02</publishTime>
     </File>
     <File Include="bin/DAL.pdb">
-      <publishTime>12/29/2019 13:00:07</publishTime>
+      <publishTime>01/19/2020 15:26:40</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>05/24/2018 14:38:22</publishTime>
@@ -46,10 +46,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/12/2014 20:48:20</publishTime>
     </File>
     <File Include="bin/Report.dll">
-      <publishTime>12/29/2019 13:00:08</publishTime>
+      <publishTime>01/19/2020 15:31:47</publishTime>
     </File>
     <File Include="bin/Report.pdb">
-      <publishTime>12/29/2019 13:00:08</publishTime>
+      <publishTime>01/19/2020 15:31:47</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/24/2018 14:38:22</publishTime>
@@ -190,10 +190,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/24/2018 14:38:24</publishTime>
     </File>
     <File Include="connection.json">
-      <publishTime>11/30/2019 16:06:46</publishTime>
+      <publishTime>01/16/2020 20:17:34</publishTime>
     </File>
     <File Include="Reports/Resource/HI.png">
       <publishTime>07/28/2019 16:25:28</publishTime>
+    </File>
+    <File Include="ReportViewer/BL.aspx">
+      <publishTime>01/18/2020 11:54:22</publishTime>
     </File>
     <File Include="ReportViewer/CopmanyReport.aspx">
       <publishTime>07/24/2019 20:50:28</publishTime>
@@ -211,7 +214,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2019 20:49:43</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/02/2019 21:29:06</publishTime>
+      <publishTime>01/19/2020 15:31:47</publishTime>
     </File>
   </ItemGroup>
 </Project>

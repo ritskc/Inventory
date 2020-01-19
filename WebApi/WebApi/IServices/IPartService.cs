@@ -20,5 +20,6 @@ namespace WebApi.IServices
         Task UpdateOpeningQtyByPartCodeAsync(int companyId, string partcode, int openingQty);
         Task UpdateOpeningQtyByPartIdAsync(int companyId, int partId, int openingQty);
         Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int qtyInHand);
+        Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand, string direction, string note);
     }
 }

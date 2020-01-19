@@ -125,7 +125,18 @@ namespace DAL.Repository
                     packingSlipReport.SurchargePerUnit = Convert.ToDecimal(dataReader1["SurchargePerUnit"]);
                     packingSlipReport.TotalSurcharge = Convert.ToDecimal(dataReader1["TotalSurcharge"]);
                     packingSlipReport.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);
+                    try
+                    {
+                        packingSlipReport.LineNumber = Convert.ToInt32(dataReader1["LineNumber"]);
 
+
+                        if (packingSlipReport.LineNumber > 0)
+                            packingSlipReport.OrderNo = packingSlipReport.OrderNo + "-" + packingSlipReport.LineNumber.ToString();
+                    }
+                    catch
+                    {
+
+                    }
                     SrNo++;
                     packingSlipReports.Add(packingSlipReport);
                 }

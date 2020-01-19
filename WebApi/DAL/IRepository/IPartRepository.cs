@@ -27,5 +27,6 @@ namespace DAL.IRepository
         Task UpdateOpeningQtyByPartCodeAsync(int companyId, string partcode, int openingQty);
         Task UpdateOpeningQtyByPartIdAsync(int companyId, int partId, int openingQty);
         Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand);
+        Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand, string direction, string note);
     }
 }

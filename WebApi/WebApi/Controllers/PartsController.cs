@@ -199,6 +199,24 @@ namespace WebApi.Controllers
         }
 
         // PUT api/values/5
+        [HttpPut("{companyId}/{partId}/{direction}/{qty}/{note}")]
+        public async Task<IActionResult> Put(int companyId, string type, int partId, int qty,string direction, string note)
+        {
+            try
+            {                
+                if (direction.ToLower() == BusinessConstants.DIRECTION.IN.ToString().ToLower() || direction.ToLower() == BusinessConstants.DIRECTION.OUT.ToString().ToLower())
+                    await this._partService.UpdateQtyInHandByPartIdAsync(companyId, partId, qty,direction,note);
+                else
+                    return BadRequest();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        // PUT api/values/5
         [HttpPut("{companyId}/{partCode}/{qty}")]
         public async Task<IActionResult> Put(int companyId, string partCode, int qty)
         {

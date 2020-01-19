@@ -121,8 +121,8 @@ namespace WebApi.Controllers
                 }
 
 
-                //if (result.IsInvoiceCreated)
-                //    return BadRequest("Invoice is already created. You can not update this Packing slip");
+                if (result.IsPOSUploaded)
+                    return BadRequest("POS is already uploaded. You can not update this Packing slip");
 
 
                 await this.packingSlipService.UpdatePackingSlipAsync(packingSlip);
@@ -147,10 +147,10 @@ namespace WebApi.Controllers
                     return NotFound();
                 }
 
-                
-                if (result.IsInvoiceCreated)
-                    return BadRequest("Invoice is already created. You can not delete this Packing slip");
-                
+
+                if (result.IsPOSUploaded)
+                    return BadRequest("POS is already uploaded. You can not delete this Packing slip");
+
 
                 await this.packingSlipService.DeletePackingSlipAsync(id);
 

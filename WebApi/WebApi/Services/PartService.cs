@@ -103,5 +103,10 @@ namespace WebApi.Services
         {
             await Task.Run(() => this._partRepository.UpdateQtyInHandByPartIdAsync(companyId, partId, QtyInHand));
         }
+
+        public async Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand, string direction, string note)
+        {
+            await Task.Run(() => this._partRepository.UpdateQtyInHandByPartIdAsync(companyId, partId, QtyInHand,direction,note));
+        }
     }
 }
