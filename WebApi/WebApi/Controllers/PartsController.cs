@@ -70,7 +70,8 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{companyId}/{type}/{typeId}")]
-        public async Task<ActionResult<IEnumerable<Part>>> GetPartsByType(int companyId,string type, int typeId)
+        // [HttpGet("{companyId}/{type}/{partId}")]
+        public async Task<ActionResult> GetPartsByType(int companyId,string type, int typeId)
         {
             try
             {
@@ -78,12 +79,27 @@ namespace WebApi.Controllers
                 if (type == "customer")
                 {
                     var result = await this._partService.GetPartByCustomerIdAsync(typeId);
-                    return result.ToList();
+                    return Ok(result);
                 }
                 else if (type == "supplier")
                 {
                     var result = await this._partService.GetPartBySupplierIdAsync(typeId);
-                    return result.ToList();
+                    return Ok(result);
+                }
+                if (type.ToLower() == "InTransit".ToLower())
+                {
+                    var result = await this._partService.GetPartInTransitDetailAsync(typeId, companyId);
+                    return Ok(result);
+                }
+                else if (type.ToLower() == "OpenOrder".ToLower())
+                {
+                    var result = await this._partService.GetPartOpenOrderDetailAsync(typeId, companyId);
+                    return Ok(result);
+                }
+                else if (type.ToLower() == "LatestShipment".ToLower())
+                {
+                    var result = await this._partService.GetPartLatestShipmentAsync(typeId, companyId);
+                    return Ok(result);
                 }
                 else
                     return BadRequest();
@@ -95,6 +111,36 @@ namespace WebApi.Controllers
             }
 
         }
+
+        //// PUT api/values/5
+        //[HttpGet("{companyId}/{type}/{partId}")]
+        //public async Task<IActionResult> Get(int companyId, string type, int partId)
+        //{
+        //    try
+        //    {
+        //        if (type.ToLower() == "InTransit".ToLower())
+        //        {
+        //            var result = await this._partService.GetPartInTransitDetailAsync(partId,companyId);
+        //            return Ok(result);
+        //        }
+        //        else if (type.ToLower() == "OpenOrder".ToLower())
+        //        {
+        //            var result = await this._partService.GetPartOpenOrderDetailAsync(partId, companyId);
+        //            return Ok(result);
+        //        }
+        //        else if (type.ToLower() == "LatestShipment".ToLower())
+        //        {
+        //            var result = await this._partService.GetPartLatestShipmentAsync(partId, companyId);
+        //            return Ok(result);
+        //        }
+        //        return BadRequest();
+                
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, ex.ToString());
+        //    }
+        //}
 
         // POST api/values
         [HttpPost]

@@ -1,0 +1,82 @@
+2020-01-20 14:03:47.3671||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 14:23:14.2822||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 14:28:23.4969||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 14:30:02.5186||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 14:43:08.6253||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 14:48:14.3212||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 14:50:09.1633||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 14:52:18.2146||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 15:03:30.4571||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 15:11:45.3449||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 15:26:16.3850||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 15:29:20.0600||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 15:32:10.8682||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 17:33:31.5346||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 17:33:32.5818||INFO|WebApi.Controllers.FileController|post file api called |url: https://localhost/File/MasterPOS/17|action: Post
+2020-01-20 17:33:47.7727||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 17:33:51.4470||INFO|WebApi.Controllers.FileController|post file api called |url: https://localhost/File/MasterPOS/17|action: Post
+2020-01-20 17:34:13.0868|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. System.InvalidOperationException: Cannot return null from an action method with a return type of 'Microsoft.AspNetCore.Mvc.IActionResult'.
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.EnsureActionResultNotNull(ObjectMethodExecutor executor, IActionResult actionResult)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: https://localhost/File/MasterPOS/17|action: Post
+2020-01-20 17:52:27.2616||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 17:52:35.1162||INFO|WebApi.Controllers.FileController|post file api called |url: https://localhost/File/MasterPOS/17/123|action: Post
+2020-01-20 17:52:35.2011|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\Ritesh\Projects\Inventory\WebApi\WebApi\Docs\MasterPOS\17.pdf'.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at WebApi.Controllers.FileController.Post(String docType, Int32 id, IFormFile file, String trackingNumber) in C:\Ritesh\Projects\Inventory\WebApi\WebApi\Controllers\FileController.cs:line 101
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: https://localhost/File/MasterPOS/17/123|action: Post
+2020-01-20 17:53:14.2944||INFO|WebApi.Controllers.FileController|post file api called |url: https://localhost/File/MasterPOS/17/123|action: Post
+2020-01-20 17:53:18.2772|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\Ritesh\Projects\Inventory\WebApi\WebApi\Docs\MasterPOS\17.pdf'.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at WebApi.Controllers.FileController.Post(String docType, Int32 id, IFormFile file, String trackingNumber) in C:\Ritesh\Projects\Inventory\WebApi\WebApi\Controllers\FileController.cs:line 101
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: https://localhost/File/MasterPOS/17/123|action: Post
+2020-01-20 17:53:52.2544||INFO|WebApi.Controllers.FileController|post file api called |url: https://localhost/File/MasterPOS/17/123|action: Post
+2020-01-20 17:56:28.6754||DEBUG|WebApi.Program|init main |url: |action: 
+2020-01-20 17:56:45.3436||INFO|WebApi.Controllers.FileController|post file api called |url: https://localhost/File/MasterPOS/17/123|action: Post

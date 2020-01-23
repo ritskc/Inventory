@@ -102,6 +102,10 @@ namespace DAL.Repository
             {
                 finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
             }
+            else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MASTER_PACKING_SLIP.ToLower())
+            {
+                finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);               
+            }
             else
                 return null;
 
@@ -136,7 +140,13 @@ namespace DAL.Repository
                     {
                         entityNumber = Convert.ToInt32(dataReader["AvailableNo"]).ToString();
                     }
-                    entityTracker.EntityNo = entityTracker.FinYear + "-" + entityNumber;
+                    if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MASTER_PACKING_SLIP.ToLower())
+                    {
+                        finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);                        
+                        entityTracker.EntityNo = entityTracker.FinYear + "M" + "-" + entityNumber;
+                    }
+                    else
+                        entityTracker.EntityNo = entityTracker.FinYear + "-" + entityNumber;
                 }
                 conn.Close();
             }
@@ -147,7 +157,13 @@ namespace DAL.Repository
                 entityTracker.CompanyId = companyId;
                 entityTracker.FinYear = finYear;
                 entityTracker.Entity = entity;
-                entityTracker.EntityNo = finYear + "-" + "001";
+                if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MASTER_PACKING_SLIP.ToLower())
+                {
+                    finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
+                    entityTracker.EntityNo = finYear + "M-" + "001";
+                }
+                else
+                    entityTracker.EntityNo = finYear + "-" + "001";
             }
             return entityTracker;
         }
@@ -163,6 +179,10 @@ namespace DAL.Repository
             else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_PACKING_SLIP.ToLower())
             {
                 finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
+            }
+            else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MASTER_PACKING_SLIP.ToLower())
+            {
+                finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);                
             }
             else
                 return null;
@@ -187,13 +207,22 @@ namespace DAL.Repository
                     if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_PO.ToLower())
                     {
                         entity = BusinessConstants.ENTITY_TRACKER_PO;
+                        entityTracker.Entity = entity;
+                        entityTracker.EntityNo = entityTracker.FinYear + "-" + Convert.ToInt32(dataReader["AvailableNo"]);
                     }
                     else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_PACKING_SLIP.ToLower())
                     {
                         entity = BusinessConstants.ENTITY_TRACKER_PACKING_SLIP;
+                        entityTracker.Entity = entity;
+                        entityTracker.EntityNo = entityTracker.FinYear + "-" + Convert.ToInt32(dataReader["AvailableNo"]);
                     }
-                    entityTracker.Entity = entity;
-                    entityTracker.EntityNo = entityTracker.FinYear + "-" + Convert.ToInt32(dataReader["AvailableNo"]);
+                    else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MASTER_PACKING_SLIP.ToLower())
+                    {
+                        entity = BusinessConstants.ENTITY_TRACKER_PACKING_SLIP;
+                        entityTracker.Entity = entity;
+                        entityTracker.EntityNo = entityTracker.FinYear + "M-" + Convert.ToInt32(dataReader["AvailableNo"]);
+                    }
+                   
                 }
                 conn.Close();
             }
@@ -273,6 +302,11 @@ namespace DAL.Repository
                 entity = BusinessConstants.ENTITY_TRACKER_PACKING_SLIP;
                 finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
             }
+            else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MASTER_PACKING_SLIP.ToLower())
+            {
+                entity = BusinessConstants.ENTITY_TRACKER_MASTER_PACKING_SLIP;
+                finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
+            }
             command.Connection = connection;
             command.Transaction = transaction;
 
@@ -285,7 +319,7 @@ namespace DAL.Repository
             }
             else
             {
-                var sql = string.Format($"UPDATE [dbo].[EntityTracker]   SET  [AvailableNo] = '{Convert.ToInt32(entityTracker.EntityNo.Replace(entityTracker.FinYear, "").Replace("-", "")) + 1}' where CompanyId = '{companyId}'  and FinYear = '{finYear}' and Entity = '{entity}'");
+                var sql = string.Format($"UPDATE [dbo].[EntityTracker]   SET  [AvailableNo] = '{Convert.ToInt32(entityTracker.EntityNo.Replace(entityTracker.FinYear, "").Replace("M-", "")) + 1}' where CompanyId = '{companyId}'  and FinYear = '{finYear}' and Entity = '{entity}'");
                 command.CommandText = sql;
                 await command.ExecuteNonQueryAsync();
             }

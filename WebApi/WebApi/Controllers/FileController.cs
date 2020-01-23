@@ -16,16 +16,19 @@ namespace WebApi.Controllers
     public class FileController : ControllerBase
     {
         private readonly IPackingSlipService packingSlipService;
+        private readonly IMasterPackingSlipService masterPackingSlipService;
         private readonly ISupplierInvoiceService supplierInvoice;
         private readonly IOrderService orderService;
         private readonly ILogger<FileController> logger;
 
         public FileController(IPackingSlipService packingSlipService,
+            IMasterPackingSlipService masterPackingSlipService,
             ISupplierInvoiceService supplierInvoice,
             IOrderService orderService,
             ILogger<FileController> logger)
         {
             this.packingSlipService = packingSlipService;
+            this.masterPackingSlipService = masterPackingSlipService;
             this.supplierInvoice = supplierInvoice;
             this.orderService = orderService;
             this.logger = logger;
@@ -81,14 +84,14 @@ namespace WebApi.Controllers
 
             return Ok();
         }
-
+        //docType = POS / MasterPOS
         [HttpPost("{docType}/{id}/{trackingNumber}")]
         public async Task<IActionResult> Post(string docType, int id, IFormFile file, string trackingNumber)
         {
             logger.LogInformation("post file api called");
 
             long size = file.Length;
-            string type = "POS";
+            string type = docType;
             
             
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Docs", type, id.ToString() + ".pdf");
@@ -101,7 +104,11 @@ namespace WebApi.Controllers
                 }
             }
             var relativeFilePath = "Docs\\" + type + "\\" + id.ToString() + ".pdf";
-            var result = packingSlipService.UpdatePOSAsync(id, relativeFilePath, trackingNumber);
+            if(docType.ToLower() == "POS".ToLower())
+                await packingSlipService.UpdatePOSAsync(id, relativeFilePath, trackingNumber);
+            else if (docType.ToLower() == "MasterPOS".ToLower())
+                await masterPackingSlipService.UpdatePOSAsync(id, relativeFilePath, trackingNumber);
+
             return Ok();
         }        
 

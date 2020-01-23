@@ -301,7 +301,7 @@ namespace DAL.Repository
 
             var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[CustomerId] ,[PackingSlipNo] ,[ShippingDate] ,[ShipVia] ,[Crates] ," +
                 $"[Boxes] ,[GrossWeight] ,[ShippingCharge] ,[CustomCharge] ,[SubTotal] ,[Total] ,[IsInvoiceCreated] ,[IsPaymentReceived] ,[FOB] ,[Terms] ," +
-                $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge]  FROM [dbo].[PackingSlipMaster] where CompanyId = '{companyId}' ");
+                $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsMasterPackingSlip],[MasterPackingSlipId]   FROM [dbo].[PackingSlipMaster] where CompanyId = '{companyId}' ");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -336,6 +336,8 @@ namespace DAL.Repository
                     packingSlip.IsPOSUploaded = Convert.ToBoolean(dataReader["IsPOSUploaded"]);
                     packingSlip.POSPath = Convert.ToString(dataReader["POSPath"]);
                     packingSlip.TotalSurcharge = Convert.ToDecimal(dataReader["TotalSurcharge"]);
+                    packingSlip.IsMasterPackingSlip = Convert.ToBoolean(dataReader["IsMasterPackingSlip"]);
+                    packingSlip.MasterPackingSlipId = Convert.ToInt32(dataReader["MasterPackingSlipId"]);
 
                     packingSlips.Add(packingSlip);
                 }
@@ -399,7 +401,7 @@ namespace DAL.Repository
 
             var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[CustomerId] ,[PackingSlipNo] ,[ShippingDate] ,[ShipVia] ,[Crates] ," +
                 $"[Boxes] ,[GrossWeight] ,[ShippingCharge] ,[CustomCharge] ,[SubTotal] ,[Total] ,[IsInvoiceCreated] ,[IsPaymentReceived] ,[FOB] ,[Terms] ," +
-                $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge]  FROM [dbo].[PackingSlipMaster] where Id = '{id}' ");
+                $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsMasterPackingSlip],[MasterPackingSlipId]  FROM [dbo].[PackingSlipMaster] where Id = '{id}' ");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -433,6 +435,9 @@ namespace DAL.Repository
                     packingSlip.IsPOSUploaded = Convert.ToBoolean(dataReader["IsPOSUploaded"]);
                     packingSlip.POSPath = Convert.ToString(dataReader["POSPath"]);
                     packingSlip.TotalSurcharge = Convert.ToDecimal(dataReader["TotalSurcharge"]);
+                    packingSlip.IsMasterPackingSlip = Convert.ToBoolean(dataReader["IsMasterPackingSlip"]);
+                    packingSlip.MasterPackingSlipId = Convert.ToInt32(dataReader["MasterPackingSlipId"]);
+
                 }
                 dataReader.Close();
                 conn.Close();

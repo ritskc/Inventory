@@ -101,7 +101,7 @@ namespace DAL.Repository
 
             List<PackingSlipReport> packingSlipReports = new List<PackingSlipReport>();
             commandText = string.Format($"SELECT [Id] ,[PackingSlipId] ,[IsBlankOrder] ,[OrderNo] ,[OrderId] ,[OrderDetailId] ,[PartId] ,[Qty] ," +
-                $"[Boxes] ,[InBasket] ,[UnitPrice] ,[Price] ,[Surcharge] ,[SurchargePerPound] ,[SurchargePerUnit] ,[TotalSurcharge] ,[ExcessQty]  FROM [dbo].[PackingSlipDetails] where PackingSlipId = '{ packingSlip.Id}'");
+                $"[Boxes] ,[InBasket] ,[UnitPrice] ,[Price] ,[Surcharge] ,[SurchargePerPound] ,[SurchargePerUnit] ,[TotalSurcharge] ,[ExcessQty],[LineNumber]  FROM [dbo].[PackingSlipDetails] where PackingSlipId = '{ packingSlip.Id}'");
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
             {

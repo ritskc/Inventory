@@ -92,6 +92,7 @@ namespace DAL.Repository
 
                         partSupplierAssignments.Add(partSupplierAssignment);
                     }
+                    dataReader1.Close();
                 }
                 part.partSupplierAssignments = partSupplierAssignments;
                 conn.Close();
@@ -123,6 +124,30 @@ namespace DAL.Repository
 
                         partCustomerAssignments.Add(partCustomerAssignment);
                     }
+                    dataReader1.Close();
+                }
+                part.partCustomerAssignments = partCustomerAssignments;
+                
+                conn.Close();
+            }
+
+            foreach (Part part in parts)
+            {
+                List<PartCustomerAssignment> partCustomerAssignments = new List<PartCustomerAssignment>();
+                commandText = string.Format("SELECT sum(Qty - ShippedQty) as openqty from OrderDetail where partid = '{0}' and (IsClosed =0 OR IsClosed IS NULL) ", part.Id);
+
+                using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                {
+                    cmd1.CommandType = CommandType.Text;
+                    conn.Open();
+                    var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                    while (dataReader1.Read())
+                    {                        
+                        part.OpenOrderQty = Convert.ToInt32(dataReader1["openqty"]);
+                        
+                    }
+                    dataReader1.Close();
                 }
                 part.partCustomerAssignments = partCustomerAssignments;
                 conn.Close();
@@ -432,6 +457,119 @@ namespace DAL.Repository
             }
 
             return part;
+        }
+
+        public async Task<IEnumerable<PartInTransit>> GetPartInTransitDetailAsync(long partId,int companyId)
+        {
+            var parts = new List<PartInTransit>();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format("SELECT 	[Code] ,[Description] ,[InvoiceNo] ,[InvoiceDate] ,[ETA] ,[PoNo],[SrNo] ,[PartId],[Qty],[Name] as SupplierName " +
+                "FROM [SupplierInvoiceDetails] SID   INNER JOIN [SupplierInvoiceMaster] SIM ON SID.InvoiceId = SIM.Id  INNER JOIN [part] P ON P.id = SID.PartId  INNER JOIN [supplier] S ON S.id = SIM.SupplierId  " +
+                "where (IsBoxReceived = 0 OR IsBoxReceived IS NULL) AND SIM.CompanyId = '{0}' AND PartId = '{1}' ",companyId, partId);
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var part = new PartInTransit();
+                    part.Code = Convert.ToString(dataReader["Code"]);
+                    part.Description = Convert.ToString(dataReader["Description"]);
+                    part.InvoiceNo = Convert.ToString(dataReader["InvoiceNo"]);
+                    part.InvoiceDate = Convert.ToDateTime(dataReader["InvoiceDate"]);
+                    part.ETA = Convert.ToDateTime(dataReader["ETA"]);
+                    part.PoNo = Convert.ToString(dataReader["PoNo"]);
+                    part.PartId = Convert.ToInt32(dataReader["PartId"]);
+                    part.Qty = Convert.ToInt32(dataReader["Qty"]);                    
+                    part.SupplierName = Convert.ToString(dataReader["SupplierName"]);
+
+                    parts.Add(part);
+                }
+                dataReader.Close();
+                conn.Close();
+            }           
+
+            return parts;
+        }
+
+        public async Task<IEnumerable<PartOpenOrder>> GetPartOpenOrderDetailAsync(long partId, int companyId)
+        {
+            var parts = new List<PartOpenOrder>();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format("SELECT  [Name] as CustomerName,[Code],[Description],[PONo] ,[PODate] ,OD.[DueDate], Qty - ShippedQty as openqty  from OrderDetail OD INNER JOIN [OrderMaster] OM ON OD.OrderId = OM.Id INNER JOIN [part] P ON P.id = OD.PartId INNER JOIN [customer] c ON c.id = OM.CustomerId where partid = '{0}' and (OD.IsClosed =0 OR OD.IsClosed IS NULL)  AND OM.CompanyId = '{1}'",  partId, companyId);
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var part = new PartOpenOrder();
+
+                    part.CustomerName = Convert.ToString(dataReader["CustomerName"]);
+                    part.Code = Convert.ToString(dataReader["Code"]);
+                    part.Description = Convert.ToString(dataReader["Description"]);
+                    part.PONo = Convert.ToString(dataReader["PONo"]);
+                    part.PODate = Convert.ToDateTime(dataReader["PODate"]);                    
+                    part.OpenQty = Convert.ToInt32(dataReader["openqty"]);
+
+                    parts.Add(part);
+                    
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+
+            return parts;
+        }
+
+        public async Task<IEnumerable<PartLatestShipment>> GetPartLatestShipmentAsync(long partId, int companyId)
+        {
+            var parts = new List<PartLatestShipment>();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format("SELECT TOP 5 NAME as CustomerName ,[code],[Description],[PackingSlipNo],[ShippingDate],[QTY]" +
+                " FROM [PackingSlipMaster] PSM INNER JOIN [PackingSlipDetails] PSD ON PSM.ID = PSD.PackingSlipId INNER JOIN [part] P ON P.id = PSD.PartId INNER JOIN [customer] c ON c.id = PSM.CustomerId WHERE PARTID ='{0}' AND PSM.COMPANYID = '{1}' ORDER BY ShippingCharge DESC", partId, companyId);
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var part = new PartLatestShipment();
+
+                    part.CustomerName = Convert.ToString(dataReader["CustomerName"]);
+                    part.Code = Convert.ToString(dataReader["Code"]);
+                    part.Description = Convert.ToString(dataReader["Description"]);
+                    part.PackingSlipNo = Convert.ToString(dataReader["PackingSlipNo"]);
+                    part.ShippingDate = Convert.ToDateTime(dataReader["ShippingDate"]);
+                    part.Qty = Convert.ToInt32(dataReader["QTY"]);
+
+                    parts.Add(part);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+
+            return parts;
         }
 
         public async Task<Part> GetPartByNameAsync(int companyId,string name)

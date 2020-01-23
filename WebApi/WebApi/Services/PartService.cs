@@ -108,5 +108,20 @@ namespace WebApi.Services
         {
             await Task.Run(() => this._partRepository.UpdateQtyInHandByPartIdAsync(companyId, partId, QtyInHand,direction,note));
         }
+
+        public async Task<IEnumerable<PartInTransit>> GetPartInTransitDetailAsync(long partId, int companyId)
+        {
+            return await Task.Run(() => this._partRepository.GetPartInTransitDetailAsync(partId, companyId));
+        }
+
+        public async Task<IEnumerable<PartOpenOrder>> GetPartOpenOrderDetailAsync(long partId, int companyId)
+        {
+            return await Task.Run(() => this._partRepository.GetPartOpenOrderDetailAsync(partId, companyId));
+        }
+
+        public async Task<IEnumerable<PartLatestShipment>> GetPartLatestShipmentAsync(long partId, int companyId)
+        {
+            return await Task.Run(() => this._partRepository.GetPartLatestShipmentAsync(partId, companyId));
+        }
     }
 }
