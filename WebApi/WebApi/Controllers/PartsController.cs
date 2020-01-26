@@ -245,7 +245,7 @@ namespace WebApi.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{companyId}/{partId}/{direction}/{qty}/{note}")]
+        [HttpPost("{companyId}/{partId}/{direction}/{qty}/{note}")]
         public async Task<IActionResult> Put(int companyId, string type, int partId, int qty,string direction, string note)
         {
             try

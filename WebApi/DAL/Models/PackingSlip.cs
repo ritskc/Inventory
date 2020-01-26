@@ -12,6 +12,7 @@ namespace DAL.Models
         public int CompanyId { get; set; }
         public int CustomerId { get; set; }
         public string PackingSlipNo { get; set; }
+        public string MasterPackingSlipNo { get; set; }
         public DateTime ShippingDate { get; set; }
         public string ShipVia { get; set; }
         public int Crates { get; set; }

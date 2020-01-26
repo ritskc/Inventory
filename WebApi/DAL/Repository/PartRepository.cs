@@ -143,9 +143,16 @@ namespace DAL.Repository
                     var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
 
                     while (dataReader1.Read())
-                    {                        
-                        part.OpenOrderQty = Convert.ToInt32(dataReader1["openqty"]);
-                        
+                    {
+                        try
+                        {
+                            part.OpenOrderQty = Convert.ToInt32(dataReader1["openqty"]);
+                        }
+                        catch
+                        {
+                            part.OpenOrderQty = 0;
+                        }
+
                     }
                     dataReader1.Close();
                 }

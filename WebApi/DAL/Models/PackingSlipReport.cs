@@ -49,6 +49,7 @@ namespace DAL.Models
         public string ShipmentZIPCode { get; set; }
         public bool ShipmentIsDefault { get; set; }
 
+        public string MasterPackingSlipNo { get; set; }
         public string PackingSlipNo { get; set; }
         public DateTime ShippingDate { get; set; }
         public string ShipVia { get; set; }

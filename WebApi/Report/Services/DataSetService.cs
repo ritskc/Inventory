@@ -80,5 +80,19 @@ namespace Report.Services
             var result =  reportRepository.GetPackingSlipReport(id);
             return result;
         }
+
+        public static List<PackingSlipReport> GetMasterPackingSlipReport(int id)
+        {
+            ISqlHelper sqlHelper = new SqlHelper();
+            IOrderRepository orderRepository = new OrderRepository(sqlHelper);
+            ICompanyRepository companyRepository = new CompanyRepository(sqlHelper);
+            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper);
+            IPartRepository partRepository = new PartRepository(sqlHelper);
+            IReportRepository reportRepository = new ReportRepository(sqlHelper, orderRepository, companyRepository,
+                customerRepository, partRepository);
+
+            var result = reportRepository.GetMasterPackingSlipReport(id);
+            return result;
+        }
     }
 }
