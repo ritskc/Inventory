@@ -24,6 +24,7 @@ export class Part {
     safeQty: number = 0;
     qtyInHand: number = 0;
     intransitQty: number = 0;
+    openOrderQty: number = 0;
     
     partSupplierAssignments: PartSupplierAssignment[];
     partCustomerAssignments: PartCustomerAssignment[];
@@ -98,5 +99,9 @@ export class PartsViewModel {
 
     get Total(): number {
         return this.part.openingQty + this.part.qtyInHand + this.part.intransitQty;
+    }
+
+    get OpenOrderQty(): number {
+        return this.part.openOrderQty;
     }
 }

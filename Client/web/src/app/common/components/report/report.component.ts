@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-report',
@@ -12,6 +12,7 @@ export class ReportComponent implements OnInit {
   private safeUrl: SafeResourceUrl = '';
   private display: boolean = false;
   
+  @Output() closeEvent: EventEmitter<any> = new EventEmitter();
   @Input() displayReportEvent: Observable<string>;
   
   constructor(private sanitizer: DomSanitizer) { }
@@ -25,5 +26,6 @@ export class ReportComponent implements OnInit {
 
   close() {
     this.display = false;
+    this.closeEvent.emit(true);
   }
 }

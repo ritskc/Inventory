@@ -42,32 +42,26 @@
           </div>
           <div class="card-body">
               <div class="form-group standard-top-margin row">
-                <label class="col-md-4 col-xs-4 label-top-adjustment">Shipment Date</label>
-                <input type="date" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.shippingDate"/>
+                <label class="col-md-3 col-xs-3">Shipment Date</label>
+                <input type="date" class="form-control col-md-9 col-xs-9" [(ngModel)]="shipment.shippingDate"/>
               </div>
               <div class="form-group standard-top-margin row">
-                <label class="col-md-4 col-xs-4 label-top-adjustment">Shipment Via</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.shipVia"/>
+                <label class="col-md-3 col-xs-3">Shipment Via</label>
+                <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="shipment.shipVia"/>
+                <label class="col-md-3 col-xs-3">Gross Weight</label>
+                <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="shipment.grossWeight"/>
               </div>
               <div class="form-group standard-top-margin row">
-                <label class="col-md-4 col-xs-4 label-top-adjustment">No of creates</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.crates"/>
+                <label class="col-md-3 col-xs-3 label-top-adjustment">Crates</label>
+                <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="shipment.crates"/>
+                <label class="col-md-3 col-xs-3 label-top-adjustment">Boxes</label>
+                <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="shipment.boxes"/>
               </div>
               <div class="form-group standard-top-margin row">
-                <label class="col-md-4 col-xs-4 label-top-adjustment">Total Boxes</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.boxes"/>
-              </div>
-              <div class="form-group standard-top-margin row">
-                <label class="col-md-4 col-xs-4 label-top-adjustment">Gross Weight</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.grossWeight"/>
-              </div>
-              <div class="form-group standard-top-margin row">
-                <label class="col-md-4 col-xs-4 label-top-adjustment">Shipping Charge</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.shippingCharge"/>
-              </div>
-              <div class="form-group standard-top-margin row">
-                <label class="col-md-4 col-xs-4 label-top-adjustment">Customs Charge</label>
-                <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="shipment.customCharge"/>
+                <label class="col-md-3 col-xs-3 label-top-adjustment">Ship Charge</label>
+                <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="shipment.shippingCharge"/>
+                <label class="col-md-3 col-xs-3 label-top-adjustment">Cust. Charge</label>
+                <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="shipment.customCharge"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Payment Received</label>
@@ -84,34 +78,38 @@
         </div>
         <div class="card-body">
             <div class="form-group standard-top-margin row">
-              <label class="col-md-4 col-xs-4 label-top-adjustment">Blank Order</label>
-              <input type="checkbox" class="form-control col-md-8 col-xs-8" [(ngModel)]="blankOrder" (change)="blankOrderChecked()"/>
+              <label class="col-md-3 col-xs-3 label-top-adjustment">Blank Order</label>
+              <input type="checkbox" class="form-control col-md-3 col-xs-3" [(ngModel)]="blankOrder" (change)="blankOrderChecked()"/>
+              <label class="col-md-3 col-xs-3 label-top-adjustment">In Basket</label>
+              <input type="checkbox" class="form-control col-md-3 col-xs-3" [(ngModel)]="inBasket"/>
             </div>
             <div class="form-group standard-top-margin row">
-              <label class="col-md-4 col-xs-4 label-top-adjustment">Order Number</label>
-              <select *ngIf="!blankOrder" type="text" class="form-control col-md-8 col-xs-8" (change)="orderSelected()" [(ngModel)]="orderId">
+              <label class="col-md-3 col-xs-3 label-top-adjustment">Order Number</label>
+              <select *ngIf="!blankOrder" type="text" class="form-control col-md-9 col-xs-9" (change)="orderSelected()" [(ngModel)]="orderId">
                 <option value="-1">Please select the order number</option>
                 <option *ngFor="let order of customerPurchaseOrders" value="{{order.id}}">{{order.poNo}}</option>
               </select>
-              <input *ngIf="blankOrder" type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="OrderNo"/>
+              <input *ngIf="blankOrder" type="text" class="form-control col-md-9 col-xs-9" [(ngModel)]="OrderNo"/>
             </div>
             <div class="form-group standard-top-margin row">
-              <label class="col-md-4 col-xs-4 label-top-adjustment">Part Code</label>
-              <select class="form-control col-md-8 col-xs-8" [(ngModel)]="partCode" (change)="partSelected()">
+              <label class="col-md-3 col-xs-3 label-top-adjustment">Part Code</label>
+              <select class="form-control col-md-9 col-xs-9" [(ngModel)]="partCode" (change)="partSelected()">
                 <option value="-1">Select part by code</option>
                 <option *ngFor="let part of customerAssociatedParts" value="{{part.id}}">{{part.code}}</option>
               </select>
             </div>
             <div class="form-group standard-top-margin row">
-              <label class="col-md-4 col-xs-4 label-top-adjustment">Part Name</label>
-              <select class="form-control col-md-8 col-xs-8" [(ngModel)]="partCode" (change)="partSelected()">
+              <label class="col-md-3 col-xs-3 label-top-adjustment">Part Name</label>
+              <select class="form-control col-md-9 col-xs-9" [(ngModel)]="partCode" (change)="partSelected()">
                   <option value="-1">Select part by description</option>
                   <option *ngFor="let part of customerAssociatedParts" value="{{part.id}}">{{part.description}}</option>
               </select>
             </div>
             <div class="form-group standard-top-margin row">
-              <label class="col-md-4 col-xs-4 label-top-adjustment">Quantity</label>
-              <input type="text" class="form-control col-md-8 col-xs-8" [(ngModel)]="quantity" (change)="shippedQuantityEntered()"/>
+              <label class="col-md-3 col-xs-3 label-top-adjustment">Quantity</label>
+              <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="quantity" (change)="shippedQuantityEntered()"/>
+              <label class="col-md-3 col-xs-3 label-top-adjustment">Unit Price</label>
+              <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="unitPrice"/>
             </div>
             <div class="form-group standard-top-margin row">
               <label class="col-md-3 col-xs-3 label-top-adjustment">Qty In Hand</label>
@@ -122,13 +120,8 @@
             <div class="form-group standard-top-margin row">
               <label class="col-md-3 col-xs-3 label-top-adjustment">No of Boxes</label>
               <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="boxes"/>
-              <label class="col-md-3 col-xs-3 label-top-adjustment">Unit Price</label>
-              <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="unitPrice"/>
-            </div>
-            <div class="form-group standard-top-margin row">
-              <label class="col-md-4 col-xs-4 label-top-adjustment">In Basket</label>
-              <input type="checkbox" class="form-control col-md-6 col-xs-6" [(ngModel)]="inBasket"/>
-              <button class="btn btn-primary col-md-2 col-xs-2" (click)="addPart()"><span class="fa fa-plus"></span> Add</button>
+              <label class="col-md-3 col-xs-3 label-top-adjustment"> </label>
+              <button class="btn btn-primary col-md-3 col-xs-3" (click)="addPart()"><span class="fa fa-plus"></span> Add</button>
             </div>
         </div>
       </div>
@@ -137,7 +130,7 @@
 </div>
 
 <div>
-  <simple-grid [addRequired]="false" [exportRequired]="false" [data]="shipment.packingSlipDetails" [columns]="columnsForPartsGrid" (actionButtonClickedEvent)="[actionButtonClicked($event)]"></simple-grid>
+  <simple-grid [addRequired]="false" [exportRequired]="false" [data]="shipment.packingSlipDetails" [columns]="columnsForPartsGrid" [pageSize]="50" (actionButtonClickedEvent)="[actionButtonClicked($event)]"></simple-grid>
 </div>
 
 <div class="card-footer">
@@ -152,7 +145,7 @@
 </div>
 
 <div>
-  <app-report [displayReportEvent]="packagingSlipCreated.asObservable()"></app-report>
+  <app-report [displayReportEvent]="packagingSlipCreated.asObservable()" (closeReport)="closeReportEvent($event)"></app-report>
 </div>
 
 <loader></loader>

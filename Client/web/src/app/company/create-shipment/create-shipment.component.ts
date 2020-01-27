@@ -10,7 +10,7 @@ import { DataColumn, DataColumnAction } from '../../models/dataColumn.model';
 import { ShipmentService } from '../shipment.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Subject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppConfigurations } from '../../config/app.config';
 import * as DateHelper from '../../common/helpers/dateHelper';
 import { UserAction } from '../../models/enum/userAction';
@@ -52,7 +52,7 @@ export class CreateShipmentComponent implements OnInit {
   private unitPrice: number = 0;
 
   constructor(private companyservice: CompanyService, private customerService: CustomerService, private partsService: PartsService, private httpLoaderService: httpLoaderService, 
-              private shipmentService: ShipmentService, private toastr: ToastrManager, private activatedRoute: ActivatedRoute) { }
+              private shipmentService: ShipmentService, private toastr: ToastrManager, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.appConfig = new AppConfigurations();
@@ -69,6 +69,7 @@ export class CreateShipmentComponent implements OnInit {
   }
 
   loadAllCustomers() {
+    this.httpLoaderService.show();
     this.customerService.getAllCustomers(this.currentlyLoggedInCompany)
         .subscribe(
           (customers) => {
@@ -82,16 +83,18 @@ export class CreateShipmentComponent implements OnInit {
             }
           },
           (error) => console.log(error),
-          () => { console.log('Create Shipment -> Customers Loaded'); }
+          () => { this.httpLoaderService.hide(); }
         );
   }
 
   loadAllParts() {
+    this.httpLoaderService.show();
     this.partsService
       .getAllParts(this.currentlyLoggedInCompany)
       .subscribe(parts => {
         this.parts = parts;
-      });
+      }, (error) => this.toastr.errorToastr(error.error),
+      () => { this.httpLoaderService.hide(); });
   }
 
   customerSelected(event) {
@@ -100,6 +103,7 @@ export class CreateShipmentComponent implements OnInit {
     this.columnsForPartsGrid = [];
     this.selectedCustomer = this.customers.find(c => c.id == (event ? event.target.value: this.selectedCustomerId));
     this.shipment.customerId = this.selectedCustomer.id;
+    this.shipment.shipVia = this.selectedCustomer.truckType;
 
     this.loadAllPartsForCustomer();
     this.loadAllOrdersForCustomer();
@@ -278,7 +282,7 @@ export class CreateShipmentComponent implements OnInit {
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Part", value: "partDescription" }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Quantity", value: "qty", isEditable: true, customStyling: 'right' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", isEditable: true, customStyling: 'right' }) );
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "In Basket", value: "inBasket", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "In Basket", value: "inBasket", isBoolean: true, customStyling: 'center' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'removePart', icon: 'fa fa-trash' })
     ] }) );  }
@@ -306,7 +310,6 @@ export class CreateShipmentComponent implements OnInit {
             this.toastr.successToastr('Shipment Created Successfully!!');
             this.packagingSlipCreated.next(`${this.appConfig.reportsUri}/PackingSlip.aspx?id=${result}`);
             this.loadAllOrdersForCustomer();
-            this.shipment = new Shipment();
           },
           (error) => { this.toastr.errorToastr('Error while creating shipment'); console.log(error); },
           () => {
@@ -367,6 +370,10 @@ export class CreateShipmentComponent implements OnInit {
         this.shipment.packingSlipDetails.splice(index, 1);
         break;
     }
+  }
+
+  closeReportEvent(event) {
+    alert('closeReport');
   }
 }
 

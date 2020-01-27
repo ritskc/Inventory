@@ -40,17 +40,20 @@
                 <ng-template ngFor let-row [ngForOf]="_data | search: searchText | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
                   <tr>
                     <td *ngFor="let item of columns" [ngClass]="item.customStyling">
-                      <span *ngIf="!item.isLink && !item.nested && !item.isDate && !item.isEditable && !item.isBoolean">{{row[item.value]}}</span>
+                      <span *ngIf="!item.isLink && !item.nested && !item.isDate && !item.isEditable && !item.isBoolean && !item.hasAdditionalAction">{{row[item.value]}}</span>
                       <span *ngIf="item.constantText && !item.isLink">{{item.constantText}}</span>
                       <span *ngIf="item.isDate">{{row[item.value] | date}}</span>
                       <span class="clickable" *ngIf="item.constantText && item.isLink">{{item.constantText}}</span>
                       <span class="clickable" (click)="rowSelected(row)" *ngIf="item.isLink">{{row[item.value]}}</span>
                       <span *ngIf="item.nested">{{row[item.value][item.nested]}}</span>
+                      <span *ngIf="item.hasAdditionalAction">{{row[item.value]}} 
+                        <span style="color: #0B8599;" class="fa fa-info-circle" (click)="additionalEventEmitted(item.additionalActionName, row)"></span>
+                      </span>
                       <span *ngIf="item.isEditable">
                         <input type="text" style="text-align: right; width: 50px;" value="{{row[item.value]}}" (change)="itemValueEdited($event, row, item)"/>
                       </span>
                       <span *ngIf="item.isBoolean">
-                        <input type="checkbox" [checked]="row[item.value]" [attr.disabled]="item.isDisabled? '': null"/>
+                        <input type="checkbox" [checked]="row[item.value]" (change)="checkboxChanged(row, item, row[item.value])" [attr.disabled]="item.isDisabled? '': null"/>
                       </span>
                       <div *ngIf="item.isActionColumn" class="center">
                         <span *ngFor="let action of item.actions">

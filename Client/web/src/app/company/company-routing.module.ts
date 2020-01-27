@@ -7,6 +7,7 @@ import { InventoryPartsListComponent } from './inventory-parts-list/inventory-pa
 import { ShipmentListComponent } from './shipment-list/shipment-list.component';
 import { CompanyInvoiceComponent } from './company-invoice/company-invoice.component';
 import { POSUploadComponent } from './pos/upload/upload.component';
+import { MasterShipmentListComponent } from './master-shipment-list/master-shipment-list.component';
 
 const routes: Routes = [{
   path: '',
@@ -23,6 +24,13 @@ const routes: Routes = [{
       component: ShipmentListComponent,
       data: {
         title: 'View Shipments'
+      }
+    },
+    {
+      path: 'master-shipment-list',
+      component: MasterShipmentListComponent,
+      data: {
+        title: 'Master Shipments'
       }
     },
     {

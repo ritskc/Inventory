@@ -47,7 +47,8 @@ export class CustomerDetailComponent implements OnInit {
       truckType: ['', Validators.required],
       emailAddress: ['', Validators.required],
       billing: ['', Validators.required],
-      contactPersonName: ['', Validators.required]
+      contactPersonName: ['', Validators.required],
+      collectFreight: ['', Validators.required]
     });
   }
 

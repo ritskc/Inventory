@@ -11,10 +11,97 @@
     </select>
   </div>
   
-<simple-grid [data]="parts" [columns]="columns" [addRequired]="false" [exportRequired]="false"
+<simple-grid [data]="parts" [columns]="columns" [addRequired]="false" [exportRequired]="false" (additionalEventEmitter)='additionalEventEmitted($event)'
   (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="addPart()" (actionButtonClickedEvent)="[actionButtonClicked($event)]">
 
   </simple-grid>
 </div>
 
 <loader></loader>
+
+<div style="top: 0px; left: 0px; width: 100%; height: 100%; position: absolute; background-color: lightgray; opacity: 0.9;" *ngIf='showModal'>
+  <div style="top: 25%; left: 40%; width: 400px; height: 200px; position: absolute; background-color: darkgray; opacity: 1;">
+    <div style="width: 100%;">
+      <div class="card">
+        <div class="card-header">
+          Part Inventory Quantity Adjustment
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label>Direction</label>
+            <select [(ngModel)]="direction" class="form-control" >
+              <option value="in">In</option>
+              <option value="out">Out</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Quantity</label>
+            <input type="text" class="form-control" [(ngModel)]="adjustedQty"/>
+          </div>
+          <div class="form-group">
+            <label>Notes</label>
+            <textarea type="text" class="form-control" [(ngModel)]="notes"></textarea>
+          </div>
+          <div>
+            <button (click)="savePartAdjustment()" class="btn btn-primary">Save</button>
+            <button (click)="showModal = false" class="btn btn-primary">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="top: 0px; left: 0px; width: 100%; height: 100%; position: absolute; background-color: lightgray; opacity: 0.9;" *ngIf='showOpenOrdersModal'>
+  <div style="top: 25%; left: 20%; width: 800px; height: 300px; position: absolute; background-color: darkgray; opacity: 1;">
+    <div style="width: 100%;">
+      <div class="card">
+        <div class="card-header">
+          Open Order Status
+        </div>
+        <div class="card-body">
+          <simple-grid [headerRequired]="false" [footerRequired]="false" [addRequired]="false" [exportRequired]="false" [columns]="columnsForModal" [data]="dataForModal"></simple-grid>
+          <div>
+            <button (click)="showOpenOrdersModal = false" class="btn btn-primary">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="top: 0px; left: 0px; width: 100%; height: 100%; position: absolute; background-color: lightgray; opacity: 0.9;" *ngIf='showInTransitModal'>
+  <div style="top: 20%; left: 20%; width: 1000px; height: 300px; position: absolute; background-color: darkgray; opacity: 1;">
+    <div style="width: 100%;">
+      <div class="card">
+        <div class="card-header">
+          In Transit Quantity Status
+        </div>
+        <div class="card-body">
+          <simple-grid [headerRequired]="false" [footerRequired]="false" [addRequired]="false" [exportRequired]="false" [columns]="columnsForModal" [data]="dataForModal"></simple-grid>
+          <div>
+            <button (click)="showInTransitModal = false" class="btn btn-primary">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="top: 0px; left: 0px; width: 100%; height: 100%; position: absolute; background-color: lightgray; opacity: 0.9;" *ngIf='showLatestShipmentsModal'>
+  <div style="top: 20%; left: 20%; width: 1000px; height: 300px; position: absolute; background-color: darkgray; opacity: 1;">
+    <div style="width: 100%;">
+      <div class="card">
+        <div class="card-header">
+          Latest Shipments Status
+        </div>
+        <div class="card-body">
+          <simple-grid [headerRequired]="false" [footerRequired]="false" [addRequired]="false" [exportRequired]="false" [columns]="columnsForModal" [data]="dataForModal"></simple-grid>
+          <div>
+            <button (click)="showLatestShipmentsModal = false" class="btn btn-primary">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

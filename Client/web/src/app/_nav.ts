@@ -88,6 +88,11 @@ export const navItems: NavData[] = [
         icon: 'icon-puzzle'
       },
       {
+        name: 'Master Shipments',
+        url: '/companies/master-shipment-list',
+        icon: 'icon-puzzle'
+      },
+      {
         name: 'Invoice',
         url: '/companies/invoice',
         icon: 'icon-puzzle'

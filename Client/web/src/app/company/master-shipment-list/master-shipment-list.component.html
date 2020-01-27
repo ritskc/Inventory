@@ -1,0 +1,11 @@
+<div class="row" style="margin-left: 1px; margin-bottom: 5px;">
+  <select class="form-control" style="width: 300px; float: left;" (change)="filterByCustomer($event)" [(ngModel)]='customerId'>
+      <option value="-1">Show for all customers</option>
+      <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
+  </select>
+</div>
+
+<simple-grid [data]="filteredMasterShipments" [columns]="columns" [exportRequired]="false" (addClickedEventEmitter)="addMasterShipment()"
+(actionButtonClickedEvent)="[actionButtonClicked($event)]"></simple-grid>
+
+<loader></loader>

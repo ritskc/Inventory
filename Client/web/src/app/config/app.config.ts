@@ -15,6 +15,7 @@ export class AppConfigurations {
     ordersUri: string;
     invoiceUri: string;
     shipmentUri: string;
+    masterShipmentUri: string;
     barcodeUri: string;
     customerInvoiceUri: string;
     fileApiUri: string;
@@ -22,10 +23,10 @@ export class AppConfigurations {
     entityTracker: string;
 
     initialize() {
-        // this.apiServerHost = 'https://questapi.yellow-chips.com';
-        // this.reportsUri = 'http://renovate.yellow-chips.com/ReportViewer/';
-        this.apiServerHost = 'http://po.harisons.com/api';
-        this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/';
+        this.apiServerHost = 'https://questapi.yellow-chips.com';
+        this.reportsUri = 'http://renovate.yellow-chips.com/ReportViewer/';
+        // this.apiServerHost = 'http://po.harisons.com/api';
+        // this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/';
 
         this.fileApiUri = `${this.apiServerHost}/File`;
 
@@ -39,6 +40,7 @@ export class AppConfigurations {
         this.ordersUri = '/orders';
         this.invoiceUri = '/supplierinvoice';
         this.shipmentUri = '/PackingSlips';
+        this.masterShipmentUri = '/MasterPackingSlips';
         this.customerInvoiceUri =  '/Invoices';
         this.entityTracker = '/EntityTracker';
         this.barcodeUri = 'https://quest.yellow-chips.com/static/barcode.html?';

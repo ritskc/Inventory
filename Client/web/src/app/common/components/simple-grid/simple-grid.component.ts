@@ -22,6 +22,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   @Output() selectedRow = new EventEmitter();
   @Output() addClickedEventEmitter = new EventEmitter();
   @Output() actionButtonClickedEvent = new EventEmitter();
+  @Output() additionalEventEmitter = new EventEmitter();
   @Output() valueEdited = new EventEmitter<any>();
 
   dataToDisplay: any[] = [];
@@ -117,8 +118,16 @@ export class SimpleGridComponent implements OnInit, OnChanges {
     this.actionButtonClickedEvent.emit(data);
   }
 
+  additionalEventEmitted(eventName: string, data: any) {
+    this.additionalEventEmitter.emit({ eventName, data });
+  }
+
   itemValueEdited(event, row, column) {
     row[column.value] = typeof row[column.value] != "number" ? event.currentTarget.value : parseFloat(event.currentTarget.value);
     this.valueEdited.emit(row);
+  }
+
+  checkboxChanged(a, b, data) {
+    a[b.value] = !data;
   }
 }

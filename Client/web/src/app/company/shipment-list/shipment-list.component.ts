@@ -53,6 +53,7 @@ export class ShipmentListComponent implements OnInit {
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Warning, event: 'editInvoice', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Shipment', actionStyle: ClassConstants.Primary, event: 'printShipment', icon: 'fa fa-print' }),
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoice', icon: 'fa fa-print' }),
+      new DataColumnAction({ actionText: 'BL', actionStyle: ClassConstants.Primary, event: 'printBL', icon: 'fa fa-print' }),
       new DataColumnAction({ actionText: 'POS', actionStyle: ClassConstants.Primary, event: 'downloadPOS', icon: 'fa fa-download' }),
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'delete', icon: 'fa fa-trash' })
     ] }) );
@@ -120,6 +121,9 @@ export class ShipmentListComponent implements OnInit {
       case 'printShipment':
         this.print('shipment', data);
         break;
+      case 'printBL':
+        this.print('BL', data);
+        break;
       case 'delete':
         this.delete(data);
         break;
@@ -141,6 +145,10 @@ export class ShipmentListComponent implements OnInit {
   }
 
   editShipment(data) {
+    if (data.isPOSUploaded) {
+      this.toastr.errorToastr('This shipment cannot be edited since POS is already uploaded');
+      return;
+    }
     this.router.navigateByUrl(`companies/create-shipment/${data.customerId}/1/${data.id}`);
   }
 
@@ -158,6 +166,8 @@ export class ShipmentListComponent implements OnInit {
       this.printDocument.next(`${appConfig.reportsUri}/PackingSlip.aspx?id=${data.id}`);
     } else if (type === 'invoice') {
       this.printDocument.next(`${appConfig.reportsUri}/Invoice.aspx?id=${data.id}`);
+    } else if (type === 'BL') {
+      this.printDocument.next(`${appConfig.reportsUri}/BL.aspx?id=${data.id}`);
     }
   }
 

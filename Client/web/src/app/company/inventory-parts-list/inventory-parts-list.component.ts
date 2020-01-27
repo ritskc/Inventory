@@ -19,9 +19,19 @@ export class InventoryPartsListComponent implements OnInit {
 
   parts: PartsViewModel[] = [];
   columns: DataColumn[] = [];
+  columnsForModal: DataColumn[] = [];
   currentlyLoggedInCompanyId: number = 0;
   filter: any;
   filterOption: FilterOption;
+  showModal: boolean = false;
+  showOpenOrdersModal: boolean = false;
+  showInTransitModal: boolean = false;
+  showLatestShipmentsModal: boolean = false;
+  selectedPartIdForAdjustment: number = 0;
+  direction: string = 'in';
+  notes: string = '';
+  adjustedQty: number = 0;
+  dataForModal: any;
 
   constructor(private service: PartsService, private companyService: CompanyService, private httpLoaderService: httpLoaderService, private customerService: CustomerService,
     private supplierService: SupplierService, private httpLoader: httpLoaderService, private toastr: ToastrManager) { }
@@ -34,14 +44,16 @@ export class InventoryPartsListComponent implements OnInit {
 
   initializeGridColumns() {
     this.columns.push( new DataColumn({ headerText: "Code", value: "Code", sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Description", value: "Description", sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", sortable: false, customStyling: 'right' }) );
-    this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", sortable: false, customStyling: 'right' }) );
-    this.columns.push( new DataColumn({ headerText: "Safe Qty", value: "SafeQty", sortable: false, customStyling: 'right' }) );
-    this.columns.push( new DataColumn({ headerText: "Opening Qty", value: "OpeningQty", isEditable: true, sortable: false, customStyling: 'right' }) );
-    this.columns.push( new DataColumn({ headerText: "Open + In Hand Qty", value: "QuantityInHand", sortable: false, customStyling: 'right' }) );
-    this.columns.push( new DataColumn({ headerText: "In Transit Qty", value: "IntransitQty", sortable: false, customStyling: 'right' }) );
-    this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
+    this.columns.push( new DataColumn({ headerText: "Description", value: "Description", sortable: true, customStyling: 'column-width-150' }) );
+    this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", sortable: false, customStyling: 'right column-width-100' }) );
+    this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", sortable: false, customStyling: 'right column-width-100' }) );
+    this.columns.push( new DataColumn({ headerText: "Safe Qty", value: "SafeQty", sortable: false, customStyling: 'right column-width-100' }) );
+    this.columns.push( new DataColumn({ headerText: "Opening Qty", value: "OpeningQty", isEditable: true, sortable: false, customStyling: 'right column-width-100' }) );
+    this.columns.push( new DataColumn({ headerText: "Open Order", value: "OpenOrderQty", isEditable: false, sortable: false, hasAdditionalAction: true, additionalActionName: 'showOpenOrders', customStyling: 'right column-width-100' }) );
+    this.columns.push( new DataColumn({ headerText: "Open + In Hand", value: "QuantityInHand", sortable: false, hasAdditionalAction: true, additionalActionName: 'showLatestShipments', customStyling: 'right column-width-100' }) );
+    this.columns.push( new DataColumn({ headerText: "In Transit", value: "IntransitQty", sortable: false, hasAdditionalAction: true, additionalActionName: 'showInTransitQty', customStyling: 'right column-width-100' }) );
+    this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center column-width-100', actions: [
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'adjustOpeningQuantity', icon: 'fa fa-adjust' }),
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'editOpeningQuantity', icon: 'fa fa-edit' })
     ] }) );
   }
@@ -107,7 +119,26 @@ export class InventoryPartsListComponent implements OnInit {
                       (error) => this.toastr.errorToastr(error.error),
                       () => { this.getAllPartsForCompany() });
         break;
+      case 'adjustOpeningQuantity':
+        this.selectedPartIdForAdjustment = data.part.id;
+        this.showModal = true;
+        break;
     }
+  }
+
+  savePartAdjustment() {
+    this.service.adjustPart(this.selectedPartIdForAdjustment, this.direction, this.notes, this.currentlyLoggedInCompanyId, this.adjustedQty)
+        .subscribe(() => {
+          this.showModal = false;
+          this.toastr.successToastr('Part inventory quantity adjusted successfully!!');
+        }, 
+        (error) => this.toastr.errorToastr(error.error),
+        () => { 
+          this.getAllPartsForCompany(); 
+          this.direction = 'in';
+          this.adjustedQty = 0;
+          this.notes = '';
+        });
   }
 
   filterBySelection(event) {
@@ -133,5 +164,72 @@ export class InventoryPartsListComponent implements OnInit {
         this.parts = partsToDisplay;
       });
     }
+  }
+
+  additionalEventEmitted(event: any) {
+    switch (event.eventName) {
+      case 'showOpenOrders':
+        this.showOpenOrders(event.data);
+        break;
+      case 'showInTransitQty':
+        this.showInTransitQty(event.data);
+        break;
+      case 'showLatestShipments':
+        this.showLatestShipments(event.data);
+        break;
+    }
+  }
+
+  showOpenOrders(data: any) {
+    this.showOpenOrdersModal = true;
+    
+    this.columnsForModal = [];
+    this.columnsForModal.push( new DataColumn({ headerText: "Customer", value: "customerName" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Part Code", value: "code" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Part Description", value: "description" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "PO No", value: "poNo" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "PO Date", value: "poDate", isDate: true }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Open Qty", value: "openQty" }) );
+
+    this.service.getPartsStatus(this.currentlyLoggedInCompanyId, data.part.id, 'OpenOrder')
+        .subscribe(data => {
+          this.dataForModal = data;
+        });
+  }
+
+  showInTransitQty(data: any) {
+    this.showOpenOrdersModal = true;
+
+    this.columnsForModal = [];
+    this.columnsForModal.push( new DataColumn({ headerText: "Part Code", value: "code" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Part Description", value: "description" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Supplier", value: "supplierName" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Invoice Date", value: "invoiceDate", isDate: true }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "ETA", value: "eta", isDate: true }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Po No", value: "poNo" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Qty", value: "qty" }) );
+
+    this.service.getPartsStatus(this.currentlyLoggedInCompanyId, data.part.id, 'InTransit')
+        .subscribe(data => {
+          this.dataForModal = data;
+        });
+  }
+
+  showLatestShipments(data: any) {
+    this.showLatestShipmentsModal = true;
+
+    this.columnsForModal = [];
+    this.columnsForModal.push( new DataColumn({ headerText: "Customer", value: "customerName" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Part Code", value: "code" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Part Description", value: "description" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Packing Slip", value: "packingSlipNo" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Shipping Date", value: "shippingDate", isDate: true }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Qty", value: "qty" }) );
+
+    this.service.getPartsStatus(this.currentlyLoggedInCompanyId, data.part.id, 'LatestShipment')
+        .subscribe(data => {
+          this.dataForModal = data;
+        });
   }
 }

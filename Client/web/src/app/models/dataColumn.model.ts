@@ -14,6 +14,8 @@ export class DataColumn {
     minWidth: boolean = false;
     customStyling: string = '';
     isDisabled: boolean = false;
+    hasAdditionalAction: boolean = false;
+    additionalActionName: string = '';
 
     constructor(init?: Partial<DataColumn>) {
         Object.assign(this, init);

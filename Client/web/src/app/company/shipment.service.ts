@@ -3,6 +3,7 @@ import { ApiService } from '../common/services/api.service';
 import { ConfigService } from '../config/config.service';
 import { Shipment } from '../models/shipment.model';
 import { Observable } from 'rxjs';
+import { MasterShipment } from '../models/master.shipment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,10 @@ export class ShipmentService {
 
   getAllShipments(companyId: number): Observable<Shipment[]> {
     return this.apiService.get<Shipment[]>(this.config.Settings.apiServerHost + this.config.Settings.shipmentUri + '/' + companyId);
+  }
+
+  getAllMasterShipments(companyId: number): Observable<MasterShipment[]> {
+    return this.apiService.get<MasterShipment[]>(this.config.Settings.apiServerHost + this.config.Settings.masterShipmentUri + '/' + companyId);
   }
 
   getAShipment(companyId: number, shipmentId: number): Observable<Shipment> {
