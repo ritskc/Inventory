@@ -1,0 +1,33 @@
+<div>
+  <div class="card">
+    <div class="card-header">
+      Master Packing Slip <strong>{{masterShipment.masterPackingSlipNo}}</strong> for customer <strong>{{selectedCustomer.name}}</strong>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-xs-3 col-md-3">
+          <select class="form-control" (change)="shipmentSelected($event)" [(ngModel)]="selectedShipmentId">
+            <option value="-1">Select Shipments</option>
+            <option *ngFor="let shipment of shipments" [value]="shipment.id">{{shipment.packingSlipNo}}</option>
+          </select>
+        </div>
+        <div class="col-xs-2 col-md-2" style="text-align: right;">
+          Comments
+        </div>
+        <div class="col-xs-7 col-md-7">
+          <input type="text" class="form-control" [(ngModel)]="masterShipment.comment" />
+        </div>
+      </div>
+      <div style="margin-top: 10px;">
+        <simple-grid [addRequired]="false" [exportRequired]="false" [columns]="columns" [data]="masterShipment.packingSlips"  (actionButtonClickedEvent)="actionButtonClicked($event)"></simple-grid>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button *ngIf="masterShipment.id > 0" class="btn btn-danger pull-right" style="margin-left: 10px;" (click)="remove()"><i class="fa fa-trash"></i> Remove</button>
+      <button class="btn btn-primary pull-right" style="margin-left: 10px;" (click)="save()"><i class="fa fa-save"></i> Save</button>
+      <button class="btn btn-warning pull-right" style="margin-left: 10px;" (click)="back()"><i class="fa fa-arrow-left"></i> Back</button>
+    </div>
+  </div>
+</div>
+
+<loader></loader>

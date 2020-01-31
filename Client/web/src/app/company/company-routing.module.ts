@@ -8,6 +8,7 @@ import { ShipmentListComponent } from './shipment-list/shipment-list.component';
 import { CompanyInvoiceComponent } from './company-invoice/company-invoice.component';
 import { POSUploadComponent } from './pos/upload/upload.component';
 import { MasterShipmentListComponent } from './master-shipment-list/master-shipment-list.component';
+import { MasterShipmentDetailComponent } from './master-shipment-detail/master-shipment-detail.component';
 
 const routes: Routes = [{
   path: '',
@@ -31,6 +32,13 @@ const routes: Routes = [{
       component: MasterShipmentListComponent,
       data: {
         title: 'Master Shipments'
+      }
+    },
+    {
+      path: 'master-shipment-detail/:customerId/:mode/:shipmentId',
+      component: MasterShipmentDetailComponent,
+      data: {
+        title: 'Master Shipment Detail'
       }
     },
     {

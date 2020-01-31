@@ -8,6 +8,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { ClassConstants } from '../../common/constants';
 import { ShipmentService } from '../shipment.service';
 import { MasterShipment } from '../../models/master.shipment.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-master-shipment-list',
@@ -24,7 +25,7 @@ export class MasterShipmentListComponent implements OnInit {
   filteredMasterShipments: MasterShipment[] = [];
 
   constructor(private companyService: CompanyService, private customerService: CustomerService, private httpLoader: httpLoaderService,
-              private toastr: ToastrManager, private shipmentService: ShipmentService) { }
+              private toastr: ToastrManager, private shipmentService: ShipmentService, private router: Router) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompany = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -41,6 +42,10 @@ export class MasterShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Traking Number", value: "trakingNumber", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "POS Uploaded", value: "isPOSUploaded", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Comment", value: "comment" }) );
+    this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center column-width-100', actions: [
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'editMasterPackingSlip', icon: 'fa fa-edit' }),
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'removeMasterPackingSlip', icon: 'fa fa-trash' })
+    ] }) );
   }
 
   loadAllCustomers() {
@@ -76,7 +81,34 @@ export class MasterShipmentListComponent implements OnInit {
     this.filteredMasterShipments = this.customerId > 0 ? this.masterShipments.filter(s => s.customerId == this.customerId): this.masterShipments;
   }
 
-  addMasterShipment() {
+  actionButtonClicked(data) {
+    switch(data.eventName) {
+      case 'removeMasterPackingSlip':
+        this.removeMasterPackingSlip(data);
+        break;
+      case 'editMasterPackingSlip':
+        this.editMasterShipment(data);
+        break;
+    }
+  }
 
+  addMasterShipment() {
+    if (this.customerId < 0) {
+      this.toastr.errorToastr('Please select the customer to create master packaging slip');
+      return;
+    }
+    this.router.navigateByUrl(`companies/master-shipment-detail/${ this.customerId }/0/0`);
+  }
+
+  editMasterShipment(data) {
+    this.router.navigateByUrl(`companies/master-shipment-detail/${ data.customerId }/1/${data.id}`);
+  }
+
+  removeMasterPackingSlip(data) {
+    this.shipmentService.removeMasterPackingSlip(data.id)
+        .subscribe(() => {
+          this.toastr.successToastr('Master Packing Slip removed successfully!');
+          this.loadAllMasterShipments();
+        });
   }
 }

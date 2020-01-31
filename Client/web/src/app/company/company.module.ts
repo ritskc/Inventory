@@ -21,6 +21,7 @@ import { ShipmentListComponent } from './shipment-list/shipment-list.component';
 import { CompanyInvoiceComponent } from './company-invoice/company-invoice.component';
 import { POSUploadComponent } from './pos/upload/upload.component';
 import { MasterShipmentListComponent } from './master-shipment-list/master-shipment-list.component';
+import { MasterShipmentDetailComponent } from './master-shipment-detail/master-shipment-detail.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MasterShipmentListComponent } from './master-shipment-list/master-shipm
     ShipmentListComponent,
     CompanyInvoiceComponent,
     POSUploadComponent,
-    MasterShipmentListComponent
+    MasterShipmentListComponent,
+    MasterShipmentDetailComponent
   ],
   imports: [
     CommonModule,

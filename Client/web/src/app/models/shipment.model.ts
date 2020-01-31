@@ -25,6 +25,7 @@ export class Shipment {
     terms: string = '';
     shipmentInfoId: number = 0;
     isInvoiceCreated: boolean;
+    isPOSUploaded: boolean;
 }
 
 export class PackingSlipDetail {
