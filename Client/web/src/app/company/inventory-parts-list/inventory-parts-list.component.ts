@@ -20,6 +20,7 @@ export class InventoryPartsListComponent implements OnInit {
   parts: PartsViewModel[] = [];
   columns: DataColumn[] = [];
   columnsForModal: DataColumn[] = [];
+  columnsForSecondaryGridInModal: DataColumn[] = [];
   currentlyLoggedInCompanyId: number = 0;
   filter: any;
   filterOption: FilterOption;
@@ -32,6 +33,7 @@ export class InventoryPartsListComponent implements OnInit {
   notes: string = '';
   adjustedQty: number = 0;
   dataForModal: any;
+  dataForSecondaryGridInModal: any;
 
   constructor(private service: PartsService, private companyService: CompanyService, private httpLoaderService: httpLoaderService, private customerService: CustomerService,
     private supplierService: SupplierService, private httpLoader: httpLoaderService, private toastr: ToastrManager) { }
@@ -189,6 +191,7 @@ export class InventoryPartsListComponent implements OnInit {
     this.columnsForModal.push( new DataColumn({ headerText: "Part Description", value: "description" }) );
     this.columnsForModal.push( new DataColumn({ headerText: "PO No", value: "poNo" }) );
     this.columnsForModal.push( new DataColumn({ headerText: "PO Date", value: "poDate", isDate: true }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Due Date", value: "dueDate", isDate: true }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Open Qty", value: "openQty" }) );
 
     this.service.getPartsStatus(this.currentlyLoggedInCompanyId, data.part.id, 'OpenOrder')
@@ -227,9 +230,22 @@ export class InventoryPartsListComponent implements OnInit {
     this.columnsForModal.push( new DataColumn({ headerText: "Shipping Date", value: "shippingDate", isDate: true }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Qty", value: "qty" }) );
 
+    this.columnsForSecondaryGridInModal = [];
+    this.columnsForSecondaryGridInModal.push( new DataColumn({ headerText: "Supplier", value: "supplierName" }) );
+    this.columnsForSecondaryGridInModal.push( new DataColumn({ headerText: "Part Code", value: "code" }) );
+    this.columnsForSecondaryGridInModal.push( new DataColumn({ headerText: "Part Description", value: "description" }) );
+    this.columnsForSecondaryGridInModal.push( new DataColumn({ headerText: "Invoice No", value: "invoiceNo" }) );
+    this.columnsForSecondaryGridInModal.push( new DataColumn({ headerText: "Received Date", value: "receivedDate", isDate: true }) );
+    this.columnsForSecondaryGridInModal.push( new DataColumn({ headerText: "Qty", value: "qty" }) );
+
     this.service.getPartsStatus(this.currentlyLoggedInCompanyId, data.part.id, 'LatestShipment')
         .subscribe(data => {
           this.dataForModal = data;
         });
+
+    this.service.getPartsStatus(this.currentlyLoggedInCompanyId, data.part.id, 'LatestReceived')
+    .subscribe(data => {
+      this.dataForSecondaryGridInModal = data;
+    });
   }
 }

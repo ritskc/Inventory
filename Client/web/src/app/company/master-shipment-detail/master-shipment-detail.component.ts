@@ -78,7 +78,7 @@ export class MasterShipmentDetailComponent implements OnInit {
   prepareScreenForMasterShipmentCreate() {
     this.masterShipment.companyId = this.currentlyLoggedInCompany;
 
-    this.shipmentService.getLatestShipment(this.currentlyLoggedInCompany, DateHelper.getToday()).subscribe(data => {
+    this.shipmentService.getLatestMasterShipment(this.currentlyLoggedInCompany, DateHelper.getToday()).subscribe(data => {
       this.masterShipment.masterPackingSlipNo = data ? data.entityNo : 'Data Unavailable';
     });
   }
@@ -116,6 +116,10 @@ export class MasterShipmentDetailComponent implements OnInit {
   }
 
   save() {
+    if (this.masterShipment.packingSlips.length === 0) {
+      this.toastr.errorToastr('At least one shipment should be present to save');
+      return;
+    }
     this.httpLoaderService.show();
     this.masterShipment.updatedDate = DateHelper.getToday();
     this.shipmentService.saveMasterShipment(this.masterShipment)

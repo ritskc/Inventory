@@ -23,10 +23,10 @@ export class AppConfigurations {
     entityTracker: string;
 
     initialize() {
-        // this.apiServerHost = 'https://questapi.yellow-chips.com';
-        // this.reportsUri = 'http://renovate.yellow-chips.com/ReportViewer/';
-        this.apiServerHost = 'http://po.harisons.com/api';
-        this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/';
+        this.apiServerHost = 'https://questapi.yellow-chips.com';
+        this.reportsUri = 'https://renovate.yellow-chips.com/ReportViewer/';
+        // this.apiServerHost = 'http://po.harisons.com/api';
+        // this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/';
 
         this.fileApiUri = `${this.apiServerHost}/File`;
 
