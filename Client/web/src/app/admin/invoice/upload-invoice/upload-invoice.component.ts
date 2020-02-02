@@ -105,12 +105,12 @@ export class UploadInvoiceComponent implements OnInit {
 
   uploadInvoice() {
     if (!this.eta || !this.invoice.eta) {
-      this.toastr.errorToastr('ETA is invalid. Please select a valid date');
+      this.toastr.warningToastr('ETA is invalid. Please select a valid date');
       return;
     }
 
     if (this.invoice.supplierInvoiceDetails.filter(d => !d.isValid).length > 0) {
-      this.toastr.errorToastr('This invoice cannot be uploaded due to one ore more invalid parts. Please check the result above');
+      this.toastr.warningToastr('This invoice cannot be uploaded due to one ore more invalid parts. Please check the result above');
       return;
     }
 

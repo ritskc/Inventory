@@ -129,33 +129,33 @@ export class PartDetailComponent implements OnInit {
 
   validatePart(): boolean {
     if (this.part.partCustomerAssignments.some(c => !c.mapCode)) {
-      this.toastr.errorToastr('Not all parts added to customer have map codes. Please verify.');
+      this.toastr.warningToastr('Not all parts added to customer have map codes. Please verify.');
       return false;
     }
     if (this.part.partSupplierAssignments.some(s => !s.mapCode)) {
-      this.toastr.errorToastr('Not all parts added to supplier have map codes. Please verify.');
+      this.toastr.warningToastr('Not all parts added to supplier have map codes. Please verify.');
       return false;
     }
 
     if (this.part.partCustomerAssignments.some(c => c.customerId < 1)) {
-      this.toastr.errorToastr('Some of the customer association are missing. Please verify.');
+      this.toastr.warningToastr('Some of the customer association are missing. Please verify.');
       return false;
     }
     if (this.part.partSupplierAssignments.some(s => s.supplierID < 1)) {
-      this.toastr.errorToastr('Some of the customer association are missing. Please verify.');
+      this.toastr.warningToastr('Some of the customer association are missing. Please verify.');
       return false;
     }
 
     if (this.part.partCustomerAssignments.some(c => c.rate < 0)) {
-      this.toastr.errorToastr('Some of the rates in customer association are invalid. Please verify.');
+      this.toastr.warningToastr('Some of the rates in customer association are invalid. Please verify.');
       return false;
     }
     if (this.part.partCustomerAssignments.some(c => c.surchargePerPound < 0)) {
-      this.toastr.errorToastr('Some of the surcharge in customer association are invalid. Please verify.');
+      this.toastr.warningToastr('Some of the surcharge in customer association are invalid. Please verify.');
       return false;
     }
     if (this.part.partSupplierAssignments.some(s => s.unitPrice < 0)) {
-      this.toastr.errorToastr('Some of the unit prices in supplier association are invalid. Please verify.');
+      this.toastr.warningToastr('Some of the unit prices in supplier association are invalid. Please verify.');
       return false;
     }
 

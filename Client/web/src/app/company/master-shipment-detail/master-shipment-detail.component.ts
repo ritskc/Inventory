@@ -105,7 +105,7 @@ export class MasterShipmentDetailComponent implements OnInit {
 
   shipmentSelected(event) {
     if (this.masterShipment.packingSlips.some(s => s.id == this.selectedShipmentId)) {
-      this.toastr.errorToastr('This selected shipment already added to the list');
+      this.toastr.warningToastr('This selected shipment already added to the list');
       return;
     } else if (this.selectedShipmentId == -1) {
       return;
@@ -117,7 +117,7 @@ export class MasterShipmentDetailComponent implements OnInit {
 
   save() {
     if (this.masterShipment.packingSlips.length === 0) {
-      this.toastr.errorToastr('At least one shipment should be present to save');
+      this.toastr.warningToastr('At least one shipment should be present to save');
       return;
     }
     this.httpLoaderService.show();

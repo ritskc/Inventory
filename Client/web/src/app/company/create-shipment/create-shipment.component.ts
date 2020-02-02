@@ -190,7 +190,7 @@ export class CreateShipmentComponent implements OnInit {
               this.shipments.push(shipment);
             });
           },
-          (error) => { console.log(error); },
+          (error) => { this.toastr.errorToastr(error); },
           () => { 
             this.httpLoaderService.hide();
             this.transformShipmentListToViewModel();
@@ -225,7 +225,7 @@ export class CreateShipmentComponent implements OnInit {
     }
 
     if (this.quantity < 1) {
-      this.toastr.errorToastr('Quantity should be more than 0(zero)');
+      this.toastr.warningToastr('Quantity should be more than 0(zero)');
       return;
     }
 
@@ -303,6 +303,10 @@ export class CreateShipmentComponent implements OnInit {
     if (!this.validateShipment())
       return;
 
+    if (confirm(`Do you want to create invoice along with this shipment?`)) {
+      this.shipment.isInvoiceCreated = true;
+    }
+
     this.httpLoaderService.show();
     this.shipmentService.createShipment(this.shipment)
         .subscribe(
@@ -344,19 +348,19 @@ export class CreateShipmentComponent implements OnInit {
 
   validateShipment(): boolean {
     if (!this.shipment.shipVia) {
-      this.toastr.errorToastr('Please enter valid shipment via detail');
+      this.toastr.warningToastr('Please enter valid shipment via detail');
       return false;
     }
     if (this.shipment.customerId < 1) {
-      this.toastr.errorToastr('Please select the customer');
+      this.toastr.warningToastr('Please select the customer');
       return false;
     }
     if (this.shipment.shipmentInfoId < 1) {
-      this.toastr.errorToastr('Please select valid shipment address');
+      this.toastr.warningToastr('Please select valid shipment address');
       return false;
     }
     if (!this.shipment.packingSlipDetails) {
-      this.toastr.errorToastr('Add at least one part detail to create shipment');
+      this.toastr.warningToastr('Add at least one part detail to create shipment');
       return false;
     }
 
@@ -373,7 +377,7 @@ export class CreateShipmentComponent implements OnInit {
   }
 
   closeReportEvent(event) {
-    alert('closeReport');
+    this.router.navigateByUrl(`companies/create-shipment/${ this.selectedCustomerId }/0/0`);
   }
 }
 

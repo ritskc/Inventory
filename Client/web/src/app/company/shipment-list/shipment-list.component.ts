@@ -95,7 +95,7 @@ export class ShipmentListComponent implements OnInit {
     if (this.customerId > 0)
       this.router.navigateByUrl(`/companies/create-shipment/${ this.customerId }/0/0`);
     else 
-      this.toastr.errorToastr('Please select the customer to proceed with shipment creation');
+      this.toastr.warningToastr('Please select the customer to proceed with shipment creation');
   }
 
   filterByCustomer(event) {
@@ -113,7 +113,7 @@ export class ShipmentListComponent implements OnInit {
         break;
       case 'printInvoice':
         if (!data.isInvoiceCreated) {
-          this.toastr.errorToastr('Cannot be printed since the invoice is not yet created!!');
+          this.toastr.warningToastr('Cannot be printed since the invoice is not yet created!!');
           return;
         }
         this.print('invoice', data);
@@ -122,7 +122,11 @@ export class ShipmentListComponent implements OnInit {
         this.print('shipment', data);
         break;
       case 'printBL':
-        this.print('BL', data);
+        if (data.isMasterPackingSlip) {
+          this.print('MasterBL', data);
+        } else {
+          this.print('BL', data);
+        }
         break;
       case 'delete':
         this.delete(data);
@@ -140,13 +144,13 @@ export class ShipmentListComponent implements OnInit {
     if (data.posPath) {
       window.open(`${this.configuration.fileApiUri}/POS/${data.id}`);
     } else {
-      this.toastr.errorToastr('POS is not uploaded for this shipment');
+      this.toastr.warningToastr('POS is not uploaded for this shipment');
     }
   }
 
   editShipment(data) {
     if (data.isPOSUploaded) {
-      this.toastr.errorToastr('This shipment cannot be edited since POS is already uploaded');
+      this.toastr.warningToastr('This shipment cannot be edited since POS is already uploaded');
       return;
     }
     this.router.navigateByUrl(`companies/create-shipment/${data.customerId}/1/${data.id}`);
@@ -154,7 +158,7 @@ export class ShipmentListComponent implements OnInit {
 
   editInvoice(data) {
     if (data.isInvoiceCreated) {
-      this.toastr.errorToastr('This cannot be edited since it is already invoiced');
+      this.toastr.warningToastr('This cannot be edited since it is already invoiced');
       return;
     }
     this.router.navigateByUrl(`companies/invoice/${data.customerId}/${data.id}`);
@@ -168,6 +172,8 @@ export class ShipmentListComponent implements OnInit {
       this.printDocument.next(`${appConfig.reportsUri}/Invoice.aspx?id=${data.id}`);
     } else if (type === 'BL') {
       this.printDocument.next(`${appConfig.reportsUri}/BL.aspx?id=${data.id}`);
+    } else if (type === 'MasterBL') {
+      this.printDocument.next(`${appConfig.reportsUri}/MasterBL.aspx?id=${data.masterPackingSlipId}`);
     }
   }
 

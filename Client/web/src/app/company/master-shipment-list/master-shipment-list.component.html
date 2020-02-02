@@ -8,4 +8,8 @@
 <simple-grid [data]="filteredMasterShipments" [columns]="columns" [exportRequired]="false" (addClickedEventEmitter)="addMasterShipment()"
 (actionButtonClickedEvent)="[actionButtonClicked($event)]"></simple-grid>
 
+<div>
+  <app-report [displayReportEvent]="packagingSlipCreated.asObservable()" (closeReport)="closeReportEvent($event)"></app-report>
+</div>
+
 <loader></loader>

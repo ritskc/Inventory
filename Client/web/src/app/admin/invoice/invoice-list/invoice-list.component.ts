@@ -114,7 +114,7 @@ export class InvoiceListComponent implements OnInit {
     if (selectedSupplierId > -1)
       this.router.navigateByUrl(`/invoice/upload/${selectedSupplierId}/0`);
     else
-      this.toastr.errorToastr('Please select a supplier to proceed to upload');
+      this.toastr.warningToastr('Please select a supplier to proceed to upload');
   }
 
   actionButtonClicked(data) {
@@ -131,42 +131,42 @@ export class InvoiceListComponent implements OnInit {
         break;
       case 'downloadInvoice':
         if (!data.isInvoiceUploaded) {
-          this.toastr.errorToastr('Document unavailable for download!!');
+          this.toastr.warningToastr('Document unavailable for download!!');
           return;
         }
         window.open(`${this.configuration.fileApiUri}/Invoice/${data.id}`);
         break;
       case 'downloadPackingSlip':
         if (!data.isPackingSlipUploaded) {
-          this.toastr.errorToastr('Document unavailable for download!!');
+          this.toastr.warningToastr('Document unavailable for download!!');
           return;
         }
         window.open(`${this.configuration.fileApiUri}/PackingSlip/${data.id}`);
         break;
       case 'downloadTenPlus':
         if (!data.isTenPlusUploaded) {
-          this.toastr.errorToastr('Document unavailable for download!!');
+          this.toastr.warningToastr('Document unavailable for download!!');
           return;
         }
         window.open(`${this.configuration.fileApiUri}/TenPlus/${data.id}`);
         break;
       case 'downloadBl':
         if (!data.isBLUploaded) {
-          this.toastr.errorToastr('Document unavailable for download!!');
+          this.toastr.warningToastr('Document unavailable for download!!');
           return;
         }
         window.open(`${this.configuration.fileApiUri}/BL/${data.id}`);
         break;
       case 'downloadTc':
         if (!data.isTCUploaded) {
-          this.toastr.errorToastr('Document unavailable for download!!');
+          this.toastr.warningToastr('Document unavailable for download!!');
           return;
         }
         window.open(`${this.configuration.fileApiUri}/TC/${data.id}`);
         break;
       case 'receiveInvoice':
         if (data.isInvoiceReceived) {
-          this.toastr.errorToastr('This invoice has been received already');
+          this.toastr.warningToastr('This invoice has been received already');
           return;
         }
         this.invoiceService.receivedInvoice(data.supplierId, data.id)
@@ -180,7 +180,7 @@ export class InvoiceListComponent implements OnInit {
 
   deleteInvoice(data) {
     if (data.isInvoiceReceived) {
-      this.toastr.errorToastr('Received invoices cannot be removed.');
+      this.toastr.warningToastr('Received invoices cannot be removed.');
       return;
     }
     var response = confirm('Are you sure you want to remove this invoice?');

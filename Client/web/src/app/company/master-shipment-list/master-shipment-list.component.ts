@@ -9,6 +9,8 @@ import { ClassConstants } from '../../common/constants';
 import { ShipmentService } from '../shipment.service';
 import { MasterShipment } from '../../models/master.shipment.model';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { AppConfigurations } from '../../config/app.config';
 
 @Component({
   selector: 'app-master-shipment-list',
@@ -18,6 +20,7 @@ import { Router } from '@angular/router';
 export class MasterShipmentListComponent implements OnInit {
 
   private currentlyLoggedInCompany: number = 0;
+  private packagingSlipCreated: Subject<string> = new Subject<string>();
   customers: Customer[] = [];
   columns: DataColumn[] = [];
   customerId: number = -1;
@@ -35,15 +38,16 @@ export class MasterShipmentListComponent implements OnInit {
 
   initializeGridColumns() {
     this.columns = [];
-    this.columns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true, customStyling: 'column-width-200' }) );
+    this.columns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true, customStyling: 'column-width-150' }) );
     this.columns.push( new DataColumn({ headerText: "Master Slip No", value: "masterPackingSlipNo", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Packing Slips", value: "packingSlipNumbers", sortable: false, customStyling: 'column-width-200' }) );
+    this.columns.push( new DataColumn({ headerText: "Packing Slips", value: "packingSlipNumbers", sortable: false, customStyling: 'column-width-100' }) );
     this.columns.push( new DataColumn({ headerText: "Updated Date", value: "updatedDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Traking Number", value: "trakingNumber", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "POS Uploaded", value: "isPOSUploaded", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Comment", value: "comment" }) );
-    this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center column-width-100', actions: [
+    this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'editMasterPackingSlip', icon: 'fa fa-edit' }),
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'printBLForMasterPackingSlip', icon: 'fa fa-print' }),
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'removeMasterPackingSlip', icon: 'fa fa-trash' })
     ] }) );
   }
@@ -89,12 +93,15 @@ export class MasterShipmentListComponent implements OnInit {
       case 'editMasterPackingSlip':
         this.editMasterShipment(data);
         break;
+      case 'printBLForMasterPackingSlip':
+        this.printBLForMasterPackingSlip(data);
+        break;
     }
   }
 
   addMasterShipment() {
     if (this.customerId < 0) {
-      this.toastr.errorToastr('Please select the customer to create master packaging slip');
+      this.toastr.warningToastr('Please select the customer to create master packaging slip');
       return;
     }
     this.router.navigateByUrl(`companies/master-shipment-detail/${ this.customerId }/0/0`);
@@ -102,6 +109,11 @@ export class MasterShipmentListComponent implements OnInit {
 
   editMasterShipment(data) {
     this.router.navigateByUrl(`companies/master-shipment-detail/${ data.customerId }/1/${data.id}`);
+  }
+
+  printBLForMasterPackingSlip(data) {
+    let appConfig = new AppConfigurations();
+    this.packagingSlipCreated.next(`${appConfig.reportsUri}/MasterBL.aspx?id=${data.id}`);
   }
 
   removeMasterPackingSlip(data) {

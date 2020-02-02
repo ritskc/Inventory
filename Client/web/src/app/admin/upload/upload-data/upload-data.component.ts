@@ -47,7 +47,7 @@ export class UploadDataComponent implements OnInit {
 
   readData(files: FileList) {
     if (this.selectedOption < 0) {
-      this.toastr.errorToastr('Please select an option to proceed');
+      this.toastr.warningToastr('Please select an option to proceed');
       return;
     }
     
@@ -111,7 +111,7 @@ export class UploadDataComponent implements OnInit {
 
           if (this.data.some(d => d.valid === false)) {
             this.dataValidated = false;
-            this.toastr.errorToastr('Not all parts are valid. Please check the entries to proceed further.');
+            this.toastr.warningToastr('Not all parts are valid. Please check the entries to proceed further.');
           } else {
             this.dataValidated = true;
           }

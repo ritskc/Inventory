@@ -126,7 +126,7 @@ export class PurchaseOrdersComponent implements OnInit {
 
   addCustomerOrder() {
     if (this.customerId < 1) {
-      this.toastr.errorToastr('Please select the customer to proceed');
+      this.toastr.warningToastr('Please select the customer to proceed');
       return;
     }
     this.router.navigateByUrl(`orders/detail/customer/${this.customerId}/create/0`);

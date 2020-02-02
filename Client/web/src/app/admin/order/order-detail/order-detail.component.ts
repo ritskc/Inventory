@@ -338,7 +338,7 @@ export class OrderDetailComponent implements OnInit {
 
   addPartToOrder() {
     if (this.quantity < 1) {
-      this.toastr.errorToastr('Part quantity should be more than 0 (zero)');
+      this.toastr.warningToastr('Part quantity should be more than 0 (zero)');
       return;
     }
 
@@ -481,23 +481,23 @@ export class OrderDetailComponent implements OnInit {
 
   validateOrder(): boolean {
     if (new Date(this.purchaseOrder.dueDate) <= new Date(this.purchaseOrder.poDate)) {
-      this.toastr.errorToastr('Due date cannot be less than purchase order date');
+      this.toastr.warningToastr('Due date cannot be less than purchase order date');
       return false;
     }
     if (!this.purchaseOrder.poNo) {
-      this.toastr.errorToastr('PO number is mandatory');
+      this.toastr.warningToastr('PO number is mandatory');
       return false;
     }
     if (!this.purchaseOrder.dueDate || !this.purchaseOrder.poDate) {
-      this.toastr.errorToastr('PO date & Due date are mandatory');
+      this.toastr.warningToastr('PO date & Due date are mandatory');
       return false;
     }
     if (this.orderFormMode === OrderFormMode.Customer && this.purchaseOrder.orderDetails.length < 1) {
-      this.toastr.errorToastr('Add at least one part detail to create this order.');
+      this.toastr.warningToastr('Add at least one part detail to create this order.');
       return false;
     }
     if (this.orderFormMode === OrderFormMode.Supplier && this.purchaseOrder.poDetails.length < 1) {
-      this.toastr.errorToastr('Add at least one part detail to create this order.');
+      this.toastr.warningToastr('Add at least one part detail to create this order.');
       return false;
     }
     return true;

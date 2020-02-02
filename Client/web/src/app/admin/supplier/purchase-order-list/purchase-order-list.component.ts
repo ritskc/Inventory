@@ -167,7 +167,7 @@ export class PurchaseOrderListComponent implements OnInit {
         break;
       case 'editPurchaseOrder':
         if (data.isClosed) {
-          this.toastr.errorToastr('This PO cannot be edited since this is already closed!!');
+          this.toastr.warningToastr('This PO cannot be edited since this is already closed!!');
           return;
         }
         this.router.navigateByUrl(`orders/detail/supplier/${data.supplierId}/edit/${data.id}`);
