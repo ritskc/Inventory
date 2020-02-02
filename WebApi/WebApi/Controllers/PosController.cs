@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using WebApi.IServices;
+using WebApi.Settings;
+using WebApi.Utils;
 
 namespace WebApi.Controllers
 {
@@ -15,11 +18,13 @@ namespace WebApi.Controllers
     {
         private readonly IPoService _poService;
         private readonly IPartService _partService;
+        private readonly AppSettings _appSettings;
 
-        public PosController(IPoService poService,IPartService partService)
+        public PosController(IPoService poService,IPartService partService, IOptions<AppSettings> appSettings)
         {
             this._poService = poService;
             this._partService = partService;
+            _appSettings = appSettings.Value;
         }
 
         // GET: api/Todo
@@ -96,7 +101,11 @@ namespace WebApi.Controllers
                         return BadRequest(string.Format("Invalid part : {0} does not belong to this supplier", selectedParts.Select(x=>x.Code).FirstOrDefault()));
                     }
                 }
+                po.AccessId = Guid.NewGuid().ToString();
                 await this._poService.AddPoAsync(po);
+
+                EmailService emailService = new EmailService(_appSettings);
+                emailService.SendEmail(_appSettings.POURL + po.AccessId);
                 return Ok();
             }
             catch (Exception ex)
@@ -155,7 +164,7 @@ namespace WebApi.Controllers
             {
                 return StatusCode(500, ex.ToString());
             }
-        }
+        }        
 
         // DELETE: api/Todo/5
         [HttpDelete("{id}")]

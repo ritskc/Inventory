@@ -13,7 +13,8 @@ namespace DAL.Models
         public string Code { get; set; }
         public string Description { get; set; }
         public string PONo { get; set; }
-        public DateTime PODate { get; set; }       
+        public DateTime PODate { get; set; }
+        public DateTime DueDate { get; set; }        
         public int OpenQty { get; set; }
     }
 }

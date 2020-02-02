@@ -41,7 +41,7 @@ namespace WebApi.Services
             {
                 foreach (PartCustomerAssignment partCustomerAssignments in part.partCustomerAssignments)
                 {
-                    partCustomerAssignments.CustomerName = suppliers.Where(x => x.Id == partCustomerAssignments.CustomerId).Select(x => x.Name).FirstOrDefault();
+                    partCustomerAssignments.CustomerName = customers.Where(x => x.Id == partCustomerAssignments.CustomerId).Select(x => x.Name).FirstOrDefault();
                 }
             }
 
@@ -122,6 +122,11 @@ namespace WebApi.Services
         public async Task<IEnumerable<PartLatestShipment>> GetPartLatestShipmentAsync(long partId, int companyId)
         {
             return await Task.Run(() => this._partRepository.GetPartLatestShipmentAsync(partId, companyId));
+        }
+
+        public async Task<IEnumerable<PartInTransit>> GetPartLatestReceivedAsync(long partId, int companyId)
+        {
+            return await Task.Run(() => this._partRepository.GetPartLatestReceivedAsync(partId, companyId));
         }
     }
 }

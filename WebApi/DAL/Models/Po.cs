@@ -22,6 +22,7 @@ namespace DAL.Models
         public DateTime? DueDate { get; set; }
         public string PaymentTerms { get; set; }      
         public string DeliveryTerms { get; set; }
+        public string AccessId { get; set; }
 
         public List<PoDetail> poDetails { get; set; }
         public List<PoTerm> poTerms { get; set; }

@@ -14,6 +14,7 @@ namespace DAL.Models
         public string SupplierName { get; set; }
         public string InvoiceNo { get; set; }
         public DateTime InvoiceDate { get; set; }
+        public DateTime ReceivedDate { get; set; }
         public DateTime ETA { get; set; }
         public string PoNo { get; set; }
         public int SrNo { get; set; }

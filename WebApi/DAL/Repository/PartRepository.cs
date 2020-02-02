@@ -132,8 +132,7 @@ namespace DAL.Repository
             }
 
             foreach (Part part in parts)
-            {
-                List<PartCustomerAssignment> partCustomerAssignments = new List<PartCustomerAssignment>();
+            {                
                 commandText = string.Format("SELECT sum(Qty - ShippedQty) as openqty from OrderDetail where partid = '{0}' and (IsClosed =0 OR IsClosed IS NULL) ", part.Id);
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
@@ -155,8 +154,7 @@ namespace DAL.Repository
 
                     }
                     dataReader1.Close();
-                }
-                part.partCustomerAssignments = partCustomerAssignments;
+                }                
                 conn.Close();
             }
 
@@ -505,6 +503,46 @@ namespace DAL.Repository
             return parts;
         }
 
+        public async Task<IEnumerable<PartInTransit>> GetPartLatestReceivedAsync(long partId, int companyId)
+        {
+            var parts = new List<PartInTransit>();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format("SELECT 	[Code] ,[Description] ,[InvoiceNo] ,[InvoiceDate],[ReceivedDate] ,[ETA] ,[PoNo],[SrNo] ,[PartId],[Qty],[Name] as SupplierName " +
+                "FROM [SupplierInvoiceDetails] SID   INNER JOIN [SupplierInvoiceMaster] SIM ON SID.InvoiceId = SIM.Id  INNER JOIN [part] P ON P.id = SID.PartId  INNER JOIN [supplier] S ON S.id = SIM.SupplierId  " +
+                "where IsBoxReceived = 1 AND SIM.CompanyId = '{0}' AND PartId = '{1}' ", companyId, partId);
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var part = new PartInTransit();
+                    part.Code = Convert.ToString(dataReader["Code"]);
+                    part.Description = Convert.ToString(dataReader["Description"]);
+                    part.InvoiceNo = Convert.ToString(dataReader["InvoiceNo"]);
+                    part.InvoiceDate = Convert.ToDateTime(dataReader["InvoiceDate"]);
+                    part.ReceivedDate = Convert.ToDateTime(dataReader["ReceivedDate"]);
+                    part.ETA = Convert.ToDateTime(dataReader["ETA"]);
+                    part.PoNo = Convert.ToString(dataReader["PoNo"]);
+                    part.PartId = Convert.ToInt32(dataReader["PartId"]);
+                    part.Qty = Convert.ToInt32(dataReader["Qty"]);
+                    part.SupplierName = Convert.ToString(dataReader["SupplierName"]);
+
+                    parts.Add(part);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+            return parts;
+        }
+
         public async Task<IEnumerable<PartOpenOrder>> GetPartOpenOrderDetailAsync(long partId, int companyId)
         {
             var parts = new List<PartOpenOrder>();
@@ -528,9 +566,10 @@ namespace DAL.Repository
                     part.Code = Convert.ToString(dataReader["Code"]);
                     part.Description = Convert.ToString(dataReader["Description"]);
                     part.PONo = Convert.ToString(dataReader["PONo"]);
-                    part.PODate = Convert.ToDateTime(dataReader["PODate"]);                    
+                    part.PODate = Convert.ToDateTime(dataReader["PODate"]);
+                    part.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
                     part.OpenQty = Convert.ToInt32(dataReader["openqty"]);
-
+                    
                     parts.Add(part);
                     
                 }

@@ -67,6 +67,11 @@ namespace WebApi.Services
         public async Task DeletePoAsync(long id)
         {
             await Task.Run(() => this._poRepository.DeletePoAsync(id));
-        }        
+        }
+
+        public async Task AcknowledgePoAsync(Po po)
+        {
+            await this._poRepository.AcknowledgePoAsync(po);
+        }
     }
 }

@@ -25,5 +25,6 @@ namespace WebApi.IServices
         Task<IEnumerable<PartInTransit>> GetPartInTransitDetailAsync(long partId, int companyId);
         Task<IEnumerable<PartOpenOrder>> GetPartOpenOrderDetailAsync(long partId, int companyId);
         Task<IEnumerable<PartLatestShipment>> GetPartLatestShipmentAsync(long partId, int companyId);
+        Task<IEnumerable<PartInTransit>> GetPartLatestReceivedAsync(long partId, int companyId);
     }
 }

@@ -15,6 +15,7 @@ namespace DAL.IRepository
         Task<Po> GetPoAsync(long poId, SqlConnection conn, SqlTransaction transaction);
         Task AddPoAsync(Po po);
         Task UpdatePoAsync(Po po);
+        Task AcknowledgePoAsync(Po po);
         Task<int> DeletePoAsync(long poId);
     }
 }

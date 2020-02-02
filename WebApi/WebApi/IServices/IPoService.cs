@@ -12,6 +12,7 @@ namespace WebApi.IServices
         Task<Po> GetPoAsync(long poId);
         Task AddPoAsync(Po po);
         Task UpdatePoAsync(Po po);
+        Task AcknowledgePoAsync(Po po);
         Task DeletePoAsync(long poId);
     }
 }
