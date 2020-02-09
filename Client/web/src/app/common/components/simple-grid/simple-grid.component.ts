@@ -56,7 +56,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
     if (filtered)
       this.pageNo = Math.ceil(filtered.length / this.pageSize);
     else 
-      this.pageNo = Math.ceil(this._data.length / this.pageSize);
+      this.pageNo = this._data && this._data.length > 0? Math.ceil(this._data.length / this.pageSize): 1;
   }
 
   createRange(){

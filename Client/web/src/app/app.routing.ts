@@ -11,6 +11,7 @@ import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AuthGuard } from './user/auth.guard';
+import { DirectSupplierPoComponent } from './no-login/direct-supplier-po/direct-supplier-po.component';
 
 export const routes: Routes = [
   {
@@ -38,6 +39,10 @@ export const routes: Routes = [
     data: {
       title: 'Login Page'
     }
+  },
+  {
+    path: 'direct-supplier-po/:id',
+    component: DirectSupplierPoComponent
   },
   {
     path: 'register',

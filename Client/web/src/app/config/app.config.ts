@@ -21,6 +21,7 @@ export class AppConfigurations {
     fileApiUri: string;
     reportsUri: string;
     entityTracker: string;
+    directSupplierPo: string;
 
     initialize() {
         this.apiServerHost = 'https://questapi.yellow-chips.com';
@@ -43,6 +44,7 @@ export class AppConfigurations {
         this.masterShipmentUri = '/MasterPackingSlips';
         this.customerInvoiceUri =  '/Invoices';
         this.entityTracker = '/EntityTracker';
+        this.directSupplierPo = '/SupplierAccess';
         this.barcodeUri = 'https://quest.yellow-chips.com/static/barcode.html?';
     }
 }

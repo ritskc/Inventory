@@ -44,6 +44,8 @@ import { FormBuilder } from '@angular/forms';
 import { UserModule } from './user/user.module';
 import { TokenInterceptor } from './common/services/api.service';
 import { FileUploadModule } from 'ng2-file-upload';
+import { DirectSupplierPoComponent } from './no-login/direct-supplier-po/direct-supplier-po.component';
+import { SharedModule } from './common/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -63,14 +65,16 @@ import { FileUploadModule } from 'ng2-file-upload';
     FileUploadModule,
 
     AdminModule,
-    UserModule
+    UserModule,
+    SharedModule
   ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
     P404Component,
     P500Component,
-    RegisterComponent
+    RegisterComponent,
+    DirectSupplierPoComponent
   ],
   providers: [
     FormBuilder,
