@@ -10,7 +10,7 @@ using WebApi.Utils;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class SupplierAccessController : ControllerBase
     {
@@ -24,11 +24,11 @@ namespace WebApi.Controllers
         }
         // PUT api/values/5
         [HttpPut("{acknowledge}/{id}")]
-        public async Task<IActionResult> AcknowledgePO(int id, [FromBody] Po po)
+        public async Task<IActionResult> AcknowledgePO(string id, [FromBody] Po po)
         {
             try
             {                
-                if (id != po.Id)
+                if (id != po.AccessId)
                 {
                     return BadRequest();
                 }
@@ -63,10 +63,31 @@ namespace WebApi.Controllers
                         return BadRequest(string.Format("Invalid part : {0} does not belong to this supplier", part.Code));
 
                 }
-                po.Id = id;
+                //po.Id = id;
                 await this._poService.AcknowledgePoAsync(po);                
 
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        // GET api/values/5        
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Po>> Get(string id)
+        {
+            try
+            {
+                var result = await this._poService.GetPoByAccessIdAsync(id);
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return result;
             }
             catch (Exception ex)
             {

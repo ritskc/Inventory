@@ -10,6 +10,7 @@ namespace WebApi.IServices
     {
         Task<IEnumerable<Po>> GetAllPosAsync(int companyId);
         Task<Po> GetPoAsync(long poId);
+        Task<Po> GetPoByAccessIdAsync(string poId);
         Task AddPoAsync(Po po);
         Task UpdatePoAsync(Po po);
         Task AcknowledgePoAsync(Po po);

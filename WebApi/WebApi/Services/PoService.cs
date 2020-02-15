@@ -52,6 +52,18 @@ namespace WebApi.Services
             return result;            
         }
 
+        public async Task<Po> GetPoByAccessIdAsync(string id)
+        {
+            var result = await this._poRepository.GetPoByAccessIdAsync(id);
+            var partList = await this._partService.GetAllPartsAsync(result.CompanyId);
+            foreach (PoDetail poDetail in result.poDetails)
+            {
+                var partDetail = partList.Where(p => p.Id == poDetail.PartId).FirstOrDefault();
+                poDetail.part = partDetail;
+            }
+            return result;
+        }
+
         public async Task AddPoAsync(Po po)
         {
             var entity = await this._entityTrackerRepository.GetEntityAsync(po.CompanyId,po.PoDate,BusinessConstants.ENTITY_TRACKER_PO);

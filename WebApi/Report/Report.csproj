@@ -89,6 +89,7 @@
     <Content Include="Reports\Resource\check.png" />
     <Content Include="Reports\Resource\HI.png" />
     <Content Include="Reports\Resource\uncheck.png" />
+    <Content Include="ReportViewer\MasterPackingSlip.aspx" />
     <Content Include="ReportViewer\MasterBL.aspx" />
     <Content Include="ReportViewer\CopmanyReport.aspx" />
     <Content Include="ReportViewer\Invoice.aspx" />
@@ -102,6 +103,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportViewer\MasterPackingSlip.aspx.cs">
+      <DependentUpon>MasterPackingSlip.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportViewer\MasterPackingSlip.aspx.designer.cs">
+      <DependentUpon>MasterPackingSlip.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ReportViewer\MasterBL.aspx.cs">
       <DependentUpon>MasterBL.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -152,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Report1.rdlc" />
+    <EmbeddedResource Include="Reports\MasterPackingSlip.rdlc" />
     <EmbeddedResource Include="Reports\MasterBL.rdlc" />
     <EmbeddedResource Include="Reports\Company.rdlc" />
     <EmbeddedResource Include="Reports\Invoice.rdlc" />

@@ -16,7 +16,7 @@ namespace WebApi.Utils
         {
             this.appSettings = appSettings;
         }
-        public void SendEmail(string EmailBody )
+        public void SendEmail(string companyName,string supplierName,string contactPersonName,string link,string pono)
         {
             //var fromAddress = new MailAddress("ychips02@gmail.com", "Yellow Chips");
             //var toAddress = new MailAddress("rits.kc@gmail.com", "Ritesh");
@@ -41,19 +41,23 @@ namespace WebApi.Utils
             //{
             //    smtp.Send(message);
             //}
+            string EmailBody = "";
             string EmailIDList = "";
-            string EmailSubject="";
+            string EmailSubject="PO generated: " + pono;            
             
-            string CompanyName = "";
 
+            EmailBody = "Hi " + contactPersonName + "<br>";
 
-            EmailBody = EmailBody + "<br>";
+            EmailBody = EmailBody + "A new PO has been raised. " + "<br>";
+
+            EmailBody = EmailBody + "Kindly acknowledge the PO by clicking on Acknowledge PO button from following link." + "<br>";
+
+            EmailBody = EmailBody + link + "<br>";
             EmailBody = EmailBody + "<br>" + "Warm Regards,";
             EmailBody = EmailBody + "<br>" + "customer Care";
-            if (string.IsNullOrEmpty(CompanyName))
-                EmailBody = EmailBody + "<br>" + "CompanyName";
-            else
-                EmailBody = EmailBody + "<br>" + CompanyName;
+
+            EmailBody = EmailBody + "<br>" + companyName;
+
             EmailIDList = appSettings.To;
             string[] stringArray = EmailIDList.Split(',');
 

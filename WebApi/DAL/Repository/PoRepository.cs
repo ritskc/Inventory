@@ -60,7 +60,7 @@ namespace DAL.Repository
                     else
                         po.DueDate = null;
 
-                    po.IsAcknowledged = Convert.ToString(dataReader["IsAcknowledged"]);
+                    po.IsAcknowledged = Convert.ToBoolean(dataReader["IsAcknowledged"]);
 
                     if (dataReader["AcknowledgementDate"] != DBNull.Value)
                         po.AcknowledgementDate = Convert.ToDateTime(dataReader["AcknowledgementDate"]);
@@ -186,7 +186,7 @@ namespace DAL.Repository
                         po.DueDate = null;
 
 
-                    po.IsAcknowledged = Convert.ToString(dataReader["IsAcknowledged"]);
+                    po.IsAcknowledged = Convert.ToBoolean(dataReader["IsAcknowledged"]);
                    
                     if (dataReader["AcknowledgementDate"] != DBNull.Value)
                         po.AcknowledgementDate = Convert.ToDateTime(dataReader["AcknowledgementDate"]);
@@ -272,6 +272,133 @@ namespace DAL.Repository
             return po;
         }
 
+        public async Task<Po> GetPoByAccessIdAsync(string poId)
+        {
+            var po = new Po();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format($"SELECT PM.[Id] ,CUS.Name AS CompanyName, PM.[CompanyId] ,SUP.[Name]  AS SupplierName ,SUP.ContactPersonName,SupplierId,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms],[DueDate],[AccessId]  FROM [dbo].[PoMaster]  PM INNER JOIN supplier SUP ON SUP.ID = PM.SupplierId INNER JOIN customer CUS ON CUS.ID = PM.CompanyId where AccessId = '{poId}' ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+
+                    po.Id = Convert.ToInt64(dataReader["Id"]);
+                    po.CompanyName = Convert.ToString(dataReader["CompanyName"]);
+                    po.SupplierName = Convert.ToString(dataReader["SupplierName"]);
+                    po.ContactPersonName = Convert.ToString(dataReader["ContactPersonName"]);
+                    po.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
+                    po.SupplierId = Convert.ToInt32(dataReader["SupplierId"]);
+                    po.PoNo = Convert.ToString(dataReader["PoNo"]);
+                    po.PoDate = Convert.ToDateTime(dataReader["PoDate"]);
+                    po.EmailIds = Convert.ToString(dataReader["EmailIds"]);
+                    po.Remarks = Convert.ToString(dataReader["Remarks"]);
+                    po.IsClosed = Convert.ToBoolean(dataReader["IsClosed"]);
+                    if (dataReader["ClosingDate"] != DBNull.Value)
+                        po.ClosingDate = Convert.ToDateTime(dataReader["ClosingDate"]);
+                    else
+                        po.ClosingDate = null;
+
+                    if (dataReader["DueDate"] != DBNull.Value)
+                        po.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
+                    else
+                        po.DueDate = null;
+
+
+                    po.IsAcknowledged = Convert.ToBoolean(dataReader["IsAcknowledged"]);
+
+                    if (dataReader["AcknowledgementDate"] != DBNull.Value)
+                        po.AcknowledgementDate = Convert.ToDateTime(dataReader["AcknowledgementDate"]);
+                    else
+                        po.AcknowledgementDate = null;
+                    po.PaymentTerms = Convert.ToString(dataReader["PaymentTerms"]);
+                    po.DeliveryTerms = Convert.ToString(dataReader["DeliveryTerms"]);
+                    po.AccessId = Convert.ToString(dataReader["AccessId"]);
+
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+
+            List<PoDetail> poDetails = new List<PoDetail>();
+            commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate],[SrNo]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
+
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+            {
+                cmd1.CommandType = CommandType.Text;
+                conn.Open();
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader1.Read())
+                {
+                    var poDetail = new PoDetail();
+                    poDetail.Id = Convert.ToInt64(dataReader1["Id"]);
+                    poDetail.PoId = Convert.ToInt64(dataReader1["PoId"]);
+                    poDetail.PartId = Convert.ToInt64(dataReader1["PartId"]);
+                    poDetail.ReferenceNo = Convert.ToString(dataReader1["ReferenceNo"]);
+                    poDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                    poDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
+                    poDetail.DueDate = Convert.ToDateTime(dataReader1["DueDate"]);
+                    poDetail.Note = Convert.ToString(dataReader1["Note"]);
+                    poDetail.AckQty = Convert.ToInt32(dataReader1["AckQty"]);
+                    poDetail.InTransitQty = Convert.ToInt32(dataReader1["InTransitQty"]);
+                    poDetail.ReceivedQty = Convert.ToInt32(dataReader1["ReceivedQty"]);
+                    poDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);
+                    if (dataReader1["SrNo"] != DBNull.Value)
+                        poDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
+                    else
+                        poDetail.SrNo = 0;
+
+                    if (dataReader1["ClosingDate"] != DBNull.Value)
+                        poDetail.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
+                    else
+                        poDetail.ClosingDate = null;
+
+                    poDetails.Add(poDetail);
+                }
+                dataReader1.Close();
+                conn.Close();
+            }
+            po.poDetails = poDetails;
+
+
+            List<PoTerm> poTerms = new List<PoTerm>();
+            commandText = string.Format("SELECT [Id] ,[PoId] ,[SequenceNo] ,[Term]  FROM [dbo].[PoTerms] where poid = '{0}'", po.Id);
+
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+            {
+                cmd1.CommandType = CommandType.Text;
+                conn.Open();
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader1.Read())
+                {
+                    var poTerm = new PoTerm();
+                    poTerm.Id = Convert.ToInt64(dataReader1["Id"]);
+                    poTerm.PoId = Convert.ToInt64(dataReader1["PoId"]);
+                    poTerm.SequenceNo = Convert.ToInt32(dataReader1["SequenceNo"]);
+                    poTerm.Term = Convert.ToString(dataReader1["Term"]);
+
+                    poTerms.Add(poTerm);
+                }
+                dataReader1.Close();
+                conn.Close();
+            }
+            po.poTerms = poTerms;
+
+
+
+            return po;
+        }
+
         public async Task<Po> GetPoAsync(long poId, SqlConnection conn,SqlTransaction transaction)
         {
             var po = new Po();           
@@ -305,7 +432,7 @@ namespace DAL.Repository
                     else
                         po.DueDate = null;
 
-                    po.IsAcknowledged = Convert.ToString(dataReader["IsAcknowledged"]);
+                    po.IsAcknowledged = Convert.ToBoolean(dataReader["IsAcknowledged"]);
 
                     if (dataReader["AcknowledgementDate"] != DBNull.Value)
                         po.AcknowledgementDate = Convert.ToDateTime(dataReader["AcknowledgementDate"]);
