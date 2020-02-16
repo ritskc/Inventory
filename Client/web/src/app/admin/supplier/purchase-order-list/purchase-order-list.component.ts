@@ -64,6 +64,7 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Qty", value: "qty", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Price", value: "unitPrice", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Total", value: "total", customStyling: 'right' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Rcvd", value: "receivedQty", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Transit", value: "inTransitQty", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
   }

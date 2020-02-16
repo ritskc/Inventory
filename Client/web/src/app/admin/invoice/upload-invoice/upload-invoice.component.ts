@@ -50,6 +50,8 @@ export class UploadInvoiceComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Rate", value: "price", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Amount", value: "total", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Adjusted Qty", value: "adjustedPOQty", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Purchase Orders", value: "multiplePurchaseOrders", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Quantity", value: "multiplePosQty", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Excess Qty", value: "excessQty", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Box Number", value: "boxNo" }) );
   }
@@ -98,17 +100,24 @@ export class UploadInvoiceComponent implements OnInit {
     this.invoiceService.validateInvoice(this.invoiceToValidate)
         .subscribe((response) => {
           this.invoice = response as Invoice;
+          this.formatInvoiceValidationResult();
           this.initializeColumns();
           this.checkForInvalidParts();
         }, (error) => this.toastr.errorToastr(error.error));
   }
 
-  uploadInvoice() {
-    if (!this.eta || !this.invoice.eta) {
-      this.toastr.warningToastr('ETA is invalid. Please select a valid date');
-      return;
-    }
+  formatInvoiceValidationResult() {
+    this.invoice.supplierInvoiceDetails.forEach(detail => {
+      detail.multiplePurchaseOrders = '';
+      detail.multiplePosQty = '';
+      detail.supplierInvoicePoDetails.forEach(po => {
+        detail.multiplePurchaseOrders += `${po.poNo}, `;
+        detail.multiplePosQty += `${ detail.qty }, `;
+      });
+    })
+  }
 
+  uploadInvoice() {
     if (this.invoice.supplierInvoiceDetails.filter(d => !d.isValid).length > 0) {
       this.toastr.warningToastr('This invoice cannot be uploaded due to one ore more invalid parts. Please check the result above');
       return;

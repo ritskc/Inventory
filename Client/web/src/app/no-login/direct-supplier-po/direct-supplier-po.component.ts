@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SupplierAccessService } from '../supplier-access.service';
 import { ActivatedRoute } from '@angular/router';
 import { DataColumn } from '../../models/dataColumn.model';
+import { httpLoaderService } from '../../common/services/httpLoader.service';
 
 @Component({
   selector: 'app-direct-supplier-po',
@@ -12,9 +13,9 @@ export class DirectSupplierPoComponent implements OnInit {
 
   supplerPurchaseOrder: any;
   columns: DataColumn[] = [];
-  hideActionButtons: boolean = false;
+  detail: boolean = false;
 
-  constructor(private supplierAccessService: SupplierAccessService, private activatedRoute: ActivatedRoute) { }
+  constructor(private supplierAccessService: SupplierAccessService, private activatedRoute: ActivatedRoute, private httpLoaderService: httpLoaderService) { }
 
   ngOnInit() {
     this.initializeGrid();
@@ -36,6 +37,7 @@ export class DirectSupplierPoComponent implements OnInit {
   }
 
   getDirectSupplierPurchaseOrder(id: string) {
+    this.httpLoaderService.show();
     this.supplierAccessService.getDirectSupplierPurchaseOrder(id)
         .subscribe(
           result => {
@@ -43,16 +45,22 @@ export class DirectSupplierPoComponent implements OnInit {
             this.transformData();
           },
           (error) => console.log(error),
-          () => {  }
+          () => { this.httpLoaderService.hide() }
         );
   }
 
   submitPurchaseOrder() {
+    this.httpLoaderService.show();
+    this.supplerPurchaseOrder.isAcknowledged = true;
     this.supplierAccessService.submitSupplierPurchaseOrder(this.supplerPurchaseOrder, this.activatedRoute.snapshot.params.id)
         .subscribe(() => {
-          alert('Order Submitted Successfully!');
-          this.hideActionButtons = true;
-        });
+          alert('Order acknowledged successfully!');
+        }, (error) => console.log(error),
+        () => this.httpLoaderService.hide());
+  }
+
+  showDetails() {
+    alert(this.detail);
   }
 
   private transformData() {

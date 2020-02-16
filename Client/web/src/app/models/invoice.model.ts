@@ -85,6 +85,9 @@ export class InvoiceDetail {
     partDetail: Part;
     barcode: string = '';
     isValid: boolean = false;
+    supplierInvoicePoDetails: any;
+    multiplePurchaseOrders: string = '';
+    multiplePosQty: string = '';
 }
 
 export enum UploadMode {
