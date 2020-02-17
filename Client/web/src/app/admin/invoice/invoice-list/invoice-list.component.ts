@@ -11,6 +11,7 @@ import { ClassConstants } from '../../../common/constants';
 import { AppConfigurations } from '../../../config/app.config';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { httpLoaderService } from '../../../common/services/httpLoader.service';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-invoice-list',
@@ -26,7 +27,7 @@ export class InvoiceListComponent implements OnInit {
 
   suppliers: Supplier[] = [];
   invoices: Invoice[] = [];
-  filteredInvoices: Invoice[] = [];
+  filteredInvoices: any[] = [];
   columns: DataColumn[] = [];
 
   constructor(private companyService: CompanyService, private invoiceService: InvoiceService, private supplierService: SupplierService,
@@ -36,77 +37,123 @@ export class InvoiceListComponent implements OnInit {
   ngOnInit() {
     this.appConfiguration = new AppConfigurations();
     this.currentlyLoggedInCompany = this.companyService.getCurrentlyLoggedInCompanyId();
-    this.initializeGridColumns();
-    this.loadAllSuppliers();
-    this.loadAllSupplierInvoices();
     this.invoiceForm = this.formBuilder.group({
       supplierList: FormControl,
-      showNotReceivedOrders: FormControl
+      showNotReceivedOrders: FormControl,
+      showDetails: FormControl
     });
     this.invoiceForm.get('showNotReceivedOrders').setValue(false);
+    this.invoiceForm.get('showDetails').setValue(false);
+
+    this.initializeGridColumns();
+    this.loadAllSuppliers();
   }
 
   initializeGridColumns() {
-    this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false, minWidth: true }) );
-    this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false, minWidth: true, isLink: true }) );
-    this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
-    this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "poDate", sortable: true, isDate: true }) );
-    this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isDate: true }) );
-    this.columns.push( new DataColumn({ headerText: "Rcvd", value: "isInvoiceReceived", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
-    this.columns.push( new DataColumn({ headerText: "Invoice", isActionColumn: true, customStyling: 'center', actions: [
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadInvoice', icon: 'fa fa-download' })
-    ] }) );
-    this.columns.push( new DataColumn({ headerText: "Packing", isActionColumn: true, customStyling: 'center', actions: [
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadPackingSlip', icon: 'fa fa-download' })
-    ] }) );
-    this.columns.push( new DataColumn({ headerText: "10+2", isActionColumn: true, customStyling: 'center', actions: [
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTenPlus', icon: 'fa fa-download' })
-    ] }) );
-    this.columns.push( new DataColumn({ headerText: "BL", isActionColumn: true, customStyling: 'center', actions: [
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadBl', icon: 'fa fa-download' })
-    ] }) );
-    this.columns.push( new DataColumn({ headerText: "TC", isActionColumn: true, customStyling: 'center', actions: [
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTc', icon: 'fa fa-download' })
-    ] }) );
-    this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
-      new DataColumnAction({ actionText: 'Inv', actionStyle: ClassConstants.Primary, event: 'printInvoiceBarcode', icon: 'fa fa-barcode' }),
-      new DataColumnAction({ actionText: 'Box', actionStyle: ClassConstants.Primary, event: 'printBoxBarcode', icon: 'fa fa-barcode' }),
-      new DataColumnAction({ actionText: 'Receive', actionStyle: ClassConstants.Primary, event: 'receiveInvoice', icon: '' }),
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'deleteInvoice', icon: 'fa fa-trash' })
-    ] }) );
+    this.columns = [];
+    if (!this.invoiceForm.get('showDetails').value) {
+      this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false, minWidth: true }) );
+      this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false, minWidth: true, isLink: false }) );
+      this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
+      this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "poDate", sortable: true, isDate: true }) );
+      this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isDate: true }) );
+      this.columns.push( new DataColumn({ headerText: "Rcvd", value: "isInvoiceReceived", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
+      this.columns.push( new DataColumn({ headerText: "Invoice", isActionColumn: true, customStyling: 'center', actions: [
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadInvoice', icon: 'fa fa-download' })
+      ] }) );
+      this.columns.push( new DataColumn({ headerText: "Packing", isActionColumn: true, customStyling: 'center', actions: [
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadPackingSlip', icon: 'fa fa-download' })
+      ] }) );
+      this.columns.push( new DataColumn({ headerText: "10+2", isActionColumn: true, customStyling: 'center', actions: [
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTenPlus', icon: 'fa fa-download' })
+      ] }) );
+      this.columns.push( new DataColumn({ headerText: "BL", isActionColumn: true, customStyling: 'center', actions: [
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadBl', icon: 'fa fa-download' })
+      ] }) );
+      this.columns.push( new DataColumn({ headerText: "TC", isActionColumn: true, customStyling: 'center', actions: [
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTc', icon: 'fa fa-download' })
+      ] }) );
+      this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
+        new DataColumnAction({ actionText: 'Inv', actionStyle: ClassConstants.Primary, event: 'printInvoiceBarcode', icon: 'fa fa-barcode' }),
+        new DataColumnAction({ actionText: 'Box', actionStyle: ClassConstants.Primary, event: 'printBoxBarcode', icon: 'fa fa-barcode' }),
+        new DataColumnAction({ actionText: 'Receive', actionStyle: ClassConstants.Primary, event: 'receiveInvoice', icon: '' }),
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'deleteInvoice', icon: 'fa fa-trash' })
+      ] }) );
+    } else {
+      this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false, minWidth: true }) );
+      this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false, minWidth: true, isLink: false }) );
+      this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
+      this.columns.push( new DataColumn({ headerText: "Part Code", value: "partCode", sortable: false, minWidth: true }) );
+      this.columns.push( new DataColumn({ headerText: "Qty", value: "quantity", sortable: false, minWidth: true, customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Price", value: "rate", sortable: false, minWidth: true, customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Total", value: "amount", sortable: false, minWidth: true, customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Adj Qty", value: "amount", sortable: false, minWidth: true, customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "PO's", value: "purchaseOrderNumbers", sortable: false, minWidth: true, customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "PO Qty's", value: "purchaseOrderQty", sortable: false, minWidth: true, customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Excess Qty", value: "excessQty", sortable: false, minWidth: true, customStyling: 'right' }) );
+    }
   }
 
   loadAllSuppliers() {
-    this.supplierService.getAllSuppliers(this.currentlyLoggedInCompany)
-        .subscribe(
-          (suppliers) => this.suppliers = suppliers,
-          (error) => console.log(error),
-          () => { console.log('Suppliers loaded'); }
-        );
-  }
-
-  loadAllSupplierInvoices() {
     this.loaderService.show();
-    this.invoiceService.getAllInvoices(this.currentlyLoggedInCompany)
-        .subscribe(
-          (invoices) => { 
-            this.invoices = invoices;
-            this.filteredInvoices = this.invoices;
+    this.supplierService.getAllSuppliers(this.currentlyLoggedInCompany)
+        .pipe(
+          map(suppliers => {
+            this.suppliers = suppliers;
             this.invoiceForm.get('supplierList').setValue(-1);
+            return suppliers;
+          }),
+          mergeMap(invoices => this.invoiceService.getAllInvoices(this.currentlyLoggedInCompany))
+        )
+        .subscribe(
+          (invoices) => {
+            var supplierId = this.invoiceForm.get('supplierList').value;
+            this.invoices = supplierId > 0 ? invoices.filter(s => s.supplierId == supplierId): invoices;
+            this.filteredInvoices = this.invoices;
           },
           (error) => console.log(error),
-          () => this.loaderService.hide()
+          () => { this.loaderService.hide(); }
         );
   }
 
   supplierSelected() {
-    this.loaderService.show();
     var supplierId = this.invoiceForm.get('supplierList').value;
-    this.invoiceService.getAllInvoices(this.currentlyLoggedInCompany)
-        .subscribe((invoices) => {
-          this.invoices = supplierId > 0 ? invoices.filter(s => s.supplierId == supplierId): invoices;
-        }, (error) => this.toastr.errorToastr(error.error),
-        () => this.loaderService.hide());
+    this.filteredInvoices = supplierId > 0 ? this.invoices.filter(s => s.supplierId == supplierId): this.invoices;
+  }
+
+  filterOptionSelected(event) {
+    this.initializeGridColumns();
+    this.supplierSelected();
+
+    var showNotReceivedOrdrers = this.invoiceForm.get('showNotReceivedOrders').value;
+    this.filteredInvoices = showNotReceivedOrdrers ? this.filteredInvoices.filter(i => i.isInvoiceReceived === false): this.filteredInvoices;
+
+    if (this.invoiceForm.get('showDetails').value) {
+      var invoicesForDetails = showNotReceivedOrdrers ? this.filteredInvoices.filter(i => i.isInvoiceReceived === false): this.filteredInvoices;
+      this.filteredInvoices = [];
+
+      invoicesForDetails.forEach(invoice => {
+        invoice.supplierInvoiceDetails.forEach(detail => {
+          var viewModel = new InvoiceListDetailsViewModel();
+          viewModel.invoiceNo = invoice.invoiceNo;
+          viewModel.poNo = invoice.poNo;
+          viewModel.supplierName = invoice.supplierName;
+          viewModel.partCode = detail.partDetail.code;
+          viewModel.quantity = detail.qty;
+          viewModel.rate = detail.price;
+          viewModel.amount = detail.total;
+          viewModel.adjustedQty = detail.adjustedQty;
+          viewModel.excessQty = detail.excessQty;
+          detail.supplierInvoicePoDetails.forEach(item => {
+            viewModel.purchaseOrderNumbers += `${item.poNo}, `;
+            viewModel.purchaseOrderQty += `${item.qty}, `;
+          });
+          viewModel.purchaseOrderNumbers = viewModel.purchaseOrderNumbers.substring(0, viewModel.purchaseOrderNumbers.length - 2);
+          viewModel.purchaseOrderQty = viewModel.purchaseOrderQty.substring(0, viewModel.purchaseOrderQty.length - 2);
+          this.filteredInvoices.push(viewModel);
+        });
+      });
+    }
   }
 
   uploadInvoice() {
@@ -213,12 +260,18 @@ export class InvoiceListComponent implements OnInit {
     );
     popupWin.document.close();
   }
+}
 
-  showNotReceivedOrdersEvent(event) {
-    if (this.invoiceForm.get('showNotReceivedOrders').value) {
-      this.filteredInvoices = this.invoices.filter(i => i.isInvoiceReceived === false);
-    } else {
-      this.filteredInvoices = this.invoices;
-    }
-  }
+export class InvoiceListDetailsViewModel {
+  supplierName: string;
+  invoiceNo: string;
+  poNo: string;
+  partCode: string;
+  quantity: number;
+  rate: number;
+  amount: number;
+  adjustedQty: number;
+  purchaseOrderNumbers: string = '';
+  purchaseOrderQty: string = '';
+  excessQty: number;
 }

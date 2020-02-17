@@ -1,11 +1,17 @@
 <form [formGroup]="invoiceForm">
   <div class="row" style="margin-left: 1px;">
-    <select class="form-group" (change)="supplierSelected()" formControlName="supplierList" class="form-control" style="float: left; width: 350px; margin-bottom: 5px;">
+    <select class="form-group" (change)="filterOptionSelected()" formControlName="supplierList" class="form-control" style="float: left; width: 350px; margin-bottom: 5px;">
       <option value="-1">Show for all Suppliers</option>
       <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{supplier.name}}</option>
     </select>
     <div class="form-check" style="margin-left: 15px; padding-top: 5px; float: left;">
-      <input class="form-check-input" type="checkbox" id="showNotReceivedOrders" (change)="showNotReceivedOrdersEvent($event)" formControlName="showNotReceivedOrders">
+      <input class="form-check-input" type="checkbox" id="showDetails" (change)="filterOptionSelected($event)" formControlName="showDetails">
+      <label class="form-check-label" for="showDetails">
+        Show Details
+      </label>
+    </div>
+    <div class="form-check" style="margin-left: 15px; padding-top: 5px; float: left;">
+      <input class="form-check-input" type="checkbox" id="showNotReceivedOrders" (change)="filterOptionSelected($event)" formControlName="showNotReceivedOrders">
       <label class="form-check-label" for="showNotReceivedOrders">
         Show Not Received Orders
       </label>
