@@ -66,6 +66,13 @@
                   </tr>
                 </ng-template>
               </tbody>
+              <tfoot *ngIf="_data.length == 0">
+                <tr>
+                  <td colspan="999999" style="text-align: center;">
+                    No records to display
+                  </td>
+                </tr>
+              </tfoot>
             </table>
           </div>
           <div class="row" *ngIf="footerRequired">

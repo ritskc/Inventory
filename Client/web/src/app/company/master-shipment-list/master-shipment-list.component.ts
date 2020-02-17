@@ -26,6 +26,7 @@ export class MasterShipmentListComponent implements OnInit {
   customerId: number = -1;
   masterShipments: MasterShipment[] = [];
   filteredMasterShipments: MasterShipment[] = [];
+  appConfig = new AppConfigurations();
 
   constructor(private companyService: CompanyService, private customerService: CustomerService, private httpLoader: httpLoaderService,
               private toastr: ToastrManager, private shipmentService: ShipmentService, private router: Router) { }
@@ -46,8 +47,10 @@ export class MasterShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "POS Uploaded", value: "isPOSUploaded", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Comment", value: "comment" }) );
     this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, actions: [
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'editMasterPackingSlip', icon: 'fa fa-edit' }),
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'printBLForMasterPackingSlip', icon: 'fa fa-print' }),
+      new DataColumnAction({ actionText: 'Edit', actionStyle: ClassConstants.Warning, event: 'editMasterPackingSlip', icon: 'fa fa-edit' }),
+      new DataColumnAction({ actionText: 'Shipment', actionStyle: ClassConstants.Primary, event: 'printShipmentForMasterPackingSlip', icon: 'fa fa-print' }),
+      new DataColumnAction({ actionText: 'BL', actionStyle: ClassConstants.Primary, event: 'printBLForMasterPackingSlip', icon: 'fa fa-print' }),
+      new DataColumnAction({ actionText: 'POS', actionStyle: ClassConstants.Primary, event: 'downloadMasterPackingSlip', icon: 'fa fa-download' }),
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'removeMasterPackingSlip', icon: 'fa fa-trash' })
     ] }) );
   }
@@ -96,6 +99,12 @@ export class MasterShipmentListComponent implements OnInit {
       case 'printBLForMasterPackingSlip':
         this.printBLForMasterPackingSlip(data);
         break;
+      case 'printShipmentForMasterPackingSlip':
+        this.printShipmentForMasterPackingSlip(data);
+        break;
+      case 'downloadMasterPackingSlip':
+        this.downloadMasterPackingSlip(data);
+        break;
     }
   }
 
@@ -112,8 +121,19 @@ export class MasterShipmentListComponent implements OnInit {
   }
 
   printBLForMasterPackingSlip(data) {
-    let appConfig = new AppConfigurations();
-    this.packagingSlipCreated.next(`${appConfig.reportsUri}/MasterBL.aspx?id=${data.id}`);
+    this.packagingSlipCreated.next(`${this.appConfig.reportsUri}/MasterBL.aspx?id=${data.id}`);
+  }
+
+  printShipmentForMasterPackingSlip(data) {
+    this.packagingSlipCreated.next(`${this.appConfig.reportsUri}/MasterPackingSlip.aspx?id=${data.id}`);
+  }
+
+  downloadMasterPackingSlip(data) {
+    if (data.posPath) {
+      window.open(`${this.appConfig.fileApiUri}/MasterPOS/${data.id}`);
+    } else {
+      this.toastr.warningToastr('POS is not uploaded for this shipment');
+    }
   }
 
   removeMasterPackingSlip(data) {

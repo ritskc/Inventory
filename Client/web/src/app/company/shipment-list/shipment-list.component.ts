@@ -85,8 +85,8 @@ export class ShipmentListComponent implements OnInit {
             if (customer)
               shipment.customerName = customer.name;
           });
-          this.shipments = shipments;
-          this.filteredShipments = this.customerId > 0 ? this.shipments.filter(s => s.customerId == this.customerId): this.shipments;
+          this.shipments = shipments.filter(s => !s.isMasterPackingSlip);
+          this.filteredShipments = this.customerId > 0 ? this.shipments.filter(s => s.customerId == this.customerId && !s.isMasterPackingSlip): this.shipments;
         }, (error) => this.toastr.errorToastr(error),
         () => this.httpLoader.hide());
   }

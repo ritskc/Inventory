@@ -26,6 +26,7 @@ export class Shipment {
     shipmentInfoId: number = 0;
     isInvoiceCreated: boolean;
     isPOSUploaded: boolean;
+    isMasterPackingSlip: boolean;
 }
 
 export class PackingSlipDetail {

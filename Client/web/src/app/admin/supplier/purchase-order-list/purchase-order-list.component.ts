@@ -28,6 +28,7 @@ export class PurchaseOrderListComponent implements OnInit {
   private showFullDetails: boolean = false;
   private showOnlyOpenOrders: boolean = false;
   private showLateOrders: boolean = false;
+  private showAcknowledgedOrders: boolean = false;
 
   constructor(private service: SupplierService, private companyService: CompanyService, private formBuilder: FormBuilder,
               private loaderService: httpLoaderService, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrManager) { }
@@ -46,11 +47,12 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closing Date", value: "closingDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Ack", value: "isAcknowledged", isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Edit', actionStyle: ClassConstants.Warning, event: 'editPurchaseOrder', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deletePurchaseOrder', icon: 'fa fa-trash' })
-    ] }) );
+    ] }));
   }
 
   initializeGridColumnsForDetails() {
@@ -87,6 +89,7 @@ export class PurchaseOrderListComponent implements OnInit {
           this.purchaseOrderViewModels = [];
           this.purchaseOrders = this.supplierId > 0? purchaseOrders.filter(p => p.supplierId == this.supplierId): purchaseOrders;
           this.purchaseOrders = this.showOnlyOpenOrders ? this.purchaseOrders.filter(p => p.isClosed === false): this.purchaseOrders;
+          this.purchaseOrders = this.showAcknowledgedOrders ? this.purchaseOrders.filter(p => p.isAcknowledged == true): this.purchaseOrders;
 
           this.purchaseOrders.forEach(order => {
             if (this.showFullDetails) {
@@ -123,6 +126,7 @@ export class PurchaseOrderListComponent implements OnInit {
                 viewModel.dueDate = order.dueDate;
                 viewModel.closingDate = order.closingDate;
                 viewModel.closed = order.isClosed;
+                viewModel.isAcknowledged = order.isAcknowledged;
                 viewModel.lateOrder = viewModel.dueDate && DateHelper.convertToDateTime(viewModel.dueDate) < new Date()? true: false;
                 this.purchaseOrderViewModels.push(viewModel);
             }
@@ -192,6 +196,10 @@ export class PurchaseOrderListComponent implements OnInit {
   showLateOrdersEvent(event) {
     this.loadAllPurchaseOrders();
   }
+
+  showOnlyAcknowledgedOrdersEvent(event) {
+    this.loadAllPurchaseOrders();
+  }
 }
 
 class SupplierPurchaseOrderViewModel {
@@ -213,4 +221,5 @@ class SupplierPurchaseOrderViewModel {
   inTransitQty: number;
   receivedQty: number;
   acknowledgedQty: number;
+  isAcknowledged: boolean;
 }

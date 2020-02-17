@@ -15,6 +15,12 @@
       Show Only Open Orders
     </label>
   </div>
+  <div class="form-check" style="margin-left: 15px; padding-top: 5px;">
+    <input class="form-check-input" type="checkbox" value="" id="showAcknolwedgedOrders" (change)="showOnlyAcknowledgedOrdersEvent($event)" [(ngModel)]="showAcknowledgedOrders">
+    <label class="form-check-label" for="showAcknolwedgedOrders">
+      Is Acknowledged
+    </label>
+  </div>
   <div class="form-check" style="margin-left: 15px; padding-top: 5px;" *ngIf="false">
     <input class="form-check-input" type="checkbox" id="showLateOrderCheckbox" (change)="showLateOrdersEvent($event)" [(ngModel)]="showLateOrders">
     <label class="form-check-label" for="showLateOrderCheckbox">

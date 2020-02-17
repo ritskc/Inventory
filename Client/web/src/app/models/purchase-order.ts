@@ -55,6 +55,7 @@ export class PurchaseOrderDetail {
     orderId: number = 0;
     srNo: number = 0;
     openQty: number = 0;
+    isAcknowledged: boolean = false;
 }
 
 export class PurchaseOrderTerm {

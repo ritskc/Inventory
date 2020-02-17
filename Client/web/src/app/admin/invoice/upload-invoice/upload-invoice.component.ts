@@ -112,7 +112,7 @@ export class UploadInvoiceComponent implements OnInit {
       detail.multiplePosQty = '';
       detail.supplierInvoicePoDetails.forEach(po => {
         detail.multiplePurchaseOrders += `${po.poNo}, `;
-        detail.multiplePosQty += `${ detail.qty }, `;
+        detail.multiplePosQty += `${ po.qty }, `;
       });
     })
   }

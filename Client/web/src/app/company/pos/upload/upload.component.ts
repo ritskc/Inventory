@@ -6,6 +6,8 @@ import { Customer } from '../../../models/customer.model';
 import { Shipment } from '../../../models/shipment.model';
 import { FileUploadService } from '../../../common/services/file-upload.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { pipe } from 'rxjs';
+import { httpLoaderService } from '../../../common/services/httpLoader.service';
 
 @Component({
   selector: 'pos-upload',
@@ -18,12 +20,13 @@ export class POSUploadComponent implements OnInit {
   private customerId: number = -1;
   private selection: number = 1;
   private currentlyLoggedInCompany: number = -1;
+  private data: any;
   private shipments: Shipment[] = [];
   private customers: Customer[] = [];
   private tracking: string = '';
   private shipmentId: number = 0;
   
-  constructor(private companyService: CompanyService, private customerService: CustomerService,
+  constructor(private companyService: CompanyService, private customerService: CustomerService, private loaderService: httpLoaderService,
               private shipmentService: ShipmentService, private fileService: FileUploadService, private toastr: ToastrManager
     ) { }
 
@@ -33,24 +36,50 @@ export class POSUploadComponent implements OnInit {
   }
 
   loadAllCustomers() {
+    this.loaderService.show();
     this.customerService.getAllCustomers(this.currentlyLoggedInCompany)
-        .subscribe((customer) => this.customers = customer);
-  }
-
-  customerSelected() {
-    this.shipments = [];
-    this.shipmentService.getAllShipments(this.currentlyLoggedInCompany)
-        .subscribe((shipments) => {
-          this.shipments = shipments.filter(s => s.customerId == this.customerId && !s.isPaymentReceived);
-        });
+        .subscribe((customer) => this.customers = customer,
+        (error) => console.log(error),
+        () => this.loaderService.hide());
   }
 
   uploadSelected(event) {
+    this.shipments = [];
+    this.data = [];
+    this.tracking = '';
     this.selection = 1;
+  }
+
+  masterSelected(event) {
+    this.shipments = [];
+    this.data = [];
+    this.tracking = '';
+    this.selection = 3;
   }
 
   deleteSelected(event) {
     this.selection = 2;
+  }
+
+  customerSelected() {
+    this.loaderService.show();
+    this.shipments = [];
+    if (this.selection == 1) {
+      this.shipmentService.getAllShipments(this.currentlyLoggedInCompany)
+        .subscribe((shipments) => {
+          this.data = shipments.filter(s => s.customerId == this.customerId && !s.isMasterPackingSlip && !s.isPaymentReceived);
+          this.shipmentId = -1;
+          //this.data = this.shipments;
+        }, (error) => console.log(error)
+        ,() => this.loaderService.hide());
+    } else if (this.selection == 3) {
+      this.shipmentService.getAllMasterShipments(this.currentlyLoggedInCompany)
+        .subscribe((shipments) => {
+          this.data = shipments.filter(s => s.customerId == this.customerId);
+          this.shipmentId = -1;
+        }, (error) => console.log(error)
+        ,() => this.loaderService.hide());
+    }
   }
 
   uploadFile(file: FileList) {
@@ -59,7 +88,7 @@ export class POSUploadComponent implements OnInit {
 
   upload() {
     if (this.tracking && this.shipmentId > 0) {
-      var item = {'type': 'POS', 'file': this.file[0]};
+      var item = this.selection == 1 ? {'type': 'POS', 'file': this.file[0]}: {'type': 'MasterPOS', 'file': this.file[0]};
       this.fileService.uploadFile(item, `${this.shipmentId}/${this.tracking}`);
       this.toastr.successToastr('Document uploaded successfully!!');
     }
