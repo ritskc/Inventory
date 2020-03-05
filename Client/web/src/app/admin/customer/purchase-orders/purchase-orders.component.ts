@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Customer } from '../../../models/customer.model';
 import { PurchaseOrder } from '../../../models/purchase-order';
-import { DataColumn } from '../../../models/dataColumn.model';
+import { DataColumn, DataColumnAction } from '../../../models/dataColumn.model';
 import { CustomerService } from '../customer.service';
 import { CompanyService } from '../../../company/company.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { httpLoaderService } from '../../../common/services/httpLoader.service';
 import { map, mergeMap } from 'rxjs/operators';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { ClassConstants } from '../../../common/constants';
 
 @Component({
   selector: 'app-purchase-orders',
@@ -58,6 +59,9 @@ export class PurchaseOrdersComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "PO Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deleteOrder', icon: 'fa fa-trash' })
+    ] }) );  
   }
 
   initializeGridForDetails() {
@@ -152,6 +156,29 @@ export class PurchaseOrdersComponent implements OnInit {
 
   showOnlyOpenOrdersEvent() {
     this.populatePurchaseOrderViewModel(this.pos);
+  }
+
+  actionButtonClicked(data) {
+    switch(data.eventName) {
+      case 'deleteOrder':
+        var result = confirm('Are you sure you want to remove this customer order?');
+        if (result) {
+          this.loaderService.show();
+          this.customerService.deletePurchaseOrder(data.id)
+              .subscribe(() => {
+                this.toastr.successToastr('Customer Order removed successfully!');
+                this.loaderService.hide();
+              },
+              (error) => {
+                this.toastr.errorToastr(error.error);
+                this.loaderService.hide();
+              },
+              () => {
+                this.loadAllPurchaseOrders();
+              });
+        }
+        break;
+    }
   }
 }
 

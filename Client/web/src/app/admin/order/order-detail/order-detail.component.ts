@@ -124,14 +124,14 @@ export class OrderDetailComponent implements OnInit {
     this.gridColumns = [];
     this.gridColumns.push(new DataColumn({headerText: "Sr No", value: "srNo", sortable: false }));
     this.gridColumns.push(new DataColumn({headerText: "Part Code", value: "partCode", sortable: true }));
-    this.gridColumns.push(new DataColumn({headerText: "Description", value: "description", sortable: true}));
+    this.gridColumns.push(new DataColumn({headerText: "Description", value: "description", sortable: true, customStyling: 'column-width-100' }));
     this.gridColumns.push(new DataColumn({headerText: "Qty", value: "qty",  isEditable: true, customStyling: 'right'}));
-    this.gridColumns.push(new DataColumn({ headerText: "Price", value: "unitPrice", customStyling: 'right' }));
+    this.gridColumns.push(new DataColumn({ headerText: "Price", value: "unitPrice", customStyling: 'right', isEditable: true }));
     this.gridColumns.push(new DataColumn({ headerText: "Total", value: "total", customStyling: 'right' }));
     this.gridColumns.push(new DataColumn({headerText: "Due Date", value: "dueDate", sortable: true, isDate: true}));
-    this.gridColumns.push(new DataColumn({ headerText: "Notes", value: "note" }));
+    this.gridColumns.push(new DataColumn({ headerText: "Notes", value: "note", isEditable: true }));
     if (this.SelectedSupplier > -1) {
-      this.gridColumns.push(new DataColumn({headerText: "Reference", value: "referenceNo"}));
+      this.gridColumns.push(new DataColumn({headerText: "Reference", value: "referenceNo", isEditable: true }));
     }
     if (this.SelectedCustomer > -1) {
       this.gridColumns.push(new DataColumn({ headerText: "Blank PO", value: "blanketPOId" }));
@@ -462,6 +462,8 @@ export class OrderDetailComponent implements OnInit {
         observableResult = this.supplierService.savePurchaseOrder(this.purchaseOrder);
       }
     }
+
+    this.loaderService.show();
     observableResult.subscribe((result) => {
       this.toastr.successToastr('Details saved successfully.');
       if (this.orderFormMode === OrderFormMode.Customer) {
@@ -470,6 +472,7 @@ export class OrderDetailComponent implements OnInit {
     }, (error) => {
       this.toastr.errorToastr(error.error);
     }, () => {
+      this.loaderService.hide();
       setTimeout(() => {
         if (this.SelectedCustomer > -1)
           this.router.navigateByUrl('customers/purchase-order/0/0');

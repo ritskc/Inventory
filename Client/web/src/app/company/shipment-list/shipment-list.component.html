@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<simple-grid [data]="filteredShipments" [columns]="columns" [exportRequired]="false" (addClickedEventEmitter)="addShipment()"
+<simple-grid [data]="filteredShipments" [columns]="columns" [exportRequired]="true" (addClickedEventEmitter)="addShipment()"
 (actionButtonClickedEvent)="[actionButtonClicked($event)]"></simple-grid>
 
 <loader></loader>

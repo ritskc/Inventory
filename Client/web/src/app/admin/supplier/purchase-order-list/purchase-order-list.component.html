@@ -30,7 +30,7 @@
 </div>
 
 <simple-grid [data]="purchaseOrderViewModels" [columns]="gridColumns" (selectedRow)="rowSelected($event)" [addRequired]="true"
-    [exportRequired]="false" (addClickedEventEmitter)="addPurchaseOrder()" (actionButtonClickedEvent)="[actionButtonClicked($event)]">
+    [exportRequired]="true" (addClickedEventEmitter)="addPurchaseOrder()" (actionButtonClickedEvent)="[actionButtonClicked($event)]">
 </simple-grid>
 
 <loader></loader>

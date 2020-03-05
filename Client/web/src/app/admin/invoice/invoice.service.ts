@@ -32,6 +32,10 @@ export class InvoiceService {
     return this.apiService.post<number>(invoiceId, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/receive/${ invoiceId }`);
   }
 
+  unReceivedInvoice(supplierId: number, invoiceId: number) {
+    return this.apiService.put<number>(invoiceId, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/unreceive/${ invoiceId }`);
+  }
+
   receivedBox(box: string) {
     return this.apiService.post<string>(box, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/receive/box/${ box }`);
   }

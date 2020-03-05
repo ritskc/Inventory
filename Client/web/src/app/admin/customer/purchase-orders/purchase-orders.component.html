@@ -18,7 +18,7 @@
 </div>
 
 <simple-grid [data]="purchaseOrders" [columns]="gridColumns" (selectedRow)="rowSelected($event)"
-  (addClickedEventEmitter)="addCustomerOrder()">
+  (addClickedEventEmitter)="addCustomerOrder()" (actionButtonClickedEvent)="[actionButtonClicked($event)]">
 </simple-grid>
 
 <loader></loader>

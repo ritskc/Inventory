@@ -5,7 +5,7 @@
   </select>
 </div>
 
-<simple-grid [data]="filteredMasterShipments" [columns]="columns" [exportRequired]="false" (addClickedEventEmitter)="addMasterShipment()"
+<simple-grid [data]="filteredMasterShipments" [columns]="columns" [exportRequired]="true" (addClickedEventEmitter)="addMasterShipment()"
 (actionButtonClickedEvent)="[actionButtonClicked($event)]"></simple-grid>
 
 <div>

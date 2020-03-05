@@ -27,8 +27,14 @@ export class DataColumnAction {
     actionStyle: string = '';
     event: string = '';
     icon: string = '';
+    showOnlyIf: string = '';
+
+    private condition(data: any): boolean {
+        return this.showOnlyIf ? eval(this.showOnlyIf): true;
+    };
 
     constructor(init?: Partial<DataColumnAction>) {
         Object.assign(this, init);
     }
+
 }

@@ -42,6 +42,10 @@ export class CustomerService {
       return this.apiService.put(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.ordersUri + `/${ purchaseOrder.id }`);
   }
 
+  deletePurchaseOrder(id: number) {
+    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.ordersUri }`);
+  }
+
   delete(id: number) {
     return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.customerUri }`)
   }

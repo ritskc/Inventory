@@ -57,7 +57,7 @@
                       </span>
                       <div *ngIf="item.isActionColumn" class="center">
                         <span *ngFor="let action of item.actions">
-                          <button class="btn {{action.actionStyle}}" (click)="actionButtonClicked(action.event, row)">{{action.actionText}}
+                          <button *ngIf="action.condition(row) == true" class="btn {{action.actionStyle}}" (click)="actionButtonClicked(action.event, row)">{{action.actionText}}
                             <i *ngIf="action.icon" class="{{action.icon}}"></i>
                           </button>
                         </span>

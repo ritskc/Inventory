@@ -69,7 +69,7 @@ export class SupplierListComponent implements OnInit {
   }
 
   redirectToSupplierInvoice(supplier) {
-    this.router.navigateByUrl(`/invoice/upload/${ supplier.id }`);
+    this.router.navigateByUrl(`/invoice/upload/${ supplier.id }/0`);
   }
 
   redirectToReceiveInvoice(supplier) {

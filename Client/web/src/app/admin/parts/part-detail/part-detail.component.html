@@ -58,11 +58,17 @@
                     <div *ngIf="f.minQty.errors.required">Minimum Quantity is required</div>
                   </div>
                 </div>
-                <div class="form-group standard-top-margin">
-                  <label>Maximum Quantity</label>
-                  <input type="text" formControlName="maxQty" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.maxQty.errors }" [(ngModel)]="part.maxQty"/>
-                  <div *ngIf="submitted && f.maxQty.errors" class="invalid-feedback">
-                    <div *ngIf="f.maxQty.errors.required">Maximum Quantity is required</div>
+                <div class="row">
+                  <div class="form-group standard-top-margin col-xs-6 col-md-6">
+                    <label>Maximum Quantity</label>
+                    <input type="text" formControlName="maxQty" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.maxQty.errors }" [(ngModel)]="part.maxQty"/>
+                    <div *ngIf="submitted && f.maxQty.errors" class="invalid-feedback">
+                      <div *ngIf="f.maxQty.errors.required">Maximum Quantity is required</div>
+                    </div>
+                  </div>
+                  <div class="form-group standard-top-margin col-xs-6 col-md-6">
+                    <label>Monthly Forecast</label>
+                    <input type="text" formControlName="monthlyForecastQty" class="form-control" [(ngModel)]="part.monthlyForecastQty"/>
                   </div>
                 </div>
                 <div class="form-group standard-top-margin">

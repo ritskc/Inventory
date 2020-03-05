@@ -110,7 +110,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   }
 
   export() {
-    this.jsonToCsvExporter.export(`Data Export ${Date.now()}`, 'csv', this._data);
+    this.jsonToCsvExporter.export(`Data Export ${Date.now()}`, 'csv', this._data, this.columns);
   }
 
   actionButtonClicked(eventName: string, data: any) {

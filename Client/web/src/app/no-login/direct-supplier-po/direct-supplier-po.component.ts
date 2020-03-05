@@ -31,7 +31,7 @@ export class DirectSupplierPoComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Ack Quantity", value: "ackQty", isEditable: true }) );
     this.columns.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice" }) );
     this.columns.push( new DataColumn({ headerText: "Total", value: "total" }) );
-    this.columns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", isDate: true }) );
+    this.columns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", isEditable: true }) );
     this.columns.push( new DataColumn({ headerText: "Reference", value: "referenceNo" }) );
     this.columns.push( new DataColumn({ headerText: "Notes", value: "note" }) );
   }

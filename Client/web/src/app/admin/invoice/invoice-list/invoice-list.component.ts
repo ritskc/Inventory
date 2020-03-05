@@ -12,6 +12,7 @@ import { AppConfigurations } from '../../../config/app.config';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { httpLoaderService } from '../../../common/services/httpLoader.service';
 import { map, mergeMap } from 'rxjs/operators';
+import { FileUploadService } from '../../../common/services/file-upload.service';
 
 @Component({
   selector: 'app-invoice-list',
@@ -24,6 +25,8 @@ export class InvoiceListComponent implements OnInit {
   private invoiceForm: FormGroup;
   private currentlyLoggedInCompany: number = 0;
   private appConfiguration: AppConfigurations;
+  private fileAttributes: any;
+  private dataToUpdate: any;
 
   suppliers: Supplier[] = [];
   invoices: Invoice[] = [];
@@ -31,7 +34,8 @@ export class InvoiceListComponent implements OnInit {
   columns: DataColumn[] = [];
 
   constructor(private companyService: CompanyService, private invoiceService: InvoiceService, private supplierService: SupplierService,
-              private formBuilder: FormBuilder, private router: Router, private toastr: ToastrManager, private loaderService: httpLoaderService
+              private formBuilder: FormBuilder, private router: Router, private toastr: ToastrManager, 
+              private loaderService: httpLoaderService, private fileUploadService: FileUploadService
     ) { }
 
   ngOnInit() {
@@ -58,25 +62,31 @@ export class InvoiceListComponent implements OnInit {
       this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "poDate", sortable: true, isDate: true }) );
       this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isDate: true }) );
       this.columns.push( new DataColumn({ headerText: "Rcvd", value: "isInvoiceReceived", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
-      this.columns.push( new DataColumn({ headerText: "Invoice", isActionColumn: true, customStyling: 'center', actions: [
-        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadInvoice', icon: 'fa fa-download' })
+      this.columns.push( new DataColumn({ headerText: "Inv", isActionColumn: true, customStyling: 'center', actions: [
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadInvoice', icon: 'fa fa-download', showOnlyIf: 'data["invoicePath"] != ""' }),
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadInvoice', icon: 'fa fa-upload', showOnlyIf: 'data["invoicePath"] == ""' })
       ] }) );
-      this.columns.push( new DataColumn({ headerText: "Packing", isActionColumn: true, customStyling: 'center', actions: [
-        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadPackingSlip', icon: 'fa fa-download' })
+      this.columns.push( new DataColumn({ headerText: "Pack", isActionColumn: true, customStyling: 'center', actions: [
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadPackingSlip', icon: 'fa fa-download', showOnlyIf: 'data["packingSlipPath"] != ""' }),
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadPackingSlip', icon: 'fa fa-upload', showOnlyIf: 'data["packingSlipPath"] == ""' })
       ] }) );
       this.columns.push( new DataColumn({ headerText: "10+2", isActionColumn: true, customStyling: 'center', actions: [
-        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTenPlus', icon: 'fa fa-download' })
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTenPlus', icon: 'fa fa-download', showOnlyIf: 'data["tenPlusPath"] != ""' }),
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadTenPlus', icon: 'fa fa-upload', showOnlyIf: 'data["tenPlusPath"] == ""' })
       ] }) );
       this.columns.push( new DataColumn({ headerText: "BL", isActionColumn: true, customStyling: 'center', actions: [
-        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadBl', icon: 'fa fa-download' })
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadBl', icon: 'fa fa-download', showOnlyIf: 'data["blPath"] != ""' }),
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadBl', icon: 'fa fa-upload', showOnlyIf: 'data["blPath"] == ""' })
       ] }) );
       this.columns.push( new DataColumn({ headerText: "TC", isActionColumn: true, customStyling: 'center', actions: [
-        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTc', icon: 'fa fa-download' })
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTc', icon: 'fa fa-download', showOnlyIf: 'data["tcPath"] != ""' }),
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadTc', icon: 'fa fa-upload', showOnlyIf: 'data["tcPath"] == ""' })
       ] }) );
       this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
         new DataColumnAction({ actionText: 'Inv', actionStyle: ClassConstants.Primary, event: 'printInvoiceBarcode', icon: 'fa fa-barcode' }),
         new DataColumnAction({ actionText: 'Box', actionStyle: ClassConstants.Primary, event: 'printBoxBarcode', icon: 'fa fa-barcode' }),
-        new DataColumnAction({ actionText: 'Receive', actionStyle: ClassConstants.Primary, event: 'receiveInvoice', icon: '' }),
+        new DataColumnAction({ actionText: 'Receive', actionStyle: ClassConstants.Primary, event: 'receiveInvoice', icon: '', showOnlyIf: 'data["isInvoiceReceived"] == false' }),
+        new DataColumnAction({ actionText: 'Unreceive', actionStyle: ClassConstants.Primary, event: 'unReceiveInvoice', icon: '', showOnlyIf: 'data["isInvoiceReceived"] == true' }),
         new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'deleteInvoice', icon: 'fa fa-trash' })
       ] }) );
     } else {
@@ -183,6 +193,26 @@ export class InvoiceListComponent implements OnInit {
         }
         window.open(`${this.configuration.fileApiUri}/Invoice/${data.id}`);
         break;
+      case 'uploadInvoice':
+        this.fileAttributes = {'type': 'Invoice', 'file': null, 'name': data.id};
+        this.openFileSelector();
+        break;
+      case 'uploadPackingSlip':
+        this.fileAttributes = {'type': 'PackingSlip', 'file': null, 'name': data.id};
+        this.openFileSelector();
+        break;
+      case 'uploadTenPlus':
+        this.fileAttributes = {'type': 'TenPlus', 'file': null, 'name': data.id};
+        this.openFileSelector();
+        break;
+      case 'uploadBl':
+        this.fileAttributes = {'type': 'BL', 'file': null, 'name': data.id};
+        this.openFileSelector();
+        break;
+      case 'uploadTc':
+          this.fileAttributes = {'type': 'TC', 'file': null, 'name': data.id};
+          this.openFileSelector();
+          break;
       case 'downloadPackingSlip':
         if (!data.isPackingSlipUploaded) {
           this.toastr.warningToastr('Document unavailable for download!!');
@@ -212,12 +242,26 @@ export class InvoiceListComponent implements OnInit {
         window.open(`${this.configuration.fileApiUri}/TC/${data.id}`);
         break;
       case 'receiveInvoice':
-        if (data.isInvoiceReceived) {
-          this.toastr.warningToastr('This invoice has been received already');
-          return;
-        }
+        this.loaderService.show();
         this.invoiceService.receivedInvoice(data.supplierId, data.id)
-            .subscribe(() => alert('Invoice received successfully!!'));
+            .subscribe(() => {
+              this.toastr.successToastr('Invoice received successfully!!');
+              data.isInvoiceReceived = true;
+            }, 
+              (error) => { this.toastr.errorToastr(error.error); this.loaderService.hide(); },
+              () => this.loaderService.hide()
+            );
+        break;
+      case 'unReceiveInvoice':
+        this.loaderService.show();
+        this.invoiceService.unReceivedInvoice(data.supplierId, data.id)
+            .subscribe(() => {
+              this.toastr.successToastr('Invoice unreceived successfully!!');
+              data.isInvoiceReceived = false;
+            }, 
+              (error) => { this.toastr.errorToastr(error.error); this.loaderService.hide(); },
+              () => this.loaderService.hide()
+            );
         break;
       case 'deleteInvoice':
         this.deleteInvoice(data);
@@ -259,6 +303,19 @@ export class InvoiceListComponent implements OnInit {
       </html>`
     );
     popupWin.document.close();
+  }
+
+  openFileSelector() {
+    let element: HTMLElement = document.querySelector('input[type="file"]') as HTMLElement;
+    element.click();
+  }
+
+  uploadFile(files: FileList) {
+    this.loaderService.show();
+    this.fileAttributes.file = files[0];
+    this.fileUploadService.uploadFile(this.fileAttributes, this.fileAttributes.name);
+    this.loaderService.hide();
+    this.toastr.successToastr('Document uploaded successfully. Please refresh to see the latest update.');
   }
 }
 
