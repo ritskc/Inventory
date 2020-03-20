@@ -121,8 +121,8 @@ namespace WebApi.Controllers
                 }
 
 
-                if (result.IsPOSUploaded)
-                    return BadRequest("POS is already uploaded. You can not update this Packing slip");
+                //if (result.IsPOSUploaded)
+                //    return BadRequest("POS is already uploaded. You can not update this Packing slip");
 
 
                 await this.packingSlipService.UpdatePackingSlipAsync(packingSlip);

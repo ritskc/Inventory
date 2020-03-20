@@ -101,12 +101,18 @@ namespace WebApi.Controllers
         }
 
         // DELETE: api/Todo/5
-        [HttpDelete("{companyId}/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<Po>> Delete(long id)
         {
             try
             {
                 var result = await this._orderService.GetOrderMasterAsync(id);
+                if(result.IsClosed)
+                    return BadRequest("Order is already processed. You can not delete the order.");
+                var processedPoItems = result.OrderDetails.Where(x => x.IsClosed || x.ShippedQty > 0 );
+                if (processedPoItems != null && processedPoItems.Count() > 0)
+                    return BadRequest("Order is already processed. You can not delete the order.");
+               
                 if (result == null)
                 {
                     return NotFound();

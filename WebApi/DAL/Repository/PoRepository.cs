@@ -154,7 +154,7 @@ namespace DAL.Repository
             var po = new Po();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms],[DueDate]  FROM [dbo].[PoMaster] where Id = '{poId}' ");
+            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms],[DueDate],[AccessId]  FROM [dbo].[PoMaster] where Id = '{poId}' ");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -194,6 +194,7 @@ namespace DAL.Repository
                         po.AcknowledgementDate = null;
                     po.PaymentTerms = Convert.ToString(dataReader["PaymentTerms"]);
                     po.DeliveryTerms = Convert.ToString(dataReader["DeliveryTerms"]);
+                    po.AccessId = Convert.ToString(dataReader["AccessId"]);
 
                 }
                 dataReader.Close();
@@ -606,7 +607,7 @@ namespace DAL.Repository
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
-                    sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [CompanyId] = '{po.CompanyId}' ,[SupplierId] = '{po.SupplierId}' ,[PoNo] = '{po.PoNo}' ,[PoDate] = '{po.PoDate}' ,[EmailIds] = '{po.EmailIds}' ,[Remarks] = '{po.Remarks}' ,[IsClosed] = '{po.IsClosed}' ,[IsAcknowledged] = '{po.IsAcknowledged}' ,[PaymentTerms] = '{po.PaymentTerms}' ,[DeliveryTerms] = '{po.DeliveryTerms}',[DueDate] = '{po.DueDate}' WHERE id = '{po.Id}' ");
+                    sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [CompanyId] = '{po.CompanyId}' ,[SupplierId] = '{po.SupplierId}' ,[PoNo] = '{po.PoNo}' ,[PoDate] = '{po.PoDate}' ,[EmailIds] = '{po.EmailIds}' ,[Remarks] = '{po.Remarks}' ,[IsClosed] = '{po.IsClosed}' ,[IsAcknowledged] = '{po.IsAcknowledged}' ,[PaymentTerms] = '{po.PaymentTerms}' ,[DeliveryTerms] = '{po.DeliveryTerms}',[DueDate] = '{po.DueDate}',[AccessId] = '{po.AccessId}' WHERE id = '{po.Id}' ");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
@@ -659,13 +660,13 @@ namespace DAL.Repository
                 string sql = string.Empty;
                 try
                 {                    
-                    sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [IsAcknowledged] = '{true}' ,[AcknowledgementDate] = '{DateTime.Now}' WHERE id = '{po.Id}' ");
+                    sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [IsAcknowledged] = '{true}' ,[AcknowledgementDate] = '{DateTime.Now}',[DueDate] = '{po.DueDate}' WHERE id = '{po.Id}' ");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
                     foreach (PoDetail poDetail in po.poDetails)
                     {
-                        sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [AckQty] = '{poDetail.AckQty}'  WHERE poid = '{po.Id}' ");
+                        sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [AckQty] = '{poDetail.AckQty}', [DueDate] = '{poDetail.DueDate}'   WHERE poid = '{po.Id}' ");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                     }                   
@@ -728,5 +729,6 @@ namespace DAL.Repository
             }
             return result;
         }
+        
     }
 }

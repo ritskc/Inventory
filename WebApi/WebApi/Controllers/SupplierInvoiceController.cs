@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using WebApi.IServices;
+using WebApi.Settings;
 
 namespace WebApi.Controllers
 {
@@ -14,13 +16,13 @@ namespace WebApi.Controllers
     public class SupplierInvoiceController : ControllerBase
     {
         private readonly ISupplierInvoiceService supplierInvoiceService;
-        private readonly ICompanyService companyService;
+        private readonly ICompanyService companyService;        
 
         public SupplierInvoiceController(ISupplierInvoiceService supplierInvoiceService,
             ICompanyService companyService)
         {
             this.supplierInvoiceService = supplierInvoiceService;
-            this.companyService = companyService;
+            this.companyService = companyService;           
         }
 
         // GET: api/Todo
@@ -153,7 +155,44 @@ namespace WebApi.Controllers
                 if (result.IsInvoiceReceived)
                     return StatusCode(500, "Invoice already received");
 
+                if (!(result.IsPackingSlipUploaded && result.IsInvoiceUploaded && result.IsBLUploaded))
+                    return StatusCode(500, "One of the document(PackingSlip / Invoice / BL is not yet uploaded");
+
                 await this.supplierInvoiceService.ReceiveSupplierInvoiceAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        // POST api/values
+        [HttpPut("unreceive/{id}")]
+        public async Task<ActionResult> Put(long id)
+        {
+            try
+            {
+                var result = await this.supplierInvoiceService.GetSupplierInvoiceAsync(id);
+                if (result == null)
+                    return NotFound();                
+
+                await this.supplierInvoiceService.UnReceiveSupplierInvoiceAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        // POST api/values
+        [HttpPut("{id}")]
+        public async Task<ActionResult<SupplierInvoice>> Put(int id,[FromBody] SupplierInvoice supplierInvoice)
+        {
+            try
+            {
+                await this.supplierInvoiceService.UpdateSupplierInvoiceAsync(supplierInvoice);
                 return Ok();
             }
             catch (Exception ex)

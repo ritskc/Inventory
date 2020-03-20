@@ -73,9 +73,10 @@ namespace Report.Services
             IOrderRepository orderRepository = new OrderRepository(sqlHelper);
             ICompanyRepository companyRepository = new CompanyRepository(sqlHelper);
             ICustomerRepository customerRepository = new CustomerRepository(sqlHelper);
+            ISupplierRepository supplierRepository = new SupplierRepository(sqlHelper);
             IPartRepository partRepository = new PartRepository(sqlHelper);
             IReportRepository reportRepository = new ReportRepository(sqlHelper,orderRepository,companyRepository,
-                customerRepository,partRepository);
+                customerRepository,partRepository, supplierRepository);
 
             var result =  reportRepository.GetPackingSlipReport(id);
             return result;
@@ -88,10 +89,26 @@ namespace Report.Services
             ICompanyRepository companyRepository = new CompanyRepository(sqlHelper);
             ICustomerRepository customerRepository = new CustomerRepository(sqlHelper);
             IPartRepository partRepository = new PartRepository(sqlHelper);
+            ISupplierRepository supplierRepository = new SupplierRepository(sqlHelper);
             IReportRepository reportRepository = new ReportRepository(sqlHelper, orderRepository, companyRepository,
-                customerRepository, partRepository);
+                customerRepository, partRepository, supplierRepository);
 
             var result = reportRepository.GetMasterPackingSlipReport(id);
+            return result;
+        }
+
+        public static List<POReport> GetPoReport(int id)
+        {
+            ISqlHelper sqlHelper = new SqlHelper();
+            IOrderRepository orderRepository = new OrderRepository(sqlHelper);
+            ICompanyRepository companyRepository = new CompanyRepository(sqlHelper);
+            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper);
+            ISupplierRepository supplierRepository = new SupplierRepository(sqlHelper);
+            IPartRepository partRepository = new PartRepository(sqlHelper);
+            IReportRepository reportRepository = new ReportRepository(sqlHelper, orderRepository, companyRepository,
+                customerRepository, partRepository, supplierRepository);
+
+            var result = reportRepository.GetPoReport(id);
             return result;
         }
     }

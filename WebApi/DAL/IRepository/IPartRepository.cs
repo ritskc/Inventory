@@ -33,5 +33,6 @@ namespace DAL.IRepository
         Task<IEnumerable<PartOpenOrder>> GetPartOpenOrderDetailAsync(long partId, int companyId);
         Task<IEnumerable<PartLatestShipment>> GetPartLatestShipmentAsync(long partId, int companyId);
         Task<IEnumerable<PartInTransit>> GetPartLatestReceivedAsync(long partId, int companyId);
+        Task<IEnumerable<SupplierOpenPO>> GetPartOpenPODetailAsync(long partId, int companyId);
     }
 }

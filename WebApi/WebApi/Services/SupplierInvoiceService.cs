@@ -59,9 +59,11 @@ namespace WebApi.Services
                 supplierInvoiceDetail.SrNo = srNo;
                 srNo++;
                 var adjustedQty = 0;
-                var pos = await _poRepository.GetAllPosAsync(supplierInvoice.CompanyId);
+                IEnumerable<Po> pos = new List<Po>();
 
-                var openPos = pos.Where(x => x.IsClosed == false && x.SupplierId == supplierInvoice.SupplierId).OrderBy(x => x.PoDate);
+                if(!(supplierInvoice.DontImpactPO))
+                    pos = await _poRepository.GetAllPosAsync(supplierInvoice.CompanyId);
+                
 
                 foreach (Po po in pos)
                 {
@@ -261,14 +263,19 @@ namespace WebApi.Services
             await this._supplierInvoiceRepository.ReceiveSupplierInvoiceAsync(supplierInvoiceId);                     
         }
 
+        public async Task UnReceiveSupplierInvoiceAsync(long supplierInvoiceId)
+        {
+            await this._supplierInvoiceRepository.UnReceiveSupplierInvoiceAsync(supplierInvoiceId);
+        }
+
         public async Task ReceiveBoxInvoiceAsync(string barcode)
         {
             await this._supplierInvoiceRepository.ReceiveBoxInvoiceAsync(barcode);            
         }
 
-        public Task UpdateSupplierInvoiceAsync(SupplierInvoice supplierInvoice)
+        public async Task UpdateSupplierInvoiceAsync(SupplierInvoice supplierInvoice)
         {
-            throw new NotImplementedException();
+            await this._supplierInvoiceRepository.UpdateSupplierInvoiceAsync(supplierInvoice);
         }
 
         public async Task UploadFileAsync(int id, string docType, string path)

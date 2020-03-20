@@ -80,11 +80,13 @@
     <Compile Include="Models\PartSupplierAssignment.cs" />
     <Compile Include="Models\PoDetail.cs" />
     <Compile Include="Models\Po.cs" />
+    <Compile Include="Models\POReport.cs" />
     <Compile Include="Models\PoTerm.cs" />
     <Compile Include="Models\SupplierIntransitInvoice.cs" />
     <Compile Include="Models\SupplierInvoiceDetail.cs" />
     <Compile Include="Models\SupplierInvoice.cs" />
     <Compile Include="Models\SupplierInvoicePoDetails.cs" />
+    <Compile Include="Models\SupplierOpenPO.cs" />
     <Compile Include="Models\TransactionDetail.cs" />
     <Compile Include="Repository\CustomerRepository.cs" />
     <Compile Include="Repository\EntityTrackerRepository.cs" />

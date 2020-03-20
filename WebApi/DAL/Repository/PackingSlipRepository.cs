@@ -55,6 +55,8 @@ namespace DAL.Repository
                     packingSlip.SubTotal = 0;
                     packingSlip.Total = 0;
                     packingSlip.TotalSurcharge = 0;
+                    packingSlip.GrossWeight = 0;
+                    packingSlip.Boxes = 0;
                     var customer = await this.customerRepository.GetCustomerAsync(packingSlip.CustomerId);
                     packingSlip.FOB = customer.FOB;
                     packingSlip.Terms = customer.Terms;
@@ -72,7 +74,26 @@ namespace DAL.Repository
                             packingSlipDetail.UnitPrice = partDetail.partCustomerAssignments.Where(x => x.CustomerId == packingSlip.CustomerId).Select(x => x.Rate).FirstOrDefault();
                         else                        
                             packingSlip.IsInvoiceCreated = false;
-                        
+
+                        if (packingSlip.IsInvoiceCreated && !packingSlipDetail.IsBlankOrder)
+                        {
+                            var orderResult = await _orderRepository.GetOrderMasterAsync(packingSlipDetail.OrderId, command.Connection, command.Transaction);
+
+                            if (orderResult != null && !orderResult.IsClosed)
+                            {
+                                var orderDetail = orderResult.OrderDetails.Where(x => x.Id == packingSlipDetail.OrderDetailId).FirstOrDefault();
+                                packingSlipDetail.OrderNo = orderResult.PONo;
+
+                                if (orderDetail != null && !orderDetail.IsClosed)
+                                {
+                                    packingSlipDetail.LineNumber = orderDetail.LineNumber;
+                                    packingSlipDetail.UnitPrice = orderDetail.UnitPrice;
+                                }
+                            }
+                        }
+                        else
+                            packingSlip.IsInvoiceCreated = false;
+
                         packingSlipDetail.Price = packingSlipDetail.Qty * packingSlipDetail.UnitPrice;
                         packingSlip.SubTotal = packingSlip.SubTotal + packingSlipDetail.Price;
 
@@ -81,6 +102,8 @@ namespace DAL.Repository
                         packingSlipDetail.SurchargePerUnit = packingSlipDetail.Surcharge * partDetail.WeightInLb;
                         packingSlipDetail.TotalSurcharge = packingSlipDetail.SurchargePerUnit * packingSlipDetail.Qty;
                         packingSlip.TotalSurcharge = packingSlip.TotalSurcharge + packingSlipDetail.TotalSurcharge;
+                        packingSlip.GrossWeight = packingSlip.GrossWeight + (packingSlipDetail.Qty * partDetail.WeightInLb);
+                        packingSlip.Boxes = packingSlip.Boxes + packingSlipDetail.Boxes;
                         packingSlipDetail.LineNumber = 0;
                     }
                     packingSlip.Total = packingSlip.SubTotal + packingSlip.TotalSurcharge  + packingSlip.ShippingCharge + packingSlip.CustomCharge;
@@ -107,7 +130,7 @@ namespace DAL.Repository
                                 
                                 if (orderDetail != null && !orderDetail.IsClosed)
                                 {
-                                    packingSlipDetail.LineNumber = orderDetail.LineNumber;
+                                    packingSlipDetail.LineNumber = orderDetail.LineNumber;                                    
                                     int availableshippedQty = orderDetail.Qty - orderDetail.ShippedQty;
                                     if(packingSlipDetail.Qty < availableshippedQty)
                                     {                                        
@@ -672,6 +695,9 @@ namespace DAL.Repository
                     packingSlip.SubTotal = 0;
                     packingSlip.Total = 0;
                     packingSlip.TotalSurcharge = 0;
+                    packingSlip.GrossWeight = 0;
+                    packingSlip.Boxes = 0;
+
                     var customer = await this.customerRepository.GetCustomerAsync(packingSlip.CustomerId);
                     packingSlip.FOB = customer.FOB;
                     packingSlip.Terms = customer.Terms;
@@ -683,7 +709,32 @@ namespace DAL.Repository
 
                     foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
                     {
-                        var partDetail = await this.partRepository.GetPartAsync(packingSlipDetail.PartId, connection, transaction);
+                        var partDetail = await this.partRepository.GetPartAsync(packingSlipDetail.PartId);
+
+                        if (packingSlip.IsInvoiceCreated)
+                            packingSlipDetail.UnitPrice = partDetail.partCustomerAssignments.Where(x => x.CustomerId == packingSlip.CustomerId).Select(x => x.Rate).FirstOrDefault();
+                        else
+                            packingSlip.IsInvoiceCreated = false;
+
+                        if (packingSlip.IsInvoiceCreated && !packingSlipDetail.IsBlankOrder)
+                        {
+                            var orderResult = await _orderRepository.GetOrderMasterAsync(packingSlipDetail.OrderId, command.Connection, command.Transaction);
+
+                            if (orderResult != null && !orderResult.IsClosed)
+                            {
+                                var orderDetail = orderResult.OrderDetails.Where(x => x.Id == packingSlipDetail.OrderDetailId).FirstOrDefault();
+                                packingSlipDetail.OrderNo = orderResult.PONo;
+
+                                if (orderDetail != null && !orderDetail.IsClosed)
+                                {
+                                    packingSlipDetail.LineNumber = orderDetail.LineNumber;
+                                    packingSlipDetail.UnitPrice = orderDetail.UnitPrice;
+                                }
+                            }
+                        }
+                        else
+                            packingSlip.IsInvoiceCreated = false;
+
 
                         packingSlipDetail.UnitPrice = partDetail.partCustomerAssignments.Where(x => x.CustomerId == packingSlip.CustomerId).Select(x => x.Rate).FirstOrDefault();
                         packingSlipDetail.Price = packingSlipDetail.Qty * packingSlipDetail.UnitPrice;
@@ -695,6 +746,8 @@ namespace DAL.Repository
                         packingSlipDetail.TotalSurcharge = packingSlipDetail.SurchargePerUnit * packingSlipDetail.Qty;
                         packingSlipDetail.LineNumber = 0;
                         packingSlip.TotalSurcharge = packingSlip.TotalSurcharge + packingSlipDetail.TotalSurcharge;
+                        packingSlip.GrossWeight = packingSlip.GrossWeight + (packingSlipDetail.Qty * partDetail.WeightInLb);
+                        packingSlip.Boxes = packingSlip.Boxes + packingSlipDetail.Boxes;
 
                     }
                     packingSlip.Total = packingSlip.SubTotal + packingSlip.TotalSurcharge + packingSlip.ShippingCharge + packingSlip.CustomCharge;

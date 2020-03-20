@@ -15,5 +15,6 @@ namespace DAL.IRepository
         Task AddSupplierAsync(Supplier supplier);
         Task UpdateSupplierAsync(Supplier supplier);
         Task<int> DeleteSupplierAsync(long id);
+        Supplier GetSupplier(int id);
     }
 }

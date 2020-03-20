@@ -17,10 +17,11 @@ namespace WebApi.Services
     public class UserService:IUserService
     {
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<User> _users = new List<User>
-        {
-            new User { Id = 1, FirstName = "Test", LastName = "User", UserName = "admin", Password = "admin" }
-        };
+        //private List<User> _users = new List<User>
+        //{
+        //    new User { Id = 1, FirstName = "Test", LastName = "User", UserName = "admin", Password = "admin" },
+        //    new User { Id = 2, FirstName = "Test", LastName = "User", UserName = "parag", Password = "parag" }
+        //};
 
         private readonly AppSettings _appSettings;
         private readonly IUserRepository userRepository;
@@ -33,7 +34,8 @@ namespace WebApi.Services
 
         public User Authenticate(string username, string password)
         {
-            var user = _users.SingleOrDefault(x => x.UserName == username && x.Password == password);
+            var _users = GetAllUsersAsync().Result;
+            var user = _users.Where(x => x.UserName == username.ToLower() && x.Password == password.ToLower()).FirstOrDefault();
 
             // return null if user not found
             if (user == null)
@@ -63,10 +65,11 @@ namespace WebApi.Services
         public IEnumerable<User> GetAll()
         {
             // return users without passwords
-            return _users.Select(x => {
-                x.Password = null;
-                return x;
-            });
+            //return _users.Select(x => {
+            //    x.Password = null;
+            //    return x;
+            //});
+            return GetAllUsersAsync().Result;
         }
 
         public async Task<User> GetUserAsync(string userName)

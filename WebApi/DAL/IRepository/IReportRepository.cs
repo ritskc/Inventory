@@ -11,5 +11,6 @@ namespace DAL.IRepository
     {
         List<PackingSlipReport> GetPackingSlipReport(long id);
         List<PackingSlipReport> GetMasterPackingSlipReport(long id);
+        List<POReport> GetPoReport(long poId);
     }
 }

@@ -105,7 +105,7 @@ namespace WebApi.Controllers
                 await this._poService.AddPoAsync(po);
 
                 EmailService emailService = new EmailService(_appSettings);
-                emailService.SendEmail(po.CompanyName,po.SupplierName,po.ContactPersonName,_appSettings.POURL + po.AccessId,po.PoNo);
+                emailService.SendAcknoledgePOEmail(po.CompanyName,po.SupplierName,po.ContactPersonName,_appSettings.POURL + po.AccessId,po.PoNo);
                 return Ok();
             }
             catch (Exception ex)
@@ -156,7 +156,15 @@ namespace WebApi.Controllers
 
                 }
                 po.Id = id;
+                po.AccessId = existingPo.AccessId;
+
+                if(po.AccessId == null || po.AccessId == string.Empty || po.AccessId == "")
+                    po.AccessId  = Guid.NewGuid().ToString();
+
                 await this._poService.UpdatePoAsync(po);
+
+                EmailService emailService = new EmailService(_appSettings);
+                emailService.SendAcknoledgePOEmail(po.CompanyName, po.SupplierName, po.ContactPersonName, _appSettings.POURL + po.AccessId, po.PoNo);
 
                 return Ok();
             }

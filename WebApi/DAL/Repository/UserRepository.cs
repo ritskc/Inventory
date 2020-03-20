@@ -104,8 +104,9 @@ namespace DAL.Repository
                 {
                     var user = new User();
                     user.Id = Convert.ToInt32(dataReader["Id"]);
-                    user.UserName = Convert.ToString(dataReader["UserName"]);
-                    user.FirstName = Convert.ToString(dataReader["FirstName"]);
+                    user.UserName = Convert.ToString(dataReader["UserName"]).ToLower();
+                    user.FirstName = Convert.ToString(dataReader["FirstName"]).ToLower();
+                    user.Password = Convert.ToString(dataReader["Password"]).ToLower();
                     user.LastName = Convert.ToString(dataReader["LastName"]);
                     user.Email = Convert.ToString(dataReader["Email"]);
                     user.PriviledgeId = Convert.ToInt32(dataReader["PriviledgeId"]);

@@ -27,6 +27,7 @@ namespace DAL.Models
         public int IntransitQty { get; set; }
         public int QtyInHand { get; set; }
         public int OpenOrderQty { get; set; }
+        public int MonthlyForecastQty { get; set; }
 
         public List<PartSupplierAssignment> partSupplierAssignments { get; set; }
         public List<PartCustomerAssignment> partCustomerAssignments { get; set; }

@@ -206,7 +206,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!CompanyWHName.Value, "dsReport") &amp; Microsoft.VisualBasic.Constants.vbcrlf &amp; First(Fields!CompanyWHAddress.Value, "dsReport") &amp; Microsoft.VisualBasic.Constants.vbcrlf  &amp; "PH: " &amp; First(Fields!CompanyWHPhoneNo.Value, "dsReport") &amp; ", " &amp; First(Fields!CompanyPhoneNo.Value, "dsReport") &amp; Microsoft.VisualBasic.Constants.vbcrlf &amp; "FX: " &amp; First(Fields!CompanyFaxNo.Value, "dsReport")</Value>
+                <Value>=First(Fields!ShipmentName.Value, "dsReport") &amp; Microsoft.VisualBasic.Constants.vbcrlf &amp; First(Fields!ShipmentAddressLine1.Value, "dsReport") &amp; Microsoft.VisualBasic.Constants.vbcrlf &amp; First(Fields!ShipmentCity.Value, "dsReport") &amp; First(Fields!ShipmentState.Value, "dsReport") &amp; Microsoft.VisualBasic.Constants.vbcrlf &amp; First(Fields!ShipmentZIPCode.Value, "dsReport")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -236,7 +236,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!CompanyContactPersonName.Value, "dsReport")</Value>
+                <Value>=First(Fields!CustomerContactPersonName.Value, "dsReport")</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -728,7 +728,7 @@
         <DataSetName>dsReport</DataSetName>
         <Top>1.99875in</Top>
         <Height>0.61458in</Height>
-        <Width>7.24014in</Width>
+        <Width>7.24013in</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
@@ -901,12 +901,12 @@
       <ReportItems>
         <Image Name="imgHI">
           <Source>Embedded</Source>
-          <Value>HI1</Value>
+          <Value>HIP</Value>
           <Sizing>FitProportional</Sizing>
           <Top>0.32292in</Top>
-          <Left>0.09723in</Left>
+          <Left>0.47223in</Left>
           <Height>0.53125in</Height>
-          <Width>0.92708in</Width>
+          <Width>0.47916in</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1292,6 +1292,13 @@ p+sFkm3FOAWjdHQSdDJCMNRbjhKuS82Vf/59OSnxVBdIT8umoKUh7q1bt3Ik4lRTbjpuYfKxazKr90g1
     <EmbeddedImage Name="uncheck">
       <MIMEType>image/png</MIMEType>
       <ImageData>iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAFTSURBVEhL7ZZJjoQwDEVNmBFw/+txAUDMIIbyd+MS66S6F616EooJ0TMJ4EAXM00TGmGe5zuy5+lQtyEmiiI0QhiGd2TP06Fuc54n+b5P67rSMAwSuwIHXHAiRg6vaZorCAJK0/QjSZ4cx0G8jLTvO9GyLLKGoKqqi69/5IBLQQ55Gbqukw7Aa3pH9jwd6jaYVlEUfBNE4zj+TNMROOACcOPc4wd1eZ4nD8wYQ4j5BmSQLepQJ2J5vf+CbyJrvomsMfphoS6BOI6ldUEd6kQOD+VBzpht22TQJz5YVO7n9mMg1bKDKq7lyAU44AJwS2XgyvrubNuW+r6X2AU44AJwI8d76XCSJAnleU5ccWWQLWVZysanTgGJ6rpGI9xdTjwd6pYebEyAp3vxTisDXQ444ALqlqVDOcc0syyTB4e3xgV18B+QLJ1sP0h0X/9V/lsJInoBsXktYkD31CkAAAAASUVORK5CYII=</ImageData>
+    </EmbeddedImage>
+    <EmbeddedImage Name="HIP">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>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</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>

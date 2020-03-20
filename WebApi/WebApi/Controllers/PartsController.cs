@@ -96,6 +96,11 @@ namespace WebApi.Controllers
                     var result = await this._partService.GetPartOpenOrderDetailAsync(typeId, companyId);
                     return Ok(result);
                 }
+                else if (type.ToLower() == "SupplierOpenPO".ToLower())
+                {
+                    var result = await this._partService.GetPartOpenPODetailAsync(typeId, companyId);
+                    return Ok(result);
+                }
                 else if (type.ToLower() == "LatestShipment".ToLower())
                 {
                     var result = await this._partService.GetPartLatestShipmentAsync(typeId, companyId);

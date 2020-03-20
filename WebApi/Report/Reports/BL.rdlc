@@ -1255,7 +1255,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>= "PLEASE PICK UP AT THE FOLLOWING LOCATION:" + Microsoft.VisualBasic.Constants.vbcrlf &amp; First(Fields!CompanyName.Value, "dsReport") &amp; Microsoft.VisualBasic.Constants.vbcrlf &amp; First(Fields!CompanyAddress.Value, "dsReport") &amp; Microsoft.VisualBasic.Constants.vbcrlf &amp; "Phone#: " &amp; First(Fields!CompanyWHPhoneNo.Value, "dsReport")</Value>
+                  <Value>= "PLEASE PICK UP AT THE FOLLOWING LOCATION:" + Microsoft.VisualBasic.Constants.vbcrlf &amp; First(Fields!CompanyWHName.Value, "dsReport") &amp; Microsoft.VisualBasic.Constants.vbcrlf &amp; First(Fields!CompanyWHAddress.Value, "dsReport") &amp; Microsoft.VisualBasic.Constants.vbcrlf  &amp; "PH: " &amp; First(Fields!CompanyWHPhoneNo.Value, "dsReport") &amp; ", " &amp; First(Fields!CompanyPhoneNo.Value, "dsReport") &amp; Microsoft.VisualBasic.Constants.vbcrlf &amp; "FX: " &amp; First(Fields!CompanyFaxNo.Value, "dsReport")</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>

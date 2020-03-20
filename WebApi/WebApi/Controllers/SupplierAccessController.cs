@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using WebApi.IServices;
+using WebApi.Settings;
 using WebApi.Utils;
 
 namespace WebApi.Controllers
@@ -16,11 +18,13 @@ namespace WebApi.Controllers
     {
         private readonly IPoService _poService;
         private readonly IPartService _partService;
+        private readonly AppSettings _appSettings;
 
-        public SupplierAccessController(IPoService poService, IPartService partService)
+        public SupplierAccessController(IPoService poService, IPartService partService, IOptions<AppSettings> appSettings)
         {
             this._poService = poService;
             this._partService = partService;
+            _appSettings = appSettings.Value;
         }
         // PUT api/values/5
         [HttpPut("{acknowledge}/{id}")]
@@ -64,7 +68,10 @@ namespace WebApi.Controllers
 
                 }
                 //po.Id = id;
-                await this._poService.AcknowledgePoAsync(po);                
+                await this._poService.AcknowledgePoAsync(po);
+
+                EmailService emailService = new EmailService(_appSettings);
+                emailService.SendNotifyAcknoledgePOEmail(po.CompanyName, po.SupplierName,  po.PoNo);
 
                 return Ok();
             }
