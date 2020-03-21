@@ -10,6 +10,7 @@ export class DataColumn {
     nested:string = '';
     constantText: string = '';
     isDate: boolean = false;
+    isEditableDate: boolean = false;
     isBoolean: boolean = false;
     minWidth: boolean = false;
     customStyling: string = '';

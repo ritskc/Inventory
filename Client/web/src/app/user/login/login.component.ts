@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { User } from '../../models/user.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
         this.authService.isLoggedIn = true;
         localStorage.setItem('token', user.token);
         localStorage.setItem('username', this.loginname);
-        let redirectUrl = this.authService.redirectUrl ? this.authService.redirectUrl : '/companies';
+        let redirectUrl = this.authService.redirectUrl ? this.authService.redirectUrl : (environment.isSupplier ? '/suppliers':  '/companies');
         this.router.navigate([redirectUrl]);
       } else {
         this.invalidCredentials = true;

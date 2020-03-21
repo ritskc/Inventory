@@ -87,10 +87,14 @@ export class POSUploadComponent implements OnInit {
   }
 
   upload() {
-    if (this.tracking && this.shipmentId > 0) {
+    if (this.shipmentId > 0) {
+      var trackingNumber = this.tracking? this.tracking: '_';
       var item = this.selection == 1 ? {'type': 'POS', 'file': this.file[0]}: {'type': 'MasterPOS', 'file': this.file[0]};
-      this.fileService.uploadFile(item, `${this.shipmentId}/${this.tracking}`);
+      this.fileService.uploadFile(item, `${this.shipmentId}/${ trackingNumber }`);
       this.toastr.successToastr('Document uploaded successfully!!');
+      this.customerId = -1;
+      this.shipmentId = -1;
+      this.tracking = '';
     }
   }
 }

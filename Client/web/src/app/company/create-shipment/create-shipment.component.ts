@@ -249,14 +249,16 @@ export class CreateShipmentComponent implements OnInit {
     } else {
       packagingSlipDetail.orderDetailId = 0;
     }
+    var selectedPartForAdd = this.parts.find(p => p.id == this.partCode);
     packagingSlipDetail.partId = this.partCode;
-    packagingSlipDetail.partDescription = this.parts.find(p => p.id == this.partCode).description;
+    packagingSlipDetail.partDescription = selectedPartForAdd.description;
     packagingSlipDetail.orderNo = this.blankOrder? this.OrderNo : this.customerPurchaseOrders.find(o => o.id == this.orderId).poNo;
     packagingSlipDetail.qty = this.quantity;
-    packagingSlipDetail.boxes = this.boxes;
+    packagingSlipDetail.boxes = parseInt(this.boxes.toString());
     packagingSlipDetail.inBasket = this.inBasket;
     packagingSlipDetail.excessQty = 0;
     packagingSlipDetail.unitPrice = this.unitPrice;
+    packagingSlipDetail.partDetail = selectedPartForAdd;
     this.shipment.packingSlipDetails.push(packagingSlipDetail);
 
     this.OrderNo = '';
@@ -267,6 +269,21 @@ export class CreateShipmentComponent implements OnInit {
     this.unitPrice = 0;
     this.resetPartDetail();
     this.resetSerialNumber();
+    this.calculateBoxesAndGrossWeight();
+  }
+
+  valueChanged(data) {
+    this.calculateBoxesAndGrossWeight();
+  }
+
+  calculateBoxesAndGrossWeight() {
+    this.shipment.grossWeight = 0;
+    this.shipment.boxes = 0;
+    this.shipment.packingSlipDetails.forEach(detail => {
+      detail.price = detail.unitPrice * detail.qty;
+      this.shipment.grossWeight += (detail.qty * detail.partDetail.weightInKg);
+      this.shipment.boxes +=  detail.boxes;
+    })
   }
 
   resetSerialNumber() {
@@ -280,8 +297,10 @@ export class CreateShipmentComponent implements OnInit {
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Blank Order", value: "isBlankOrder", isDisabled: true, isBoolean: true, customStyling: 'center' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Order Id", value: "orderNo" }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Part", value: "partDescription" }) );
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Quantity", value: "qty", isEditable: true, customStyling: 'right' }) );
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", isEditable: true, customStyling: 'right' }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Quantity", value: "qty", isEditable: true, customStyling: 'right column-width-50' }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", isEditable: true, customStyling: 'right column-width-100' }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Price", value: "price", customStyling: 'right' }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Boxes", value: "boxes", isEditable: true, customStyling: 'right column-width-50' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "In Basket", value: "inBasket", isBoolean: true, customStyling: 'center' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'removePart', icon: 'fa fa-trash' })

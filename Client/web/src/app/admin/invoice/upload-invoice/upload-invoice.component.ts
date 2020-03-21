@@ -30,6 +30,7 @@ export class UploadInvoiceComponent implements OnInit {
   private company: string = '';
   private eta: string = '';
   private invoiceTotal: number = 0;
+  private dontImpactPO: boolean = false;
   private documents = [];
 
   constructor(private companyService: CompanyService, private invoiceService: InvoiceService, private fileService: FileUploadService,
@@ -124,6 +125,7 @@ export class UploadInvoiceComponent implements OnInit {
     }
 
     this.invoice.eta = this.eta;
+    this.invoice.dontImpactPO = this.dontImpactPO;
 
     this.invoiceService.uploadInvoice(this.invoice)
         .subscribe(response => {

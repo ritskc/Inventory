@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DataColumn } from '../../models/dataColumn.model';
+import * as DateHelper from '../helpers/dateHelper';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,12 @@ export class JsonToCsvExporterService {
     data.forEach(item => {
       columns.forEach(column => {
         if (typeof(item[column.value]) !== "object" && column.actions.length == 0) {
-          var valueToPrint = item[column.value];
+          var valueToPrint = '';
+          if (column.isDate || column.isEditableDate) {
+            valueToPrint = DateHelper.formatDate(new Date(item[column.value]));
+          } else {
+            valueToPrint = item[column.value];
+          }
           if (typeof(valueToPrint) === 'string') valueToPrint = valueToPrint.replace(/\,/gi, "");
           dataToWrite += valueToPrint + ","
         }

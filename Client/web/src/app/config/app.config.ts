@@ -1,3 +1,5 @@
+import { environment } from '../../environments/environment';
+
 export class AppConfigurations {
 
     constructor() {
@@ -24,10 +26,13 @@ export class AppConfigurations {
     directSupplierPo: string;
 
     initialize() {
-        this.apiServerHost = 'https://questapi.yellow-chips.com';
-        this.reportsUri = 'https://renovate.yellow-chips.com/ReportViewer/';
-        // this.apiServerHost = 'http://po.harisons.com/api';
-        // this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/';
+        if (environment.production) {
+            this.apiServerHost = 'http://po.harisons.com/api';
+            this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/';
+        } else {
+            this.apiServerHost = 'https://questapi.yellow-chips.com';
+            this.reportsUri = 'https://renovate.yellow-chips.com/ReportViewer/';
+        }
 
         this.fileApiUri = `${this.apiServerHost}/File`;
 

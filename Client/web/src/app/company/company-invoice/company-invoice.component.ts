@@ -97,15 +97,15 @@ export class CompanyInvoiceComponent implements OnInit {
     this.selectedShipment = new Shipment();
     this.selectedShipment = this.shipments.find(s => s.id == this.shipmentId);
     this.selectedShipment.packingSlipDetails.forEach(detail => {
-      detail.total = detail.qty * detail.unitPrice;
+      detail.price = detail.qty * detail.unitPrice;
       var part = this.parts.find(p => p.id == detail.partId);
       detail.partCode = part.code;
       detail.partDescription = part.description;
     });
   }
 
-  unitPriceChanged(row: PackingSlipDetail) {
-    row.total = row.qty * row.unitPrice;
+  unitPriceChanged(row) {
+    row.row.total = row.row.qty * row.row.unitPrice;
   }
 
   createInvoice() {

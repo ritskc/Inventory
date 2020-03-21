@@ -40,7 +40,7 @@
                 <ng-template ngFor let-row [ngForOf]="_data | search: searchText | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
                   <tr>
                     <td *ngFor="let item of columns" [ngClass]="item.customStyling">
-                      <span *ngIf="!item.isLink && !item.nested && !item.isDate && !item.isEditable && !item.isBoolean && !item.hasAdditionalAction">{{row[item.value]}}</span>
+                      <span *ngIf="!item.isLink && !item.nested && !item.isDate && !item.isEditable && !item.isBoolean && !item.hasAdditionalAction && !item.isEditableDate">{{row[item.value]}}</span>
                       <span *ngIf="item.constantText && !item.isLink">{{item.constantText}}</span>
                       <span *ngIf="item.isDate">{{row[item.value] | date}}</span>
                       <span class="clickable" *ngIf="item.constantText && item.isLink">{{item.constantText}}</span>
@@ -50,7 +50,10 @@
                         <span style="color: #0B8599;" class="fa fa-info-circle" (click)="additionalEventEmitted(item.additionalActionName, row)"></span>
                       </span>
                       <span *ngIf="item.isEditable">
-                        <input type="text" style="text-align: right; width: 50px;" value="{{row[item.value]}}" (change)="itemValueEdited($event, row, item)"/>
+                        <input type="text" style="text-align: right; width: 90%;" value="{{row[item.value]}}" (change)="itemValueEdited($event, row, item)"/>
+                      </span>
+                      <span *ngIf="item.isEditableDate">
+                        <input type="text" style="text-align: right; width: 60px;" [ngModel]="row[item.value] | date: 'MM/dd/yyyy'" (blur)="row[item.value]=transformDate($event.target.value)"/>
                       </span>
                       <span *ngIf="item.isBoolean">
                         <input type="checkbox" [checked]="row[item.value]" (change)="checkboxChanged(row, item, row[item.value])" [attr.disabled]="item.isDisabled? '': null"/>

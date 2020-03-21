@@ -103,7 +103,7 @@ export class PurchaseOrdersComponent implements OnInit {
           customerPurchaseOrderViewModel.id = order.id;
           customerPurchaseOrderViewModel.poNo = order.poNo;
           customerPurchaseOrderViewModel.poDate = order.poDate;
-          customerPurchaseOrderViewModel.dueDate = order.dueDate;
+          customerPurchaseOrderViewModel.dueDate = detail.dueDate;
           customerPurchaseOrderViewModel.partCode = detail.part.code;
           customerPurchaseOrderViewModel.partDescription = detail.part.description;
           customerPurchaseOrderViewModel.openQuantity = detail.qty - detail.shippedQty;

@@ -15,7 +15,8 @@ export class DirectSupplierPoComponent implements OnInit {
   columns: DataColumn[] = [];
   detail: boolean = false;
 
-  constructor(private supplierAccessService: SupplierAccessService, private activatedRoute: ActivatedRoute, private httpLoaderService: httpLoaderService) { }
+  constructor(private supplierAccessService: SupplierAccessService, private activatedRoute: ActivatedRoute, 
+              private httpLoaderService: httpLoaderService) { }
 
   ngOnInit() {
     this.initializeGrid();

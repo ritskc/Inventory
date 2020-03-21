@@ -38,6 +38,7 @@ export class Invoice {
     companyDetail: Company;
     supplierDetail: Supplier;
     supplierInvoiceDetails: InvoiceDetail[];
+    dontImpactPO: boolean;
 }
 
 export class UploadInvoice {

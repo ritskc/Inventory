@@ -6,6 +6,7 @@ import { SearchPipe } from '../pipes/search.pipe';
 import { LoaderComponent } from '../components/loader/loader.component';
 import { FormsModule } from '@angular/forms';
 import { SafePipe } from '../pipes/safe.pipe';
+import { ToastrModule } from 'ng6-toastr-notifications';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SafePipe } from '../pipes/safe.pipe';
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ToastrModule.forRoot()
   ]
 })
 export class SharedModule { }

@@ -122,21 +122,21 @@ export class OrderDetailComponent implements OnInit {
 
   initializePartsGrid() {
     this.gridColumns = [];
-    this.gridColumns.push(new DataColumn({headerText: "Sr No", value: "srNo", sortable: false }));
+    this.gridColumns.push(new DataColumn({headerText: "Sr No", value: "srNo", sortable: false, customStyling: 'right' }));
     this.gridColumns.push(new DataColumn({headerText: "Part Code", value: "partCode", sortable: true }));
     this.gridColumns.push(new DataColumn({headerText: "Description", value: "description", sortable: true, customStyling: 'column-width-100' }));
-    this.gridColumns.push(new DataColumn({headerText: "Qty", value: "qty",  isEditable: true, customStyling: 'right'}));
-    this.gridColumns.push(new DataColumn({ headerText: "Price", value: "unitPrice", customStyling: 'right', isEditable: true }));
+    this.gridColumns.push(new DataColumn({headerText: "Qty", value: "qty",  isEditable: true, customStyling: 'right column-width-50'}));
+    this.gridColumns.push(new DataColumn({ headerText: "Price", value: "unitPrice", customStyling: 'right column-width-50', isEditable: true }));
     this.gridColumns.push(new DataColumn({ headerText: "Total", value: "total", customStyling: 'right' }));
-    this.gridColumns.push(new DataColumn({headerText: "Due Date", value: "dueDate", sortable: true, isDate: true}));
+    this.gridColumns.push(new DataColumn({headerText: "Due Date", value: "dueDate", sortable: true, isEditableDate: true}));
     this.gridColumns.push(new DataColumn({ headerText: "Notes", value: "note", isEditable: true }));
     if (this.SelectedSupplier > -1) {
       this.gridColumns.push(new DataColumn({headerText: "Reference", value: "referenceNo", isEditable: true }));
     }
     if (this.SelectedCustomer > -1) {
       this.gridColumns.push(new DataColumn({ headerText: "Blank PO", value: "blanketPOId" }));
-      this.gridColumns.push(new DataColumn({ headerText: "Open Qty", value: "openQty" }));
-      this.gridColumns.push(new DataColumn({ headerText: "Line No", value: "lineNumber" }));
+      this.gridColumns.push(new DataColumn({ headerText: "Open Qty", value: "openQty", customStyling: 'right' }));
+      this.gridColumns.push(new DataColumn({ headerText: "Line", value: "lineNumber", customStyling: 'right' }));
     }
     this.gridColumns.push(new DataColumn({headerText: "Actions", isActionColumn: true, customStyling: 'center', actions: [
           new DataColumnAction({actionText: "Remove", actionStyle: ClassConstants.Danger, event: "removeSelectedPart"})
@@ -174,11 +174,13 @@ export class OrderDetailComponent implements OnInit {
   }
 
   loadPartsList() {
+    this.loaderService.show();
     this.partsService
       .getAllParts(this.currentlyLoaddedInCompanyId)
       .subscribe(parts => {
         this.parts = parts;
         this.initializeFormForSelection();
+        this.loaderService.hide();
       });
   }
 

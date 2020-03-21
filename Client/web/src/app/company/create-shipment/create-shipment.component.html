@@ -48,20 +48,20 @@
               <div class="form-group standard-top-margin row">
                 <label class="col-md-3 col-xs-3">Shipment Via</label>
                 <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="shipment.shipVia"/>
-                <label class="col-md-3 col-xs-3">Gross Weight</label>
-                <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="shipment.grossWeight"/>
+                <label class="col-md-3 col-xs-3">Grs Wt (Kg)</label>
+                <input type="text" class="form-control col-md-3 col-xs-3" style="text-align: right;" [(ngModel)]="shipment.grossWeight"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-3 col-xs-3 label-top-adjustment">Crates</label>
-                <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="shipment.crates"/>
+                <input type="text" class="form-control col-md-3 col-xs-3" style="text-align: right;" [(ngModel)]="shipment.crates"/>
                 <label class="col-md-3 col-xs-3 label-top-adjustment">Boxes</label>
-                <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="shipment.boxes"/>
+                <input type="text" class="form-control col-md-3 col-xs-3" style="text-align: right;" [(ngModel)]="shipment.boxes"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-3 col-xs-3 label-top-adjustment">Ship Charge</label>
-                <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="shipment.shippingCharge"/>
+                <input type="text" class="form-control col-md-3 col-xs-3" style="text-align: right;" [(ngModel)]="shipment.shippingCharge"/>
                 <label class="col-md-3 col-xs-3 label-top-adjustment">Cust. Charge</label>
-                <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="shipment.customCharge"/>
+                <input type="text" class="form-control col-md-3 col-xs-3" style="text-align: right;" [(ngModel)]="shipment.customCharge"/>
               </div>
               <div class="form-group standard-top-margin row">
                 <label class="col-md-4 col-xs-4 label-top-adjustment">Payment Received</label>
@@ -107,9 +107,9 @@
             </div>
             <div class="form-group standard-top-margin row">
               <label class="col-md-3 col-xs-3 label-top-adjustment">Quantity</label>
-              <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="quantity" (change)="shippedQuantityEntered()"/>
+              <input type="text" class="form-control col-md-3 col-xs-3" style="text-align: right;" [(ngModel)]="quantity" (change)="shippedQuantityEntered()"/>
               <label class="col-md-3 col-xs-3 label-top-adjustment">Unit Price</label>
-              <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="unitPrice"/>
+              <input type="text" class="form-control col-md-3 col-xs-3" style="text-align: right;" [(ngModel)]="unitPrice"/>
             </div>
             <div class="form-group standard-top-margin row">
               <label class="col-md-3 col-xs-3 label-top-adjustment">Qty In Hand</label>
@@ -119,7 +119,7 @@
             </div>
             <div class="form-group standard-top-margin row">
               <label class="col-md-3 col-xs-3 label-top-adjustment">No of Boxes</label>
-              <input type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="boxes"/>
+              <input type="text" class="form-control col-md-3 col-xs-3" style="text-align: right;" [(ngModel)]="boxes"/>
               <label class="col-md-3 col-xs-3 label-top-adjustment"> </label>
               <button class="btn btn-primary col-md-3 col-xs-3" (click)="addPart()"><span class="fa fa-plus"></span> Add</button>
             </div>
@@ -130,7 +130,9 @@
 </div>
 
 <div>
-  <simple-grid [addRequired]="false" [exportRequired]="false" [data]="shipment.packingSlipDetails" [columns]="columnsForPartsGrid" [pageSize]="50" (actionButtonClickedEvent)="[actionButtonClicked($event)]"></simple-grid>
+  <simple-grid [addRequired]="false" [exportRequired]="false" [data]="shipment.packingSlipDetails" [columns]="columnsForPartsGrid" 
+        [pageSize]="50" (actionButtonClickedEvent)="[actionButtonClicked($event)]" (valueEdited)="valueChanged($event)">
+  </simple-grid>
 </div>
 
 <div class="card-footer">

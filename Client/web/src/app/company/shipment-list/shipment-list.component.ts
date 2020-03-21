@@ -49,12 +49,12 @@ export class ShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "isInvoiceCreated", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Actions", isActionColumn: true, customStyling: 'center', actions: [
-      new DataColumnAction({ actionText: 'Shipment', actionStyle: ClassConstants.Warning, event: 'editShipment', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Warning, event: 'editInvoice', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Shipment', actionStyle: ClassConstants.Primary, event: 'printShipment', icon: 'fa fa-print' }),
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoice', icon: 'fa fa-print' }),
       new DataColumnAction({ actionText: 'BL', actionStyle: ClassConstants.Primary, event: 'printBL', icon: 'fa fa-print' }),
       new DataColumnAction({ actionText: 'POS', actionStyle: ClassConstants.Primary, event: 'downloadPOS', icon: 'fa fa-download' }),
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'editShipment', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'delete', icon: 'fa fa-trash' })
     ] }) );
   }
@@ -85,7 +85,7 @@ export class ShipmentListComponent implements OnInit {
             if (customer)
               shipment.customerName = customer.name;
           });
-          this.shipments = shipments.filter(s => !s.isMasterPackingSlip);
+          this.shipments = shipments;
           this.filteredShipments = this.customerId > 0 ? this.shipments.filter(s => s.customerId == this.customerId && !s.isMasterPackingSlip): this.shipments;
         }, (error) => this.toastr.errorToastr(error),
         () => this.httpLoader.hide());

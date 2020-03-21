@@ -41,7 +41,7 @@ export class PackingSlipDetail {
     inBasket: boolean = false;
     boxes: number = 0;
     unitPrice: number = 0;
-    total: number = 0;
+    price: number = 0;
     surcharge: number = 0;
     surchargePerPound: number = 0;
     surchargePerUnit: number = 0;

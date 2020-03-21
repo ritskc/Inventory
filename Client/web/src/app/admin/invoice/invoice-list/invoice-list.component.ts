@@ -59,8 +59,9 @@ export class InvoiceListComponent implements OnInit {
       this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false, minWidth: true }) );
       this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false, minWidth: true, isLink: false }) );
       this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
-      this.columns.push( new DataColumn({ headerText: "Invoice Date", value: "poDate", sortable: true, isDate: true }) );
-      this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isDate: true }) );
+      this.columns.push( new DataColumn({ headerText: "Inv Date", value: "invoiceDate", sortable: true, isEditableDate: true }) );
+      this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isEditableDate: true }) );
+      this.columns.push( new DataColumn({ headerText: "Rcvd On", value: "receivedDate", isDate: true }) );
       this.columns.push( new DataColumn({ headerText: "Rcvd", value: "isInvoiceReceived", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
       this.columns.push( new DataColumn({ headerText: "Inv", isActionColumn: true, customStyling: 'center', actions: [
         new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadInvoice', icon: 'fa fa-download', showOnlyIf: 'data["invoicePath"] != ""' }),
@@ -87,6 +88,7 @@ export class InvoiceListComponent implements OnInit {
         new DataColumnAction({ actionText: 'Box', actionStyle: ClassConstants.Primary, event: 'printBoxBarcode', icon: 'fa fa-barcode' }),
         new DataColumnAction({ actionText: 'Receive', actionStyle: ClassConstants.Primary, event: 'receiveInvoice', icon: '', showOnlyIf: 'data["isInvoiceReceived"] == false' }),
         new DataColumnAction({ actionText: 'Unreceive', actionStyle: ClassConstants.Primary, event: 'unReceiveInvoice', icon: '', showOnlyIf: 'data["isInvoiceReceived"] == true' }),
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'updateInvoice', icon: 'fa fa-save' }),
         new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'deleteInvoice', icon: 'fa fa-trash' })
       ] }) );
     } else {
@@ -262,6 +264,13 @@ export class InvoiceListComponent implements OnInit {
               (error) => { this.toastr.errorToastr(error.error); this.loaderService.hide(); },
               () => this.loaderService.hide()
             );
+        break;
+      case 'updateInvoice':
+        this.loaderService.show();
+        this.invoiceService.updateInvoice(data)
+              .subscribe(() => this.toastr.successToastr('Updated successfully!!'),
+                        (error) => this.toastr.errorToastr('Error while updating the invoice'),
+                        () => this.loaderService.hide());
         break;
       case 'deleteInvoice':
         this.deleteInvoice(data);
