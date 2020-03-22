@@ -50,6 +50,7 @@ export class ShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Actions", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Warning, event: 'editInvoice', icon: 'fa fa-edit' }),
+      new DataColumnAction({ actionText: 'Repack', actionStyle: ClassConstants.Primary, event: 'printRepackingInvoice', icon: 'fa fa-print' }),
       new DataColumnAction({ actionText: 'Shipment', actionStyle: ClassConstants.Primary, event: 'printShipment', icon: 'fa fa-print' }),
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoice', icon: 'fa fa-print' }),
       new DataColumnAction({ actionText: 'BL', actionStyle: ClassConstants.Primary, event: 'printBL', icon: 'fa fa-print' }),
@@ -121,6 +122,9 @@ export class ShipmentListComponent implements OnInit {
       case 'printShipment':
         this.print('shipment', data);
         break;
+      case 'printRepackingInvoice':
+        this.print('RepackingInvoice', data);
+        break;
       case 'printBL':
         if (data.isMasterPackingSlip) {
           this.print('MasterBL', data);
@@ -174,6 +178,8 @@ export class ShipmentListComponent implements OnInit {
       this.printDocument.next(`${appConfig.reportsUri}/BL.aspx?id=${data.id}`);
     } else if (type === 'MasterBL') {
       this.printDocument.next(`${appConfig.reportsUri}/MasterBL.aspx?id=${data.masterPackingSlipId}`);
+    } else if (type === 'RepackingInvoice') {
+      this.printDocument.next(`${appConfig.reportsUri}/RepackingInvoice.aspx?id=${data.id}`);
     }
   }
 

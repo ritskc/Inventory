@@ -72,6 +72,7 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Total", value: "total", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Rcvd", value: "receivedQty", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Transit", value: "inTransitQty", customStyling: 'right' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Force Closed", value: "forceClosed", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
   }
 
@@ -117,6 +118,7 @@ export class PurchaseOrderListComponent implements OnInit {
                 viewModel.acknowledgedQty = detail.ackQty;
                 viewModel.receivedQty = parseInt(detail.receivedQty);
                 viewModel.inTransitQty = detail.inTransitQty;
+                viewModel.forceClosed = detail.isForceClosed;
                 this.purchaseOrderViewModels.push(viewModel);
               });
             } else {
@@ -230,4 +232,5 @@ class SupplierPurchaseOrderViewModel {
   receivedQty: number;
   acknowledgedQty: number;
   isAcknowledged: boolean;
+  forceClosed: boolean;
 }

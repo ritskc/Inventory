@@ -9,6 +9,6 @@ export class MasterShipment {
     packingSlipNumbers: string = '';
     comment: string = '';
     updatedDate: string = '';
-    IsPOSUploaded: boolean = false;
+    isPOSUploaded: boolean = false;
     packingSlips: Shipment[] = [];
 }

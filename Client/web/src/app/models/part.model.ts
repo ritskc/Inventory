@@ -25,6 +25,7 @@ export class Part {
     qtyInHand: number = 0;
     intransitQty: number = 0;
     openOrderQty: number = 0;
+    supplierOpenPoQty: number = 0;
     
     partSupplierAssignments: PartSupplierAssignment[];
     partCustomerAssignments: PartCustomerAssignment[];
@@ -103,5 +104,9 @@ export class PartsViewModel {
 
     get OpenOrderQty(): number {
         return this.part.openOrderQty;
+    }
+
+    get SupplierOpenPoQty(): number {
+        return this.part.supplierOpenPoQty;
     }
 }

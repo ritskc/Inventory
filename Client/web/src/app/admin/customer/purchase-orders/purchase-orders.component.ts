@@ -79,6 +79,7 @@ export class PurchaseOrdersComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Shipped", value: "shippedQty", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Status", value: "status" }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Force Close", value: "isForceClosed", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Note", value: "note" }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
   }
@@ -120,6 +121,7 @@ export class PurchaseOrdersComponent implements OnInit {
           customerPurchaseOrderViewModel.unitPrice = detail.unitPrice;
           customerPurchaseOrderViewModel.note = detail.note;
           customerPurchaseOrderViewModel.status = detail.isClosed? 'Close': 'Open';
+          customerPurchaseOrderViewModel.isForceClosed = detail.isForceClosed;
           this.purchaseOrders.push(customerPurchaseOrderViewModel);
         });
       } else {
@@ -212,4 +214,5 @@ class CustomerPurchaseOrderViewModel {
   unitPrice: number = 0;
   note: string = '';
   status: string = '';
+  isForceClosed: boolean;
 }

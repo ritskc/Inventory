@@ -56,6 +56,8 @@ export class PurchaseOrderDetail {
     srNo: number = 0;
     openQty: number = 0;
     isAcknowledged: boolean = false;
+    isForceClosed: boolean = false;
+    packingSlipNo: string = '';
 }
 
 export class PurchaseOrderTerm {

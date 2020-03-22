@@ -126,22 +126,23 @@ export class OrderDetailComponent implements OnInit {
     this.gridColumns = [];
     this.gridColumns.push(new DataColumn({headerText: "Sr No", value: "srNo", sortable: false, customStyling: 'right' }));
     this.gridColumns.push(new DataColumn({headerText: "Part Code", value: "partCode", sortable: true }));
-    this.gridColumns.push(new DataColumn({headerText: "Description", value: "description", sortable: true, customStyling: 'column-width-100' }));
+    this.gridColumns.push(new DataColumn({headerText: "Description", value: "description", sortable: true, customStyling: 'column-width-150' }));
     this.gridColumns.push(new DataColumn({headerText: "Qty", value: "qty",  isEditable: true, customStyling: 'right column-width-50'}));
     this.gridColumns.push(new DataColumn({ headerText: "Price", value: "unitPrice", customStyling: 'right column-width-50', isEditable: true }));
     this.gridColumns.push(new DataColumn({ headerText: "Total", value: "total", customStyling: 'right' }));
     this.gridColumns.push(new DataColumn({headerText: "Due Date", value: "dueDate", sortable: true, isEditableDate: true}));
     this.gridColumns.push(new DataColumn({ headerText: "Notes", value: "note", isEditable: true }));
+    this.gridColumns.push(new DataColumn({ headerText: "Pack Slip", value: "packingSlipNo", sortable: false }));
+    this.gridColumns.push(new DataColumn({ headerText: "Force Close", value: "isForceClosed", isBoolean: true, customStyling: 'center' }));
     if (this.SelectedSupplier > -1) {
       this.gridColumns.push(new DataColumn({headerText: "Reference", value: "referenceNo", isEditable: true }));
     }
     if (this.SelectedCustomer > -1) {
-      this.gridColumns.push(new DataColumn({ headerText: "Blank PO", value: "blanketPOId" }));
       this.gridColumns.push(new DataColumn({ headerText: "Open Qty", value: "openQty", customStyling: 'right' }));
-      this.gridColumns.push(new DataColumn({ headerText: "Line", value: "lineNumber", customStyling: 'right' }));
+      this.gridColumns.push(new DataColumn({ headerText: "Line", value: "lineNumber", isEditable: true, customStyling: 'right column-width-50' }));
     }
     this.gridColumns.push(new DataColumn({headerText: "Actions", isActionColumn: true, customStyling: 'center', actions: [
-          new DataColumnAction({actionText: "Remove", actionStyle: ClassConstants.Danger, event: "removeSelectedPart"})
+          new DataColumnAction({actionText: "", actionStyle: ClassConstants.Danger, icon: 'fa fa-trash', event: "removeSelectedPart"})
         ]}));
   }
 

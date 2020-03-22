@@ -67,7 +67,7 @@ export class POSUploadComponent implements OnInit {
     if (this.selection == 1) {
       this.shipmentService.getAllShipments(this.currentlyLoggedInCompany)
         .subscribe((shipments) => {
-          this.data = shipments.filter(s => s.customerId == this.customerId && !s.isMasterPackingSlip && !s.isPaymentReceived);
+          this.data = shipments.filter(s => s.customerId == this.customerId && !s.isMasterPackingSlip && !s.isPOSUploaded);
           this.shipmentId = -1;
           //this.data = this.shipments;
         }, (error) => console.log(error)
@@ -75,7 +75,7 @@ export class POSUploadComponent implements OnInit {
     } else if (this.selection == 3) {
       this.shipmentService.getAllMasterShipments(this.currentlyLoggedInCompany)
         .subscribe((shipments) => {
-          this.data = shipments.filter(s => s.customerId == this.customerId);
+          this.data = shipments.filter(s => s.customerId == this.customerId && !s.isPOSUploaded);
           this.shipmentId = -1;
         }, (error) => console.log(error)
         ,() => this.loaderService.hide());

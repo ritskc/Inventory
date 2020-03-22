@@ -164,19 +164,17 @@ export class CreateShipmentComponent implements OnInit {
   }
 
   displayPartQuantityStatus() {
+    var selectedPart = this.customerAssociatedParts.find(p => p.id == this.partCode);
+    this.partQuantityInHand = selectedPart.qtyInHand + selectedPart.openingQty;
+    this.unitPrice = selectedPart.partCustomerAssignments.find(c => c.customerId == this.selectedCustomerId).rate;
+
     if (this.blankOrder) {
-      var selectedPart = this.customerAssociatedParts.find(p => p.id == this.partCode);
-      this.partQuantityInHand = selectedPart.qtyInHand + selectedPart.openingQty;
       this.partOpenQuantity = 0;
-      this.unitPrice = selectedPart.partCustomerAssignments.find(c => c.customerId == this.selectedCustomerId).rate;
     }
     else {
       var selectedOrder = this.customerPurchaseOrders.find(o => o.id == this.orderId);
-      var selectedPart = this.customerAssociatedParts.find(p => p.id == this.partCode);
       var partDetail = selectedOrder.orderDetails.find(p => p.partId == selectedPart.id);
-      this.partQuantityInHand = selectedPart.qtyInHand;
       this.partOpenQuantity = partDetail.qty - partDetail.shippedQty;
-      this.unitPrice = selectedPart.partCustomerAssignments.find(c => c.customerId == this.selectedCustomerId).rate;
     }
   }
 
