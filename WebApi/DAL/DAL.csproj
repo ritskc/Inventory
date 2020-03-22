@@ -65,6 +65,7 @@
     <Compile Include="Models\ConnectionInfo.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerShippingInfo.cs" />
+    <Compile Include="Models\DeletedPackingSlip.cs" />
     <Compile Include="Models\EntityTracker.cs" />
     <Compile Include="Models\MasterPackingSlip.cs" />
     <Compile Include="Models\OrderDetail.cs" />

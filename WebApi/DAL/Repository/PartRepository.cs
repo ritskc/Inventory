@@ -156,6 +156,31 @@ namespace DAL.Repository
                     dataReader1.Close();
                 }                
                 conn.Close();
+
+
+                commandText = string.Format("SELECT sum(AckQty - (InTransitQty + ReceivedQty )) as openqty from PoDetails where partid = '{0}' and (IsClosed =0 OR IsClosed IS NULL) ", part.Id);
+
+                using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                {
+                    cmd1.CommandType = CommandType.Text;
+                    conn.Open();
+                    var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                    while (dataReader1.Read())
+                    {
+                        try
+                        {
+                            part.SupplierOpenPoQty = Convert.ToInt32(dataReader1["openqty"]);
+                        }
+                        catch
+                        {
+                            part.SupplierOpenPoQty = 0;
+                        }
+
+                    }
+                    dataReader1.Close();
+                }
+                conn.Close();
             }
 
             return parts.OrderBy(x=>x.Code);

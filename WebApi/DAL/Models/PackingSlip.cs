@@ -31,6 +31,7 @@ namespace DAL.Models
         public bool IsPOSUploaded { get; set; }
         public string POSPath { get; set; }
         public decimal TotalSurcharge { get; set; }
+        public bool IsDeletedPackingSlipNoUsed { get; set; }
 
         public bool IsMasterPackingSlip { get; set; }
         public int MasterPackingSlipId { get; set; }

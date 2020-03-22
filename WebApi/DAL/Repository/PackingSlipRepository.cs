@@ -181,7 +181,15 @@ namespace DAL.Repository
                         //packingSlipDetail.Id = Convert.ToInt32(await _sqlHelper.ExecuteScalarAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text));
 
                     }
-                    await entityTrackerRepository.AddEntityAsync(packingSlip.CompanyId, packingSlip.ShippingDate, BusinessConstants.ENTITY_TRACKER_PACKING_SLIP, command.Connection, command.Transaction, command);
+                    if (packingSlip.IsDeletedPackingSlipNoUsed)
+                    {
+                        sql = string.Format($"DELETE FROM [dbo].[DeletedPackingSlip] WHERE PackingSlipNo = '{packingSlip.PackingSlipNo}'");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+
+                    }
+                    else
+                        await entityTrackerRepository.AddEntityAsync(packingSlip.CompanyId, packingSlip.ShippingDate, BusinessConstants.ENTITY_TRACKER_PACKING_SLIP, command.Connection, command.Transaction, command);
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -307,7 +315,11 @@ namespace DAL.Repository
 
                     sql = string.Format($"DELETE FROM [dbo].[PackingSlipMaster]  WHERE id = '{id}'");
                     command.CommandText = sql;
-                    await command.ExecuteNonQueryAsync();            
+                    await command.ExecuteNonQueryAsync();
+
+                    sql = string.Format($"INSERT INTO [dbo].[DeletedPackingSlip]   ([PackingSlipNo]) VALUES   ('{packingslip.PackingSlipNo}')");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
 
                     transaction.Commit();
                 }
@@ -516,6 +528,37 @@ namespace DAL.Repository
             return packingSlip;
         }
 
+        public async Task<IEnumerable<DeletedPackingSlip>> GetDeletedPackingSlipAsync()
+        {
+            var packingSlips = new List<DeletedPackingSlip>();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format($"SELECT [id] ,[PackingSlipNo] FROM [DeletedPackingSlip]");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var packingSlip = new DeletedPackingSlip();
+                    packingSlip.Id = Convert.ToInt32(dataReader["Id"]);                    
+                    packingSlip.PackingSlipNo = Convert.ToString(dataReader["PackingSlipNo"]);
+
+                    packingSlips.Add(packingSlip);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+            
+            return packingSlips;
+        }
+
         public PackingSlip GetPackingSlip(long id)
         {
             var packingSlip = new PackingSlip();
@@ -691,13 +734,12 @@ namespace DAL.Repository
                     sql = string.Format($"DELETE FROM [dbo].[PackingSlipDetails]  WHERE PackingSlipId = '{id}'");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
-                    //insert details
+
                     packingSlip.SubTotal = 0;
                     packingSlip.Total = 0;
                     packingSlip.TotalSurcharge = 0;
                     packingSlip.GrossWeight = 0;
                     packingSlip.Boxes = 0;
-
                     var customer = await this.customerRepository.GetCustomerAsync(packingSlip.CustomerId);
                     packingSlip.FOB = customer.FOB;
                     packingSlip.Terms = customer.Terms;
@@ -735,8 +777,6 @@ namespace DAL.Repository
                         else
                             packingSlip.IsInvoiceCreated = false;
 
-
-                        packingSlipDetail.UnitPrice = partDetail.partCustomerAssignments.Where(x => x.CustomerId == packingSlip.CustomerId).Select(x => x.Rate).FirstOrDefault();
                         packingSlipDetail.Price = packingSlipDetail.Qty * packingSlipDetail.UnitPrice;
                         packingSlip.SubTotal = packingSlip.SubTotal + packingSlipDetail.Price;
 
@@ -744,13 +784,13 @@ namespace DAL.Repository
                         packingSlipDetail.SurchargePerPound = packingSlipDetail.Surcharge;
                         packingSlipDetail.SurchargePerUnit = packingSlipDetail.Surcharge * partDetail.WeightInLb;
                         packingSlipDetail.TotalSurcharge = packingSlipDetail.SurchargePerUnit * packingSlipDetail.Qty;
-                        packingSlipDetail.LineNumber = 0;
                         packingSlip.TotalSurcharge = packingSlip.TotalSurcharge + packingSlipDetail.TotalSurcharge;
                         packingSlip.GrossWeight = packingSlip.GrossWeight + (packingSlipDetail.Qty * partDetail.WeightInLb);
                         packingSlip.Boxes = packingSlip.Boxes + packingSlipDetail.Boxes;
-
+                        packingSlipDetail.LineNumber = 0;
                     }
                     packingSlip.Total = packingSlip.SubTotal + packingSlip.TotalSurcharge + packingSlip.ShippingCharge + packingSlip.CustomCharge;
+                    
                     sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [CompanyId] = '{packingSlip.CompanyId}' ,[CustomerId] = '{packingSlip.CustomerId}' " +
                         $",[PackingSlipNo] = '{packingSlip.PackingSlipNo}' ,[ShippingDate] = '{packingSlip.ShippingDate}' ,[ShipVia] = '{packingSlip.ShipVia}' " +
                         $",[Crates] = '{packingSlip.Crates}' ,[Boxes] = '{packingSlip.Boxes}' ,[GrossWeight] = '{packingSlip.GrossWeight}' " +
@@ -758,9 +798,9 @@ namespace DAL.Repository
                         $",[IsPaymentReceived] = '{packingSlip.IsPaymentReceived}' ,[FOB] = '{packingSlip.FOB}' ,[Terms] = '{packingSlip.Terms}' ," +
                         $"[ShipmentInfoId] = '{packingSlip.ShipmentInfoId}'  ,[TotalSurcharge] = '{packingSlip.TotalSurcharge}'  WHERE id = '{packingSlip.Id}'");
 
-                    command.CommandText = sql;
-                    await command.ExecuteNonQueryAsync();
-                    //
+                    await command.ExecuteNonQueryAsync();                    
+
+                    var packingSlipId = packingSlip.Id;
 
                     foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
                     {
@@ -773,7 +813,7 @@ namespace DAL.Repository
                             {
                                 var orderDetail = orderResult.OrderDetails.Where(x => x.Id == packingSlipDetail.OrderDetailId).FirstOrDefault();
                                 packingSlipDetail.OrderNo = orderResult.PONo;
-                                
+
                                 if (orderDetail != null && !orderDetail.IsClosed)
                                 {
                                     packingSlipDetail.LineNumber = orderDetail.LineNumber;
@@ -809,7 +849,7 @@ namespace DAL.Repository
                         //var partDetail = await this.partRepository.GetPartAsync(packingSlipDetail.PartId);
                         //packingSlipDetail.SurchargePerUnit = partDetail.partCustomerAssignments.Where(x => x.CustomerId == packingSlip.CustomerId).Select(x => x.SurchargePerPound).FirstOrDefault();
                         //packingSlipDetail.TotalSurcharge = packingSlipDetail.SurchargePerUnit * packingSlipDetail.Qty;
-                        sql = string.Format($"INSERT INTO [dbo].[PackingSlipDetails]   ([PackingSlipId]   ,[IsBlankOrder]   ,[OrderNo]   ,[OrderId]   ,[OrderDetailId]   ,[PartId]   ,[Qty]   ,[Boxes]   ,[InBasket]   ,[UnitPrice]   ,[Price]   ,[Surcharge]   ,[SurchargePerPound]   ,[SurchargePerUnit]   ,[TotalSurcharge]   ,[ExcessQty],[SrNo],[LineNumber]) VALUES   ('{packingslip.Id}'   ,'{packingSlipDetail.IsBlankOrder}'   ,'{packingSlipDetail.OrderNo}'   ,'{packingSlipDetail.OrderId}'   ,'{packingSlipDetail.OrderDetailId}'   ,'{packingSlipDetail.PartId}'   ,'{packingSlipDetail.Qty}'   ,'{packingSlipDetail.Boxes}'   ,'{packingSlipDetail.InBasket}'   ,'{packingSlipDetail.UnitPrice}'   ,'{packingSlipDetail.Price}'   ,'{packingSlipDetail.Surcharge}'   ,'{packingSlipDetail.SurchargePerPound}'   ,'{packingSlipDetail.SurchargePerUnit}'   ,'{packingSlipDetail.TotalSurcharge}'   ,'{packingSlipDetail.ExcessQty}','{packingSlipDetail.SrNo}','{packingSlipDetail.LineNumber}')");
+                        sql = string.Format($"INSERT INTO [dbo].[PackingSlipDetails]   ([PackingSlipId]   ,[IsBlankOrder]   ,[OrderNo]   ,[OrderId]   ,[OrderDetailId]   ,[PartId]   ,[Qty]   ,[Boxes]   ,[InBasket]   ,[UnitPrice]   ,[Price]   ,[Surcharge]   ,[SurchargePerPound]   ,[SurchargePerUnit]   ,[TotalSurcharge]   ,[ExcessQty],[SrNo],[LineNumber]) VALUES   ('{packingSlipId}'   ,'{packingSlipDetail.IsBlankOrder}'   ,'{packingSlipDetail.OrderNo}'   ,'{packingSlipDetail.OrderId}'   ,'{packingSlipDetail.OrderDetailId}'   ,'{packingSlipDetail.PartId}'   ,'{packingSlipDetail.Qty}'   ,'{packingSlipDetail.Boxes}'   ,'{packingSlipDetail.InBasket}'   ,'{packingSlipDetail.UnitPrice}'   ,'{packingSlipDetail.Price}'   ,'{packingSlipDetail.Surcharge}'   ,'{packingSlipDetail.SurchargePerPound}'   ,'{packingSlipDetail.SurchargePerUnit}'   ,'{packingSlipDetail.TotalSurcharge}'   ,'{packingSlipDetail.ExcessQty}','{packingSlipDetail.SrNo}','{packingSlipDetail.LineNumber}')");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
 
@@ -820,15 +860,10 @@ namespace DAL.Repository
 
                         sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{packingSlipDetail.PartId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.CUSTOMER_PACKINGSLIP)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.OUT)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{packingSlip.Id.ToString()}'   ,'{packingSlipDetail.Qty}')");
                         command.CommandText = sql;
-                        await command.ExecuteNonQueryAsync();
-
-                        //sql = sql + " Select Scope_Identity()";
-                        //command.CommandText = sql;
-                        //packingSlipDetail.Id = Convert.ToInt32(await _sqlHelper.ExecuteScalarAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text));
+                        await command.ExecuteNonQueryAsync();                      
 
                     }
-
-                    transaction.Commit();
+                    transaction.Commit();                    
                 }
                 catch (Exception ex)
                 {

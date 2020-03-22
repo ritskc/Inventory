@@ -17,5 +17,6 @@ namespace DAL.IRepository
         Task<bool> DeletePackingSlipAsync(long id);
         Task CreateInvoiceAsync(PackingSlip packingSlip);
         Task UpdatePOSAsync(int packingSlipId, string path,string trackingNumber);
+        Task<IEnumerable<DeletedPackingSlip>> GetDeletedPackingSlipAsync();
     }
 }

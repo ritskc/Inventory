@@ -22,6 +22,8 @@ namespace DAL.Models
         public bool IsClosed { get; set; }
         public DateTime? ClosingDate { get; set; }
         public string Note { get; set; }
+        public bool IsForceClosed { get; set; }
+        public string PackingSlipNo { get; set; }
 
         public Part part { get; set; }
     }

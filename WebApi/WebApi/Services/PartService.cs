@@ -34,6 +34,7 @@ namespace WebApi.Services
                 foreach(PartSupplierAssignment partSupplierAssignment in part.partSupplierAssignments)
                 {
                     partSupplierAssignment.SupplierName = suppliers.Where(x => x.Id == partSupplierAssignment.SupplierID).Select(x => x.Name).FirstOrDefault();
+                    part.SupplierPrice = partSupplierAssignment.UnitPrice;
                 }
             }
 
@@ -42,6 +43,7 @@ namespace WebApi.Services
                 foreach (PartCustomerAssignment partCustomerAssignments in part.partCustomerAssignments)
                 {
                     partCustomerAssignments.CustomerName = customers.Where(x => x.Id == partCustomerAssignments.CustomerId).Select(x => x.Name).FirstOrDefault();
+                    part.CustomerPrice = partCustomerAssignments.Rate;
                 }
             }
 

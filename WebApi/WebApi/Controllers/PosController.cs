@@ -132,27 +132,67 @@ namespace WebApi.Controllers
                 var existingPo = await this._poService.GetPoAsync(po.Id);
                 if (existingPo != null && existingPo.IsClosed)
                     return BadRequest("PO is already closed.PO is not editable");
-                if(existingPo !=null && existingPo.poDetails != null)
-                {
-                    var processedPoItems = existingPo.poDetails.Where(x => x.IsClosed || x.InTransitQty > 0 || x.ReceivedQty > 0);
-                    if(processedPoItems != null && processedPoItems.Count() > 0)
-                        return BadRequest("PO Detail(s) is already processed. PO is not editable");
-                }
+
+                //if(existingPo !=null && existingPo.poDetails != null)
+                //{
+                //    var processedPoItems = existingPo.poDetails.Where(x => x.IsClosed || x.InTransitQty > 0 || x.ReceivedQty > 0);
+                //    if(processedPoItems != null && processedPoItems.Count() > 0)
+                //        return BadRequest("PO Detail(s) is already processed. PO is not editable");
+                //}
 
                 foreach (PoDetail poDetail in po.poDetails)
                 {
-                    var part = parts.Where(p => p.Id == poDetail.PartId).FirstOrDefault();
-                    //var part = parts.Where(x => x.partSupplierAssignments.Select(p => p.PartID == poDetail.PartId && p.SupplierID == po.SupplierId).FirstOrDefault()).FirstOrDefault();
-                    if (part == null)
+                    if (poDetail.Id != 0)
                     {
-                        part = parts.Where(p => p.Id == poDetail.PartId).FirstOrDefault();
+                        var part = parts.Where(p => p.Id == poDetail.PartId).FirstOrDefault();
+                        //var part = parts.Where(x => x.partSupplierAssignments.Select(p => p.PartID == poDetail.PartId && p.SupplierID == po.SupplierId).FirstOrDefault()).FirstOrDefault();
                         if (part == null)
-                            return BadRequest(string.Format("Invalid part"));                        
-                            
+                        {
+                            part = parts.Where(p => p.Id == poDetail.PartId).FirstOrDefault();
+                            if (part == null)
+                                return BadRequest(string.Format("Invalid part"));
+
+                        }
+
+                        var existingPartDetail = existingPo.poDetails.Where(x => x.Id == poDetail.Id).FirstOrDefault();
+                        if(existingPartDetail.PartId != poDetail.PartId)
+                            return BadRequest(string.Format("Invalid part associated in edited po line number"));
+
+                        if(existingPartDetail.IsClosed)
+                        {
+                            if(poDetail.Qty != existingPartDetail.Qty)
+                                return BadRequest(string.Format("Part is already closed you can not change the qty of this part", poDetail.part.Code));
+                        }
+                        if (poDetail.Qty < (existingPartDetail.ReceivedQty + existingPartDetail.InTransitQty))
+                            return BadRequest(string.Format("Invalid part associated in edited po line number"));
+                        if(poDetail.IsForceClosed)
+                        {
+                            poDetail.IsClosed = true;
+                        }
+
+                        if (poDetail.Qty == (existingPartDetail.ReceivedQty + existingPartDetail.InTransitQty))
+                        {
+                            if(!existingPartDetail.IsClosed)
+                            {
+                                poDetail.IsClosed = true;
+                                poDetail.IsForceClosed = true;
+                            }
+                        }
                     }
-                    var supplier = part.partSupplierAssignments.Where(x => x.SupplierID == po.SupplierId).FirstOrDefault();
-                    if(supplier == null)
-                        return BadRequest(string.Format("Invalid part : {0} does not belong to this supplier", part.Code));
+                    else
+                    {
+                        var selectedParts = parts.Where(x => x.Id == poDetail.PartId);
+                        if (selectedParts == null)
+                        {
+                            return BadRequest(string.Format("Invalid part"));
+                        }
+                        var part = selectedParts.Select(x => x.partSupplierAssignments.Where(p => p.SupplierID == po.SupplierId).FirstOrDefault()).FirstOrDefault();
+
+                        if (part == null)
+                        {
+                            return BadRequest(string.Format("Invalid part : {0} does not belong to this supplier", selectedParts.Select(x => x.Code).FirstOrDefault()));
+                        }                        
+                    }
 
                 }
                 po.Id = id;

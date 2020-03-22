@@ -27,8 +27,18 @@ namespace WebApi.Services
 
         public async Task<Int32> AddPackingSlipAsync(PackingSlip packingSlip)
         {
-            var entity = await this.entityTrackerRepository.GetEntityAsync(packingSlip.CompanyId, packingSlip.ShippingDate, BusinessConstants.ENTITY_TRACKER_PACKING_SLIP);
-            packingSlip.PackingSlipNo = entity.EntityNo;
+            var deletedPackingSlips = await this.packingSlipRepository.GetDeletedPackingSlipAsync();
+            if (deletedPackingSlips != null & deletedPackingSlips.Count() > 0)
+            {
+                packingSlip.PackingSlipNo = deletedPackingSlips.Select(x => x.PackingSlipNo).FirstOrDefault();
+                packingSlip.IsDeletedPackingSlipNoUsed = true;
+            }
+            else
+            {
+                var entity = await this.entityTrackerRepository.GetEntityAsync(packingSlip.CompanyId, packingSlip.ShippingDate, BusinessConstants.ENTITY_TRACKER_PACKING_SLIP);
+                packingSlip.PackingSlipNo = entity.EntityNo;
+                packingSlip.IsDeletedPackingSlipNoUsed = false;
+            }
 
             var result = await this.packingSlipRepository.AddPackingSlipAsync(packingSlip);           
             return result;

@@ -12,11 +12,13 @@ namespace WebApi.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IPartRepository _partRepository;
+        private readonly IPackingSlipService _packingSlipService;
 
-        public OrderService(IOrderRepository orderRepository, IPartRepository partRepository)
+        public OrderService(IOrderRepository orderRepository, IPartRepository partRepository, IPackingSlipService packingSlipService)
         {
             _orderRepository = orderRepository;
             _partRepository = partRepository;
+            _packingSlipService = packingSlipService;
         }
         public async Task<long> AddOrderMasterAsync(OrderMaster order)
         {
@@ -33,12 +35,29 @@ namespace WebApi.Services
             //return await this.orderRepository.GetAllOrderMastersAsync(companyId);
 
             var result = await this._orderRepository.GetAllOrderMastersAsync(companyId);
+            var packingSlips = await this._packingSlipService.GetAllPackingSlipsAsync(companyId);
             foreach (OrderMaster pos in result)
             {
                 foreach (OrderDetail poDetail in pos.OrderDetails)
                 {
                     var partDetail = await this._partRepository.GetPartAsync(poDetail.PartId);
                     poDetail.part = partDetail;
+                    poDetail.PackingSlipNo = "";
+                    if (poDetail.ShippedQty > 0)
+                    {
+                        foreach (PackingSlip packingSlip in packingSlips)
+                        {
+                            foreach (PackingSlipDetails packingSlipDetails in packingSlip.PackingSlipDetails)
+                            {
+                                if (packingSlipDetails.OrderDetailId == poDetail.Id)
+                                {
+                                    poDetail.PackingSlipNo = packingSlip.PackingSlipNo;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                   
                 }
             }
             return result;
