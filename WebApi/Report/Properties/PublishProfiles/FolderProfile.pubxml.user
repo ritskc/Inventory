@@ -10,13 +10,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/DAL.dll">
-      <publishTime>03/21/2020 16:22:52</publishTime>
+      <publishTime>03/22/2020 16:51:08</publishTime>
     </File>
     <File Include="bin/DAL.dll.config">
       <publishTime>11/24/2019 22:11:02</publishTime>
     </File>
     <File Include="bin/DAL.pdb">
-      <publishTime>03/21/2020 16:22:52</publishTime>
+      <publishTime>03/22/2020 16:51:08</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>05/24/2018 14:38:22</publishTime>
@@ -46,10 +46,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/12/2014 20:48:20</publishTime>
     </File>
     <File Include="bin/Report.dll">
-      <publishTime>03/21/2020 16:24:35</publishTime>
+      <publishTime>03/22/2020 16:51:09</publishTime>
     </File>
     <File Include="bin/Report.pdb">
-      <publishTime>03/21/2020 16:24:35</publishTime>
+      <publishTime>03/22/2020 16:51:09</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/24/2018 14:38:22</publishTime>
@@ -221,6 +221,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="ReportViewer/PackingSlip.aspx">
       <publishTime>07/28/2019 15:34:11</publishTime>
+    </File>
+    <File Include="ReportViewer/RepackingInvoice.aspx">
+      <publishTime>03/22/2020 14:35:53</publishTime>
     </File>
     <File Include="ReportViewer/SupplierPO.aspx">
       <publishTime>03/16/2020 17:07:35</publishTime>

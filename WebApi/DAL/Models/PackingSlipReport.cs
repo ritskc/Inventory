@@ -51,6 +51,7 @@ namespace DAL.Models
 
         public string MasterPackingSlipNo { get; set; }
         public string PackingSlipNo { get; set; }
+        public string RePackingSlipNo { get; set; }
         public DateTime ShippingDate { get; set; }
         public string ShipVia { get; set; }
         public int Crates { get; set; }
@@ -76,6 +77,8 @@ namespace DAL.Models
         public bool InBasket { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal Price { get; set; }
+        public decimal TotalRePackingCharge { get; set; }
+        public decimal SumRePackingCharge { get; set; }
         public decimal Surcharge { get; set; }
         public decimal SurchargePerPound { get; set; }
         public decimal SurchargePerUnit { get; set; }

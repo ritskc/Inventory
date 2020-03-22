@@ -129,7 +129,7 @@ namespace DAL.Repository
                     packingSlipReport.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);
                     packingSlipReport.SurchargePerUnit = Convert.ToDecimal(dataReader1["SurchargePerUnit"]);
                     packingSlipReport.TotalSurcharge = Convert.ToDecimal(dataReader1["TotalSurcharge"]);
-                    packingSlipReport.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);
+                    packingSlipReport.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);                    
                     try
                     {
                         packingSlipReport.LineNumber = Convert.ToInt32(dataReader1["LineNumber"]);
@@ -147,11 +147,12 @@ namespace DAL.Repository
                 }
             }            
             conn.Close();
-
             var company = companyRepository.GetCompany(packingSlip.CompanyId);
             var customer = customerRepository.GetCustomer(packingSlip.CustomerId);
-            
-            foreach(PackingSlipReport packingSlipReport in packingSlipReports)
+
+            decimal totalRepackingSlipCost = 0;
+
+            foreach (PackingSlipReport packingSlipReport in packingSlipReports)
             {                
                 packingSlipReport.CompanyId = packingSlip.CompanyId;                
                 packingSlipReport.PackingSlipNo = packingSlip.PackingSlipNo;
@@ -214,12 +215,20 @@ namespace DAL.Repository
                 packingSlipReport.ShipmentZIPCode = packingSlip.customerShippingInfo.ZIPCode;
                 packingSlipReport.ShipmentIsDefault = packingSlip.customerShippingInfo.IsDefault;
 
+                packingSlipReport.TotalRePackingCharge = customer.RePackingCharge * packingSlipReport.Qty;
+                totalRepackingSlipCost = totalRepackingSlipCost + packingSlipReport.TotalRePackingCharge;
                 var part = partRepository.GetPart(packingSlipReport.PartId);
                 packingSlipReport.PartCode = part.Code;
                 packingSlipReport.PartDescription = part.Description;
+                packingSlipReport.RePackingSlipNo = packingSlipReport.PackingSlipNo;
             }
 
-            return packingSlipReports;
+            foreach (PackingSlipReport packingSlipReport in packingSlipReports)
+            {
+                packingSlipReport.SumRePackingCharge = totalRepackingSlipCost;
+            }
+
+                return packingSlipReports;
         }
 
         public List<PackingSlipReport> GetMasterPackingSlipReport(long id)

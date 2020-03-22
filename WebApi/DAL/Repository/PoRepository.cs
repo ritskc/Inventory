@@ -678,7 +678,7 @@ namespace DAL.Repository
 
                     foreach (PoDetail poDetail in po.poDetails)
                     {
-                        sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [AckQty] = '{poDetail.AckQty}', [DueDate] = '{poDetail.DueDate}'   WHERE poid = '{po.Id}' ");
+                        sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [AckQty] = '{poDetail.AckQty}', [DueDate] = '{poDetail.AckQty}'   WHERE poid = '{po.Id}' ");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                     }                   

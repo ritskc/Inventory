@@ -614,7 +614,7 @@ namespace DAL.Repository
             var parts = new List<SupplierOpenPO>();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-            var commandText = string.Format("SELECT S.Name as SupplierName ,[PoId] ,[PartId] ,p.code ,p.Description   ,[ReferenceNo]  ,[UnitPrice],PD.[DueDate],[Note],[AckQty] - (pd.[InTransitQty] +  pd.[ReceivedQty]) as OpenQty ,[SrNo]  FROM [Inventory].[dbo].[PoDetails] PD  INNER JOIN PoMaster PM ON PM.ID = PD.PoId  INNER JOIN part P ON P.id = PD.PartId INNER JOIN supplier S ON S.ID = PM.SupplierId  WHERE PartId = '{0}' AND (PD.IsClosed = 0 OR PD.IsClosed IS NULL) AND OM.CompanyId = '{1}'", partId, companyId);
+            var commandText = string.Format("SELECT S.Name as SupplierName ,[PoId] ,[PartId] ,p.code ,p.Description   ,[ReferenceNo]  ,[UnitPrice],PD.[DueDate],[Note],[AckQty] - (pd.[InTransitQty] +  pd.[ReceivedQty]) as OpenQty ,[SrNo]  FROM [dbo].[PoDetails] PD  INNER JOIN PoMaster PM ON PM.ID = PD.PoId  INNER JOIN part P ON P.id = PD.PartId INNER JOIN supplier S ON S.ID = PM.SupplierId  WHERE PartId = '{0}' AND (PD.IsClosed = 0 OR PD.IsClosed IS NULL) AND PM.CompanyId = '{1}'", partId, companyId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
