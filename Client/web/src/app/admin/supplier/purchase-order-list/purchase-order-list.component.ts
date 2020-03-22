@@ -11,6 +11,8 @@ import { PurchaseOrder } from '../../../models/purchase-order';
 import { ClassConstants } from '../../../common/constants';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import * as DateHelper from '../../../common/helpers/dateHelper';
+import { Subject } from 'rxjs';
+import { AppConfigurations } from '../../../config/app.config';
 
 @Component({
   selector: 'app-purchase-order-list',
@@ -29,6 +31,7 @@ export class PurchaseOrderListComponent implements OnInit {
   private showOnlyOpenOrders: boolean = false;
   private showLateOrders: boolean = false;
   private showAcknowledgedOrders: boolean = false;
+  printDocument: Subject<string> = new Subject<string>();
 
   constructor(private service: SupplierService, private companyService: CompanyService, private formBuilder: FormBuilder,
               private loaderService: httpLoaderService, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrManager) { }
@@ -46,11 +49,12 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Email", value: "email", minWidth: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Closing Date", value: "closingDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Closing", value: "closingDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Ack", value: "isAcknowledged", isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
-      new DataColumnAction({ actionText: 'Edit', actionStyle: ClassConstants.Warning, event: 'editPurchaseOrder', icon: 'fa fa-edit' }),
+      new DataColumnAction({ actionText: 'PO', actionStyle: ClassConstants.Primary, event: 'printPurchaseOrder', icon: 'fa fa-print' }),
+      new DataColumnAction({ actionText: 'Edit', actionStyle: ClassConstants.Primary, event: 'editPurchaseOrder', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deletePurchaseOrder', icon: 'fa fa-trash' })
     ] }));
   }
@@ -176,6 +180,10 @@ export class PurchaseOrderListComponent implements OnInit {
           return;
         }
         this.router.navigateByUrl(`orders/detail/supplier/${data.supplierId}/edit/${data.id}`);
+        break;
+      case 'printPurchaseOrder':
+        var appConfig = new AppConfigurations();
+        this.printDocument.next(`${appConfig.reportsUri}/supplierpo.aspx?id=${data.id}`);
         break;
     }
   }

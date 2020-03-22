@@ -83,13 +83,15 @@
             </select>
           </div>
           <div class="form-group standard-top-margin row" *ngIf="SelectedCustomer > -1 && !isBlanketPO">
-            <label class="col-md-3 col-xs-3 label-top-adjustment">Blank PO</label>
-            <select disabled class="form-control col-md-3 col-xs-3" formControlName="blanketPOId" [(ngModel)]="blanketPOId" (change)="blankPOSelected()">
+            <label class="col-md-3 col-xs-3 label-top-adjustment" *ngIf="false">Blank PO</label>
+            <select disabled class="form-control col-md-3 col-xs-3" *ngIf="false" formControlName="blanketPOId" [(ngModel)]="blanketPOId" (change)="blankPOSelected()">
                 <option value="-1">Blank PO</option>
                 <option *ngFor="let order of blankOrders" [value]="order.id">{{order.poNo}}</option>
             </select>
             <label class="col-md-3 col-xs-3 label-top-adjustment">Open Qty</label>
             <input disabled class="col-md-3 col-xs-3 form-control" type="text" formControlName="blanketPOAdjQty" [(ngModel)]="blanketPOAdjQty"/>
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Qty In Hand</label>
+            <input disabled class="col-md-3 col-xs-3 form-control" type="text" formControlName="qtyInHand" [(ngModel)]="qtyInHand"/>
           </div>
           <div class="form-group standard-top-margin row" *ngIf="SelectedSupplier > -1">
             <label class="col-md-3 col-xs-3 label-top-adjustment">Reference</label>

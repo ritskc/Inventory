@@ -42,6 +42,7 @@ export class OrderDetailComponent implements OnInit {
   private partDescription: string = '';
   private currentlyLoaddedInCompanyId: number = 0;
   private blanketPOAdjQty: number = 0;
+  private qtyInHand: number = 0;
   private lineNumber: number = 0;
   private blanketPOId: number = 0;
   private isBlanketPO: boolean = false;
@@ -81,6 +82,7 @@ export class OrderDetailComponent implements OnInit {
       paymentTerms: FormControl,
       deliveryTerms: FormControl,
       blanketPOAdjQty: FormControl,
+      qtyInHand: FormControl,
       isBlanketPO: FormControl,
       lineNumber: FormControl,
       blanketPOId: FormControl
@@ -289,6 +291,8 @@ export class OrderDetailComponent implements OnInit {
     if (this.SelectedCustomer > -1) {
       var selectedCustomer = this.orderForm.get("customersList").value;
       unitPrice = this.parts.find(p => p.id == partSelected).partCustomerAssignments.find(c => c.customerId == selectedCustomer).rate;
+      var qtyInHand = this.parts.find(p => p.id == partSelected).qtyInHand;
+      this.orderForm.get("qtyInHand").setValue(qtyInHand);
     }
 
     this.orderForm.get("price").setValue(unitPrice);
@@ -469,6 +473,8 @@ export class OrderDetailComponent implements OnInit {
     observableResult.subscribe((result) => {
       this.toastr.successToastr('Details saved successfully.');
       if (this.orderFormMode === OrderFormMode.Customer) {
+        if (this.formMode == UserAction.Edit)
+          result = this.activatedRoute.snapshot.params.orderId;
         this.uploadDocuments(result);
       }
     }, (error) => {

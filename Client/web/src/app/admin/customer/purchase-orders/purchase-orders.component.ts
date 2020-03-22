@@ -9,6 +9,7 @@ import { httpLoaderService } from '../../../common/services/httpLoader.service';
 import { map, mergeMap } from 'rxjs/operators';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { ClassConstants } from '../../../common/constants';
+import { AppConfigurations } from '../../../config/app.config';
 
 @Component({
   selector: 'app-purchase-orders',
@@ -60,21 +61,25 @@ export class PurchaseOrdersComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: 'Order', actionStyle: ClassConstants.Primary, event: 'downloadDocument', icon: 'fa fa-download' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deleteOrder', icon: 'fa fa-trash' })
     ] }) );  
   }
 
   initializeGridForDetails() {
     this.gridColumns = [];
-    this.gridColumns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "PO Date", value: "poDate", sortable: true, isDate: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Line", value: "lineNo", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Code", value: "partCode", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Description", value: "partDescription", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Open", value: "openQuantity" }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Order", value: "orderedQty" }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Shipped", value: "shippedQty" }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Description", value: "partDescription", sortable: true, customStyling: 'column-width-100' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Order", value: "orderedQty", customStyling: 'right' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Open", value: "openQuantity", customStyling: 'right' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Shipped", value: "shippedQty", customStyling: 'right' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", customStyling: 'right' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Status", value: "status" }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Note", value: "note" }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
   }
 
@@ -111,6 +116,10 @@ export class PurchaseOrdersComponent implements OnInit {
           customerPurchaseOrderViewModel.orderedQty = detail.qty;
           customerPurchaseOrderViewModel.isClosed = detail.isClosed;
           customerPurchaseOrderViewModel.shippedQty = detail.shippedQty;
+          customerPurchaseOrderViewModel.lineNo = detail.lineNumber;
+          customerPurchaseOrderViewModel.unitPrice = detail.unitPrice;
+          customerPurchaseOrderViewModel.note = detail.note;
+          customerPurchaseOrderViewModel.status = detail.isClosed? 'Close': 'Open';
           this.purchaseOrders.push(customerPurchaseOrderViewModel);
         });
       } else {
@@ -160,6 +169,10 @@ export class PurchaseOrdersComponent implements OnInit {
 
   actionButtonClicked(data) {
     switch(data.eventName) {
+      case 'downloadDocument':
+        var configuration = new AppConfigurations();
+        window.open(`${configuration.fileApiUri}/customerorder/${data.id}`);
+        break;
       case 'deleteOrder':
         var result = confirm('Are you sure you want to remove this customer order?');
         if (result) {
@@ -195,4 +208,8 @@ class CustomerPurchaseOrderViewModel {
   orderedQty: number = 0;
   isClosed: boolean = false;
   shippedQty: number = 0;
+  lineNo: number = 0;
+  unitPrice: number = 0;
+  note: string = '';
+  status: string = '';
 }

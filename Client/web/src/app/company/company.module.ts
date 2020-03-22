@@ -27,7 +27,6 @@ import { MasterShipmentDetailComponent } from './master-shipment-detail/master-s
   declarations: [
     CompanyListComponent, 
     CompanyDetailComponent,
-    ReportComponent,
     CreateShipmentComponent,
     InventoryPartsListComponent,
     ShipmentListComponent,
