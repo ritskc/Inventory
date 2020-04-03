@@ -299,7 +299,7 @@ namespace DAL.Repository
 
                 try
                 {
-                    string sql = string.Format($"INSERT INTO [dbo].[OrderMaster]   ([CompanyId]   ,[CustomerId]   ,[IsBlanketPO]   ,[PONo]   ,[PODate]   ,[DueDate]   ,[Remarks]) VALUES   ('{order.CompanyId}'   ,'{order.CustomerId}'   ,'{order.IsBlanketPO}'   ,'{order.PONo}'   ,'{order.PoDate}'   ,'{order.DueDate}'   ,'{order.Remarks}')");
+                    string sql = string.Format($"INSERT INTO [dbo].[OrderMaster]   ([CompanyId]   ,[CustomerId]   ,[IsBlanketPO]   ,[PONo]   ,[PODate]   ,[DueDate]   ,[Remarks],[IsClosed]) VALUES   ('{order.CompanyId}'   ,'{order.CustomerId}'   ,'{order.IsBlanketPO}'   ,'{order.PONo}'   ,'{order.PoDate}'   ,'{order.DueDate}'   ,'{order.Remarks}','{false}')");
 
                     sql = sql + " Select Scope_Identity()";
                     command.CommandText = sql;
@@ -309,7 +309,7 @@ namespace DAL.Repository
 
                     foreach (OrderDetail orderDetail in order.OrderDetails)
                     {
-                        sql = string.Format($"INSERT INTO [dbo].[OrderDetail]   ([OrderId]   ,[PartId]   ,[BlanketPOId]   ,[BlanketPOAdjQty]   ,[LineNumber]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note],[ShippedQty],[SrNo],[IsForceClosed]) VALUES   ('{id}'   ,'{orderDetail.PartId}'   ,'{orderDetail.BlanketPOId}'   ,'{orderDetail.BlanketPOAdjQty}'   ,'{orderDetail.LineNumber}'   ,'{orderDetail.Qty}'   ,'{orderDetail.UnitPrice}'   ,'{orderDetail.DueDate}'   ,'{orderDetail.Note}','{0}','{orderDetail.SrNo}','{false}')");
+                        sql = string.Format($"INSERT INTO [dbo].[OrderDetail]   ([OrderId]   ,[PartId]   ,[BlanketPOId]   ,[BlanketPOAdjQty]   ,[LineNumber]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note],[ShippedQty],[SrNo],[IsForceClosed],[IsClosed]) VALUES   ('{id}'   ,'{orderDetail.PartId}'   ,'{orderDetail.BlanketPOId}'   ,'{orderDetail.BlanketPOAdjQty}'   ,'{orderDetail.LineNumber}'   ,'{orderDetail.Qty}'   ,'{orderDetail.UnitPrice}'   ,'{orderDetail.DueDate}'   ,'{orderDetail.Note}','{0}','{orderDetail.SrNo}','{false}','{false}')");
 
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
@@ -337,7 +337,7 @@ namespace DAL.Repository
                 SqlTransaction transaction;
 
                 // Start a local transaction.
-                transaction = connection.BeginTransaction("SampleTransaction");
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted, "SampleTransaction");
 
                 // Must assign both transaction object and connection
                 // to Command object for a pending local transaction
@@ -356,18 +356,37 @@ namespace DAL.Repository
 
                     foreach (OrderDetail orderDetail in order.OrderDetails)
                     {
-                        if(orderDetail.Id == 0)
-                            sql = string.Format($"INSERT INTO [dbo].[OrderDetail]   ([OrderId]   ,[PartId]   ,[BlanketPOId]   ,[BlanketPOAdjQty]   ,[LineNumber]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note],[ShippedQty],[SrNo]) VALUES   ('{order.Id}'   ,'{orderDetail.PartId}'   ,'{orderDetail.BlanketPOId}'   ,'{orderDetail.BlanketPOAdjQty}'   ,'{orderDetail.LineNumber}'   ,'{orderDetail.Qty}'   ,'{orderDetail.UnitPrice}'   ,'{orderDetail.DueDate}'   ,'{orderDetail.Note}','{0}','{orderDetail.SrNo}')");
-                        else
+                        if (orderDetail.Id == 0)
                         {
                             if (orderDetail.IsForceClosed)
-                                sql = string.Format($"UPDATE [dbo].[OrderDetail]   SET  [LineNumber] = '{orderDetail.LineNumber}' ,[Qty] = '{orderDetail.Qty}'  ,[UnitPrice] = '{orderDetail.UnitPrice}', [DueDate] = '{orderDetail.DueDate}' ,[Note] = '{orderDetail.Note}',[IsClosed] = '{true}',[ClosingDate] ='{DateTime.Now}' ,[SrNo] ='{orderDetail.SrNo}',[IsForceClosed] = '{true}' WHERE id = '{orderDetail.Id}'");
+                                sql = string.Format($"INSERT INTO [dbo].[OrderDetail]   ([OrderId]   ,[PartId]   ,[BlanketPOId]   ,[BlanketPOAdjQty]   ,[LineNumber]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note],[ShippedQty],[SrNo],[IsForceClosed],[IsClosed],[ClosingDate]) VALUES   ('{order.Id}'   ,'{orderDetail.PartId}'   ,'{orderDetail.BlanketPOId}'   ,'{orderDetail.BlanketPOAdjQty}'   ,'{orderDetail.LineNumber}'   ,'{orderDetail.Qty}'   ,'{orderDetail.UnitPrice}'   ,'{orderDetail.DueDate}'   ,'{orderDetail.Note}','{0}','{orderDetail.SrNo}','{true}','{true}','{DateTime.Now}')");
+                            else
+                                sql = string.Format($"INSERT INTO [dbo].[OrderDetail]   ([OrderId]   ,[PartId]   ,[BlanketPOId]   ,[BlanketPOAdjQty]   ,[LineNumber]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note],[ShippedQty],[SrNo],[IsForceClosed],[IsClosed]) VALUES   ('{order.Id}'   ,'{orderDetail.PartId}'   ,'{orderDetail.BlanketPOId}'   ,'{orderDetail.BlanketPOAdjQty}'   ,'{orderDetail.LineNumber}'   ,'{orderDetail.Qty}'   ,'{orderDetail.UnitPrice}'   ,'{orderDetail.DueDate}'   ,'{orderDetail.Note}','{0}','{orderDetail.SrNo}','{false}','{false}')");
+
+                        }
+                        else
+                        {
+                            if (orderDetail.IsForceClosed || (orderDetail.Qty == orderDetail.ShippedQty))
+                            {
+                                sql = string.Format($"UPDATE [dbo].[OrderDetail]   SET  [LineNumber] = '{orderDetail.LineNumber}' ,[Qty] = '{orderDetail.Qty}'  ,[UnitPrice] = '{orderDetail.UnitPrice}', [DueDate] = '{orderDetail.DueDate}' ,[Note] = '{orderDetail.Note}',[IsClosed] = '{true}',[ClosingDate] ='{DateTime.Now}' ,[SrNo] ='{orderDetail.SrNo}',[IsForceClosed] = '{orderDetail.IsForceClosed }' WHERE id = '{orderDetail.Id}'");
+                            }
                             else
                                 sql = string.Format($"UPDATE [dbo].[OrderDetail]   SET  [LineNumber] = '{orderDetail.LineNumber}' ,[Qty] = '{orderDetail.Qty}'  ,[UnitPrice] = '{orderDetail.UnitPrice}', [DueDate] = '{orderDetail.DueDate}' ,[Note] = '{orderDetail.Note}',[SrNo] ='{orderDetail.SrNo}' WHERE id = '{orderDetail.Id}'");
                         }
 
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
+                    }
+
+                    var orderResult = await GetOrderMasterAsync(order.Id, command.Connection, command.Transaction);
+                    var openPO = orderResult.OrderDetails.Where(x => x.OrderId == order.Id && x.IsClosed == false).FirstOrDefault();
+
+                    if (openPO == null)
+                    {
+                        sql = string.Format($"UPDATE [dbo].[OrderMaster]   SET [IsClosed] = '{true}' ,[ClosingDate] = '{DateTime.Now}'  WHERE id = '{order.Id}' ");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                        //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
                     }
 
                     // Attempt to commit the transaction.

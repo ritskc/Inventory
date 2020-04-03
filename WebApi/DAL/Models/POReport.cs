@@ -13,6 +13,7 @@ namespace DAL.Models
         public int SupplierId { get; set; }
         public string CompanyName { get; set; }
         public string SupplierName { get; set; }
+        public int PoLetterHead { get; set; }
         public string ContactPersonName { get; set; }
         public string PoNo { get; set; }
         public DateTime PoDate { get; set; }

@@ -1,3 +1,0 @@
-﻿{
-  "ConnectionString": "Data Source=wdb2.my-hosting-panel.com;Initial Catalog=srksoft_inventory;Persist Security Info=True;UID=srksoft_sa;PWD=sa123;MultipleActiveResultSets=False;Packet Size=4096;Connection Timeout=1800"
-}

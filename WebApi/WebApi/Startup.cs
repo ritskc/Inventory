@@ -110,6 +110,7 @@ namespace WebApi
             services.AddTransient<ISupplierInvoiceService, SupplierInvoiceService>();
             services.AddTransient<IEntityTrackerService, EntityTrackerService>();
             services.AddTransient<IPackingSlipService, PackingSlipService>();
+            services.AddTransient<IReportService, ReportService>();
             services.AddTransient<IMasterPackingSlipService, MasterPackingSlipService>();
 
             //add repositories here

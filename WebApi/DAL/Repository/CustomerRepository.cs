@@ -70,7 +70,7 @@ namespace DAL.Repository
             foreach (Customer customer in customers)
             {
                 List<CustomerShippingInfo> lstTerms = new List<CustomerShippingInfo>();
-                commandText = string.Format($"SELECT [id] ,[CustomerID] ,[Name] ,[ContactPersonName] ,[AddressLine1] ,[City] ,[State],[ZIPCode] ,[IsDefault] FROM [dbo].[customershippinginfo] WITH(NOLOCK)  WHERE customerid ='{customer.Id}'");
+                commandText = string.Format($"SELECT [id] ,[CustomerID] ,[Name] ,[ContactPersonName] ,[AddressLine1] ,[City] ,[State],[ZIPCode] ,[IsDefault] FROM [dbo].[customershippinginfo] WITH(NOLOCK)  WHERE customerid ='{customer.Id}' and IsOld = 0");
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                 {
@@ -146,7 +146,7 @@ namespace DAL.Repository
             }
 
             List<CustomerShippingInfo> lstTerms = new List<CustomerShippingInfo>();
-            commandText = string.Format($"SELECT [id] ,[CustomerID] ,[Name] ,[ContactPersonName] ,[AddressLine1] ,[City] ,[State],[ZIPCode] ,[IsDefault] FROM [dbo].[customershippinginfo] WITH(NOLOCK)  WHERE customerid ='{customer.Id}'");
+            commandText = string.Format($"SELECT [id] ,[CustomerID] ,[Name] ,[ContactPersonName] ,[AddressLine1] ,[City] ,[State],[ZIPCode] ,[IsDefault] FROM [dbo].[customershippinginfo] WITH(NOLOCK)  WHERE customerid ='{customer.Id}'  and IsOld = 0");
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
             {
@@ -317,8 +317,8 @@ namespace DAL.Repository
                     term.ZIPCode = string.Empty;
                
 
-                sql = string.Format($"INSERT INTO [dbo].[customershippinginfo] ([CustomerID] ,[Name] ,[ContactPersonName] ,[AddressLine1] ,[City] ,[State],[ZIPCode],[IsDefault]) VALUES ( " +
-                    $"'{customerId}' , '{term.Name.Replace("'", "''")}' , '{term.ContactPersonName.Replace("'", "''")}' ,'{term.AddressLine1.Replace("'", "''")}', '{term.City.Replace("'", "''")}' , '{term.State.Replace("'", "''")}' , '{term.ZIPCode.Replace("'", "''")}' , '{term.IsDefault}')");
+                sql = string.Format($"INSERT INTO [dbo].[customershippinginfo] ([CustomerID] ,[Name] ,[ContactPersonName] ,[AddressLine1] ,[City] ,[State],[ZIPCode],[IsDefault],[IsOld]) VALUES ( " +
+                    $"'{customerId}' , '{term.Name.Replace("'", "''")}' , '{term.ContactPersonName.Replace("'", "''")}' ,'{term.AddressLine1.Replace("'", "''")}', '{term.City.Replace("'", "''")}' , '{term.State.Replace("'", "''")}' , '{term.ZIPCode.Replace("'", "''")}' , '{term.IsDefault}','{false}')");
 
                 await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
             }
@@ -328,7 +328,7 @@ namespace DAL.Repository
         {
             try
             {
-                var sql = string.Format("DELETE FROM [dbo].[customershippinginfo]  WHERE customerid = '{0}'", customer.Id);
+                var sql = string.Format("UPDATE customershippinginfo SET IsOld = 1  WHERE customerid = '{0}'", customer.Id);
 
                 _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
@@ -393,8 +393,8 @@ namespace DAL.Repository
                         term.ZIPCode = string.Empty;
 
 
-                    sql = string.Format($"INSERT INTO [dbo].[customershippinginfo] ([CustomerID] ,[Name] ,[ContactPersonName] ,[AddressLine1] ,[City] ,[State],[ZIPCode],[IsDefault]) VALUES ( " +
-                        $"'{customer.Id}' , '{term.Name.Replace("'", "''")}' , '{term.ContactPersonName.Replace("'", "''")}' ,'{term.AddressLine1.Replace("'", "''")}', '{term.City.Replace("'", "''")}' , '{term.State.Replace("'", "''")}' , '{term.ZIPCode.Replace("'", "''")}' , '{term.IsDefault}')");
+                    sql = string.Format($"INSERT INTO [dbo].[customershippinginfo] ([CustomerID] ,[Name] ,[ContactPersonName] ,[AddressLine1] ,[City] ,[State],[ZIPCode],[IsDefault],[IsOld]) VALUES ( " +
+                        $"'{customer.Id}' , '{term.Name.Replace("'", "''")}' , '{term.ContactPersonName.Replace("'", "''")}' ,'{term.AddressLine1.Replace("'", "''")}', '{term.City.Replace("'", "''")}' , '{term.State.Replace("'", "''")}' , '{term.ZIPCode.Replace("'", "''")}' , '{term.IsDefault}', '{false}')");
 
                     await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
                 }

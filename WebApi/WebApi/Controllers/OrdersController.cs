@@ -146,20 +146,20 @@ namespace WebApi.Controllers
                             }
                         }
                     }
-                    else
-                    {
-                        var selectedParts = parts.Where(x => x.Id == poDetail.PartId);
-                        if (selectedParts == null)
-                        {
-                            return BadRequest(string.Format("Invalid part"));
-                        }
-                        var part = selectedParts.Select(x => x.partCustomerAssignments.Where(p => p.CustomerId == po.CustomerId).FirstOrDefault()).FirstOrDefault();
+                    //else
+                    //{
+                    //    var selectedParts = parts.Where(x => x.Id == poDetail.PartId);
+                    //    if (selectedParts == null)
+                    //    {
+                    //        return BadRequest(string.Format("Invalid part"));
+                    //    }
+                    //    var part = selectedParts.Select(x => x.partCustomerAssignments.Where(p => p.CustomerId == po.CustomerId).FirstOrDefault()).FirstOrDefault();
 
-                        if (part == null)
-                        {
-                            return BadRequest(string.Format("Invalid part : {0} does not belong to this customer", selectedParts.Select(x => x.Code).FirstOrDefault()));
-                        }
-                    }
+                    //    if (part == null)
+                    //    {
+                    //        return BadRequest(string.Format("Invalid part : {0} does not belong to this customer", selectedParts.Select(x => x.Code).FirstOrDefault()));
+                    //    }
+                    //}
 
                 }
 

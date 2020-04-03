@@ -143,7 +143,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!CustomerName.Value, "dsReport")  &amp; vbcrlf &amp; First(Fields!CustomerAddressLine1.Value, "dsReport") &amp; vbcrlf &amp; First(Fields!CustomerCity.Value, "dsReport") &amp; First(Fields!CustomerState.Value, "dsReport") &amp; vbcrlf &amp; First(Fields!CustomerZIPCode.Value, "dsReport")</Value>
+                <Value>=First(Fields!CustomerName.Value, "dsReport")  &amp; vbcrlf &amp; First(Fields!ShipmentAddressLine1.Value, "dsReport") &amp; vbcrlf &amp; First(Fields!ShipmentCity.Value, "dsReport") &amp; First(Fields!ShipmentState.Value, "dsReport") &amp; vbcrlf &amp; First(Fields!ShipmentZIPCode.Value, "dsReport")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -173,7 +173,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!CustomerContactPersonName.Value, "dsReport")</Value>
+                <Value>=First(Fields!ShipmentContactPersonName.Value, "dsReport")</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>

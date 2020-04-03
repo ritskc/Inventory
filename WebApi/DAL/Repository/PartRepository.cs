@@ -28,7 +28,7 @@ namespace DAL.Repository
 
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty] FROM [part] where CompanyId = '{0}' ", companyId);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage] FROM [part] where CompanyId = '{0}' ", companyId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -56,10 +56,12 @@ namespace DAL.Repository
                     part.DrawingFileName = Convert.ToString(dataReader["DrawingFileName"]);
                     part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
+                    part.IsRepackage = Convert.ToBoolean(dataReader["IsRepackage"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
                     part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);
                     part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]);
                     part.MonthlyForecastQty = Convert.ToInt32(dataReader["MonthlyForecastQty"]);
+                    part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
 
                     parts.Add(part);
                 }
@@ -192,7 +194,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty] FROM [part] where id = '{0}' ", partId);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage] FROM [part] where id = '{0}' ", partId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -218,11 +220,13 @@ namespace DAL.Repository
                     part.DrawingFileName = Convert.ToString(dataReader["DrawingFileName"]);
                     part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
+                    part.IsRepackage = Convert.ToBoolean(dataReader["IsRepackage"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
                     part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);                    
                     part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]) + Convert.ToInt32(dataReader["OpeningQty"]);
                     part.OpeningQty = Convert.ToInt32(dataReader["OpeningQty"]);
                     part.MonthlyForecastQty = Convert.ToInt32(dataReader["MonthlyForecastQty"]);
+                    part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
                 }
                 conn.Close();
             }
@@ -294,7 +298,7 @@ namespace DAL.Repository
             var part = new Part();            
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty] FROM [part] where id = '{0}' ", partId);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage] FROM [part] where id = '{0}' ", partId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
             {
@@ -318,11 +322,13 @@ namespace DAL.Repository
                     part.DrawingFileName = Convert.ToString(dataReader["DrawingFileName"]);
                     part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
+                    part.IsRepackage = Convert.ToBoolean(dataReader["IsRepackage"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
                     part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);
                     part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]);
                     part.OpeningQty = Convert.ToInt32(dataReader["OpeningQty"]);
                     part.MonthlyForecastQty = Convert.ToInt32(dataReader["MonthlyForecastQty"]);
+                    part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
                 }
                 dataReader.Close();
             }
@@ -395,7 +401,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty] FROM [part] where id = '{0}' ", partId);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage] FROM [part] where id = '{0}' ", partId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -421,11 +427,13 @@ namespace DAL.Repository
                     part.DrawingFileName = Convert.ToString(dataReader["DrawingFileName"]);
                     part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
+                    part.IsRepackage = Convert.ToBoolean(dataReader["IsRepackage"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
                     part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);
                     part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]);
                     part.OpeningQty = Convert.ToInt32(dataReader["OpeningQty"]);
                     part.MonthlyForecastQty = Convert.ToInt32(dataReader["MonthlyForecastQty"]);
+                    part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
                 }
                 conn.Close();
             }
@@ -536,9 +544,10 @@ namespace DAL.Repository
             var parts = new List<PartInTransit>();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-            var commandText = string.Format("SELECT 	[Code] ,[Description] ,[InvoiceNo] ,[InvoiceDate],[ReceivedDate] ,[ETA] ,[PoNo],[SrNo] ,[PartId],[Qty],[Name] as SupplierName " +
-                "FROM [SupplierInvoiceDetails] SID   INNER JOIN [SupplierInvoiceMaster] SIM ON SID.InvoiceId = SIM.Id  INNER JOIN [part] P ON P.id = SID.PartId  INNER JOIN [supplier] S ON S.id = SIM.SupplierId  " +
-                "where IsBoxReceived = 1 AND SIM.CompanyId = '{0}' AND PartId = '{1}' ", companyId, partId);
+           var commandText = string.Format("SELECT top 5 [Code] ,[Description] ,[InvoiceNo] ,[InvoiceDate],[ReceivedDate] ,[ETA] ,[PoNo] ,[PartId],Sum([Qty]) as QTY ,[Name] as SupplierName  " +
+                "FROM [SupplierInvoiceDetails] SID   INNER JOIN [SupplierInvoiceMaster] SIM ON SID.InvoiceId = SIM.Id  INNER JOIN [part] P ON P.id = SID.PartId INNER JOIN [supplier] S ON S.id = SIM.SupplierId   " +
+                "where  IsBoxReceived = 1 and SIM.CompanyId = '{0}' and Partid =  '{1}' group by [Code] ,[Description] ,[InvoiceNo] ,[InvoiceDate],[ReceivedDate] ,[ETA] ,[PoNo],[PartId],[Name] order by ReceivedDate desc", companyId, partId);
+
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -614,7 +623,7 @@ namespace DAL.Repository
             var parts = new List<SupplierOpenPO>();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-            var commandText = string.Format("SELECT S.Name as SupplierName ,[PoId] ,[PartId] ,p.code ,p.Description   ,[ReferenceNo]  ,[UnitPrice],PD.[DueDate],[Note],[AckQty] - (pd.[InTransitQty] +  pd.[ReceivedQty]) as OpenQty ,[SrNo]  FROM [dbo].[PoDetails] PD  INNER JOIN PoMaster PM ON PM.ID = PD.PoId  INNER JOIN part P ON P.id = PD.PartId INNER JOIN supplier S ON S.ID = PM.SupplierId  WHERE PartId = '{0}' AND (PD.IsClosed = 0 OR PD.IsClosed IS NULL) AND PM.CompanyId = '{1}'", partId, companyId);
+            var commandText = string.Format("SELECT S.Name as SupplierName ,[PoId] ,[PartId] ,p.code , pm.PoNo,p.Description   ,[ReferenceNo]  ,[UnitPrice],PD.[DueDate],[Note],[Qty] - (pd.[InTransitQty] +  pd.[ReceivedQty]) as OpenQty ,[SrNo]  FROM [dbo].[PoDetails] PD  INNER JOIN PoMaster PM ON PM.ID = PD.PoId  INNER JOIN part P ON P.id = PD.PartId INNER JOIN supplier S ON S.ID = PM.SupplierId   WHERE PartId = '{0}' AND (PD.IsClosed = 0 OR PD.IsClosed IS NULL) AND PM.CompanyId = '{1}'  order by pd.DueDate asc ", partId, companyId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -636,6 +645,7 @@ namespace DAL.Repository
                     part.Note = Convert.ToString(dataReader["Note"]);
                     part.OpenQty = Convert.ToInt32(dataReader["openqty"]);
                     part.SrNo = Convert.ToInt32(dataReader["SrNo"]);
+                    part.PoNo = Convert.ToString(dataReader["PoNo"]);
 
                     parts.Add(part);
 
@@ -691,7 +701,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[MonthlyForecastQty] FROM [part] where companyId = '{0}'  and Code = '{1}'", companyId,name);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage] FROM [part] where companyId = '{0}'  and Code = '{1}'", companyId,name);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -717,10 +727,12 @@ namespace DAL.Repository
                     part.DrawingFileName = Convert.ToString(dataReader["DrawingFileName"]);
                     part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
+                    part.IsRepackage = Convert.ToBoolean(dataReader["IsRepackage"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
                     part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]);
                     part.OpeningQty = Convert.ToInt32(dataReader["OpeningQty"]);
                     part.MonthlyForecastQty = Convert.ToInt32(dataReader["MonthlyForecastQty"]);
+                    part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
 
                 }
                 conn.Close();
@@ -794,7 +806,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
             
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[MonthlyForecastQty] FROM [part]   where id in (SELECT[PartID] FROM[partsupplierassignment]  where[SupplierID] = '{0}' and REPLACE(Mapcode,' ','') = '{1}')", supplierId, mapCode.Replace(" ",""));
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage] FROM [part]   where id in (SELECT[PartID] FROM[partsupplierassignment]  where[SupplierID] = '{0}' and REPLACE(Mapcode,' ','') = '{1}')", supplierId, mapCode.Replace(" ",""));
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -820,10 +832,12 @@ namespace DAL.Repository
                     part.DrawingFileName = Convert.ToString(dataReader["DrawingFileName"]);
                     part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
+                    part.IsRepackage = Convert.ToBoolean(dataReader["IsRepackage"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
                     part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]);
                     part.OpeningQty = Convert.ToInt32(dataReader["OpeningQty"]);
                     part.MonthlyForecastQty = Convert.ToInt32(dataReader["MonthlyForecastQty"]);
+                    part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
                 }
                 conn.Close();
             }
@@ -897,7 +911,7 @@ namespace DAL.Repository
 
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[IntransitQty],[MonthlyForecastQty] FROM [part]   where id in (SELECT[PartID] FROM[partsupplierassignment]  where[SupplierID] = '{0}')", supplierId);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[IntransitQty],[MonthlyForecastQty],[SupplierCode],[IsRepackage] FROM [part]   where id in (SELECT[PartID] FROM[partsupplierassignment]  where[SupplierID] = '{0}')", supplierId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -925,11 +939,13 @@ namespace DAL.Repository
                     part.DrawingFileName = Convert.ToString(dataReader["DrawingFileName"]);
                     part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
+                    part.IsRepackage = Convert.ToBoolean(dataReader["IsRepackage"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
                     part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);
                     part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]);
                     part.OpeningQty = Convert.ToInt32(dataReader["OpeningQty"]);
                     part.MonthlyForecastQty = Convert.ToInt32(dataReader["MonthlyForecastQty"]);
+                    part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
 
                     parts.Add(part);
                 }
@@ -1008,7 +1024,7 @@ namespace DAL.Repository
 
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                 "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[IntransitQty],[MonthlyForecastQty] FROM [part]   where id in (SELECT[PartID] FROM[partcustomerassignment]  where[CustomerID] = '{0}')", customerId);
+                 "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[IntransitQty],[MonthlyForecastQty],[SupplierCode],[IsRepackage] FROM [part]   where id in (SELECT[PartID] FROM[partcustomerassignment]  where[CustomerID] = '{0}')", customerId);
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
                 cmd.CommandType = CommandType.Text;
@@ -1035,12 +1051,13 @@ namespace DAL.Repository
                     part.DrawingFileName = Convert.ToString(dataReader["DrawingFileName"]);
                     part.IsActive = Convert.ToBoolean(dataReader["IsActive"]);
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
+                    part.IsRepackage = Convert.ToBoolean(dataReader["IsRepackage"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
                     part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);
                     part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]) + Convert.ToInt32(dataReader["OpeningQty"]);
                     part.OpeningQty = Convert.ToInt32(dataReader["OpeningQty"]);
                     part.MonthlyForecastQty = Convert.ToInt32(dataReader["MonthlyForecastQty"]);
-
+                    part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
                     parts.Add(part);
                 }
                 conn.Close();
@@ -1139,7 +1156,7 @@ namespace DAL.Repository
                     if (part.DrawingFileName == null)
                         part.DrawingFileName = string.Empty;
 
-                    string sql = string.Format($"INSERT INTO [dbo].[part]   ([Code]   ,[Description]   ,[CompanyId]   ,[WeightInKg]   ,[WeightInLb]   ,[IsSample]   ,[MinQty]   ,[MaxQty]   ,[OpeningQty],[SafeQty],[DrawingNo]   ,[DrawingUploaded]   ,[DrawingFileName]   ,[IsActive]   ,[Location],[MonthlyForecastQty])     VALUES   ('{part.Code.Replace("'", "''")}'   ,'{part.Description.Replace("'", "''")}'   ,'{part.CompanyId}'   ,'{part.WeightInKg}'   ,'{part.WeightInLb}'   ,'{part.IsSample}'   ,'{part.MinQty}'   ,'{part.MaxQty}'   ,'{part.OpeningQty}'   ,'{part.SafeQty}' ,'{part.DrawingNo}'   ,'{part.DrawingUploaded}'   ,'{part.DrawingFileName.Replace("'", "''")}'   ,'{part.IsActive}'   ,'{part.Location.Replace("'", "''")}','{part.MonthlyForecastQty}')");
+                    string sql = string.Format($"INSERT INTO [dbo].[part]   ([Code]   ,[Description]   ,[CompanyId]   ,[WeightInKg]   ,[WeightInLb]   ,[IsSample]   ,[MinQty]   ,[MaxQty]   ,[OpeningQty],[SafeQty],[DrawingNo]   ,[DrawingUploaded]   ,[DrawingFileName]   ,[IsActive]   ,[Location],[MonthlyForecastQty],[SupplierCode],[IsRepackage])     VALUES   ('{part.Code.Replace("'", "''")}'   ,'{part.Description.Replace("'", "''")}'   ,'{part.CompanyId}'   ,'{part.WeightInKg}'   ,'{part.WeightInLb}'   ,'{part.IsSample}'   ,'{part.MinQty}'   ,'{part.MaxQty}'   ,'{part.OpeningQty}'   ,'{part.SafeQty}' ,'{part.DrawingNo}'   ,'{part.DrawingUploaded}'   ,'{part.DrawingFileName.Replace("'", "''")}'   ,'{part.IsActive}'   ,'{part.Location.Replace("'", "''")}','{part.MonthlyForecastQty}','{part.SupplierCode}','{part.IsRepackage}')");
 
                     sql = sql + " Select Scope_Identity()";
                     command.CommandText = sql;
@@ -1219,7 +1236,7 @@ namespace DAL.Repository
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
-                    sql = string.Format($"UPDATE [dbo].[part]   SET [Code] = '{part.Code.Replace("'", "''")}' ,[Description] = '{part.Description.Replace("'", "''")}' ,[CompanyId] = '{part.CompanyId}' ,[WeightInKg] = '{part.WeightInKg}' ,[WeightInLb] = '{part.WeightInLb}' ,[IsSample] = '{part.IsSample}' ,[MinQty] = '{part.MinQty}' ,[MaxQty] = '{part.MaxQty}',[OpeningQty] = '{part.OpeningQty}' ,[SafeQty] = '{part.SafeQty}' ,[DrawingNo] = '{part.DrawingNo.Replace("'", "''")}' ,[DrawingUploaded] = '{part.DrawingUploaded}' ,[DrawingFileName] = '{part.DrawingFileName.Replace("'", "''")}' ,[IsActive] = '{part.IsActive}' ,[Location] = '{part.Location.Replace("'", "''")}',[MonthlyForecastQty] = '{part.MonthlyForecastQty}'  WHERE id = '{part.Id}' ");
+                    sql = string.Format($"UPDATE [dbo].[part]   SET [Code] = '{part.Code.Replace("'", "''")}' ,[Description] = '{part.Description.Replace("'", "''")}' ,[CompanyId] = '{part.CompanyId}' ,[WeightInKg] = '{part.WeightInKg}' ,[WeightInLb] = '{part.WeightInLb}' ,[IsSample] = '{part.IsSample}' ,[MinQty] = '{part.MinQty}' ,[MaxQty] = '{part.MaxQty}',[OpeningQty] = '{part.OpeningQty}' ,[SafeQty] = '{part.SafeQty}' ,[DrawingNo] = '{part.DrawingNo.Replace("'", "''")}' ,[DrawingUploaded] = '{part.DrawingUploaded}' ,[DrawingFileName] = '{part.DrawingFileName.Replace("'", "''")}' ,[IsActive] = '{part.IsActive}' ,[Location] = '{part.Location.Replace("'", "''")}',[MonthlyForecastQty] = '{part.MonthlyForecastQty}',[SupplierCode] = '{part.SupplierCode.Replace("'", "''")}',[IsRepackage] = '{part.IsRepackage}'   WHERE id = '{part.Id}' ");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 

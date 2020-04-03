@@ -622,9 +622,9 @@ namespace DAL.Repository
                         else
                         {
                             if(poDetail.IsForceClosed)
-                                sql = string.Format($"UPDATE [PoDetails]  SET [ReferenceNo] = '{poDetail.ReferenceNo}',[Qty] = '{poDetail.Qty}' ,[UnitPrice] = '{poDetail.UnitPrice}',[DueDate] = '{poDetail.DueDate}' ,[AckQty] ='{poDetail.AckQty}' ,[IsClosed] ='{true}' ,[ClosingDate] = '{DateTime.Now}' ,[SrNo] = '{poDetail.SrNo}' ,[IsForceClosed] ='{true}' WHERE  id = '{poDetail.Id}'");
+                                sql = string.Format($"UPDATE [PoDetails]  SET [ReferenceNo] = '{poDetail.ReferenceNo}',[Qty] = '{poDetail.Qty}' ,[UnitPrice] = '{poDetail.UnitPrice}',[DueDate] = '{poDetail.DueDate}' ,[AckQty] ='{poDetail.Qty}' ,[IsClosed] ='{true}' ,[ClosingDate] = '{DateTime.Now}' ,[SrNo] = '{poDetail.SrNo}' ,[IsForceClosed] ='{true}' WHERE  id = '{poDetail.Id}'");
                             else
-                                sql = string.Format($"UPDATE [PoDetails]  SET [ReferenceNo] = '{poDetail.ReferenceNo}',[Qty] = '{poDetail.Qty}' ,[UnitPrice] = '{poDetail.UnitPrice}',[DueDate] = '{poDetail.DueDate}' ,[AckQty] ='{poDetail.AckQty}' ,[SrNo] = '{poDetail.SrNo}'  WHERE  id = '{poDetail.Id}'");
+                                sql = string.Format($"UPDATE [PoDetails]  SET [ReferenceNo] = '{poDetail.ReferenceNo}',[Qty] = '{poDetail.Qty}' ,[UnitPrice] = '{poDetail.UnitPrice}',[DueDate] = '{poDetail.DueDate}' ,[AckQty] ='{poDetail.Qty}' ,[SrNo] = '{poDetail.SrNo}'  WHERE  id = '{poDetail.Id}'");
                         }
                             command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();

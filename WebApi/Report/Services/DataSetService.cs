@@ -82,6 +82,21 @@ namespace Report.Services
             return result;
         }
 
+        public static List<PackingSlipReport> GetRepackingInvoiceReport(int id)
+        {
+            ISqlHelper sqlHelper = new SqlHelper();
+            IOrderRepository orderRepository = new OrderRepository(sqlHelper);
+            ICompanyRepository companyRepository = new CompanyRepository(sqlHelper);
+            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper);
+            ISupplierRepository supplierRepository = new SupplierRepository(sqlHelper);
+            IPartRepository partRepository = new PartRepository(sqlHelper);
+            IReportRepository reportRepository = new ReportRepository(sqlHelper, orderRepository, companyRepository,
+                customerRepository, partRepository, supplierRepository);
+
+            var result = reportRepository.GetRepackingInvoiceReport(id);
+            return result;
+        }
+
         public static List<PackingSlipReport> GetMasterPackingSlipReport(int id)
         {
             ISqlHelper sqlHelper = new SqlHelper();

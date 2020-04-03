@@ -18,6 +18,6 @@ namespace DAL.Models
         public int OpenQty { get; set; }
         public string Note { get; set; }
         public int SrNo { get; set; }
-        
+        public string PoNo { get; set; }
     }
 }
