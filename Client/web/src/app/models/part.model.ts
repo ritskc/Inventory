@@ -26,6 +26,8 @@ export class Part {
     intransitQty: number = 0;
     openOrderQty: number = 0;
     supplierOpenPoQty: number = 0;
+    supplierCode: string = '';
+    isRepackage: boolean;
     
     partSupplierAssignments: PartSupplierAssignment[];
     partCustomerAssignments: PartCustomerAssignment[];

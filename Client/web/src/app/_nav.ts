@@ -36,6 +36,11 @@ if (environment.isSupplier) {
           name: 'Invoice',
           url: '/invoice',
           icon: 'icon-puzzle'
+        },
+        {
+          name: 'Purchase Report',
+          url: '/suppliers/purchase-report',
+          icon: 'icon-puzzle'
         }
       ]
     }
@@ -94,6 +99,11 @@ if (environment.isSupplier) {
           name: 'Invoice',
           url: '/invoice',
           icon: 'icon-puzzle'
+        },
+        {
+          name: 'Purchase Report',
+          url: '/suppliers/purchase-report',
+          icon: 'icon-puzzle'
         }
       ]
     },
@@ -129,6 +139,11 @@ if (environment.isSupplier) {
         {
           name: 'POS',
           url: '/companies/pos',
+          icon: 'icon-puzzle'
+        },
+        {
+          name: 'Sale Report',
+          url: '/companies/sale-report',
           icon: 'icon-puzzle'
         },
         {

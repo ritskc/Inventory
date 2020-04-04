@@ -41,6 +41,7 @@ export class PartListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Min Qty", value: "minQty", sortable: true, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Max Qty", value: "maxQty", sortable: true, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Total", value: "safeQty", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Supplier Code", value: "supplierCode", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Supp Price", value: "supplierPrice", sortable: false, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Cust Price", value: "customerPrice", sortable: false, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Active", value: "isActive", sortable: true, isBoolean: true, customStyling: 'center', isDisabled: true }) );

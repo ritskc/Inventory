@@ -49,4 +49,8 @@ export class CustomerService {
   delete(id: number) {
     return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.customerUri }`)
   }
+
+  getSaleReport(companyId: number, from: string, to: string): Observable<any[]> {
+    return this.apiService.get(`${this.configService.Settings.apiServerHost}/reports/sales/${companyId}/${ from }/${ to }`);
+  }
 }

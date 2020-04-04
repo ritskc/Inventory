@@ -21,19 +21,29 @@
               <div *ngIf="f.address.errors.required">Supplier Address is required</div>
             </div>
           </div>
-          <div class="form-group standard-top-margin">
-            <label>Phone Number</label>
-            <input type="tel" formControlName="phoneNo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phoneNo.errors }" [(ngModel)]="supplier.phoneNo"/>
-            <div *ngIf="submitted && f.phoneNo.errors" class="invalid-feedback">
-              <div *ngIf="f.phoneNo.errors.required">Supplier Phone Number is required</div>
+          <div class="row">
+            <div class="form-group standard-top-margin col-md-6 col-xs-6">
+              <label>Phone Number</label>
+              <input type="tel" formControlName="phoneNo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phoneNo.errors }" [(ngModel)]="supplier.phoneNo"/>
+              <div *ngIf="submitted && f.phoneNo.errors" class="invalid-feedback">
+                <div *ngIf="f.phoneNo.errors.required">Supplier Phone Number is required</div>
+              </div>
+            </div>
+            <div class="form-group standard-top-margin col-md-6 col-xs-6">
+              <label>Fax Number</label>
+              <input type="tel" formControlName="faxNo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.faxNo.errors }" [(ngModel)]="supplier.faxNo"/>
+              <div *ngIf="submitted && f.faxNo.errors" class="invalid-feedback">
+                <div *ngIf="f.faxNo.errors.required">Supplier Fax Number is required</div>
+              </div>
             </div>
           </div>
           <div class="form-group standard-top-margin">
-            <label>Fax Number</label>
-            <input type="tel" formControlName="faxNo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.faxNo.errors }" [(ngModel)]="supplier.faxNo"/>
-            <div *ngIf="submitted && f.faxNo.errors" class="invalid-feedback">
-              <div *ngIf="f.faxNo.errors.required">Supplier Fax Number is required</div>
-            </div>
+            <label>PO Letter Head</label>
+            <select [(ngModel)]="supplier.poLetterHead" formControlName="poLetterHead" class="form-control">
+              <option value="-1">Please select</option>
+              <option value="1">Harisons</option>
+              <option value="2">Phloem</option>
+            </select>
           </div>
           <div class="form-group standard-top-margin">
             <label>Email</label>

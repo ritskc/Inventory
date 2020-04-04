@@ -15,6 +15,12 @@
         Show Invoiced only
       </label>
     </div>
+    <div class="form-check" style="margin-left: 15px; padding-top: 5px;">
+      <input class="form-check-input" type="checkbox" id="showRepackageCheckbox" (change)="showRepackagedOnly($event)" [(ngModel)]="showRepackge">
+      <label class="form-check-label" for="showRepackageCheckbox">
+        Show Repackage only
+      </label>
+    </div>
 </div>
 
 <simple-grid [data]="filteredShipments" [columns]="columns" [exportRequired]="true" (addClickedEventEmitter)="addShipment()"

@@ -27,6 +27,7 @@ export class Shipment {
     isInvoiceCreated: boolean;
     isPOSUploaded: boolean;
     isMasterPackingSlip: boolean;
+    isRepackage: boolean;
 }
 
 export class PackingSlipDetail {
@@ -39,6 +40,7 @@ export class PackingSlipDetail {
     partDescription: string = '';
     qty: number = 0;
     inBasket: boolean = false;
+    isRepackage: boolean;
     boxes: number = 0;
     unitPrice: number = 0;
     price: number = 0;

@@ -21,5 +21,6 @@ export class Supplier {
     dateFormat: Date;
     noofstages: number;
     companyProfileID: number;
+    poLetterHead: number;
     terms: Term[];
 }

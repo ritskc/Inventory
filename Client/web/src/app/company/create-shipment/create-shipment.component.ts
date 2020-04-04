@@ -48,6 +48,8 @@ export class CreateShipmentComponent implements OnInit {
   private previousPackingSlipNo: string;
   private partQuantityInHand: number = 0;
   private partOpenQuantity: number = 0;
+  private lineNo: number = 0;
+  private dueDate: string = '';
   private OrderNo: string = '';
   private unitPrice: number = 0;
 
@@ -123,6 +125,7 @@ export class CreateShipmentComponent implements OnInit {
   }
 
   loadAllOrdersForCustomer() {
+    this.httpLoaderService.show();
     this.customerService.getAllPurchaseOrders(this.currentlyLoggedInCompany)
       .subscribe((orders) => {
         this.customerPurchaseOrders = [];
@@ -130,8 +133,11 @@ export class CreateShipmentComponent implements OnInit {
           if (order.customerId == this.selectedCustomer.id && !order.isClosed)
             this.customerPurchaseOrders.push(order);
         });
-      }, (error) => console.log(error),
-      () => this.orderId = -1 );
+      }, (error) => this.toastr.errorToastr(error),
+      () => {
+        this.orderId = -1;
+        this.httpLoaderService.hide();
+      } );
   }
 
   orderSelected() {
@@ -152,6 +158,8 @@ export class CreateShipmentComponent implements OnInit {
     this.resetPartDetail();
     this.partQuantityInHand = 0;
     this.partOpenQuantity = 0;
+    this.lineNo = 0;
+    this.dueDate =  '';
 }
 
   partSelected() {
@@ -170,11 +178,15 @@ export class CreateShipmentComponent implements OnInit {
 
     if (this.blankOrder) {
       this.partOpenQuantity = 0;
+      this.lineNo = 0;
+      this.dueDate = '';
     }
     else {
       var selectedOrder = this.customerPurchaseOrders.find(o => o.id == this.orderId);
       var partDetail = selectedOrder.orderDetails.find(p => p.partId == selectedPart.id);
       this.partOpenQuantity = partDetail.qty - partDetail.shippedQty;
+      this.lineNo = partDetail.lineNumber;
+      this.dueDate = DateHelper.formatDate(DateHelper.convertToDateTime(partDetail.dueDate));
     }
   }
 

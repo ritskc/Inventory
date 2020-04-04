@@ -29,6 +29,7 @@ export class ShipmentListComponent implements OnInit {
   customerId: number = -1;
   showFullDetails: boolean = false;
   showInvoiced: boolean = false;
+  showRepackge: boolean = false;
   printDocument: Subject<string> = new Subject<string>();
 
   constructor(private companyService: CompanyService, private shipmentService: ShipmentService, private customerService: CustomerService, 
@@ -43,14 +44,14 @@ export class ShipmentListComponent implements OnInit {
   initializeGridColumns() {
     this.columns = [];
     this.columns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true, customStyling: 'column-width-200' }) );
-    this.columns.push( new DataColumn({ headerText: "Slip No", value: "packingSlipNo", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Shipped Date", value: "shippingDate", sortable: false, isDate: true }) );
+    this.columns.push( new DataColumn({ headerText: "Slip No", value: "packingSlipNo", sortable: true }) );
+    this.columns.push( new DataColumn({ headerText: "Shipped Date", value: "shippingDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Shipped Via", value: "shipVia", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "isInvoiceCreated", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Actions", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Warning, event: 'editInvoice', icon: 'fa fa-edit' }),
-      new DataColumnAction({ actionText: 'Repack', actionStyle: ClassConstants.Primary, event: 'printRepackingInvoice', icon: 'fa fa-print' }),
+      new DataColumnAction({ actionText: 'Repack', actionStyle: ClassConstants.Primary, event: 'printRepackingInvoice', icon: 'fa fa-print', showOnlyIf: 'data["isRepackage"] == true' }),
       new DataColumnAction({ actionText: 'Shipment', actionStyle: ClassConstants.Primary, event: 'printShipment', icon: 'fa fa-print' }),
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoice', icon: 'fa fa-print' }),
       new DataColumnAction({ actionText: 'BL', actionStyle: ClassConstants.Primary, event: 'printBL', icon: 'fa fa-print' }),
@@ -63,8 +64,8 @@ export class ShipmentListComponent implements OnInit {
   initializeGridColumnsForDetails() {
     this.columns = [];
     this.columns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Slip No", value: "packingSlipNo", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Shipped Date", value: "shippingDate", sortable: false, isDate: true }) );
+    this.columns.push( new DataColumn({ headerText: "Slip No", value: "packingSlipNo", sortable: true }) );
+    this.columns.push( new DataColumn({ headerText: "Shipped Date", value: "shippingDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Order No", value: "orderNo", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Part Code", value: "partCode", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Description", value: "partDescription", sortable: false }) );
@@ -153,10 +154,6 @@ export class ShipmentListComponent implements OnInit {
   }
 
   editShipment(data) {
-    if (data.isPOSUploaded) {
-      this.toastr.warningToastr('This shipment cannot be edited since POS is already uploaded');
-      return;
-    }
     this.router.navigateByUrl(`companies/create-shipment/${data.customerId}/1/${data.id}`);
   }
 
@@ -225,6 +222,8 @@ export class ShipmentListComponent implements OnInit {
       this.initializeGridColumns();
       this.filteredShipments = this.customerId > 0 ? this.shipments.filter(s => s.customerId == this.customerId): this.shipments;
     }
+    this.showInvoiced = false;
+    this.showRepackge = false;
   }
 
   showInvoicedOnly() {
@@ -233,6 +232,10 @@ export class ShipmentListComponent implements OnInit {
     } else {
       this.filteredShipments = this.shipments;
     }
+  }
+
+  showRepackagedOnly() {
+    this.filteredShipments = this.showRepackge ? this.shipments.filter(i => i.isRepackage == true): this.shipments;
   }
 }
 

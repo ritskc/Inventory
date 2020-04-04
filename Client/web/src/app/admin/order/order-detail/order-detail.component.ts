@@ -292,7 +292,9 @@ export class OrderDetailComponent implements OnInit {
     if (this.SelectedCustomer > -1) {
       var selectedCustomer = this.orderForm.get("customersList").value;
       unitPrice = this.parts.find(p => p.id == partSelected).partCustomerAssignments.find(c => c.customerId == selectedCustomer).rate;
-      var qtyInHand = this.parts.find(p => p.id == partSelected).qtyInHand;
+      //var qtyInHand = this.parts.find(p => p.id == partSelected).qtyInHand;
+      var p = this.parts.find(p => p.id == partSelected)
+      var qtyInHand = p.qtyInHand + p.openingQty;
       this.orderForm.get("qtyInHand").setValue(qtyInHand);
     }
 

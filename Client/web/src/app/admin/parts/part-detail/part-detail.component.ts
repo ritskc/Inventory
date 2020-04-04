@@ -45,7 +45,8 @@ export class PartDetailComponent implements OnInit {
       minQty: ['', Validators.required],
       maxQty: ['', Validators.required],
       drawingNo: ['', Validators.required],
-      monthlyForecastQty: ['']
+      monthlyForecastQty: [''],
+      supplierCode: ['']
     })
   }
 

@@ -74,6 +74,7 @@ export class PurchaseOrdersComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Code", value: "partCode", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Description", value: "partDescription", sortable: true, customStyling: 'column-width-100' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Pack. Slip", value: "packingSlipNo", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Order", value: "orderedQty", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Open", value: "openQuantity", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Shipped", value: "shippedQty", customStyling: 'right' }) );
@@ -122,6 +123,7 @@ export class PurchaseOrdersComponent implements OnInit {
           customerPurchaseOrderViewModel.note = detail.note;
           customerPurchaseOrderViewModel.status = detail.isClosed? 'Close': 'Open';
           customerPurchaseOrderViewModel.isForceClosed = detail.isForceClosed;
+          customerPurchaseOrderViewModel.packingSlipNo = detail.packingSlipNo;
           this.purchaseOrders.push(customerPurchaseOrderViewModel);
         });
       } else {
@@ -215,4 +217,5 @@ class CustomerPurchaseOrderViewModel {
   note: string = '';
   status: string = '';
   isForceClosed: boolean;
+  packingSlipNo: string = '';
 }

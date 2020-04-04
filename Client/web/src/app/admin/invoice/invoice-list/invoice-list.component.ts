@@ -61,7 +61,7 @@ export class InvoiceListComponent implements OnInit {
       this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
       this.columns.push( new DataColumn({ headerText: "Inv Date", value: "invoiceDate", sortable: true, isEditableDate: true }) );
       this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isEditableDate: true }) );
-      this.columns.push( new DataColumn({ headerText: "Rcvd On", value: "receivedDate", isDate: true }) );
+      this.columns.push( new DataColumn({ headerText: "Rcvd On", value: "receivedDate", isDate: true, sortable: true }) );
       this.columns.push( new DataColumn({ headerText: "Rcvd", value: "isInvoiceReceived", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
       this.columns.push( new DataColumn({ headerText: "Inv", isActionColumn: true, customStyling: 'center', actions: [
         new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadInvoice', icon: 'fa fa-download', showOnlyIf: 'data["invoicePath"] != ""' }),

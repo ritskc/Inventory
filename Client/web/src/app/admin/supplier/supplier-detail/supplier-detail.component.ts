@@ -38,7 +38,8 @@ export class SupplierDetailComponent implements OnInit {
       country: ['', Validators.required],
       zipCode: ['', Validators.required],
       dateFormat: ['', Validators.required],
-      noofstages: ['', Validators.required]
+      noofstages: ['', Validators.required],
+      poLetterHead: ['']
     });
   }
 
@@ -76,6 +77,11 @@ export class SupplierDetailComponent implements OnInit {
     this.supplier.companyId = this.companyService.getCurrentlyLoggedInCompanyId();
     
     if (this.supplierForm.invalid) return;
+
+    if (this.supplier.poLetterHead < 1) {
+      this.toastr.warningToastr('Please select a valid PO Letter header option');
+      return;
+    }
 
     this.supplierService.saveSupplier(this.supplier)
       .subscribe((response) => { 

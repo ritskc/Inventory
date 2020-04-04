@@ -48,17 +48,16 @@ export class InventoryPartsListComponent implements OnInit {
   initializeGridColumns() {
     this.columns.push( new DataColumn({ headerText: "Code", value: "Code", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Description", value: "Description", sortable: true, customStyling: 'column-width-150' }) );
-    this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", sortable: false, customStyling: 'right column-width-100' }) );
-    this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", sortable: false, customStyling: 'right column-width-100' }) );
-    this.columns.push( new DataColumn({ headerText: "Safe Qty", value: "SafeQty", sortable: false, customStyling: 'right column-width-100' }) );
-    this.columns.push( new DataColumn({ headerText: "Opening Qty", value: "OpeningQty", isEditable: true, sortable: false, customStyling: 'right column-width-100' }) );
-    this.columns.push( new DataColumn({ headerText: "Open Order", value: "OpenOrderQty", isEditable: false, sortable: false, hasAdditionalAction: true, additionalActionName: 'showOpenOrders', customStyling: 'right column-width-100' }) );
-    this.columns.push( new DataColumn({ headerText: "Open + In Hand", value: "QuantityInHand", sortable: false, hasAdditionalAction: true, additionalActionName: 'showLatestShipments', customStyling: 'right column-width-100' }) );
-    this.columns.push( new DataColumn({ headerText: "Supp Open PO", value: "SupplierOpenPoQty", sortable: false, hasAdditionalAction: true, additionalActionName: 'showSupplierOpenPO', customStyling: 'right column-width-100' }) );
-    this.columns.push( new DataColumn({ headerText: "In Transit", value: "IntransitQty", sortable: false, hasAdditionalAction: true, additionalActionName: 'showInTransitQty', customStyling: 'right column-width-100' }) );
+    this.columns.push( new DataColumn({ headerText: "Opening Qty", value: "OpeningQty" }) );
+    this.columns.push( new DataColumn({ headerText: "Open + In Hand", value: "QuantityInHand", sortable: false, hasAdditionalAction: true, additionalActionName: 'showLatestShipments' }) );
+    this.columns.push( new DataColumn({ headerText: "In Transit", value: "IntransitQty", sortable: false, hasAdditionalAction: true, additionalActionName: 'showInTransitQty' }) );
+    this.columns.push( new DataColumn({ headerText: "Open Order", value: "OpenOrderQty", isEditable: false, sortable: false, hasAdditionalAction: true, additionalActionName: 'showOpenOrders' }) );
+    this.columns.push( new DataColumn({ headerText: "Safe Qty", value: "SafeQty", sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Supp Open PO", value: "SupplierOpenPoQty", sortable: false, hasAdditionalAction: true, additionalActionName: 'showSupplierOpenPO' }) );
+    this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center column-width-100', actions: [
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'adjustOpeningQuantity', icon: 'fa fa-adjust' }),
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'editOpeningQuantity', icon: 'fa fa-edit' })
+      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'adjustOpeningQuantity', icon: 'fa fa-adjust' })
     ] }) );
   }
 
@@ -232,6 +231,7 @@ export class InventoryPartsListComponent implements OnInit {
     this.columnsForModal.push( new DataColumn({ headerText: "Supplier", value: "supplierName" }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Part Code", value: "code" }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Part Description", value: "description" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: 'PO No', value: 'poNo' }));
     this.columnsForModal.push( new DataColumn({ headerText: "Reference", value: "referenceNo" }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", customStyling: 'right' }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Due", value: "dueDate", isDate: true }) );

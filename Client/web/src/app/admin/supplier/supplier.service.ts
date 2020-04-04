@@ -50,4 +50,8 @@ export class SupplierService {
   getNewPurchaseOrderNumber(companyId: number, date: string): Observable<any> {
     return this.apiService.get(`${this.configService.Settings.apiServerHost}/${this.configService.Settings.entityTracker}/po/${companyId}/${ date }`)
   }
+
+  getPurchaseReport(companyId: number, from: string, to: string): Observable<any[]> {
+    return this.apiService.get(`${this.configService.Settings.apiServerHost}/reports/purchase/${companyId}/${ from }/${ to }`);
+  }
 }

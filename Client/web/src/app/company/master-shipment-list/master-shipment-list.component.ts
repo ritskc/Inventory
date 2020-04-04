@@ -40,7 +40,7 @@ export class MasterShipmentListComponent implements OnInit {
   initializeGridColumns() {
     this.columns = [];
     this.columns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true, customStyling: 'column-width-150' }) );
-    this.columns.push( new DataColumn({ headerText: "Master Slip No", value: "masterPackingSlipNo", sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Master Slip No", value: "masterPackingSlipNo", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Packing Slips", value: "packingSlipNumbers", sortable: false, customStyling: 'column-width-100' }) );
     this.columns.push( new DataColumn({ headerText: "Updated Date", value: "updatedDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Traking Number", value: "trakingNumber", sortable: false }) );
