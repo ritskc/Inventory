@@ -5,6 +5,8 @@ import { CompanyService } from '../company.service';
 import { CustomerService } from '../../admin/customer/customer.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { httpLoaderService } from '../../common/services/httpLoader.service';
+import { SupplierService } from '../../admin/supplier/supplier.service';
+import { Supplier } from '../../models/supplier.model';
 
 @Component({
   selector: 'app-sale-report',
@@ -14,20 +16,23 @@ import { httpLoaderService } from '../../common/services/httpLoader.service';
 export class SaleReportComponent implements OnInit {
 
   private customerId: number = -1;
+  private supplierId: number = -1;
   private unfileterdData: any[] = [];
   private saleReport: any[] = [];
   private currentlyLoggedInCompany: number = 0;
   private customers: Customer[] = [];
+  private suppliers: Supplier[] = [];
   private columns: DataColumn[] = [];
   private from: Date;
   private to: Date;
 
-  constructor(private companyService: CompanyService, private customerService: CustomerService, private loaderService: httpLoaderService,
-              private toastr: ToastrManager) { }
+  constructor(private companyService: CompanyService, private customerService: CustomerService, private supplierService: SupplierService,
+              private loaderService: httpLoaderService, private toastr: ToastrManager) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompany = this.companyService.getCurrentlyLoggedInCompanyId();
     this.loadAllCustomer();
+    this.loadAllSuppliers();
     this.initializeGrid();
   }
 
@@ -41,9 +46,18 @@ export class SaleReportComponent implements OnInit {
         );
   }
 
+  loadAllSuppliers() {
+    this.loaderService.show();
+    this.supplierService.getAllSuppliers(this.currentlyLoggedInCompany)
+        .subscribe(suppliers => this.suppliers = suppliers,
+          (error) => this.toastr.errorToastr(error.error),
+          () => this.loaderService.hide());
+  }
+
   initializeGrid() {
     this.columns = [];
     this.columns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true }) );
+    this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Code", value: "code", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Description", value: "description", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Packing Slip No", value: "packingSlipNo", sortable: true }) );
@@ -74,17 +88,33 @@ export class SaleReportComponent implements OnInit {
         () => this.loaderService.hide());
   }
 
+  supplierSelected() {
+    this.loaderService.show();
+    this.fileterSaleReportForCustomerSelection();
+    this.loaderService.hide();
+  }
+
   customerSelected() {
     this.fileterSaleReportForCustomerSelection();
   }
 
   private fileterSaleReportForCustomerSelection() {
-    if (this.customerId > 0) {
-      var customerName = this.customers.find(c => c.id == this.customerId).name;
-      this.saleReport = this.unfileterdData.filter(c => c.customerName == customerName);
+    if (this.supplierId > 0 || this.customerId > 0) {
+      if (this.supplierId > 0 && this.customerId < 1) {
+        var supplierName = this.suppliers.find(s => s.id == this.supplierId).name;
+        this.saleReport = this.unfileterdData.filter(s => s.supplierName == supplierName);
+      }
+      else if (this.supplierId < 1 && this.customerId > 0) {
+        var customerName = this.customers.find(c => c.id == this.customerId).name;
+        this.saleReport = this.unfileterdData.filter(s => s.customerName == customerName);
+      }
+      else if (this.supplierId > 0 && this.customerId > 0) {
+        var supplierName = this.suppliers.find(s => s.id == this.supplierId).name;
+        var customerName = this.customers.find(c => c.id == this.customerId).name;
+        this.saleReport = this.unfileterdData.filter(s => s.customerName == customerName && s.supplierName == supplierName);
+      }
     } else {
       this.saleReport = this.unfileterdData;
     }
-
   }
 }

@@ -6,7 +6,7 @@ export class Part {
         this.partCustomerAssignments = [];
     }
 
-    id: number = 0;
+    id: any = 0;
     code: string;
     description: string;
     companyId: number = 0;

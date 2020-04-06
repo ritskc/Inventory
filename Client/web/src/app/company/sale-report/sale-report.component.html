@@ -1,9 +1,13 @@
 <div class="row" style="margin-left: 1px; margin-bottom: 5px;">
-  <select class="form-control col-xs-3 col-md-3" [(ngModel)]='customerId' (change)="customerSelected()">
+  <select class="form-control col-xs-2 col-md-2" [(ngModel)]='customerId' (change)="customerSelected()">
       <option value="-1">Show for all customers</option>
       <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
   </select>
-  <span class="col-xs-1 col-md-1"> </span>
+  <select class="form-control col-xs-2 col-md-2" [(ngModel)]='supplierId' (change)="supplierSelected()">
+    <option value="-1">Show for all suppliers</option>
+    <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{supplier.name}}</option>
+</select>
+<span class="col-xs-1 col-md-1"> </span>
   <input type="date" class="form-control col-xs-2 col-md-2" [(ngModel)]="from"/>
   <input type="date" class="form-control col-xs-2 col-md-2" [(ngModel)]="to"/>
   <button class="btn btn-primary" style="margin-left: 10px;" (click)="generate()">Generate</button>

@@ -47,8 +47,10 @@ export class ShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Slip No", value: "packingSlipNo", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Shipped Date", value: "shippingDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Shipped Via", value: "shipVia", sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Tracking", value: "trakingNumber", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "isInvoiceCreated", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
+    this.columns.push( new DataColumn({ headerText: "POS", value: "isPOSUploaded", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Actions", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Warning, event: 'editInvoice', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Repack', actionStyle: ClassConstants.Primary, event: 'printRepackingInvoice', icon: 'fa fa-print', showOnlyIf: 'data["isRepackage"] == true' }),

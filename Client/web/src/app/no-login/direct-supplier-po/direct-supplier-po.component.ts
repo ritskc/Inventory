@@ -56,7 +56,10 @@ export class DirectSupplierPoComponent implements OnInit {
     this.supplierAccessService.submitSupplierPurchaseOrder(this.supplerPurchaseOrder, this.activatedRoute.snapshot.params.id)
         .subscribe(() => {
           alert('Order acknowledged successfully!');
-        }, (error) => console.log(error),
+        }, (error) => {
+          this.httpLoaderService.hide();
+          console.log(error)
+        },
         () => this.httpLoaderService.hide());
   }
 

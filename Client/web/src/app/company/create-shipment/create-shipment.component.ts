@@ -39,7 +39,7 @@ export class CreateShipmentComponent implements OnInit {
 
   private blankOrder: boolean = false;
   private orderId: number = 0;
-  private partCode: number = 0;
+  private partCode: any;
   private quantity: number = 0;
   private inBasket: boolean = false;
   private boxes: number = 0;
@@ -145,7 +145,9 @@ export class CreateShipmentComponent implements OnInit {
     this.customerPurchaseOrders.filter(c => c.id == this.orderId)[0].orderDetails
         .filter(o => !o.isClosed)
         .forEach(orderDetail => {
-      this.customerAssociatedParts.push(orderDetail.part);
+          var orderDetailsPart = Object.assign({}, orderDetail.part);
+          orderDetailsPart.id = `${ orderDetailsPart.id }.${ orderDetail.id }`;
+          this.customerAssociatedParts.push(orderDetailsPart);
     });
     this.partCode = -1;
   }
@@ -182,8 +184,9 @@ export class CreateShipmentComponent implements OnInit {
       this.dueDate = '';
     }
     else {
+      var partId = selectedPart.id.split('.');
       var selectedOrder = this.customerPurchaseOrders.find(o => o.id == this.orderId);
-      var partDetail = selectedOrder.orderDetails.find(p => p.partId == selectedPart.id);
+      var partDetail = selectedOrder.orderDetails.find(p => p.partId == partId[0] && p.id == partId[1]);
       this.partOpenQuantity = partDetail.qty - partDetail.shippedQty;
       this.lineNo = partDetail.lineNumber;
       this.dueDate = DateHelper.formatDate(DateHelper.convertToDateTime(partDetail.dueDate));
@@ -252,15 +255,18 @@ export class CreateShipmentComponent implements OnInit {
     var packagingSlipDetail = new PackingSlipDetail();
     packagingSlipDetail.isBlankOrder = this.blankOrder;
     packagingSlipDetail.orderId = this.blankOrder ? 0: this.orderId;
+    var selectedPartCode: any;
     if (!this.blankOrder) {
+      selectedPartCode = this.partCode.split('.')[0];
       var selectedOrder = this.customerPurchaseOrders.find(o => o.id == this.orderId);
-      var partInTheOrder = selectedOrder.orderDetails.find(p => p.partId == this.partCode);
+      var partInTheOrder = selectedOrder.orderDetails.find(p => p.partId == selectedPartCode);
       packagingSlipDetail.orderDetailId = partInTheOrder.id;
     } else {
       packagingSlipDetail.orderDetailId = 0;
+      selectedPartCode = this.partCode;
     }
-    var selectedPartForAdd = this.parts.find(p => p.id == this.partCode);
-    packagingSlipDetail.partId = this.partCode;
+    var selectedPartForAdd = this.parts.find(p => p.id == selectedPartCode);
+    packagingSlipDetail.partId = selectedPartCode;
     packagingSlipDetail.partDescription = selectedPartForAdd.description;
     packagingSlipDetail.orderNo = this.blankOrder? this.OrderNo : this.customerPurchaseOrders.find(o => o.id == this.orderId).poNo;
     packagingSlipDetail.qty = this.quantity;
@@ -306,7 +312,7 @@ export class CreateShipmentComponent implements OnInit {
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Sr No", value: "srNo", customStyling: 'center' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Blank Order", value: "isBlankOrder", isDisabled: true, isBoolean: true, customStyling: 'center' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Order Id", value: "orderNo" }) );
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Part", value: "partDescription" }) );
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Part Description", value: "partDescription" }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Quantity", value: "qty", isEditable: true, customStyling: 'right column-width-50' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", isEditable: true, customStyling: 'right column-width-100' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Price", value: "price", customStyling: 'right' }) );
@@ -344,7 +350,11 @@ export class CreateShipmentComponent implements OnInit {
             this.packagingSlipCreated.next(`${this.appConfig.reportsUri}/PackingSlip.aspx?id=${result}`);
             this.loadAllOrdersForCustomer();
           },
-          (error) => { this.toastr.errorToastr('Error while creating shipment'); console.log(error); },
+          (error) => { 
+            this.toastr.errorToastr('Error while creating shipment'); 
+            this.httpLoaderService.hide();
+            console.log(error); 
+          },
           () => {
             this.getAllShipmentsForSelectedCustomer();
             this.httpLoaderService.hide();

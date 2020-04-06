@@ -482,6 +482,7 @@ export class OrderDetailComponent implements OnInit {
       }
     }, (error) => {
       this.toastr.errorToastr(error.error);
+      this.loaderService.hide();
     }, () => {
       this.loaderService.hide();
       setTimeout(() => {

@@ -36,6 +36,10 @@ export class SupplierService {
       return this.apiService.put(supplier, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri + `/${ supplier.id }`);
   }
 
+  delete(id: number) {
+    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.supplierUri }`)
+  }
+
   savePurchaseOrder(purchaseOrder: PurchaseOrder) {
     if (purchaseOrder.id == 0)
       return this.apiService.post(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.posUri);

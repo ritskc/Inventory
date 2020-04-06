@@ -21,10 +21,12 @@ export class POSUploadComponent implements OnInit {
   private selection: number = 1;
   private currentlyLoggedInCompany: number = -1;
   private data: any;
+  private unfilteredShipmentsList: any;
   private shipments: Shipment[] = [];
   private customers: Customer[] = [];
   private tracking: string = '';
-  private shipmentId: number = 0;
+  private shipmentId: number = -1;
+  private showPOSShipments: boolean = false;
   
   constructor(private companyService: CompanyService, private customerService: CustomerService, private loaderService: httpLoaderService,
               private shipmentService: ShipmentService, private fileService: FileUploadService, private toastr: ToastrManager
@@ -62,23 +64,33 @@ export class POSUploadComponent implements OnInit {
   }
 
   customerSelected() {
+    this.showPOSShipments = false;
     this.loaderService.show();
     this.shipments = [];
     if (this.selection == 1) {
       this.shipmentService.getAllShipments(this.currentlyLoggedInCompany)
         .subscribe((shipments) => {
+          this.unfilteredShipmentsList = shipments;
           this.data = shipments.filter(s => s.customerId == this.customerId && !s.isMasterPackingSlip && !s.isPOSUploaded);
           this.shipmentId = -1;
-          //this.data = this.shipments;
         }, (error) => console.log(error)
         ,() => this.loaderService.hide());
     } else if (this.selection == 3) {
       this.shipmentService.getAllMasterShipments(this.currentlyLoggedInCompany)
         .subscribe((shipments) => {
+          this.unfilteredShipmentsList = shipments;
           this.data = shipments.filter(s => s.customerId == this.customerId && !s.isPOSUploaded);
           this.shipmentId = -1;
         }, (error) => console.log(error)
         ,() => this.loaderService.hide());
+    }
+  }
+
+  showPOS(event) {
+    if (this.selection == 1) {
+      this.data = this.unfilteredShipmentsList.filter(s => s.customerId == this.customerId && !s.isMasterPackingSlip && s.isPOSUploaded == this.showPOSShipments);
+    } else {
+      this.data = this.unfilteredShipmentsList.filter(s => s.customerId == this.customerId && s.isPOSUploaded == this.showPOSShipments);
     }
   }
 

@@ -1,4 +1,4 @@
-<div class="card standard-margin-top" style="width: 38%;">
+<div class="card standard-margin-top" style="width: 60%;">
   <div class="card-header">
     <strong>POS Upload & Remove</strong>
   </div>
@@ -6,16 +6,28 @@
     <div>
       <label><input type="radio" name="optradio" value="" checked (change)="uploadSelected($event)"> Upload</label>
       <label class="standard-margin-left"><input type="radio" name="optradio" value="" (change)="masterSelected($event)"> Master</label>
-      <label class="standard-margin-left"><input type="radio" name="optradio" value="" (change)="deleteSelected($event)"> Remove</label>
+      <label class="standard-margin-left" hidden><input type="radio" name="optradio" value="" (change)="deleteSelected($event)" hidden> Remove</label>
     </div>
     <select class="form-control" (change)="customerSelected()" [(ngModel)]="customerId">
       <option value="-1">Select Customer</option>
       <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
     </select>
-    <select *ngIf="selection == 1" class="form-control standard-margin-top" [(ngModel)]="shipmentId">
-      <option value="-1">Select Shipment</option>
-      <option *ngFor="let shipment of data" [value]="shipment.id">{{shipment.packingSlipNo}}</option>
-    </select>
+    <div class="row">
+      <div class="col-xs-6 col-md-6">
+        <select *ngIf="selection == 1" class="form-control standard-margin-top" [(ngModel)]="shipmentId">
+          <option value="-1">Select Shipment</option>
+          <option *ngFor="let shipment of data" [value]="shipment.id">{{shipment.packingSlipNo}}</option>
+        </select>
+      </div>
+      <div class="col-md-3 col-xs-3">
+        <div style="margin-top: 20px;">
+          <input class="form-check-input" type="checkbox" id="showPOSOnly" (change)="showPOS($event)" [(ngModel)]="showPOSShipments">
+          <label class="form-check-label" for="showPOSOnly">
+            Show POS Uploaded
+          </label>
+        </div>
+      </div>
+    </div>
     <select *ngIf="selection == 3" class="form-control standard-margin-top" [(ngModel)]="shipmentId">
       <option value="-1">Select Shipment</option>
       <option *ngFor="let shipment of data" [value]="shipment.id">{{shipment.masterPackingSlipNo}}</option>

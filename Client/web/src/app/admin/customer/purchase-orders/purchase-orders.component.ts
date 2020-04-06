@@ -74,6 +74,7 @@ export class PurchaseOrdersComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Code", value: "partCode", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Description", value: "partDescription", sortable: true, customStyling: 'column-width-100' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Ship Date", value: "shippingDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Pack. Slip", value: "packingSlipNo", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Order", value: "orderedQty", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Open", value: "openQuantity", customStyling: 'right' }) );
@@ -218,4 +219,5 @@ class CustomerPurchaseOrderViewModel {
   status: string = '';
   isForceClosed: boolean;
   packingSlipNo: string = '';
+  shippingDate: string = '';
 }

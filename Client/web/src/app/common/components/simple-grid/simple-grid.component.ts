@@ -19,7 +19,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   @Input() addRequired: boolean = true;
   @Input() exportRequired: boolean = true;
   @Input() columns: DataColumn[] = [];
-  @Input() pageSize: number = 10;
+  @Input() pageSize: number = 20;
   @Input() defaultSortColumnName: string = 'name';
   @Output() selectedRow = new EventEmitter();
   @Output() addClickedEventEmitter = new EventEmitter();

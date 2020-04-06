@@ -59,13 +59,7 @@ export class SupplierDetailComponent implements OnInit {
   }
 
   addMoreTermAndCondition() {
-    if (this.supplier.terms.length == 0) {
-      this.createNewTermAndCondition();
-      return;  
-    }
-
-    // if (this.verifyIfAValidTermAndConditionExist())
-    //   this.createNewTermAndCondition();
+    this.createNewTermAndCondition();
   }
 
   removeTermAndCondition(index) {
@@ -92,6 +86,16 @@ export class SupplierDetailComponent implements OnInit {
         this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
       }
     );
+  }
+
+  delete() {
+    if (confirm('Are you sure you want to delete this supplier?')) {
+      this.supplierService.delete(this.supplier.id)
+          .subscribe(
+            () => this.router.navigateByUrl('/suppliers'),
+            (error) => this.toastr.errorToastr(error.error)
+          );
+    }
   }
 
   private createNewTermAndCondition() {

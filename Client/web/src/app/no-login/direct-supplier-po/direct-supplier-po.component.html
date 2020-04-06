@@ -15,7 +15,7 @@
     </div>
   </div>
   <simple-grid [addRequired]="false" [exportRequired]="false" [columns]="columns" [data]="supplerPurchaseOrder?.poDetails"></simple-grid>
-  <div class="card" *ngIf="!supplerPurchaseOrder?.isAcknowledged">
+  <div class="card">
     <div class="card-footer">
       <button class="btn btn-primary pull-right" (click)="submitPurchaseOrder()">Acknowledge Purchase Order</button>
     </div>
