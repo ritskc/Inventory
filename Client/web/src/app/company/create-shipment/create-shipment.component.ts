@@ -259,7 +259,7 @@ export class CreateShipmentComponent implements OnInit {
     if (!this.blankOrder) {
       selectedPartCode = this.partCode.split('.')[0];
       var selectedOrder = this.customerPurchaseOrders.find(o => o.id == this.orderId);
-      var partInTheOrder = selectedOrder.orderDetails.find(p => p.partId == selectedPartCode);
+      var partInTheOrder = selectedOrder.orderDetails.find(p => p.partId == selectedPartCode && p.id == this.partCode.split('.')[1]);
       packagingSlipDetail.orderDetailId = partInTheOrder.id;
     } else {
       packagingSlipDetail.orderDetailId = 0;

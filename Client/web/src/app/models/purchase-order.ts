@@ -58,6 +58,7 @@ export class PurchaseOrderDetail {
     isAcknowledged: boolean = false;
     isForceClosed: boolean = false;
     packingSlipNo: string = '';
+    shippingDate: string;
 }
 
 export class PurchaseOrderTerm {

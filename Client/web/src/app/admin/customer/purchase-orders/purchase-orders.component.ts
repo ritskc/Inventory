@@ -125,6 +125,7 @@ export class PurchaseOrdersComponent implements OnInit {
           customerPurchaseOrderViewModel.status = detail.isClosed? 'Close': 'Open';
           customerPurchaseOrderViewModel.isForceClosed = detail.isForceClosed;
           customerPurchaseOrderViewModel.packingSlipNo = detail.packingSlipNo;
+          customerPurchaseOrderViewModel.shippingDate = detail.shippingDate;
           this.purchaseOrders.push(customerPurchaseOrderViewModel);
         });
       } else {
