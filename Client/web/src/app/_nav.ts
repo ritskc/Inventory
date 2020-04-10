@@ -374,9 +374,9 @@ if (environment.isSupplier) {
     //     text: 'NEW'
     //   }
     // },
-    {
-      divider: true
-    },
+    // {
+    //   divider: true
+    // },
     // {
     //   title: true,
     //   name: 'Extras',

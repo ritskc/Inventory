@@ -11,7 +11,7 @@ import { CompanyService } from '../../company/company.service';
   templateUrl: './default-layout.component.html'
 })
 export class DefaultLayoutComponent implements OnDestroy {
-  public navItems = navItems;
+  public clonedNavItems = JSON.parse(localStorage.getItem('filtered')); //JSON.parse(JSON.stringify(navItems));
   public sidebarMinimized = true;
   private changes: MutationObserver;
   public element: HTMLElement;
