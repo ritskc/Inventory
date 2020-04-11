@@ -16,20 +16,37 @@ namespace DAL.Repository
     {
         private readonly ISqlHelper _sqlHelper;
         private readonly IEntityTrackerRepository entityTrackerRepository;
+        private readonly IUserRepository userRepository;
 
-        public PoRepository(ISqlHelper sqlHelper, IEntityTrackerRepository entityTrackerRepository)
+        public PoRepository(ISqlHelper sqlHelper, IEntityTrackerRepository entityTrackerRepository, IUserRepository userRepository)
         {
             _sqlHelper = sqlHelper;
             this.entityTrackerRepository = entityTrackerRepository;
+            this.userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<Po>> GetAllPosAsync(int companyId)
+        public async Task<IEnumerable<Po>> GetAllPosAsync(int companyId, int userId)
         {
             List<Po> pos = new List<Po>();
+
+            var userInfo = await userRepository.GeUserbyIdAsync(userId);
+            var commandText = "";
+            if (userInfo.UserTypeId == 1)
+            {
+                commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms],[DueDate]  FROM [dbo].[PoMaster] where CompanyId = '{companyId}' ");
+            }
+            if (userInfo.UserTypeId == 2)
+            {
+                return pos;
+            }
+            if (userInfo.UserTypeId == 3)
+            {
+                string companylist = string.Join(",", userInfo.CompanyIds);
+                commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms],[DueDate]  FROM [dbo].[PoMaster] where CompanyId = '{companyId}' and  [SupplierId] in ({companylist})");
+            }
+
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
-
-
-            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms],[DueDate]  FROM [dbo].[PoMaster] where CompanyId = '{companyId}' ");
+            
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -678,7 +695,7 @@ namespace DAL.Repository
 
                     foreach (PoDetail poDetail in po.poDetails)
                     {
-                        sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [AckQty] = '{poDetail.AckQty}', [DueDate] = '{poDetail.AckQty}'   WHERE poid = '{po.Id}' ");
+                        sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [AckQty] = '{poDetail.AckQty}', [DueDate] = '{poDetail.DueDate}'   WHERE poid = '{po.Id}' ");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                     }                   

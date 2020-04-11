@@ -19,18 +19,21 @@ namespace DAL.Repository
         private readonly IPartRepository partRepository;
         private readonly IEntityTrackerRepository entityTrackerRepository;
         private readonly ICustomerRepository customerRepository;
+        private readonly IUserRepository userRepository;
 
         public PackingSlipRepository(ISqlHelper sqlHelper, 
             IOrderRepository orderRepository,
             IPartRepository partRepository,
             IEntityTrackerRepository entityTrackerRepository,
-            ICustomerRepository customerRepository)
+            ICustomerRepository customerRepository,
+            IUserRepository userRepository)
         {
             this._sqlHelper = sqlHelper;
             this._orderRepository = orderRepository;
             this.partRepository = partRepository;
             this.entityTrackerRepository = entityTrackerRepository;
             this.customerRepository = customerRepository;
+            this.userRepository = userRepository;
         }
         public async Task<Int32> AddPackingSlipAsync(PackingSlip packingSlip)
         {
@@ -57,7 +60,7 @@ namespace DAL.Repository
                     packingSlip.TotalSurcharge = 0;
                     packingSlip.GrossWeight = 0;
                     packingSlip.Boxes = 0;
-                    var customer = await this.customerRepository.GetCustomerAsync(packingSlip.CustomerId);
+                    var customer = await this.customerRepository.GetCustomerAsync(packingSlip.CustomerId, connection, transaction);
                     packingSlip.FOB = customer.FOB;
                     packingSlip.Terms = customer.Terms;
                     packingSlip.IsRepackage = false;
@@ -68,7 +71,7 @@ namespace DAL.Repository
                     
                     foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
                     {
-                        var partDetail = await this.partRepository.GetPartAsync(packingSlipDetail.PartId);
+                        var partDetail = await this.partRepository.GetPartAsync(packingSlipDetail.PartId, connection, transaction);
                         packingSlipDetail.IsRepackage = partDetail.IsRepackage;
                         if (packingSlipDetail.IsRepackage)
                             packingSlip.IsRepackage = true;
@@ -335,15 +338,32 @@ namespace DAL.Repository
             return true;
         }
 
-        public async Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId)
+        public async Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId, int userId)
         {
             List<PackingSlip> packingSlips = new List<PackingSlip>();
-            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-
-            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[CustomerId] ,[PackingSlipNo] ,[ShippingDate] ,[ShipVia] ,[Crates] ," +
+            var commandText = "";
+            var userInfo = await userRepository.GeUserbyIdAsync(userId);
+            if (userInfo.UserTypeId == 1)
+            {
+                commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[CustomerId] ,[PackingSlipNo] ,[ShippingDate] ,[ShipVia] ,[Crates] ," +
                 $"[Boxes] ,[GrossWeight] ,[ShippingCharge] ,[CustomCharge] ,[SubTotal] ,[Total] ,[IsInvoiceCreated] ,[IsPaymentReceived] ,[FOB] ,[Terms] ," +
                 $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsMasterPackingSlip],[MasterPackingSlipId],[IsRepackage],[TrakingNumber]   FROM [dbo].[PackingSlipMaster] where CompanyId = '{companyId}' ");
+            }
+            if (userInfo.UserTypeId == 2)
+            {
+                string companylist = string.Join(",", userInfo.CompanyIds);
+
+                commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[CustomerId] ,[PackingSlipNo] ,[ShippingDate] ,[ShipVia] ,[Crates] ," +
+               $"[Boxes] ,[GrossWeight] ,[ShippingCharge] ,[CustomCharge] ,[SubTotal] ,[Total] ,[IsInvoiceCreated] ,[IsPaymentReceived] ,[FOB] ,[Terms] ," +
+               $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsMasterPackingSlip],[MasterPackingSlipId],[IsRepackage],[TrakingNumber]   FROM [dbo].[PackingSlipMaster] where CompanyId = '{companyId}' and  [CustomerId] in ({companylist}) ");               
+            }
+            if (userInfo.UserTypeId == 3)
+            {
+                return packingSlips;
+            }
+
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);           
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -754,7 +774,7 @@ namespace DAL.Repository
                     packingSlip.TotalSurcharge = 0;
                     packingSlip.GrossWeight = 0;
                     packingSlip.Boxes = 0;
-                    var customer = await this.customerRepository.GetCustomerAsync(packingSlip.CustomerId);
+                    var customer = await this.customerRepository.GetCustomerAsync(packingSlip.CustomerId, connection, transaction);
                     packingSlip.FOB = customer.FOB;
                     packingSlip.Terms = customer.Terms;
 
@@ -765,7 +785,7 @@ namespace DAL.Repository
                     packingSlip.IsRepackage = false;
                     foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
                     {
-                        var partDetail = await this.partRepository.GetPartAsync(packingSlipDetail.PartId);
+                        var partDetail = await this.partRepository.GetPartAsync(packingSlipDetail.PartId, connection, transaction);
 
                         packingSlipDetail.IsRepackage = partDetail.IsRepackage;
                         if (packingSlipDetail.IsRepackage)
@@ -815,7 +835,7 @@ namespace DAL.Repository
                         $",[ShippingCharge] = '{packingSlip.ShippingCharge}' ,[CustomCharge] = '{packingSlip.CustomCharge}' ,[SubTotal] = '{packingSlip.SubTotal}' ,[Total] = '{packingSlip.Total}' " +
                         $",[IsPaymentReceived] = '{packingSlip.IsPaymentReceived}' ,[FOB] = '{packingSlip.FOB}' ,[Terms] = '{packingSlip.Terms}' ," +
                         $"[ShipmentInfoId] = '{packingSlip.ShipmentInfoId}'  ,[TotalSurcharge] = '{packingSlip.TotalSurcharge}' ,[IsRepackage] = '{packingSlip.IsRepackage}'  WHERE id = '{packingSlip.Id}'");
-
+                    command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();                    
 
                     var packingSlipId = packingSlip.Id;

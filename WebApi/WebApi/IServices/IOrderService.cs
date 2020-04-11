@@ -8,7 +8,7 @@ namespace WebApi.IServices
 {
     public interface IOrderService
     {
-        Task<IEnumerable<OrderMaster>> GetAllOrderMastersAsync(int companyId);
+        Task<IEnumerable<OrderMaster>> GetAllOrderMastersAsync(int companyId,int userId);
         Task<OrderMaster> GetOrderMasterAsync(long orderId);
         Task<long> AddOrderMasterAsync(OrderMaster order);
         Task UpdateOrderMasterAsync(OrderMaster order);

@@ -15,20 +15,37 @@ namespace DAL.Repository
     public class PartRepository : IPartRepository
     {
         private readonly ISqlHelper _sqlHelper;
+        private readonly IUserRepository userRepository;
 
-        public PartRepository(ISqlHelper sqlHelper)
+        public PartRepository(ISqlHelper sqlHelper,IUserRepository userRepository)
         {
             _sqlHelper = sqlHelper;
+            this.userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<Part>> GetAllPartsAsync(int companyId)
-        {
+        public async Task<IEnumerable<Part>> GetAllPartsAsync(int companyId,int userId)
+        {            
             List<Part> parts = new List<Part>();
-            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-
-            var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
+            var commandText = "";
+            var userInfo = await userRepository.GeUserbyIdAsync(userId);
+            if (userInfo.UserTypeId == 1)
+            {
+                commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
                 "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage] FROM [part] where CompanyId = '{0}' ", companyId);
+            }
+            if (userInfo.UserTypeId == 2)
+            {
+                string companylist = string.Join(",", userInfo.CompanyIds);
+                commandText = string.Format($"SELECT PM.[id],[Code],PM.[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty], [DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage] FROM [part] PM INNER JOIN partcustomerassignment PCA ON PCA.PartId = PM.id where CompanyId = '{companyId}' AND PCA.CustomerId IN ({companylist}) ");
+            }
+            if (userInfo.UserTypeId == 3)
+            {
+                string companylist = string.Join(",", userInfo.CompanyIds);
+                commandText = string.Format($"SELECT PM.[id],[Code],PM.[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty], [DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],PM.[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage] FROM [part] PM INNER JOIN partsupplierassignment PCA ON PCA.PartId = PM.id where CompanyId ='{companyId}' AND PCA.SupplierID IN ({companylist}) ");
+            }
+
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);           
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -160,7 +177,7 @@ namespace DAL.Repository
                 conn.Close();
 
 
-                commandText = string.Format("SELECT sum(AckQty - (InTransitQty + ReceivedQty )) as openqty from PoDetails where partid = '{0}' and (IsClosed =0 OR IsClosed IS NULL) ", part.Id);
+                commandText = string.Format("SELECT sum(Qty - (InTransitQty + ReceivedQty )) as openqty from PoDetails where partid = '{0}' and (IsClosed =0 OR IsClosed IS NULL) ", part.Id);
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                 {
@@ -623,7 +640,7 @@ namespace DAL.Repository
             var parts = new List<SupplierOpenPO>();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-            var commandText = string.Format("SELECT S.Name as SupplierName ,[PoId] ,[PartId] ,p.code , pm.PoNo,p.Description   ,[ReferenceNo]  ,[UnitPrice],PD.[DueDate],[Note],[Qty] - (pd.[InTransitQty] +  pd.[ReceivedQty]) as OpenQty ,[SrNo]  FROM [dbo].[PoDetails] PD  INNER JOIN PoMaster PM ON PM.ID = PD.PoId  INNER JOIN part P ON P.id = PD.PartId INNER JOIN supplier S ON S.ID = PM.SupplierId   WHERE PartId = '{0}' AND (PD.IsClosed = 0 OR PD.IsClosed IS NULL) AND PM.CompanyId = '{1}'  order by pd.DueDate asc ", partId, companyId);
+            var commandText = string.Format("SELECT S.Name as SupplierName ,[PoId] ,[PartId] ,p.code , pm.PoNo, pm.PoDate, p.Description   ,[ReferenceNo]  ,[UnitPrice],PD.[DueDate],[Note],[Qty] - (pd.[InTransitQty] +  pd.[ReceivedQty]) as OpenQty ,[SrNo]  FROM [dbo].[PoDetails] PD  INNER JOIN PoMaster PM ON PM.ID = PD.PoId  INNER JOIN part P ON P.id = PD.PartId INNER JOIN supplier S ON S.ID = PM.SupplierId   WHERE PartId = '{0}' AND (PD.IsClosed = 0 OR PD.IsClosed IS NULL) AND PM.CompanyId = '{1}'  order by pd.DueDate asc ", partId, companyId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {

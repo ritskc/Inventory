@@ -10,7 +10,7 @@ namespace DAL.IRepository
 {
     public interface IPartRepository
     {
-        Task<IEnumerable<Part>> GetAllPartsAsync(int companyId);
+        Task<IEnumerable<Part>> GetAllPartsAsync(int companyId,int userId);
         Task<Part> GetPartAsync(long partId);
         Task<Part> GetPartAsync(long partId, SqlConnection conn, SqlTransaction transaction);
         Part GetPart(long partId);

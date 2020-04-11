@@ -24,6 +24,7 @@ namespace DAL.Models
         public string Note { get; set; }
         public bool IsForceClosed { get; set; }
         public string PackingSlipNo { get; set; }
+        public DateTime ShippingDate { get; set; }
 
         public Part part { get; set; }
     }

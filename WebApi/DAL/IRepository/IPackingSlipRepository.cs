@@ -9,7 +9,7 @@ namespace DAL.IRepository
 {
     public interface IPackingSlipRepository
     {
-        Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId);
+        Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId,int userId);
         Task<PackingSlip> GetPackingSlipAsync(long Id);
         PackingSlip GetPackingSlip(long id);
         Task<Int32> AddPackingSlipAsync(PackingSlip packingSlip);

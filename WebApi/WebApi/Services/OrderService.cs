@@ -30,12 +30,12 @@ namespace WebApi.Services
             await this._orderRepository.DeleteOrderMasterAsync(orderId);            
         }
 
-        public async Task<IEnumerable<OrderMaster>> GetAllOrderMastersAsync(int companyId)
+        public async Task<IEnumerable<OrderMaster>> GetAllOrderMastersAsync(int companyId,int userId)
         {
             //return await this.orderRepository.GetAllOrderMastersAsync(companyId);
 
-            var result = await this._orderRepository.GetAllOrderMastersAsync(companyId);
-            var packingSlips = await this._packingSlipService.GetAllPackingSlipsAsync(companyId);
+            var result = await this._orderRepository.GetAllOrderMastersAsync(companyId,userId);
+            var packingSlips = await this._packingSlipService.GetAllPackingSlipsAsync(companyId,userId);
             foreach (OrderMaster pos in result)
             {
                 foreach (OrderDetail poDetail in pos.OrderDetails)
@@ -52,6 +52,7 @@ namespace WebApi.Services
                                 if (packingSlipDetails.OrderDetailId == poDetail.Id)
                                 {
                                     poDetail.PackingSlipNo = packingSlip.PackingSlipNo;
+                                    poDetail.ShippingDate = packingSlip.ShippingDate;
                                     break;
                                 }
                             }

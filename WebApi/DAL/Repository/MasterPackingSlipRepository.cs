@@ -17,12 +17,15 @@ namespace DAL.Repository
         private readonly ISqlHelper sqlHelper;
         private readonly IEntityTrackerRepository entityTrackerRepository;
         private readonly IPackingSlipRepository packingSlipRepository;
+        private readonly IUserRepository userRepository;
 
-        public MasterPackingSlipRepository(ISqlHelper sqlHelper, IEntityTrackerRepository entityTrackerRepository, IPackingSlipRepository packingSlipRepository)
+        public MasterPackingSlipRepository(ISqlHelper sqlHelper, IEntityTrackerRepository entityTrackerRepository, 
+            IPackingSlipRepository packingSlipRepository, IUserRepository userRepository)
         {
             this.sqlHelper = sqlHelper;
             this.entityTrackerRepository = entityTrackerRepository;
             this.packingSlipRepository = packingSlipRepository;
+            this.userRepository = userRepository;
 
         }
         public async Task<int> AddMasterPackingSlipAsync(MasterPackingSlip masterPackingSlip)
@@ -117,16 +120,33 @@ namespace DAL.Repository
             return true;
         }
 
-        public async Task<IEnumerable<MasterPackingSlip>> GetAllMasterPackingSlipsAsync(int companyId)
+        public async Task<IEnumerable<MasterPackingSlip>> GetAllMasterPackingSlipsAsync(int companyId, int userId)
         {
-            List<MasterPackingSlip> masterPackingSlips = new List<MasterPackingSlip>();          
+            List<MasterPackingSlip> masterPackingSlips = new List<MasterPackingSlip>();
+
+            var commandText = "";
+            var userInfo = await userRepository.GeUserbyIdAsync(userId);
+            if (userInfo.UserTypeId == 1)
+            {
+                commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[CustomerId] ,[MasterPackingSlipNo] " +
+                  $",[UpdatedDate] ,[Comment] ,[IsPOSUploaded] ,[POSPath] ,[TrakingNumber]  FROM [dbo].[MasterPackingSlipMaster] where [CompanyId] = '{companyId}' ");
+
+            }
+            if (userInfo.UserTypeId == 2)
+            {
+                string companylist = string.Join(",", userInfo.CompanyIds);
+
+                commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[CustomerId] ,[MasterPackingSlipNo] " +
+                 $",[UpdatedDate] ,[Comment] ,[IsPOSUploaded] ,[POSPath] ,[TrakingNumber]  FROM [dbo].[MasterPackingSlipMaster] where [CompanyId] = '{companyId}' and  [CustomerId] in ({companylist}) ");
+             }
+            if (userInfo.UserTypeId == 3)
+            {
+                return masterPackingSlips;
+            }
 
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-
-            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[CustomerId] ,[MasterPackingSlipNo] " +
-                 $",[UpdatedDate] ,[Comment] ,[IsPOSUploaded] ,[POSPath] ,[TrakingNumber]  FROM [dbo].[MasterPackingSlipMaster] where [CompanyId] = '{companyId}' ");
-
+            
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
                 cmd.CommandType = CommandType.Text;

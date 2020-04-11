@@ -37,11 +37,11 @@ namespace WebApi.Controllers
                     return BadRequest();
                 }
 
-                var parts = await this._partService.GetAllPartsAsync(po.CompanyId);
+                var parts = await this._partService.GetAllPartsAsync(po.CompanyId,1);
                 if (po == null || po.poDetails == null)
                     return BadRequest("Invalid PO");
 
-                var existingPo = await this._poService.GetPoAsync(po.Id);
+                var existingPo = await this._poService.GetPoAsync(po.Id,1);
                 if (existingPo != null && existingPo.IsClosed)
                     return BadRequest("PO is already closed.PO is not editable");
                 if (existingPo != null && existingPo.poDetails != null)
@@ -87,7 +87,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                var result = await this._poService.GetPoByAccessIdAsync(id);
+                var result = await this._poService.GetPoByAccessIdAsync(id,1);
 
                 if (result == null)
                 {

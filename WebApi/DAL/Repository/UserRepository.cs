@@ -1,4 +1,5 @@
-﻿using DAL.IRepository;
+﻿using DAL.DBHelper;
+using DAL.IRepository;
 using DAL.Models;
 using DAL.Settings;
 using System;
@@ -13,6 +14,12 @@ namespace DAL.Repository
 {
     public class UserRepository : IUserRepository
     {
+        private readonly IPriviledgeRepository priviledgeRepository;
+        public UserRepository(IPriviledgeRepository priviledgeRepository)
+        {
+            this.priviledgeRepository = priviledgeRepository;
+
+        }
         public async Task AddUserAsync(User user)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
@@ -32,11 +39,20 @@ namespace DAL.Repository
 
                 try
                 {
-                    string sql = string.Format($"INSERT INTO [dbo].[User]   ([UserName]   ,[Password]   ,[FirstName]   ,[LastName]   ,[Email]   ,[PriviledgeId]   ,[UserTypeId]   ,[MapId]) VALUES   ('{user.UserName}'   ,'{user.Password}'   ,'{user.FirstName}'   ,'{user.LastName}'   ,'{user.Email}'   ,'{user.PriviledgeId}'   ,'{user.UserTypeId}'   ,'{user.MapId}')");
+                    string sql = string.Format($"INSERT INTO [dbo].[User]   ([UserName]   ,[Password]   ,[FirstName]   ,[LastName]   ,[Email]   ,[PriviledgeId]   ,[UserTypeId],[IsSuperAdmin] ) VALUES   ('{user.UserName}'   ,'{user.Password}'   ,'{user.FirstName}'   ,'{user.LastName}'   ,'{user.Email}'   ,'{user.PriviledgeId}'   ,'{user.UserTypeId}','{user.IsSuperAdmin}')");
 
                     sql = sql + " Select Scope_Identity()";
                     command.CommandText = sql;
-                    await command.ExecuteScalarAsync();                    
+                    var userId = await command.ExecuteScalarAsync();
+                    
+
+                    foreach (Int32 companyId in user.CompanyIds)
+                    {                       
+
+                        sql = string.Format($"INSERT INTO [dbo].[UserCompanyAssignment]   ([UserId]   ,[CompanyId])     VALUES   ('{userId}'   ,'{companyId}')");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                    }
 
                     // Attempt to commit the transaction.
                     transaction.Commit();
@@ -68,7 +84,11 @@ namespace DAL.Repository
 
                 try
                 {
-                    var sql = string.Format("DELETE FROM [dbo].[User] WHERE  WHERE id = '{0}'", id);
+                    var sql = string.Format($"DELETE FROM [dbo].[UserCompanyAssignment] WHERE UserId = '{id}'");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    sql = string.Format("DELETE FROM [dbo].[User] WHERE  WHERE id = '{0}'", id);
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();                   
 
@@ -90,7 +110,7 @@ namespace DAL.Repository
 
 
             var commandText = string.Format("SELECT [Id] ,[UserName] ,[Password] ,[FirstName] ,[LastName] ,[Email] ,[PriviledgeId] ," +
-                "[UserTypeId] ,[MapId] FROM [User]  WITH(NOLOCK)" );
+                "[UserTypeId] ,[IsSuperAdmin] FROM [User]  WITH(NOLOCK)");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -111,105 +131,136 @@ namespace DAL.Repository
                     user.Email = Convert.ToString(dataReader["Email"]);
                     user.PriviledgeId = Convert.ToInt32(dataReader["PriviledgeId"]);
                     user.UserTypeId = Convert.ToInt32(dataReader["UserTypeId"]);
-                    user.MapId = Convert.ToInt32(dataReader["MapId"]);
+                    user.IsSuperAdmin = Convert.ToBoolean(dataReader["IsSuperAdmin"]);
                     users.Add(user);
                 }
+                dataReader.Close();
                 conn.Close();
             }
             foreach (User user in users)
             {
-                List<Report> reports = new List<Report>();
-                commandText = string.Format("SELECT distinct  R.Name as ReportName, URP.[PriviledgeId] , URP.[ReportId] FROM [UserReportPriviledges] URP INNER JOIN[USER] U ON U.PriviledgeId = URP.PriviledgeId " +
-                    "INNER JOIN[REPORT] R ON R.Id = URP.ReportId WHERE URP.PriviledgeId = '{0}'", user.PriviledgeId.ToString());
-
-                using (SqlCommand cmd3 = new SqlCommand(commandText, conn))
+                if (!user.IsSuperAdmin)
                 {
-                    cmd3.CommandType = CommandType.Text;
-                    conn.Open();
-                    var dataReader3 = cmd3.ExecuteReader(CommandBehavior.CloseConnection);
+                    //user.userPriviledge = await this.priviledgeRepository.GetPriviledgeAsync(user.PriviledgeId);                   
 
-                    while (dataReader3.Read())
+                    user.userPriviledge = await this.priviledgeRepository.GetFormattedPriviledgeAsync(user.PriviledgeId);
+
+                    user.CompanyIds = new List<int>();
+                    commandText = string.Format($"SELECT [Id],[UserId],[CompanyId]  FROM [UserCompanyAssignment]  WITH(NOLOCK) WHERE UserId ='{user.Id}'");
+
+                    using (SqlCommand cmd = new SqlCommand(commandText, conn))
                     {
-                        var report = new Report();
-                        report.Id = Convert.ToInt32(dataReader3["ReportId"]);
-                        //report.PriviledgeId = Convert.ToInt32(dataReader3["PriviledgeId"]);
-                        report.Name = Convert.ToString(dataReader3["ReportName"]);
+                        cmd.CommandType = CommandType.Text;
 
-                        reports.Add(report);
-                    }
-                    user.Reports = reports;
-                    conn.Close();
-                }
-            }
+                        conn.Open();
 
+                        var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
 
-            foreach (User user in users)
-            {
-                List<UserReportPriviledge> userReportPriviledges = new List<UserReportPriviledge>();
-                commandText = string.Format("SELECT URP.[Id], R.Name as ReportName, URP.[PriviledgeId] , URP.[ReportId],[ReportColumnId] , RC.ColumnName, URP.[ColumnName] AS 'DISPLAYNAME' ,[View] ,[Edit],[Sort],[SortOrder] ," +
-                    "[ColumnTypeId] ,[ColumnSequence] FROM [UserReportPriviledges] URP INNER JOIN[USER] U ON U.PriviledgeId = URP.PriviledgeId INNER JOIN[REPORT] R ON R.Id = URP.ReportId  " +
-                    "INNER JOIN ReportColumns RC ON RC.Id = URP.ReportColumnId WHERE U.PriviledgeId = '{0}'", user.PriviledgeId);
+                        while (dataReader.Read())
+                        {
 
-                using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
-                {
-                    cmd1.CommandType = CommandType.Text;
-                    conn.Open();
-                    var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
-
-                    while (dataReader1.Read())
-                    {
-                        var userReportPriviledge = new UserReportPriviledge();
-                        userReportPriviledge.Id = Convert.ToInt32(dataReader1["Id"]);
-                        //userReportPriviledge.PriviledgeId = Convert.ToInt32(dataReader1["PriviledgeId"]);
-                        userReportPriviledge.ReportId = Convert.ToInt32(dataReader1["ReportId"]);
-                        //userReportPriviledge.ReportName = Convert.ToString(dataReader1["ReportName"]);
-                        userReportPriviledge.ReportColumnId = Convert.ToInt32(dataReader1["ReportColumnId"]);
-                        userReportPriviledge.DisplayName = Convert.ToString(dataReader1["DisplayName"]);
-                        userReportPriviledge.ColumnName = Convert.ToString(dataReader1["ColumnName"]);
-                        userReportPriviledge.View = Convert.ToBoolean(dataReader1["Edit"]);
-                        userReportPriviledge.Edit = Convert.ToBoolean(dataReader1["Sort"]);
-                        userReportPriviledge.Sort = Convert.ToBoolean(dataReader1["Sort"]);
-                        userReportPriviledge.SortOrder = Convert.ToBoolean(dataReader1["SortOrder"]);
-                        userReportPriviledge.ColumnTypeId = Convert.ToInt32(dataReader1["ColumnTypeId"]);
-                        userReportPriviledge.ColumnSequence = Convert.ToInt32(dataReader1["ColumnSequence"]);
-
-                        var rep = user.Reports.Where(x => x.Id == userReportPriviledge.ReportId).FirstOrDefault();
-
-                        if (rep.UserReportPriviledges == null)
-                            rep.UserReportPriviledges = new List<UserReportPriviledge>();
-                        rep.UserReportPriviledges.Add(userReportPriviledge);
+                            user.CompanyIds.Add(Convert.ToInt32(dataReader["CompanyId"]));
+                        }
+                        dataReader.Close();
+                        conn.Close();
                     }
                 }
-                //user.UserReportPriviledges = userReportPriviledges;
-                conn.Close();
-            }
-            foreach (User user in users)
-            {
-                List<SSRSReport> sSRSReports = new List<SSRSReport>();
-                commandText = "SELECT [Id],[Name],[Path] FROM[SSRSReport]  WITH(NOLOCK) ";
+            }            
 
-                using (SqlCommand cmd2 = new SqlCommand(commandText, conn))
-                {
-                    cmd2.CommandType = CommandType.Text;
+            //foreach (User user in users)
+            //{
+            //    List<Report> reports = new List<Report>();
+            //    commandText = string.Format("SELECT distinct  R.Name as ReportName, URP.[PriviledgeId] , URP.[ReportId] FROM [UserReportPriviledges] URP INNER JOIN[USER] U ON U.PriviledgeId = URP.PriviledgeId " +
+            //        "INNER JOIN[REPORT] R ON R.Id = URP.ReportId WHERE URP.PriviledgeId = '{0}'", user.PriviledgeId.ToString());
 
-                    conn.Open();
+            //    using (SqlCommand cmd3 = new SqlCommand(commandText, conn))
+            //    {
+            //        cmd3.CommandType = CommandType.Text;
+            //        conn.Open();
+            //        var dataReader3 = cmd3.ExecuteReader(CommandBehavior.CloseConnection);
 
-                    var dataReader2 = await cmd2.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+            //        while (dataReader3.Read())
+            //        {
+            //            var report = new Report();
+            //            report.Id = Convert.ToInt32(dataReader3["ReportId"]);
+            //            //report.PriviledgeId = Convert.ToInt32(dataReader3["PriviledgeId"]);
+            //            report.Name = Convert.ToString(dataReader3["ReportName"]);
 
-                    while (dataReader2.Read())
-                    {
-                        var sSRSReport = new SSRSReport();
-                        sSRSReport.Id = Convert.ToInt32(dataReader2["Id"]);
-                        sSRSReport.Name = Convert.ToString(dataReader2["Name"]);
-                        sSRSReport.Path = Convert.ToString(dataReader2["Path"]);
+            //            reports.Add(report);
+            //        }
+            //        user.Reports = reports;
+            //        conn.Close();
+            //    }
+            //}
 
 
-                        sSRSReports.Add(sSRSReport);
-                    }
-                    conn.Close();
-                }
-                user.SSRSReports = sSRSReports;
-            }
+            //foreach (User user in users)
+            //{
+            //    List<UserReportPriviledge> userReportPriviledges = new List<UserReportPriviledge>();
+            //    commandText = string.Format("SELECT URP.[Id], R.Name as ReportName, URP.[PriviledgeId] , URP.[ReportId],[ReportColumnId] , RC.ColumnName, URP.[ColumnName] AS 'DISPLAYNAME' ,[View] ,[Edit],[Sort],[SortOrder] ," +
+            //        "[ColumnTypeId] ,[ColumnSequence] FROM [UserReportPriviledges] URP INNER JOIN[USER] U ON U.PriviledgeId = URP.PriviledgeId INNER JOIN[REPORT] R ON R.Id = URP.ReportId  " +
+            //        "INNER JOIN ReportColumns RC ON RC.Id = URP.ReportColumnId WHERE U.PriviledgeId = '{0}'", user.PriviledgeId);
+
+            //    using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+            //    {
+            //        cmd1.CommandType = CommandType.Text;
+            //        conn.Open();
+            //        var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+            //        while (dataReader1.Read())
+            //        {
+            //            var userReportPriviledge = new UserReportPriviledge();
+            //            userReportPriviledge.Id = Convert.ToInt32(dataReader1["Id"]);
+            //            //userReportPriviledge.PriviledgeId = Convert.ToInt32(dataReader1["PriviledgeId"]);
+            //            userReportPriviledge.ReportId = Convert.ToInt32(dataReader1["ReportId"]);
+            //            //userReportPriviledge.ReportName = Convert.ToString(dataReader1["ReportName"]);
+            //            userReportPriviledge.ReportColumnId = Convert.ToInt32(dataReader1["ReportColumnId"]);
+            //            userReportPriviledge.DisplayName = Convert.ToString(dataReader1["DisplayName"]);
+            //            userReportPriviledge.ColumnName = Convert.ToString(dataReader1["ColumnName"]);
+            //            userReportPriviledge.View = Convert.ToBoolean(dataReader1["Edit"]);
+            //            userReportPriviledge.Edit = Convert.ToBoolean(dataReader1["Sort"]);
+            //            userReportPriviledge.Sort = Convert.ToBoolean(dataReader1["Sort"]);
+            //            userReportPriviledge.SortOrder = Convert.ToBoolean(dataReader1["SortOrder"]);
+            //            userReportPriviledge.ColumnTypeId = Convert.ToInt32(dataReader1["ColumnTypeId"]);
+            //            userReportPriviledge.ColumnSequence = Convert.ToInt32(dataReader1["ColumnSequence"]);
+
+            //            var rep = user.Reports.Where(x => x.Id == userReportPriviledge.ReportId).FirstOrDefault();
+
+            //            if (rep.UserReportPriviledges == null)
+            //                rep.UserReportPriviledges = new List<UserReportPriviledge>();
+            //            rep.UserReportPriviledges.Add(userReportPriviledge);
+            //        }
+            //    }
+            //    //user.UserReportPriviledges = userReportPriviledges;
+            //    conn.Close();
+            //}
+            //foreach (User user in users)
+            //{
+            //    List<SSRSReport> sSRSReports = new List<SSRSReport>();
+            //    commandText = "SELECT [Id],[Name],[Path] FROM[SSRSReport]  WITH(NOLOCK) ";
+
+            //    using (SqlCommand cmd2 = new SqlCommand(commandText, conn))
+            //    {
+            //        cmd2.CommandType = CommandType.Text;
+
+            //        conn.Open();
+
+            //        var dataReader2 = await cmd2.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+            //        while (dataReader2.Read())
+            //        {
+            //            var sSRSReport = new SSRSReport();
+            //            sSRSReport.Id = Convert.ToInt32(dataReader2["Id"]);
+            //            sSRSReport.Name = Convert.ToString(dataReader2["Name"]);
+            //            sSRSReport.Path = Convert.ToString(dataReader2["Path"]);
+
+
+            //            sSRSReports.Add(sSRSReport);
+            //        }
+            //        conn.Close();
+            //    }
+            //    user.SSRSReports = sSRSReports;
+            //}
             return users;
         }
 
@@ -220,7 +271,7 @@ namespace DAL.Repository
 
 
             var commandText = string.Format("SELECT [Id] ,[UserName] ,[Password] ,[FirstName] ,[LastName] ,[Email] ,[PriviledgeId] ," +
-                "[UserTypeId] ,[MapId] FROM [User]  WITH(NOLOCK) WHERE UserName ='{0}' ", userName);
+                "[UserTypeId],[IsSuperAdmin] FROM [User]  WITH(NOLOCK) WHERE UserName ='{0}' ", userName);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -240,98 +291,126 @@ namespace DAL.Repository
                     user.Email = Convert.ToString(dataReader["Email"]);
                     user.PriviledgeId = Convert.ToInt32(dataReader["PriviledgeId"]);
                     user.UserTypeId = Convert.ToInt32(dataReader["UserTypeId"]);
-                    user.MapId = Convert.ToInt32(dataReader["MapId"]);
+                    user.IsSuperAdmin = Convert.ToBoolean(dataReader["IsSuperAdmin"]);
                 }
+                dataReader.Close();
                 conn.Close();
             }
 
-            List<Report> reports = new List<Report>();
-            commandText = string.Format("SELECT distinct  R.Name as ReportName, URP.[PriviledgeId] , URP.[ReportId] FROM [UserReportPriviledges] URP INNER JOIN[USER] U ON U.PriviledgeId = URP.PriviledgeId " +
-                "INNER JOIN[REPORT] R ON R.Id = URP.ReportId WHERE URP.PriviledgeId = '{0}'", user.PriviledgeId.ToString());
-
-            using (SqlCommand cmd3 = new SqlCommand(commandText, conn))
+            if (!user.IsSuperAdmin)
             {
-                cmd3.CommandType = CommandType.Text;
-                conn.Open();
-                var dataReader3 = cmd3.ExecuteReader(CommandBehavior.CloseConnection);
-
-                while (dataReader3.Read())
+                user.CompanyIds = new List<int>();
+                commandText = string.Format($"SELECT [Id],[UserId],[CompanyId]  FROM [UserCompanyAssignment]  WITH(NOLOCK) WHERE UserId ='{user.Id}'");
+                using (SqlCommand cmd = new SqlCommand(commandText, conn))
                 {
-                    var report = new Report();
-                    report.Id = Convert.ToInt32(dataReader3["ReportId"]);
-                    //report.PriviledgeId = Convert.ToInt32(dataReader3["PriviledgeId"]);
-                    report.Name = Convert.ToString(dataReader3["ReportName"]);
-                   
-                    reports.Add(report);
+                    cmd.CommandType = CommandType.Text;
+
+                    conn.Open();
+
+                    var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                    while (dataReader.Read())
+                    {
+
+                        user.CompanyIds.Add(Convert.ToInt32(dataReader["CompanyId"]));
+                    }
+                    dataReader.Close();
+                    conn.Close();
                 }
-            }
-            user.Reports = reports;
-            conn.Close();
+
+                user.userPriviledge = await this.priviledgeRepository.GetPriviledgeAsync(user.PriviledgeId);
+               
+           }
+
+            //List<Report> reports = new List<Report>();
+            //commandText = string.Format("SELECT distinct  R.Name as ReportName, URP.[PriviledgeId] , URP.[ReportId] FROM [UserReportPriviledges] URP INNER JOIN[USER] U ON U.PriviledgeId = URP.PriviledgeId " +
+            //    "INNER JOIN[REPORT] R ON R.Id = URP.ReportId WHERE URP.PriviledgeId = '{0}'", user.PriviledgeId.ToString());
+
+            //using (SqlCommand cmd3 = new SqlCommand(commandText, conn))
+            //{
+            //    cmd3.CommandType = CommandType.Text;
+            //    conn.Open();
+            //    var dataReader3 = cmd3.ExecuteReader(CommandBehavior.CloseConnection);
+
+            //    while (dataReader3.Read())
+            //    {
+            //        var report = new Report();
+            //        report.Id = Convert.ToInt32(dataReader3["ReportId"]);
+            //        //report.PriviledgeId = Convert.ToInt32(dataReader3["PriviledgeId"]);
+            //        report.Name = Convert.ToString(dataReader3["ReportName"]);
+
+            //        reports.Add(report);
+            //    }
+            //}
+            //user.Reports = reports;
+            //conn.Close();
 
 
-            List<UserReportPriviledge> userReportPriviledges = new List<UserReportPriviledge>();
-            commandText = string.Format("SELECT URP.[Id], R.Name as ReportName, URP.[PriviledgeId] , URP.[ReportId],[ReportColumnId] , RC.ColumnName, URP.[ColumnName] AS 'DISPLAYNAME' ,[View] ,[Edit],[Sort],[SortOrder] ," +
-                "[ColumnTypeId] ,[ColumnSequence] FROM [UserReportPriviledges] URP INNER JOIN[USER] U ON U.PriviledgeId = URP.PriviledgeId INNER JOIN[REPORT] R ON R.Id = URP.ReportId  " +
-                "INNER JOIN ReportColumns RC ON RC.Id = URP.ReportColumnId WHERE U.PriviledgeId = '{0}'", user.PriviledgeId);
+            //List<UserReportPriviledge> userReportPriviledges = new List<UserReportPriviledge>();
+            //commandText = string.Format("SELECT URP.[Id], R.Name as ReportName, URP.[PriviledgeId] , URP.[ReportId],[ReportColumnId] , RC.ColumnName, URP.[ColumnName] AS 'DISPLAYNAME' ,[View] ,[Edit],[Sort],[SortOrder] ," +
+            //    "[ColumnTypeId] ,[ColumnSequence] FROM [UserReportPriviledges] URP INNER JOIN[USER] U ON U.PriviledgeId = URP.PriviledgeId INNER JOIN[REPORT] R ON R.Id = URP.ReportId  " +
+            //    "INNER JOIN ReportColumns RC ON RC.Id = URP.ReportColumnId WHERE U.PriviledgeId = '{0}'", user.PriviledgeId);
 
-            using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
-            {
-                cmd1.CommandType = CommandType.Text;
-                conn.Open();
-                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+            //using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+            //{
+            //    cmd1.CommandType = CommandType.Text;
+            //    conn.Open();
+            //    var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
 
-                while (dataReader1.Read())
-                {
-                    var userReportPriviledge = new UserReportPriviledge();
-                    userReportPriviledge.Id = Convert.ToInt32(dataReader1["Id"]);
-                    //userReportPriviledge.PriviledgeId = Convert.ToInt32(dataReader1["PriviledgeId"]);
-                    userReportPriviledge.ReportId = Convert.ToInt32(dataReader1["ReportId"]);
-                    //userReportPriviledge.ReportName = Convert.ToString(dataReader1["ReportName"]);
-                    userReportPriviledge.ReportColumnId = Convert.ToInt32(dataReader1["ReportColumnId"]);
-                    userReportPriviledge.DisplayName = Convert.ToString(dataReader1["DisplayName"]);
-                    userReportPriviledge.ColumnName = Convert.ToString(dataReader1["ColumnName"]);
-                    userReportPriviledge.View = Convert.ToBoolean(dataReader1["Edit"]);
-                    userReportPriviledge.Edit = Convert.ToBoolean(dataReader1["Sort"]);
-                    userReportPriviledge.Sort = Convert.ToBoolean(dataReader1["Sort"]);
-                    userReportPriviledge.SortOrder = Convert.ToBoolean(dataReader1["SortOrder"]);
-                    userReportPriviledge.ColumnTypeId = Convert.ToInt32(dataReader1["ColumnTypeId"]);
-                    userReportPriviledge.ColumnSequence = Convert.ToInt32(dataReader1["ColumnSequence"]);
+            //    while (dataReader1.Read())
+            //    {
+            //        var userReportPriviledge = new UserReportPriviledge();
+            //        userReportPriviledge.Id = Convert.ToInt32(dataReader1["Id"]);
+            //        //userReportPriviledge.PriviledgeId = Convert.ToInt32(dataReader1["PriviledgeId"]);
+            //        userReportPriviledge.ReportId = Convert.ToInt32(dataReader1["ReportId"]);
+            //        //userReportPriviledge.ReportName = Convert.ToString(dataReader1["ReportName"]);
+            //        userReportPriviledge.ReportColumnId = Convert.ToInt32(dataReader1["ReportColumnId"]);
+            //        userReportPriviledge.DisplayName = Convert.ToString(dataReader1["DisplayName"]);
+            //        userReportPriviledge.ColumnName = Convert.ToString(dataReader1["ColumnName"]);
+            //        userReportPriviledge.View = Convert.ToBoolean(dataReader1["Edit"]);
+            //        userReportPriviledge.Edit = Convert.ToBoolean(dataReader1["Sort"]);
+            //        userReportPriviledge.Sort = Convert.ToBoolean(dataReader1["Sort"]);
+            //        userReportPriviledge.SortOrder = Convert.ToBoolean(dataReader1["SortOrder"]);
+            //        userReportPriviledge.ColumnTypeId = Convert.ToInt32(dataReader1["ColumnTypeId"]);
+            //        userReportPriviledge.ColumnSequence = Convert.ToInt32(dataReader1["ColumnSequence"]);
 
-                    var rep = user.Reports.Where(x => x.Id == userReportPriviledge.ReportId).FirstOrDefault();
+            //        var rep = user.Reports.Where(x => x.Id == userReportPriviledge.ReportId).FirstOrDefault();
 
-                    if (rep.UserReportPriviledges == null)
-                        rep.UserReportPriviledges = new List<UserReportPriviledge>();
-                    rep.UserReportPriviledges.Add(userReportPriviledge);
-                }
-            }
-            //user.UserReportPriviledges = userReportPriviledges;
-            conn.Close();
-
-  
-            List<SSRSReport> sSRSReports = new List<SSRSReport>();
-            commandText = "SELECT [Id],[Name],[Path] FROM[SSRSReport]  WITH(NOLOCK) ";
-
-            using (SqlCommand cmd2 = new SqlCommand(commandText, conn))
-            {
-                cmd2.CommandType = CommandType.Text;
-
-                conn.Open();
-
-                var dataReader2 = await cmd2.ExecuteReaderAsync(CommandBehavior.CloseConnection);
-
-                while (dataReader2.Read())
-                {
-                    var sSRSReport = new SSRSReport();
-                    sSRSReport.Id = Convert.ToInt32(dataReader2["Id"]);
-                    sSRSReport.Name = Convert.ToString(dataReader2["Name"]);
-                    sSRSReport.Path = Convert.ToString(dataReader2["Path"]);
+            //        if (rep.UserReportPriviledges == null)
+            //            rep.UserReportPriviledges = new List<UserReportPriviledge>();
+            //        rep.UserReportPriviledges.Add(userReportPriviledge);
+            //    }
+            //}
+            ////user.UserReportPriviledges = userReportPriviledges;
+            //conn.Close();
 
 
-                    sSRSReports.Add(sSRSReport);
-                }
-                conn.Close();
-            }
-            user.SSRSReports = sSRSReports;
+            //List<SSRSReport> sSRSReports = new List<SSRSReport>();
+            //commandText = "SELECT [Id],[Name],[Path] FROM[SSRSReport]  WITH(NOLOCK) ";
+
+            //using (SqlCommand cmd2 = new SqlCommand(commandText, conn))
+            //{
+            //    cmd2.CommandType = CommandType.Text;
+
+            //    conn.Open();
+
+            //    var dataReader2 = await cmd2.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+            //    while (dataReader2.Read())
+            //    {
+            //        var sSRSReport = new SSRSReport();
+            //        sSRSReport.Id = Convert.ToInt32(dataReader2["Id"]);
+            //        sSRSReport.Name = Convert.ToString(dataReader2["Name"]);
+            //        sSRSReport.Path = Convert.ToString(dataReader2["Path"]);
+
+
+            //        sSRSReports.Add(sSRSReport);
+            //    }
+            //    conn.Close();
+            //}
+            //user.SSRSReports = sSRSReports;
+
+           
             return user;
         }
 
@@ -359,11 +438,20 @@ namespace DAL.Repository
 
                 try
                 {
-                   
-                    var sql = string.Format($"UPDATE [dbo].[User]   SET [UserName] = '{user.UserName}' ,[Password] = '{user.Password}' ,[FirstName] = '{user.FirstName}' ,[LastName] = '{user.LastName}' ,[Email] = '{user.Email}' ,[PriviledgeId] = '{user.PriviledgeId}' ,[UserTypeId] = '{user.UserTypeId}' ,[MapId] = '{user.MapId}' WHERE id = '{0}'", user.Id);
+                    var sql = string.Format($"DELETE FROM [dbo].[UserCompanyAssignment] WHERE UserId = '{user.Id}'");
                     command.CommandText = sql;
-                    await command.ExecuteNonQueryAsync();                    
+                    await command.ExecuteNonQueryAsync();
 
+                    sql = string.Format($"UPDATE [dbo].[User]   SET [UserName] = '{user.UserName}' ,[Password] = '{user.Password}' ,[FirstName] = '{user.FirstName}' ,[LastName] = '{user.LastName}' ,[Email] = '{user.Email}' ,[PriviledgeId] = '{user.PriviledgeId}' ,[UserTypeId] = '{user.UserTypeId}' ,[IsSuperAdmin] = '{user.IsSuperAdmin}' WHERE id = '{0}'", user.Id);
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    foreach (Int32 companyId in user.CompanyIds)
+                    {
+                        sql = string.Format($"INSERT INTO [dbo].[UserCompanyAssignment]   ([UserId]   ,[CompanyId])     VALUES   ('{user.Id}'   ,'{companyId}'");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                    }
                     // Attempt to commit the transaction.
                     transaction.Commit();
                 }

@@ -55,10 +55,10 @@ namespace WebApi.Services
             return result;
         }       
 
-        public async Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId)
+        public async Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId,int userId)
         {
-            var partList = await this.partService.GetAllPartsAsync(companyId);
-            var result =  await this.packingSlipRepository.GetAllPackingSlipsAsync(companyId);
+            var partList = await this.partService.GetAllPartsAsync(companyId,userId);
+            var result =  await this.packingSlipRepository.GetAllPackingSlipsAsync(companyId,userId);
 
             foreach(PackingSlip packingSlip in result)
             {
@@ -74,10 +74,10 @@ namespace WebApi.Services
         public async Task<PackingSlip> GetPackingSlipAsync(long Id)
         {            
             var result= await this.packingSlipRepository.GetPackingSlipAsync(Id);
-            var partList = await this.partService.GetAllPartsAsync(result.CompanyId);
+            //var partList = await this.partService.GetAllPartsAsync(result.CompanyId);
             foreach (PackingSlipDetails packingSlipDetails in result.PackingSlipDetails)
             {
-                var partDetail = partList.Where(p => p.Id == packingSlipDetails.PartId).FirstOrDefault();
+                var partDetail = await this.partService.GetPartAsync(packingSlipDetails.PartId);//partList.Where(p => p.Id == packingSlipDetails.PartId).FirstOrDefault();
                 packingSlipDetails.PartDetail = partDetail;
             }
             return result;

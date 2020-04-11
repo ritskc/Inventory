@@ -8,9 +8,9 @@ namespace WebApi.IServices
 {
     public interface IPoService
     {
-        Task<IEnumerable<Po>> GetAllPosAsync(int companyId);
-        Task<Po> GetPoAsync(long poId);
-        Task<Po> GetPoByAccessIdAsync(string poId);
+        Task<IEnumerable<Po>> GetAllPosAsync(int companyId,int userId);
+        Task<Po> GetPoAsync(long poId,int userId);
+        Task<Po> GetPoByAccessIdAsync(string poId,int userId);
         Task AddPoAsync(Po po);
         Task UpdatePoAsync(Po po);
         Task AcknowledgePoAsync(Po po);

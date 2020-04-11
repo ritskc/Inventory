@@ -14,7 +14,7 @@ namespace Report.Services
     {        
         public static List<Company> GetCompanies(string contactname)
         {
-            ISqlHelper sqlHelper = new SqlHelper();
+            ISqlHelper sqlHelper = new SqlHelper();            
             ICompanyRepository companyRepository = new CompanyRepository(sqlHelper);          
            
             return companyRepository.GetAllCompany().ToList();
@@ -24,11 +24,13 @@ namespace Report.Services
         public static async Task<PackingSlip> GetPackingSlipAsync(int id)
         {
             ISqlHelper sqlHelper = new SqlHelper();
-            IOrderRepository oRepository = new OrderRepository(sqlHelper);
-            IPartRepository partRepository = new PartRepository(sqlHelper);
+            IPriviledgeRepository priviledgeRepository = new PriviledgeRepository(sqlHelper);
+            IUserRepository userRepository = new UserRepository(priviledgeRepository);
+            IOrderRepository oRepository = new OrderRepository(sqlHelper, userRepository);
+            IPartRepository partRepository = new PartRepository(sqlHelper, userRepository);
             IEntityTrackerRepository entityTrackerRepository = new EntityTrackerRepository(sqlHelper);
-            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper);
-            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository, customerRepository);
+            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper, userRepository);
+            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository, customerRepository, userRepository);
 
             return await pRepository.GetPackingSlipAsync(id);
         }
@@ -36,11 +38,13 @@ namespace Report.Services
         public static List<PackingSlip> GetPackingSlip(int id)
         {
             ISqlHelper sqlHelper = new SqlHelper();
-            IOrderRepository oRepository = new OrderRepository(sqlHelper);
-            IPartRepository partRepository = new PartRepository(sqlHelper);
+            IPriviledgeRepository priviledgeRepository = new PriviledgeRepository(sqlHelper);
+            IUserRepository userRepository = new UserRepository(priviledgeRepository);
+            IOrderRepository oRepository = new OrderRepository(sqlHelper, userRepository);
+            IPartRepository partRepository = new PartRepository(sqlHelper, userRepository);
             IEntityTrackerRepository entityTrackerRepository = new EntityTrackerRepository(sqlHelper);
-            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper);
-            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository, customerRepository);
+            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper, userRepository);
+            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository, customerRepository, userRepository);
 
             var result = pRepository.GetPackingSlip(id);
 
@@ -53,11 +57,13 @@ namespace Report.Services
         public static List<CustomerShippingInfo> GetShippingInfo(int id)
         {
             ISqlHelper sqlHelper = new SqlHelper();
-            IOrderRepository oRepository = new OrderRepository(sqlHelper);
-            IPartRepository partRepository = new PartRepository(sqlHelper);
+            PriviledgeRepository priviledgeRepository = new PriviledgeRepository(sqlHelper);
+            IUserRepository userRepository = new UserRepository(priviledgeRepository);
+            IOrderRepository oRepository = new OrderRepository(sqlHelper, userRepository);
+            IPartRepository partRepository = new PartRepository(sqlHelper, userRepository);
             IEntityTrackerRepository entityTrackerRepository = new EntityTrackerRepository(sqlHelper);
-            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper);
-            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository, customerRepository);
+            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper, userRepository);
+            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository, customerRepository, userRepository);
 
             var result = pRepository.GetPackingSlip(id);
 
@@ -70,11 +76,13 @@ namespace Report.Services
         public static List<PackingSlipReport> GetPackingSlipReport(int id)
         {
             ISqlHelper sqlHelper = new SqlHelper();
-            IOrderRepository orderRepository = new OrderRepository(sqlHelper);
+            PriviledgeRepository priviledgeRepository = new PriviledgeRepository(sqlHelper);
+            IUserRepository userRepository = new UserRepository(priviledgeRepository);
+            IOrderRepository orderRepository = new OrderRepository(sqlHelper, userRepository);
             ICompanyRepository companyRepository = new CompanyRepository(sqlHelper);
-            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper);
-            ISupplierRepository supplierRepository = new SupplierRepository(sqlHelper);
-            IPartRepository partRepository = new PartRepository(sqlHelper);
+            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper, userRepository);
+            ISupplierRepository supplierRepository = new SupplierRepository(sqlHelper, userRepository);
+            IPartRepository partRepository = new PartRepository(sqlHelper, userRepository);
             IReportRepository reportRepository = new ReportRepository(sqlHelper,orderRepository,companyRepository,
                 customerRepository,partRepository, supplierRepository);
 
@@ -85,11 +93,13 @@ namespace Report.Services
         public static List<PackingSlipReport> GetRepackingInvoiceReport(int id)
         {
             ISqlHelper sqlHelper = new SqlHelper();
-            IOrderRepository orderRepository = new OrderRepository(sqlHelper);
+            PriviledgeRepository priviledgeRepository = new PriviledgeRepository(sqlHelper);
+            IUserRepository userRepository = new UserRepository(priviledgeRepository);
+            IOrderRepository orderRepository = new OrderRepository(sqlHelper, userRepository);
             ICompanyRepository companyRepository = new CompanyRepository(sqlHelper);
-            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper);
-            ISupplierRepository supplierRepository = new SupplierRepository(sqlHelper);
-            IPartRepository partRepository = new PartRepository(sqlHelper);
+            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper, userRepository);
+            ISupplierRepository supplierRepository = new SupplierRepository(sqlHelper, userRepository);
+            IPartRepository partRepository = new PartRepository(sqlHelper, userRepository);
             IReportRepository reportRepository = new ReportRepository(sqlHelper, orderRepository, companyRepository,
                 customerRepository, partRepository, supplierRepository);
 
@@ -100,11 +110,13 @@ namespace Report.Services
         public static List<PackingSlipReport> GetMasterPackingSlipReport(int id)
         {
             ISqlHelper sqlHelper = new SqlHelper();
-            IOrderRepository orderRepository = new OrderRepository(sqlHelper);
+            PriviledgeRepository priviledgeRepository = new PriviledgeRepository(sqlHelper);
+            IUserRepository userRepository = new UserRepository(priviledgeRepository);
+            IOrderRepository orderRepository = new OrderRepository(sqlHelper, userRepository);
             ICompanyRepository companyRepository = new CompanyRepository(sqlHelper);
-            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper);
-            IPartRepository partRepository = new PartRepository(sqlHelper);
-            ISupplierRepository supplierRepository = new SupplierRepository(sqlHelper);
+            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper, userRepository);
+            IPartRepository partRepository = new PartRepository(sqlHelper, userRepository);
+            ISupplierRepository supplierRepository = new SupplierRepository(sqlHelper, userRepository);
             IReportRepository reportRepository = new ReportRepository(sqlHelper, orderRepository, companyRepository,
                 customerRepository, partRepository, supplierRepository);
 
@@ -115,11 +127,13 @@ namespace Report.Services
         public static List<POReport> GetPoReport(int id)
         {
             ISqlHelper sqlHelper = new SqlHelper();
-            IOrderRepository orderRepository = new OrderRepository(sqlHelper);
+            PriviledgeRepository priviledgeRepository = new PriviledgeRepository(sqlHelper);
+            IUserRepository userRepository = new UserRepository(priviledgeRepository);
+            IOrderRepository orderRepository = new OrderRepository(sqlHelper, userRepository);
             ICompanyRepository companyRepository = new CompanyRepository(sqlHelper);
-            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper);
-            ISupplierRepository supplierRepository = new SupplierRepository(sqlHelper);
-            IPartRepository partRepository = new PartRepository(sqlHelper);
+            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper, userRepository);
+            ISupplierRepository supplierRepository = new SupplierRepository(sqlHelper, userRepository);
+            IPartRepository partRepository = new PartRepository(sqlHelper, userRepository);
             IReportRepository reportRepository = new ReportRepository(sqlHelper, orderRepository, companyRepository,
                 customerRepository, partRepository, supplierRepository);
 

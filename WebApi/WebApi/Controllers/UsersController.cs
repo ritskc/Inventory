@@ -41,7 +41,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -77,29 +77,29 @@ namespace WebApi.Controllers
             }
         }
 
+        //// GET: api/Todo
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<User>>> GetAllUser()
+        //{
+        //    try
+        //    {
+        //        var result = await this._userService.GetAllUsersAsync();
+
+        //        if (result == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        return result.ToList();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, ex.ToString());
+        //    }
+        //}
+
         // GET: api/Todo
-        [HttpGet()]
-        public async Task<ActionResult<IEnumerable<User>>> GetAllUser()
-        {
-            try
-            {
-                var result = await this._userService.GetAllUsersAsync();
-
-                if (result == null)
-                {
-                    return NotFound();
-                }
-
-                return result.ToList();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.ToString());
-            }
-        }
-
-        // GET: api/Todo
-        [HttpGet("{userId}")]
+        [HttpGet("id/{userId}")]
         public async Task<ActionResult<User>> GetUser(int userId)
         {
             try

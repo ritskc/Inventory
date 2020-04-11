@@ -23,12 +23,12 @@ namespace WebApi.Services
         }
 
        
-        public async Task<IEnumerable<Part>> GetAllPartsAsync(int companyId)
+        public async Task<IEnumerable<Part>> GetAllPartsAsync(int companyId,int userId)
         {
-            var suppliers = await _supplierRepository.GetAllSupplierAsync(companyId);
-            var customers = await _customerRepository.GetAllCustomerAsync(companyId);
+            var suppliers = await _supplierRepository.GetAllSupplierAsync(companyId,userId);
+            var customers = await _customerRepository.GetAllCustomerAsync(companyId,userId);
 
-            var parts=  await this._partRepository.GetAllPartsAsync(companyId);
+            var parts=  await this._partRepository.GetAllPartsAsync(companyId,userId);
             foreach(Part part in parts)
             {
                 foreach(PartSupplierAssignment partSupplierAssignment in part.partSupplierAssignments)

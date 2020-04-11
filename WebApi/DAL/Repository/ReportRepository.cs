@@ -905,7 +905,7 @@ namespace DAL.Repository
 
             foreach (SalesData salesData in packingSlips)
             {
-                commandText = string.Format($"select Top 1 name from supplier sm inner join partsupplierassignment psa on sm.id = psa.SupplierID where partid '{salesData.PartId}'");
+                commandText = string.Format($"select Top 1 name from supplier sm inner join partsupplierassignment psa on sm.id = psa.SupplierID where partid = '{salesData.PartId}'");
 
                 using (SqlCommand cmd = new SqlCommand(commandText, conn))
                 {

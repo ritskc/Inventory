@@ -9,7 +9,7 @@ namespace DAL.IRepository
 {
     public interface ISupplierRepository
     {
-        Task<IEnumerable<Supplier>> GetAllSupplierAsync(int companyId);
+        Task<IEnumerable<Supplier>> GetAllSupplierAsync(int companyId,int userId);
         Task<Supplier> GetSupplierAsync(int id);
         Task<Supplier> GetSupplierByNameAsync(int companyId,string supplierName);
         Task AddSupplierAsync(Supplier supplier);

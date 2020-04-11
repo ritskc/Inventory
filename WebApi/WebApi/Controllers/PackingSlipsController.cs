@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.IServices;
 using Microsoft.AspNetCore.Http.Extensions;
+using System.Security.Claims;
 
 namespace WebApi.Controllers
 {
@@ -27,7 +28,10 @@ namespace WebApi.Controllers
         {
             try
             {
-                var result = await this.packingSlipService.GetAllPackingSlipsAsync(companyId);
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var result = await this.packingSlipService.GetAllPackingSlipsAsync(companyId,userId);
 
                 if (result == null)
                 {

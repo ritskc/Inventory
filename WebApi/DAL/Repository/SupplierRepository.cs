@@ -15,18 +15,40 @@ namespace DAL.Repository
     public class SupplierRepository : ISupplierRepository
     {
         private readonly ISqlHelper _sqlHelper;
+        private readonly IUserRepository userRepository;
 
-        public SupplierRepository(ISqlHelper sqlHelper)
+        public SupplierRepository(ISqlHelper sqlHelper, IUserRepository userRepository)
         {
             _sqlHelper = sqlHelper;
+            this.userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<Supplier>> GetAllSupplierAsync(int companyId)
+        public async Task<IEnumerable<Supplier>> GetAllSupplierAsync(int companyId,int userId)
         {
             List<Supplier> suppliers = new List<Supplier>();
-            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
-            var commandText = string.Format("SELECT [id],[CompanyId],[Name],[ContactPersonName],[PhoneNo],[EmailID],[Address],[City],[State],[Country]," +
+
+            var userInfo = await userRepository.GeUserbyIdAsync(userId);
+            var commandText = "";
+            if (userInfo.UserTypeId == 1)
+            {
+                commandText = string.Format("SELECT [id],[CompanyId],[Name],[ContactPersonName],[PhoneNo],[EmailID],[Address],[City],[State],[Country]," +
                                  "[ZIPCode],[FAXNo],[DateFormat],[noofstages],[CompanyProfileID],[PoLetterHead] FROM [dbo].[supplier] WITH(NOLOCK) WHERE CompanyId = '{0}'", companyId);
+            }
+            if (userInfo.UserTypeId == 2)
+            {
+                return suppliers;
+            }
+            if (userInfo.UserTypeId == 3)
+            {
+                string companylist = string.Join(",", userInfo.CompanyIds);
+
+                commandText = string.Format("SELECT [id],[CompanyId],[Name],[ContactPersonName],[PhoneNo],[EmailID],[Address],[City],[State],[Country]," +
+                                "[ZIPCode],[FAXNo],[DateFormat],[noofstages],[CompanyProfileID],[PoLetterHead] FROM [dbo].[supplier] WITH(NOLOCK) WHERE CompanyId = '{0}' and  [id] in ({1})", companyId, companylist);
+               
+            }
+
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+           
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
                 cmd.CommandType = CommandType.Text;

@@ -15,19 +15,37 @@ namespace DAL.Repository
     public class OrderRepository : IOrderRepository
     {
         private readonly ISqlHelper _sqlHelper;
+        private readonly IUserRepository userRepository;
 
-        public OrderRepository(ISqlHelper sqlHelper)
+        public OrderRepository(ISqlHelper sqlHelper, IUserRepository userRepository)
         {
             _sqlHelper = sqlHelper;
+            this.userRepository = userRepository;
         }       
 
-        public async Task<IEnumerable<OrderMaster>> GetAllOrderMastersAsync(int companyId)
+        public async Task<IEnumerable<OrderMaster>> GetAllOrderMastersAsync(int companyId, int userId)
         {
             List<OrderMaster> orders = new List<OrderMaster>();
-            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
+            var commandText = "";
+            var userInfo = await userRepository.GeUserbyIdAsync(userId);
+            if (userInfo.UserTypeId == 1)
+            {
+                commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks],[IsClosed] ,[ClosingDate]  FROM [dbo].[OrderMaster] where CompanyId = '{0}' ", companyId);
+            }
+            if (userInfo.UserTypeId == 2)
+            {
+                string companylist = string.Join(",", userInfo.CompanyIds);
 
-            var commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks],[IsClosed] ,[ClosingDate]  FROM [dbo].[OrderMaster] where CompanyId = '{0}' ", companyId);
+                commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks],[IsClosed] ,[ClosingDate]  FROM [dbo].[OrderMaster] where CompanyId = '{0}'  " +
+                    "and  [CustomerId] in ({1}) ", companyId, companylist);               
+            }
+            if (userInfo.UserTypeId == 3)
+            {
+                return orders;
+            }
+
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);            
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -371,7 +389,13 @@ namespace DAL.Repository
                                 sql = string.Format($"UPDATE [dbo].[OrderDetail]   SET  [LineNumber] = '{orderDetail.LineNumber}' ,[Qty] = '{orderDetail.Qty}'  ,[UnitPrice] = '{orderDetail.UnitPrice}', [DueDate] = '{orderDetail.DueDate}' ,[Note] = '{orderDetail.Note}',[IsClosed] = '{true}',[ClosingDate] ='{DateTime.Now}' ,[SrNo] ='{orderDetail.SrNo}',[IsForceClosed] = '{orderDetail.IsForceClosed }' WHERE id = '{orderDetail.Id}'");
                             }
                             else
-                                sql = string.Format($"UPDATE [dbo].[OrderDetail]   SET  [LineNumber] = '{orderDetail.LineNumber}' ,[Qty] = '{orderDetail.Qty}'  ,[UnitPrice] = '{orderDetail.UnitPrice}', [DueDate] = '{orderDetail.DueDate}' ,[Note] = '{orderDetail.Note}',[SrNo] ='{orderDetail.SrNo}' WHERE id = '{orderDetail.Id}'");
+                            {
+                                if (orderDetail.Qty == orderDetail.ShippedQty)
+                                    orderDetail.IsClosed = true;
+                                else
+                                    orderDetail.IsClosed = false;
+                                sql = string.Format($"UPDATE [dbo].[OrderDetail]   SET  [LineNumber] = '{orderDetail.LineNumber}' ,[Qty] = '{orderDetail.Qty}'  ,[UnitPrice] = '{orderDetail.UnitPrice}', [DueDate] = '{orderDetail.DueDate}' ,[Note] = '{orderDetail.Note}',[SrNo] ='{orderDetail.SrNo}',[IsForceClosed] = '{orderDetail.IsForceClosed }',[IsClosed] = '{orderDetail.IsClosed}' WHERE id = '{orderDetail.Id}'");
+                            }
                         }
 
                         command.CommandText = sql;

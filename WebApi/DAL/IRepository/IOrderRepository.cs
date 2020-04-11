@@ -10,7 +10,7 @@ namespace DAL.IRepository
 {
     public interface IOrderRepository
     {
-        Task<IEnumerable<OrderMaster>> GetAllOrderMastersAsync(int companyId);
+        Task<IEnumerable<OrderMaster>> GetAllOrderMastersAsync(int companyId,int userId);
         Task<OrderMaster> GetOrderMasterAsync(long orderId);
         Task<OrderMaster> GetOrderMasterAsync(long orderId, SqlConnection conn, SqlTransaction transaction);
         Task<long> AddOrderMasterAsync(OrderMaster order);

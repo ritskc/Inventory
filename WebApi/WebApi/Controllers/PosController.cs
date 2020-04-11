@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
@@ -33,7 +34,10 @@ namespace WebApi.Controllers
         {
             try
             {
-                var result= await this._poService.GetAllPosAsync(companyId);
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var result= await this._poService.GetAllPosAsync(companyId,userId);
 
                 if (result == null)
                 {
@@ -55,7 +59,10 @@ namespace WebApi.Controllers
         {
             try
             {
-                var result = await this._poService.GetPoAsync(id);
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var result = await this._poService.GetPoAsync(id,userId);
 
                 if (result == null)
                 {
@@ -76,7 +83,9 @@ namespace WebApi.Controllers
         {
             try
             {
-                var parts = await this._partService.GetAllPartsAsync(po.CompanyId);
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+                var parts = await this._partService.GetAllPartsAsync(po.CompanyId,userId);
                 if (po == null || po.poDetails == null)
                     return BadRequest("Invalid PO");
                 foreach(PoDetail poDetail in po.poDetails)
@@ -120,16 +129,19 @@ namespace WebApi.Controllers
         {
             try
             {
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+                
                 if (id != po.Id)
                 {
                     return BadRequest();
                 }
 
-                var parts = await this._partService.GetAllPartsAsync(po.CompanyId);
+                var parts = await this._partService.GetAllPartsAsync(po.CompanyId,userId);
                 if (po == null || po.poDetails == null)
                     return BadRequest("Invalid PO");
 
-                var existingPo = await this._poService.GetPoAsync(po.Id);
+                var existingPo = await this._poService.GetPoAsync(po.Id,userId);
                 if (existingPo != null && existingPo.IsClosed)
                     return BadRequest("PO is already closed.PO is not editable");
 
@@ -220,13 +232,16 @@ namespace WebApi.Controllers
         {
             try
             {
-                var result = await this._poService.GetPoAsync(id);
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var result = await this._poService.GetPoAsync(id,userId);
                 if (result == null)
                 {
                     return NotFound();
                 }
 
-                var existingPo = await this._poService.GetPoAsync(id);
+                var existingPo = await this._poService.GetPoAsync(id,userId);
                 if (existingPo != null && existingPo.IsClosed)
                     return BadRequest("PO is already closed. You can not delete this PO");
                 if (existingPo != null && existingPo.poDetails != null)

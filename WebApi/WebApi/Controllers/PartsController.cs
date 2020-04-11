@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -31,7 +32,9 @@ namespace WebApi.Controllers
         {
             try
             {
-                var result = await this._partService.GetAllPartsAsync(companyId);
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+                var result = await this._partService.GetAllPartsAsync(companyId,userId);
 
                 if (result == null)
                 {
@@ -158,14 +161,17 @@ namespace WebApi.Controllers
         {
             try
             {
-                if(part == null)
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                if (part == null)
                     return StatusCode(500,"invalid part");
                 if (string.IsNullOrEmpty(part.Code) || string.IsNullOrEmpty(part.Description))
                     return StatusCode(500, "invalid partcode / description");
                 if(part.partSupplierAssignments == null || part.partSupplierAssignments.Count() < 1 ||
                     part.partCustomerAssignments == null || part.partCustomerAssignments.Count() < 1)
                     return StatusCode(500, "invalid part - Atleast one supplier and Customer requires to create a part");
-                var parts = await this._partService.GetAllPartsAsync(part.CompanyId);
+                var parts = await this._partService.GetAllPartsAsync(part.CompanyId,userId);
                 if (parts.Where(x => x.Code == part.Code).Count() > 0)
                     return StatusCode(302);
 

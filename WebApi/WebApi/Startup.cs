@@ -112,6 +112,7 @@ namespace WebApi
             services.AddTransient<IPackingSlipService, PackingSlipService>();
             services.AddTransient<IReportService, ReportService>();
             services.AddTransient<IMasterPackingSlipService, MasterPackingSlipService>();
+            services.AddTransient<IPriviledgeService, PriviledgeService>();
 
             //add repositories here
             //services.AddScoped<IPartRepository, PartRepository>();
@@ -128,6 +129,7 @@ namespace WebApi
             services.AddTransient<IPackingSlipRepository, PackingSlipRepository>();
             services.AddTransient<IReportRepository, ReportRepository>();
             services.AddTransient<IMasterPackingSlipRepository, MasterPackingSlipRepository>();
+            services.AddTransient<IPriviledgeRepository, PriviledgeRepository>();
 
             //add helpers here
             services.AddScoped<ISqlHelper, SqlHelper>();

@@ -18,12 +18,15 @@ namespace DAL.Repository
         private readonly ISqlHelper _sqlHelper;
         private readonly IPoRepository _poRepository;
         private readonly ITransactionRepository _transactionRepository;
+        private readonly IUserRepository userRepository;
 
-        public SupplierInvoiceRepository(ISqlHelper sqlHelper, IPoRepository poRepository, ITransactionRepository transactionRepository)
+        public SupplierInvoiceRepository(ISqlHelper sqlHelper, IPoRepository poRepository, 
+            ITransactionRepository transactionRepository,IUserRepository userRepository)
         {
             _sqlHelper = sqlHelper;
             _poRepository = poRepository;
             _transactionRepository = transactionRepository;
+            this.userRepository = userRepository;
         }
 
         public async Task<Int64> AddSupplierInvoiceAsync(SupplierInvoice supplierInvoice)
@@ -309,16 +312,35 @@ namespace DAL.Repository
 
         }
 
-        public async Task<IEnumerable<SupplierInvoice>> GetAllSupplierInvoicesAsync(int companyId)
+        public async Task<IEnumerable<SupplierInvoice>> GetAllSupplierInvoicesAsync(int companyId,int userId)
         {
             List<SupplierInvoice> supplierInvoices = new List<SupplierInvoice>();
+
+            var userInfo = await userRepository.GeUserbyIdAsync(userId);
+            var commandText = "";
+            if (userInfo.UserTypeId == 1)
+            {
+                commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[InvoiceNo] ,[InvoiceDate] ,[ETA] ,[IsAirShipment] ,[PoNo] ,[ReferenceNo] ,[Email] " +
+               $",[ByCourier] ,[IsInvoiceUploaded] ,[IsPackingSlipUploaded] ,[IsTenPlusUploaded] ,[IsBLUploaded] ,[IsTCUploaded] ," +
+               $"[InvoicePath] ,[PackingSlipPath] ,[TenPlusPath] ,[BLPath] ,[IsInvoiceReceived] ,[UploadedDate] ,[ReceivedDate],[Barcode]  FROM [SupplierInvoiceMaster] where CompanyId = '{companyId}' ");
+
+            }
+            if (userInfo.UserTypeId == 2)
+            {
+                return supplierInvoices;
+            }
+            if (userInfo.UserTypeId == 3)
+            {
+                string companylist = string.Join(",", userInfo.CompanyIds);
+                commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[InvoiceNo] ,[InvoiceDate] ,[ETA] ,[IsAirShipment] ,[PoNo] ,[ReferenceNo] ,[Email] " +
+               $",[ByCourier] ,[IsInvoiceUploaded] ,[IsPackingSlipUploaded] ,[IsTenPlusUploaded] ,[IsBLUploaded] ,[IsTCUploaded] ," +
+               $"[InvoicePath] ,[PackingSlipPath] ,[TenPlusPath] ,[BLPath] ,[IsInvoiceReceived] ,[UploadedDate] ,[ReceivedDate],[Barcode]  FROM [SupplierInvoiceMaster] where CompanyId = '{companyId}' and  [SupplierId] in ({companylist})");
+                
+            }
+
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-
-            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[InvoiceNo] ,[InvoiceDate] ,[ETA] ,[IsAirShipment] ,[PoNo] ,[ReferenceNo] ,[Email] " +
-                $",[ByCourier] ,[IsInvoiceUploaded] ,[IsPackingSlipUploaded] ,[IsTenPlusUploaded] ,[IsBLUploaded] ,[IsTCUploaded] ," +
-                $"[InvoicePath] ,[PackingSlipPath] ,[TenPlusPath] ,[BLPath] ,[IsInvoiceReceived] ,[UploadedDate] ,[ReceivedDate],[Barcode]  FROM [SupplierInvoiceMaster] where CompanyId = '{companyId}' ");
-
+           
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
                 cmd.CommandType = CommandType.Text;

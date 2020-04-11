@@ -36,9 +36,9 @@ namespace WebApi.Services
             return result;
         }
 
-        public async Task<IEnumerable<MasterPackingSlip>> GetAllMasterPackingSlipsAsync(int companyId)
+        public async Task<IEnumerable<MasterPackingSlip>> GetAllMasterPackingSlipsAsync(int companyId,int userId)
         {
-            var result = await this.masterPackingSlipRepository.GetAllMasterPackingSlipsAsync(companyId);
+            var result = await this.masterPackingSlipRepository.GetAllMasterPackingSlipsAsync(companyId,userId);
             return result;
         }
 

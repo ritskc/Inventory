@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
@@ -31,7 +32,10 @@ namespace WebApi.Controllers
         {
             try
             {
-                var result = await this.supplierInvoiceService.GetAllSupplierInvoicesAsync(companyId);
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var result = await this.supplierInvoiceService.GetAllSupplierInvoicesAsync(companyId, userId);
 
                 if (result == null)
                 {

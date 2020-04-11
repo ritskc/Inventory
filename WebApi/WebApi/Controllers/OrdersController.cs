@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
@@ -28,7 +29,9 @@ namespace WebApi.Controllers
         {
             try
             {
-                var result = await this._orderService.GetAllOrderMastersAsync(companyId);
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+                var result = await this._orderService.GetAllOrderMastersAsync(companyId,userId);
 
                 if (result == null)
                 {
@@ -86,13 +89,16 @@ namespace WebApi.Controllers
         {
             try
             {
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
                 if (id != po.Id)
                 {
                     return BadRequest();
                 }
 
                 po.Id = id;
-                var parts = await this._partService.GetAllPartsAsync(po.CompanyId);
+                var parts = await this._partService.GetAllPartsAsync(po.CompanyId,userId);
                 if (po == null || po.OrderDetails == null)
                     return BadRequest("Invalid PO");
 
@@ -125,11 +131,7 @@ namespace WebApi.Controllers
                         if (existingPartDetail.PartId != poDetail.PartId)
                             return BadRequest(string.Format("Invalid part associated in edited po line number"));
 
-                        if (existingPartDetail.IsClosed)
-                        {
-                            if (poDetail.Qty != existingPartDetail.Qty)
-                                return BadRequest(string.Format("Part is already closed you can not change the qty of this part", poDetail.part.Code));
-                        }
+                        
                         if (poDetail.Qty < (existingPartDetail.ShippedQty))
                             return BadRequest(string.Format("Invalid part associated in edited po line number"));
                         if (poDetail.IsForceClosed)

@@ -25,10 +25,10 @@ namespace WebApi.Services
         }
 
 
-        public async Task<IEnumerable<Po>> GetAllPosAsync(int companyId)
+        public async Task<IEnumerable<Po>> GetAllPosAsync(int companyId,int userId)
         {            
-            var result = await this._poRepository.GetAllPosAsync(companyId);
-            var partList = await this._partService.GetAllPartsAsync(companyId);
+            var result = await this._poRepository.GetAllPosAsync(companyId,userId);
+            var partList = await this._partService.GetAllPartsAsync(companyId,userId);
             foreach (Po pos in result)
             {
                 foreach (PoDetail poDetail in pos.poDetails)
@@ -40,10 +40,10 @@ namespace WebApi.Services
             return result;
         }
 
-        public async Task<Po> GetPoAsync(long id)
+        public async Task<Po> GetPoAsync(long id,int userId)
         {
             var result = await this._poRepository.GetPoAsync(id);
-            var partList = await this._partService.GetAllPartsAsync(result.CompanyId);
+            var partList = await this._partService.GetAllPartsAsync(result.CompanyId,userId);
             foreach (PoDetail poDetail in result.poDetails)
             {
                 var partDetail = partList.Where(p => p.Id == poDetail.PartId).FirstOrDefault();
@@ -52,10 +52,10 @@ namespace WebApi.Services
             return result;            
         }
 
-        public async Task<Po> GetPoByAccessIdAsync(string id)
+        public async Task<Po> GetPoByAccessIdAsync(string id,int userId)
         {
             var result = await this._poRepository.GetPoByAccessIdAsync(id);
-            var partList = await this._partService.GetAllPartsAsync(result.CompanyId);
+            var partList = await this._partService.GetAllPartsAsync(result.CompanyId,userId);
             foreach (PoDetail poDetail in result.poDetails)
             {
                 var partDetail = partList.Where(p => p.Id == poDetail.PartId).FirstOrDefault();

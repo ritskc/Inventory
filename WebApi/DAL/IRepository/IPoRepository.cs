@@ -10,7 +10,7 @@ namespace DAL.IRepository
 {
     public interface IPoRepository
     {
-        Task<IEnumerable<Po>> GetAllPosAsync(int companyId);
+        Task<IEnumerable<Po>> GetAllPosAsync(int companyId,int userId);
         Task<Po> GetPoAsync(long poId);
         Task<Po> GetPoByAccessIdAsync(string id);
         Task<Po> GetPoAsync(long poId, SqlConnection conn, SqlTransaction transaction);

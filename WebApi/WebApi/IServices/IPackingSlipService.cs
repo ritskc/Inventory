@@ -8,7 +8,7 @@ namespace WebApi.IServices
 {
     public interface IPackingSlipService
     {
-        Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId);
+        Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId,int userId);
         Task<PackingSlip> GetPackingSlipAsync(long Id);
         Task<Int32> AddPackingSlipAsync(PackingSlip packingSlip);
         Task<bool> UpdatePackingSlipAsync(PackingSlip packingSlip);
