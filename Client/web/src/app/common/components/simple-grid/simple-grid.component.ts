@@ -4,6 +4,8 @@ import { Utils } from '../../utils/utils';
 import { JsonToCsvExporterService } from '../../services/json-to-csv-exporter.service';
 import * as DateHelper from '../../../common/helpers/dateHelper';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { Router } from '@angular/router';
+import { navItems, NavData } from '../../../_nav';
 
 @Component({
   selector: 'simple-grid',
@@ -35,11 +37,13 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   ascendingSortOrder: boolean = true;
   currentSortColumnName: string = '';
 
-  constructor(private jsonToCsvExporter: JsonToCsvExporterService, private toastr: ToastrManager) {
+  constructor(private jsonToCsvExporter: JsonToCsvExporterService, private toastr: ToastrManager, 
+              private route: Router) {
   }
  
   ngOnInit() {
     this.currentSortColumnName = this.defaultSortColumnName;
+    this.filterColumns();
   }
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
@@ -109,6 +113,28 @@ export class SimpleGridComponent implements OnInit, OnChanges {
 
   descendingOrderSelected(columnName: string) {
     return columnName == this.currentSortColumnName && !this.ascendingSortOrder;
+  }
+
+  filterColumns() {
+    var privileges = JSON.parse(localStorage.getItem('privileges'));
+    if (privileges.isSuperAdmin) return;
+
+    var clonedNavItems = JSON.parse(JSON.stringify(navItems));
+    var linearyArrayOfMenuItems: NavData[] = [];
+    clonedNavItems.forEach(navItem => {
+      linearyArrayOfMenuItems.push(...navItem.children);
+    });
+    var selectedMenuItem = linearyArrayOfMenuItems.find(m => m.url == this.route.url);
+    var reports = privileges.userPriviledge.userMenus.find(m => m.menu == selectedMenuItem.name);
+    if (reports && reports.userReports && reports.userReports.length > 0) {
+      for (var index = 0; index < this.columns.length; index++) {
+        var col = reports.userReports.find(r => r.columnName == this.columns[index].columnName);
+        if (!col) {
+          this.columns.splice(index, 1);
+          index--;
+        }
+      }
+    }
   }
 
   export() {
