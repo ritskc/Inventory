@@ -51,23 +51,35 @@
                     <div *ngIf="f.openingQty.errors.required">Opening Quantity is required</div>
                   </div>
                 </div>
-                <div class="form-group standard-top-margin">
-                  <label>Minimum Quantity</label>
-                  <input type="text" formControlName="minQty" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.minQty.errors }" [(ngModel)]="part.minQty"/>
-                  <div *ngIf="submitted && f.minQty.errors" class="invalid-feedback">
-                    <div *ngIf="f.minQty.errors.required">Minimum Quantity is required</div>
+                <div class="row">
+                  <div class="form-group standard-top-margin col-xs-6 col-md-6">
+                    <label>Minimum Quantity</label>
+                    <input type="text" formControlName="minQty" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.minQty.errors }" [(ngModel)]="part.minQty"/>
+                    <div *ngIf="submitted && f.minQty.errors" class="invalid-feedback">
+                      <div *ngIf="f.minQty.errors.required">Minimum Quantity is required</div>
+                    </div>
+                  </div>
+                  <div class="form-group standard-top-margin col-xs-6 col-md-6">
+                    <label>Maximum Quantity</label>
+                    <input type="text" formControlName="maxQty" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.maxQty.errors }" [(ngModel)]="part.maxQty"/>
+                    <div *ngIf="submitted && f.maxQty.errors" class="invalid-feedback">
+                      <div *ngIf="f.maxQty.errors.required">Maximum Quantity is required</div>
+                    </div>
                   </div>
                 </div>
-                <div class="form-group standard-top-margin">
-                  <label>Maximum Quantity</label>
-                  <input type="text" formControlName="maxQty" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.maxQty.errors }" [(ngModel)]="part.maxQty"/>
-                  <div *ngIf="submitted && f.maxQty.errors" class="invalid-feedback">
-                    <div *ngIf="f.maxQty.errors.required">Maximum Quantity is required</div>
+                <div class="row">
+                  <div class="form-group standard-top-margin col-xs-6 col-md-6">
+                    <label>Supplier Code</label>
+                    <input type="text" formControlName="supplierCode" class="form-control" [(ngModel)]="part.supplierCode"/>
+                  </div>
+                  <div class="form-group standard-top-margin col-xs-6 col-md-6">
+                    <label>Monthly Forecast</label>
+                    <input type="text" formControlName="monthlyForecastQty" class="form-control" [(ngModel)]="part.monthlyForecastQty"/>
                   </div>
                 </div>
                 <div class="form-group standard-top-margin">
                   <div class="row">
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-4 col-md-4">
                         <label>Active</label>
                         <div>
                           <label class="switch switch-3d switch-primary">
@@ -76,11 +88,20 @@
                           </label>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-4 col-md-4">
                       <label>Sample</label>
                       <div>
                         <label class="switch switch-3d switch-primary">
                           <input class="switch-input" type="checkbox" [(ngModel)]="part.isSample" [ngModelOptions]="{standalone: true}"/>
+                          <span class="switch-slider"></span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                      <label>Repackage</label>
+                      <div>
+                        <label class="switch switch-3d switch-primary">
+                          <input class="switch-input" type="checkbox" [(ngModel)]="part.isRepackage" [ngModelOptions]="{standalone: true}"/>
                           <span class="switch-slider"></span>
                         </label>
                       </div>

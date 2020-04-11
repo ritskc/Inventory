@@ -38,6 +38,7 @@ export class Invoice {
     companyDetail: Company;
     supplierDetail: Supplier;
     supplierInvoiceDetails: InvoiceDetail[];
+    dontImpactPO: boolean;
 }
 
 export class UploadInvoice {
@@ -85,6 +86,9 @@ export class InvoiceDetail {
     partDetail: Part;
     barcode: string = '';
     isValid: boolean = false;
+    supplierInvoicePoDetails: any;
+    multiplePurchaseOrders: string = '';
+    multiplePosQty: string = '';
 }
 
 export enum UploadMode {

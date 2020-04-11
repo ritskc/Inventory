@@ -1,3 +1,5 @@
+import { environment } from '../../environments/environment';
+
 export class AppConfigurations {
 
     constructor() {
@@ -15,17 +17,22 @@ export class AppConfigurations {
     ordersUri: string;
     invoiceUri: string;
     shipmentUri: string;
+    masterShipmentUri: string;
     barcodeUri: string;
     customerInvoiceUri: string;
     fileApiUri: string;
     reportsUri: string;
     entityTracker: string;
+    directSupplierPo: string;
 
     initialize() {
-        // this.apiServerHost = 'https://questapi.yellow-chips.com';
-        // this.reportsUri = 'http://renovate.yellow-chips.com/ReportViewer/PackingSlip.aspx?id=';
-        this.apiServerHost = 'http://po.harisons.com/api';
-        this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/PackingSlip.aspx?id=';
+        if (environment.production) {
+            this.apiServerHost = 'http://po.harisons.com/api';
+            this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/';
+        } else {
+            this.apiServerHost = 'https://questapi.yellow-chips.com';
+            this.reportsUri = 'https://renovate.yellow-chips.com/ReportViewer/';
+        }
 
         this.fileApiUri = `${this.apiServerHost}/File`;
 
@@ -39,8 +46,10 @@ export class AppConfigurations {
         this.ordersUri = '/orders';
         this.invoiceUri = '/supplierinvoice';
         this.shipmentUri = '/PackingSlips';
+        this.masterShipmentUri = '/MasterPackingSlips';
         this.customerInvoiceUri =  '/Invoices';
         this.entityTracker = '/EntityTracker';
+        this.directSupplierPo = '/SupplierAccess';
         this.barcodeUri = 'https://quest.yellow-chips.com/static/barcode.html?';
     }
 }

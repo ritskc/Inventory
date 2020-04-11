@@ -16,6 +16,10 @@ export class InvoiceService {
     return this.apiService.get<Invoice[]>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/${ companyId }`);
   }
 
+  getInvoice(companyId: number, invoiceId: number): Observable<Invoice> {
+    return this.apiService.get<Invoice>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/${ companyId }/${ invoiceId }`);
+  }
+
   getAllSupplierInvoices(companyId: number, supplierId: number): Observable<Invoice[]> {
     return this.apiService.get<Invoice[]>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/${ companyId }/${ supplierId }`);
   }
@@ -26,6 +30,10 @@ export class InvoiceService {
 
   receivedInvoice(supplierId: number, invoiceId: number) {
     return this.apiService.post<number>(invoiceId, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/receive/${ invoiceId }`);
+  }
+
+  unReceivedInvoice(supplierId: number, invoiceId: number) {
+    return this.apiService.put<number>(invoiceId, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/unreceive/${ invoiceId }`);
   }
 
   receivedBox(box: string) {
@@ -42,5 +50,13 @@ export class InvoiceService {
 
   createCustomerInvoice(shipment: Shipment) {
     return this.apiService.post<Shipment>(shipment, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.customerInvoiceUri }`);
+  }
+
+  updateInvoice(invoice: Invoice) {
+    return this.apiService.put<Invoice>(invoice, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/${ invoice.id }`);
+  }
+
+  deleteInvoice(id: number) {
+    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }`);
   }
 }

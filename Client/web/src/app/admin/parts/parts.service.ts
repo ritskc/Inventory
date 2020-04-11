@@ -31,4 +31,20 @@ export class PartsService {
   delete(id: number) {
     return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }`);
   }
+
+  updateOpeningQuantity(part: Part, companyId: number, partId: number, quantity: number) {
+    return this.apiService.put<Part>(part, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }/${ companyId }/OpeningQty/${ partId }/${ quantity }`);
+  }
+
+  updateOpeningQuantityByPartCode(part: Part, companyId: number, partId: number, quantity: number) {
+    return this.apiService.put<Part>(part, `${ this.configService.Settings.apiServerHost }${ this.configService.Settings.partsUri }/${ companyId }/${ partId }/${ quantity }`);
+  }
+
+  adjustPart(partId: number, direction: string, notes: string, companyId: number, quantity: number) {
+    return this.apiService.post<Part>(null, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }/${ companyId }/${ partId }/${ direction }/${ quantity }/${ notes }`);
+  }
+
+  getPartsStatus(companyId: number, partId: number, type: string): Observable<any> {
+    return this.apiService.get<any>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }/${ companyId }/${ type }/${ partId }`);
+  }
 }

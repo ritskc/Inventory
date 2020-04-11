@@ -17,13 +17,15 @@ import { SharedModule } from '../../common/shared/shared.module';
 import { SupplierDetailComponent } from './supplier-detail/supplier-detail.component';
 import { PurchaseOrderListComponent } from './purchase-order-list/purchase-order-list.component';
 import { PurchaseOrderDetailComponent } from './purchase-order-detail/purchase-order-detail.component';
+import { PurchaseReportComponent } from './purchase-report/purchase-report.component';
 
 @NgModule({
   declarations: [
     SupplierListComponent,
     SupplierDetailComponent,
     PurchaseOrderListComponent,
-    PurchaseOrderDetailComponent
+    PurchaseOrderDetailComponent,
+    PurchaseReportComponent
   ],
   imports: [
     CommonModule,

@@ -1,12 +1,24 @@
-<div class="row">
-  <select (change)="loadAllPurchaseOrders()" [(ngModel)]="customerId">
+<div class="row" style="margin-left: 1px;">
+  <select (change)="loadAllPurchaseOrders()" [(ngModel)]="customerId" class="form-control" style="width: 350px; margin-bottom: 5px;">
     <option value="-1">Please select a Customer</option>
     <option [value]="customer.id" *ngFor="let customer of customers">{{customer.name}}</option>
   </select>
+  <div class="form-check" style="margin-left: 15px; padding-top: 5px;">
+    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" (change)="showFullOrderDetails($event)" [(ngModel)]="showFullDetails">
+    <label class="form-check-label" for="defaultCheck1">
+      Show Full Details
+    </label>
+  </div>
+  <div class="form-check" style="margin-left: 15px; padding-top: 5px;">
+    <input class="form-check-input" type="checkbox" value="" id="showOpenOrders" (change)="showOnlyOpenOrdersEvent($event)" [(ngModel)]="showOpenOrders">
+    <label class="form-check-label" for="showOpenOrders">
+      Show Only Open Orders
+    </label>
+  </div>
 </div>
 
-<div class="row">
-  <simple-grid [data]="purchaseOrders" [columns]="gridColumns" (selectedRow)="rowSelected($event)"
-    (addClickedEventEmitter)="addCustomerOrder()"
-  ></simple-grid>
-</div>
+<simple-grid [data]="purchaseOrders" [columns]="gridColumns" (selectedRow)="rowSelected($event)"
+  (addClickedEventEmitter)="addCustomerOrder()" (actionButtonClickedEvent)="[actionButtonClicked($event)]">
+</simple-grid>
+
+<loader></loader>

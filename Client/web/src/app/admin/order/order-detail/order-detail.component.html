@@ -1,16 +1,16 @@
 <form [formGroup]="orderForm">
-  <div class="row">
+  <div class="row" style="background-color: white; padding: 5px; width: 100%; margin-left: 3px; border-radius: 4px;">
     <div class="input-group col-xs-6 col-md-6">
       <div class="input-group-prepend">
         <div class="input-group-text" hidden>
           <input type="radio" name="selection" (change)="supplierOptionSelected()">
         </div>
       </div>
-      <select *ngIf='SelectedSupplier >= 0' class="form-control" (change)="setFormForSupplierSelection()" formControlName="suppliersList">
+      <select disabled *ngIf='SelectedSupplier >= 0' class="form-control" (change)="setFormForSupplierSelection()" formControlName="suppliersList">
         <option value="-1">Create Order by selecting Supplier</option>
         <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{supplier.name}}</option>
       </select>
-      <select *ngIf='SelectedCustomer >= 0' class="form-control" (change)="setFormForCustomerSelection()" formControlName="customersList">
+      <select disabled *ngIf='SelectedCustomer >= 0' class="form-control" (change)="setFormForCustomerSelection()" formControlName="customersList">
         <option value="-1">Create order by selecting Customer</option>
         <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
       </select>
@@ -21,10 +21,6 @@
           <input type="radio" name="selection" (change)="customerOptionSelected()">
         </div>
       </div>
-      <!-- <select [attr.disabled]="disableCustomerSelectedPurchaseOrder? '': null"  class="form-control" (change)="setFormForCustomerSelection()" formControlName="customersList">
-        <option value="-1">Create order by selecting Customer</option>
-        <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
-      </select> -->
     </div>
   </div>
   
@@ -32,23 +28,23 @@
     <div class="col-lg-6 col-md-6 col-xs-12">
       <div class="card">
         <div class="card-header">
-          <strong>Order Details</strong>
+          <strong>Order </strong>Details
         </div>
         <div class="card-body">
           <div class="form-group standard-top-margin row" *ngIf="SelectedCustomer > -1">
             <label class="col-md-3 col-xs-3 label-top-adjustment">Blank PO</label>
             <label class="switch switch-3d switch-primary">
-              <input class="switch-input" type="checkbox" [(ngModel)]="isBlanketPO" [ngModelOptions]="{standalone: true}"/>
+              <input class="switch-input" type="checkbox" [(ngModel)]="isBlanketPO" [ngModelOptions]="{standalone: true}" disabled/>
               <span class="switch-slider"></span>
             </label>
           </div>
           <div class="form-group standard-top-margin row">
             <label class="col-md-3 col-xs-3 label-top-adjustment">PO Number</label>
-            <input [attr.disabled]="disabled? '': null" type="text" formControlName="poNo" class="form-control col-md-9 col-xs-9" [(ngModel)]="purchaseOrder.poNo"/>
+            <input type="text" formControlName="poNo" class="form-control col-md-9 col-xs-9" [(ngModel)]="purchaseOrder.poNo"/>
           </div>
           <div class="form-group standard-top-margin row">
             <label class="col-md-3 col-xs-3 label-top-adjustment">PO Date</label>
-            <input [attr.disabled]="disabled? '': null" type="date" formControlName="poDate" class="form-control col-md-5 col-xs-5" [(ngModel)]="purchaseOrder.poDate"/>
+            <input [attr.disabled]="disabled? '': null" type="date" (change)='dueDateChanged($event)' formControlName="poDate" class="form-control col-md-5 col-xs-5" [(ngModel)]="purchaseOrder.poDate"/>
           </div>
           <div class="form-group standard-top-margin row">
             <label class="col-md-3 col-xs-3 label-top-adjustment">Due Date</label>
@@ -69,7 +65,7 @@
     <div class="col-lg-6 col-md-6 col-xs-12">
       <div class="card">
         <div class="card-header">
-            <strong>Part Details</strong>
+            <strong>Part </strong>Details
         </div>
         <div class="card-body">
           <div class="form-group standard-top-margin row">
@@ -87,13 +83,15 @@
             </select>
           </div>
           <div class="form-group standard-top-margin row" *ngIf="SelectedCustomer > -1 && !isBlanketPO">
-            <label class="col-md-3 col-xs-3 label-top-adjustment">Blank PO</label>
-            <select [attr.disabled]="disabled? '': null" class="form-control col-md-3 col-xs-3" formControlName="blanketPOId" [(ngModel)]="blanketPOId" (change)="blankPOSelected()">
+            <label class="col-md-3 col-xs-3 label-top-adjustment" *ngIf="false">Blank PO</label>
+            <select disabled class="form-control col-md-3 col-xs-3" *ngIf="false" formControlName="blanketPOId" [(ngModel)]="blanketPOId" (change)="blankPOSelected()">
                 <option value="-1">Blank PO</option>
                 <option *ngFor="let order of blankOrders" [value]="order.id">{{order.poNo}}</option>
             </select>
             <label class="col-md-3 col-xs-3 label-top-adjustment">Open Qty</label>
-            <input class="col-md-3 col-xs-3 form-control" type="text" formControlName="blanketPOAdjQty" [(ngModel)]="blanketPOAdjQty"/>
+            <input disabled class="col-md-3 col-xs-3 form-control" type="text" formControlName="blanketPOAdjQty" [(ngModel)]="blanketPOAdjQty"/>
+            <label class="col-md-3 col-xs-3 label-top-adjustment">Qty In Hand</label>
+            <input disabled class="col-md-3 col-xs-3 form-control" type="text" formControlName="qtyInHand" [(ngModel)]="qtyInHand"/>
           </div>
           <div class="form-group standard-top-margin row" *ngIf="SelectedSupplier > -1">
             <label class="col-md-3 col-xs-3 label-top-adjustment">Reference</label>
@@ -123,10 +121,10 @@
   
   <div class="card">
     <div class="card-header">
-        <strong>Part Details</strong>
+        <strong>Part </strong>Details
     </div>
-    <simple-grid *ngIf="SelectedSupplier > -1" [data]="purchaseOrder.poDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false" (actionButtonClickedEvent)="removePart($event)"></simple-grid>
-    <simple-grid *ngIf="SelectedCustomer > -1" [data]="purchaseOrder.orderDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false" (actionButtonClickedEvent)="removePart($event)"></simple-grid>
+    <simple-grid *ngIf="SelectedSupplier > -1" [data]="purchaseOrder.poDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false" [pageSize]="50" (actionButtonClickedEvent)="removePart($event)"></simple-grid>
+    <simple-grid *ngIf="SelectedCustomer > -1" [data]="purchaseOrder.orderDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false" [pageSize]="50" (actionButtonClickedEvent)="removePart($event)"></simple-grid>
   </div>
 
   <div class="card" *ngIf="SelectedSupplier > -1">
@@ -162,7 +160,22 @@
     </div>
   </div>
 
+  <div class="card" *ngIf="orderFormMode === 1">
+    <div class="card-header">
+      <strong>Upload</strong> Documents
+    </div>
+    <div class="card-body">
+      <div class="row">
+          <div class="col-lg-4 col-md-4">
+            <input type="file" class="btn btn-primary" (change)="addAttachment($event.target.files, 'CustomerOrder')" id="uploadCustomerOrder"/>
+          </div>
+      </div>
+    </div>
+  </div>
+
   <div class="card-footer">
       <button class="btn btn-primary" (click)="save()"><i class="fa fa-save"></i> Save</button>
   </div>
 </form>
+
+<loader></loader>

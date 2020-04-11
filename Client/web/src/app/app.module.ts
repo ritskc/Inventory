@@ -40,10 +40,13 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { AdminModule } from './admin/admin.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ConfigService } from './config/config.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormsModule } from '@angular/forms';
 import { UserModule } from './user/user.module';
 import { TokenInterceptor } from './common/services/api.service';
 import { FileUploadModule } from 'ng2-file-upload';
+import { DirectSupplierPoComponent } from './no-login/direct-supplier-po/direct-supplier-po.component';
+import { SharedModule } from './common/shared/shared.module';
+import { httpLoaderService } from './common/services/httpLoader.service';
 
 @NgModule({
   imports: [
@@ -61,18 +64,22 @@ import { FileUploadModule } from 'ng2-file-upload';
     ChartsModule,
     HttpClientModule,
     FileUploadModule,
+    FormsModule,
 
     AdminModule,
-    UserModule
+    UserModule,
+    SharedModule
   ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
     P404Component,
     P500Component,
-    RegisterComponent
+    RegisterComponent,
+    DirectSupplierPoComponent
   ],
   providers: [
+    httpLoaderService,
     FormBuilder,
     ConfigService,
     {

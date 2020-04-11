@@ -4,6 +4,7 @@ import { SupplierListComponent } from './supplier-list/supplier-list.component';
 import { SupplierDetailComponent } from './supplier-detail/supplier-detail.component';
 import { PurchaseOrderListComponent } from './purchase-order-list/purchase-order-list.component';
 import { PurchaseOrderDetailComponent } from './purchase-order-detail/purchase-order-detail.component';
+import { PurchaseReportComponent } from './purchase-report/purchase-report.component';
 
 const routes: Routes = [{
   path: '',
@@ -30,6 +31,12 @@ const routes: Routes = [{
     component: PurchaseOrderDetailComponent,
     data: {
       title: 'Purchase Order'
+    }
+  }, {
+    path: 'purchase-report',
+    component: PurchaseReportComponent,
+    data: {
+      title: 'Purchase Report'
     }
   }]
 }];

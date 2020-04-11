@@ -6,7 +6,7 @@ export class Part {
         this.partCustomerAssignments = [];
     }
 
-    id: number = 0;
+    id: any = 0;
     code: string;
     description: string;
     companyId: number = 0;
@@ -19,11 +19,15 @@ export class Part {
     drawingUploaded: boolean;
     drawingFileName: string;
     location: string;
-    isActive: boolean;
+    isActive: boolean = true;
     isSample: boolean;
     safeQty: number = 0;
     qtyInHand: number = 0;
     intransitQty: number = 0;
+    openOrderQty: number = 0;
+    supplierOpenPoQty: number = 0;
+    supplierCode: string = '';
+    isRepackage: boolean;
     
     partSupplierAssignments: PartSupplierAssignment[];
     partCustomerAssignments: PartCustomerAssignment[];
@@ -85,10 +89,26 @@ export class PartsViewModel {
     }
 
     get QuantityInHand(): number {
-        return this.part.openingQty + this.part.qtyInHand;
+        return this.part.qtyInHand + this.part.openingQty;
+    }
+
+    get OpeningQty(): number {
+        return this.part.openingQty;
+    }
+
+    set OpeningQty(value: number) {
+        this.part.openingQty = value;
     }
 
     get Total(): number {
         return this.part.openingQty + this.part.qtyInHand + this.part.intransitQty;
+    }
+
+    get OpenOrderQty(): number {
+        return this.part.openOrderQty;
+    }
+
+    get SupplierOpenPoQty(): number {
+        return this.part.supplierOpenPoQty;
     }
 }

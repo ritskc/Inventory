@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { DataColumn } from '../../../models/dataColumn.model';
 import { Utils } from '../../utils/utils';
 import { JsonToCsvExporterService } from '../../services/json-to-csv-exporter.service';
+import * as DateHelper from '../../../common/helpers/dateHelper';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'simple-grid',
@@ -17,11 +19,12 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   @Input() addRequired: boolean = true;
   @Input() exportRequired: boolean = true;
   @Input() columns: DataColumn[] = [];
-  @Input() pageSize: number = 10;
+  @Input() pageSize: number = 20;
   @Input() defaultSortColumnName: string = 'name';
   @Output() selectedRow = new EventEmitter();
   @Output() addClickedEventEmitter = new EventEmitter();
   @Output() actionButtonClickedEvent = new EventEmitter();
+  @Output() additionalEventEmitter = new EventEmitter();
   @Output() valueEdited = new EventEmitter<any>();
 
   dataToDisplay: any[] = [];
@@ -32,7 +35,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   ascendingSortOrder: boolean = true;
   currentSortColumnName: string = '';
 
-  constructor(private jsonToCsvExporter: JsonToCsvExporterService) {
+  constructor(private jsonToCsvExporter: JsonToCsvExporterService, private toastr: ToastrManager) {
   }
  
   ngOnInit() {
@@ -46,12 +49,16 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   @Input() 
   set data(data: any[]) {
     this._data = Utils.sortArray(data, this.defaultSortColumnName, true);
+    this.setPageNo(1);
     this.calculatePages();
     this.createRange();
   }
 
-  calculatePages() {
-    this.pageNo = Math.ceil(this._data.length / this.pageSize);
+  calculatePages(filtered: any[] = null) {
+    if (filtered)
+      this.pageNo = Math.ceil(filtered.length / this.pageSize);
+    else 
+      this.pageNo = this._data && this._data.length > 0? Math.ceil(this._data.length / this.pageSize): 1;
   }
 
   createRange(){
@@ -76,7 +83,10 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   }
 
   dataChanges() {
-    this.calculatePages();
+    var filtered = this._data.filter(d => JSON.stringify(d).toUpperCase().indexOf(this.searchText.toUpperCase()) > -1);
+
+    this.page = 1;
+    this.calculatePages(filtered);
     this.createRange();
   }
 
@@ -102,7 +112,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   }
 
   export() {
-    this.jsonToCsvExporter.export(`Data Export ${Date.now()}`, 'csv', this._data);
+    this.jsonToCsvExporter.export(`Data Export ${Date.now()}`, 'csv', this._data, this.columns);
   }
 
   actionButtonClicked(eventName: string, data: any) {
@@ -110,8 +120,23 @@ export class SimpleGridComponent implements OnInit, OnChanges {
     this.actionButtonClickedEvent.emit(data);
   }
 
+  additionalEventEmitted(eventName: string, data: any) {
+    this.additionalEventEmitter.emit({ eventName, data });
+  }
+
   itemValueEdited(event, row, column) {
     row[column.value] = typeof row[column.value] != "number" ? event.currentTarget.value : parseFloat(event.currentTarget.value);
-    this.valueEdited.emit(row);
+    this.valueEdited.emit({ row: row, column: column });
+  }
+
+  checkboxChanged(a, b, data) {
+    a[b.value] = !data;
+  }
+
+  transformDate(value) {
+    if (new Date(value).toString() == 'Invalid Date') {
+      this.toastr.errorToastr('Invalid date format');
+    }
+    return new Date(value);
   }
 }

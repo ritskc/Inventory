@@ -4,7 +4,7 @@
   [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
   [sidebarToggler]="'lg'"
   [asideMenuToggler]="'lg'">
-  <ul class="nav navbar-nav d-md-down-none">
+  <!-- <ul class="nav navbar-nav d-md-down-none">
     <li class="nav-item px-3">
       <a class="nav-link" href="#">Dashboard</a>
     </li>
@@ -14,7 +14,7 @@
     <li class="nav-item px-3">
       <a class="nav-link" href="#">Settings</a>
     </li>
-  </ul>
+  </ul> -->
   <ul class="nav navbar-nav ml-auto">
     <!-- <li class="nav-item d-md-down-none">
       <a class="nav-link" href="#"><i class="icon-bell"></i><span class="badge badge-pill badge-danger">5</span></a>
@@ -26,12 +26,16 @@
       <a class="nav-link" href="#"><i class="icon-location-pin"></i></a>
     </li> -->
     <li class="nav-item dropdown" dropdown placement="bottom right">
-      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
+      <!-- <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
         <div style="height: 35px; width: 35px; text-align: center; border-radius: 50%; padding-top: 5px; background-color: #347AE8; color: white; font-weight: bold;">
           H I
         </div>
-      </a>
-      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+      </a> -->
+      <select (change)="setCompany($event)">
+        <option value="1">Harisons Industries</option>
+        <option value="2">Cast & Forge</option>
+      </select>
+      <!-- <div style="display: none;" class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <a class="dropdown-item">
             <div style="margin-left: -10px; height: 35px; width: 35px; text-align: center; border-radius: 50%; padding-top: 5px; background-color: #347AE8; color: white; font-weight: bold;">
               H I
@@ -41,18 +45,18 @@
             </div>
            </a>
         <a class="dropdown-item">
-          <div style="margin-left: -10px; height: 35px; width: 35px; text-align: center; border-radius: 50%; padding-top: 5px; background-color: rgb(236, 72, 22); color: white; font-weight: bold;">
+          <div style="margin-left: -10px; height: 35px; width: 35px; text-align: center; border-radius: 50%; padding-top: 5px; background-color: rgb(236, 72, 22); color: white; font-weight: bold;" (click)="setHarrisons()">
             C F
           </div>
-          <div style="position: absolute; top: 18px; left: 50px;">
+          <div style="position: absolute; top: 18px; left: 50px;" (click)="setCastAndForge()">
               Cast & Forge
           </div>
         </a>
-      </div>
+      </div> -->
     </li>
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
-        <img src="assets/img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com"/>
+        <img src="assets/img/avatars/6.jpg" class="img-avatar" alt="sheshadrinath@gmail.com"/>
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <div class="dropdown-header text-center"><strong>Account</strong></div>
@@ -74,15 +78,14 @@
 </app-header>
 <div class="app-body">
   <app-sidebar [fixed]="true" [display]="'lg'">
-    <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
-    <app-sidebar-minimizer></app-sidebar-minimizer>
+    <app-sidebar-nav [navItems]="clonedNavItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    <!-- <app-sidebar-minimizer></app-sidebar-minimizer> -->
   </app-sidebar>
   <!-- Main content -->
   <main class="main">
     <!-- Breadcrumb -->
-    <ol class="breadcrumb">
+    <!-- <ol class="breadcrumb">
       <app-breadcrumb></app-breadcrumb>
-      <!-- Breadcrumb Menu-->
       <li class="breadcrumb-menu d-md-down-none">
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
           <a class="btn" href="#"><i class="icon-speech"></i></a>
@@ -90,7 +93,7 @@
           <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
         </div>
       </li>
-    </ol>
+    </ol> -->
     <div class="container-fluid">
       <router-outlet></router-outlet>
     </div><!-- /.container-fluid -->

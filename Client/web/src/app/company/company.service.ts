@@ -8,7 +8,11 @@ import { Company } from '../models/company.model';
 })
 export class CompanyService {
 
-  constructor(private apiService: ApiService, private config: ConfigService) { }
+  private _currentlyLoggedInCompanyId: number = 0;
+
+  constructor(private apiService: ApiService, private config: ConfigService) { 
+    this._currentlyLoggedInCompanyId = 1;
+  }
 
   getGridPriviledges(username: string): any {
     return this.apiService.get<any>(`${ this.config.Settings.apiServerHost }/${ this.config.Settings.gridDefinitionUri }/${ username }`);
@@ -24,7 +28,15 @@ export class CompanyService {
 
   //TODO: Replace the logic once the logged in companyId is determined
   getCurrentlyLoggedInCompanyId(): number {
-    return 1;
+    return this._currentlyLoggedInCompanyId;
+  }
+
+  setHarisons() {
+    this._currentlyLoggedInCompanyId = 1;
+  }
+
+  setCastAndForge() {
+    this._currentlyLoggedInCompanyId = 2;
   }
 
   saveCompany(company: Company) {

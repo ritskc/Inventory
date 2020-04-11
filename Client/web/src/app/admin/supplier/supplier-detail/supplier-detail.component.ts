@@ -7,6 +7,7 @@ import { Supplier } from '../../../models/supplier.model';
 import { Term } from '../../../models/terms.model';
 import { UserAction } from '../../../models/enum/userAction';
 import * as _ from 'lodash';
+import { CompanyService } from '../../../company/company.service';
 
 @Component({
   selector: 'app-supplier-detail',
@@ -21,7 +22,7 @@ export class SupplierDetailComponent implements OnInit {
   atleastOneTermPresent: boolean = true;
 
   constructor(private supplierBuilder: FormBuilder, private activeRoute: ActivatedRoute, private supplierService: SupplierService,
-              private toastr: ToastrManager, private router: Router) { 
+              private toastr: ToastrManager, private router: Router, private companyService: CompanyService) { 
     this.supplier = new Supplier();
     this.supplier.terms = [];
 
@@ -29,7 +30,7 @@ export class SupplierDetailComponent implements OnInit {
       name: ['', Validators.required],
       address: ['', Validators.required],
       phoneNo: ['', Validators.required],
-      faxNo: ['', Validators.required],
+      faxNo: [''],
       emailID: ['', Validators.required],
       contactPersonName: ['', Validators.required],
       city: ['', Validators.required],
@@ -37,7 +38,8 @@ export class SupplierDetailComponent implements OnInit {
       country: ['', Validators.required],
       zipCode: ['', Validators.required],
       dateFormat: ['', Validators.required],
-      noofstages: ['', Validators.required]
+      noofstages: ['', Validators.required],
+      poLetterHead: ['']
     });
   }
 
@@ -57,13 +59,7 @@ export class SupplierDetailComponent implements OnInit {
   }
 
   addMoreTermAndCondition() {
-    if (this.supplier.terms.length == 0) {
-      this.createNewTermAndCondition();
-      return;  
-    }
-
-    if (this.verifyIfAValidTermAndConditionExist())
-      this.createNewTermAndCondition();
+    this.createNewTermAndCondition();
   }
 
   removeTermAndCondition(index) {
@@ -72,11 +68,19 @@ export class SupplierDetailComponent implements OnInit {
   
   save() {
     this.submitted = true;
-    if (this.supplierForm.invalid || !this.verifyIfAValidTermAndConditionExist()) return;
+    this.supplier.companyId = this.companyService.getCurrentlyLoggedInCompanyId();
+    
+    if (this.supplierForm.invalid) return;
+
+    if (this.supplier.poLetterHead < 1) {
+      this.toastr.warningToastr('Please select a valid PO Letter header option');
+      return;
+    }
 
     this.supplierService.saveSupplier(this.supplier)
       .subscribe((response) => { 
         this.toastr.successToastr('Details saved successfully.');
+        this.router.navigateByUrl('/suppliers');
       },
       (error) => { 
         this.toastr.errorToastr('Could not save details. Please try again & contact administrator if the problem persists!!')
@@ -84,26 +88,27 @@ export class SupplierDetailComponent implements OnInit {
     );
   }
 
+  delete() {
+    if (confirm('Are you sure you want to delete this supplier?')) {
+      this.supplierService.delete(this.supplier.id)
+          .subscribe(
+            () => this.router.navigateByUrl('/suppliers'),
+            (error) => this.toastr.errorToastr(error.error)
+          );
+    }
+  }
+
   private createNewTermAndCondition() {
     var term = new Term();
     this.supplier.terms.push(term);
   }
 
-  private verifyIfAValidTermAndConditionExist(): boolean {
-    if (this.supplier.terms.length == 0) return false;
-
-    var isValid = true;
-    this.atleastOneTermPresent = isValid;
-    this.supplier.terms.forEach(term => {
-      if (!term.terms) {
-        this.atleastOneTermPresent = isValid = false;
-      }
-    });
-    return isValid;
-  }
-
   private clearAllValidations() {
     this.submitted = false;
     this.atleastOneTermPresent = true;
+  }
+  
+  cancel() {
+    this.router.navigateByUrl('/suppliers');
   }
 }

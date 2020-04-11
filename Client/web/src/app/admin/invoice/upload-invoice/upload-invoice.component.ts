@@ -10,6 +10,7 @@ import { HttpRequest, HttpClient, HttpEventType, HttpResponse } from '@angular/c
 import { Subject } from 'rxjs';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import * as DateHelper from '../../../common/helpers/dateHelper';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-upload-invoice',
@@ -29,23 +30,29 @@ export class UploadInvoiceComponent implements OnInit {
   private company: string = '';
   private eta: string = '';
   private invoiceTotal: number = 0;
+  private dontImpactPO: boolean = false;
   private documents = [];
 
   constructor(private companyService: CompanyService, private invoiceService: InvoiceService, private fileService: FileUploadService,
-              private http: HttpClient, private toastr: ToastrManager) { }
+              private http: HttpClient, private toastr: ToastrManager, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompany = this.companyService.getCurrentlyLoggedInCompanyId();
+    if (this.activatedRoute.snapshot.params.mode == 1) {
+      this.loadInvoice()
+    }
   }
 
   initializeColumns(mode: UploadMode = UploadMode.Confirm) {
     this.columns = [];
-    this.columns.push( new DataColumn({ headerText: "Valid", value: "isValid", isBoolean: true, customStyling: 'center' }) );
+    this.columns.push( new DataColumn({ headerText: "Valid", value: "isValid", isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Part Code", value: "partCode" }) );
     this.columns.push( new DataColumn({ headerText: "Quantity", value: "qty", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Rate", value: "price", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Amount", value: "total", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Adjusted Qty", value: "adjustedPOQty", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Purchase Orders", value: "multiplePurchaseOrders", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Quantity", value: "multiplePosQty", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Excess Qty", value: "excessQty", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Box Number", value: "boxNo" }) );
   }
@@ -60,32 +67,6 @@ export class UploadInvoiceComponent implements OnInit {
   uploadAttachment(files: FileList, folderName: string) {
     this.documents.push({'type': folderName, 'file': files[0]});
     return;
-
-
-    // var formData = new FormData();
-    // formData.append('file', files[0], files[0].name);
-    // const req = new HttpRequest('POST', 'http://po.harisons.com/api/File/BL/10', formData, {
-    //   reportProgress: true
-    // });
-    
-    // const progress = new Subject<number>();
-
-    // this.http.request(req).subscribe(event => {
-    //   if (event.type === HttpEventType.UploadProgress) {
-
-    //     // calculate the progress percentage
-    //     const percentDone = Math.round(100 * event.loaded / event.total);
-
-    //     // pass the percentage into the progress-stream
-    //     progress.next(percentDone);
-    //   } else if (event instanceof HttpResponse) {
-
-    //     // Close the progress-stream if we get an answer form the API
-    //     // The upload is complete
-    //     progress.complete();
-    //   }
-    // });
-    //this.fileService.postFile(files.item(0));
   }
 
   extractDataFromFile(rows: any) {
@@ -115,29 +96,43 @@ export class UploadInvoiceComponent implements OnInit {
     this.invoiceToValidate.PoNo = this.poNo;
     this.invoiceToValidate.InvoiceTotal = this.invoiceTotal;
     this.invoiceToValidate.CompanyName = this.company;
-    this.invoiceToValidate.ETA = this.eta ? this.eta: new Date().toLocaleString();
+    this.invoiceToValidate.ETA = this.eta ? this.eta: DateHelper.getToday();
     this.invoiceToValidate.UploadedDate = new Date().toLocaleString();
     this.invoiceService.validateInvoice(this.invoiceToValidate)
         .subscribe((response) => {
           this.invoice = response as Invoice;
+          this.formatInvoiceValidationResult();
           this.initializeColumns();
           this.checkForInvalidParts();
-          console.log(this.invoice);
-        });
+        }, (error) => this.toastr.errorToastr(error.error));
+  }
+
+  formatInvoiceValidationResult() {
+    this.invoice.supplierInvoiceDetails.forEach(detail => {
+      detail.multiplePurchaseOrders = '';
+      detail.multiplePosQty = '';
+      detail.supplierInvoicePoDetails.forEach(po => {
+        detail.multiplePurchaseOrders += `${po.poNo}, `;
+        detail.multiplePosQty += `${ po.qty }, `;
+      });
+    })
   }
 
   uploadInvoice() {
     if (this.invoice.supplierInvoiceDetails.filter(d => !d.isValid).length > 0) {
-      alert('This invoice cannot be uploaded due to one ore more invalid parts. Please check the result above');
+      this.toastr.warningToastr('This invoice cannot be uploaded due to one ore more invalid parts. Please check the result above');
       return;
     }
+
+    this.invoice.eta = this.eta;
+    this.invoice.dontImpactPO = this.dontImpactPO;
 
     this.invoiceService.uploadInvoice(this.invoice)
         .subscribe(response => {
           var invoiceResponse = response as Invoice;
           this.uploadDocuments(invoiceResponse.id.toString());
           this.toastr.successToastr('Invoice uploaded successfully!!');
-        })
+        }, (error) => this.toastr.errorToastr(error.error));
   }
 
   uploadDocuments(invoiceNumber: string) {
@@ -145,6 +140,19 @@ export class UploadInvoiceComponent implements OnInit {
       this.fileService.uploadFile(item, invoiceNumber);
       this.toastr.successToastr('File(s) uploaded successfully!!');
     });
+  }
+
+  loadInvoice() {
+    var selectedInvoice = this.activatedRoute.snapshot.params.invoiceId;
+    this.invoiceService.getInvoice(this.currentlyLoggedInCompany, selectedInvoice)
+        .subscribe(
+          invoice => {
+            this.invoice = invoice;
+            
+          },
+          error => this.toastr.errorToastr(error.error),
+          () => {}
+        );
   }
 
   private checkForInvalidParts() {

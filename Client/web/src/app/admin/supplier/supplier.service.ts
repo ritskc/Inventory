@@ -36,6 +36,10 @@ export class SupplierService {
       return this.apiService.put(supplier, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri + `/${ supplier.id }`);
   }
 
+  delete(id: number) {
+    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.supplierUri }`)
+  }
+
   savePurchaseOrder(purchaseOrder: PurchaseOrder) {
     if (purchaseOrder.id == 0)
       return this.apiService.post(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.posUri);
@@ -43,7 +47,15 @@ export class SupplierService {
       return this.apiService.put(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.posUri + `/${ purchaseOrder.id }`);
   }
 
-  getNewPurchaseOrderNumber(companyId: number): Observable<any> {
-    return this.apiService.get(`${this.configService.Settings.apiServerHost}/${this.configService.Settings.entityTracker}/po/${companyId}/${ DateHelper.getToday() }`)
+  deletePurchaseOrder(id: number) {
+    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }${ this.configService.Settings.posUri }`);
+  }
+
+  getNewPurchaseOrderNumber(companyId: number, date: string): Observable<any> {
+    return this.apiService.get(`${this.configService.Settings.apiServerHost}/${this.configService.Settings.entityTracker}/po/${companyId}/${ date }`)
+  }
+
+  getPurchaseReport(companyId: number, from: string, to: string): Observable<any[]> {
+    return this.apiService.get(`${this.configService.Settings.apiServerHost}/reports/purchase/${companyId}/${ from }/${ to }`);
   }
 }

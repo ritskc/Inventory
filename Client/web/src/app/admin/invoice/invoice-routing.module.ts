@@ -31,10 +31,17 @@ const routes: Routes = [{
       }
     },
     {
-      path: 'upload/:id',
+      path: 'upload/:id/:mode',
       component: UploadInvoiceComponent,
       data: {
-        title: 'Upload'
+        title: 'Create Invoice'
+      }
+    },
+    {
+      path: 'upload/:id/:mode/:invoiceId',
+      component: UploadInvoiceComponent,
+      data: {
+        title: 'Edit Invoice'
       }
     }]
 }];

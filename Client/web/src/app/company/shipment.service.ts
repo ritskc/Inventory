@@ -3,6 +3,7 @@ import { ApiService } from '../common/services/api.service';
 import { ConfigService } from '../config/config.service';
 import { Shipment } from '../models/shipment.model';
 import { Observable } from 'rxjs';
+import { MasterShipment } from '../models/master.shipment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,15 @@ export class ShipmentService {
     return this.apiService.get<Shipment[]>(this.config.Settings.apiServerHost + this.config.Settings.shipmentUri + '/' + companyId);
   }
 
-  getAShipment(shipmentId: number): Observable<Shipment> {
-    return this.apiService.get<Shipment>(this.config.Settings.apiServerHost + this.config.Settings.shipmentUri + '/' + shipmentId);
+  getAShipment(companyId: number, shipmentId: number): Observable<Shipment> {
+    return this.apiService.get<Shipment>(this.config.Settings.apiServerHost + this.config.Settings.shipmentUri + '/1/' + shipmentId);
   }
 
   createShipment(shipment: Shipment) {
-    return this.apiService.post(shipment, this.config.Settings.apiServerHost + this.config.Settings.shipmentUri);
+    if (shipment.id < 1) 
+      return this.apiService.post(shipment, this.config.Settings.apiServerHost + this.config.Settings.shipmentUri);
+    else
+      return this.apiService.put(shipment, this.config.Settings.apiServerHost + this.config.Settings.shipmentUri + `/${ shipment.id }`);
   }
 
   deleteShipment(shipmentId: number) {
@@ -29,5 +33,28 @@ export class ShipmentService {
 
   getLatestShipment(companyId: number, date: string): Observable<any> {
     return this.apiService.get(`${ this.config.Settings.apiServerHost }/${ this.config.Settings.entityTracker }/packing_slip/${ companyId }/${ date }`);
+  }
+
+  getAllMasterShipments(companyId: number): Observable<MasterShipment[]> {
+    return this.apiService.get<MasterShipment[]>(this.config.Settings.apiServerHost + this.config.Settings.masterShipmentUri + '/' + companyId);
+  }
+
+  getAMasterShipments(companyId: number, masterShipmentId: number): Observable<MasterShipment> {
+    return this.apiService.get<MasterShipment>(this.config.Settings.apiServerHost + this.config.Settings.masterShipmentUri + '/' + companyId + '/' + masterShipmentId);
+  }
+
+  getLatestMasterShipment(companyId: number, date: string): Observable<any> {
+    return this.apiService.get(`${ this.config.Settings.apiServerHost }/${ this.config.Settings.entityTracker }/master_packing_slip/${ companyId }/${ date }`);
+  }
+
+  saveMasterShipment(masterShipment: MasterShipment) {
+    if (masterShipment.id < 1) 
+      return this.apiService.post(masterShipment, this.config.Settings.apiServerHost + this.config.Settings.masterShipmentUri);
+    else
+      return this.apiService.put(masterShipment, this.config.Settings.apiServerHost + this.config.Settings.masterShipmentUri + `/${ masterShipment.id }`);
+  }
+
+  removeMasterPackingSlip(masterShipmentId: number) {
+    return this.apiService.delete(masterShipmentId, this.config.Settings.apiServerHost + this.config.Settings.masterShipmentUri);
   }
 }

@@ -38,9 +38,19 @@ export class CustomerService {
   savePurchaseOrder(purchaseOrder: PurchaseOrder) {
     if (purchaseOrder.id == 0)
       return this.apiService.post(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.ordersUri);
+    else
+      return this.apiService.put(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.ordersUri + `/${ purchaseOrder.id }`);
+  }
+
+  deletePurchaseOrder(id: number) {
+    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.ordersUri }`);
   }
 
   delete(id: number) {
     return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.customerUri }`)
+  }
+
+  getSaleReport(companyId: number, from: string, to: string): Observable<any[]> {
+    return this.apiService.get(`${this.configService.Settings.apiServerHost}/reports/sales/${companyId}/${ from }/${ to }`);
   }
 }

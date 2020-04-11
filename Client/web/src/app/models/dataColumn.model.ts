@@ -10,9 +10,13 @@ export class DataColumn {
     nested:string = '';
     constantText: string = '';
     isDate: boolean = false;
+    isEditableDate: boolean = false;
     isBoolean: boolean = false;
     minWidth: boolean = false;
     customStyling: string = '';
+    isDisabled: boolean = false;
+    hasAdditionalAction: boolean = false;
+    additionalActionName: string = '';
 
     constructor(init?: Partial<DataColumn>) {
         Object.assign(this, init);
@@ -24,8 +28,14 @@ export class DataColumnAction {
     actionStyle: string = '';
     event: string = '';
     icon: string = '';
+    showOnlyIf: string = '';
+
+    private condition(data: any): boolean {
+        return this.showOnlyIf ? eval(this.showOnlyIf): true;
+    };
 
     constructor(init?: Partial<DataColumnAction>) {
         Object.assign(this, init);
     }
+
 }

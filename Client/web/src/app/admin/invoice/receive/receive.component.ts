@@ -87,7 +87,7 @@ export class ReceiveComponent implements OnInit {
   invoiceReceived() {
     this.service.receivedInvoice(this.supplierInvoice.supplierId, this.supplierInvoice.id)
         .subscribe(
-          (result) => { console.log(result); },
+          (result) => { alert('Invoice received successfully!'); },
           (error) => { console.log(error) }
         );
   }

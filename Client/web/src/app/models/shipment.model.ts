@@ -1,3 +1,5 @@
+import { Part } from './part.model';
+
 export class Shipment {
 
     constructor() {
@@ -21,6 +23,11 @@ export class Shipment {
     fob: string = '';
     totalSurcharge: number = 0;
     terms: string = '';
+    shipmentInfoId: number = 0;
+    isInvoiceCreated: boolean;
+    isPOSUploaded: boolean;
+    isMasterPackingSlip: boolean;
+    isRepackage: boolean;
 }
 
 export class PackingSlipDetail {
@@ -33,12 +40,15 @@ export class PackingSlipDetail {
     partDescription: string = '';
     qty: number = 0;
     inBasket: boolean = false;
+    isRepackage: boolean;
     boxes: number = 0;
     unitPrice: number = 0;
-    total: number = 0;
+    price: number = 0;
     surcharge: number = 0;
     surchargePerPound: number = 0;
     surchargePerUnit: number = 0;
     totalSurcharge: number = 0;
     excessQty: number = 0;
+    srNo: number = 0;
+    partDetail: Part;
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DataColumn } from '../../models/dataColumn.model';
+import * as DateHelper from '../helpers/dateHelper';
 
 @Injectable({
   providedIn: 'root'
@@ -8,20 +9,29 @@ export class JsonToCsvExporterService {
 
   constructor() { }
 
-  export(filename: string, fileformat: string, data: any[]) {
+  export(filename: string, fileformat: string, data: any[], columns: any[]) {
 
     var dataToWrite: string = '';
     var headers = Object.keys(data[0]);
 
-    headers.forEach(item => {
-      dataToWrite += item + ",";
+    columns.forEach(column => {
+      if (column.actions.length == 0)
+        dataToWrite += column.headerText + ",";
     });
     dataToWrite += String.fromCharCode(13);
 
     data.forEach(item => {
-      headers.forEach(header => {
-        if (typeof(item[header]) !== "object")
-          dataToWrite += item[header] + ","
+      columns.forEach(column => {
+        if (typeof(item[column.value]) !== "object" && column.actions.length == 0) {
+          var valueToPrint = '';
+          if (column.isDate || column.isEditableDate) {
+            valueToPrint = DateHelper.formatDate(new Date(item[column.value]));
+          } else {
+            valueToPrint = item[column.value];
+          }
+          if (typeof(valueToPrint) === 'string') valueToPrint = valueToPrint.replace(/\,/gi, "");
+          dataToWrite += valueToPrint + ","
+        }
       });
       dataToWrite += String.fromCharCode(13);
     });

@@ -20,6 +20,8 @@ export class PurchaseOrder {
     poDetails: PurchaseOrderDetail[];
     orderDetails: PurchaseOrderDetail[];
     poTerms: PurchaseOrderTerm[];
+    supplierName: string;
+    customerName: string;
 
     constructor() {
         this.poDetails = [];
@@ -47,10 +49,16 @@ export class PurchaseOrderDetail {
     isClosed: boolean;
     partCode: string;
     description: string;
-    total: number;
+    total: string;
     part: Part
-
+    shippedQty: number = 0;
     orderId: number = 0;
+    srNo: number = 0;
+    openQty: number = 0;
+    isAcknowledged: boolean = false;
+    isForceClosed: boolean = false;
+    packingSlipNo: string = '';
+    shippingDate: string;
 }
 
 export class PurchaseOrderTerm {
