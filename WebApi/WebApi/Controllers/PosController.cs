@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using WebApi.IServices;
+using WebApi.Settings;
+using WebApi.Utils;
 
 namespace WebApi.Controllers
 {
@@ -14,10 +18,14 @@ namespace WebApi.Controllers
     public class PosController : ControllerBase
     {
         private readonly IPoService _poService;
+        private readonly IPartService _partService;
+        private readonly AppSettings _appSettings;
 
-        public PosController(IPoService poService)
+        public PosController(IPoService poService,IPartService partService, IOptions<AppSettings> appSettings)
         {
             this._poService = poService;
+            this._partService = partService;
+            _appSettings = appSettings.Value;
         }
 
         // GET: api/Todo
@@ -26,7 +34,10 @@ namespace WebApi.Controllers
         {
             try
             {
-                var result= await this._poService.GetAllPosAsync(companyId);
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var result= await this._poService.GetAllPosAsync(companyId,userId);
 
                 if (result == null)
                 {
@@ -48,7 +59,10 @@ namespace WebApi.Controllers
         {
             try
             {
-                var result = await this._poService.GetPoAsync(id);
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var result = await this._poService.GetPoAsync(id,userId);
 
                 if (result == null)
                 {
@@ -69,7 +83,38 @@ namespace WebApi.Controllers
         {
             try
             {
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+                var parts = await this._partService.GetAllPartsAsync(po.CompanyId,userId);
+                if (po == null || po.poDetails == null)
+                    return BadRequest("Invalid PO");
+                foreach(PoDetail poDetail in po.poDetails)
+                {
+                    //foreach(Part tmpPart in parts)
+                    //{
+                    //    if(tmpPart.Id == poDetail.PartId)
+                    //    {
+                    //        tmpPart.partSupplierAssignments.Where(x=>x.SupplierID == po.SupplierId)
+                    //    }
+                    //}
+                    //var part = parts.Where(x => x.partSupplierAssignments.Select(p => p.PartID == poDetail.PartId && p.SupplierID == po.SupplierId).FirstOrDefault()).FirstOrDefault();
+                    var selectedParts = parts.Where(x => x.Id == poDetail.PartId);
+                    if (selectedParts == null)
+                    {
+                        return BadRequest(string.Format("Invalid part"));                        
+                    }
+                    var part = selectedParts.Select(x => x.partSupplierAssignments.Where(p => p.SupplierID == po.SupplierId).FirstOrDefault()).FirstOrDefault();
+                   
+                    if (part == null)
+                    {
+                        return BadRequest(string.Format("Invalid part : {0} does not belong to this supplier", selectedParts.Select(x=>x.Code).FirstOrDefault()));
+                    }
+                }
+                po.AccessId = Guid.NewGuid().ToString();
                 await this._poService.AddPoAsync(po);
+
+                EmailService emailService = new EmailService(_appSettings);
+                emailService.SendAcknoledgePOEmail(po.CompanyName,po.SupplierName,po.ContactPersonName,_appSettings.POURL + po.AccessId,po.PoNo);
                 return Ok();
             }
             catch (Exception ex)
@@ -84,13 +129,94 @@ namespace WebApi.Controllers
         {
             try
             {
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+                
                 if (id != po.Id)
                 {
                     return BadRequest();
                 }
 
+                var parts = await this._partService.GetAllPartsAsync(po.CompanyId,userId);
+                if (po == null || po.poDetails == null)
+                    return BadRequest("Invalid PO");
+
+                var existingPo = await this._poService.GetPoAsync(po.Id,userId);
+                if (existingPo != null && existingPo.IsClosed)
+                    return BadRequest("PO is already closed.PO is not editable");
+
+                //if(existingPo !=null && existingPo.poDetails != null)
+                //{
+                //    var processedPoItems = existingPo.poDetails.Where(x => x.IsClosed || x.InTransitQty > 0 || x.ReceivedQty > 0);
+                //    if(processedPoItems != null && processedPoItems.Count() > 0)
+                //        return BadRequest("PO Detail(s) is already processed. PO is not editable");
+                //}
+
+                foreach (PoDetail poDetail in po.poDetails)
+                {
+                    if (poDetail.Id != 0)
+                    {
+                        var part = parts.Where(p => p.Id == poDetail.PartId).FirstOrDefault();
+                        //var part = parts.Where(x => x.partSupplierAssignments.Select(p => p.PartID == poDetail.PartId && p.SupplierID == po.SupplierId).FirstOrDefault()).FirstOrDefault();
+                        if (part == null)
+                        {
+                            part = parts.Where(p => p.Id == poDetail.PartId).FirstOrDefault();
+                            if (part == null)
+                                return BadRequest(string.Format("Invalid part"));
+
+                        }
+
+                        var existingPartDetail = existingPo.poDetails.Where(x => x.Id == poDetail.Id).FirstOrDefault();
+                        if(existingPartDetail.PartId != poDetail.PartId)
+                            return BadRequest(string.Format("Invalid part associated in edited po line number"));
+
+                        if(existingPartDetail.IsClosed)
+                        {
+                            if(poDetail.Qty != existingPartDetail.Qty)
+                                return BadRequest(string.Format("Part is already closed you can not change the qty of this part", poDetail.part.Code));
+                        }
+                        if (poDetail.Qty < (existingPartDetail.ReceivedQty + existingPartDetail.InTransitQty))
+                            return BadRequest(string.Format("Invalid part associated in edited po line number"));
+                        if(poDetail.IsForceClosed)
+                        {
+                            poDetail.IsClosed = true;
+                        }
+
+                        if (poDetail.Qty == (existingPartDetail.ReceivedQty + existingPartDetail.InTransitQty))
+                        {
+                            if(!existingPartDetail.IsClosed)
+                            {
+                                poDetail.IsClosed = true;
+                                poDetail.IsForceClosed = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var selectedParts = parts.Where(x => x.Id == poDetail.PartId);
+                        if (selectedParts == null)
+                        {
+                            return BadRequest(string.Format("Invalid part"));
+                        }
+                        var part = selectedParts.Select(x => x.partSupplierAssignments.Where(p => p.SupplierID == po.SupplierId).FirstOrDefault()).FirstOrDefault();
+
+                        if (part == null)
+                        {
+                            return BadRequest(string.Format("Invalid part : {0} does not belong to this supplier", selectedParts.Select(x => x.Code).FirstOrDefault()));
+                        }                        
+                    }
+
+                }
                 po.Id = id;
+                po.AccessId = existingPo.AccessId;
+
+                if(po.AccessId == null || po.AccessId == string.Empty || po.AccessId == "")
+                    po.AccessId  = Guid.NewGuid().ToString();
+
                 await this._poService.UpdatePoAsync(po);
+
+                EmailService emailService = new EmailService(_appSettings);
+                emailService.SendAcknoledgePOEmail(po.CompanyName, po.SupplierName, po.ContactPersonName, _appSettings.POURL + po.AccessId, po.PoNo);
 
                 return Ok();
             }
@@ -98,18 +224,31 @@ namespace WebApi.Controllers
             {
                 return StatusCode(500, ex.ToString());
             }
-        }
+        }        
 
         // DELETE: api/Todo/5
-        [HttpDelete("{companyId}/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<Po>> Delete(long id)
         {
             try
             {
-                var result = await this._poService.GetPoAsync(id);
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var result = await this._poService.GetPoAsync(id,userId);
                 if (result == null)
                 {
                     return NotFound();
+                }
+
+                var existingPo = await this._poService.GetPoAsync(id,userId);
+                if (existingPo != null && existingPo.IsClosed)
+                    return BadRequest("PO is already closed. You can not delete this PO");
+                if (existingPo != null && existingPo.poDetails != null)
+                {
+                    var processedPoItems = existingPo.poDetails.Where(x => x.IsClosed || x.InTransitQty > 0 || x.ReceivedQty > 0);
+                    if (processedPoItems != null && processedPoItems.Count() > 0)
+                        return BadRequest("PO Detail(s) is already processed. You can not delete this PO");
                 }
 
                 await this._poService.DeletePoAsync(id);

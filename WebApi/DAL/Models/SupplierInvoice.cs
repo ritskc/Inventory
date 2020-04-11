@@ -15,7 +15,7 @@ namespace DAL.Models
         public string SupplierName { get; set; }
         public string InvoiceNo { get; set; }
         public DateTime InvoiceDate { get; set; }
-        public DateTime ETA { get; set; }
+        public DateTime? ETA { get; set; }
         public bool IsAirShipment { get; set; }
         public string PoNo { get; set; }
         public string ReferenceNo { get; set; }
@@ -31,6 +31,7 @@ namespace DAL.Models
         public string TenPlusPath { get; set; }
         public string BLPath { get; set; }
         public bool IsInvoiceReceived { get; set; }
+        public bool DontImpactPO { get; set; }
         public string Barcode { get; set; }
         public DateTime UploadedDate { get; set; }
         public DateTime? ReceivedDate { get; set; }

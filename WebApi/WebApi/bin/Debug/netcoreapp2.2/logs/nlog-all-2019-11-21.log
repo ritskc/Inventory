@@ -1,0 +1,251 @@
+2019-11-21 18:49:05.2679||DEBUG|WebApi.Program|init main 
+2019-11-21 18:49:07.4203||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-21 18:49:08.2963|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-21 18:49:08.2963|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-21 18:49:08.3341|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 38.3174ms 200  
+2019-11-21 18:49:08.4284|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 132.8495ms 404  
+2019-11-21 18:53:00.8412||DEBUG|WebApi.Program|init main 
+2019-11-21 18:53:02.2202||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-21 18:53:02.9338|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-21 18:53:02.9338|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-21 18:53:02.9659|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 32.4753ms 200  
+2019-11-21 18:53:03.0378|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 104.7117ms 404  
+2019-11-21 18:53:13.7890|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-21 18:53:13.8482|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 18:53:13.8482|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 18:53:13.8837|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) 
+2019-11-21 18:53:13.9021|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2019-11-21 18:53:14.8443|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 939.878ms. 
+2019-11-21 18:53:14.8524|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.SupplierInvoice, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-11-21 18:53:14.9048|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) in 1018.0035ms 
+2019-11-21 18:53:14.9048|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 18:53:14.9104|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 1121.407ms 200 application/json; charset=utf-8 
+2019-11-21 18:53:14.9104|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRERNP55FTI", Request id "0HLRERNP55FTI:00000002": the application completed without reading the entire request body. 
+2019-11-21 18:53:37.1757|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/supplierinvoice/1/36 application/json 1510 
+2019-11-21 18:53:37.1757|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 18:53:37.1757|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Get (WebApi)' 
+2019-11-21 18:53:37.1901|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Get (WebApi) 
+2019-11-21 18:53:37.1901|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Get (WebApi) with arguments (1, 36) - Validation state: Valid 
+2019-11-21 18:53:37.7445|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 549.4957ms. 
+2019-11-21 18:53:37.7445|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-21 18:53:37.7445|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Get (WebApi) in 556.0467ms 
+2019-11-21 18:53:37.7445|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Get (WebApi)' 
+2019-11-21 18:53:37.7445|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 572.0132ms 200 application/json; charset=utf-8 
+2019-11-21 18:53:37.7445|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRERNP55FTJ", Request id "0HLRERNP55FTJ:00000002": the application completed without reading the entire request body. 
+2019-11-21 18:54:27.8631|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/pos/1 application/json 1950 
+2019-11-21 18:54:27.8983|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-11-21 18:54:27.9528|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-11-21 18:54:27.9528|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2019-11-21 18:54:27.9587|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "Pos"}. Executing action WebApi.Controllers.PosController.GetPos (WebApi) 
+2019-11-21 18:54:27.9587|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PosController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2019-11-21 18:54:28.4730|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PosController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 512.637ms. 
+2019-11-21 18:54:28.4730|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.Po, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-11-21 18:54:28.4730|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PosController.GetPos (WebApi) in 525.6461ms 
+2019-11-21 18:54:28.4730|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2019-11-21 18:54:28.4730|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 622.771ms 200 application/json; charset=utf-8 
+2019-11-21 18:54:28.4730|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRERNP55FTJ", Request id "0HLRERNP55FTJ:00000003": the application completed without reading the entire request body. 
+2019-11-21 18:54:40.3523|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/pos/1/23 application/json 1950 
+2019-11-21 18:54:40.3523|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-11-21 18:54:40.3523|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-11-21 18:54:40.3523|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PosController.Get (WebApi)' 
+2019-11-21 18:54:40.3523|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "Pos"}. Executing action WebApi.Controllers.PosController.Get (WebApi) 
+2019-11-21 18:54:40.3523|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PosController.Get (WebApi) with arguments (1, 23) - Validation state: Valid 
+2019-11-21 18:54:40.8477|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PosController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 489.3079ms. 
+2019-11-21 18:54:40.8477|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.Po'. 
+2019-11-21 18:54:40.8477|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PosController.Get (WebApi) in 491.2198ms 
+2019-11-21 18:54:40.8477|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PosController.Get (WebApi)' 
+2019-11-21 18:54:40.8477|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 497.4576ms 200 application/json; charset=utf-8 
+2019-11-21 18:54:40.8477|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRERNP55FTJ", Request id "0HLRERNP55FTJ:00000004": the application completed without reading the entire request body. 
+2019-11-21 18:58:05.4682||DEBUG|WebApi.Program|init main 
+2019-11-21 18:58:06.6291||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-21 18:58:07.2386|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-21 18:58:07.2386|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-21 18:58:07.2733|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 34.9217ms 200  
+2019-11-21 18:58:07.3703|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 132.3784ms 404  
+2019-11-21 18:58:23.7863|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/pos/1/ application/json 1950 
+2019-11-21 18:58:23.8517|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-11-21 18:58:23.8785|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-11-21 18:58:23.8785|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2019-11-21 18:58:23.9107|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "Pos"}. Executing action WebApi.Controllers.PosController.GetPos (WebApi) 
+2019-11-21 18:58:23.9259|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PosController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2019-11-21 18:58:25.7030|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PosController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1772.7647ms. 
+2019-11-21 18:58:25.7201|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.Po, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-11-21 18:58:25.7727|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PosController.GetPos (WebApi) in 1859.3079ms 
+2019-11-21 18:58:25.7727|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2019-11-21 18:58:25.7727|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 1993.2558ms 200 application/json; charset=utf-8 
+2019-11-21 18:58:25.7885|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRERQJR5MO7", Request id "0HLRERQJR5MO7:00000002": the application completed without reading the entire request body. 
+2019-11-21 18:58:42.1049|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/pos/1/ application/json 1950 
+2019-11-21 18:58:42.1049|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-11-21 18:58:42.1049|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-11-21 18:58:42.1049|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2019-11-21 18:58:42.1126|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "Pos"}. Executing action WebApi.Controllers.PosController.GetPos (WebApi) 
+2019-11-21 18:58:42.1126|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PosController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2019-11-21 18:58:43.3919|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PosController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1276.8646ms. 
+2019-11-21 18:58:43.3935|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.Po, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-11-21 18:58:43.3935|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PosController.GetPos (WebApi) in 1290.8392ms 
+2019-11-21 18:58:43.3935|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2019-11-21 18:58:43.3935|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 1301.9819ms 200 application/json; charset=utf-8 
+2019-11-21 18:58:43.3935|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRERQJR5MO8", Request id "0HLRERQJR5MO8:00000002": the application completed without reading the entire request body. 
+2019-11-21 18:59:08.4970|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-21 18:59:08.5040|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 18:59:08.5040|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 18:59:08.5040|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) 
+2019-11-21 18:59:08.5040|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2019-11-21 18:59:17.0082|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 8491.5988ms. 
+2019-11-21 18:59:17.0082|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.SupplierInvoice, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-11-21 18:59:17.0600|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) in 8544.7809ms 
+2019-11-21 18:59:17.0600|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 18:59:17.0600|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 8565.0797ms 200 application/json; charset=utf-8 
+2019-11-21 18:59:17.0600|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRERQJR5MO7", Request id "0HLRERQJR5MO7:00000003": the application completed without reading the entire request body. 
+2019-11-21 18:59:56.0982|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-21 18:59:56.0982|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 18:59:56.0982|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 18:59:56.0982|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) 
+2019-11-21 18:59:56.0982|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2019-11-21 19:00:39.2783|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 43174.4304ms. 
+2019-11-21 19:00:39.2783|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.SupplierInvoice, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-11-21 19:00:39.2964|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) in 43194.5973ms 
+2019-11-21 19:00:39.2964|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 19:00:39.2964|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 43200.7466ms 200 application/json; charset=utf-8 
+2019-11-21 19:00:39.3010|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRERQJR5MO7", Request id "0HLRERQJR5MO7:00000004": the application completed without reading the entire request body. 
+2019-11-21 19:00:42.9694|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-21 19:00:42.9694|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 19:00:42.9717|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 19:00:43.0186|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) 
+2019-11-21 19:00:43.0193|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2019-11-21 19:02:09.0799|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 86060.0951ms. 
+2019-11-21 19:02:09.0799|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.SupplierInvoice, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-11-21 19:02:09.0884|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) in 86069.2349ms 
+2019-11-21 19:02:09.0884|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 19:02:09.0884|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 86120.5657ms 200 application/json; charset=utf-8 
+2019-11-21 19:02:09.0884|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRERQJR5MO7", Request id "0HLRERQJR5MO7:00000005": the application completed without reading the entire request body. 
+2019-11-21 19:02:12.2781|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-21 19:02:12.2781|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 19:02:12.2781|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 19:02:12.2781|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) 
+2019-11-21 19:02:12.2781|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2019-11-21 19:03:18.5838|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 66302.2897ms. 
+2019-11-21 19:03:18.5838|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.SupplierInvoice, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-11-21 19:03:18.5838|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) in 66312.8291ms 
+2019-11-21 19:03:18.5838|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 19:03:18.5838|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 66316.6045ms 200 application/json; charset=utf-8 
+2019-11-21 19:03:18.5838|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRERQJR5MO7", Request id "0HLRERQJR5MO7:00000006": the application completed without reading the entire request body. 
+2019-11-21 19:05:17.4430|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DELETE http://localhost:44390/supplierinvoice/4 application/json 1510 
+2019-11-21 19:05:17.4430|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 19:05:17.4430|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Delete (WebApi)' 
+2019-11-21 19:05:17.4743|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Delete", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) 
+2019-11-21 19:05:17.4743|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) with arguments (4) - Validation state: Valid 
+2019-11-21 19:05:20.3711|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Delete (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 2895.4455ms. 
+2019-11-21 19:05:20.3711|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2019-11-21 19:05:20.3711|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) in 2897.3888ms 
+2019-11-21 19:05:20.3711|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Delete (WebApi)' 
+2019-11-21 19:05:20.3711|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 2930.8112ms 500 application/json; charset=utf-8 
+2019-11-21 19:05:20.3711|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRERQJR5MO9", Request id "0HLRERQJR5MO9:00000001": the application completed without reading the entire request body. 
+2019-11-21 19:05:31.5504|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DELETE http://localhost:44390/supplierinvoice/4 application/json 1510 
+2019-11-21 19:05:31.5504|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 19:05:31.5504|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Delete (WebApi)' 
+2019-11-21 19:05:31.5504|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Delete", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) 
+2019-11-21 19:05:31.5504|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) with arguments (4) - Validation state: Valid 
+2019-11-21 19:06:28.0823|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Delete (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 56528.2696ms. 
+2019-11-21 19:06:28.0823|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2019-11-21 19:06:28.0823|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) in 56530.4548ms 
+2019-11-21 19:06:28.0823|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Delete (WebApi)' 
+2019-11-21 19:06:28.0823|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 56538.8626ms 500 application/json; charset=utf-8 
+2019-11-21 19:06:28.0823|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRERQJR5MO9", Request id "0HLRERQJR5MO9:00000002": the application completed without reading the entire request body. 
+2019-11-21 19:06:31.7219|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DELETE http://localhost:44390/supplierinvoice/4 application/json 1510 
+2019-11-21 19:06:31.7219|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 19:06:31.7219|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Delete (WebApi)' 
+2019-11-21 19:06:31.7219|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Delete", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) 
+2019-11-21 19:06:31.7219|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) with arguments (4) - Validation state: Valid 
+2019-11-21 19:12:07.5043||DEBUG|WebApi.Program|init main 
+2019-11-21 19:12:08.7577||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-21 19:12:09.4295|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-21 19:12:09.4295|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-21 19:12:09.4739|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 44.3821ms 200  
+2019-11-21 19:12:09.5506|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 121.7847ms 404  
+2019-11-21 19:12:14.4470|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DELETE http://localhost:44390/supplierinvoice/4 application/json 1510 
+2019-11-21 19:12:14.5241|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 19:12:14.5241|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Delete (WebApi)' 
+2019-11-21 19:12:14.5594|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Delete", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) 
+2019-11-21 19:12:14.5838|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) with arguments (4) - Validation state: Valid 
+2019-11-21 19:12:51.8099|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Delete (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 37223.758ms. 
+2019-11-21 19:12:51.8202|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2019-11-21 19:12:51.8386|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) in 37275.9573ms 
+2019-11-21 19:12:51.8386|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Delete (WebApi)' 
+2019-11-21 19:12:51.8386|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 37397.6419ms 500 application/json; charset=utf-8 
+2019-11-21 19:12:51.8547|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRES2EQS9TH", Request id "0HLRES2EQS9TH:00000002": the application completed without reading the entire request body. 
+2019-11-21 19:13:00.1257|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DELETE http://localhost:44390/supplierinvoice/4 application/json 1510 
+2019-11-21 19:13:00.1257|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 19:13:00.1257|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Delete (WebApi)' 
+2019-11-21 19:13:00.1285|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Delete", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) 
+2019-11-21 19:13:00.1285|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) with arguments (4) - Validation state: Valid 
+2019-11-21 19:34:29.1804||DEBUG|WebApi.Program|init main 
+2019-11-21 19:34:30.4086||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-21 19:34:31.0318|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-21 19:34:31.0318|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-21 19:34:31.0701|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 38.882ms 200  
+2019-11-21 19:34:31.1655|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 134.6997ms 404  
+2019-11-21 19:34:33.6285|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DELETE http://localhost:44390/supplierinvoice/4 application/json 1510 
+2019-11-21 19:34:33.6905|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 19:34:33.6905|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Delete (WebApi)' 
+2019-11-21 19:34:33.7267|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Delete", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) 
+2019-11-21 19:34:33.7458|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) with arguments (4) - Validation state: Valid 
+2019-11-21 19:34:44.9467|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Delete (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 11196.347ms. 
+2019-11-21 19:34:44.9891|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2019-11-21 19:34:44.9891|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Delete (WebApi) in 11267.5576ms 
+2019-11-21 19:34:44.9891|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Delete (WebApi)' 
+2019-11-21 19:34:45.0059|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 11377.4208ms 200  
+2019-11-21 19:34:45.0059|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRESEULAS04", Request id "0HLRESEULAS04:00000002": the application completed without reading the entire request body. 
+2019-11-21 19:35:35.3251|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-21 19:35:35.3492|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 19:35:35.3492|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 19:35:35.3650|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) 
+2019-11-21 19:35:35.3650|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2019-11-21 19:35:56.6306|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 21263.8767ms. 
+2019-11-21 19:35:56.6306|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.SupplierInvoice, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-11-21 19:35:56.7333|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) in 21367.7982ms 
+2019-11-21 19:35:56.7333|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 19:35:56.7333|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 21410.1101ms 200 application/json; charset=utf-8 
+2019-11-21 19:35:56.7333|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRESEULAS04", Request id "0HLRESEULAS04:00000003": the application completed without reading the entire request body. 
+2019-11-21 19:36:01.6544|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-21 19:36:01.6544|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 19:36:01.6544|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 19:36:01.6544|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) 
+2019-11-21 19:36:01.6544|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2019-11-21 19:36:50.7537|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 49095.3966ms. 
+2019-11-21 19:36:50.7537|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.SupplierInvoice, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-11-21 19:36:50.7840|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) in 49126.5281ms 
+2019-11-21 19:36:50.7840|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 19:36:50.7840|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 49131.9616ms 200 application/json; charset=utf-8 
+2019-11-21 19:36:50.7840|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRESEULAS04", Request id "0HLRESEULAS04:00000004": the application completed without reading the entire request body. 
+2019-11-21 19:36:53.6137|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-21 19:36:53.6137|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-21 19:36:53.6137|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 19:36:53.6137|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) 
+2019-11-21 19:36:53.6137|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2019-11-21 19:38:21.1520|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 87535.1492ms. 
+2019-11-21 19:38:21.1520|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.SupplierInvoice, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2019-11-21 19:38:21.1832|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) in 87566.9415ms 
+2019-11-21 19:38:21.1832|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2019-11-21 19:38:21.1832|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 87570.4493ms 200 application/json; charset=utf-8 
+2019-11-21 19:38:21.1832|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRESEULAS04", Request id "0HLRESEULAS04:00000005": the application completed without reading the entire request body. 

@@ -9,13 +9,14 @@ namespace DAL.IRepository
 {
     public interface IPackingSlipRepository
     {
-        Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId);
+        Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId,int userId);
         Task<PackingSlip> GetPackingSlipAsync(long Id);
         PackingSlip GetPackingSlip(long id);
         Task<Int32> AddPackingSlipAsync(PackingSlip packingSlip);
-        Task UpdatePackingSlipAsync(PackingSlip packingSlip);
-        Task<int> DeleteSupplierInvoiceAsync(long id);
+        Task<bool> UpdatePackingSlipAsync(PackingSlip packingSlip);
+        Task<bool> DeletePackingSlipAsync(long id);
         Task CreateInvoiceAsync(PackingSlip packingSlip);
-        Task UpdatePOSAsync(int packingSlipId, string path);
+        Task UpdatePOSAsync(int packingSlipId, string path,string trackingNumber);
+        Task<IEnumerable<DeletedPackingSlip>> GetDeletedPackingSlipAsync();
     }
 }

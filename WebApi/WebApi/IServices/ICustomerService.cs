@@ -8,7 +8,7 @@ namespace WebApi.IServices
 {
     public interface ICustomerService
     {
-        Task<IEnumerable<Customer>> GetAllCustomerAsync(int companyId);
+        Task<IEnumerable<Customer>> GetAllCustomerAsync(int companyId,int userId);
         Task<Customer> GetCustomerAsync(int id);
         Task AddCustomerAsync(Customer customer);
         Task UpdateCustomerAsync(Customer customer);

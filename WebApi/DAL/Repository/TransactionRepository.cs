@@ -42,7 +42,8 @@ namespace DAL.Repository
                         sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand - '{transactionDetail.Qty}'  WHERE id = '{transactionDetail.PartId}' ");
                     else if (transactionDetail.TransactionTypeId == BusinessConstants.TRANSACTION_TYPE.ADJUSTMENT_PLUS)
                         sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand + '{transactionDetail.Qty}'  WHERE id = '{transactionDetail.PartId}' ");
-
+                    else if (transactionDetail.TransactionTypeId == BusinessConstants.TRANSACTION_TYPE.REVERT_UPLOAD_SUPPLIER_INVOICE)
+                        sql = string.Format($"UPDATE [dbo].[part]   SET [IntransitQty] =  IntransitQty - '{transactionDetail.Qty}'  WHERE id = '{transactionDetail.PartId}' ");
 
 
                     command.CommandText = sql; 

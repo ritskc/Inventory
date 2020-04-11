@@ -12,6 +12,7 @@ namespace DAL.Models
         public const string ENTITY_TRACKER_SUPP_INVOICE = "SUPP_INVOICE";
         public const string ENTITY_TRACKER_ORDER = "ORDER";
         public const string ENTITY_TRACKER_PACKING_SLIP = "PACKING_SLIP";
+        public const string ENTITY_TRACKER_MASTER_PACKING_SLIP = "MASTER_PACKING_SLIP";
 
         public enum INVENTORY_TYPE
         {
@@ -26,6 +27,9 @@ namespace DAL.Models
             CUSTOMER_PACKINGSLIP = 3,
             ADJUSTMENT_PLUS = 4,
             ADJUSTMENT_MINUS = 5,
+            REVERT_UPLOAD_SUPPLIER_INVOICE = 6,
+            REVERT_CUSTOMER_PACKINGSLIP = 7,
+            UNRECEIVE_SUPPLIER_INVOICE = 8,
         }
 
         public enum DIRECTION

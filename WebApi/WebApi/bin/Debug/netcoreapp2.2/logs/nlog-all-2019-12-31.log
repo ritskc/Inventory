@@ -1,0 +1,28 @@
+2019-12-31 11:40:25.9124||DEBUG|WebApi.Program|init main 
+2019-12-31 11:40:27.5232||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-12-31 11:40:28.5636|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-12-31 11:40:28.5636|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-12-31 11:40:28.6092|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 46.5905ms 200  
+2019-12-31 11:40:28.7223|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 160.3443ms 404  
+2019-12-31 11:42:49.6518|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/parts/1/OpeningQty/333/100 application/json 151 
+2019-12-31 11:42:49.7590|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-12-31 11:42:49.7590|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.Put (WebApi)' 
+2019-12-31 11:42:49.8059|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.Put (WebApi) 
+2019-12-31 11:42:49.8263|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.Put (WebApi) with arguments (1, OpeningQty, 333, 100) - Validation state: Valid 
+2019-12-31 11:43:33.2202|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.Put (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 43390.925ms. 
+2019-12-31 11:43:33.2322|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2019-12-31 11:43:33.2720|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.Put (WebApi) in 43461.9893ms 
+2019-12-31 11:43:33.2720|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.Put (WebApi)' 
+2019-12-31 11:43:33.2720|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 43627.3888ms 500 application/json; charset=utf-8 
+2019-12-31 11:43:33.2912|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLSE20ICUGED", Request id "0HLSE20ICUGED:00000001": the application completed without reading the entire request body. 
+2019-12-31 11:53:54.6302||DEBUG|WebApi.Program|init main 
+2019-12-31 11:53:56.2492||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-12-31 11:53:56.9585|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-12-31 11:53:56.9585|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-12-31 11:53:57.0046|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 46.1233ms 200  
+2019-12-31 11:53:57.1034|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 145.6314ms 404  
+2019-12-31 11:53:58.7187|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/parts/1/OpeningQty/333/100 application/json 151 
+2019-12-31 11:53:58.7927|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-12-31 11:53:58.7927|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.Put (WebApi)' 
+2019-12-31 11:53:58.8282|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.Put (WebApi) 
+2019-12-31 11:53:58.8458|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.Put (WebApi) with arguments (1, OpeningQty, 333, 100) - Validation state: Valid 

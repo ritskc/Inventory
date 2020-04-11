@@ -16,14 +16,19 @@ namespace DAL.Models
         public string Email { get; set; }
         public int PriviledgeId { get; set; }
         public string PriviledgeName { get; set; }
-        public int UserTypeId { get; set; }
+        public int UserTypeId { get; set; } //1 = company, 2= Customer, 3 = Supplier
         public string UserType { get; set; }
-        public int MapId { get; set; }
+       
         public string Token { get; set; }
         public DateTime? TokenExpires { get; set; }
+        public bool IsSuperAdmin { get; set; }
+
+        public UserPriviledge userPriviledge { get; set; }
+
+        public List<Int32> CompanyIds { get; set; }
 
         public List<Report> Reports { get; set; }
         public List<SSRSReport> SSRSReports { get; set; }
 
-}
+    }
 }

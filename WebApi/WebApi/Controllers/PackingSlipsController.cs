@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.IServices;
 using Microsoft.AspNetCore.Http.Extensions;
+using System.Security.Claims;
 
 namespace WebApi.Controllers
 {
@@ -27,7 +28,10 @@ namespace WebApi.Controllers
         {
             try
             {
-                var result = await this.packingSlipService.GetAllPackingSlipsAsync(companyId);
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var result = await this.packingSlipService.GetAllPackingSlipsAsync(companyId,userId);
 
                 if (result == null)
                 {
@@ -80,7 +84,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("{id}")]
-        public async Task<IActionResult> Post(int id,IFormFile file)
+        public async Task<IActionResult> Post(int id,IFormFile file,string trackingNumber)
         {
             long size = file.Length;
 
@@ -98,9 +102,68 @@ namespace WebApi.Controllers
             
             var relativeFilePath = "Docs\\POS\\" + id.ToString() + "_POS.pdf";
 
-            var result = packingSlipService.UpdatePOSAsync(id, relativeFilePath);
+            var result = packingSlipService.UpdatePOSAsync(id, relativeFilePath,trackingNumber);
 
             return Ok();
-        }        
+        }
+
+        // DELETE: api/Todo/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult<long>> Put(long id, [FromBody] PackingSlip packingSlip)
+        {
+            try
+            {
+                if (id != packingSlip.Id)
+                {
+                    return BadRequest();
+                }
+
+                var result = await this.packingSlipService.GetPackingSlipAsync(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+
+                //if (result.IsPOSUploaded)
+                //    return BadRequest("POS is already uploaded. You can not update this Packing slip");
+
+
+                await this.packingSlipService.UpdatePackingSlipAsync(packingSlip);
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        // DELETE: api/Todo/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<bool>> Delete(long id)
+        {
+            try
+            {
+                var result = await this.packingSlipService.GetPackingSlipAsync(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+
+                if (result.IsPOSUploaded)
+                    return BadRequest("POS is already uploaded. You can not delete this Packing slip");
+
+
+                await this.packingSlipService.DeletePackingSlipAsync(id);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
     }
 }

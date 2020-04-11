@@ -1,0 +1,13 @@
+2019-12-31 11:59:40.5110||DEBUG|WebApi.Program|init main 
+2019-12-31 11:59:40.7883||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-12-31 11:59:41.1449|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/parts/1/OpeningQty/333/100 application/json 151 
+2019-12-31 11:59:41.2186|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-12-31 11:59:41.2499|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.Put (WebApi)' 
+2019-12-31 11:59:41.2736|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.Put (WebApi) 
+2019-12-31 11:59:41.2909|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.Put (WebApi) with arguments (1, OpeningQty, 333, 100) - Validation state: Valid 
+2019-12-31 12:00:04.5232|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.Put (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 23230.2157ms. 
+2019-12-31 12:00:04.5325|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2019-12-31 12:00:04.5325|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.Put (WebApi) in 23269.1703ms 
+2019-12-31 12:00:04.5486|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.Put (WebApi)' 
+2019-12-31 12:00:04.5486|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 23416.4964ms 500 application/json; charset=utf-8 
+2019-12-31 12:00:04.5733|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLSE2B9TDFF8", Request id "0HLSE2B9TDFF8:00000001": the application completed without reading the entire request body. 

@@ -23,6 +23,7 @@ namespace DAL.Models
         public string DateFormat { get; set; }
         public int noofstages { get; set; }
         public int CompanyProfileID { get; set; }
+        public int PoLetterHead { get; set; }
 
         public List<SupplierTerms> Terms { get; set; }
     }
