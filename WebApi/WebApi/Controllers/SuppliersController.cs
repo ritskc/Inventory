@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -31,7 +32,10 @@ namespace WebApi.Controllers
         {
             try
             {
-                var result = await this._supplierService.GetAllSupplierAsync(companyId); ;
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var result = await this._supplierService.GetAllSupplierAsync(companyId,userId); 
 
                 if (result == null)
                 {

@@ -38,37 +38,17 @@ namespace WebApi
         {
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(
+                options.AddPolicy("MyCorsPolicy",
                     builder =>
-                    {
-
-                        builder.WithOrigins("http://yellow-chips.com",
-                                            "https://yellow-chips.com");
+                    {                       
+                        builder.WithOrigins("https://*.yellow-chips.com", "http://*.yellow-chips.com","https://quest.yellow-chips.com", "http://quest.yellow-chips.com", "http://*.harisons.com", "http://po.harisons.com","*");
+                        builder.SetIsOriginAllowedToAllowWildcardSubdomains();
+                        builder.AllowAnyOrigin();                        
+                        builder.AllowAnyMethod();
+                        builder.AllowCredentials();
+                        builder.AllowAnyHeader();
+                        builder.Build();
                     });
-
-                options.AddPolicy("AnotherPolicy",
-                    builder =>
-                    {
-                        builder.WithOrigins("http://yellow-chips.com",
-                            "https://yellow-chips.com")
-                                            .AllowAnyHeader()
-                                            .AllowAnyMethod();
-                    });
-
-                options.AddPolicy("AllowSubdomain",
-    builder =>
-    {
-        builder.WithOrigins("http://*.yellow-chips.com", "https://*.yellow-chips.com")
-            .SetIsOriginAllowedToAllowWildcardSubdomains();
-    });
-
-                options.AddPolicy("AllowSubdomain",
-    builder =>
-    {
-        builder.WithOrigins("http://*.yellow-chips.com")
-            .SetIsOriginAllowedToAllowWildcardSubdomains();
-    });
-
 
             });
 
@@ -130,6 +110,9 @@ namespace WebApi
             services.AddTransient<ISupplierInvoiceService, SupplierInvoiceService>();
             services.AddTransient<IEntityTrackerService, EntityTrackerService>();
             services.AddTransient<IPackingSlipService, PackingSlipService>();
+            services.AddTransient<IReportService, ReportService>();
+            services.AddTransient<IMasterPackingSlipService, MasterPackingSlipService>();
+            services.AddTransient<IPriviledgeService, PriviledgeService>();
 
             //add repositories here
             //services.AddScoped<IPartRepository, PartRepository>();
@@ -145,6 +128,8 @@ namespace WebApi
             services.AddTransient<ITransactionRepository, TransactionRepository>();
             services.AddTransient<IPackingSlipRepository, PackingSlipRepository>();
             services.AddTransient<IReportRepository, ReportRepository>();
+            services.AddTransient<IMasterPackingSlipRepository, MasterPackingSlipRepository>();
+            services.AddTransient<IPriviledgeRepository, PriviledgeRepository>();
 
             //add helpers here
             services.AddScoped<ISqlHelper, SqlHelper>();
@@ -171,7 +156,8 @@ namespace WebApi
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();            
+            app.UseMvc();
+            app.UseCors("MyCorsPolicy");
         }
     }
 }

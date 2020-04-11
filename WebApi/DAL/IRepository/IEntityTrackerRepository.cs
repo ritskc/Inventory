@@ -1,6 +1,7 @@
 ﻿using DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,5 +15,6 @@ namespace DAL.IRepository
         Task AddEntityTrackerAsyncAsync(EntityTracker entityTracker);
         Task<EntityTracker> GetEntityAsync(int companyId, DateTime dateTime, string entity);
         Task AddEntityAsync(int companyId, DateTime dateTime, string entity);
+        Task AddEntityAsync(int companyId, DateTime dateTime, string entity, SqlConnection connection, SqlTransaction transaction, SqlCommand command);
     }
 }

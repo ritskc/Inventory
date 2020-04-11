@@ -39,6 +39,7 @@ namespace DAL.Models
         public string CustomerShipVia { get; set; }
         public int CustomerInvoicingtypeid { get; set; }
         public string CustomerEndCustomerName { get; set; }
+        public string Billing { get; set; }
 
         public string ShipmentName { get; set; }
         public string ShipmentContactPersonName { get; set; }
@@ -48,7 +49,9 @@ namespace DAL.Models
         public string ShipmentZIPCode { get; set; }
         public bool ShipmentIsDefault { get; set; }
 
+        public string MasterPackingSlipNo { get; set; }
         public string PackingSlipNo { get; set; }
+        public string RePackingSlipNo { get; set; }
         public DateTime ShippingDate { get; set; }
         public string ShipVia { get; set; }
         public int Crates { get; set; }
@@ -74,11 +77,14 @@ namespace DAL.Models
         public bool InBasket { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal Price { get; set; }
+        public decimal TotalRePackingCharge { get; set; }
+        public decimal SumRePackingCharge { get; set; }
         public decimal Surcharge { get; set; }
         public decimal SurchargePerPound { get; set; }
         public decimal SurchargePerUnit { get; set; }
         public decimal TotalSurcharge { get; set; }
         public int ExcessQty { get; set; }
+        public int LineNumber { get; set; }
 
     }
 }

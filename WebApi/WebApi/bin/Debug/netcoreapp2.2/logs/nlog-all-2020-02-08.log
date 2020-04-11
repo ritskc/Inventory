@@ -1,0 +1,73 @@
+2020-02-08 11:00:15.3962||DEBUG|WebApi.Program|init main 
+2020-02-08 11:00:17.3146||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-02-08 11:00:18.9504|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-02-08 11:00:18.9504|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-02-08 11:00:19.0167|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 66.749ms 200  
+2020-02-08 11:00:19.2149|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 265.4171ms 404  
+2020-02-08 11:54:41.6267|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/SupplierAccess/a1ffe6f8-57a1-4edd-86ac-1d70d0822b91 application/json 3426 
+2020-02-08 11:54:41.7766|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-02-08 11:54:41.8424|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-02-08 11:54:41.8424|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 221.3096ms 404  
+2020-02-08 11:54:41.8655|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLTCLVVAL3H4", Request id "0HLTCLVVAL3H4:00000001": the application completed without reading the entire request body. 
+2020-02-08 11:55:48.1052||DEBUG|WebApi.Program|init main 
+2020-02-08 11:55:49.3415||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-02-08 11:55:50.0179|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-02-08 11:55:50.0179|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-02-08 11:55:50.0780|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 60.4276ms 200  
+2020-02-08 11:55:50.1728|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 155.4506ms 404  
+2020-02-08 11:55:52.2373|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/SupplierAccess/a1ffe6f8-57a1-4edd-86ac-1d70d0822b91 application/json 3426 
+2020-02-08 11:55:52.2985|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-02-08 11:55:52.3263|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-02-08 11:55:52.3263|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierAccessController.Get (WebApi)' 
+2020-02-08 11:55:52.3624|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "SupplierAccess"}. Executing action WebApi.Controllers.SupplierAccessController.Get (WebApi) 
+2020-02-08 11:55:52.3800|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierAccessController.Get (WebApi) with arguments (a1ffe6f8-57a1-4edd-86ac-1d70d0822b91) - Validation state: Valid 
+2020-02-08 11:59:01.5820|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierAccessController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 189198.801ms. 
+2020-02-08 11:59:01.6192|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.Po'. 
+2020-02-08 11:59:01.6684|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierAccessController.Get (WebApi) in 189303.4109ms 
+2020-02-08 11:59:01.6684|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierAccessController.Get (WebApi)' 
+2020-02-08 11:59:01.6684|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 189438.3702ms 200 application/json; charset=utf-8 
+2020-02-08 11:59:01.6856|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLTCMV02LVTH", Request id "0HLTCMV02LVTH:00000002": the application completed without reading the entire request body. 
+2020-02-08 11:59:50.3903|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/SupplierAccess/a1ffe6f8-57a1-4edd-86ac-1d70d0822b91 application/json 3027 
+2020-02-08 11:59:50.3903|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-02-08 11:59:50.3903|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-02-08 11:59:50.3903|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint '405 HTTP Method Not Supported' 
+2020-02-08 11:59:50.3903|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint '405 HTTP Method Not Supported' 
+2020-02-08 11:59:50.3903|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 8.254ms 405  
+2020-02-08 11:59:50.3903|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLTCMV02LVTH", Request id "0HLTCMV02LVTH:00000003": the application completed without reading the entire request body. 
+2020-02-08 12:01:21.2113||DEBUG|WebApi.Program|init main 
+2020-02-08 12:01:22.4629||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-02-08 12:01:23.2530|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-02-08 12:01:23.2530|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-02-08 12:01:23.2869|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 34.2906ms 200  
+2020-02-08 12:01:23.3708|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 118.6595ms 404  
+2020-02-08 12:01:30.3864|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/SupplierAccess/acknowledge/a1ffe6f8-57a1-4edd-86ac-1d70d0822b91 application/json 3027 
+2020-02-08 12:01:30.4408|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-02-08 12:01:30.4711|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-02-08 12:01:30.4711|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi)' 
+2020-02-08 12:01:30.4997|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AcknowledgePO", controller = "SupplierAccess"}. Executing action WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) 
+2020-02-08 12:01:30.5994|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) with arguments (a1ffe6f8-57a1-4edd-86ac-1d70d0822b91, DAL.Models.Po) - Validation state: Valid 
+2020-02-08 12:08:17.4883|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 406883.2967ms. 
+2020-02-08 12:08:17.5081|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-02-08 12:08:17.5264|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) in 407022.138ms 
+2020-02-08 12:08:17.5264|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi)' 
+2020-02-08 12:08:17.5264|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 407151.8539ms 200  

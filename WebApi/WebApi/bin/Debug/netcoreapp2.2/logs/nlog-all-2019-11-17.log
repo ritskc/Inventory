@@ -1,0 +1,876 @@
+2019-11-17 10:26:54.0148||DEBUG|WebApi.Program|init main 
+2019-11-17 10:26:55.3831||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 10:26:56.1455|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 10:26:56.1455|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 10:26:56.1862|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 41.1031ms 200  
+2019-11-17 10:26:56.2678|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 122.9475ms 404  
+2019-11-17 10:29:07.8251|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1434 
+2019-11-17 10:29:07.8951|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 10:29:07.8951|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint '405 HTTP Method Not Supported' 
+2019-11-17 10:29:07.8951|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint '405 HTTP Method Not Supported' 
+2019-11-17 10:29:07.8951|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 76.1962ms 405  
+2019-11-17 10:29:07.9098|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRBEAAA1FR0", Request id "0HLRBEAAA1FR0:00000001": the application completed without reading the entire request body. 
+2019-11-17 10:30:59.8400||DEBUG|WebApi.Program|init main 
+2019-11-17 10:31:00.9388||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 10:31:01.5105|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 10:31:01.5105|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 10:31:01.5451|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 34.9072ms 200  
+2019-11-17 10:31:01.6212|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 111.2064ms 404  
+2019-11-17 10:31:29.7000|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1434 
+2019-11-17 10:31:29.7729|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 10:31:29.7729|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 10:31:29.8064|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 10:31:29.8706|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 10:31:37.1545|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 7280.9998ms. 
+2019-11-17 10:31:37.1663|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2019-11-17 10:31:37.1766|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 7367.595ms 
+2019-11-17 10:31:37.1766|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 10:31:37.1766|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 7483.6359ms 200 application/json; charset=utf-8 
+2019-11-17 10:31:51.5340|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1434 
+2019-11-17 10:31:51.5340|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 10:31:51.5340|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 10:31:51.5340|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 10:31:51.5340|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 10:35:18.3530||DEBUG|WebApi.Program|init main 
+2019-11-17 10:35:19.6232||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 10:35:24.3374||DEBUG|WebApi.Program|init main 
+2019-11-17 10:35:24.5817||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 10:35:25.0204|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 10:35:25.0828|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 62.9558ms 404  
+2019-11-17 10:35:42.8779||DEBUG|WebApi.Program|init main 
+2019-11-17 10:35:44.1654||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 10:35:44.9427|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 10:35:44.9427|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 10:35:44.9787|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 36.2867ms 200  
+2019-11-17 10:35:45.0516|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 109.5555ms 404  
+2019-11-17 10:36:02.1729|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1434 
+2019-11-17 10:36:02.2335|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 10:36:02.2416|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 10:36:02.2699|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 10:36:02.3480|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 10:36:08.1030|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 5752.6701ms. 
+2019-11-17 10:36:08.1117|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 10:36:08.1361|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 5863.7838ms 
+2019-11-17 10:36:08.1361|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 10:36:08.1436|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 5970.8008ms 200 application/json; charset=utf-8 
+2019-11-17 14:35:19.9664||DEBUG|WebApi.Program|init main 
+2019-11-17 14:35:21.4814||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 14:35:22.2330|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 14:35:22.2330|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 14:35:22.2739|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 41.0301ms 200  
+2019-11-17 14:35:22.3472|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 114.777ms 404  
+2019-11-17 14:35:29.0766|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1434 
+2019-11-17 14:35:29.1886|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 14:35:29.1936|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 14:35:29.2285|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 14:35:29.3115|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 14:35:29.5699|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 255.2838ms. 
+2019-11-17 14:35:29.5699|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 14:35:29.6068|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 375.1333ms 
+2019-11-17 14:35:29.6068|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 14:35:29.6138|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 537.1945ms 200 application/json; charset=utf-8 
+2019-11-17 14:37:05.2817|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 14:37:05.2892|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 14:37:05.2892|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 14:37:05.2892|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 14:37:05.3257|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 14:37:05.4747|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 145.8217ms. 
+2019-11-17 14:37:05.4747|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 14:37:05.4747|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 162.3845ms 
+2019-11-17 14:37:05.4747|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 14:37:05.4747|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 196.0107ms 200 application/json; charset=utf-8 
+2019-11-17 14:40:51.8047||DEBUG|WebApi.Program|init main 
+2019-11-17 14:40:52.8773||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 14:40:53.4455|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 14:40:53.4455|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 14:40:53.4857|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 40.1408ms 200  
+2019-11-17 14:40:53.5570|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 112.088ms 404  
+2019-11-17 14:41:03.9075|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 14:41:03.9678|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 14:41:03.9720|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 14:41:04.0064|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 14:41:04.0776|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 14:41:04.3256|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 245.2811ms. 
+2019-11-17 14:41:04.3373|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 14:41:04.3633|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 354.1374ms 
+2019-11-17 14:41:04.3633|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 14:41:04.3633|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 462.4835ms 200 application/json; charset=utf-8 
+2019-11-17 14:59:38.0752||DEBUG|WebApi.Program|init main 
+2019-11-17 14:59:39.3712||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 14:59:40.0498|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 14:59:40.0498|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 14:59:40.0916|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 42.2395ms 200  
+2019-11-17 14:59:40.1865|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 137.5342ms 404  
+2019-11-17 14:59:46.0341|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 14:59:46.1136|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 14:59:46.1136|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 14:59:46.1519|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 14:59:46.2310|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 14:59:46.5019|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 268.5084ms. 
+2019-11-17 14:59:46.5019|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 14:59:46.5409|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 386.0041ms 
+2019-11-17 14:59:46.5409|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 14:59:46.5485|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 514.346ms 200 application/json; charset=utf-8 
+2019-11-17 15:00:23.0593|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 1435 
+2019-11-17 15:00:23.0658|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:00:23.0658|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:00:23.0658|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:00:23.0658|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:00:23.5603|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 490.9414ms. 
+2019-11-17 15:00:23.5603|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2019-11-17 15:00:23.5603|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 494.1414ms 
+2019-11-17 15:00:23.5603|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:00:23.5603|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 503.6772ms 500 application/json; charset=utf-8 
+2019-11-17 15:01:24.7094|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 1435 
+2019-11-17 15:01:24.7251|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:01:24.7646|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:01:24.7646|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:01:24.7738|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:01:48.8746|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 24100.2594ms. 
+2019-11-17 15:01:48.8746|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2019-11-17 15:01:48.8746|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 24110.4201ms 
+2019-11-17 15:01:48.8766|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:01:48.9049|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 24195.4617ms 500 application/json; charset=utf-8 
+2019-11-17 15:01:52.0859|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 1435 
+2019-11-17 15:01:52.0859|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:01:52.0859|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:01:52.0859|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:01:52.0859|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:05:10.8664||DEBUG|WebApi.Program|init main 
+2019-11-17 15:05:11.9851||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 15:05:12.7183|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 15:05:12.7183|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 15:05:12.7462|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 28.4209ms 200  
+2019-11-17 15:05:12.8195|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 102.0835ms 404  
+2019-11-17 15:05:32.0947|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 15:05:32.1677|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:05:32.1757|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:05:32.2106|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:05:32.2875|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:05:32.5610|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 270.3836ms. 
+2019-11-17 15:05:32.5708|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 15:05:32.6029|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 388.7975ms 
+2019-11-17 15:05:32.6029|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:05:32.6107|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 515.9656ms 200 application/json; charset=utf-8 
+2019-11-17 15:06:04.8493|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 8861 
+2019-11-17 15:06:04.8493|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:06:04.8493|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:06:04.8493|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:06:04.8971|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:06:15.4625|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 10564.9218ms. 
+2019-11-17 15:06:15.4625|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 15:06:15.4625|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 10600.0001ms 
+2019-11-17 15:06:15.4726|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:06:15.4726|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 10624.1691ms 200 application/json; charset=utf-8 
+2019-11-17 15:28:55.0352||DEBUG|WebApi.Program|init main 
+2019-11-17 15:28:56.1167||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 15:28:56.8725|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 15:28:56.8725|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 15:28:56.9080|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 36.1128ms 200  
+2019-11-17 15:28:56.9783|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 106.6647ms 404  
+2019-11-17 15:29:01.4141|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 15:29:01.4802|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:29:01.4802|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:29:01.5137|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:29:01.5824|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:29:01.8070|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 222.3452ms. 
+2019-11-17 15:29:01.8163|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 15:29:01.8446|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 327.6185ms 
+2019-11-17 15:29:01.8464|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:29:01.8464|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 438.2196ms 200 application/json; charset=utf-8 
+2019-11-17 15:30:06.4976|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 1435 
+2019-11-17 15:30:06.5027|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:30:06.5027|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:30:06.5027|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:30:06.5688|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:30:06.9680|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 398.3513ms. 
+2019-11-17 15:30:06.9680|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2019-11-17 15:30:06.9733|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 460.7408ms 
+2019-11-17 15:30:06.9733|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:30:06.9733|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 478.3572ms 500 application/json; charset=utf-8 
+2019-11-17 15:30:24.6535|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 15:30:24.6535|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:30:24.6591|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:30:24.6591|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:30:24.6591|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:30:24.7998|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 134.7894ms. 
+2019-11-17 15:30:24.7998|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 15:30:24.7998|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 137.9743ms 
+2019-11-17 15:30:24.7998|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:30:24.7998|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 149.6688ms 200 application/json; charset=utf-8 
+2019-11-17 15:30:41.3281|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9202 
+2019-11-17 15:30:41.3329|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:30:41.3329|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:30:41.3329|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:30:41.3512|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:30:41.5303|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 178.5911ms. 
+2019-11-17 15:30:41.5303|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 15:30:41.5594|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 225.139ms 
+2019-11-17 15:30:41.5594|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:30:41.5594|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 232.8662ms 200 application/json; charset=utf-8 
+2019-11-17 15:38:02.0462|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 15:38:02.0486|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:38:02.0486|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:38:02.0486|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:38:02.0486|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:38:02.2064|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 152.794ms. 
+2019-11-17 15:38:02.2064|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 15:38:02.2064|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 155.177ms 
+2019-11-17 15:38:02.2064|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:38:02.2064|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 162.6105ms 200 application/json; charset=utf-8 
+2019-11-17 15:38:20.2759|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9531 
+2019-11-17 15:38:20.2932|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:38:20.3026|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:38:20.3026|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:38:20.3026|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:38:20.4964|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 188.1869ms. 
+2019-11-17 15:38:20.4964|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 15:38:20.4964|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 190.9242ms 
+2019-11-17 15:38:20.4964|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:38:20.4964|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 223.3463ms 200 application/json; charset=utf-8 
+2019-11-17 15:43:39.4624|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 15:43:39.4624|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:43:39.4624|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:43:39.4719|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:43:39.4719|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:49:19.3855|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 339906.3168ms. 
+2019-11-17 15:49:19.3855|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 15:49:19.3855|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 339914.7626ms 
+2019-11-17 15:49:19.3855|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:49:19.3958|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 339933.6932ms 200 application/json; charset=utf-8 
+2019-11-17 15:51:10.3664|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 15:51:10.3664|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:51:10.3664|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:51:10.3664|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:51:10.3664|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:54:36.9336||DEBUG|WebApi.Program|init main 
+2019-11-17 15:54:38.6838||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 15:54:39.5537|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 15:54:39.5537|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 15:54:39.6050|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 51.7059ms 200  
+2019-11-17 15:54:39.7167|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 163.7791ms 404  
+2019-11-17 15:54:47.7943|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 15:54:47.8712|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:54:47.8712|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:54:47.9400|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:54:48.0092|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:54:48.2658|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 254.3512ms. 
+2019-11-17 15:54:48.2764|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 15:54:48.3039|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 356.6555ms 
+2019-11-17 15:54:48.3039|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:54:48.3039|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 518.2117ms 200 application/json; charset=utf-8 
+2019-11-17 15:55:24.8824|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9529 
+2019-11-17 15:55:24.8824|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:55:24.8824|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:55:24.8996|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:55:24.9212|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:55:25.2580|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 336.2612ms. 
+2019-11-17 15:55:25.2580|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 15:55:25.2580|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 359.5808ms 
+2019-11-17 15:55:25.2580|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:55:25.2580|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 378.4355ms 200 application/json; charset=utf-8 
+2019-11-17 15:57:24.1940|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 15:57:24.1940|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:57:24.1940|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:57:24.2087|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:57:24.2087|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:57:24.3831|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 168.6967ms. 
+2019-11-17 15:57:24.3831|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 15:57:24.3831|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 171.1989ms 
+2019-11-17 15:57:24.3831|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:57:24.3831|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 191.5043ms 200 application/json; charset=utf-8 
+2019-11-17 15:57:37.3023|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 8521 
+2019-11-17 15:57:37.3023|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 15:57:37.3023|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:57:37.3023|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 15:57:37.3023|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 15:57:37.5656|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 259.4123ms. 
+2019-11-17 15:57:37.5656|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 15:57:37.5656|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 261.9292ms 
+2019-11-17 15:57:37.5656|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 15:57:37.5656|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 266.0051ms 200 application/json; charset=utf-8 
+2019-11-17 16:00:58.0482|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 16:00:58.0577|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:00:58.0577|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:00:58.0883|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:00:58.1213|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:00:58.2767|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 154.8759ms. 
+2019-11-17 16:00:58.2767|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:00:58.2767|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 165.4808ms 
+2019-11-17 16:00:58.2767|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:00:58.2767|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 231.1275ms 200 application/json; charset=utf-8 
+2019-11-17 16:01:12.3900|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 8862 
+2019-11-17 16:01:12.3900|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:01:12.3933|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:01:12.3933|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:01:12.3933|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:01:12.5836|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 182.2425ms. 
+2019-11-17 16:01:12.5836|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:01:12.5836|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 190.5177ms 
+2019-11-17 16:01:12.5836|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:01:12.5836|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 196.1461ms 200 application/json; charset=utf-8 
+2019-11-17 16:03:29.4856|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 16:03:29.4940|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:03:29.4940|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:03:29.4940|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:03:29.5034|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:03:29.6673|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 163.3743ms. 
+2019-11-17 16:03:29.6673|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:03:29.6673|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 170.5959ms 
+2019-11-17 16:03:29.6673|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:03:29.6673|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 184.4149ms 200 application/json; charset=utf-8 
+2019-11-17 16:05:23.3642|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 16:05:23.3642|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:05:23.3642|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:05:23.3642|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:05:23.3771|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:05:52.4294|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 29051.8254ms. 
+2019-11-17 16:05:52.4294|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:05:52.4294|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 29061.7283ms 
+2019-11-17 16:05:52.4603|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:05:52.4603|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 29100.9209ms 200 application/json; charset=utf-8 
+2019-11-17 16:06:21.4486|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 16:06:21.4486|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:06:21.4583|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:06:21.4583|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:06:21.4969|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:06:27.2809|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 5783.4672ms. 
+2019-11-17 16:06:27.2809|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:06:27.2809|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 5820.0731ms 
+2019-11-17 16:06:27.2832|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:06:27.2832|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 5835.3199ms 200 application/json; charset=utf-8 
+2019-11-17 16:07:22.5849|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9188 
+2019-11-17 16:07:22.5849|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:07:22.5987|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:07:22.5987|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:07:22.6165|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:07:22.9281|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 311.1196ms. 
+2019-11-17 16:07:22.9281|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:07:22.9281|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 313.6242ms 
+2019-11-17 16:07:22.9281|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:07:22.9281|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 346.0146ms 200 application/json; charset=utf-8 
+2019-11-17 16:10:52.3898|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 16:10:52.4007|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:10:52.4007|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:10:52.4007|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:10:52.4007|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:10:52.5614|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 157.8104ms. 
+2019-11-17 16:10:52.5614|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:10:52.5701|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 167.6202ms 
+2019-11-17 16:10:52.5701|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:10:52.5701|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 181.3574ms 200 application/json; charset=utf-8 
+2019-11-17 16:11:07.1384|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9188 
+2019-11-17 16:11:07.1384|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:11:07.1384|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:11:07.1384|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:11:07.1424|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:13:16.0868||DEBUG|WebApi.Program|init main 
+2019-11-17 16:13:17.5244||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 16:13:18.3631|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 16:13:18.3631|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 16:13:18.3941|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 31.081ms 200  
+2019-11-17 16:13:18.4707|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 108.0741ms 404  
+2019-11-17 16:14:25.5335|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 16:14:25.6647|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:14:25.6748|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:14:25.7049|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:14:25.7744|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:14:26.0008|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 223.4598ms. 
+2019-11-17 16:14:26.0124|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:14:26.0403|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 332.2488ms 
+2019-11-17 16:14:26.0403|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:14:26.0403|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 513.0388ms 200 application/json; charset=utf-8 
+2019-11-17 16:14:41.3493|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9188 
+2019-11-17 16:14:41.3493|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:14:41.3493|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:14:41.3493|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:14:41.3848|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:14:45.6986|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 4313.0601ms. 
+2019-11-17 16:14:45.6986|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:14:45.6986|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 4337.1092ms 
+2019-11-17 16:14:45.6986|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:14:45.6986|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 4352.576ms 200 application/json; charset=utf-8 
+2019-11-17 16:24:56.7425||DEBUG|WebApi.Program|init main 
+2019-11-17 16:24:57.8633||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 16:24:58.5873|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 16:24:58.5873|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 16:24:58.6172|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 30.3148ms 200  
+2019-11-17 16:24:58.7028|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 116.1177ms 404  
+2019-11-17 16:25:07.4080|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 16:25:07.4800|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:25:07.4869|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:25:07.5235|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:25:07.6040|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:25:07.8445|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 238.0557ms. 
+2019-11-17 16:25:07.8545|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:25:07.8782|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 351.2132ms 
+2019-11-17 16:25:07.8782|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:25:07.8782|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 477.9217ms 200 application/json; charset=utf-8 
+2019-11-17 16:25:16.6972|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 8521 
+2019-11-17 16:25:16.6972|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:25:16.6972|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:25:16.6972|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:25:16.7229|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:25:16.7680|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 44.5298ms. 
+2019-11-17 16:25:16.7680|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:25:16.7680|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 69.1347ms 
+2019-11-17 16:25:16.7680|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:25:16.7680|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 74.1958ms 200 application/json; charset=utf-8 
+2019-11-17 16:31:12.7616||DEBUG|WebApi.Program|init main 
+2019-11-17 16:31:14.0622||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 16:31:14.8095|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 16:31:14.8095|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 16:31:14.8457|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 36.9355ms 200  
+2019-11-17 16:31:14.9228|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 114.3729ms 404  
+2019-11-17 16:32:55.1013||DEBUG|WebApi.Program|init main 
+2019-11-17 16:32:56.3091||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 16:32:56.9274|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 16:32:56.9274|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 16:32:56.9636|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 36.5145ms 200  
+2019-11-17 16:32:57.0393|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 112.5629ms 404  
+2019-11-17 16:32:58.1872|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 8521 
+2019-11-17 16:32:58.2650|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:32:58.2703|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:32:58.3031|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:32:58.4092|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:32:58.6658|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 254.1822ms. 
+2019-11-17 16:32:58.6759|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:32:58.6978|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 391.9746ms 
+2019-11-17 16:32:58.6978|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:32:58.6978|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 517.0978ms 200 application/json; charset=utf-8 
+2019-11-17 16:33:15.3885|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9188 
+2019-11-17 16:33:15.3932|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:33:15.3932|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:33:15.4207|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:33:15.4279|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:33:15.6440|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 215.6074ms. 
+2019-11-17 16:33:15.6440|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:33:15.6440|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 222.4157ms 
+2019-11-17 16:33:15.6440|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:33:15.6440|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 258.396ms 200 application/json; charset=utf-8 
+2019-11-17 16:35:40.8182|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 8521 
+2019-11-17 16:35:40.8182|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:35:40.8182|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:35:40.8182|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:35:40.8182|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:35:41.0066|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 178.1408ms. 
+2019-11-17 16:35:41.0066|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:35:41.0066|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 180.6945ms 
+2019-11-17 16:35:41.0066|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:35:41.0066|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 190.6651ms 200 application/json; charset=utf-8 
+2019-11-17 16:35:45.8271|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 8521 
+2019-11-17 16:35:45.8271|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:35:45.8271|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:35:45.8271|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:35:45.8305|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:35:46.0063|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 175.3396ms. 
+2019-11-17 16:35:46.0063|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:35:46.0063|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 177.9871ms 
+2019-11-17 16:35:46.0063|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:35:46.0063|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 181.6483ms 200 application/json; charset=utf-8 
+2019-11-17 16:36:58.8633|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 8521 
+2019-11-17 16:36:58.8998|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:36:58.8998|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:36:58.8998|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:36:58.9084|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:36:59.0561|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 147.0834ms. 
+2019-11-17 16:36:59.0561|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:36:59.0561|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 149.6818ms 
+2019-11-17 16:36:59.0561|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:36:59.0561|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 196.7276ms 200 application/json; charset=utf-8 
+2019-11-17 16:37:12.8423|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9188 
+2019-11-17 16:37:12.8423|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:37:12.8423|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:37:12.8450|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:37:12.8450|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:37:13.1580|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 310.6224ms. 
+2019-11-17 16:37:13.1580|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:37:13.1580|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 313.5738ms 
+2019-11-17 16:37:13.1580|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:37:13.1580|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 317.9632ms 200 application/json; charset=utf-8 
+2019-11-17 16:39:45.7760||DEBUG|WebApi.Program|init main 
+2019-11-17 16:39:46.9862||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 16:39:47.6258|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 16:39:47.6258|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 16:39:47.6591|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 33.476ms 200  
+2019-11-17 16:39:47.7358|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 110.6944ms 404  
+2019-11-17 16:41:21.1981|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 8521 
+2019-11-17 16:41:21.2607|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:41:21.2702|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:41:21.3075|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:41:21.3923|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:41:21.6256|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 229.9466ms. 
+2019-11-17 16:41:21.6353|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:41:21.6543|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 343.9443ms 
+2019-11-17 16:41:21.6543|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:41:21.6616|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 463.5061ms 200 application/json; charset=utf-8 
+2019-11-17 16:42:29.1594|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 16:42:29.1594|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:42:29.1594|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:42:29.1594|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:42:29.1594|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:42:29.3597|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 190.1665ms. 
+2019-11-17 16:42:29.3597|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:42:29.3618|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 194.358ms 
+2019-11-17 16:42:29.3618|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:42:29.3618|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 203.9453ms 200 application/json; charset=utf-8 
+2019-11-17 16:42:52.1736|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9188 
+2019-11-17 16:42:52.1736|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:42:52.1736|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:42:52.1736|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:42:52.2127|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:42:52.4651|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 251.7587ms. 
+2019-11-17 16:42:52.4651|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:42:52.4651|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 261.4987ms 
+2019-11-17 16:42:52.4651|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:42:52.4651|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 294.2004ms 200 application/json; charset=utf-8 
+2019-11-17 16:44:40.8062|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 16:44:40.8062|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:44:40.8062|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:44:40.8062|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:44:40.8062|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:44:40.9755|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 162.2939ms. 
+2019-11-17 16:44:40.9755|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:44:40.9755|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 164.9639ms 
+2019-11-17 16:44:40.9755|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:44:40.9755|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 171.952ms 200 application/json; charset=utf-8 
+2019-11-17 16:45:05.2204|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 16:45:05.2204|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:45:05.2204|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:45:05.2204|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:45:05.2204|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:45:05.3760|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 147.8362ms. 
+2019-11-17 16:45:05.3760|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:45:05.3820|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 154.8526ms 
+2019-11-17 16:45:05.3820|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:45:05.3820|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 167.5419ms 200 application/json; charset=utf-8 
+2019-11-17 16:45:25.7247|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9188 
+2019-11-17 16:45:25.7247|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:45:25.7247|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:45:25.7247|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:45:25.7247|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:51:44.9089||DEBUG|WebApi.Program|init main 
+2019-11-17 16:51:46.1547||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 16:51:46.7978|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 16:51:46.7978|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 16:51:46.8319|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 34.6244ms 200  
+2019-11-17 16:51:46.9043|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 107.261ms 404  
+2019-11-17 16:52:03.6221|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 16:52:03.6903|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:52:03.6903|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:52:03.7324|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:52:03.8061|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:52:04.0575|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 248.4617ms. 
+2019-11-17 16:52:04.0689|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:52:04.0940|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 358.6611ms 
+2019-11-17 16:52:04.0960|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:52:04.0960|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 480.2631ms 200 application/json; charset=utf-8 
+2019-11-17 16:52:27.4189|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 8861 
+2019-11-17 16:52:27.4251|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:52:27.4251|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:52:27.4251|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:52:27.4494|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:56:13.4784||DEBUG|WebApi.Program|init main 
+2019-11-17 16:56:14.7803||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 16:56:15.4186|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 16:56:15.4186|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 16:56:15.4528|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 34.6022ms 200  
+2019-11-17 16:56:15.5315|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 113.6102ms 404  
+2019-11-17 16:56:32.1751|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 16:56:32.2444|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:56:32.2444|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:56:32.2783|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:56:32.3514|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:56:32.5821|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 227.8058ms. 
+2019-11-17 16:56:32.5821|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:56:32.6202|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 338.2334ms 
+2019-11-17 16:56:32.6202|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:56:32.6279|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 452.777ms 200 application/json; charset=utf-8 
+2019-11-17 16:57:10.3541|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9188 
+2019-11-17 16:57:10.3541|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:57:10.3541|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:57:10.3649|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:57:10.3868|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:59:34.9672||DEBUG|WebApi.Program|init main 
+2019-11-17 16:59:36.1588||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 16:59:36.9450|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 16:59:36.9450|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 16:59:36.9782|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 33.5726ms 200  
+2019-11-17 16:59:37.0451|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 100.7602ms 404  
+2019-11-17 16:59:52.5614|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 16:59:52.6380|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 16:59:52.6471|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:59:52.6810|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 16:59:52.7632|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 16:59:52.9941|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 228.1838ms. 
+2019-11-17 16:59:53.0050|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 16:59:53.0342|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 349.399ms 
+2019-11-17 16:59:53.0342|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 16:59:53.0342|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 479.7307ms 200 application/json; charset=utf-8 
+2019-11-17 17:00:14.6253|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9188 
+2019-11-17 17:00:14.6264|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 17:00:14.6264|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:00:14.6264|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 17:00:14.6875|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 17:00:17.7733|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 3085.2813ms. 
+2019-11-17 17:00:17.7733|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 17:00:17.7733|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 3146.9914ms 
+2019-11-17 17:00:17.7733|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:00:17.7733|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 3151.47ms 200 application/json; charset=utf-8 
+2019-11-17 17:04:42.8471||DEBUG|WebApi.Program|init main 
+2019-11-17 17:04:43.0881||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 17:04:43.4937|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 17:04:43.5567|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 17:04:43.5822|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:04:43.6018|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 17:04:43.6488|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 17:04:43.8275|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 176.3069ms. 
+2019-11-17 17:04:43.8349|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 17:04:43.8578|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 253.4576ms 
+2019-11-17 17:04:43.8578|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:04:43.8672|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 373.6593ms 200 application/json; charset=utf-8 
+2019-11-17 17:05:01.1692|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9187 
+2019-11-17 17:05:01.1692|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 17:05:01.1751|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:05:01.1751|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 17:05:01.1988|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 17:05:01.3427|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 143.1916ms. 
+2019-11-17 17:05:01.3427|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 17:05:01.3427|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 167.83ms 
+2019-11-17 17:05:01.3452|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:05:01.3452|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 176.6856ms 200 application/json; charset=utf-8 
+2019-11-17 17:06:26.9510||DEBUG|WebApi.Program|init main 
+2019-11-17 17:06:28.4442||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 17:06:29.2456|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 17:06:29.2456|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 17:06:29.2836|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 38.3964ms 200  
+2019-11-17 17:06:29.3814|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 136.4813ms 404  
+2019-11-17 17:07:42.9150||DEBUG|WebApi.Program|init main 
+2019-11-17 17:07:44.5632||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 17:07:45.2652|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 17:07:45.2652|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 17:07:45.2978|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 32.9276ms 200  
+2019-11-17 17:07:45.3862|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 121.6474ms 404  
+2019-11-17 17:08:17.5029|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 17:08:17.5835|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 17:08:17.5835|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:08:17.6279|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 17:08:17.7324|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 17:08:18.2969|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 561.7049ms. 
+2019-11-17 17:08:18.3059|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 17:08:18.3301|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 699.3382ms 
+2019-11-17 17:08:18.3301|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:08:18.3301|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 832.8184ms 200 application/json; charset=utf-8 
+2019-11-17 17:08:49.6682|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9188 
+2019-11-17 17:08:49.6682|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 17:08:49.6682|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:08:49.6682|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 17:08:49.6941|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 17:11:30.7063||DEBUG|WebApi.Program|init main 
+2019-11-17 17:11:31.8860||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 17:11:32.5637|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 17:11:32.5637|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 17:11:32.6204|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 57.0685ms 200  
+2019-11-17 17:11:32.6940|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 131.0425ms 404  
+2019-11-17 17:11:43.9154|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 17:11:43.9819|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 17:11:43.9906|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:11:44.0220|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 17:11:44.0868|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 17:11:44.3451|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 255.8008ms. 
+2019-11-17 17:11:44.3451|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 17:11:44.3838|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 358.2507ms 
+2019-11-17 17:11:44.3838|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:11:44.3838|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 474.7799ms 200 application/json; charset=utf-8 
+2019-11-17 17:12:03.0555|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9188 
+2019-11-17 17:12:03.0555|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 17:12:03.0555|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:12:03.0663|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 17:12:03.0858|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 17:13:29.8996|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 86813.1794ms. 
+2019-11-17 17:13:29.8996|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 17:13:29.9130|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 86845.8476ms 
+2019-11-17 17:13:29.9242|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:13:29.9242|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 86870.1471ms 200 application/json; charset=utf-8 
+2019-11-17 17:42:18.8436||DEBUG|WebApi.Program|init main 
+2019-11-17 17:42:20.0495||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 17:42:20.6898|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 17:42:20.6898|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 17:42:20.7192|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 29.691ms 200  
+2019-11-17 17:42:20.8222|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 133.0394ms 404  
+2019-11-17 17:43:18.7923|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1435 
+2019-11-17 17:43:18.8809|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 17:43:18.8809|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:43:18.9260|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 17:43:19.0042|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 17:43:28.0309|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 9021.2162ms. 
+2019-11-17 17:43:28.0559|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 17:43:28.1082|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 9179.0516ms 
+2019-11-17 17:43:28.1082|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:43:28.1163|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 9324.1241ms 200 application/json; charset=utf-8 
+2019-11-17 17:43:48.9486|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 9188 
+2019-11-17 17:43:48.9486|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 17:43:48.9486|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:43:48.9486|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 17:43:48.9789|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 17:43:54.8027|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 5823.1962ms. 
+2019-11-17 17:43:54.8027|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 17:43:54.8027|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 5852.1199ms 
+2019-11-17 17:43:54.8027|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:43:54.8027|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 5860.905ms 200 application/json; charset=utf-8 
+2019-11-17 17:49:36.5115|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-17 17:49:36.5115|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 17:49:36.5115|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:49:36.5182|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 17:49:36.5182|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 17:49:36.6792|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 157.0367ms. 
+2019-11-17 17:49:36.6792|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 17:49:36.6792|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 159.973ms 
+2019-11-17 17:49:36.6792|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:49:36.6792|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 170.4358ms 200 application/json; charset=utf-8 
+2019-11-17 17:49:58.9120|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 10335 
+2019-11-17 17:49:58.9120|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 17:49:58.9120|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:49:58.9120|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 17:49:58.9238|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 17:49:59.2019|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 276.1302ms. 
+2019-11-17 17:49:59.2019|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 17:49:59.2063|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 288.0412ms 
+2019-11-17 17:49:59.2063|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:49:59.2063|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 295.4112ms 200 application/json; charset=utf-8 
+2019-11-17 17:53:21.8035|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-17 17:53:21.8035|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 17:53:21.8290|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:53:21.8324|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 17:53:21.8324|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 17:56:58.2036|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 216369.5877ms. 
+2019-11-17 17:56:58.2036|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 17:56:58.2063|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 216373.4249ms 
+2019-11-17 17:56:58.2063|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:56:58.2063|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 216406.2506ms 200 application/json; charset=utf-8 
+2019-11-17 17:57:13.2714|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-17 17:57:13.2714|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 17:57:13.2714|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 17:57:13.2714|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 17:57:13.2835|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 17:59:47.2251||DEBUG|WebApi.Program|init main 
+2019-11-17 17:59:48.2428||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 17:59:48.7599|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 17:59:48.7599|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 17:59:48.7916|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 32.215ms 200  
+2019-11-17 17:59:48.8594|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 100.319ms 404  
+2019-11-17 18:00:01.4674|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-17 18:00:01.5258|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 18:00:01.5258|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:00:01.5566|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 18:00:01.6202|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 18:00:01.9044|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 281.2361ms. 
+2019-11-17 18:00:01.9128|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2019-11-17 18:00:01.9128|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 362.0071ms 
+2019-11-17 18:00:01.9128|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:00:01.9291|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 461.7828ms 500 application/json; charset=utf-8 
+2019-11-17 18:00:31.3726|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-17 18:00:31.3726|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 18:00:31.3786|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:00:31.3786|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 18:00:31.3786|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 18:01:55.4704||DEBUG|WebApi.Program|init main 
+2019-11-17 18:01:56.5973||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 18:01:57.2049|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 18:01:57.2049|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 18:01:57.2382|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 33.7313ms 200  
+2019-11-17 18:01:57.3140|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 109.7836ms 404  
+2019-11-17 18:01:59.9356|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-17 18:02:00.0003|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 18:02:00.0047|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:02:00.0310|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 18:02:00.0945|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 18:02:46.2465|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 46149.3208ms. 
+2019-11-17 18:02:46.2571|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 18:02:46.3164|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 46282.0206ms 
+2019-11-17 18:02:46.3164|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:02:46.3164|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 46390.6382ms 200 application/json; charset=utf-8 
+2019-11-17 18:03:02.3630|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-17 18:03:02.3630|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 18:03:02.3630|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:03:02.3630|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 18:03:02.3630|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 18:07:38.7531||DEBUG|WebApi.Program|init main 
+2019-11-17 18:07:39.7831||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 18:07:40.4780|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 18:07:40.4780|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 18:07:40.5088|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 31.0415ms 200  
+2019-11-17 18:07:40.5824|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 104.7906ms 404  
+2019-11-17 18:08:06.5778|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-17 18:08:06.6515|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 18:08:06.6615|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:08:06.6973|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 18:08:06.7601|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 18:16:36.0108||DEBUG|WebApi.Program|init main 
+2019-11-17 18:16:37.0932||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 18:16:37.6996|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 18:16:37.6996|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 18:16:37.7355|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 36.3568ms 200  
+2019-11-17 18:16:37.8170|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 118.2633ms 404  
+2019-11-17 18:16:42.6715|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-17 18:16:42.7512|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 18:16:42.7571|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:16:42.7868|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 18:16:42.8666|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 18:17:55.1550|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 72282.6712ms. 
+2019-11-17 18:17:55.1742|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 18:17:55.2454|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 72452.539ms 
+2019-11-17 18:17:55.2558|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:17:55.2558|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 72590.4537ms 200 application/json; charset=utf-8 
+2019-11-17 18:18:21.4409|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 10334 
+2019-11-17 18:18:21.4409|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 18:18:21.4409|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:18:21.4409|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 18:18:21.4759|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 18:18:21.7230|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 246.5844ms. 
+2019-11-17 18:18:21.7230|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 18:18:21.7230|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 272.0895ms 
+2019-11-17 18:18:21.7230|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:18:21.7230|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 284.8818ms 200 application/json; charset=utf-8 
+2019-11-17 18:21:22.9102||DEBUG|WebApi.Program|init main 
+2019-11-17 18:21:24.0973||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 18:21:24.8344|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 18:21:24.8344|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 18:21:24.8667|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 32.6604ms 200  
+2019-11-17 18:21:24.9385|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 104.6559ms 404  
+2019-11-17 18:23:11.9582|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1510 
+2019-11-17 18:23:12.0773|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 18:23:12.0811|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:23:12.1117|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 18:23:12.1740|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 18:23:16.4542|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 4277.6923ms. 
+2019-11-17 18:23:16.4629|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 18:23:16.4918|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 4376.92ms 
+2019-11-17 18:23:16.4918|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:23:16.4918|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 4541.4618ms 200 application/json; charset=utf-8 
+2019-11-17 18:23:35.3626|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/2 application/json 10008 
+2019-11-17 18:23:35.3626|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 18:23:35.3626|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:23:35.3626|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 18:23:35.3946|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (2, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 18:23:35.5843|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 189.1904ms. 
+2019-11-17 18:23:35.5843|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 18:23:35.5843|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 219.7697ms 
+2019-11-17 18:23:35.5843|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 18:23:35.5843|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 227.8319ms 200 application/json; charset=utf-8 
+2019-11-17 20:26:00.2424||DEBUG|WebApi.Program|init main 
+2019-11-17 20:26:01.4318||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-11-17 20:26:02.2825|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-11-17 20:26:02.2825|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-11-17 20:26:02.3310|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 48.4428ms 200  
+2019-11-17 20:26:02.4432|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 161.3231ms 404  
+2019-11-17 20:54:40.6350|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/supplierinvoice/1 application/json 1434 
+2019-11-17 20:54:40.7451|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-11-17 20:54:40.7546|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 20:54:40.7916|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2019-11-17 20:54:40.8590|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (1, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2019-11-17 20:54:41.1425|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 281.1634ms. 
+2019-11-17 20:54:41.1779|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.SupplierInvoice'. 
+2019-11-17 20:54:41.2017|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 407.6333ms 
+2019-11-17 20:54:41.2017|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2019-11-17 20:54:41.2076|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 572.6215ms 200 application/json; charset=utf-8 

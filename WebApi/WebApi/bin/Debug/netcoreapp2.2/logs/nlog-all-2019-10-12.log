@@ -1,0 +1,329 @@
+2019-10-12 14:57:23.9172||DEBUG|WebApi.Program|init main 
+2019-10-12 14:57:25.7812||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-10-12 14:57:26.7589|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-10-12 14:57:26.7589|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-10-12 14:57:26.7979|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 39.5922ms 200  
+2019-10-12 14:57:26.8882|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 130.3583ms 404  
+2019-10-12 18:52:38.5516||DEBUG|WebApi.Program|init main 
+2019-10-12 18:52:43.1421||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-10-12 18:52:45.5972|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-10-12 18:52:45.5972|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-10-12 18:52:45.8455|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 255.6799ms 200  
+2019-10-12 18:52:45.9923|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 400.966ms 404  
+2019-10-12 18:54:05.6443|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------107498162762534922507927 286640 
+2019-10-12 18:54:05.7585|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 18:54:05.7692|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Routing.Matching.AmbiguousMatchException: The request matched multiple endpoints. Matches: 
+
+WebApi.Controllers.FileController.Post (WebApi)
+WebApi.Controllers.FileController.Post (WebApi)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ReportAmbiguity(CandidateSet candidates)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ProcessFinalCandidates(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.SelectAsync(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DfaMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.Matching.DataSourceDependentMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-10-12 18:54:05.8807|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 236.4196ms 500 text/html; charset=utf-8 
+2019-10-12 18:54:05.9317|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLQFCRIJQM9E", Request id "0HLQFCRIJQM9E:00000001": the application completed without reading the entire request body. 
+2019-10-12 19:20:28.6599|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------893244570550866647621337 286640 
+2019-10-12 19:20:28.6939|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:20:28.6939|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Routing.Matching.AmbiguousMatchException: The request matched multiple endpoints. Matches: 
+
+WebApi.Controllers.FileController.Post (WebApi)
+WebApi.Controllers.FileController.Post (WebApi)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ReportAmbiguity(CandidateSet candidates)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ProcessFinalCandidates(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.SelectAsync(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DfaMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.Matching.DataSourceDependentMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-10-12 19:20:28.6984|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 38.5474ms 500 text/html; charset=utf-8 
+2019-10-12 19:20:28.6984|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLQFCRIJQM9F", Request id "0HLQFCRIJQM9F:00000001": the application completed without reading the entire request body. 
+2019-10-12 19:20:54.1446|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------821520679281373364676344 286640 
+2019-10-12 19:20:54.1525|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:20:54.1525|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Routing.Matching.AmbiguousMatchException: The request matched multiple endpoints. Matches: 
+
+WebApi.Controllers.FileController.Post (WebApi)
+WebApi.Controllers.FileController.Post (WebApi)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ReportAmbiguity(CandidateSet candidates)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ProcessFinalCandidates(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.SelectAsync(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DfaMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.Matching.DataSourceDependentMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-10-12 19:20:54.1525|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 18.2264ms 500 text/html; charset=utf-8 
+2019-10-12 19:20:54.1525|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLQFCRIJQM9F", Request id "0HLQFCRIJQM9F:00000002": the application completed without reading the entire request body. 
+2019-10-12 19:21:22.3870|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------909928085855374834256782 286640 
+2019-10-12 19:21:22.3870|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:21:22.4016|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Routing.Matching.AmbiguousMatchException: The request matched multiple endpoints. Matches: 
+
+WebApi.Controllers.FileController.Post (WebApi)
+WebApi.Controllers.FileController.Post (WebApi)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ReportAmbiguity(CandidateSet candidates)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ProcessFinalCandidates(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.SelectAsync(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DfaMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.Matching.DataSourceDependentMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-10-12 19:21:22.4016|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 18.5067ms 500 text/html; charset=utf-8 
+2019-10-12 19:21:22.4016|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLQFCRIJQM9F", Request id "0HLQFCRIJQM9F:00000003": the application completed without reading the entire request body. 
+2019-10-12 19:21:54.2818|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------795040474812355320814959 286640 
+2019-10-12 19:21:54.3015|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:21:54.3015|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Routing.Matching.AmbiguousMatchException: The request matched multiple endpoints. Matches: 
+
+WebApi.Controllers.FileController.Post (WebApi)
+WebApi.Controllers.FileController.Post (WebApi)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ReportAmbiguity(CandidateSet candidates)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ProcessFinalCandidates(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.SelectAsync(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DfaMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.Matching.DataSourceDependentMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-10-12 19:21:54.3108|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 28.9396ms 500 text/html; charset=utf-8 
+2019-10-12 19:21:54.3108|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLQFCRIJQM9F", Request id "0HLQFCRIJQM9F:00000004": the application completed without reading the entire request body. 
+2019-10-12 19:24:21.5444||DEBUG|WebApi.Program|init main 
+2019-10-12 19:24:22.9273||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-10-12 19:24:23.6252|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-10-12 19:24:23.6252|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-10-12 19:24:23.6719|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 47.0155ms 200  
+2019-10-12 19:24:23.7600|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 135.7883ms 404  
+2019-10-12 19:24:27.7304|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------970913323648835635380016 286640 
+2019-10-12 19:24:27.8076|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:24:27.8076|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Routing.Matching.AmbiguousMatchException: The request matched multiple endpoints. Matches: 
+
+WebApi.Controllers.FileController.Post (WebApi)
+WebApi.Controllers.FileController.Post (WebApi)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ReportAmbiguity(CandidateSet candidates)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ProcessFinalCandidates(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.SelectAsync(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DfaMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.Matching.DataSourceDependentMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-10-12 19:24:27.9062|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 175.8142ms 500 text/html; charset=utf-8 
+2019-10-12 19:24:27.9185|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLQFDD8G1930", Request id "0HLQFDD8G1930:00000002": the application completed without reading the entire request body. 
+2019-10-12 19:24:36.4496|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------898340942492968505274112 286640 
+2019-10-12 19:24:36.4496|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:24:36.4496|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Routing.Matching.AmbiguousMatchException: The request matched multiple endpoints. Matches: 
+
+WebApi.Controllers.FileController.Post (WebApi)
+WebApi.Controllers.FileController.Post (WebApi)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ReportAmbiguity(CandidateSet candidates)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ProcessFinalCandidates(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.SelectAsync(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DfaMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.Matching.DataSourceDependentMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-10-12 19:24:36.4496|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 10.2791ms 500 text/html; charset=utf-8 
+2019-10-12 19:24:36.4626|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLQFDD8G1931", Request id "0HLQFDD8G1931:00000002": the application completed without reading the entire request body. 
+2019-10-12 19:25:01.8635||DEBUG|WebApi.Program|init main 
+2019-10-12 19:25:02.9170||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-10-12 19:25:03.5533|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-10-12 19:25:03.5533|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-10-12 19:25:03.6058|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 53.1725ms 200  
+2019-10-12 19:25:03.7916|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------484488113237899524623150 286640 
+2019-10-12 19:25:03.9581|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 405.5846ms 404  
+2019-10-12 19:25:04.0237|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:25:04.0404|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:25:04.1413|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "File"}. Executing action WebApi.Controllers.FileController.Post (WebApi) 
+2019-10-12 19:25:04.3014|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.FileController.Post (WebApi) with arguments (POS, 15, Microsoft.AspNetCore.Http.Internal.FormFile, ) - Validation state: Valid 
+2019-10-12 19:25:09.5860||INFO|WebApi.Controllers.FileController|post file api called 
+2019-10-12 19:25:15.8836|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.FileController.Post (WebApi) in 11739.4542ms 
+2019-10-12 19:25:15.8855|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:25:15.8855|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\Ritesh\Projects\Inventory\WebApi\WebApi\Docs\POS\15.pdf'.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at WebApi.Controllers.FileController.Post(String docType, Int32 id, IFormFile file, String trackingNumber) in C:\Ritesh\Projects\Inventory\WebApi\WebApi\Controllers\FileController.cs:line 66
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-10-12 19:25:15.9715|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 12179.9243ms 500 text/html; charset=utf-8 
+2019-10-12 19:25:43.3196|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------027752400032882784214006 286640 
+2019-10-12 19:25:43.3247|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:25:43.3247|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:25:43.3247|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "File"}. Executing action WebApi.Controllers.FileController.Post (WebApi) 
+2019-10-12 19:25:43.3402|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.FileController.Post (WebApi) with arguments (POS, 15, Microsoft.AspNetCore.Http.Internal.FormFile, ) - Validation state: Valid 
+2019-10-12 19:25:46.5444||INFO|WebApi.Controllers.FileController|post file api called 
+2019-10-12 19:26:27.9767|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.FileController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 44631.5611ms. 
+2019-10-12 19:26:27.9909|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2019-10-12 19:26:27.9909|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.FileController.Post (WebApi) in 44660.2842ms 
+2019-10-12 19:26:27.9940|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:26:27.9940|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 44676.2134ms 200  
+2019-10-12 19:27:17.9046|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------170292209854278305709518 286640 
+2019-10-12 19:27:17.9046|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:27:17.9046|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:27:17.9046|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "File"}. Executing action WebApi.Controllers.FileController.Post (WebApi) 
+2019-10-12 19:27:17.9466|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.FileController.Post (WebApi) with arguments (POS, 15, Microsoft.AspNetCore.Http.Internal.FormFile, ) - Validation state: Valid 
+2019-10-12 19:27:20.4841||INFO|WebApi.Controllers.FileController|post file api called 
+2019-10-12 19:27:29.8992|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.FileController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 11951.8684ms. 
+2019-10-12 19:27:29.8998|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2019-10-12 19:27:29.8998|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.FileController.Post (WebApi) in 11987.329ms 
+2019-10-12 19:27:29.8998|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:27:29.8998|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 11997.325ms 200  
+2019-10-12 19:27:35.4802|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------261793822778392000280312 286640 
+2019-10-12 19:27:35.4802|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:27:35.4802|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:27:35.4802|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "File"}. Executing action WebApi.Controllers.FileController.Post (WebApi) 
+2019-10-12 19:27:35.5015|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.FileController.Post (WebApi) with arguments (POS, 15, Microsoft.AspNetCore.Http.Internal.FormFile, ) - Validation state: Valid 
+2019-10-12 19:30:17.4914||DEBUG|WebApi.Program|init main 
+2019-10-12 19:30:18.5812||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-10-12 19:30:19.1716|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-10-12 19:30:19.1716|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-10-12 19:30:19.2073|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 36.1337ms 200  
+2019-10-12 19:30:19.2832|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 112.3417ms 404  
+2019-10-12 19:30:22.2222|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------469314948878356551487095 286640 
+2019-10-12 19:30:22.3159|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:30:22.3159|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:30:22.3552|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "File"}. Executing action WebApi.Controllers.FileController.Post (WebApi) 
+2019-10-12 19:30:22.4511|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'. 
+2019-10-12 19:30:22.4723|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.FileController.Post (WebApi) in 112.9133ms 
+2019-10-12 19:30:22.4723|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:30:22.4812|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 258.9825ms 415 application/problem+json; charset=utf-8 
+2019-10-12 19:30:28.3439|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------069405340957885238011717 286640 
+2019-10-12 19:30:28.3439|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:30:28.3439|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:30:28.3439|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "File"}. Executing action WebApi.Controllers.FileController.Post (WebApi) 
+2019-10-12 19:30:28.3871|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'. 
+2019-10-12 19:30:28.3871|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.FileController.Post (WebApi) in 37.8728ms 
+2019-10-12 19:30:28.3871|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:30:28.3871|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 46.4679ms 415 application/problem+json; charset=utf-8 
+2019-10-12 19:31:14.0141||DEBUG|WebApi.Program|init main 
+2019-10-12 19:31:15.0857||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-10-12 19:31:15.7847|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-10-12 19:31:15.7847|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-10-12 19:31:15.8197|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 35.3248ms 200  
+2019-10-12 19:31:15.8893|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 105.2139ms 404  
+2019-10-12 19:31:17.4196|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------082456826432755232376596 286640 
+2019-10-12 19:31:17.4964|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:31:17.4964|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:31:17.5344|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "File"}. Executing action WebApi.Controllers.FileController.Post (WebApi) 
+2019-10-12 19:31:17.6405|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'. 
+2019-10-12 19:31:17.6621|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.FileController.Post (WebApi) in 124.0736ms 
+2019-10-12 19:31:17.6621|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:31:17.6712|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 251.6629ms 415 application/problem+json; charset=utf-8 
+2019-10-12 19:31:25.6839|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------021883251155496244307125 286640 
+2019-10-12 19:31:25.6839|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:31:25.6839|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:31:25.6839|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "File"}. Executing action WebApi.Controllers.FileController.Post (WebApi) 
+2019-10-12 19:31:25.7209|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'. 
+2019-10-12 19:31:25.7209|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.FileController.Post (WebApi) in 34.2867ms 
+2019-10-12 19:31:25.7209|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:31:25.7209|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 41.7759ms 415 application/problem+json; charset=utf-8 
+2019-10-12 19:31:35.9370|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------004220363864928190050594 286640 
+2019-10-12 19:31:35.9370|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:31:35.9370|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:31:35.9458|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "File"}. Executing action WebApi.Controllers.FileController.Post (WebApi) 
+2019-10-12 19:31:35.9801|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'. 
+2019-10-12 19:31:35.9801|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.FileController.Post (WebApi) in 33.4383ms 
+2019-10-12 19:31:35.9801|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:31:35.9801|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 45.2295ms 415 application/problem+json; charset=utf-8 
+2019-10-12 19:32:25.1324||DEBUG|WebApi.Program|init main 
+2019-10-12 19:32:26.5547||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-10-12 19:32:27.3331|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-10-12 19:32:27.3331|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-10-12 19:32:27.3765|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 43.7527ms 200  
+2019-10-12 19:32:27.4739|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 141.4852ms 404  
+2019-10-12 19:32:32.0567|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------578034856602033648610088 286640 
+2019-10-12 19:32:32.1494|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:32:32.1494|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint '405 HTTP Method Not Supported' 
+2019-10-12 19:32:32.1494|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint '405 HTTP Method Not Supported' 
+2019-10-12 19:32:32.1494|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 99.3379ms 405  
+2019-10-12 19:32:32.1740|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLQFDHOL3R8K", Request id "0HLQFDHOL3R8K:00000002": the application completed without reading the entire request body. 
+2019-10-12 19:32:46.2704|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15 multipart/form-data; boundary=--------------------------375968369207391946085880 286640 
+2019-10-12 19:32:46.2704|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:32:46.2704|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint '405 HTTP Method Not Supported' 
+2019-10-12 19:32:46.2704|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint '405 HTTP Method Not Supported' 
+2019-10-12 19:32:46.2704|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 3.1224ms 405  
+2019-10-12 19:32:46.2787|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLQFDHOL3R8L", Request id "0HLQFDHOL3R8L:00000002": the application completed without reading the entire request body. 
+2019-10-12 19:33:01.3456|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15/{123456} multipart/form-data; boundary=--------------------------040770406747310300428707 286640 
+2019-10-12 19:33:01.3456|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:33:01.3456|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:33:01.3965|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "File"}. Executing action WebApi.Controllers.FileController.Post (WebApi) 
+2019-10-12 19:33:01.4815|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.FileController.Post (WebApi) with arguments (POS, 15, Microsoft.AspNetCore.Http.Internal.FormFile, {123456}) - Validation state: Valid 
+2019-10-12 19:33:05.1050||INFO|WebApi.Controllers.FileController|post file api called 
+2019-10-12 19:33:07.2535|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.FileController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 5767.0927ms. 
+2019-10-12 19:33:07.2694|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2019-10-12 19:33:07.2807|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.FileController.Post (WebApi) in 5877.0427ms 
+2019-10-12 19:33:07.2807|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:33:07.2936|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 5948.0707ms 200  
+2019-10-12 19:33:29.2108|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15/{123456} multipart/form-data; boundary=--------------------------418428455943597830819387 286640 
+2019-10-12 19:33:29.2185|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:33:29.2185|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:33:29.2574|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "File"}. Executing action WebApi.Controllers.FileController.Post (WebApi) 
+2019-10-12 19:33:29.2645|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.FileController.Post (WebApi) with arguments (POS, 15, Microsoft.AspNetCore.Http.Internal.FormFile, {123456}) - Validation state: Valid 
+2019-10-12 19:33:43.9285||INFO|WebApi.Controllers.FileController|post file api called 
+2019-10-12 19:34:18.2358|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.FileController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 48970.3057ms. 
+2019-10-12 19:34:18.2358|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2019-10-12 19:34:18.2358|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.FileController.Post (WebApi) in 48982.965ms 
+2019-10-12 19:34:18.2466|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:34:18.2466|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 49043.6095ms 200  
+2019-10-12 19:34:31.2854|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15/123456 multipart/form-data; boundary=--------------------------418005940724204571037208 286640 
+2019-10-12 19:34:31.2854|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:34:31.2925|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:34:31.2925|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "File"}. Executing action WebApi.Controllers.FileController.Post (WebApi) 
+2019-10-12 19:34:31.2925|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.FileController.Post (WebApi) with arguments (POS, 15, Microsoft.AspNetCore.Http.Internal.FormFile, 123456) - Validation state: Valid 
+2019-10-12 19:34:33.3709||INFO|WebApi.Controllers.FileController|post file api called 
+2019-10-12 19:34:34.7983|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.FileController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 3496.612ms. 
+2019-10-12 19:34:34.7983|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2019-10-12 19:34:34.7983|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.FileController.Post (WebApi) in 3506.7529ms 
+2019-10-12 19:34:34.8115|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:34:34.8115|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 3527.7506ms 200  
+2019-10-12 19:34:50.7705|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/15/ multipart/form-data; boundary=--------------------------633115308296611802435820 286640 
+2019-10-12 19:34:50.8007|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:34:50.8007|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint '405 HTTP Method Not Supported' 
+2019-10-12 19:34:50.8007|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint '405 HTTP Method Not Supported' 
+2019-10-12 19:34:50.8056|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 35.1111ms 405  
+2019-10-12 19:34:50.8056|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLQFDHOL3R8L", Request id "0HLQFDHOL3R8L:00000005": the application completed without reading the entire request body. 
+2019-10-12 19:37:51.3983||DEBUG|WebApi.Program|init main 
+2019-10-12 19:37:52.5128||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-10-12 19:37:53.2614|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-10-12 19:37:53.2614|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-10-12 19:37:53.2951|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 33.975ms 200  
+2019-10-12 19:37:53.3700|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 109.16ms 404  
+2019-10-12 19:38:27.1119|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/POS/14/4567 multipart/form-data; boundary=--------------------------221618860594709709197241 286640 
+2019-10-12 19:38:27.1899|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:38:27.1994|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:38:27.2346|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "File"}. Executing action WebApi.Controllers.FileController.Post (WebApi) 
+2019-10-12 19:38:27.3368|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.FileController.Post (WebApi) with arguments (POS, 14, Microsoft.AspNetCore.Http.Internal.FormFile, 4567) - Validation state: Valid 
+2019-10-12 19:38:30.1957||INFO|WebApi.Controllers.FileController|post file api called 
+2019-10-12 19:38:32.9572|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.FileController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 5615.2924ms. 
+2019-10-12 19:38:32.9729|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2019-10-12 19:38:32.9838|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.FileController.Post (WebApi) in 5743.6602ms 
+2019-10-12 19:38:32.9838|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:38:32.9982|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 5889.41ms 200  
+2019-10-12 19:39:07.7306|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/File/BL/14 multipart/form-data; boundary=--------------------------018616848341673932213331 286640 
+2019-10-12 19:39:07.7306|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-10-12 19:39:07.7306|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:39:07.7617|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "File"}. Executing action WebApi.Controllers.FileController.Post (WebApi) 
+2019-10-12 19:39:07.7761|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.FileController.Post (WebApi) with arguments (BL, 14, Microsoft.AspNetCore.Http.Internal.FormFile) - Validation state: Valid 
+2019-10-12 19:39:07.7761||INFO|WebApi.Controllers.FileController|post file api called 
+2019-10-12 19:39:07.7761|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.FileController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 9.6634ms. 
+2019-10-12 19:39:07.7761|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2019-10-12 19:39:07.7761|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.FileController.Post (WebApi) in 25.6514ms 
+2019-10-12 19:39:07.7761|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.FileController.Post (WebApi)' 
+2019-10-12 19:39:07.7761|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 58.7245ms 200  
+2019-10-12 19:48:20.1738||DEBUG|WebApi.Program|init main 
+2019-10-12 19:48:21.4199||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-10-12 19:48:22.0396|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-10-12 19:48:22.0396|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-10-12 19:48:22.0812|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 38.7596ms 200  
+2019-10-12 19:48:22.1875|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 148.6299ms 404  

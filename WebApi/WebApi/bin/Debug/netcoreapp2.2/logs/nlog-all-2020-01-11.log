@@ -1,0 +1,63 @@
+2020-01-11 12:39:22.7253||DEBUG|WebApi.Program|init main 
+2020-01-11 12:39:24.3167||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-01-11 12:39:25.1534|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-01-11 12:39:25.1534|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-01-11 12:39:25.1972|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 44.7897ms 200  
+2020-01-11 12:39:25.2980|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 145.9238ms 404  
+2020-01-11 12:59:16.7589|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DELETE http://localhost:44390/PackingSlips/30 application/json 5590 
+2020-01-11 12:59:16.8629|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-01-11 12:59:16.9276|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-01-11 12:59:16.9309|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Delete (WebApi)' 
+2020-01-11 12:59:16.9661|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Delete", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Delete (WebApi) 
+2020-01-11 12:59:16.9918|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Delete (WebApi) with arguments (30) - Validation state: Valid 
+2020-01-11 13:00:08.9970||DEBUG|WebApi.Program|init main 
+2020-01-11 13:00:10.4385||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-01-11 13:00:11.1862|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-01-11 13:00:11.1862|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-01-11 13:00:11.2256|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 39.6651ms 200  
+2020-01-11 13:00:11.3397|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 154.3697ms 404  
+2020-01-11 13:00:12.0548|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DELETE http://localhost:44390/PackingSlips/30 application/json 5590 
+2020-01-11 13:00:12.1412|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-01-11 13:00:12.1741|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-01-11 13:00:12.1741|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Delete (WebApi)' 
+2020-01-11 13:00:12.2083|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Delete", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Delete (WebApi) 
+2020-01-11 13:00:12.2357|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Delete (WebApi) with arguments (30) - Validation state: Valid 
+2020-01-11 13:02:39.5487|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.Delete (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 147309.8318ms. 
+2020-01-11 13:02:39.5664|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-01-11 13:02:39.5862|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Delete (WebApi) in 147373.9524ms 
+2020-01-11 13:02:39.5877|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Delete (WebApi)' 
+2020-01-11 13:02:39.5877|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 147538.699ms 500 application/json; charset=utf-8 
+2020-01-11 13:02:39.6093|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLSMO0D0CLGR", Request id "0HLSMO0D0CLGR:00000002": the application completed without reading the entire request body. 
+2020-01-11 13:07:28.9342||DEBUG|WebApi.Program|init main 
+2020-01-11 13:07:30.4960||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-01-11 13:07:31.2344|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-01-11 13:07:31.2344|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-01-11 13:07:31.2836|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 49.6093ms 200  
+2020-01-11 13:07:31.4001|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 166.4708ms 404  
+2020-01-11 13:07:39.9335|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DELETE http://localhost:44390/PackingSlips/30 application/json 5590 
+2020-01-11 13:07:40.0012|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-01-11 13:07:40.0309|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-01-11 13:07:40.0309|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Delete (WebApi)' 
+2020-01-11 13:07:40.0648|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Delete", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Delete (WebApi) 
+2020-01-11 13:07:40.0824|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Delete (WebApi) with arguments (30) - Validation state: Valid 
+2020-01-11 13:08:30.4926|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.Delete (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 50405.7363ms. 
+2020-01-11 13:08:30.5347|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-01-11 13:08:30.5466|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Delete (WebApi) in 50478.9039ms 
+2020-01-11 13:08:30.5466|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Delete (WebApi)' 
+2020-01-11 13:08:30.5602|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 50626.6889ms 200  
+2020-01-11 13:08:30.5754|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLSMO4G573CQ", Request id "0HLSMO4G573CQ:00000002": the application completed without reading the entire request body. 

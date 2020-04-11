@@ -12,15 +12,17 @@ namespace WebApi.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IPartRepository _partRepository;
+        private readonly IPackingSlipService _packingSlipService;
 
-        public OrderService(IOrderRepository orderRepository, IPartRepository partRepository)
+        public OrderService(IOrderRepository orderRepository, IPartRepository partRepository, IPackingSlipService packingSlipService)
         {
             _orderRepository = orderRepository;
             _partRepository = partRepository;
+            _packingSlipService = packingSlipService;
         }
-        public async Task AddOrderMasterAsync(OrderMaster order)
+        public async Task<long> AddOrderMasterAsync(OrderMaster order)
         {
-            await this._orderRepository.AddOrderMasterAsync(order);
+            return await this._orderRepository.AddOrderMasterAsync(order);
         }
 
         public async Task DeleteOrderMasterAsync(long orderId)
@@ -28,17 +30,35 @@ namespace WebApi.Services
             await this._orderRepository.DeleteOrderMasterAsync(orderId);            
         }
 
-        public async Task<IEnumerable<OrderMaster>> GetAllOrderMastersAsync(int companyId)
+        public async Task<IEnumerable<OrderMaster>> GetAllOrderMastersAsync(int companyId,int userId)
         {
             //return await this.orderRepository.GetAllOrderMastersAsync(companyId);
 
-            var result = await this._orderRepository.GetAllOrderMastersAsync(companyId);
+            var result = await this._orderRepository.GetAllOrderMastersAsync(companyId,userId);
+            var packingSlips = await this._packingSlipService.GetAllPackingSlipsAsync(companyId,userId);
             foreach (OrderMaster pos in result)
             {
                 foreach (OrderDetail poDetail in pos.OrderDetails)
                 {
                     var partDetail = await this._partRepository.GetPartAsync(poDetail.PartId);
                     poDetail.part = partDetail;
+                    poDetail.PackingSlipNo = "";
+                    if (poDetail.ShippedQty > 0)
+                    {
+                        foreach (PackingSlip packingSlip in packingSlips)
+                        {
+                            foreach (PackingSlipDetails packingSlipDetails in packingSlip.PackingSlipDetails)
+                            {
+                                if (packingSlipDetails.OrderDetailId == poDetail.Id)
+                                {
+                                    poDetail.PackingSlipNo = packingSlip.PackingSlipNo;
+                                    poDetail.ShippingDate = packingSlip.ShippingDate;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                   
                 }
             }
             return result;
@@ -55,6 +75,11 @@ namespace WebApi.Services
                 poDetail.part = partDetail;
             }
             return result;
+        }
+
+        public async Task UpdateOrderAsync(int id, string path)
+        {
+            await this._orderRepository.UpdateOrderAsync(id,path);
         }
 
         public async Task UpdateOrderMasterAsync(OrderMaster order)

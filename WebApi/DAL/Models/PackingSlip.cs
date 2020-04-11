@@ -12,6 +12,7 @@ namespace DAL.Models
         public int CompanyId { get; set; }
         public int CustomerId { get; set; }
         public string PackingSlipNo { get; set; }
+        public string MasterPackingSlipNo { get; set; }
         public DateTime ShippingDate { get; set; }
         public string ShipVia { get; set; }
         public int Crates { get; set; }
@@ -30,6 +31,12 @@ namespace DAL.Models
         public bool IsPOSUploaded { get; set; }
         public string POSPath { get; set; }
         public decimal TotalSurcharge { get; set; }
+        public bool IsDeletedPackingSlipNoUsed { get; set; }
+        public bool IsRepackage { get; set; }
+        public string TrakingNumber { get; set; }
+
+        public bool IsMasterPackingSlip { get; set; }
+        public int MasterPackingSlipId { get; set; }
 
         public List<PackingSlipDetails> PackingSlipDetails { get; set; }
         public CustomerShippingInfo customerShippingInfo { get; set; }

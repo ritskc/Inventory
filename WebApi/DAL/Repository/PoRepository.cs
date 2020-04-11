@@ -15,19 +15,38 @@ namespace DAL.Repository
     public class PoRepository : IPoRepository
     {
         private readonly ISqlHelper _sqlHelper;
+        private readonly IEntityTrackerRepository entityTrackerRepository;
+        private readonly IUserRepository userRepository;
 
-        public PoRepository(ISqlHelper sqlHelper)
+        public PoRepository(ISqlHelper sqlHelper, IEntityTrackerRepository entityTrackerRepository, IUserRepository userRepository)
         {
             _sqlHelper = sqlHelper;
+            this.entityTrackerRepository = entityTrackerRepository;
+            this.userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<Po>> GetAllPosAsync(int companyId)
+        public async Task<IEnumerable<Po>> GetAllPosAsync(int companyId, int userId)
         {
             List<Po> pos = new List<Po>();
+
+            var userInfo = await userRepository.GeUserbyIdAsync(userId);
+            var commandText = "";
+            if (userInfo.UserTypeId == 1)
+            {
+                commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms],[DueDate]  FROM [dbo].[PoMaster] where CompanyId = '{companyId}' ");
+            }
+            if (userInfo.UserTypeId == 2)
+            {
+                return pos;
+            }
+            if (userInfo.UserTypeId == 3)
+            {
+                string companylist = string.Join(",", userInfo.CompanyIds);
+                commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms],[DueDate]  FROM [dbo].[PoMaster] where CompanyId = '{companyId}' and  [SupplierId] in ({companylist})");
+            }
+
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
-
-
-            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms]  FROM [dbo].[PoMaster] where CompanyId = '{companyId}' ");
+            
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -53,8 +72,12 @@ namespace DAL.Repository
                     else
                         po.ClosingDate = null;
 
+                    if (dataReader["DueDate"] != DBNull.Value)
+                        po.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
+                    else
+                        po.DueDate = null;
 
-                    po.IsAcknowledged = Convert.ToString(dataReader["IsAcknowledged"]);
+                    po.IsAcknowledged = Convert.ToBoolean(dataReader["IsAcknowledged"]);
 
                     if (dataReader["AcknowledgementDate"] != DBNull.Value)
                         po.AcknowledgementDate = Convert.ToDateTime(dataReader["AcknowledgementDate"]);
@@ -65,13 +88,15 @@ namespace DAL.Repository
 
                     pos.Add(po);
                 }
+                dataReader.Close();
                 conn.Close();
             }
 
             foreach (Po po in pos)
             {
                 List<PoDetail> poDetails = new List<PoDetail>();
-                commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
+                commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ," +
+                    $"[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate] , [SrNo],[IsForceClosed] FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                 {
@@ -94,13 +119,20 @@ namespace DAL.Repository
                         poDetail.InTransitQty = Convert.ToInt32(dataReader1["InTransitQty"]);
                         poDetail.ReceivedQty = Convert.ToInt32(dataReader1["ReceivedQty"]);
                         poDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);
+                        poDetail.IsForceClosed = Convert.ToBoolean(dataReader1["IsForceClosed"]);
                         if (dataReader1["ClosingDate"] != DBNull.Value)
-                            po.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
+                            poDetail.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
                         else
-                            po.ClosingDate = null;
+                            poDetail.ClosingDate = null;
+
+                        if (dataReader1["SrNo"] != DBNull.Value)
+                            poDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
+                        else
+                            poDetail.SrNo = 0;
 
                         poDetails.Add(poDetail);
                     }
+                    dataReader1.Close();
                 }
                 po.poDetails = poDetails;
                 conn.Close();
@@ -132,7 +164,7 @@ namespace DAL.Repository
                 conn.Close();
             }
 
-            return pos;
+            return pos.OrderBy(x=>x.DueDate);
         }
 
         public async Task<Po> GetPoAsync(long poId)
@@ -140,7 +172,7 @@ namespace DAL.Repository
             var po = new Po();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms]  FROM [dbo].[PoMaster] where Id = '{poId}' ");
+            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms],[DueDate],[AccessId]  FROM [dbo].[PoMaster] where Id = '{poId}' ");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -165,9 +197,14 @@ namespace DAL.Repository
                         po.ClosingDate = Convert.ToDateTime(dataReader["ClosingDate"]);
                     else
                         po.ClosingDate = null;
-                        
-                    
-                    po.IsAcknowledged = Convert.ToString(dataReader["IsAcknowledged"]);
+
+                    if (dataReader["DueDate"] != DBNull.Value)
+                        po.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
+                    else
+                        po.DueDate = null;
+
+
+                    po.IsAcknowledged = Convert.ToBoolean(dataReader["IsAcknowledged"]);
                    
                     if (dataReader["AcknowledgementDate"] != DBNull.Value)
                         po.AcknowledgementDate = Convert.ToDateTime(dataReader["AcknowledgementDate"]);
@@ -175,14 +212,16 @@ namespace DAL.Repository
                         po.AcknowledgementDate = null;
                     po.PaymentTerms = Convert.ToString(dataReader["PaymentTerms"]);
                     po.DeliveryTerms = Convert.ToString(dataReader["DeliveryTerms"]);
+                    po.AccessId = Convert.ToString(dataReader["AccessId"]);
 
                 }
+                dataReader.Close();
                 conn.Close();
             }
 
 
             List<PoDetail> poDetails = new List<PoDetail>();
-            commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
+            commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate],[SrNo],[IsForceClosed]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
             {
@@ -204,18 +243,25 @@ namespace DAL.Repository
                     poDetail.AckQty = Convert.ToInt32(dataReader1["AckQty"]);
                     poDetail.InTransitQty = Convert.ToInt32(dataReader1["InTransitQty"]);
                     poDetail.ReceivedQty = Convert.ToInt32(dataReader1["ReceivedQty"]);
-                    poDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);               
+                    poDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);
+                    poDetail.IsForceClosed = Convert.ToBoolean(dataReader1["IsForceClosed"]);
+                    if (dataReader1["SrNo"] != DBNull.Value)
+                        poDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
+                    else
+                        poDetail.SrNo =  0;
 
                     if (dataReader1["ClosingDate"] != DBNull.Value)
-                        po.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
+                        poDetail.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
                     else
-                        po.ClosingDate = null;
+                        poDetail.ClosingDate = null;
 
                     poDetails.Add(poDetail);
                 }
+                dataReader1.Close();
+                conn.Close();
             }
             po.poDetails = poDetails;
-            conn.Close();
+            
             
             List<PoTerm> poTerms = new List<PoTerm>();
             commandText = string.Format("SELECT [Id] ,[PoId] ,[SequenceNo] ,[Term]  FROM [dbo].[PoTerms] where poid = '{0}'", po.Id);
@@ -236,84 +282,482 @@ namespace DAL.Repository
 
                     poTerms.Add(poTerm);
                 }
+                dataReader1.Close();
+                conn.Close();
             }
             po.poTerms = poTerms;
-            conn.Close();
+           
         
+
+            return po;
+        }
+
+        public async Task<Po> GetPoByAccessIdAsync(string poId)
+        {
+            var po = new Po();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format($"SELECT PM.[Id] ,CUS.Name AS CompanyName, PM.[CompanyId] ,SUP.[Name]  AS SupplierName ,SUP.ContactPersonName,SupplierId,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms],[DueDate],[AccessId]  FROM [dbo].[PoMaster]  PM INNER JOIN supplier SUP ON SUP.ID = PM.SupplierId INNER JOIN customer CUS ON CUS.ID = PM.CompanyId where AccessId = '{poId}' ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+
+                    po.Id = Convert.ToInt64(dataReader["Id"]);
+                    po.CompanyName = Convert.ToString(dataReader["CompanyName"]);
+                    po.SupplierName = Convert.ToString(dataReader["SupplierName"]);
+                    po.ContactPersonName = Convert.ToString(dataReader["ContactPersonName"]);
+                    po.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
+                    po.SupplierId = Convert.ToInt32(dataReader["SupplierId"]);
+                    po.PoNo = Convert.ToString(dataReader["PoNo"]);
+                    po.PoDate = Convert.ToDateTime(dataReader["PoDate"]);
+                    po.EmailIds = Convert.ToString(dataReader["EmailIds"]);
+                    po.Remarks = Convert.ToString(dataReader["Remarks"]);
+                    po.IsClosed = Convert.ToBoolean(dataReader["IsClosed"]);
+                    //po.IsForceClosed = Convert.ToBoolean(dataReader["IsForceClosed"]);
+                    if (dataReader["ClosingDate"] != DBNull.Value)
+                        po.ClosingDate = Convert.ToDateTime(dataReader["ClosingDate"]);
+                    else
+                        po.ClosingDate = null;
+
+                    if (dataReader["DueDate"] != DBNull.Value)
+                        po.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
+                    else
+                        po.DueDate = null;
+
+
+                    po.IsAcknowledged = Convert.ToBoolean(dataReader["IsAcknowledged"]);
+
+                    if (dataReader["AcknowledgementDate"] != DBNull.Value)
+                        po.AcknowledgementDate = Convert.ToDateTime(dataReader["AcknowledgementDate"]);
+                    else
+                        po.AcknowledgementDate = null;
+                    po.PaymentTerms = Convert.ToString(dataReader["PaymentTerms"]);
+                    po.DeliveryTerms = Convert.ToString(dataReader["DeliveryTerms"]);
+                    po.AccessId = Convert.ToString(dataReader["AccessId"]);
+
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+
+            List<PoDetail> poDetails = new List<PoDetail>();
+            commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate],[SrNo]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
+
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+            {
+                cmd1.CommandType = CommandType.Text;
+                conn.Open();
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader1.Read())
+                {
+                    var poDetail = new PoDetail();
+                    poDetail.Id = Convert.ToInt64(dataReader1["Id"]);
+                    poDetail.PoId = Convert.ToInt64(dataReader1["PoId"]);
+                    poDetail.PartId = Convert.ToInt64(dataReader1["PartId"]);
+                    poDetail.ReferenceNo = Convert.ToString(dataReader1["ReferenceNo"]);
+                    poDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                    poDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
+                    poDetail.DueDate = Convert.ToDateTime(dataReader1["DueDate"]);
+                    poDetail.Note = Convert.ToString(dataReader1["Note"]);
+                    poDetail.AckQty = Convert.ToInt32(dataReader1["AckQty"]);
+                    poDetail.InTransitQty = Convert.ToInt32(dataReader1["InTransitQty"]);
+                    poDetail.ReceivedQty = Convert.ToInt32(dataReader1["ReceivedQty"]);
+                    poDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);
+                    if (dataReader1["SrNo"] != DBNull.Value)
+                        poDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
+                    else
+                        poDetail.SrNo = 0;
+
+                    if (dataReader1["ClosingDate"] != DBNull.Value)
+                        poDetail.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
+                    else
+                        poDetail.ClosingDate = null;
+
+                    poDetails.Add(poDetail);
+                }
+                dataReader1.Close();
+                conn.Close();
+            }
+            po.poDetails = poDetails;
+
+
+            List<PoTerm> poTerms = new List<PoTerm>();
+            commandText = string.Format("SELECT [Id] ,[PoId] ,[SequenceNo] ,[Term]  FROM [dbo].[PoTerms] where poid = '{0}'", po.Id);
+
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+            {
+                cmd1.CommandType = CommandType.Text;
+                conn.Open();
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader1.Read())
+                {
+                    var poTerm = new PoTerm();
+                    poTerm.Id = Convert.ToInt64(dataReader1["Id"]);
+                    poTerm.PoId = Convert.ToInt64(dataReader1["PoId"]);
+                    poTerm.SequenceNo = Convert.ToInt32(dataReader1["SequenceNo"]);
+                    poTerm.Term = Convert.ToString(dataReader1["Term"]);
+
+                    poTerms.Add(poTerm);
+                }
+                dataReader1.Close();
+                conn.Close();
+            }
+            po.poTerms = poTerms;
+
+
+
+            return po;
+        }
+
+        public async Task<Po> GetPoAsync(long poId, SqlConnection conn,SqlTransaction transaction)
+        {
+            var po = new Po();           
+
+            var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[PoNo] ,[PoDate] ,[EmailIds] ,[Remarks] ,[IsClosed] ,[ClosingDate] ,[IsAcknowledged] ,[AcknowledgementDate] ,[PaymentTerms] ,[DeliveryTerms],[DueDate]  FROM [dbo].[PoMaster] where Id = '{poId}' ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn,transaction))
+            {
+                cmd.CommandType = CommandType.Text;                
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
+
+                while (dataReader.Read())
+                {
+
+                    po.Id = Convert.ToInt64(dataReader["Id"]);
+                    po.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
+                    po.SupplierId = Convert.ToInt32(dataReader["SupplierId"]);
+                    po.PoNo = Convert.ToString(dataReader["PoNo"]);
+                    po.PoDate = Convert.ToDateTime(dataReader["PoDate"]);
+                    po.EmailIds = Convert.ToString(dataReader["EmailIds"]);
+                    po.Remarks = Convert.ToString(dataReader["Remarks"]);
+                    po.IsClosed = Convert.ToBoolean(dataReader["IsClosed"]);
+                    if (dataReader["ClosingDate"] != DBNull.Value)
+                        po.ClosingDate = Convert.ToDateTime(dataReader["ClosingDate"]);
+                    else
+                        po.ClosingDate = null;
+
+                    if (dataReader["DueDate"] != DBNull.Value)
+                        po.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
+                    else
+                        po.DueDate = null;
+
+                    po.IsAcknowledged = Convert.ToBoolean(dataReader["IsAcknowledged"]);
+
+                    if (dataReader["AcknowledgementDate"] != DBNull.Value)
+                        po.AcknowledgementDate = Convert.ToDateTime(dataReader["AcknowledgementDate"]);
+                    else
+                        po.AcknowledgementDate = null;
+                    po.PaymentTerms = Convert.ToString(dataReader["PaymentTerms"]);
+                    po.DeliveryTerms = Convert.ToString(dataReader["DeliveryTerms"]);
+
+                }
+
+                dataReader.Close();
+            }
+
+
+            List<PoDetail> poDetails = new List<PoDetail>();
+            commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate],[SrNo],[IsForceClosed]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
+
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn, transaction))
+            {
+                cmd1.CommandType = CommandType.Text;                
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.Default);
+
+                while (dataReader1.Read())
+                {
+                    var poDetail = new PoDetail();
+                    poDetail.Id = Convert.ToInt64(dataReader1["Id"]);
+                    poDetail.PoId = Convert.ToInt64(dataReader1["PoId"]);
+                    poDetail.PartId = Convert.ToInt64(dataReader1["PartId"]);
+                    poDetail.ReferenceNo = Convert.ToString(dataReader1["ReferenceNo"]);
+                    poDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                    poDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
+                    poDetail.DueDate = Convert.ToDateTime(dataReader1["DueDate"]);
+                    poDetail.Note = Convert.ToString(dataReader1["Note"]);
+                    poDetail.AckQty = Convert.ToInt32(dataReader1["AckQty"]);
+                    poDetail.InTransitQty = Convert.ToInt32(dataReader1["InTransitQty"]);
+                    poDetail.ReceivedQty = Convert.ToInt32(dataReader1["ReceivedQty"]);
+                    poDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);
+                    poDetail.IsForceClosed = Convert.ToBoolean(dataReader1["IsForceClosed"]);
+                    if (dataReader1["SrNo"] != DBNull.Value)
+                        poDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
+                    else
+                        poDetail.SrNo = 0;
+
+                    if (dataReader1["ClosingDate"] != DBNull.Value)
+                        poDetail.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
+                    else
+                        poDetail.ClosingDate = null;
+
+                    poDetails.Add(poDetail);
+                }
+
+                dataReader1.Close();
+            }
+            po.poDetails = poDetails;
+
+
+            List<PoTerm> poTerms = new List<PoTerm>();
+            commandText = string.Format("SELECT [Id] ,[PoId] ,[SequenceNo] ,[Term]  FROM [dbo].[PoTerms] where poid = '{0}'", po.Id);
+
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn, transaction))
+            {
+                cmd1.CommandType = CommandType.Text;                
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.Default);
+
+                while (dataReader1.Read())
+                {
+                    var poTerm = new PoTerm();
+                    poTerm.Id = Convert.ToInt64(dataReader1["Id"]);
+                    poTerm.PoId = Convert.ToInt64(dataReader1["PoId"]);
+                    poTerm.SequenceNo = Convert.ToInt32(dataReader1["SequenceNo"]);
+                    poTerm.Term = Convert.ToString(dataReader1["Term"]);
+
+                    poTerms.Add(poTerm);
+                }
+
+                dataReader1.Close();
+            }
+            po.poTerms = poTerms;
 
             return po;
         }
 
         public async Task AddPoAsync(Po po)
         {
-            string sql = string.Format($"INSERT INTO [dbo].[PoMaster]   ([CompanyId]   ,[SupplierId]   ,[PoNo]   ,[PoDate]   ,[EmailIds]   ,[Remarks]   ,[IsClosed]   ,[ClosingDate]   ,[IsAcknowledged]   ,[AcknowledgementDate]   ,[PaymentTerms]   ,[DeliveryTerms]) VALUES   ('{po.CompanyId}'   ,'{po.SupplierId}'   ,'{po.PoNo}'   ,'{po.PoDate}'   ,'{po.EmailIds}'   ,'{po.Remarks}'   ,'{po.IsClosed}'   ,'{po.ClosingDate}'   ,'{po.IsAcknowledged}'   ,'{po.AcknowledgementDate}'   ,'{po.PaymentTerms}'   ,'{po.DeliveryTerms}')");
 
-            sql = sql + " Select Scope_Identity()";
-
-
-            var poId = _sqlHelper.ExecuteScalar(ConnectionSettings.ConnectionString, sql, CommandType.Text);
-
-
-            foreach (PoDetail poDetail in po.poDetails)
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
-                sql = string.Format($"INSERT INTO [dbo].[PoDetails]   ([PoId]   ,[PartId]   ,[ReferenceNo]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note]   ,[AckQty]   ,[InTransitQty]   ,[ReceivedQty]   ,[IsClosed]   ,[ClosingDate]) VALUES   ('{poId}'   ,'{poDetail.PartId}'   ,'{poDetail.ReferenceNo}'   ,'{poDetail.Qty}'   ,'{poDetail.UnitPrice}'   ,'{poDetail.DueDate}'   ,'{poDetail.Note}'   ,'{poDetail.AckQty}'   ,'{poDetail.InTransitQty}'   ,'{poDetail.ReceivedQty}'   ,'{poDetail.IsClosed}'   ,'{poDetail.ClosingDate}')");
+                connection.Open();
 
-                await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
-            }
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
 
-            foreach (PoTerm poTerm in po.poTerms)
-            {
-                sql = string.Format($"INSERT INTO [dbo].[PoTerms]   ([PoId]   ,[SequenceNo]   ,[Term]) VALUES   ('{poId}'   ,'{poTerm.SequenceNo}'   ,'{poTerm.Term}')");
+                // Start a local transaction.
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted, "SampleTransaction");
 
-                await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
-            }
+                //1. Get SupplierInvoicePoDetails po transaction detail
+                List<SupplierInvoicePoDetails> supplierInvoicePoDetailsList = new List<SupplierInvoicePoDetails>();
+                SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+                string sql = string.Empty;
+                try
+                {
+                    sql = string.Format($"INSERT INTO [dbo].[PoMaster]   ([CompanyId]   ,[SupplierId]   ,[PoNo]   ,[PoDate]   ,[EmailIds]   ,[Remarks]   ,[IsClosed]  ,[IsAcknowledged]   ,[PaymentTerms]   ,[DeliveryTerms],[DueDate],[AccessId] ) VALUES   ('{po.CompanyId}'   ,'{po.SupplierId}'   ,'{po.PoNo}'   ,'{po.PoDate}'   ,'{po.EmailIds}'   ,'{po.Remarks}'   ,'{po.IsClosed}'   ,'{po.IsAcknowledged}'  ,'{po.PaymentTerms}'   ,'{po.DeliveryTerms}' ,'{po.DueDate}', '{po.AccessId}')");
+
+                    sql = sql + " Select Scope_Identity()";
+
+                    command.CommandText = sql;
+                    var poId = command.ExecuteScalar();
+
+
+                    //var poId = _sqlHelper.ExecuteScalar(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+
+
+                    foreach (PoDetail poDetail in po.poDetails)
+                    {
+                        sql = string.Format($"INSERT INTO [dbo].[PoDetails]   ([PoId]   ,[PartId]   ,[ReferenceNo]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note]   ,[AckQty]   ,[InTransitQty]   ,[ReceivedQty]   ,[IsClosed],[SrNo],[IsForceClosed]  ) VALUES   ('{poId}'   ,'{poDetail.PartId}'   ,'{poDetail.ReferenceNo}'   ,'{poDetail.Qty}'   ,'{poDetail.UnitPrice}'   ,'{poDetail.DueDate}'   ,'{poDetail.Note}'   ,'{poDetail.AckQty}'   ,'{poDetail.InTransitQty}'   ,'{poDetail.ReceivedQty}'   ,'{poDetail.IsClosed}','{poDetail.SrNo}','{false}')");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                    }
+
+                    foreach (PoTerm poTerm in po.poTerms)
+                    {
+                        sql = string.Format($"INSERT INTO [dbo].[PoTerms]   ([PoId]   ,[SequenceNo]   ,[Term]) VALUES   ('{poId}'   ,'{poTerm.SequenceNo}'   ,'{poTerm.Term}')");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                    }
+                    
+                    await this.entityTrackerRepository.AddEntityAsync(po.CompanyId, po.PoDate, BusinessConstants.ENTITY_TRACKER_PO, command.Connection, command.Transaction, command);
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }            
         }
 
         public async Task UpdatePoAsync(Po po)
         {
-            var sql = string.Format("DELETE FROM [dbo].[PoDetails]  WHERE poid = '{0}'", po.Id);
-
-            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
-
-            sql = string.Format("DELETE FROM [dbo].[PoTerms]  WHERE poid = '{0}'", po.Id);
-
-            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
-
-            sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [CompanyId] = '{po.CompanyId}' ,[SupplierId] = '{po.SupplierId}' ,[PoNo] = '{po.PoNo}' ,[PoDate] = '{po.PoDate}' ,[EmailIds] = '{po.EmailIds}' ,[Remarks] = '{po.Remarks}' ,[IsClosed] = '{po.IsClosed}' ,[ClosingDate] = '{po.ClosingDate}' ,[IsAcknowledged] = '{po.IsAcknowledged}' ,[AcknowledgementDate] = '{po.AcknowledgementDate}' ,[PaymentTerms] = '{po.PaymentTerms}' ,[DeliveryTerms] = '{po.DeliveryTerms}' WHERE id = '{po.Id}' ");
-            await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
-
-            foreach (PoDetail poDetail in po.poDetails)
+            //start
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
-                sql = string.Format($"INSERT INTO [dbo].[PoDetails]   ([PoId]   ,[PartId]   ,[ReferenceNo]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note]   ,[AckQty]   ,[InTransitQty]   ,[ReceivedQty]   ,[IsClosed]   ,[ClosingDate]) VALUES   ('{poDetail.PoId}'   ,'{poDetail.PartId}'   ,'{poDetail.ReferenceNo}'   ,'{poDetail.Qty}'   ,'{poDetail.UnitPrice}'   ,'{poDetail.DueDate}'   ,'{poDetail.Note}'   ,'{poDetail.AckQty}'   ,'{poDetail.InTransitQty}'   ,'{poDetail.ReceivedQty}'   ,'{poDetail.IsClosed}'   ,'{poDetail.ClosingDate}')");
+                connection.Open();
 
-                await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted, "SampleTransaction");
+
+                //1. Get SupplierInvoicePoDetails po transaction detail
+                List<SupplierInvoicePoDetails> supplierInvoicePoDetailsList = new List<SupplierInvoicePoDetails>();
+                SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+                string sql = string.Empty;
+                try
+                {
+                    sql = string.Format("DELETE FROM [dbo].[PoTerms]  WHERE poid = '{0}'", po.Id);
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+                    
+                    //sql = string.Format("DELETE FROM [dbo].[PoDetails]  WHERE poid = '{0}'", po.Id);
+                    //command.CommandText = sql;
+                    //await command.ExecuteNonQueryAsync();
+
+                    sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [CompanyId] = '{po.CompanyId}' ,[SupplierId] = '{po.SupplierId}' ,[PoNo] = '{po.PoNo}' ,[PoDate] = '{po.PoDate}' ,[EmailIds] = '{po.EmailIds}' ,[Remarks] = '{po.Remarks}' ,[IsClosed] = '{po.IsClosed}' ,[IsAcknowledged] = '{po.IsAcknowledged}' ,[PaymentTerms] = '{po.PaymentTerms}' ,[DeliveryTerms] = '{po.DeliveryTerms}',[DueDate] = '{po.DueDate}',[AccessId] = '{po.AccessId}' WHERE id = '{po.Id}' ");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    foreach (PoDetail poDetail in po.poDetails)
+                    {
+                        if (poDetail.Id == 0)
+                            sql = string.Format($"INSERT INTO [dbo].[PoDetails]   ([PoId]   ,[PartId]   ,[ReferenceNo]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note]   ,[AckQty]   ,[InTransitQty]   ,[ReceivedQty]   ,[IsClosed],[SrNo] ) VALUES   ('{po.Id}'   ,'{poDetail.PartId}'   ,'{poDetail.ReferenceNo}'   ,'{poDetail.Qty}'   ,'{poDetail.UnitPrice}'   ,'{poDetail.DueDate}'   ,'{poDetail.Note}'   ,'{poDetail.AckQty}'   ,'{poDetail.InTransitQty}'   ,'{poDetail.ReceivedQty}'   ,'{poDetail.IsClosed}','{poDetail.SrNo}')");
+                        else
+                        {
+                            if(poDetail.IsForceClosed)
+                                sql = string.Format($"UPDATE [PoDetails]  SET [ReferenceNo] = '{poDetail.ReferenceNo}',[Qty] = '{poDetail.Qty}' ,[UnitPrice] = '{poDetail.UnitPrice}',[DueDate] = '{poDetail.DueDate}' ,[AckQty] ='{poDetail.Qty}' ,[IsClosed] ='{true}' ,[ClosingDate] = '{DateTime.Now}' ,[SrNo] = '{poDetail.SrNo}' ,[IsForceClosed] ='{true}' WHERE  id = '{poDetail.Id}'");
+                            else
+                                sql = string.Format($"UPDATE [PoDetails]  SET [ReferenceNo] = '{poDetail.ReferenceNo}',[Qty] = '{poDetail.Qty}' ,[UnitPrice] = '{poDetail.UnitPrice}',[DueDate] = '{poDetail.DueDate}' ,[AckQty] ='{poDetail.Qty}' ,[SrNo] = '{poDetail.SrNo}'  WHERE  id = '{poDetail.Id}'");
+                        }
+                            command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                    }
+
+                    foreach (PoTerm poTerm in po.poTerms)
+                    {
+                        sql = string.Format($"INSERT INTO [dbo].[PoTerms]   ([PoId]   ,[SequenceNo]   ,[Term]) VALUES   ('{po.Id}'   ,'{poTerm.SequenceNo}'   ,'{poTerm.Term}')");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
             }
+            //end           
+        }
 
-            foreach (PoTerm poTerm in po.poTerms)
+        public async Task AcknowledgePoAsync(Po po)
+        {
+            //start
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
-                sql = string.Format($"INSERT INTO [dbo].[PoTerms]   ([PoId]   ,[SequenceNo]   ,[Term]) VALUES   ('{poTerm.PoId}'   ,'{poTerm.SequenceNo}'   ,'{poTerm.Term}')");
+                connection.Open();
 
-                await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted, "SampleTransaction");
+
+                //1. Get SupplierInvoicePoDetails po transaction detail
+                List<SupplierInvoicePoDetails> supplierInvoicePoDetailsList = new List<SupplierInvoicePoDetails>();
+                SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+                string sql = string.Empty;
+                try
+                {                    
+                    sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [IsAcknowledged] = '{true}' ,[AcknowledgementDate] = '{DateTime.Now}',[DueDate] = '{po.DueDate}' WHERE id = '{po.Id}' ");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    foreach (PoDetail poDetail in po.poDetails)
+                    {
+                        sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [AckQty] = '{poDetail.AckQty}', [DueDate] = '{poDetail.DueDate}'   WHERE poid = '{po.Id}' ");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                    }                   
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
             }
+            //end           
         }
 
         public async Task<int> DeletePoAsync(long id)
         {
-            var sql = string.Format("DELETE FROM [dbo].[posupplierassignment]  WHERE poid = '{0}'", id);
+            int result = 0;
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
 
-            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
 
-            sql = string.Format("DELETE FROM [dbo].[pocustomerassignment]  WHERE poid = '{0}'", id);
+                // Start a local transaction.
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted, "SampleTransaction");
 
-            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                //1. Get SupplierInvoicePoDetails po transaction detail
+                List<SupplierInvoicePoDetails> supplierInvoicePoDetailsList = new List<SupplierInvoicePoDetails>();
+                SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-            sql = string.Format("DELETE FROM [dbo].[po]  WHERE id = '{0}'", id);
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+                string sql = string.Empty;
+                
+                try
+                {
+                    sql = string.Format("DELETE FROM [dbo].[PoTerms]  WHERE poid = '{0}'", id);
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();                    
 
-            _sqlHelper.ExecuteNonQuery(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                    sql = string.Format("DELETE FROM [dbo].[PoDetails]  WHERE poid = '{0}'", id);
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();                    
 
-            return await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                    sql = string.Format("DELETE FROM [dbo].[PoMaster]  WHERE id = '{0}'", id);
+                    command.CommandText = sql;
+                    result = await command.ExecuteNonQueryAsync();                                       
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+            return result;
         }
-
-
+        
     }
 }

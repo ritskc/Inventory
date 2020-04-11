@@ -1,0 +1,168 @@
+2019-12-03 18:29:07.0231||DEBUG|WebApi.Program|init main 
+2019-12-03 18:29:08.6540||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-12-03 18:29:09.5520|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-12-03 18:29:09.5520|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-12-03 18:29:09.6352|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 83.2973ms 200  
+2019-12-03 18:29:09.7412|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 189.9963ms 404  
+2019-12-03 18:42:04.9123|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/customers application/json 594 
+2019-12-03 18:42:05.0816|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-12-03 18:42:05.1550|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-12-03 18:42:05.1605|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.CustomersController.Post (WebApi)' 
+2019-12-03 18:42:05.2100|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Customers"}. Executing action WebApi.Controllers.CustomersController.Post (WebApi) 
+2019-12-03 18:42:05.2274|2|INFO|Microsoft.AspNetCore.Authorization.DefaultAuthorizationService|Authorization failed. 
+2019-12-03 18:42:05.2274|3|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Authorization failed for the request at filter 'Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter'. 
+2019-12-03 18:42:05.2274|1|INFO|Microsoft.AspNetCore.Mvc.ChallengeResult|Executing ChallengeResult with authentication schemes (). 
+2019-12-03 18:42:05.2410|12|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|AuthenticationScheme: Bearer was challenged. 
+2019-12-03 18:42:05.2410|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.CustomersController.Post (WebApi) in 28.709ms 
+2019-12-03 18:42:05.2410|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.CustomersController.Post (WebApi)' 
+2019-12-03 18:42:05.2410|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 333.8302ms 401  
+2019-12-03 18:42:05.2541|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRO92CEC0IF", Request id "0HLRO92CEC0IF:00000001": the application completed without reading the entire request body. 
+2019-12-03 18:42:38.7115|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/users/Authenticate application/json 47 
+2019-12-03 18:42:38.7115|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-12-03 18:42:38.7207|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-12-03 18:42:38.7207|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.Authenticate (WebApi)' 
+2019-12-03 18:42:38.7207|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Authenticate", controller = "Users"}. Executing action WebApi.Controllers.UsersController.Authenticate (WebApi) 
+2019-12-03 18:42:38.7800|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.Authenticate (WebApi) with arguments (DAL.Models.User) - Validation state: Valid 
+2019-12-03 18:42:38.7921|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.UsersController.Authenticate (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 9.2607ms. 
+2019-12-03 18:42:38.7921|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.User'. 
+2019-12-03 18:42:38.8168|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.UsersController.Authenticate (WebApi) in 86.6912ms 
+2019-12-03 18:42:38.8168|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.UsersController.Authenticate (WebApi)' 
+2019-12-03 18:42:38.8168|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 107.7579ms 200 application/json; charset=utf-8 
+2019-12-03 18:42:53.1978|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/customers application/json 594 
+2019-12-03 18:42:53.1978|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-12-03 18:42:53.1978|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-12-03 18:42:53.1978|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.CustomersController.Post (WebApi)' 
+2019-12-03 18:42:53.1978|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Customers"}. Executing action WebApi.Controllers.CustomersController.Post (WebApi) 
+2019-12-03 18:42:53.1978|2|INFO|Microsoft.AspNetCore.Authorization.DefaultAuthorizationService|Authorization failed. 
+2019-12-03 18:42:53.1978|3|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Authorization failed for the request at filter 'Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter'. 
+2019-12-03 18:42:53.1978|1|INFO|Microsoft.AspNetCore.Mvc.ChallengeResult|Executing ChallengeResult with authentication schemes (). 
+2019-12-03 18:42:53.2055|12|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|AuthenticationScheme: Bearer was challenged. 
+2019-12-03 18:42:53.2055|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.CustomersController.Post (WebApi) in 4.1277ms 
+2019-12-03 18:42:53.2055|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.CustomersController.Post (WebApi)' 
+2019-12-03 18:42:53.2055|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 11.0665ms 401  
+2019-12-03 18:42:53.2055|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRO92CEC0IF", Request id "0HLRO92CEC0IF:00000003": the application completed without reading the entire request body. 
+2019-12-03 18:43:03.5740|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/users/Authenticate application/json 47 
+2019-12-03 18:43:03.5740|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2019-12-03 18:43:03.5740|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2019-12-03 18:43:03.5740|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.Authenticate (WebApi)' 
+2019-12-03 18:43:03.5740|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Authenticate", controller = "Users"}. Executing action WebApi.Controllers.UsersController.Authenticate (WebApi) 
+2019-12-03 18:43:03.5800|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.Authenticate (WebApi) with arguments (DAL.Models.User) - Validation state: Valid 
+2019-12-03 18:43:03.5800|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.UsersController.Authenticate (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.3847ms. 
+2019-12-03 18:43:03.5800|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.User'. 
+2019-12-03 18:43:03.5800|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.UsersController.Authenticate (WebApi) in 10.479ms 
+2019-12-03 18:43:03.5800|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.UsersController.Authenticate (WebApi)' 
+2019-12-03 18:43:03.5800|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 15.8769ms 200 application/json; charset=utf-8 
+2019-12-03 18:43:34.8386|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/customers application/json 594 
+2019-12-03 18:43:34.8514|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-12-03 18:43:34.8620|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.CustomersController.Post (WebApi)' 
+2019-12-03 18:43:34.8620|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Customers"}. Executing action WebApi.Controllers.CustomersController.Post (WebApi) 
+2019-12-03 18:43:34.8620|1|INFO|Microsoft.AspNetCore.Authorization.DefaultAuthorizationService|Authorization was successful. 
+2019-12-03 18:43:34.8891|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.CustomersController.Post (WebApi) with arguments (DAL.Models.Customer) - Validation state: Valid 
+2019-12-03 18:43:35.3517|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.CustomersController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 462.0256ms. 
+2019-12-03 18:43:35.3517|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2019-12-03 18:43:35.3517|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.CustomersController.Post (WebApi) in 489.8425ms 
+2019-12-03 18:43:35.3517|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.CustomersController.Post (WebApi)' 
+2019-12-03 18:43:35.3517|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 516.0144ms 500 application/json; charset=utf-8 
+2019-12-03 18:44:31.0213|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/customers application/json 594 
+2019-12-03 18:44:31.0213|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-12-03 18:44:31.0213|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.CustomersController.Post (WebApi)' 
+2019-12-03 18:44:31.0213|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Customers"}. Executing action WebApi.Controllers.CustomersController.Post (WebApi) 
+2019-12-03 18:44:31.0213|1|INFO|Microsoft.AspNetCore.Authorization.DefaultAuthorizationService|Authorization was successful. 
+2019-12-03 18:44:31.0213|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.CustomersController.Post (WebApi) with arguments (DAL.Models.Customer) - Validation state: Valid 
+2019-12-03 18:45:47.7206||DEBUG|WebApi.Program|init main 
+2019-12-03 18:45:49.0326||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-12-03 18:45:49.6853|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-12-03 18:45:49.6853|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-12-03 18:45:49.7222|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 37.0822ms 200  
+2019-12-03 18:45:49.8038|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 119.1034ms 404  
+2019-12-03 18:48:20.4040|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/customers application/json 621 
+2019-12-03 18:48:20.4864|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-12-03 18:48:20.4864|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.CustomersController.Post (WebApi)' 
+2019-12-03 18:48:20.5276|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Customers"}. Executing action WebApi.Controllers.CustomersController.Post (WebApi) 
+2019-12-03 18:48:20.5434|1|INFO|Microsoft.AspNetCore.Authorization.DefaultAuthorizationService|Authorization was successful. 
+2019-12-03 18:48:20.6252|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'. 
+2019-12-03 18:48:20.6475|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.CustomersController.Post (WebApi) in 114.7592ms 
+2019-12-03 18:48:20.6475|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.CustomersController.Post (WebApi)' 
+2019-12-03 18:48:20.6475|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 246.9842ms 400 application/problem+json; charset=utf-8 
+2019-12-03 18:48:49.1119|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/customers application/json 622 
+2019-12-03 18:48:49.1119|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-12-03 18:48:49.1119|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.CustomersController.Post (WebApi)' 
+2019-12-03 18:48:49.1119|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Customers"}. Executing action WebApi.Controllers.CustomersController.Post (WebApi) 
+2019-12-03 18:48:49.1119|1|INFO|Microsoft.AspNetCore.Authorization.DefaultAuthorizationService|Authorization was successful. 
+2019-12-03 18:48:49.1405|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.CustomersController.Post (WebApi) with arguments (DAL.Models.Customer) - Validation state: Valid 
+2019-12-03 18:48:58.6575|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.CustomersController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 9514.3204ms. 
+2019-12-03 18:48:58.6575|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2019-12-03 18:48:58.6575|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.CustomersController.Post (WebApi) in 9543.7192ms 
+2019-12-03 18:48:58.6575|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.CustomersController.Post (WebApi)' 
+2019-12-03 18:48:58.6744|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 9562.4551ms 200  
+2019-12-03 19:01:41.9929|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/customers application/json 711 
+2019-12-03 19:01:42.0213|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-12-03 19:01:42.0213|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.CustomersController.Post (WebApi)' 
+2019-12-03 19:01:42.0213|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Customers"}. Executing action WebApi.Controllers.CustomersController.Post (WebApi) 
+2019-12-03 19:01:42.0213|1|INFO|Microsoft.AspNetCore.Authorization.DefaultAuthorizationService|Authorization was successful. 
+2019-12-03 19:01:42.0213|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.CustomersController.Post (WebApi) with arguments (DAL.Models.Customer) - Validation state: Valid 
+2019-12-03 19:01:45.1365|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.CustomersController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 3109.1529ms. 
+2019-12-03 19:01:45.1365|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2019-12-03 19:01:45.1365|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.CustomersController.Post (WebApi) in 3114.6996ms 
+2019-12-03 19:01:45.1365|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.CustomersController.Post (WebApi)' 
+2019-12-03 19:01:45.1365|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 3146.1086ms 200  
+2019-12-03 19:02:47.3283|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/customers/9 application/json 711 
+2019-12-03 19:02:47.3319|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-12-03 19:02:47.3587|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.CustomersController.Put (WebApi)' 
+2019-12-03 19:02:47.3667|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "Customers"}. Executing action WebApi.Controllers.CustomersController.Put (WebApi) 
+2019-12-03 19:02:47.3667|1|INFO|Microsoft.AspNetCore.Authorization.DefaultAuthorizationService|Authorization was successful. 
+2019-12-03 19:02:47.3667|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.CustomersController.Put (WebApi) with arguments (9, DAL.Models.Customer) - Validation state: Valid 
+2019-12-03 19:02:47.3667|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.CustomersController.Put (WebApi), returned result Microsoft.AspNetCore.Mvc.BadRequestResult in 2.3054ms. 
+2019-12-03 19:02:47.3667|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'. 
+2019-12-03 19:02:47.3772|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.CustomersController.Put (WebApi) in 9.9406ms 
+2019-12-03 19:02:47.3772|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.CustomersController.Put (WebApi)' 
+2019-12-03 19:02:47.3772|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 49.8963ms 400 application/problem+json; charset=utf-8 
+2019-12-03 19:02:56.7737|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/customers/1/9 application/json 711 
+2019-12-03 19:02:56.7737|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-12-03 19:02:56.7737|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint '405 HTTP Method Not Supported' 
+2019-12-03 19:02:56.7737|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint '405 HTTP Method Not Supported' 
+2019-12-03 19:02:56.7737|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 3.1668ms 405  
+2019-12-03 19:02:56.7737|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRO9BMGFAG3", Request id "0HLRO9BMGFAG3:00000002": the application completed without reading the entire request body. 
+2019-12-03 19:04:06.1512|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/customers/1/9 application/json 711 
+2019-12-03 19:04:06.1512|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-12-03 19:04:06.1512|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint '405 HTTP Method Not Supported' 
+2019-12-03 19:04:06.1580|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint '405 HTTP Method Not Supported' 
+2019-12-03 19:04:06.1580|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 7.5424ms 405  
+2019-12-03 19:04:06.1580|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRO9BMGFAG4", Request id "0HLRO9BMGFAG4:00000001": the application completed without reading the entire request body. 
+2019-12-03 19:04:38.4775|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/customers/1/9 application/json 711 
+2019-12-03 19:04:38.4775|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-12-03 19:04:38.4775|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint '405 HTTP Method Not Supported' 
+2019-12-03 19:04:38.4875|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint '405 HTTP Method Not Supported' 
+2019-12-03 19:04:38.4875|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 11.0044ms 405  
+2019-12-03 19:04:38.4875|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLRO9BMGFAG4", Request id "0HLRO9BMGFAG4:00000002": the application completed without reading the entire request body. 
+2019-12-03 19:04:58.5231|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/customers/9 application/json 711 
+2019-12-03 19:04:58.5502|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2019-12-03 19:04:58.5502|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.CustomersController.Put (WebApi)' 
+2019-12-03 19:04:58.5502|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "Customers"}. Executing action WebApi.Controllers.CustomersController.Put (WebApi) 
+2019-12-03 19:04:58.5502|1|INFO|Microsoft.AspNetCore.Authorization.DefaultAuthorizationService|Authorization was successful. 
+2019-12-03 19:04:58.5502|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.CustomersController.Put (WebApi) with arguments (9, DAL.Models.Customer) - Validation state: Valid 
+2019-12-03 19:05:44.7708|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.CustomersController.Put (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 46213.2225ms. 
+2019-12-03 19:05:44.7708|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2019-12-03 19:05:44.7708|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.CustomersController.Put (WebApi) in 46218.034ms 
+2019-12-03 19:05:44.7708|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.CustomersController.Put (WebApi)' 
+2019-12-03 19:05:44.7871|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 46263.9648ms 200  

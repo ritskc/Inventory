@@ -19,9 +19,9 @@ namespace WebApi.Services
             _supplierRepository = supplierRepository;
         }
 
-        public async Task<IEnumerable<Supplier>> GetAllSupplierAsync(int companyId)
+        public async Task<IEnumerable<Supplier>> GetAllSupplierAsync(int companyId,int userId)
         {
-            return await this._supplierRepository.GetAllSupplierAsync(companyId);
+            return await this._supplierRepository.GetAllSupplierAsync(companyId,userId);
         }
 
         public async Task<Supplier> GetSupplierAsync(int id)

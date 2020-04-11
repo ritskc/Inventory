@@ -1,0 +1,90 @@
+2020-04-09 15:59:20.6607||DEBUG|WebApi.Program|init main 
+2020-04-09 15:59:22.6392||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-09 15:59:23.7571|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-09 15:59:23.7571|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-09 15:59:23.8116|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 53.3139ms 200  
+2020-04-09 15:59:23.9087|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 152.4419ms 404  
+2020-04-09 16:03:47.8053|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/SupplierAccess/acknowledge/5984efd1-0c12-4f99-8fb0-5d4009abc2ea application/json 3104 
+2020-04-09 16:03:47.8505|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi)' 
+2020-04-09 16:03:47.8889|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AcknowledgePO", controller = "SupplierAccess"}. Executing action WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) 
+2020-04-09 16:03:48.0467|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) with arguments (5984efd1-0c12-4f99-8fb0-5d4009abc2ea, DAL.Models.Po) - Validation state: Valid 
+2020-04-09 16:07:25.2783|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/SupplierAccess/acknowledge/5984efd1-0c12-4f99-8fb0-5d4009abc2ea application/json 3104 
+2020-04-09 16:07:25.2783|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi)' 
+2020-04-09 16:07:25.2783|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AcknowledgePO", controller = "SupplierAccess"}. Executing action WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) 
+2020-04-09 16:07:25.2864|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) with arguments (5984efd1-0c12-4f99-8fb0-5d4009abc2ea, DAL.Models.Po) - Validation state: Valid 
+2020-04-09 16:08:43.8919||DEBUG|WebApi.Program|init main 
+2020-04-09 16:08:45.3103||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-09 16:08:46.0800|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-09 16:08:46.0800|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-09 16:08:46.1344|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 55.0191ms 200  
+2020-04-09 16:08:46.2302|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 151.231ms 404  
+2020-04-09 16:09:27.2853|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/SupplierAccess/acknowledge/5984efd1-0c12-4f99-8fb0-5d4009abc2ea application/json 3104 
+2020-04-09 16:09:27.3237|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi)' 
+2020-04-09 16:09:27.3626|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AcknowledgePO", controller = "SupplierAccess"}. Executing action WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) 
+2020-04-09 16:09:27.5016|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) with arguments (5984efd1-0c12-4f99-8fb0-5d4009abc2ea, DAL.Models.Po) - Validation state: Valid 
+2020-04-09 16:10:04.5141|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 37007.5618ms. 
+2020-04-09 16:10:04.5253|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-04-09 16:10:04.5253|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) in 37167.7741ms 
+2020-04-09 16:10:04.5368|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi)' 
+2020-04-09 16:10:04.5368|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 37256.5242ms 200  
+2020-04-09 16:10:47.9626|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/SupplierAccess/acknowledge/5984efd1-0c12-4f99-8fb0-5d4009abc2ea application/json 3104 
+2020-04-09 16:10:47.9626|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi)' 
+2020-04-09 16:10:47.9626|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AcknowledgePO", controller = "SupplierAccess"}. Executing action WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) 
+2020-04-09 16:10:47.9990|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) with arguments (5984efd1-0c12-4f99-8fb0-5d4009abc2ea, DAL.Models.Po) - Validation state: Valid 
+2020-04-09 16:11:31.5429|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 43508.6193ms. 
+2020-04-09 16:11:31.5429|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-04-09 16:11:31.5570|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) in 43559.5478ms 
+2020-04-09 16:11:31.5570|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi)' 
+2020-04-09 16:11:31.5570|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 43596.0909ms 200  
+2020-04-09 16:46:01.8083||DEBUG|WebApi.Program|init main 
+2020-04-09 16:46:02.1379||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-09 16:46:02.4893|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/PackingSlips/70 application/json 3004 
+2020-04-09 16:46:02.5467|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Put (WebApi)' 
+2020-04-09 16:46:02.5687|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Put (WebApi) 
+2020-04-09 16:46:02.7100|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'. 
+2020-04-09 16:46:02.7361|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Put (WebApi) in 164.5318ms 
+2020-04-09 16:46:02.7361|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Put (WebApi)' 
+2020-04-09 16:46:02.7430|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 253.8496ms 400 application/problem+json; charset=utf-8 
+2020-04-09 16:46:40.1607|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/PackingSlips/70 application/json 3588 
+2020-04-09 16:46:40.1669|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Put (WebApi)' 
+2020-04-09 16:46:40.1669|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Put (WebApi) 
+2020-04-09 16:46:40.2062|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Put (WebApi) with arguments (70, DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-09 16:46:42.5602|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.Put (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 2351.2171ms. 
+2020-04-09 16:46:42.5602|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Int64'. 
+2020-04-09 16:46:42.5602|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Put (WebApi) in 2391.7338ms 
+2020-04-09 16:46:42.5602|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Put (WebApi)' 
+2020-04-09 16:46:42.5704|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 2409.7579ms 200 application/json; charset=utf-8 
+2020-04-09 16:47:40.1012||DEBUG|WebApi.Program|init main 
+2020-04-09 16:47:41.6973||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-09 16:47:42.4246|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-09 16:47:42.4246|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-09 16:47:42.4769|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 53.1182ms 200  
+2020-04-09 16:47:42.5757|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 152.3065ms 404  
+2020-04-09 16:47:45.2725|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/PackingSlips/70 application/json 3588 
+2020-04-09 16:47:45.2808|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Put (WebApi)' 
+2020-04-09 16:47:45.3230|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Put (WebApi) 
+2020-04-09 16:47:45.5528|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Put (WebApi) with arguments (70, DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-09 16:48:06.2002|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.Put (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 20644.1406ms. 
+2020-04-09 16:48:06.2185|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Int64'. 
+2020-04-09 16:48:06.2319|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Put (WebApi) in 20905.6922ms 
+2020-04-09 16:48:06.2319|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Put (WebApi)' 
+2020-04-09 16:48:06.2319|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 20966.9446ms 200 application/json; charset=utf-8 
+2020-04-09 16:49:18.0610|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/PackingSlips/70 application/json 3588 
+2020-04-09 16:49:18.0610|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Put (WebApi)' 
+2020-04-09 16:49:18.0715|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Put (WebApi) 
+2020-04-09 16:49:18.0715|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Put (WebApi) with arguments (70, DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-09 16:53:19.4748||DEBUG|WebApi.Program|init main 
+2020-04-09 16:53:20.8346||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-09 16:53:21.6111|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-09 16:53:21.6111|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-09 16:53:21.6509|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 39.9892ms 200  
+2020-04-09 16:53:21.7509|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 140.7474ms 404  
+2020-04-09 16:53:26.8584|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/PackingSlips/70 application/json 3588 
+2020-04-09 16:53:26.8584|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Put (WebApi)' 
+2020-04-09 16:53:26.9049|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Put (WebApi) 
+2020-04-09 16:53:27.0801|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Put (WebApi) with arguments (70, DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-09 16:53:42.0917|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.Put (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 15007.9536ms. 
+2020-04-09 16:53:42.1051|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Int64'. 
+2020-04-09 16:53:42.1218|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Put (WebApi) in 15213.2543ms 
+2020-04-09 16:53:42.1218|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Put (WebApi)' 
+2020-04-09 16:53:42.1218|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 15270.7897ms 200 application/json; charset=utf-8 

@@ -20,12 +20,19 @@ namespace DAL.Models
         public int SafeQty { get; set; }
         public string DrawingNo { get; set; }
         public bool DrawingUploaded { get; set; }
-        public string DrawingFileName { get; set; }
+        public string DrawingFileName { get; set; }       
         public bool IsActive { get; set; }
         public bool IsSample { get; set; }
+        public bool IsRepackage { get; set; }
         public string Location { get; set; }
         public int IntransitQty { get; set; }
         public int QtyInHand { get; set; }
+        public int OpenOrderQty { get; set; }
+        public int SupplierOpenPoQty { get; set; }
+        public int MonthlyForecastQty { get; set; }
+        public decimal SupplierPrice { get; set; }
+        public decimal CustomerPrice { get; set; }
+        public string SupplierCode { get; set; }
 
         public List<PartSupplierAssignment> partSupplierAssignments { get; set; }
         public List<PartCustomerAssignment> partCustomerAssignments { get; set; }

@@ -10,13 +10,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/DAL.dll">
-      <publishTime>07/28/2019 17:46:48</publishTime>
+      <publishTime>04/01/2020 11:23:23</publishTime>
     </File>
     <File Include="bin/DAL.dll.config">
-      <publishTime>02/17/2019 12:46:54</publishTime>
+      <publishTime>11/24/2019 22:11:02</publishTime>
     </File>
     <File Include="bin/DAL.pdb">
-      <publishTime>07/28/2019 17:46:48</publishTime>
+      <publishTime>04/01/2020 11:23:23</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>05/24/2018 14:38:22</publishTime>
@@ -33,20 +33,23 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/Microsoft.ReportViewer.WinForms.dll">
       <publishTime>05/21/2014 12:35:00</publishTime>
     </File>
+    <File Include="bin/Microsoft.SqlServer.Types.dll">
+      <publishTime>12/06/2013 15:53:18</publishTime>
+    </File>
     <File Include="bin/netstandard.dll">
-      <publishTime>03/09/2019 14:15:06</publishTime>
+      <publishTime>01/22/2020 19:11:31</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
-      <publishTime>03/09/2019 13:27:13</publishTime>
+      <publishTime>01/22/2020 19:17:03</publishTime>
     </File>
     <File Include="bin/RDLCReportRunner.dll">
       <publishTime>08/12/2014 20:48:20</publishTime>
     </File>
     <File Include="bin/Report.dll">
-      <publishTime>07/29/2019 21:07:15</publishTime>
+      <publishTime>04/01/2020 11:23:29</publishTime>
     </File>
     <File Include="bin/Report.pdb">
-      <publishTime>07/29/2019 21:07:15</publishTime>
+      <publishTime>04/01/2020 11:23:29</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/24/2018 14:38:22</publishTime>
@@ -187,22 +190,52 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/24/2018 14:38:24</publishTime>
     </File>
     <File Include="connection.json">
-      <publishTime>03/07/2019 14:06:47</publishTime>
+      <publishTime>01/16/2020 20:17:34</publishTime>
+    </File>
+    <File Include="Reports/Resource/check.png">
+      <publishTime>01/25/2020 16:16:28</publishTime>
     </File>
     <File Include="Reports/Resource/HI.png">
       <publishTime>07/28/2019 16:25:28</publishTime>
+    </File>
+    <File Include="Reports/Resource/HIP.png">
+      <publishTime>03/13/2020 21:25:03</publishTime>
+    </File>
+    <File Include="Reports/Resource/uncheck.png">
+      <publishTime>01/25/2020 16:17:05</publishTime>
+    </File>
+    <File Include="ReportViewer/BL.aspx">
+      <publishTime>01/18/2020 11:54:22</publishTime>
     </File>
     <File Include="ReportViewer/CopmanyReport.aspx">
       <publishTime>07/24/2019 20:50:28</publishTime>
     </File>
     <File Include="ReportViewer/Invoice.aspx">
-      <publishTime>07/29/2019 20:35:47</publishTime>
+      <publishTime>03/21/2020 12:35:00</publishTime>
+    </File>
+    <File Include="ReportViewer/MasterBL.aspx">
+      <publishTime>01/24/2020 21:40:10</publishTime>
+    </File>
+    <File Include="ReportViewer/MasterPackingSlip.aspx">
+      <publishTime>02/15/2020 12:21:24</publishTime>
     </File>
     <File Include="ReportViewer/PackingSlip.aspx">
       <publishTime>07/28/2019 15:34:11</publishTime>
     </File>
+    <File Include="ReportViewer/RepackingInvoice.aspx">
+      <publishTime>03/29/2020 13:03:16</publishTime>
+    </File>
+    <File Include="ReportViewer/SupplierPO.aspx">
+      <publishTime>03/16/2020 17:07:35</publishTime>
+    </File>
+    <File Include="SqlServerTypes/x64/SqlServerSpatial110.dll">
+      <publishTime>10/20/2019 20:49:43</publishTime>
+    </File>
+    <File Include="SqlServerTypes/x86/SqlServerSpatial110.dll">
+      <publishTime>10/20/2019 20:49:43</publishTime>
+    </File>
     <File Include="Web.config">
-      <publishTime>07/24/2019 21:26:10</publishTime>
+      <publishTime>04/01/2020 11:23:39</publishTime>
     </File>
   </ItemGroup>
 </Project>

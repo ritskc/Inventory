@@ -30,6 +30,7 @@ namespace DAL.Models
        public int Invoicingtypeid { get; set; }
        public string EndCustomerName { get; set; }
        public bool DisplayLineNo { get; set; }
+       public string Billing { get; set; }
 
         public List<CustomerShippingInfo> ShippingInfos { get; set; }
     }

@@ -1,0 +1,6 @@
+2019-12-28 23:06:15.1095||DEBUG|WebApi.Program|init main 
+2019-12-28 23:06:16.4867||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2019-12-28 23:06:17.1635|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2019-12-28 23:06:17.1635|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2019-12-28 23:06:17.2074|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 44.6261ms 200  
+2019-12-28 23:06:17.3063|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 143.9878ms 404  

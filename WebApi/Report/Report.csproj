@@ -57,6 +57,9 @@
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportViewer.WinForms.VS2010.10.0.40219.1\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.11.0.0\lib\net20\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="RDLCReportRunner, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RDLCReportRunner.1.0.0\lib\RDLCReportRunner.dll</HintPath>
     </Reference>
@@ -83,14 +86,47 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Reports\Resource\check.png" />
     <Content Include="Reports\Resource\HI.png" />
+    <Content Include="Reports\Resource\HIP.png" />
+    <Content Include="Reports\Resource\uncheck.png" />
+    <Content Include="ReportViewer\RepackingInvoice.aspx" />
+    <Content Include="ReportViewer\MasterPackingSlip.aspx" />
+    <Content Include="ReportViewer\MasterBL.aspx" />
     <Content Include="ReportViewer\CopmanyReport.aspx" />
     <Content Include="ReportViewer\Invoice.aspx" />
+    <Content Include="ReportViewer\BL.aspx" />
+    <Content Include="ReportViewer\SupplierPO.aspx" />
     <Content Include="ReportViewer\PackingSlip.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial110.dll" />
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial110.dll" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportViewer\RepackingInvoice.aspx.cs">
+      <DependentUpon>RepackingInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportViewer\RepackingInvoice.aspx.designer.cs">
+      <DependentUpon>RepackingInvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportViewer\MasterPackingSlip.aspx.cs">
+      <DependentUpon>MasterPackingSlip.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportViewer\MasterPackingSlip.aspx.designer.cs">
+      <DependentUpon>MasterPackingSlip.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportViewer\MasterBL.aspx.cs">
+      <DependentUpon>MasterBL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportViewer\MasterBL.aspx.designer.cs">
+      <DependentUpon>MasterBL.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ReportViewer\CopmanyReport.aspx.cs">
       <DependentUpon>CopmanyReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -104,6 +140,20 @@
     </Compile>
     <Compile Include="ReportViewer\Invoice.aspx.designer.cs">
       <DependentUpon>Invoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportViewer\BL.aspx.cs">
+      <DependentUpon>BL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportViewer\BL.aspx.designer.cs">
+      <DependentUpon>BL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportViewer\SupplierPO.aspx.cs">
+      <DependentUpon>SupplierPO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportViewer\SupplierPO.aspx.designer.cs">
+      <DependentUpon>SupplierPO.aspx</DependentUpon>
     </Compile>
     <Compile Include="ReportViewer\PackingSlip.aspx.cs">
       <DependentUpon>PackingSlip.aspx</DependentUpon>
@@ -127,8 +177,13 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Report1.rdlc" />
+    <EmbeddedResource Include="Reports\RepackingInvoice.rdlc" />
+    <EmbeddedResource Include="Reports\MasterPackingSlip.rdlc" />
+    <EmbeddedResource Include="Reports\MasterBL.rdlc" />
     <EmbeddedResource Include="Reports\Company.rdlc" />
     <EmbeddedResource Include="Reports\Invoice.rdlc" />
+    <EmbeddedResource Include="Reports\BL.rdlc" />
+    <EmbeddedResource Include="Reports\SupplierPO.rdlc" />
     <EmbeddedResource Include="Reports\PackingSlip.rdlc" />
   </ItemGroup>
   <ItemGroup>

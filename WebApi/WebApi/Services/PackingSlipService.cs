@@ -13,35 +13,34 @@ namespace WebApi.Services
         private readonly IPackingSlipRepository packingSlipRepository;
         private readonly IEntityTrackerRepository entityTrackerRepository;
         private readonly ITransactionRepository transactionRepository;
+        private readonly IPartService partService;
 
-        public PackingSlipService(IPackingSlipRepository packingSlipRepository, IEntityTrackerRepository entityTrackerRepository,ITransactionRepository transactionRepository)
+        public PackingSlipService(IPackingSlipRepository packingSlipRepository, 
+            IEntityTrackerRepository entityTrackerRepository,ITransactionRepository transactionRepository
+            ,IPartService partService)
         {
             this.packingSlipRepository = packingSlipRepository;
             this.entityTrackerRepository = entityTrackerRepository;
             this.transactionRepository = transactionRepository;
+            this.partService = partService;
         }
 
         public async Task<Int32> AddPackingSlipAsync(PackingSlip packingSlip)
         {
-            var entity = await this.entityTrackerRepository.GetEntityAsync(packingSlip.CompanyId, packingSlip.ShippingDate, BusinessConstants.ENTITY_TRACKER_PACKING_SLIP);
-            packingSlip.PackingSlipNo = entity.EntityNo;
-
-            var result = await this.packingSlipRepository.AddPackingSlipAsync(packingSlip);
-
-            await this.entityTrackerRepository.AddEntityAsync(packingSlip.CompanyId, packingSlip.ShippingDate, BusinessConstants.ENTITY_TRACKER_PACKING_SLIP);
-
-            foreach(PackingSlipDetails packingSlipDetails in packingSlip.PackingSlipDetails)
+            var deletedPackingSlips = await this.packingSlipRepository.GetDeletedPackingSlipAsync();
+            if (deletedPackingSlips != null & deletedPackingSlips.Count() > 0)
             {
-                var transactionDetail = new TransactionDetail();
-                transactionDetail.PartId = packingSlipDetails.PartId;
-                transactionDetail.Qty = packingSlipDetails.Qty;
-                transactionDetail.TransactionTypeId = BusinessConstants.TRANSACTION_TYPE.CUSTOMER_PACKINGSLIP;
-                transactionDetail.TransactionDate = DateTime.Now;
-                transactionDetail.DirectionId = BusinessConstants.DIRECTION.OUT;
-                transactionDetail.InventoryType = BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND;
-                transactionDetail.ReferenceNo = packingSlip.PackingSlipNo;
-                await this.transactionRepository.AddTransactionAsync(transactionDetail);
+                packingSlip.PackingSlipNo = deletedPackingSlips.Select(x => x.PackingSlipNo).FirstOrDefault();
+                packingSlip.IsDeletedPackingSlipNoUsed = true;
             }
+            else
+            {
+                var entity = await this.entityTrackerRepository.GetEntityAsync(packingSlip.CompanyId, packingSlip.ShippingDate, BusinessConstants.ENTITY_TRACKER_PACKING_SLIP);
+                packingSlip.PackingSlipNo = entity.EntityNo;
+                packingSlip.IsDeletedPackingSlipNoUsed = false;
+            }
+
+            var result = await this.packingSlipRepository.AddPackingSlipAsync(packingSlip);           
             return result;
         }
 
@@ -50,29 +49,49 @@ namespace WebApi.Services
             await this.packingSlipRepository.CreateInvoiceAsync(packingSlip);
         }
 
-        public Task<int> DeleteSupplierInvoiceAsync(long id)
+        public async Task<bool> DeletePackingSlipAsync(long id)
         {
-            throw new NotImplementedException();
-        }
+            var result= await this.packingSlipRepository.DeletePackingSlipAsync(id);
+            return result;
+        }       
 
-        public async Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId)
+        public async Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId,int userId)
         {
-            return await this.packingSlipRepository.GetAllPackingSlipsAsync(companyId);
+            var partList = await this.partService.GetAllPartsAsync(companyId,userId);
+            var result =  await this.packingSlipRepository.GetAllPackingSlipsAsync(companyId,userId);
+
+            foreach(PackingSlip packingSlip in result)
+            {
+                foreach(PackingSlipDetails packingSlipDetails in packingSlip.PackingSlipDetails)
+                {
+                    var partDetail = partList.Where(p => p.Id == packingSlipDetails.PartId).FirstOrDefault();
+                    packingSlipDetails.PartDetail = partDetail;
+                }
+            }
+            return result;
         }
 
         public async Task<PackingSlip> GetPackingSlipAsync(long Id)
-        {
-            return await this.packingSlipRepository.GetPackingSlipAsync(Id);
+        {            
+            var result= await this.packingSlipRepository.GetPackingSlipAsync(Id);
+            //var partList = await this.partService.GetAllPartsAsync(result.CompanyId);
+            foreach (PackingSlipDetails packingSlipDetails in result.PackingSlipDetails)
+            {
+                var partDetail = await this.partService.GetPartAsync(packingSlipDetails.PartId);//partList.Where(p => p.Id == packingSlipDetails.PartId).FirstOrDefault();
+                packingSlipDetails.PartDetail = partDetail;
+            }
+            return result;
         }
 
-        public Task UpdatePackingSlipAsync(PackingSlip packingSlip)
+        public async Task<bool> UpdatePackingSlipAsync(PackingSlip packingSlip)
         {
-            throw new NotImplementedException();
+            var result = await this.packingSlipRepository.UpdatePackingSlipAsync(packingSlip);
+            return result;
         }
 
-        public async Task UpdatePOSAsync(int packingSlipId, string path)
+        public async Task UpdatePOSAsync(int packingSlipId, string path,string trackingNumber)
         {
-            await packingSlipRepository.UpdatePOSAsync(packingSlipId,path);
-        }
+            await packingSlipRepository.UpdatePOSAsync(packingSlipId,path, trackingNumber);
+        }       
     }
 }
