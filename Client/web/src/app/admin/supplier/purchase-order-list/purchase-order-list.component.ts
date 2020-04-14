@@ -65,9 +65,10 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Part Code", value: "partCode"}) );
-    this.gridColumns.push( new DataColumn({ headerText: "Part Desc", value: "partDescription", minWidth: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Part Code", value: "partCode", columnName: 'PartCode' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Part Desc", value: "partDescription", columnName: 'PartDescription', minWidth: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Qty", value: "qty", customStyling: 'right' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Open Qty", value: "openQty", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Price", value: "unitPrice", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Total", value: "total", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Rcvd", value: "receivedQty", customStyling: 'right' }) );
@@ -119,6 +120,7 @@ export class PurchaseOrderListComponent implements OnInit {
                 viewModel.receivedQty = parseInt(detail.receivedQty);
                 viewModel.inTransitQty = detail.inTransitQty;
                 viewModel.forceClosed = detail.isForceClosed;
+                viewModel.openQty = detail.qty - (viewModel.inTransitQty + viewModel.receivedQty);
                 this.purchaseOrderViewModels.push(viewModel);
               });
             } else {
@@ -233,4 +235,5 @@ class SupplierPurchaseOrderViewModel {
   acknowledgedQty: number;
   isAcknowledged: boolean;
   forceClosed: boolean;
+  openQty: number;
 }

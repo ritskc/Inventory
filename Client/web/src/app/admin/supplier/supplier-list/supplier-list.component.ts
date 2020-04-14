@@ -33,7 +33,7 @@ export class SupplierListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Name", value: "name", isLink: true, sortable: true }) );
     //this.columns.push( new DataColumn({ headerText: "Address", value: "address", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Phone No", value: "phoneNo", sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Email", value: "emailID", sortable: true, minWidth: true }) );
+    this.columns.push( new DataColumn({ headerText: "Email", value: "emailID", sortable: true, minWidth: true, customStyling: 'column-width-200' }) );
     this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, actions: [
       new DataColumnAction({ actionText: 'PO', actionStyle: ClassConstants.Primary, event: 'managePurchaseOrder' }),
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'manageInvoice' }),

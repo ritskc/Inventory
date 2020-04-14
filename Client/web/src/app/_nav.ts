@@ -96,7 +96,7 @@ if (environment.isSupplier) {
           icon: 'icon-puzzle'
         },
         {
-          name: 'Invoice',
+          name: 'Supplier Invoice',
           url: '/invoice',
           icon: 'icon-puzzle'
         },
@@ -132,7 +132,7 @@ if (environment.isSupplier) {
           icon: 'icon-puzzle'
         },
         {
-          name: 'Invoice',
+          name: 'Customer Invoice',
           url: '/companies/invoice',
           icon: 'icon-puzzle'
         },

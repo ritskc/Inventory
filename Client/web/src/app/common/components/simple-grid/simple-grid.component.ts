@@ -128,10 +128,12 @@ export class SimpleGridComponent implements OnInit, OnChanges {
     var reports = privileges.userPriviledge.userMenus.find(m => m.menu == selectedMenuItem.name);
     if (reports && reports.userReports && reports.userReports.length > 0) {
       for (var index = 0; index < this.columns.length; index++) {
-        var col = reports.userReports.find(r => r.columnName == this.columns[index].columnName);
+        var col = reports.userReports.find(r => r.columnName == this.columns[index].columnName && r.isVisible == true);
         if (!col) {
           this.columns.splice(index, 1);
           index--;
+        } else {
+          this.columns[index].headerText = col.columnDisplayName;
         }
       }
     }

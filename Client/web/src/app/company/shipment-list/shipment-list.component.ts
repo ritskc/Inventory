@@ -148,7 +148,10 @@ export class ShipmentListComponent implements OnInit {
   }
 
   downloadPOS(data) {
-    if (data.posPath) {
+    if (data.isMasterPackingSlip && data.masterPackingSlipId > 0) {
+      window.open(`${this.configuration.fileApiUri}/MasterPOS/${data.masterPackingSlipId}`);
+    }
+    else if (data.posPath) {
       window.open(`${this.configuration.fileApiUri}/POS/${data.id}`);
     } else {
       this.toastr.warningToastr('POS is not uploaded for this shipment');
