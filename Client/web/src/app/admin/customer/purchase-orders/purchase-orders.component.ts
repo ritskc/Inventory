@@ -56,11 +56,12 @@ export class PurchaseOrdersComponent implements OnInit {
   initializeGridColumns() {
     this.gridColumns = [];
     this.gridColumns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo" }) );
     this.gridColumns.push( new DataColumn({ headerText: "PO Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "isClosed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
+    this.gridColumns.push( new DataColumn({ headerText: "Action",value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editOrder', icon: 'fa fa-save' }),
       new DataColumnAction({ actionText: 'Order', actionStyle: ClassConstants.Primary, event: 'downloadDocument', icon: 'fa fa-download' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deleteOrder', icon: 'fa fa-trash' })
     ] }) );  
@@ -175,6 +176,9 @@ export class PurchaseOrdersComponent implements OnInit {
 
   actionButtonClicked(data) {
     switch(data.eventName) {
+      case 'editOrder':
+        this.rowSelected(data);
+        break;
       case 'downloadDocument':
         var configuration = new AppConfigurations();
         window.open(`${configuration.fileApiUri}/customerorder/${data.id}`);

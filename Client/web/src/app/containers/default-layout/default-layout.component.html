@@ -31,7 +31,7 @@
           H I
         </div>
       </a> -->
-      <select (change)="setCompany($event)">
+      <select (change)="setCompany($event)" [(ngModel)]="companyId">
         <option value="1">Harisons Industries</option>
         <option value="2">Cast & Forge</option>
       </select>

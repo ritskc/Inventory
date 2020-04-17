@@ -11,7 +11,7 @@
   </select>
 </div>
 
-  <simple-grid [data]="parts" [columns]="columns" 
+  <simple-grid [data]="parts" [columns]="columns"  (actionButtonClickedEvent)="[actionButtonClicked($event)]"
   (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="addPart()">
 
   </simple-grid>

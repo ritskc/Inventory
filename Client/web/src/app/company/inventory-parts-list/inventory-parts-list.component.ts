@@ -57,8 +57,8 @@ export class InventoryPartsListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Supp Open PO", value: "SupplierOpenPoQty", columnName: 'SupplierOpenPO', sortable: false, hasAdditionalAction: true, additionalActionName: 'showSupplierOpenPO' }) );
     this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", columnName: 'MinQty', sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", columnName: 'MaxQty', sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Action", columnName: 'Action', isActionColumn: true, customStyling: 'center column-width-100', actions: [
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'adjustOpeningQuantity', icon: 'fa fa-adjust' })
+    this.columns.push( new DataColumn({ headerText: "Action", columnName: 'Action', value: "Action", isActionColumn: true, customStyling: 'center column-width-100', actions: [
+      new DataColumnAction({ actionText: 'Adjust', actionStyle: ClassConstants.Primary, event: 'adjustOpeningQuantity' })
     ] }) );
   }
 

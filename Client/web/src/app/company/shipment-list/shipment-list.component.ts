@@ -51,15 +51,15 @@ export class ShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "isInvoiceCreated", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "POS", value: "isPOSUploaded", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
-    this.columns.push( new DataColumn({ headerText: "Actions", isActionColumn: true, customStyling: 'center', actions: [
-      new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Warning, event: 'editInvoice', icon: 'fa fa-edit' }),
-      new DataColumnAction({ actionText: 'Repack', actionStyle: ClassConstants.Primary, event: 'printRepackingInvoice', icon: 'fa fa-print', showOnlyIf: 'data["isRepackage"] == true' }),
-      new DataColumnAction({ actionText: 'Shipment', actionStyle: ClassConstants.Primary, event: 'printShipment', icon: 'fa fa-print' }),
-      new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoice', icon: 'fa fa-print' }),
-      new DataColumnAction({ actionText: 'BL', actionStyle: ClassConstants.Primary, event: 'printBL', icon: 'fa fa-print' }),
-      new DataColumnAction({ actionText: 'POS', actionStyle: ClassConstants.Primary, event: 'downloadPOS', icon: 'fa fa-download' }),
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'editShipment', icon: 'fa fa-edit' }),
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'delete', icon: 'fa fa-trash' })
+    this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editShipment' }),
+      new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'editInvoice' }),
+      new DataColumnAction({ actionText: 'Repack', actionStyle: ClassConstants.Primary, event: 'printRepackingInvoice', showOnlyIf: 'data["isRepackage"] == true' }),
+      new DataColumnAction({ actionText: 'Print Shipment', actionStyle: ClassConstants.Primary, event: 'printShipment' }),
+      new DataColumnAction({ actionText: 'Print Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoice' }),
+      new DataColumnAction({ actionText: 'Print BL', actionStyle: ClassConstants.Primary, event: 'printBL' }),
+      new DataColumnAction({ actionText: 'Download POS', actionStyle: ClassConstants.Primary, event: 'downloadPOS' }),
+      new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'delete' })
     ] }) );
   }
 

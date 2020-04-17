@@ -318,7 +318,7 @@ export class CreateShipmentComponent implements OnInit {
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Price", value: "price", customStyling: 'right' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "Boxes", value: "boxes", isEditable: true, customStyling: 'right column-width-50' }) );
     this.columnsForPartsGrid.push( new DataColumn({ headerText: "In Basket", value: "inBasket", isBoolean: true, customStyling: 'center' }) );
-    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
+    this.columnsForPartsGrid.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'removePart', icon: 'fa fa-trash' })
     ] }) );  }
 

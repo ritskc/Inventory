@@ -45,16 +45,16 @@ export class PurchaseOrderListComponent implements OnInit {
   initializeGridColumns() {
     this.gridColumns = [];
     this.gridColumns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Email", value: "email", minWidth: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closing", value: "closingDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Ack", value: "isAcknowledged", isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
+    this.gridColumns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editPurchaseOrder', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'PO', actionStyle: ClassConstants.Primary, event: 'printPurchaseOrder', icon: 'fa fa-print' }),
-      new DataColumnAction({ actionText: 'Edit', actionStyle: ClassConstants.Primary, event: 'editPurchaseOrder', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deletePurchaseOrder', icon: 'fa fa-trash' })
     ] }));
   }

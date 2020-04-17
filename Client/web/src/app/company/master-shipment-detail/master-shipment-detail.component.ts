@@ -53,7 +53,7 @@ export class MasterShipmentDetailComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Shipped Via", value: "shipVia", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "isInvoiceCreated", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
-    this.columns.push( new DataColumn({ headerText: "Actions", isActionColumn: true, customStyling: 'center', actions: [
+    this.columns.push( new DataColumn({ headerText: "Actions", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'removeShipment', icon: 'fa fa-trash' })
     ] }) );
   }

@@ -37,9 +37,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   ascendingSortOrder: boolean = true;
   currentSortColumnName: string = '';
 
-  constructor(private jsonToCsvExporter: JsonToCsvExporterService, private toastr: ToastrManager, 
-              private route: Router) {
-  }
+  constructor(private jsonToCsvExporter: JsonToCsvExporterService, private toastr: ToastrManager, private route: Router) { }
  
   ngOnInit() {
     this.currentSortColumnName = this.defaultSortColumnName;
@@ -47,7 +45,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
-    
+    this.filterColumns();
   }
 
   @Input() 
@@ -129,13 +127,30 @@ export class SimpleGridComponent implements OnInit, OnChanges {
     if (reports && reports.userReports && reports.userReports.length > 0) {
       for (var index = 0; index < this.columns.length; index++) {
         var col = reports.userReports.find(r => r.columnName == this.columns[index].columnName && r.isVisible == true);
-        if (!col) {
+        var colByValue = reports.userReports.find(r => r.columnName.toUpperCase() == this.columns[index].value.toUpperCase() && r.isVisible == true);
+        if (!col && !colByValue) {
           this.columns.splice(index, 1);
           index--;
         } else {
-          this.columns[index].headerText = col.columnDisplayName;
+          this.columns[index].headerText = col ? col.columnDisplayName: colByValue.columnDisplayName;
         }
       }
+    }
+    this.setGridPermissions(reports);
+  }
+
+  setGridPermissions(selectedMenuItem) {
+    if (selectedMenuItem && selectedMenuItem.userActions && selectedMenuItem.userActions.length > 0) {
+      this.addRequired = selectedMenuItem.userActions.find(m => m.action == 'Add' && m.isPermitted == true) != undefined;
+      this.exportRequired = selectedMenuItem.userActions.find(m => m.action == 'Export' && m.isPermitted == true) != undefined;
+      var actionColumns = this.columns.find(c => c.isActionColumn == true);
+      if (actionColumns && actionColumns.actions.length > 0) {
+        for(var index = 0; index < actionColumns.actions.length; index++)
+          if (!selectedMenuItem.userActions.find(m => m.action == actionColumns.actions[index].actionText && m.isPermitted == true)) {
+            actionColumns.actions.splice(index, 1);
+            index--;
+          }
+        }
     }
   }
 

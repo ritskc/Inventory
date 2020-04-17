@@ -8,6 +8,7 @@ import { UserAction } from '../../../models/enum/userAction';
 import { Router } from '@angular/router';
 import { ClassConstants } from '../../../common/constants';
 import { EventEmitter } from 'protractor';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-supplier-list',
@@ -21,7 +22,7 @@ export class SupplierListComponent implements OnInit {
   currentlyLoggedInCompanyId: number = 0;
 
   constructor(private supplierService: SupplierService, private companyService: CompanyService,
-              private loaderService: httpLoaderService, private router: Router) { }
+              private loaderService: httpLoaderService, private router: Router, private toastr: ToastrManager) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompanyId = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -30,14 +31,16 @@ export class SupplierListComponent implements OnInit {
   }
 
   initializeGridColumns() {
-    this.columns.push( new DataColumn({ headerText: "Name", value: "name", isLink: true, sortable: true }) );
-    //this.columns.push( new DataColumn({ headerText: "Address", value: "address", sortable: true }) );
+    this.columns.push( new DataColumn({ headerText: "Name", value: "name", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Phone No", value: "phoneNo", sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Email", value: "emailID", sortable: true, minWidth: true, customStyling: 'column-width-200' }) );
-    this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, actions: [
+    this.columns.push( new DataColumn({ headerText: "Phone", value: "phoneNo" }) );
+    this.columns.push( new DataColumn({ headerText: "Fax", value: "faxNo" }) );
+    this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, actions: [
+      new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editSupplier' }),
       new DataColumnAction({ actionText: 'PO', actionStyle: ClassConstants.Primary, event: 'managePurchaseOrder' }),
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'manageInvoice' }),
-      new DataColumnAction({ actionText: 'Receive', actionStyle: ClassConstants.Primary, event: 'manageReceiveInvoice' })
+      new DataColumnAction({ actionText: 'Receive', actionStyle: ClassConstants.Primary, event: 'manageReceiveInvoice' }),
+      new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deleteSupplier' })
     ] }) );
   }
 
@@ -76,8 +79,21 @@ export class SupplierListComponent implements OnInit {
     this.router.navigateByUrl(`/invoice/receive/${ supplier.id }`);
   }
 
+  deleteSupplier(row) {
+    if (confirm('Are you sure you want to delete this supplier?')) {
+      this.supplierService.delete(row.id)
+          .subscribe(
+            () => this.router.navigateByUrl('/suppliers'),
+            (error) => this.toastr.errorToastr(error.error)
+          );
+    }
+  }
+
   actionButtonClicked(data) {
     switch(data.eventName) {
+      case 'editSupplier':
+        this.rowSelected(data);
+        break;
       case 'managePurchaseOrder':
         this.redirectToSupplierPurchaseOrder(data);
         break;
@@ -86,6 +102,9 @@ export class SupplierListComponent implements OnInit {
         break;
       case 'manageReceiveInvoice':
         this.redirectToReceiveInvoice(data);
+        break;
+      case 'deleteSupplier':
+        this.deleteSupplier(data);
         break;
     }
   }
