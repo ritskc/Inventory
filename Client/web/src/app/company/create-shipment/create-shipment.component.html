@@ -78,50 +78,47 @@
         </div>
         <div class="card-body">
             <div class="form-group standard-top-margin row">
-              <label class="col-md-3 col-xs-3 label-top-adjustment">Blank Order</label>
-              <input type="checkbox" class="form-control col-md-3 col-xs-3" [(ngModel)]="blankOrder" (change)="blankOrderChecked()"/>
-              <label class="col-md-3 col-xs-3 label-top-adjustment">In Basket</label>
-              <input type="checkbox" class="form-control col-md-3 col-xs-3" [(ngModel)]="inBasket"/>
-            </div>
-            <div class="form-group standard-top-margin row">
-              <label class="col-md-3 col-xs-3 label-top-adjustment">Order Number</label>
-              <select *ngIf="!blankOrder" type="text" class="form-control col-md-9 col-xs-9" (change)="orderSelected()" [(ngModel)]="orderId">
-                <option value="-1">Please select the order number</option>
+              <label class="col-md-2 col-xs-2 label-top-adjustment">Blank Ord</label>
+              <input type="checkbox" class="form-control col-md-1 col-xs-1" [(ngModel)]="blankOrder" (change)="blankOrderChecked()"/>
+              <label class="col-md-2 col-xs-2 label-top-adjustment">In Basket</label>
+              <input type="checkbox" class="form-control col-md-1 col-xs-1" [(ngModel)]="inBasket"/>
+              <label class="col-md-2 col-xs-2 label-top-adjustment">Order No</label>
+              <select *ngIf="!blankOrder" type="text" class="form-control col-md-4 col-xs-4" (change)="orderSelected()" [(ngModel)]="orderId">
+                <option value="-1">Select order number</option>
                 <option *ngFor="let order of customerPurchaseOrders" value="{{order.id}}">{{order.poNo}}</option>
               </select>
-              <input *ngIf="blankOrder" type="text" class="form-control col-md-9 col-xs-9" [(ngModel)]="OrderNo"/>
+              <input *ngIf="blankOrder" type="text" class="form-control col-md-4 col-xs-4" [(ngModel)]="OrderNo"/>
             </div>
             <div class="form-group standard-top-margin row">
-              <label class="col-md-3 col-xs-3 label-top-adjustment">Part Code</label>
-              <select class="form-control col-md-9 col-xs-9" [(ngModel)]="partCode" (change)="partSelected()">
+              <label class="col-md-2 col-xs-2 label-top-adjustment">Part Code</label>
+              <select class="form-control col-md-4 col-xs-4" [(ngModel)]="partCode" (change)="partSelected()">
                 <option value="-1">Select part by code</option>
                 <option *ngFor="let part of customerAssociatedParts" value="{{part.id}}">{{part.code}}</option>
               </select>
+              <label class="col-md-2 col-xs-2 label-top-adjustment">Part Name</label>
+              <select class="form-control col-md-4 col-xs-4" [(ngModel)]="partCode" (change)="partSelected()">
+                <option value="-1">Select part by description</option>
+                <option *ngFor="let part of customerAssociatedParts" value="{{part.id}}">{{part.description}}</option>
+              </select>
             </div>
-            <div class="form-group standard-top-margin row">
-              <label class="col-md-3 col-xs-3 label-top-adjustment">Part Name</label>
-              <select class="form-control col-md-9 col-xs-9" [(ngModel)]="partCode" (change)="partSelected()">
-                  <option value="-1">Select part by description</option>
-                  <option *ngFor="let part of customerAssociatedParts" value="{{part.id}}">{{part.description}}</option>
+            <div class="form-group standard-top-margin row" *ngIf="selectedCustomer.invoicingtypeid == 3">
+              <label class="col-md-2 col-xs-2 label-top-adjustment">Invoice</label>
+              <select class="form-control col-md-4 col-xs-4" [(ngModel)]="invoiceNo" (change)="invoiceSelected()">
+                <option value="0">Select invoice</option>
+                <option *ngFor="let invoice of invoices" value="{{invoice.id}}">{{invoice.invoiceNo}}</option>
               </select>
             </div>
             <div class="form-group standard-top-margin row">
-              <label class="col-md-3 col-xs-3 label-top-adjustment">Quantity</label>
-              <input type="text" class="form-control col-md-3 col-xs-3" style="text-align: right;" [(ngModel)]="quantity" (change)="shippedQuantityEntered()"/>
-              <label class="col-md-3 col-xs-3 label-top-adjustment">Unit Price</label>
-              <input type="text" class="form-control col-md-3 col-xs-3" style="text-align: right;" [(ngModel)]="unitPrice"/>
+              <label class="col-md-2 col-xs-2 label-top-adjustment">Quantity</label>
+              <input type="text" class="form-control col-md-2 col-xs-2" style="text-align: right;" [(ngModel)]="quantity" (change)="shippedQuantityEntered()"/>
+              <label class="col-md-2 col-xs-2 label-top-adjustment">Unit Price</label>
+              <input type="text" class="form-control col-md-2 col-xs-2" style="text-align: right;" [(ngModel)]="unitPrice"/>
+              <label class="col-md-2 col-xs-2 label-top-adjustment">Boxes</label>
+              <input type="text" class="form-control col-md-2 col-xs-2" style="text-align: right;" [(ngModel)]="boxes"/>
             </div>
             <div class="form-group standard-top-margin row">
-              <label class="col-md-3 col-xs-3 label-top-adjustment">In Hand({{partQuantityInHand}})</label>
-              <label class="col-md-3 col-xs-3 label-top-adjustment">Open Qty({{partOpenQuantity}})</label>
-              <label class="col-md-2 col-xs-2 label-top-adjustment">Line({{lineNo}})</label>
-              <label class="col-md-4 col-xs-4 label-top-adjustment">Due({{dueDate}})</label>
-            </div>
-            <div class="form-group standard-top-margin row">
-              <label class="col-md-3 col-xs-3 label-top-adjustment">No of Boxes</label>
-              <input type="text" class="form-control col-md-3 col-xs-3" style="text-align: right;" [(ngModel)]="boxes"/>
-              <label class="col-md-3 col-xs-3 label-top-adjustment"> </label>
-              <button class="btn btn-primary col-md-3 col-xs-3" (click)="addPart()"><span class="fa fa-plus"></span> Add</button>
+              <label class="col-md-10 col-xs-10 label-top-adjustment" style="white-space: pre;">In Hand({{partQuantityInHand}})   Open({{partOpenQuantity}})    Line({{lineNo}})    Due({{dueDate}})</label>
+              <button class="btn btn-primary col-md-2 col-xs-2" (click)="addPart()"><span class="fa fa-plus"></span> Add</button>
             </div>
         </div>
       </div>

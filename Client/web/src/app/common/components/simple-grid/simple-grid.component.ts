@@ -23,6 +23,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   @Input() columns: DataColumn[] = [];
   @Input() pageSize: number = 20;
   @Input() defaultSortColumnName: string = 'name';
+  @Input() ignoreColumnFiltering: boolean = false;
   @Output() selectedRow = new EventEmitter();
   @Output() addClickedEventEmitter = new EventEmitter();
   @Output() actionButtonClickedEvent = new EventEmitter();
@@ -115,7 +116,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
 
   filterColumns() {
     var privileges = JSON.parse(localStorage.getItem('privileges'));
-    if (privileges.isSuperAdmin) return;
+    if (privileges.isSuperAdmin || this.ignoreColumnFiltering) return;
 
     var clonedNavItems = JSON.parse(JSON.stringify(navItems));
     var linearyArrayOfMenuItems: NavData[] = [];
