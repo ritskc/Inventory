@@ -21,6 +21,9 @@ namespace DAL.Models
         public int BoxNo { get; set; }
         public string Barcode { get; set; }
         public bool IsBoxReceived { get; set; }
+        public bool IsOpen { get; set; }
+        public int AdjustedInvoiceQty { get; set; }
+        public int OpenQty { get; set; }
 
         public Part PartDetail { get; set; }
 

@@ -263,7 +263,7 @@ namespace DAL.Repository
 
             //List<UserPriviledgeDetail> userPriviledgeDetails = new List<UserPriviledgeDetail>();
             List<UserMenu> userMenus = new List<UserMenu>();
-            commandText = string.Format($"SELECT UPD.[Id] ,UPD.[UserPriviledgeId] ,UPD.[UserMenuActionId] ,UPD.[IsPermitted],UMAA.MenuId,UM.Menu,UMAA.ActionId,UA.Action,UM.IsReport FROM [dbo].[UserPriviledgeDetails] UPD INNER JOIN UserMenuActionAssignment UMAA ON UMAA.Id = UPD.UserMenuActionId INNER JOIN UserMenu UM ON UM.Id = UMAA.MenuId INNER JOIN UserAction UA ON UA.ID = UMAA.ActionId  where UPD.UserPriviledgeId = '{id}' and UA.Id = 1 and UPD.IsPermitted = 1");
+            commandText = string.Format($"SELECT UPD.[Id] ,UPD.[UserPriviledgeId] ,UPD.[UserMenuActionId] ,UPD.[IsPermitted] ,UPD.[IsLanding],UMAA.MenuId,UM.Menu,UMAA.ActionId,UA.Action,UM.IsReport,UM.url FROM [dbo].[UserPriviledgeDetails] UPD INNER JOIN UserMenuActionAssignment UMAA ON UMAA.Id = UPD.UserMenuActionId INNER JOIN UserMenu UM ON UM.Id = UMAA.MenuId INNER JOIN UserAction UA ON UA.ID = UMAA.ActionId  where UPD.UserPriviledgeId = '{id}' and UA.Id = 1 and UPD.IsPermitted = 1");
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
             {
@@ -278,8 +278,10 @@ namespace DAL.Repository
                     userMenu.UserReports = new List<UserReport>();
                     userMenu.MenuId = Convert.ToInt32(dataReader1["MenuId"]);
                     userMenu.Menu = Convert.ToString(dataReader1["Menu"]);
+                    userMenu.Url = Convert.ToString(dataReader1["Url"]);
                     userMenu.IsViewPermitted = Convert.ToBoolean(dataReader1["IsPermitted"]); 
-                    userMenu.IsReport = Convert.ToBoolean(dataReader1["IsReport"]); 
+                    userMenu.IsReport = Convert.ToBoolean(dataReader1["IsReport"]);
+                    userMenu.IsLanding = Convert.ToBoolean(dataReader1["IsLanding"]);
                     userMenus.Add(userMenu);
                 }
                 dataReader1.Close();
@@ -318,7 +320,8 @@ namespace DAL.Repository
             {
                 if (userMenu.IsReport)
                 {
-                    commandText = string.Format($"SELECT  [Id]  ,[ReportId] ,[ColumnName] ,[ColumnDisplayName]  ,[IsVisible]  FROM [UserDefaultReport] where ReportId = '{userMenu.MenuId}'");
+                    bool hasData = false;
+                    commandText = string.Format($"SELECT  [Id]  ,[ReportId] ,[PriviledgeId]  ,[ColumnName] ,[ColumnDisplayName]  ,[IsVisible]  FROM [UserReport] where PriviledgeId = '{id}' and ReportId = '{userMenu.MenuId}'");
 
                     using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                     {
@@ -328,6 +331,7 @@ namespace DAL.Repository
 
                         while (dataReader1.Read())
                         {
+                            hasData = true;
                             var UserReportInfo = new UserReport();
                             UserReportInfo.Id = Convert.ToInt32(dataReader1["Id"]);
                             UserReportInfo.ReportId = Convert.ToInt32(dataReader1["ReportId"]);
@@ -341,28 +345,32 @@ namespace DAL.Repository
                         conn.Close();
                     }
 
-                    commandText = string.Format($"SELECT  [Id]  ,[ReportId] ,[PriviledgeId]  ,[ColumnName] ,[ColumnDisplayName]  ,[IsVisible]  FROM [UserReport] where PriviledgeId = '{id}'");
-
-                    using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                    if (!hasData)
                     {
-                        cmd1.CommandType = CommandType.Text;
-                        conn.Open();
-                        var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+                        commandText = string.Format($"SELECT  [Id]  ,[ReportId] ,[ColumnName] ,[ColumnDisplayName]  ,[IsVisible]  FROM [UserDefaultReport] where ReportId = '{userMenu.MenuId}'");
 
-                        while (dataReader1.Read())
+                        using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                         {
-                            var UserReportInfo = new UserReport();
-                            UserReportInfo.Id = Convert.ToInt32(dataReader1["Id"]);
-                            UserReportInfo.ReportId = Convert.ToInt32(dataReader1["ReportId"]);
-                            UserReportInfo.ColumnName = Convert.ToString(dataReader1["ColumnName"]);
-                            UserReportInfo.ColumnDisplayName = Convert.ToString(dataReader1["ColumnDisplayName"]);
-                            UserReportInfo.IsVisible = Convert.ToBoolean(dataReader1["IsVisible"]);
+                            cmd1.CommandType = CommandType.Text;
+                            conn.Open();
+                            var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
 
-                            userMenu.UserReports.Add(UserReportInfo);
+                            while (dataReader1.Read())
+                            {
+                                var UserReportInfo = new UserReport();
+                                UserReportInfo.Id = Convert.ToInt32(dataReader1["Id"]);
+                                UserReportInfo.ReportId = Convert.ToInt32(dataReader1["ReportId"]);
+                                UserReportInfo.ColumnName = Convert.ToString(dataReader1["ColumnName"]);
+                                UserReportInfo.ColumnDisplayName = Convert.ToString(dataReader1["ColumnDisplayName"]);
+                                UserReportInfo.IsVisible = Convert.ToBoolean(dataReader1["IsVisible"]);
+
+                                userMenu.UserReports.Add(UserReportInfo);
+                            }
+                            dataReader1.Close();
+                            conn.Close();
                         }
-                        dataReader1.Close();
-                        conn.Close();
                     }
+                    
                 }
             }
             userPriviledge.UserMenus = userMenus;

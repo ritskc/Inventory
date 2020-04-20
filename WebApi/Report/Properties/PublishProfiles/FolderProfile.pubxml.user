@@ -10,13 +10,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/DAL.dll">
-      <publishTime>04/01/2020 11:23:23</publishTime>
+      <publishTime>04/19/2020 12:58:40</publishTime>
     </File>
     <File Include="bin/DAL.dll.config">
       <publishTime>11/24/2019 22:11:02</publishTime>
     </File>
     <File Include="bin/DAL.pdb">
-      <publishTime>04/01/2020 11:23:23</publishTime>
+      <publishTime>04/19/2020 12:58:40</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>05/24/2018 14:38:22</publishTime>
@@ -46,10 +46,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/12/2014 20:48:20</publishTime>
     </File>
     <File Include="bin/Report.dll">
-      <publishTime>04/01/2020 11:23:29</publishTime>
+      <publishTime>04/19/2020 12:58:42</publishTime>
     </File>
     <File Include="bin/Report.pdb">
-      <publishTime>04/01/2020 11:23:29</publishTime>
+      <publishTime>04/19/2020 12:58:42</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/24/2018 14:38:22</publishTime>
@@ -192,14 +192,23 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="connection.json">
       <publishTime>01/16/2020 20:17:34</publishTime>
     </File>
+    <File Include="Reports/Resource/CF.png">
+      <publishTime>04/14/2020 12:16:41</publishTime>
+    </File>
     <File Include="Reports/Resource/check.png">
       <publishTime>01/25/2020 16:16:28</publishTime>
+    </File>
+    <File Include="Reports/Resource/HARISONS LOGO %28002%29.jpg">
+      <publishTime>03/13/2020 21:11:54</publishTime>
     </File>
     <File Include="Reports/Resource/HI.png">
       <publishTime>07/28/2019 16:25:28</publishTime>
     </File>
     <File Include="Reports/Resource/HIP.png">
       <publishTime>03/13/2020 21:25:03</publishTime>
+    </File>
+    <File Include="Reports/Resource/Phloem.png">
+      <publishTime>03/27/2020 19:56:55</publishTime>
     </File>
     <File Include="Reports/Resource/uncheck.png">
       <publishTime>01/25/2020 16:17:05</publishTime>
@@ -219,6 +228,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="ReportViewer/MasterPackingSlip.aspx">
       <publishTime>02/15/2020 12:21:24</publishTime>
     </File>
+    <File Include="ReportViewer/MonthlyInvoice.aspx">
+      <publishTime>04/19/2020 12:58:10</publishTime>
+    </File>
     <File Include="ReportViewer/PackingSlip.aspx">
       <publishTime>07/28/2019 15:34:11</publishTime>
     </File>
@@ -235,7 +247,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2019 20:49:43</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/01/2020 11:23:39</publishTime>
+      <publishTime>04/19/2020 12:58:42</publishTime>
     </File>
   </ItemGroup>
 </Project>

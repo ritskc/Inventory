@@ -12,6 +12,8 @@ namespace DAL.Models
         public string Menu { get; set; }
         public bool IsViewPermitted { get; set; }
         public bool IsReport { get; set; }
+        public string Url { get; set; }
+        public bool IsLanding { get; set; }
 
         public List<UserAction> UserActions { get; set; }
         public List<UserReport> UserReports { get; set; }

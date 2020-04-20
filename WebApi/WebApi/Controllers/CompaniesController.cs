@@ -111,15 +111,15 @@ namespace WebApi.Controllers
         {
             try
             {
-                var result = await this._companyService.GetCompanyAsync(id);
-                if (result == null)
-                {
-                    return NotFound();
-                }
+                // var result = await this._companyService.GetCompanyAsync(id);
+                //if (result == null)
+                //{
+                //    return NotFound();
+                //}
 
-                await this._companyService.DeleteCompanyAsync(id);
+                //await this._companyService.DeleteCompanyAsync(id);
 
-                return Ok();
+                return BadRequest("Bad Request, you can not delete company. please contact your admin.");
             }
             catch (Exception ex)
             {

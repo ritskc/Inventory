@@ -1,0 +1,456 @@
+2020-04-18 18:51:27.4088||DEBUG|WebApi.Program|init main 
+2020-04-18 18:51:28.9242||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-18 18:51:29.6902|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-18 18:51:29.6902|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-18 18:51:29.7321|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 42.1317ms 200  
+2020-04-18 18:51:29.8133|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 123.7798ms 404  
+2020-04-18 18:52:04.1994|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/supplierinvoice/openinvoice/1/286 application/json 11406 
+2020-04-18 18:52:04.2897|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-04-18 18:52:04.3553|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-04-18 18:52:04.3641|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi)' 
+2020-04-18 18:52:04.4055|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetIntansitPos", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi) 
+2020-04-18 18:52:04.4288|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi) with arguments (openinvoice, 1, 286) - Validation state: Valid 
+2020-04-18 18:52:04.9720|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 537.9394ms. 
+2020-04-18 18:52:04.9872|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.SupplierOpenInvoice, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-04-18 18:52:05.0116|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi) in 602.3901ms 
+2020-04-18 18:52:05.0116|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.GetIntansitPos (WebApi)' 
+2020-04-18 18:52:05.0205|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 821.112ms 200 application/json; charset=utf-8 
+2020-04-18 18:52:05.0367|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3TC48B4J0", Request id "0HLV3TC48B4J0:00000002": the application completed without reading the entire request body. 
+2020-04-18 21:03:53.6312||DEBUG|WebApi.Program|init main 
+2020-04-18 21:03:55.3508||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-18 21:03:56.2973|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-18 21:03:56.2973|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-18 21:03:56.3379|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 38.6133ms 200  
+2020-04-18 21:03:56.4474|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 150.8619ms 404  
+2020-04-18 21:05:17.6596|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2019-07-01 application/json 93 
+2020-04-18 21:05:17.7543|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:05:17.7989|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 21:05:17.8232|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2019 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:05:18.6122|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 784.7971ms. 
+2020-04-18 21:05:18.6307|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-04-18 21:05:18.6472|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 844.3619ms 
+2020-04-18 21:05:18.6472|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:05:18.6573|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 997.7964ms 500 application/json; charset=utf-8 
+2020-04-18 21:05:18.6776|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VM4GONI7", Request id "0HLV3VM4GONI7:00000001": the application completed without reading the entire request body. 
+2020-04-18 21:07:16.1858||DEBUG|WebApi.Program|init main 
+2020-04-18 21:07:16.5266||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-18 21:07:17.1027|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2019-07-01 application/json 93 
+2020-04-18 21:07:17.1639|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:07:17.1916|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 21:07:17.2093|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2019 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:07:17.6607|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 448.7675ms. 
+2020-04-18 21:07:17.6607|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-04-18 21:07:17.6834|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 488.3435ms 
+2020-04-18 21:07:17.6879|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:07:17.6879|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 594.1409ms 500 application/json; charset=utf-8 
+2020-04-18 21:07:17.7075|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VO0C8GRP", Request id "0HLV3VO0C8GRP:00000001": the application completed without reading the entire request body. 
+2020-04-18 21:08:03.3372|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2019-07-01 application/json 93 
+2020-04-18 21:08:03.3452|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:08:03.3452|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 21:08:03.3452|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2019 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:08:03.4061|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 56.9913ms. 
+2020-04-18 21:08:03.4061|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-04-18 21:08:03.4061|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 61.137ms 
+2020-04-18 21:08:03.4061|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:08:03.4061|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 73.2092ms 500 application/json; charset=utf-8 
+2020-04-18 21:08:03.4061|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VO0C8GRP", Request id "0HLV3VO0C8GRP:00000002": the application completed without reading the entire request body. 
+2020-04-18 21:08:10.7971|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2019-07-01 application/json 93 
+2020-04-18 21:08:10.7971|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:08:10.7971|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 21:08:10.7971|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2019 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:08:10.8571|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 50.2091ms. 
+2020-04-18 21:08:10.8571|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-04-18 21:08:10.8597|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 55.1796ms 
+2020-04-18 21:08:10.8597|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:08:10.8597|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 64.6653ms 500 application/json; charset=utf-8 
+2020-04-18 21:08:10.8597|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VO0C8GRP", Request id "0HLV3VO0C8GRP:00000003": the application completed without reading the entire request body. 
+2020-04-18 21:08:32.8286||DEBUG|WebApi.Program|init main 
+2020-04-18 21:08:34.6074||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-18 21:08:35.4971|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-18 21:08:35.4971|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2019-07-01 application/json 93 
+2020-04-18 21:08:35.4971|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-18 21:08:35.5397|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 42.9536ms 200  
+2020-04-18 21:08:35.6676|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:08:35.6742|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 177.9534ms 404  
+2020-04-18 21:08:35.7422|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 21:08:35.7694|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2019 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:08:56.8494|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 21077.1913ms. 
+2020-04-18 21:08:56.8619|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-04-18 21:08:56.8799|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 21133.3999ms 
+2020-04-18 21:08:56.8799|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:08:56.8799|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 21388.2246ms 500 application/json; charset=utf-8 
+2020-04-18 21:08:56.8975|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VONNH6TO", Request id "0HLV3VONNH6TO:00000001": the application completed without reading the entire request body. 
+2020-04-18 21:09:45.2636|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2019-07-01 application/json 93 
+2020-04-18 21:09:45.2817|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:09:45.2817|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 21:09:45.2817|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2019 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:11:37.1673||DEBUG|WebApi.Program|init main 
+2020-04-18 21:11:38.7049||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-18 21:11:39.5297|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-18 21:11:39.5297|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-18 21:11:39.5698|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 40.5601ms 200  
+2020-04-18 21:11:39.6568|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 128.013ms 404  
+2020-04-18 21:11:42.8879|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2019-07-01 application/json 93 
+2020-04-18 21:11:42.8958|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:11:42.9433|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 21:11:42.9682|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2019 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:11:47.4571|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 4485.6629ms. 
+2020-04-18 21:11:47.4745|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-04-18 21:11:47.4937|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 4546.8814ms 
+2020-04-18 21:11:47.4937|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:11:47.5028|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 4614.9478ms 500 application/json; charset=utf-8 
+2020-04-18 21:11:47.5191|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VQEIK5AL", Request id "0HLV3VQEIK5AL:00000002": the application completed without reading the entire request body. 
+2020-04-18 21:12:28.9518|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2019-07-01 application/json 93 
+2020-04-18 21:12:28.9531|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:12:28.9531|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 21:12:28.9531|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2019 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:12:32.0176|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 3053.5156ms. 
+2020-04-18 21:12:32.0176|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 21:12:32.0176|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 3061.5422ms 
+2020-04-18 21:12:32.0176|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:12:32.0176|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 3074.0358ms 200 application/json; charset=utf-8 
+2020-04-18 21:12:32.0176|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VQEIK5AK", Request id "0HLV3VQEIK5AK:00000002": the application completed without reading the entire request body. 
+2020-04-18 21:13:36.0280|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/EntityTracker/po/1/2017-07-01 application/json 93 
+2020-04-18 21:13:36.0280|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 21:13:36.0721|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Post (WebApi) 
+2020-04-18 21:13:36.0721|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Post (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, po) - Validation state: Valid 
+2020-04-18 21:13:36.2969|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 222.4932ms. 
+2020-04-18 21:13:36.2969|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-04-18 21:13:36.2969|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Post (WebApi) in 228.525ms 
+2020-04-18 21:13:36.2969|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 21:13:36.2969|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 275.6364ms 200  
+2020-04-18 21:13:36.2969|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VQEIK5AM", Request id "0HLV3VQEIK5AM:00000001": the application completed without reading the entire request body. 
+2020-04-18 21:14:06.7163|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 21:14:06.7163|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 21:14:06.7230|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Post (WebApi) 
+2020-04-18 21:14:06.7230|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Post (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:14:06.9387|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 212.6266ms. 
+2020-04-18 21:14:06.9387|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-04-18 21:14:06.9387|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Post (WebApi) in 216.1792ms 
+2020-04-18 21:14:06.9387|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 21:14:06.9387|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 225.6604ms 200  
+2020-04-18 21:14:06.9387|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VQEIK5AM", Request id "0HLV3VQEIK5AM:00000002": the application completed without reading the entire request body. 
+2020-04-18 21:14:15.7890|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 21:14:15.7890|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:14:15.7890|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 21:14:15.7890|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:14:19.2276|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 3435.2277ms. 
+2020-04-18 21:14:19.2276|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 21:14:19.2276|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 3438.4767ms 
+2020-04-18 21:14:19.2276|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:14:19.2276|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 3442.857ms 200 application/json; charset=utf-8 
+2020-04-18 21:14:19.2337|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VQEIK5AM", Request id "0HLV3VQEIK5AM:00000003": the application completed without reading the entire request body. 
+2020-04-18 21:14:27.7843|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 21:14:27.7843|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 21:14:27.7843|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Post (WebApi) 
+2020-04-18 21:14:27.7843|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Post (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:14:28.0038|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 214.8202ms. 
+2020-04-18 21:14:28.0038|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-04-18 21:14:28.0038|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Post (WebApi) in 217.2491ms 
+2020-04-18 21:14:28.0038|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 21:14:28.0038|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 222.5757ms 200  
+2020-04-18 21:14:28.0038|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VQEIK5AM", Request id "0HLV3VQEIK5AM:00000004": the application completed without reading the entire request body. 
+2020-04-18 21:14:34.7654|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 21:14:34.7654|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:14:34.7654|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 21:14:34.7654|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:14:41.1568|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 6387.8632ms. 
+2020-04-18 21:14:41.1568|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 21:14:41.1568|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 6395.5939ms 
+2020-04-18 21:14:41.1568|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:14:41.1568|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 6401.9978ms 200 application/json; charset=utf-8 
+2020-04-18 21:14:41.1568|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VQEIK5AM", Request id "0HLV3VQEIK5AM:00000005": the application completed without reading the entire request body. 
+2020-04-18 21:14:53.3769|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-08-01 application/json 93 
+2020-04-18 21:14:53.3769|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:14:53.3769|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 21:14:53.3769|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 8/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:14:53.4316|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 51.0977ms. 
+2020-04-18 21:14:53.4316|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 21:14:53.4316|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 55.011ms 
+2020-04-18 21:14:53.4316|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:14:53.4316|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 59.5432ms 200 application/json; charset=utf-8 
+2020-04-18 21:14:53.4377|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VQEIK5AM", Request id "0HLV3VQEIK5AM:00000006": the application completed without reading the entire request body. 
+2020-04-18 21:15:00.0340|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 21:15:00.0340|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:15:00.0340|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 21:15:00.0340|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:15:00.0883|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 48.836ms. 
+2020-04-18 21:15:00.0883|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 21:15:00.0883|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 52.3477ms 
+2020-04-18 21:15:00.0883|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:15:00.0931|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 59.0319ms 200 application/json; charset=utf-8 
+2020-04-18 21:15:00.0931|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VQEIK5AM", Request id "0HLV3VQEIK5AM:00000007": the application completed without reading the entire request body. 
+2020-04-18 21:15:12.2156|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 21:15:12.2156|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 21:15:12.2178|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Post (WebApi) 
+2020-04-18 21:15:12.2178|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Post (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:15:12.4141|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 194.6678ms. 
+2020-04-18 21:15:12.4141|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-04-18 21:15:12.4141|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Post (WebApi) in 196.9492ms 
+2020-04-18 21:15:12.4141|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 21:15:12.4141|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 201.87ms 200  
+2020-04-18 21:15:12.4141|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VQEIK5AM", Request id "0HLV3VQEIK5AM:00000008": the application completed without reading the entire request body. 
+2020-04-18 21:15:18.0832|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 21:15:18.0832|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:15:18.0832|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 21:15:18.0832|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 21:15:18.1389|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 48.8572ms. 
+2020-04-18 21:15:18.1389|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 21:15:18.1410|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 51.8167ms 
+2020-04-18 21:15:18.1410|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 21:15:18.1410|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 59.9515ms 200 application/json; charset=utf-8 
+2020-04-18 21:15:18.1410|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VQEIK5AM", Request id "0HLV3VQEIK5AM:00000009": the application completed without reading the entire request body. 
+2020-04-18 22:08:21.5449|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 22:08:21.5498|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:08:21.5498|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 22:08:21.5498|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:08:21.8549|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 298.321ms. 
+2020-04-18 22:08:21.8549|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 22:08:21.8549|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 301.4787ms 
+2020-04-18 22:08:21.8549|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:08:21.8626|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 317.759ms 200 application/json; charset=utf-8 
+2020-04-18 22:08:21.8626|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV3VQEIK5AN", Request id "0HLV3VQEIK5AN:00000001": the application completed without reading the entire request body. 
+2020-04-18 22:08:30.3807|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 22:08:30.3807|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:08:30.3807|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Post (WebApi) 
+2020-04-18 22:08:30.3807|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Post (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:09:36.1381||DEBUG|WebApi.Program|init main 
+2020-04-18 22:09:37.6510||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-18 22:09:38.4122|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-18 22:09:38.4122|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-18 22:09:38.4677|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 55.7565ms 200  
+2020-04-18 22:09:38.5609|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 149.4429ms 404  
+2020-04-18 22:10:14.3020|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 22:10:14.3144|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:10:14.3643|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 22:10:14.3918|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:10:14.8142|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 419.2066ms. 
+2020-04-18 22:10:14.8142|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 22:10:14.8459|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 474.572ms 
+2020-04-18 22:10:14.8459|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:10:14.8459|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 552.6771ms 200 application/json; charset=utf-8 
+2020-04-18 22:10:14.8664|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40QRBTME3", Request id "0HLV40QRBTME3:00000002": the application completed without reading the entire request body. 
+2020-04-18 22:10:19.3824|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 22:10:19.3824|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:10:19.3824|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Post (WebApi) 
+2020-04-18 22:10:19.3824|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Post (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:10:24.8917|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 5501.2898ms. 
+2020-04-18 22:10:24.8917|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-04-18 22:10:24.8917|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Post (WebApi) in 5507.3919ms 
+2020-04-18 22:10:24.8917|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:10:24.8917|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 5516.3804ms 200  
+2020-04-18 22:10:24.8917|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40QRBTME4", Request id "0HLV40QRBTME4:00000002": the application completed without reading the entire request body. 
+2020-04-18 22:10:31.9353|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 22:10:31.9353|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:10:31.9353|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 22:10:31.9353|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:10:31.9931|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 54.1094ms. 
+2020-04-18 22:10:31.9931|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 22:10:31.9931|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 57.1916ms 
+2020-04-18 22:10:31.9931|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:10:31.9931|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 61.5316ms 200 application/json; charset=utf-8 
+2020-04-18 22:10:31.9931|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40QRBTME3", Request id "0HLV40QRBTME3:00000003": the application completed without reading the entire request body. 
+2020-04-18 22:10:37.4460|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 22:10:37.4460|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:10:37.4460|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Post (WebApi) 
+2020-04-18 22:10:37.4460|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Post (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:10:50.7987|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 13346.1369ms. 
+2020-04-18 22:10:50.7987|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-04-18 22:10:50.7987|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Post (WebApi) in 13352.6663ms 
+2020-04-18 22:10:50.7987|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:10:50.7987|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 13362.9832ms 500 application/json; charset=utf-8 
+2020-04-18 22:10:50.7987|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40QRBTME4", Request id "0HLV40QRBTME4:00000003": the application completed without reading the entire request body. 
+2020-04-18 22:11:15.8181|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 22:11:15.8181|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:11:15.8181|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Post (WebApi) 
+2020-04-18 22:11:15.8181|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Post (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:14:40.8435||DEBUG|WebApi.Program|init main 
+2020-04-18 22:14:42.2013||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-18 22:14:43.0340|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-18 22:14:43.0340|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-18 22:14:43.0928|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 59.2086ms 200  
+2020-04-18 22:14:43.1756|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 142.3306ms 404  
+2020-04-18 22:14:48.2934|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 22:14:48.3013|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:14:48.3428|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Post (WebApi) 
+2020-04-18 22:14:48.3717|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Post (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:14:51.6412|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 3266.5558ms. 
+2020-04-18 22:14:51.6532|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-04-18 22:14:51.6607|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Post (WebApi) in 3314.4187ms 
+2020-04-18 22:14:51.6607|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:14:51.6607|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 3376.6104ms 200  
+2020-04-18 22:14:51.6870|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40TM510OV", Request id "0HLV40TM510OV:00000002": the application completed without reading the entire request body. 
+2020-04-18 22:14:57.6254|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 22:14:57.6268|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:14:57.6268|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 22:14:57.6268|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:14:57.6988|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 63.8021ms. 
+2020-04-18 22:14:57.6988|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 22:14:57.7152|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 81.7041ms 
+2020-04-18 22:14:57.7152|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:14:57.7152|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 92.8701ms 200 application/json; charset=utf-8 
+2020-04-18 22:14:57.7152|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40TM510OU", Request id "0HLV40TM510OU:00000002": the application completed without reading the entire request body. 
+2020-04-18 22:15:03.7710|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 22:15:03.7710|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:15:03.7710|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Post (WebApi) 
+2020-04-18 22:15:03.7710|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Post (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:15:10.3720|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 6590.6945ms. 
+2020-04-18 22:15:10.3720|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-04-18 22:15:10.3720|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Post (WebApi) in 6595.7076ms 
+2020-04-18 22:15:10.3720|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:15:10.3776|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 6606.619ms 200  
+2020-04-18 22:15:10.3776|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40TM510OV", Request id "0HLV40TM510OV:00000003": the application completed without reading the entire request body. 
+2020-04-18 22:15:22.8892|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2017-07-01 application/json 93 
+2020-04-18 22:15:22.8892|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:15:22.8892|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 22:15:22.8918|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 7/1/2017 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:15:22.9485|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 55.9828ms. 
+2020-04-18 22:15:22.9485|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 22:15:22.9485|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 59.1543ms 
+2020-04-18 22:15:22.9485|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:15:22.9485|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 64.0567ms 200 application/json; charset=utf-8 
+2020-04-18 22:15:22.9548|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40TM510OU", Request id "0HLV40TM510OU:00000003": the application completed without reading the entire request body. 
+2020-04-18 22:15:34.1537|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2020-02-01 application/json 93 
+2020-04-18 22:15:34.1537|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:15:34.1537|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 22:15:34.1590|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 2/1/2020 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:15:34.2108|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 50.3149ms. 
+2020-04-18 22:15:34.2108|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 22:15:34.2108|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 54.956ms 
+2020-04-18 22:15:34.2108|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:15:34.2108|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 61.7876ms 200 application/json; charset=utf-8 
+2020-04-18 22:15:34.2108|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40TM510OV", Request id "0HLV40TM510OV:00000004": the application completed without reading the entire request body. 
+2020-04-18 22:15:42.8953|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2020-02-01 application/json 93 
+2020-04-18 22:15:42.8953|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:15:42.8953|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Post (WebApi) 
+2020-04-18 22:15:42.8953|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Post (WebApi) with arguments (1, 2/1/2020 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:15:43.1092|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 207.2767ms. 
+2020-04-18 22:15:43.1092|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-04-18 22:15:43.1111|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Post (WebApi) in 210.3159ms 
+2020-04-18 22:15:43.1111|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:15:43.1111|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 217.724ms 200  
+2020-04-18 22:15:43.1111|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40TM510OU", Request id "0HLV40TM510OU:00000004": the application completed without reading the entire request body. 
+2020-04-18 22:15:47.6252|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2020-02-01 application/json 93 
+2020-04-18 22:15:47.6252|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:15:47.6268|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 22:15:47.6268|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 2/1/2020 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:15:47.6787|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 49.7383ms. 
+2020-04-18 22:15:47.6787|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 22:15:47.6787|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 52.9175ms 
+2020-04-18 22:15:47.6787|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:15:47.6787|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 57.3235ms 200 application/json; charset=utf-8 
+2020-04-18 22:15:47.6787|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40TM510OV", Request id "0HLV40TM510OV:00000005": the application completed without reading the entire request body. 
+2020-04-18 22:15:53.6649|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2020-03-01 application/json 93 
+2020-04-18 22:15:53.6649|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:15:53.6649|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 22:15:53.6649|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 3/1/2020 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:15:53.7173|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 48.1502ms. 
+2020-04-18 22:15:53.7173|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 22:15:53.7198|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 51.6294ms 
+2020-04-18 22:15:53.7198|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:15:53.7198|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 56.9666ms 200 application/json; charset=utf-8 
+2020-04-18 22:15:53.7198|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40TM510OU", Request id "0HLV40TM510OU:00000005": the application completed without reading the entire request body. 
+2020-04-18 22:15:57.6561|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2020-03-01 application/json 93 
+2020-04-18 22:15:57.6561|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:15:57.6581|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Post (WebApi) 
+2020-04-18 22:15:57.6581|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Post (WebApi) with arguments (1, 3/1/2020 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:15:57.8561|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 196.2373ms. 
+2020-04-18 22:15:57.8561|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-04-18 22:15:57.8561|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Post (WebApi) in 199.1193ms 
+2020-04-18 22:15:57.8561|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:15:57.8561|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 203.5252ms 200  
+2020-04-18 22:15:57.8561|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40TM510OV", Request id "0HLV40TM510OV:00000006": the application completed without reading the entire request body. 
+2020-04-18 22:16:01.4014|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2020-03-01 application/json 93 
+2020-04-18 22:16:01.4014|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:16:01.4014|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Post (WebApi) 
+2020-04-18 22:16:01.4014|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Post (WebApi) with arguments (1, 3/1/2020 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:16:01.6125|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 207.0588ms. 
+2020-04-18 22:16:01.6125|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-04-18 22:16:01.6125|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Post (WebApi) in 210.0645ms 
+2020-04-18 22:16:01.6125|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:16:01.6125|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 214.7695ms 200  
+2020-04-18 22:16:01.6125|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40TM510OU", Request id "0HLV40TM510OU:00000006": the application completed without reading the entire request body. 
+2020-04-18 22:16:02.4458|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2020-03-01 application/json 93 
+2020-04-18 22:16:02.4458|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:16:02.4458|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Post (WebApi) 
+2020-04-18 22:16:02.4458|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Post (WebApi) with arguments (1, 3/1/2020 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:16:02.6653|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 210.385ms. 
+2020-04-18 22:16:02.6653|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-04-18 22:16:02.6653|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Post (WebApi) in 214.5762ms 
+2020-04-18 22:16:02.6653|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Post (WebApi)' 
+2020-04-18 22:16:02.6653|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 223.0732ms 200  
+2020-04-18 22:16:02.6653|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40TM510OV", Request id "0HLV40TM510OV:00000007": the application completed without reading the entire request body. 
+2020-04-18 22:16:06.9273|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/EntityTracker/MONTHLY_INVOICE/1/2020-03-01 application/json 93 
+2020-04-18 22:16:06.9273|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:16:06.9273|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "EntityTracker"}. Executing action WebApi.Controllers.EntityTrackerController.Get (WebApi) 
+2020-04-18 22:16:06.9273|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.EntityTrackerController.Get (WebApi) with arguments (1, 3/1/2020 12:00:00 AM, MONTHLY_INVOICE) - Validation state: Valid 
+2020-04-18 22:16:06.9798|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.EntityTrackerController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 47.9721ms. 
+2020-04-18 22:16:06.9798|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.EntityTracker'. 
+2020-04-18 22:16:06.9798|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.EntityTrackerController.Get (WebApi) in 50.9513ms 
+2020-04-18 22:16:06.9798|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.EntityTrackerController.Get (WebApi)' 
+2020-04-18 22:16:06.9798|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 56.0802ms 200 application/json; charset=utf-8 
+2020-04-18 22:16:06.9798|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV40TM510OU", Request id "0HLV40TM510OU:00000007": the application completed without reading the entire request body. 
+2020-04-18 23:46:03.2805||DEBUG|WebApi.Program|init main 
+2020-04-18 23:46:04.7816||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-18 23:46:05.5373|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-18 23:46:05.5373|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-18 23:46:05.5815|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 44.5432ms 200  
+2020-04-18 23:46:05.6860|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 149.5459ms 404  
+2020-04-18 23:46:48.4160|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/packingslip/1 application/json 1960 
+2020-04-18 23:46:48.4667|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 50.7609ms 404  
+2020-04-18 23:46:48.4802|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV42GO2B54I", Request id "0HLV42GO2B54I:00000002": the application completed without reading the entire request body. 
+2020-04-18 23:47:37.2919|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/packingslips application/json 1960 
+2020-04-18 23:47:37.2919|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2020-04-18 23:47:37.3415|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Post (WebApi) 
+2020-04-18 23:47:37.4919|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-18 23:48:44.0062|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 66511.3856ms. 
+2020-04-18 23:48:44.0197|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-04-18 23:48:44.0357|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Post (WebApi) in 66691.1106ms 
+2020-04-18 23:48:44.0357|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2020-04-18 23:48:44.0435|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 66751.5837ms 500 application/json; charset=utf-8 
+2020-04-18 23:48:48.7582|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/packingslips application/json 1960 
+2020-04-18 23:48:48.7582|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2020-04-18 23:48:48.7582|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Post (WebApi) 
+2020-04-18 23:48:48.7582|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-18 23:50:25.6787|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 96915.6755ms. 
+2020-04-18 23:50:25.6800|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-04-18 23:50:25.6800|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Post (WebApi) in 96923.6157ms 
+2020-04-18 23:50:25.6800|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2020-04-18 23:50:25.6800|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 96928.2166ms 500 application/json; charset=utf-8 
+2020-04-18 23:50:28.2267|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/packingslips application/json 1960 
+2020-04-18 23:50:28.2568|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2020-04-18 23:50:28.2578|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Post (WebApi) 
+2020-04-18 23:50:28.2578|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-18 23:55:41.8737||DEBUG|WebApi.Program|init main 
+2020-04-18 23:55:43.2842||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-18 23:55:43.9593|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-18 23:55:43.9593|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-18 23:55:44.0285|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 69.7106ms 200  
+2020-04-18 23:55:44.1336|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 175.1572ms 404  
+2020-04-18 23:55:57.1094|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/packingslips application/json 1960 
+2020-04-18 23:55:57.1094|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2020-04-18 23:55:57.1477|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Post (WebApi) 
+2020-04-18 23:55:57.3029|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-18 23:57:19.9500|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 82644.2806ms. 
+2020-04-18 23:57:19.9640|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-04-18 23:57:19.9811|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Post (WebApi) in 82829.8189ms 
+2020-04-18 23:57:19.9811|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2020-04-18 23:57:19.9811|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 82878.8573ms 500 application/json; charset=utf-8 
+2020-04-18 23:57:54.6197|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/packingslips application/json 1960 
+2020-04-18 23:57:54.6197|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2020-04-18 23:57:54.6375|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Post (WebApi) 
+2020-04-18 23:58:06.3106|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-18 23:58:35.7335|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 29421.9531ms. 
+2020-04-18 23:58:35.7335|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-04-18 23:58:35.7664|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.Post (WebApi) in 41127.9403ms 
+2020-04-18 23:58:35.7664|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2020-04-18 23:58:35.7664|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 41149.0205ms 500 application/json; charset=utf-8 
+2020-04-18 23:59:30.5837|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/packingslips application/json 1960 
+2020-04-18 23:59:30.5883|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.Post (WebApi)' 
+2020-04-18 23:59:30.5883|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.Post (WebApi) 
+2020-04-18 23:59:30.6182|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 

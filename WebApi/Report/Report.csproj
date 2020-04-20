@@ -86,10 +86,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Reports\Resource\CF.png" />
     <Content Include="Reports\Resource\check.png" />
+    <Content Include="Reports\Resource\HARISONS LOGO %28002%29.jpg" />
     <Content Include="Reports\Resource\HI.png" />
     <Content Include="Reports\Resource\HIP.png" />
+    <Content Include="Reports\Resource\Phloem.png" />
     <Content Include="Reports\Resource\uncheck.png" />
+    <Content Include="ReportViewer\MonthlyInvoice.aspx" />
     <Content Include="ReportViewer\RepackingInvoice.aspx" />
     <Content Include="ReportViewer\MasterPackingSlip.aspx" />
     <Content Include="ReportViewer\MasterBL.aspx" />
@@ -106,6 +110,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportViewer\MonthlyInvoice.aspx.cs">
+      <DependentUpon>MonthlyInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportViewer\MonthlyInvoice.aspx.designer.cs">
+      <DependentUpon>MonthlyInvoice.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ReportViewer\RepackingInvoice.aspx.cs">
       <DependentUpon>RepackingInvoice.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -177,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Report1.rdlc" />
+    <EmbeddedResource Include="Reports\MonthlyInvoice.rdlc" />
     <EmbeddedResource Include="Reports\RepackingInvoice.rdlc" />
     <EmbeddedResource Include="Reports\MasterPackingSlip.rdlc" />
     <EmbeddedResource Include="Reports\MasterBL.rdlc" />

@@ -27,7 +27,7 @@ namespace WebApi.Services
 
         public async Task<Int32> AddPackingSlipAsync(PackingSlip packingSlip)
         {
-            var deletedPackingSlips = await this.packingSlipRepository.GetDeletedPackingSlipAsync();
+            var deletedPackingSlips = await this.packingSlipRepository.GetDeletedPackingSlipAsync(packingSlip.CompanyId);
             if (deletedPackingSlips != null & deletedPackingSlips.Count() > 0)
             {
                 packingSlip.PackingSlipNo = deletedPackingSlips.Select(x => x.PackingSlipNo).FirstOrDefault();

@@ -74,19 +74,35 @@ namespace WebApi.Controllers
         }
 
         // GET: api/Todo
-        [HttpGet("intransit/{companyId}/{partId}")]
-        public async Task<ActionResult<IEnumerable<SupplierIntransitInvoice>>> GetIntansitPos(int companyId,int partId)
+        [HttpGet("{type}/{companyId}/{partId}")]
+        public async Task<ActionResult> GetIntansitPos(string type,int companyId,int partId)
         {
             try
             {
-                var result = await this.supplierInvoiceService.GetIntransitSupplierInvoicesByPartIdAsync(companyId,partId);
-
-                if (result == null)
+                if (type == "intransit")
                 {
-                    return NotFound();
-                }
+                    var result = await this.supplierInvoiceService.GetIntransitSupplierInvoicesByPartIdAsync(companyId, partId);
 
-                return result.ToList();
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(result.ToList());
+                }
+                else if (type == "openinvoice")
+                {
+                    var result = await this.supplierInvoiceService.GetOpenSupplierInvoicesByPartIdAsync(companyId, partId);
+
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(result.ToList());
+                }
+                else
+                    return BadRequest();
             }
             catch (Exception ex)
             {

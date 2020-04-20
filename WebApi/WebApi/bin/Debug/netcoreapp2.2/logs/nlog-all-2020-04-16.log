@@ -1,0 +1,91 @@
+2020-04-16 13:28:17.6549||DEBUG|WebApi.Program|init main 
+2020-04-16 13:28:19.2869||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-16 13:28:20.1791|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-16 13:28:20.1791|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-16 13:28:20.2268|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 47.9936ms 200  
+2020-04-16 13:28:20.3177|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 139.3947ms 404  
+2020-04-16 13:28:34.0010|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1/LatestShipment/362 application/json 441 
+2020-04-16 13:28:34.1001|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-04-16 13:28:34.1721|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-04-16 13:28:34.1721|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.GetPartsByType (WebApi)' 
+2020-04-16 13:28:34.2154|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPartsByType", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.GetPartsByType (WebApi) 
+2020-04-16 13:28:34.2391|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.GetPartsByType (WebApi) with arguments (1, LatestShipment, 362) - Validation state: Valid 
+2020-04-16 13:28:34.7715|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.GetPartsByType (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 529.5285ms. 
+2020-04-16 13:28:34.7836|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.PartLatestShipment, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-04-16 13:28:34.8046|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.GetPartsByType (WebApi) in 585.7441ms 
+2020-04-16 13:28:34.8046|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.GetPartsByType (WebApi)' 
+2020-04-16 13:28:34.8126|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 811.6778ms 200 application/json; charset=utf-8 
+2020-04-16 13:28:34.8126|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV25E7A6NUR", Request id "0HLV25E7A6NUR:00000002": the application completed without reading the entire request body. 
+2020-04-16 13:30:25.4372|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1/LatestReceived/362 application/json 441 
+2020-04-16 13:30:25.4490|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-04-16 13:30:25.4490|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-04-16 13:30:25.4490|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.GetPartsByType (WebApi)' 
+2020-04-16 13:30:25.4579|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPartsByType", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.GetPartsByType (WebApi) 
+2020-04-16 13:30:25.4579|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.GetPartsByType (WebApi) with arguments (1, LatestReceived, 362) - Validation state: Valid 
+2020-04-16 13:30:25.5261|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.GetPartsByType (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 65.3723ms. 
+2020-04-16 13:30:25.5261|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.PartInTransit, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-04-16 13:30:25.5330|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.GetPartsByType (WebApi) in 73.9395ms 
+2020-04-16 13:30:25.5330|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.GetPartsByType (WebApi)' 
+2020-04-16 13:30:25.5330|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 97.7341ms 200 application/json; charset=utf-8 
+2020-04-16 13:30:25.5330|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV25E7A6NUT", Request id "0HLV25E7A6NUT:00000001": the application completed without reading the entire request body. 
+2020-04-16 13:31:08.5458|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1/LatestReceived/363 application/json 441 
+2020-04-16 13:31:08.5507|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-04-16 13:31:08.5507|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-04-16 13:31:08.5507|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.GetPartsByType (WebApi)' 
+2020-04-16 13:31:08.5507|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPartsByType", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.GetPartsByType (WebApi) 
+2020-04-16 13:31:08.5623|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.GetPartsByType (WebApi) with arguments (1, LatestReceived, 363) - Validation state: Valid 
+2020-04-16 13:31:08.6193|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.GetPartsByType (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 55.9902ms. 
+2020-04-16 13:31:08.6193|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.PartInTransit, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-04-16 13:31:08.6193|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.GetPartsByType (WebApi) in 59.1017ms 
+2020-04-16 13:31:08.6193|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.GetPartsByType (WebApi)' 
+2020-04-16 13:31:08.6193|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 77.124ms 200 application/json; charset=utf-8 
+2020-04-16 13:31:08.6193|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV25E7A6NUT", Request id "0HLV25E7A6NUT:00000002": the application completed without reading the entire request body. 
+2020-04-16 13:31:12.2446|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1/LatestReceived/363 application/json 441 
+2020-04-16 13:31:12.2446|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-04-16 13:31:12.2446|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-04-16 13:31:12.2446|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.GetPartsByType (WebApi)' 
+2020-04-16 13:31:12.2446|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPartsByType", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.GetPartsByType (WebApi) 
+2020-04-16 13:31:12.2446|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.GetPartsByType (WebApi) with arguments (1, LatestReceived, 363) - Validation state: Valid 
+2020-04-16 13:31:12.3080|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.GetPartsByType (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 57.6303ms. 
+2020-04-16 13:31:12.3080|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.PartInTransit, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-04-16 13:31:12.3080|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.GetPartsByType (WebApi) in 60.4836ms 
+2020-04-16 13:31:12.3080|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.GetPartsByType (WebApi)' 
+2020-04-16 13:31:12.3080|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 67.5131ms 200 application/json; charset=utf-8 
+2020-04-16 13:31:12.3137|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV25E7A6NUT", Request id "0HLV25E7A6NUT:00000003": the application completed without reading the entire request body. 
+2020-04-16 13:31:27.1313|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1/LatestReceived/363 application/json 441 
+2020-04-16 13:31:27.1313|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-04-16 13:31:27.1313|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-04-16 13:31:27.1313|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.GetPartsByType (WebApi)' 
+2020-04-16 13:31:27.1313|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPartsByType", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.GetPartsByType (WebApi) 
+2020-04-16 13:31:27.1313|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.GetPartsByType (WebApi) with arguments (1, LatestReceived, 363) - Validation state: Valid 
+2020-04-16 13:32:55.1684|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.GetPartsByType (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 88030.3102ms. 
+2020-04-16 13:32:55.1684|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.PartInTransit, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-04-16 13:32:55.1730|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.GetPartsByType (WebApi) in 88035.8452ms 
+2020-04-16 13:32:55.2100|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.GetPartsByType (WebApi)' 
+2020-04-16 13:32:55.2502|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 88118.9165ms 200 application/json; charset=utf-8 
+2020-04-16 13:32:55.2502|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV25E7A6NUT", Request id "0HLV25E7A6NUT:00000004": the application completed without reading the entire request body. 

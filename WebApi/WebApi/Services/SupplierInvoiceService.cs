@@ -186,6 +186,7 @@ namespace WebApi.Services
             return result;
         }
 
+
         public async Task<IEnumerable<SupplierIntransitInvoice>> GetIntransitSupplierInvoicesByPartIdAsync(int companyId, int partId)
         {
             var result = await this._supplierInvoiceRepository.GetIntransitSupplierInvoicesByPartIdAsync(companyId,partId);
@@ -234,6 +235,13 @@ namespace WebApi.Services
             }
 
             return supplierIntransitInvoices;
+        }
+
+        public async Task<IEnumerable<SupplierOpenInvoice>> GetOpenSupplierInvoicesByPartIdAsync(int companyId, int partId)
+        {
+            var result = await this._supplierInvoiceRepository.GetOpenSupplierInvoicesByPartIdAsync(companyId, partId);           
+
+            return result;
         }
 
         public async Task<SupplierInvoice> GetSupplierInvoiceAsync(long supplierInvoiceId)

@@ -30,7 +30,10 @@ namespace Report.Services
             IPartRepository partRepository = new PartRepository(sqlHelper, userRepository);
             IEntityTrackerRepository entityTrackerRepository = new EntityTrackerRepository(sqlHelper);
             ICustomerRepository customerRepository = new CustomerRepository(sqlHelper, userRepository);
-            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository, customerRepository, userRepository);
+            ITransactionRepository transactionRepository = new TransactionRepository();
+            IPoRepository poRepository = new PoRepository(sqlHelper, entityTrackerRepository, userRepository);
+            ISupplierInvoiceRepository supplierInvoiceRepository = new SupplierInvoiceRepository(sqlHelper, poRepository, transactionRepository, userRepository);
+            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository, customerRepository, userRepository,supplierInvoiceRepository);
 
             return await pRepository.GetPackingSlipAsync(id);
         }
@@ -44,7 +47,10 @@ namespace Report.Services
             IPartRepository partRepository = new PartRepository(sqlHelper, userRepository);
             IEntityTrackerRepository entityTrackerRepository = new EntityTrackerRepository(sqlHelper);
             ICustomerRepository customerRepository = new CustomerRepository(sqlHelper, userRepository);
-            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository, customerRepository, userRepository);
+            ITransactionRepository transactionRepository = new TransactionRepository();
+            IPoRepository poRepository = new PoRepository(sqlHelper, entityTrackerRepository, userRepository);
+            ISupplierInvoiceRepository supplierInvoiceRepository = new SupplierInvoiceRepository(sqlHelper, poRepository, transactionRepository, userRepository);
+            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository, customerRepository, userRepository,supplierInvoiceRepository);
 
             var result = pRepository.GetPackingSlip(id);
 
@@ -63,7 +69,10 @@ namespace Report.Services
             IPartRepository partRepository = new PartRepository(sqlHelper, userRepository);
             IEntityTrackerRepository entityTrackerRepository = new EntityTrackerRepository(sqlHelper);
             ICustomerRepository customerRepository = new CustomerRepository(sqlHelper, userRepository);
-            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository, customerRepository, userRepository);
+            ITransactionRepository transactionRepository = new TransactionRepository();
+            IPoRepository poRepository = new PoRepository(sqlHelper, entityTrackerRepository, userRepository);
+            ISupplierInvoiceRepository supplierInvoiceRepository = new SupplierInvoiceRepository(sqlHelper, poRepository, transactionRepository, userRepository);
+            IPackingSlipRepository pRepository = new PackingSlipRepository(sqlHelper, oRepository, partRepository, entityTrackerRepository, customerRepository, userRepository,supplierInvoiceRepository);
 
             var result = pRepository.GetPackingSlip(id);
 
@@ -138,6 +147,23 @@ namespace Report.Services
                 customerRepository, partRepository, supplierRepository);
 
             var result = reportRepository.GetPoReport(id);
+            return result;
+        }
+
+        public static List<PackingSlipReport> GetMonthlyInvoiceReport(int id)
+        {
+            ISqlHelper sqlHelper = new SqlHelper();
+            PriviledgeRepository priviledgeRepository = new PriviledgeRepository(sqlHelper);
+            IUserRepository userRepository = new UserRepository(priviledgeRepository);
+            IOrderRepository orderRepository = new OrderRepository(sqlHelper, userRepository);
+            ICompanyRepository companyRepository = new CompanyRepository(sqlHelper);
+            ICustomerRepository customerRepository = new CustomerRepository(sqlHelper, userRepository);
+            ISupplierRepository supplierRepository = new SupplierRepository(sqlHelper, userRepository);
+            IPartRepository partRepository = new PartRepository(sqlHelper, userRepository);
+            IReportRepository reportRepository = new ReportRepository(sqlHelper, orderRepository, companyRepository,
+                customerRepository, partRepository, supplierRepository);
+
+            var result = reportRepository.GetMonthlyInvoiceReport(id);
             return result;
         }
     }

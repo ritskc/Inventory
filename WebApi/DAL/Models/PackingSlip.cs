@@ -16,7 +16,7 @@ namespace DAL.Models
         public DateTime ShippingDate { get; set; }
         public string ShipVia { get; set; }
         public int Crates { get; set; }
-        public int Boxes { get; set; }
+        public int Boxes { get; set; }        
         public decimal GrossWeight { get; set; }
         public decimal ShippingCharge { get; set; }
         public decimal CustomCharge { get; set; }
@@ -37,6 +37,7 @@ namespace DAL.Models
 
         public bool IsMasterPackingSlip { get; set; }
         public int MasterPackingSlipId { get; set; }
+        public bool IsMonthly { get; set; }       
 
         public List<PackingSlipDetails> PackingSlipDetails { get; set; }
         public CustomerShippingInfo customerShippingInfo { get; set; }

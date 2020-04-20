@@ -32,6 +32,7 @@ namespace DAL.Models
         public string BLPath { get; set; }
         public bool IsInvoiceReceived { get; set; }
         public bool DontImpactPO { get; set; }
+        public bool IsOpen { get; set; }
         public string Barcode { get; set; }
         public DateTime UploadedDate { get; set; }
         public DateTime? ReceivedDate { get; set; }

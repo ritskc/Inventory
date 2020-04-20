@@ -94,6 +94,7 @@ namespace DAL.Repository
         {
             EntityTracker entityTracker = null;
             var finYear = string.Empty;
+            var month = string.Empty;
             if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_PO.ToLower())
             {
                 finYear = DateTimeUtil.GetIndianFinancialYear(dateTime);
@@ -106,13 +107,24 @@ namespace DAL.Repository
             {
                 finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);               
             }
+            else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MONTHLY_INVOICE.ToLower())
+            {
+                finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
+            }
             else
                 return null;
 
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
-
-            var commandText = string.Format($"SELECT  [CompanyId] ,[FinYear] ,[Entity] ,[AvailableNo] FROM [dbo].[EntityTracker] where CompanyId = '{companyId}'  and FinYear = '{finYear}' and Entity = '{entity}'");
-
+            var commandText = string.Empty;
+            if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MONTHLY_INVOICE.ToLower())
+            {               
+                month = dateTime.ToString("MMM").ToUpper();
+                commandText = string.Format($"SELECT  [CompanyId] ,[FinYear] ,[Entity] ,[AvailableNo] FROM [dbo].[EntityTracker] where CompanyId = '{companyId}'  and FinYear = '{finYear}' and Entity = '{entity}' and Month = '{month}'");
+            }
+            else
+            {
+                commandText = string.Format($"SELECT  [CompanyId] ,[FinYear] ,[Entity] ,[AvailableNo] FROM [dbo].[EntityTracker] where CompanyId = '{companyId}'  and FinYear = '{finYear}' and Entity = '{entity}'");
+            }
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
                 cmd.CommandType = CommandType.Text;
@@ -145,6 +157,11 @@ namespace DAL.Repository
                         finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);                        
                         entityTracker.EntityNo = entityTracker.FinYear + "M" + "-" + entityNumber;
                     }
+                    else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MONTHLY_INVOICE.ToLower())
+                    {
+                        finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
+                        entityTracker.EntityNo = finYear + "-" + month + "-" + entityNumber;
+                    }
                     else
                         entityTracker.EntityNo = entityTracker.FinYear + "-" + entityNumber;
                 }
@@ -162,6 +179,11 @@ namespace DAL.Repository
                     finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
                     entityTracker.EntityNo = finYear + "M-" + "001";
                 }
+                else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MONTHLY_INVOICE.ToLower())
+                {
+                    finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
+                    entityTracker.EntityNo = finYear + "-"+ month + "-" + "001";
+                }
                 else
                     entityTracker.EntityNo = finYear + "-" + "001";
             }
@@ -172,6 +194,7 @@ namespace DAL.Repository
         {
             EntityTracker entityTracker = null;
             var finYear = string.Empty;
+            var month = string.Empty;
             if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_PO.ToLower())
             {
                 finYear = DateTimeUtil.GetIndianFinancialYear(dateTime);
@@ -184,12 +207,24 @@ namespace DAL.Repository
             {
                 finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);                
             }
+            else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MONTHLY_INVOICE.ToLower())
+            {
+                finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
+            }
             else
                 return null;
 
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
-
-            var commandText = string.Format($"SELECT  [CompanyId] ,[FinYear] ,[Entity] ,[AvailableNo] FROM [dbo].[EntityTracker] where CompanyId = '{companyId}'  and FinYear = '{finYear}' and Entity = '{entity}'");
+            var commandText = "";
+            if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MONTHLY_INVOICE.ToLower())
+            {
+                month = dateTime.ToString("MMM").ToUpper();
+                commandText = string.Format($"SELECT  [CompanyId] ,[FinYear] ,[Entity] ,[AvailableNo] FROM [dbo].[EntityTracker] where CompanyId = '{companyId}'  and FinYear = '{finYear}' and Entity = '{entity}' and Month = '{month}'");
+            }
+            else
+            {
+                commandText = string.Format($"SELECT  [CompanyId] ,[FinYear] ,[Entity] ,[AvailableNo] FROM [dbo].[EntityTracker] where CompanyId = '{companyId}'  and FinYear = '{finYear}' and Entity = '{entity}'");
+            }
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -222,7 +257,12 @@ namespace DAL.Repository
                         entityTracker.Entity = entity;
                         entityTracker.EntityNo = entityTracker.FinYear + "M-" + Convert.ToInt32(dataReader["AvailableNo"]);
                     }
-                   
+                    else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MONTHLY_INVOICE.ToLower())
+                    {
+                        finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
+                        entityTracker.EntityNo = finYear + "-" + month + "-" + Convert.ToInt32(dataReader["AvailableNo"]);
+                    }
+
                 }
                 conn.Close();
             }
@@ -244,6 +284,11 @@ namespace DAL.Repository
                 entity = BusinessConstants.ENTITY_TRACKER_PACKING_SLIP;
                 finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
             }
+            else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MONTHLY_INVOICE.ToLower())
+            {
+                entity = BusinessConstants.ENTITY_TRACKER_MONTHLY_INVOICE;
+                finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
+            }
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
                 connection.Open();
@@ -261,16 +306,17 @@ namespace DAL.Repository
 
                 try
                 {
+                    var month = dateTime.ToString("MMM").ToUpper();
                     if (entityTracker == null)
                     {
-                        var sql = string.Format($"INSERT INTO [dbo].[EntityTracker]   ([CompanyId]   ,[FinYear]   ,[Entity]   ,[AvailableNo]) VALUES   ('{companyId}'   ,'{finYear}'   ,'{entity}'   ,'{2}')");
+                        var sql = string.Format($"INSERT INTO [dbo].[EntityTracker]   ([CompanyId]   ,[FinYear]   ,[Entity]   ,[AvailableNo],[Month]) VALUES   ('{companyId}'   ,'{finYear}'   ,'{entity}'   ,'{2}','{month}')");
 
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                     }
                     else
                     {
-                        var sql = string.Format($"UPDATE [dbo].[EntityTracker]   SET  [AvailableNo] = '{Convert.ToInt32(entityTracker.EntityNo.Replace(entityTracker.FinYear, "").Replace("-", "")) + 1}' where CompanyId = '{companyId}'  and FinYear = '{finYear}' and Entity = '{entity}'");
+                        var sql = string.Format($"UPDATE [dbo].[EntityTracker]   SET  [AvailableNo] = '{Convert.ToInt32(entityTracker.EntityNo.Replace(entityTracker.FinYear, "").Replace("-", "").Replace(month,"")) + 1}' where CompanyId = '{companyId}'  and FinYear = '{finYear}' and Entity = '{entity}' and [Month] = '{month}'");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                     }

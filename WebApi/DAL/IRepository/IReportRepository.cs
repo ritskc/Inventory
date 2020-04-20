@@ -13,6 +13,7 @@ namespace DAL.IRepository
         List<PackingSlipReport> GetRepackingInvoiceReport(long id);
         List<PackingSlipReport> GetMasterPackingSlipReport(long id);
         List<POReport> GetPoReport(long poId);
+        List<PackingSlipReport> GetMonthlyInvoiceReport(long id);
 
         Task<IEnumerable<SalesData>> GetSalesDataAsync(int companyId, DateTime fromDate, DateTime toDate);
         Task<IEnumerable<PurchaseData>> GetPurchaseDataAsync(int companyId, DateTime fromDate, DateTime toDate);

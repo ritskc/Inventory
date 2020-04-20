@@ -13,6 +13,7 @@ namespace DAL.Models
         public const string ENTITY_TRACKER_ORDER = "ORDER";
         public const string ENTITY_TRACKER_PACKING_SLIP = "PACKING_SLIP";
         public const string ENTITY_TRACKER_MASTER_PACKING_SLIP = "MASTER_PACKING_SLIP";
+        public const string ENTITY_TRACKER_MONTHLY_INVOICE = "MONTHLY_INVOICE";
 
         public enum INVENTORY_TYPE
         {

@@ -14,10 +14,13 @@ namespace DAL.Models
         public string OrderNo { get; set; }
         public int OrderId { get; set; }
         public int? OrderDetailId { get; set; }
+        public long SupplierInvoiceId { get; set; }
+        public int SupplierInvoiceDetailId { get; set; }
         public int SrNo { get; set; }
         public int PartId { get; set; }
         public int Qty { get; set; }
         public int Boxes { get; set; }
+        public int SupplierInvoiceOpenQty { get; set; }
         public bool InBasket { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal Price { get; set; }
