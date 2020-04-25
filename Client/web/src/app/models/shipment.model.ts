@@ -34,6 +34,8 @@ export class PackingSlipDetail {
     isBlankOrder: boolean = false;
     orderId: number = 0;
     orderDetailId: number = 0;
+    supplierInvoiceId: number = 0;
+    supplierInvoiceDetailsId: number = 0;
     partId: number = 0;
     partCode: string = '';
     orderNo: string = '';

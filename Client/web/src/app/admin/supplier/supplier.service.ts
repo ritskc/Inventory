@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Supplier } from '../../models/supplier.model';
 import { PurchaseOrder } from '../../models/purchase-order';
 import * as DateHelper from '../../common/helpers/dateHelper';
+import { Invoice } from '../../models/invoice.model';
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +58,9 @@ export class SupplierService {
 
   getPurchaseReport(companyId: number, from: string, to: string): Observable<any[]> {
     return this.apiService.get(`${this.configService.Settings.apiServerHost}/reports/purchase/${companyId}/${ from }/${ to }`);
+  }
+
+  getSupplierOpenInvoice(companyId: number, partId: number): Observable<Invoice[]> {
+    return this.apiService.get(`${this.configService.Settings.apiServerHost}/${ this.configService.Settings.invoiceUri }/openinvoice/${ companyId }/${ partId }`);
   }
 }

@@ -141,7 +141,7 @@ export class OrderDetailComponent implements OnInit {
       this.gridColumns.push(new DataColumn({ headerText: "Open Qty", value: "openQty", customStyling: 'right' }));
       this.gridColumns.push(new DataColumn({ headerText: "Line", value: "lineNumber", isEditable: true, customStyling: 'right column-width-50' }));
     }
-    this.gridColumns.push(new DataColumn({headerText: "Actions", isActionColumn: true, customStyling: 'center', actions: [
+    this.gridColumns.push(new DataColumn({headerText: "Actions", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
           new DataColumnAction({actionText: "", actionStyle: ClassConstants.Danger, icon: 'fa fa-trash', event: "removeSelectedPart"})
         ]}));
   }

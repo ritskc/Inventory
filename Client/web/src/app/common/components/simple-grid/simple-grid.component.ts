@@ -4,6 +4,8 @@ import { Utils } from '../../utils/utils';
 import { JsonToCsvExporterService } from '../../services/json-to-csv-exporter.service';
 import * as DateHelper from '../../../common/helpers/dateHelper';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { Router } from '@angular/router';
+import { navItems, NavData } from '../../../_nav';
 
 @Component({
   selector: 'simple-grid',
@@ -21,6 +23,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   @Input() columns: DataColumn[] = [];
   @Input() pageSize: number = 20;
   @Input() defaultSortColumnName: string = 'name';
+  @Input() ignoreColumnFiltering: boolean = false;
   @Output() selectedRow = new EventEmitter();
   @Output() addClickedEventEmitter = new EventEmitter();
   @Output() actionButtonClickedEvent = new EventEmitter();
@@ -35,15 +38,15 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   ascendingSortOrder: boolean = true;
   currentSortColumnName: string = '';
 
-  constructor(private jsonToCsvExporter: JsonToCsvExporterService, private toastr: ToastrManager) {
-  }
+  constructor(private jsonToCsvExporter: JsonToCsvExporterService, private toastr: ToastrManager, private route: Router) { }
  
   ngOnInit() {
     this.currentSortColumnName = this.defaultSortColumnName;
+    this.filterColumns();
   }
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
-    
+    this.filterColumns();
   }
 
   @Input() 
@@ -109,6 +112,47 @@ export class SimpleGridComponent implements OnInit, OnChanges {
 
   descendingOrderSelected(columnName: string) {
     return columnName == this.currentSortColumnName && !this.ascendingSortOrder;
+  }
+
+  filterColumns() {
+    var privileges = JSON.parse(localStorage.getItem('privileges'));
+    if (privileges.isSuperAdmin || this.ignoreColumnFiltering) return;
+
+    var clonedNavItems = JSON.parse(JSON.stringify(navItems));
+    var linearyArrayOfMenuItems: NavData[] = [];
+    clonedNavItems.forEach(navItem => {
+      linearyArrayOfMenuItems.push(...navItem.children);
+    });
+    var selectedMenuItem = linearyArrayOfMenuItems.find(m => m.url == this.route.url);
+    var reports = privileges.userPriviledge.userMenus.find(m => m.menu == selectedMenuItem.name);
+    if (reports && reports.userReports && reports.userReports.length > 0) {
+      for (var index = 0; index < this.columns.length; index++) {
+        var col = reports.userReports.find(r => r.columnName == this.columns[index].columnName && r.isVisible == true);
+        var colByValue = reports.userReports.find(r => r.columnName.toUpperCase() == this.columns[index].value.toUpperCase() && r.isVisible == true);
+        if (!col && !colByValue) {
+          this.columns.splice(index, 1);
+          index--;
+        } else {
+          this.columns[index].headerText = col ? col.columnDisplayName: colByValue.columnDisplayName;
+        }
+      }
+    }
+    this.setGridPermissions(reports);
+  }
+
+  setGridPermissions(selectedMenuItem) {
+    if (selectedMenuItem && selectedMenuItem.userActions && selectedMenuItem.userActions.length > 0) {
+      this.addRequired = selectedMenuItem.userActions.find(m => m.action == 'Add' && m.isPermitted == true) != undefined;
+      this.exportRequired = selectedMenuItem.userActions.find(m => m.action == 'Export' && m.isPermitted == true) != undefined;
+      var actionColumns = this.columns.find(c => c.isActionColumn == true);
+      if (actionColumns && actionColumns.actions.length > 0) {
+        for(var index = 0; index < actionColumns.actions.length; index++)
+          if (!selectedMenuItem.userActions.find(m => m.action == actionColumns.actions[index].actionText && m.isPermitted == true)) {
+            actionColumns.actions.splice(index, 1);
+            index--;
+          }
+        }
+    }
   }
 
   export() {

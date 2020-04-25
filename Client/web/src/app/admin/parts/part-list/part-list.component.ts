@@ -4,11 +4,12 @@ import { PartsService } from '../parts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { httpLoaderService } from '../../../common/services/httpLoader.service';
 import { CompanyService } from '../../../company/company.service';
-import { DataColumn } from '../../../models/dataColumn.model';
+import { DataColumn, DataColumnAction } from '../../../models/dataColumn.model';
 import { UserAction } from '../../../models/enum/userAction';
 import { CustomerService } from '../../customer/customer.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { SupplierService } from '../../supplier/supplier.service';
+import { ClassConstants } from '../../../common/constants';
 
 @Component({
   selector: 'app-part-list',
@@ -34,8 +35,8 @@ export class PartListComponent implements OnInit {
   }
 
   initializeGridColumns() {
-    this.columns.push( new DataColumn({ headerText: "Code", value: "code", isLink: true, sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Description", value: "description", sortable: true }) );
+    this.columns.push( new DataColumn({ headerText: "Code", value: "code", sortable: true }) );
+    this.columns.push( new DataColumn({ headerText: "Description", value: "description", sortable: true, customStyling: 'column-width-150' }) );
     this.columns.push( new DataColumn({ headerText: "Weight (Kgs)", value: "weightInKg", sortable: true, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Weight (Lbs)", value: "weightInLb", sortable: true, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Min Qty", value: "minQty", sortable: true, customStyling: 'right' }) );
@@ -46,6 +47,10 @@ export class PartListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Cust Price", value: "customerPrice", sortable: false, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Active", value: "isActive", sortable: true, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Sample", value: "isSample", sortable: true, isBoolean: true, customStyling: 'center', isDisabled: true }) );
+    this.columns.push( new DataColumn({ headerText: "Actions", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editPart', icon: 'fa fa-edit' }),
+      new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deletePart', icon: 'fa fa-trash' })
+    ] }) );
   }
 
   getAllPartsForCompany() {
@@ -120,6 +125,26 @@ export class PartListComponent implements OnInit {
       observable.subscribe((parts) => {
         this.parts = parts.filter(p => p.partSupplierAssignments.find(s => s.supplierID === selectedValue));
       });
+    }
+  }
+
+  actionButtonClicked(data) {
+    switch(data.eventName) {
+      case 'editPart':
+        this.rowSelected(data);
+        break;
+      case 'deletePart':
+        this.deletePart(data);
+        break;
+    }
+  }
+
+  deletePart(data) {
+    if (confirm('Are you sure you want to remove this part?')) {
+      this.service.delete(data.id)
+          .subscribe(() => this.toastr.successToastr('Removed the part successfully'),
+            (error) => this.toastr.errorToastr(error.error)
+          );
     }
   }
 }

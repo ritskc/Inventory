@@ -46,12 +46,12 @@ export class MasterShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Traking Number", value: "trakingNumber", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "POS Uploaded", value: "isPOSUploaded", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Comment", value: "comment" }) );
-    this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, actions: [
-      new DataColumnAction({ actionText: 'Edit', actionStyle: ClassConstants.Warning, event: 'editMasterPackingSlip', icon: 'fa fa-edit' }),
-      new DataColumnAction({ actionText: 'Shipment', actionStyle: ClassConstants.Primary, event: 'printShipmentForMasterPackingSlip', icon: 'fa fa-print' }),
-      new DataColumnAction({ actionText: 'BL', actionStyle: ClassConstants.Primary, event: 'printBLForMasterPackingSlip', icon: 'fa fa-print' }),
-      new DataColumnAction({ actionText: 'POS', actionStyle: ClassConstants.Primary, event: 'downloadMasterPackingSlip', icon: 'fa fa-download' }),
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Danger, event: 'removeMasterPackingSlip', icon: 'fa fa-trash' })
+    this.columns.push( new DataColumn({ headerText: "Actions", value: "Action", isActionColumn: true, actions: [
+      new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editMasterPackingSlip' }),
+      new DataColumnAction({ actionText: 'Print Shipment', actionStyle: ClassConstants.Primary, event: 'printShipmentForMasterPackingSlip' }),
+      new DataColumnAction({ actionText: 'Print BL', actionStyle: ClassConstants.Primary, event: 'printBLForMasterPackingSlip' }),
+      new DataColumnAction({ actionText: 'Download POS', actionStyle: ClassConstants.Primary, event: 'downloadMasterPackingSlip' }),
+      new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'removeMasterPackingSlip' })
     ] }) );
   }
 

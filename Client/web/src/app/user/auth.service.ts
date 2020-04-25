@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   setPrivileges(privileges: any) {
-    console.log(privileges);
+    localStorage.setItem('privileges', JSON.stringify(privileges));
     if (!localStorage.getItem('menus')){
       localStorage.setItem('menus', JSON.stringify(navItems));
     }
