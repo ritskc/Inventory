@@ -38,7 +38,7 @@ export class CreateShipmentComponent implements OnInit {
   private columnsForOrderGrid: DataColumn[] = [];
   private shipmentsViewModel: ShipmentsViewModel[] = [];
   private selectedCustomer: Customer = new Customer();
-  private invoices: Invoice[] = [];
+  private invoices: any = [];
 
   private blankOrder: boolean = false;
   private orderId: number = 0;
@@ -55,7 +55,7 @@ export class CreateShipmentComponent implements OnInit {
   private dueDate: string = '';
   private OrderNo: string = '';
   private unitPrice: number = 0;
-  private invoiceNo: number = 0;
+  private invoiceId: number = 0;
 
   constructor(private companyservice: CompanyService, private customerService: CustomerService, private partsService: PartsService, private httpLoaderService: httpLoaderService, 
               private supplierService: SupplierService, private shipmentService: ShipmentService, private toastr: ToastrManager, private activatedRoute: ActivatedRoute, private router: Router) { }
@@ -156,7 +156,7 @@ export class CreateShipmentComponent implements OnInit {
   }
 
   invoiceSelected() {
-
+    this.quantity = this.invoices.find(i => i.invoiceId == this.invoiceId).openQty;
   }
 
   blankOrderChecked() {
@@ -175,7 +175,8 @@ export class CreateShipmentComponent implements OnInit {
     this.displayPartQuantityStatus();
     this.resetPartDetail();
     if (this.selectedCustomer.invoicingtypeid == 3) {
-      this.supplierService.getSupplierOpenInvoice(this.currentlyLoggedInCompany, this.partCode)
+      this.invoiceId = 0;
+      this.supplierService.getSupplierOpenInvoice(this.currentlyLoggedInCompany, this.partCode.split('.')[0])
           .subscribe((invoices) => this.invoices = invoices);
     }
   }
@@ -283,7 +284,9 @@ export class CreateShipmentComponent implements OnInit {
     packagingSlipDetail.excessQty = 0;
     packagingSlipDetail.unitPrice = this.unitPrice;
     packagingSlipDetail.partDetail = selectedPartForAdd;
-    packagingSlipDetail.supplierInvoiceId = this.invoiceNo;
+    packagingSlipDetail.supplierInvoiceId = this.invoiceId;
+    if (this.selectedCustomer.invoicingtypeid == 3 && this.invoiceId > 0)
+      packagingSlipDetail.SupplierInvoiceOpenQty = this.invoices.find(i => i.invoiceId == this.invoiceId).openQty;
     this.shipment.packingSlipDetails.push(packagingSlipDetail);
 
     this.OrderNo = '';

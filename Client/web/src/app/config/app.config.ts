@@ -16,6 +16,7 @@ export class AppConfigurations {
     posUri: string;
     ordersUri: string;
     invoiceUri: string;
+    monthlyInvoiceUri: string;
     shipmentUri: string;
     masterShipmentUri: string;
     barcodeUri: string;
@@ -45,6 +46,7 @@ export class AppConfigurations {
         this.posUri = '/pos';
         this.ordersUri = '/orders';
         this.invoiceUri = '/supplierinvoice';
+        this.monthlyInvoiceUri = '/monthlyInvoices';
         this.shipmentUri = '/PackingSlips';
         this.masterShipmentUri = '/MasterPackingSlips';
         this.customerInvoiceUri =  '/Invoices';

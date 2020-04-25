@@ -59,4 +59,8 @@ export class InvoiceService {
   deleteInvoice(id: number) {
     return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }`);
   }
+
+  getAllMonthlyInvoice(companyId: number): Observable<Shipment[]> {
+    return this.apiService.get<Shipment[]>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.monthlyInvoiceUri }/${ companyId }`);
+  }
 }

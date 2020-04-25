@@ -137,6 +137,11 @@ if (environment.isSupplier) {
           icon: 'icon-puzzle'
         },
         {
+          name: 'Monthly Invoice',
+          url: '/companies/monthly-invoice',
+          icon: 'icon-puzzle'
+        },
+        {
           name: 'POS',
           url: '/companies/pos',
           icon: 'icon-puzzle'
@@ -162,6 +167,11 @@ if (environment.isSupplier) {
     {
       name: 'Admin',
       children: [
+        {
+          name: 'Reports',
+          url: '/usermanagement/reports',
+          icon: 'icon-user'
+        },
         {
           name: 'User',
           url: '/admin',

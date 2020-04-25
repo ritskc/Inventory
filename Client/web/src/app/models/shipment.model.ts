@@ -53,4 +53,5 @@ export class PackingSlipDetail {
     excessQty: number = 0;
     srNo: number = 0;
     partDetail: Part;
+    SupplierInvoiceOpenQty: number = 0;
 }

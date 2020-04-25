@@ -10,6 +10,8 @@ import { POSUploadComponent } from './pos/upload/upload.component';
 import { MasterShipmentListComponent } from './master-shipment-list/master-shipment-list.component';
 import { MasterShipmentDetailComponent } from './master-shipment-detail/master-shipment-detail.component';
 import { SaleReportComponent } from './sale-report/sale-report.component';
+import { MonthlyInvoiceListComponent } from './monthly-invoice/monthly-invoice.component';
+import { EditMonthlyInvoiceComponent } from './edit-monthly-invoice/edit-monthly-invoice.component';
 
 const routes: Routes = [{
   path: '',
@@ -47,6 +49,20 @@ const routes: Routes = [{
       component: CreateShipmentComponent,
       data: {
         title: 'Create Shipment'
+      }
+    },
+    {
+      path: 'monthly-invoice',
+      component: MonthlyInvoiceListComponent,
+      data: {
+        title: 'Monthly Invoice'
+      }
+    },
+    {
+      path: 'monthly-invoice/edit/:customerId/:action',
+      component: EditMonthlyInvoiceComponent,
+      data: {
+        title: 'Edit Monthly Invoice'
       }
     },
     {
