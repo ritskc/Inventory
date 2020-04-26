@@ -60,7 +60,12 @@ export class MonthlyInvoiceListComponent implements OnInit {
     this.httpLoaderService.show();
     this.invoiceService.getAllMonthlyInvoice(this.currentlyLoggedInCompany)
         .subscribe(
-            mothlyInvoices => this.monthlyInvoices = mothlyInvoices,
+            mothlyInvoices => {
+              this.monthlyInvoices = mothlyInvoices;
+              this.monthlyInvoices.forEach(invoice => {
+                invoice.customerName = invoice.customerDetail.name;
+              })
+            },
             error => this.toastr.errorToastr(error.error),
             () => this.httpLoaderService.hide()
           );

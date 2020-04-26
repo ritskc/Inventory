@@ -1,4 +1,5 @@
 import { Part } from './part.model';
+import { Customer } from './customer.model';
 
 export class Shipment {
 
@@ -19,6 +20,7 @@ export class Shipment {
     shippingCharge: number = 0;
     customCharge: number = 0;
     isPaymentReceived: boolean = false;
+    customerDetail: Customer;
     packingSlipDetails: PackingSlipDetail[] = [];
     fob: string = '';
     totalSurcharge: number = 0;
