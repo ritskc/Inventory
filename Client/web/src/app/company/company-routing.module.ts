@@ -59,7 +59,7 @@ const routes: Routes = [{
       }
     },
     {
-      path: 'monthly-invoice/edit/:customerId/:action',
+      path: 'monthly-invoice/edit/:customerId/:action/:invoiceId',
       component: EditMonthlyInvoiceComponent,
       data: {
         title: 'Edit Monthly Invoice'

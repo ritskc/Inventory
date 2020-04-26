@@ -31,6 +31,9 @@ export class Shipment {
 }
 
 export class PackingSlipDetail {
+
+    constructor() {}
+
     isBlankOrder: boolean = false;
     orderId: number = 0;
     orderDetailId: number = 0;

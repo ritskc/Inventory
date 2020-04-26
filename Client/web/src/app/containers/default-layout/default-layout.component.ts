@@ -36,8 +36,10 @@ export class DefaultLayoutComponent implements OnDestroy {
   setCompany(event) {
     if (event.target.value == 1) {
       this.companyService.setHarisons();
-    } else {
+    } else if (event.target.value == 2) {
       this.companyService.setCastAndForge();
+    } else {
+      this.companyService.setTest();
     }
     var landingUrl = localStorage.getItem('landingurl')
     this.router.navigateByUrl(landingUrl);

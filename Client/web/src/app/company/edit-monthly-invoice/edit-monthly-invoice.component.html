@@ -1,3 +1,81 @@
-<p>
-  edit-monthly-invoice works!
-</p>
+<div class="card">
+  <div class="card-header">
+    Monthly Invoice
+    <span *ngIf="mode == 0" class="pull-right"><strong>Last Invoice No:</strong> {{previousMonthlyInvoiceNo}}</span>
+    <span *ngIf="mode == 1" class="pull-right"><strong>Invoice No:</strong> {{shipment.packingSlipNo}}</span>
+  </div>
+  <div class="card-body">
+    <div class="row standard-top-margin-5">
+      <span class="col-xs-1 col-md-1 standard-top-margin-5">Date</span>
+      <div class="col-xs-2 col-md-2">
+        <input class="form-control" id="date-input" type="date" name="date-input" placeholder="date" [(ngModel)]="shippingDate">
+      </div>
+      <span class="col-xs-1 col-md-1 standard-top-margin-5">Ship Chrg.</span>
+      <div class="col-xs-2 col-md-2">
+        <input class="form-control" type="text" [(ngModel)]="shipment.shippingCharge">
+      </div>
+      <span class="col-xs-1 col-md-1 standard-top-margin-5">Cust Chrg.</span>
+      <div class="col-xs-2 col-md-2">
+        <input class="form-control" type="text" [(ngModel)]="shipment.customCharge">
+      </div>
+      <span class="col-xs-1 col-md-1 standard-top-margin-5">Pay Rcvd</span>
+      <div class="col-xs-2 col-md-2">
+        <input class="form-control" type="checkbox" [(ngModel)]="shipment.isPaymentReceived">
+      </div>
+    </div>    
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    Part Details
+  </div>
+  <div class="card-body">
+    <div class="row standard-top-margin-5">
+      <span class="col-xs-1 col-md-1 standard-top-margin-5">Part</span>
+      <div class="col-md-2 col-xs-2">
+        <select class="form-control" [(ngModel)]="partId" (change)="partSelected()">
+          <option value="0">Select Part</option>
+          <option *ngFor="let part of parts" [value]="part.id">{{part.code}} ({{part.description}})</option>
+        </select>
+      </div>
+      <span class="col-xs-1 col-md-1 standard-top-margin-5">PO No</span>
+      <div class="col-xs-2 col-md-2">
+        <input class="form-control" type="text" [(ngModel)]="orderNo">
+      </div>
+      <span class="col-xs-1 col-md-1 standard-top-margin-5">In Hand</span>
+      <div class="col-xs-2 col-md-2">
+        <input class="form-control" type="text" [(ngModel)]="quantityInHand" disabled>
+      </div>
+    </div>
+
+    <div class="row standard-top-margin-5">
+      <span class="col-xs-1 col-md-1 standard-top-margin-5">Unit Price</span>
+      <div class="col-xs-2 col-md-2">
+        <input class="form-control" type="text" [(ngModel)]="unitPrice">
+      </div>
+      <span class="col-xs-1 col-md-1 standard-top-margin-5">Quantity</span>
+      <div class="col-xs-2 col-md-2">
+        <input class="form-control" type="text" (change)="quantityChanged()" [(ngModel)]="quantity">
+      </div>
+      <span class="col-xs-1 col-md-1 standard-top-margin-5">Total</span>
+      <div class="col-xs-2 col-md-2">
+        <input class="form-control" type="text" [(ngModel)]="shipmentDetail.price" disabled>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-primary pull-right" (click)="addPart()">Add Part</button>
+  </div>
+</div>
+
+<simple-grid [addRequired]="false" [exportRequired]="false" [columns]="cols" [data]="shipment.packingSlipDetails"
+              (actionButtonClickedEvent)="[actionButtonClicked($event)]" (valueEdited)="valueChanged($event)"></simple-grid>
+
+<div class="card">
+  <div class="card-footer">
+    <button class="btn btn-primary pull-right" (click)="save()">Save</button>
+  </div>
+</div>
+
+<loader></loader>

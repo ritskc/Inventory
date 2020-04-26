@@ -47,6 +47,11 @@ export class CompanyService {
     localStorage.setItem('currentCompany', this._currentlyLoggedInCompanyId.toString());
   }
 
+  setTest() {
+    this._currentlyLoggedInCompanyId = 3;
+    localStorage.setItem('currentCompany', this._currentlyLoggedInCompanyId.toString());
+  }
+
   saveCompany(company: Company) {
     if (company.id == 0)
       return this.apiService.post(company, this.config.Settings.apiServerHost + this.config.Settings.companyUri);

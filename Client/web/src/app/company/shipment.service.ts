@@ -17,7 +17,7 @@ export class ShipmentService {
   }
 
   getAShipment(companyId: number, shipmentId: number): Observable<Shipment> {
-    return this.apiService.get<Shipment>(this.config.Settings.apiServerHost + this.config.Settings.shipmentUri + '/1/' + shipmentId);
+    return this.apiService.get<Shipment>(this.config.Settings.apiServerHost + this.config.Settings.shipmentUri + `/${ companyId }/` + shipmentId);
   }
 
   createShipment(shipment: Shipment) {

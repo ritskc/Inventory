@@ -63,4 +63,23 @@ export class InvoiceService {
   getAllMonthlyInvoice(companyId: number): Observable<Shipment[]> {
     return this.apiService.get<Shipment[]>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.monthlyInvoiceUri }/${ companyId }`);
   }
+
+  getAMonthlyInvoice(companyId: number, shipmentId: number): Observable<Shipment> {
+    return this.apiService.get<Shipment>(this.configService.Settings.apiServerHost + this.configService.Settings.monthlyInvoiceUri + `/${ companyId }/` + shipmentId);
+  }
+
+  getPreviousMonthlyInvoiceNo(companyId: number, date: string): Observable<any> {
+    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.entityTracker }/MONTHLY_INVOICE/${ companyId }/${ date }`);
+  }
+
+  saveMonthlyInvoice(shipment: Shipment) {
+    if (shipment.id == 0)
+      return this.apiService.post(shipment, this.configService.Settings.apiServerHost + this.configService.Settings.monthlyInvoiceUri);
+    else 
+      return this.apiService.put(shipment, this.configService.Settings.apiServerHost + this.configService.Settings.monthlyInvoiceUri + `/${ shipment.id }`);
+  }
+
+  deleteMonthlyInvoice(invoiceId: number) {
+    return this.apiService.delete(invoiceId, this.configService.Settings.apiServerHost + this.configService.Settings.monthlyInvoiceUri);
+  }
 }
