@@ -103,9 +103,9 @@
             </div>
             <div class="form-group standard-top-margin row" *ngIf="selectedCustomer.invoicingtypeid == 3">
               <label class="col-md-2 col-xs-2 label-top-adjustment">Invoice</label>
-              <select class="form-control col-md-4 col-xs-4" [(ngModel)]="invoiceNo" (change)="invoiceSelected()">
+              <select class="form-control col-md-4 col-xs-4" [(ngModel)]="invoiceId" (change)="invoiceSelected()">
                 <option value="0">Select invoice</option>
-                <option *ngFor="let invoice of invoices" value="{{invoice.id}}">{{invoice.invoiceNo}}</option>
+                <option *ngFor="let invoice of invoices" value="{{invoice.invoiceId}}">{{invoice.invoiceNo}}</option>
               </select>
             </div>
             <div class="form-group standard-top-margin row">

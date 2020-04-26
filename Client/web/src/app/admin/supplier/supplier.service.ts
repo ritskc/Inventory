@@ -60,7 +60,7 @@ export class SupplierService {
     return this.apiService.get(`${this.configService.Settings.apiServerHost}/reports/purchase/${companyId}/${ from }/${ to }`);
   }
 
-  getSupplierOpenInvoice(companyId: number, partId: number): Observable<Invoice[]> {
+  getSupplierOpenInvoice(companyId: number, partId: number): Observable<any> {
     return this.apiService.get(`${this.configService.Settings.apiServerHost}/${ this.configService.Settings.invoiceUri }/openinvoice/${ companyId }/${ partId }`);
   }
 }
