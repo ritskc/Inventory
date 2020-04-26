@@ -14,15 +14,18 @@ namespace WebApi.Services
         private readonly IEntityTrackerRepository entityTrackerRepository;
         private readonly ITransactionRepository transactionRepository;
         private readonly IPartService partService;
+        private readonly ICustomerService customerService;
 
         public PackingSlipService(IPackingSlipRepository packingSlipRepository, 
             IEntityTrackerRepository entityTrackerRepository,ITransactionRepository transactionRepository
-            ,IPartService partService)
+            ,IPartService partService,
+            ICustomerService customerService)
         {
             this.packingSlipRepository = packingSlipRepository;
             this.entityTrackerRepository = entityTrackerRepository;
             this.transactionRepository = transactionRepository;
             this.partService = partService;
+            this.customerService = customerService;
         }
 
         public async Task<Int32> AddPackingSlipAsync(PackingSlip packingSlip)
@@ -58,14 +61,17 @@ namespace WebApi.Services
         public async Task<IEnumerable<PackingSlip>> GetAllPackingSlipsAsync(int companyId,int userId)
         {
             var partList = await this.partService.GetAllPartsAsync(companyId,userId);
+            var custList = await this.customerService.GetAllCustomerAsync(companyId, userId);
             var result =  await this.packingSlipRepository.GetAllPackingSlipsAsync(companyId,userId);
 
             foreach(PackingSlip packingSlip in result)
             {
-                foreach(PackingSlipDetails packingSlipDetails in packingSlip.PackingSlipDetails)
+                var custInfo = custList.Where(p => p.Id == packingSlip.CustomerId).FirstOrDefault();
+                packingSlip.CustomerDetail = custInfo;
+                foreach (PackingSlipDetails packingSlipDetails in packingSlip.PackingSlipDetails)
                 {
                     var partDetail = partList.Where(p => p.Id == packingSlipDetails.PartId).FirstOrDefault();
-                    packingSlipDetails.PartDetail = partDetail;
+                    packingSlipDetails.PartDetail = partDetail;                    
                 }
             }
             return result;
@@ -74,6 +80,8 @@ namespace WebApi.Services
         public async Task<PackingSlip> GetPackingSlipAsync(long Id)
         {            
             var result= await this.packingSlipRepository.GetPackingSlipAsync(Id);
+            var custDetail = await this.customerService.GetCustomerAsync(result.CustomerId);
+            result.CustomerDetail = custDetail;
             //var partList = await this.partService.GetAllPartsAsync(result.CompanyId);
             foreach (PackingSlipDetails packingSlipDetails in result.PackingSlipDetails)
             {

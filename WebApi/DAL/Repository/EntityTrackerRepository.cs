@@ -353,12 +353,19 @@ namespace DAL.Repository
                 entity = BusinessConstants.ENTITY_TRACKER_MASTER_PACKING_SLIP;
                 finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
             }
+            else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MONTHLY_INVOICE.ToLower())
+            {
+                entity = BusinessConstants.ENTITY_TRACKER_MONTHLY_INVOICE;
+                finYear = DateTimeUtil.GetUSAFinancialYear(dateTime);
+            }
             command.Connection = connection;
             command.Transaction = transaction;
 
             if (entityTracker == null)
             {
-                var sql = string.Format($"INSERT INTO [dbo].[EntityTracker]   ([CompanyId]   ,[FinYear]   ,[Entity]   ,[AvailableNo]) VALUES   ('{companyId}'   ,'{finYear}'   ,'{entity}'   ,'{2}')");
+                var month = dateTime.ToString("MMM").ToUpper();
+                var sql = string.Format($"INSERT INTO [dbo].[EntityTracker]   ([CompanyId]   ,[FinYear]   ,[Entity]   ,[AvailableNo],[Month]) VALUES   ('{companyId}'   ,'{finYear}'   ,'{entity}'   ,'{2}','{month}')");
+                //var sql = string.Format($"INSERT INTO [dbo].[EntityTracker]   ([CompanyId]   ,[FinYear]   ,[Entity]   ,[AvailableNo]) VALUES   ('{companyId}'   ,'{finYear}'   ,'{entity}'   ,'{2}')");
 
                 command.CommandText = sql;
                 await command.ExecuteNonQueryAsync();
@@ -367,8 +374,15 @@ namespace DAL.Repository
             {
                 var sql = string.Empty;
                 if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MASTER_PACKING_SLIP.ToLower())
-                {
+                {                    
                     sql = string.Format($"UPDATE [dbo].[EntityTracker]   SET  [AvailableNo] = '{Convert.ToInt32(entityTracker.EntityNo.Replace(entityTracker.FinYear, "").Replace("M-", "")) + 1}' where CompanyId = '{companyId}'  and FinYear = '{finYear}' and Entity = '{entity}'");
+                    
+                }
+                else if (entity.ToLower() == BusinessConstants.ENTITY_TRACKER_MONTHLY_INVOICE.ToLower())
+                {
+                    var month = dateTime.ToString("MMM").ToUpper();
+                    //var sql = string.Format($"UPDATE [dbo].[EntityTracker]   SET  [AvailableNo] = '{Convert.ToInt32(entityTracker.EntityNo.Replace(entityTracker.FinYear, "").Replace("M-", "")) + 1}' where CompanyId = '{companyId}'  and FinYear = '{finYear}' and Entity = '{entity}'");
+                    sql = string.Format($"UPDATE [dbo].[EntityTracker]   SET  [AvailableNo] = '{Convert.ToInt32(entityTracker.EntityNo.Replace(entityTracker.FinYear, "").Replace("-", "").Replace(month, "")) + 1}' where CompanyId = '{companyId}'  and FinYear = '{finYear}' and Entity = '{entity}' and [Month] = '{month}'");
                 }
                 else
                 {

@@ -1,0 +1,92 @@
+2020-04-25 19:16:04.9292||DEBUG|WebApi.Program|init main 
+2020-04-25 19:16:06.5458||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-25 19:16:07.3294|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-25 19:16:07.3294|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-25 19:16:07.3704|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 41.493ms 200  
+2020-04-25 19:16:07.4600|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 131.4303ms 404  
+2020-04-25 19:16:08.7482|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/monthlyinvoices/ application/json 1094 
+2020-04-25 19:16:08.8405|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2020-04-25 19:16:08.8405|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MonthlyInvoicesController.Post (WebApi)' 
+2020-04-25 19:16:08.8932|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "MonthlyInvoices"}. Executing action WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) 
+2020-04-25 19:16:08.9945|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-25 19:16:09.8460|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.MonthlyInvoicesController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 848.1912ms. 
+2020-04-25 19:16:09.8575|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-04-25 19:16:09.8693|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) in 972.4772ms 
+2020-04-25 19:16:09.8693|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.MonthlyInvoicesController.Post (WebApi)' 
+2020-04-25 19:16:09.8693|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 1129.481ms 500 application/json; charset=utf-8 
+2020-04-25 19:16:58.9433|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/monthlyinvoices/ application/json 1094 
+2020-04-25 19:16:58.9433|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2020-04-25 19:16:58.9502|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MonthlyInvoicesController.Post (WebApi)' 
+2020-04-25 19:16:58.9502|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "MonthlyInvoices"}. Executing action WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) 
+2020-04-25 19:16:58.9502|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-25 19:17:23.5763|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.MonthlyInvoicesController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 24618.5594ms. 
+2020-04-25 19:17:23.5763|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-04-25 19:17:23.5763|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) in 24626.6685ms 
+2020-04-25 19:17:23.5763|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.MonthlyInvoicesController.Post (WebApi)' 
+2020-04-25 19:17:23.5763|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 24640.3871ms 500 application/json; charset=utf-8 
+2020-04-25 19:17:26.3925|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/monthlyinvoices/ application/json 1094 
+2020-04-25 19:17:26.3925|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2020-04-25 19:17:26.3925|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MonthlyInvoicesController.Post (WebApi)' 
+2020-04-25 19:17:26.3925|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "MonthlyInvoices"}. Executing action WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) 
+2020-04-25 19:17:26.4069|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-25 19:18:00.8024|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.MonthlyInvoicesController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 34394.5331ms. 
+2020-04-25 19:18:00.8024|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-04-25 19:18:00.8312|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) in 34430.6446ms 
+2020-04-25 19:18:00.8312|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.MonthlyInvoicesController.Post (WebApi)' 
+2020-04-25 19:18:00.8312|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 34440.6589ms 500 application/json; charset=utf-8 
+2020-04-25 19:18:03.8146|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/monthlyinvoices/ application/json 1094 
+2020-04-25 19:18:03.8146|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2020-04-25 19:18:03.8146|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MonthlyInvoicesController.Post (WebApi)' 
+2020-04-25 19:18:03.8146|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "MonthlyInvoices"}. Executing action WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) 
+2020-04-25 19:18:03.8146|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-25 19:20:39.7898||DEBUG|WebApi.Program|init main 
+2020-04-25 19:20:40.1097||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-25 19:20:40.6928|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/monthlyinvoices/ application/json 1095 
+2020-04-25 19:20:40.7623|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2020-04-25 19:20:40.7912|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MonthlyInvoicesController.Post (WebApi)' 
+2020-04-25 19:20:40.8154|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "MonthlyInvoices"}. Executing action WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) 
+2020-04-25 19:20:40.8817|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-25 19:20:41.9750|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.MonthlyInvoicesController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1090.6435ms. 
+2020-04-25 19:20:41.9841|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Int32'. 
+2020-04-25 19:20:41.9841|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) in 1175.1663ms 
+2020-04-25 19:20:41.9971|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.MonthlyInvoicesController.Post (WebApi)' 
+2020-04-25 19:20:41.9971|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 1311.59ms 200 application/json; charset=utf-8 
+2020-04-25 19:20:45.6621|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-25 19:20:45.6685|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 6.4204ms 404  
+2020-04-25 19:20:49.3432|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/monthlyinvoices/ application/json 1095 
+2020-04-25 19:20:49.3432|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2020-04-25 19:20:49.3539|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MonthlyInvoicesController.Post (WebApi)' 
+2020-04-25 19:20:49.3539|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "MonthlyInvoices"}. Executing action WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) 
+2020-04-25 19:20:49.3539|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-25 19:21:11.5630|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.MonthlyInvoicesController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 22200.6414ms. 
+2020-04-25 19:21:11.5630|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Int32'. 
+2020-04-25 19:21:11.5630|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) in 22208.667ms 
+2020-04-25 19:21:11.5630|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.MonthlyInvoicesController.Post (WebApi)' 
+2020-04-25 19:21:11.5630|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 22227.8454ms 200 application/json; charset=utf-8 
+2020-04-25 19:22:08.3268|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/monthlyinvoices/ application/json 1095 
+2020-04-25 19:22:08.3268|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2020-04-25 19:22:08.3268|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MonthlyInvoicesController.Post (WebApi)' 
+2020-04-25 19:22:08.3381|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "MonthlyInvoices"}. Executing action WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) 
+2020-04-25 19:22:08.3381|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) with arguments (DAL.Models.PackingSlip) - Validation state: Valid 
+2020-04-25 19:22:12.0283|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.MonthlyInvoicesController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 3687.7826ms. 
+2020-04-25 19:22:12.0283|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Int32'. 
+2020-04-25 19:22:12.0283|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.MonthlyInvoicesController.Post (WebApi) in 3692.819ms 
+2020-04-25 19:22:12.0283|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.MonthlyInvoicesController.Post (WebApi)' 
+2020-04-25 19:22:12.0699|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 3743.0291ms 200 application/json; charset=utf-8 
+2020-04-25 19:22:21.5510|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/monthlyinvoices/ application/json 1095 
+2020-04-25 19:22:21.5510|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2020-04-25 19:22:21.5510|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint '405 HTTP Method Not Supported' 
+2020-04-25 19:22:21.5510|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint '405 HTTP Method Not Supported' 
+2020-04-25 19:22:21.5510|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 3.2162ms 405  
+2020-04-25 19:22:21.5510|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV9DT2HNTJC", Request id "0HLV9DT2HNTJC:00000005": the application completed without reading the entire request body. 
+2020-04-25 19:22:28.8138|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/monthlyinvoices/1 application/json 1095 
+2020-04-25 19:22:28.8138|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2020-04-25 19:22:28.8138|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MonthlyInvoicesController.GetPackingSlips (WebApi)' 
+2020-04-25 19:22:28.8278|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPackingSlips", controller = "MonthlyInvoices"}. Executing action WebApi.Controllers.MonthlyInvoicesController.GetPackingSlips (WebApi) 
+2020-04-25 19:22:28.8278|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MonthlyInvoicesController.GetPackingSlips (WebApi) with arguments (1) - Validation state: Valid 
+2020-04-25 19:29:08.1997|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.MonthlyInvoicesController.GetPackingSlips (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 399368.1751ms. 
+2020-04-25 19:29:08.1997|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.PackingSlip, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-04-25 19:29:08.2711|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.MonthlyInvoicesController.GetPackingSlips (WebApi) in 399441.8764ms 
+2020-04-25 19:29:08.2711|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.MonthlyInvoicesController.GetPackingSlips (WebApi)' 
+2020-04-25 19:29:08.2711|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 399459.246ms 200 application/json; charset=utf-8 
+2020-04-25 19:29:08.2711|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV9DT2HNTJC", Request id "0HLV9DT2HNTJC:00000006": the application completed without reading the entire request body. 

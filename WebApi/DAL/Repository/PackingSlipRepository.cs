@@ -372,7 +372,7 @@ namespace DAL.Repository
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
-                    sql = string.Format($"INSERT INTO [dbo].[DeletedPackingSlip]   ([PackingSlipNo],[CompanyId]) VALUES   ('{packingslip.PackingSlipNo}'),'{packingslip.CompanyId}')");
+                    sql = string.Format($"INSERT INTO [dbo].[DeletedPackingSlip]   ([PackingSlipNo],[CompanyId]) VALUES   ('{packingslip.PackingSlipNo}','{packingslip.CompanyId}')");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 

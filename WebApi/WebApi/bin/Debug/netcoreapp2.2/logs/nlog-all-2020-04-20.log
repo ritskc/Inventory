@@ -1,0 +1,23 @@
+2020-04-20 15:18:38.8888||DEBUG|WebApi.Program|init main 
+2020-04-20 15:18:40.4594||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-04-20 15:18:41.5858|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-04-20 15:18:41.5858|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-04-20 15:18:41.7664|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 180.9961ms 200  
+2020-04-20 15:18:41.9090|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 324.0451ms 404  
+2020-04-20 15:18:45.2092|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/priviledges/ application/json 3869 
+2020-04-20 15:18:45.2975|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-04-20 15:18:45.3698|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-04-20 15:18:45.3767|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PriviledgesController.Get (WebApi)' 
+2020-04-20 15:18:45.4100|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "Priviledges"}. Executing action WebApi.Controllers.PriviledgesController.Get (WebApi) 
+2020-04-20 15:18:45.4347|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PriviledgesController.Get (WebApi) - Validation state: Valid 
+2020-04-20 15:18:45.9957|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PriviledgesController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 557.5619ms. 
+2020-04-20 15:18:46.0079|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.UserPriviledgeDetail, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-04-20 15:18:46.0295|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PriviledgesController.Get (WebApi) in 610.7742ms 
+2020-04-20 15:18:46.0295|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PriviledgesController.Get (WebApi)' 
+2020-04-20 15:18:46.0377|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 828.5752ms 200 application/json; charset=utf-8 
+2020-04-20 15:18:46.0488|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HLV5BUHF59NI", Request id "0HLV5BUHF59NI:00000002": the application completed without reading the entire request body. 

@@ -475,8 +475,8 @@ namespace DAL.Repository
                     packingSlip.ShipVia = Convert.ToString(dataReader["ShipVia"]);
                     packingSlip.Crates = Convert.ToInt32(dataReader["Crates"]);
                     Crates = Crates + packingSlip.Crates;
-                    packingSlip.Boxes = + Convert.ToInt32(dataReader["Boxes"]);
-                    Boxes = Boxes + packingSlip.Boxes;
+                    packingSlip.Boxes = Convert.ToInt32(dataReader["Boxes"]);
+                    packingSlip.TotalBoxes = packingSlip.TotalBoxes + packingSlip.Boxes;
                     packingSlip.GrossWeight =  Convert.ToDecimal(dataReader["GrossWeight"]);
                     GrossWeight = GrossWeight + packingSlip.GrossWeight;
                     packingSlip.ShippingCharge = ShippingCharge + Convert.ToDecimal(dataReader["ShippingCharge"]);
@@ -650,7 +650,7 @@ namespace DAL.Repository
                 packingSlipReport.PartDescription = part.Description;
             }
 
-            return packingSlipReports;
+            return packingSlipReports.OrderBy(x => x.PackingSlipNo).ToList();            
         }
 
         public List<POReport> GetPoReport(long poId)

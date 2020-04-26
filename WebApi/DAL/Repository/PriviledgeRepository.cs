@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.Repository
@@ -464,6 +463,61 @@ namespace DAL.Repository
                     throw ex;
                 }
             }
+        }
+
+        public async Task<IEnumerable<UserMenuReport>> GetDefaultReportsAsync()
+        {
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+            //List<UserPriviledgeDetail> userPriviledgeDetails = new List<UserPriviledgeDetail>();
+            List<UserMenuReport> userMenus = new List<UserMenuReport>();
+            var commandText = string.Format($"SELECT [Id]  ,[Menu] ,[IsReport] ,[url]  FROM [dbo].[UserMenu]");
+
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+            {
+                cmd1.CommandType = CommandType.Text;
+                conn.Open();
+                var dataReader1 = await cmd1.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader1.Read())
+                {
+                    var userMenu = new UserMenuReport();
+                    userMenu.Id = Convert.ToInt32(dataReader1["Id"]);
+                    userMenu.Report = Convert.ToString(dataReader1["Menu"]);
+
+                    userMenu.UserReports = new List<UserReport>();
+                    userMenus.Add(userMenu);
+                }
+                dataReader1.Close();
+                conn.Close();
+            }
+
+            foreach (UserMenuReport userMenu in userMenus)
+            {
+                commandText = string.Format($"SELECT  [Id]  ,[ReportId] ,[ColumnName] ,[ColumnDisplayName]  ,[IsVisible]  FROM [UserDefaultReport] where ReportId = '{userMenu.Id}'");
+
+                using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                {
+                    cmd1.CommandType = CommandType.Text;
+                    conn.Open();
+                    var dataReader1 = await cmd1.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                    while (dataReader1.Read())
+                    {
+                        var UserReportInfo = new UserReport();
+                        UserReportInfo.Id = Convert.ToInt32(dataReader1["Id"]);
+                        UserReportInfo.ReportId = Convert.ToInt32(dataReader1["ReportId"]);
+                        UserReportInfo.ColumnName = Convert.ToString(dataReader1["ColumnName"]);
+                        UserReportInfo.ColumnDisplayName = Convert.ToString(dataReader1["ColumnDisplayName"]);
+                        UserReportInfo.IsVisible = Convert.ToBoolean(dataReader1["IsVisible"]);
+
+                        userMenu.UserReports.Add(UserReportInfo);
+                    }
+                    dataReader1.Close();
+                    conn.Close();
+                }
+
+            }            
+            return userMenus;
         }
     }
 }
