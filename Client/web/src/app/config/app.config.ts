@@ -25,6 +25,7 @@ export class AppConfigurations {
     reportsUri: string;
     entityTracker: string;
     directSupplierPo: string;
+    privilegesUri: string;
 
     initialize() {
         if (environment.production) {
@@ -52,6 +53,7 @@ export class AppConfigurations {
         this.customerInvoiceUri =  '/Invoices';
         this.entityTracker = '/EntityTracker';
         this.directSupplierPo = '/SupplierAccess';
+        this.privilegesUri = '/priviledges';
         this.barcodeUri = 'https://quest.yellow-chips.com/static/barcode.html?';
     }
 }

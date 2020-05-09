@@ -1,0 +1,36 @@
+<div class="card" style="margin-top: 20px;">
+  <div class="card-header">
+    <strong>User Management</strong>
+  </div>
+  <div class="card-body">
+    <div class="row" style="margin-top: 20px; margin-left: 0px;">
+      <select class="col-xs-2 col-md-2 form-control">
+        <option value="0">Please select company</option>
+        <option *ngFor="let company of companies" [value]="company.id">{{company.name}}</option>
+      </select>
+      <select class="col-xs-2 col-md-2 form-control" style="margin-left: 20px;">
+        <option value="0">Please select privilege</option>
+        <option *ngFor="let privilege of privileges" [value]="privilege.id">{{privilege.name}}</option>
+      </select>
+    </div>
+
+    <div class="row" style="margin-top: 20px; margin-left: 0px;">
+      <input [(ngModel)]="user.userName" placeholder="Enter the username here" class="col-md-2 col-xs-2 form-control"/>
+      <input [(ngModel)]="user.password" style="margin-left: 20px;" placeholder="Enter the password here" type="password" class="col-md-2 col-xs-2 form-control"/>
+      <input [(ngModel)]="user.confirmPassword" style="margin-left: 20px;" placeholder="Confirm password again" type="password" class="col-md-2 col-xs-2 form-control"/>
+    </div>
+
+    <div class="row" style="margin-top: 20px; margin-left: 0px;">
+      <input [(ngModel)]="user.firstName" placeholder="Enter the first name" class="col-md-2 col-xs-2 form-control"/>
+      <input [(ngModel)]="user.lastName" style="margin-left: 20px;" placeholder="Enter the last name" class="col-md-2 col-xs-2 form-control"/>
+      <input [(ngModel)]="user.email" style="margin-left: 20px;" placeholder="Enter email" type="email" class="col-md-2 col-xs-2 form-control"/>
+    </div>
+
+    <div style="margin-top: 20px; margin-left: 0px;">
+      <simple-grid [exportRequired]="false" [addRequired]="false" [columns]="columns" [data]="users" [pageSize]="10"></simple-grid>
+    </div>
+
+  </div>
+</div>
+
+<loader></loader>

@@ -12,6 +12,7 @@ export class DataColumn {
     isDate: boolean = false;
     isEditableDate: boolean = false;
     isBoolean: boolean = false;
+    checkboxText: string = '';
     minWidth: boolean = false;
     customStyling: string = '';
     isDisabled: boolean = false;

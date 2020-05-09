@@ -168,13 +168,13 @@ if (environment.isSupplier) {
       name: 'Admin',
       children: [
         {
-          name: 'Reports',
+          name: 'Privileges',
           url: '/usermanagement/reports',
           icon: 'icon-user'
         },
         {
           name: 'User',
-          url: '/admin',
+          url: '/usermanagement/users',
           icon: 'icon-user'
         },
         {
@@ -182,11 +182,11 @@ if (environment.isSupplier) {
           url: '/upload',
           icon: 'icon-user'
         },
-        {
-          name: 'Privilages',
-          url: '/admin',
-          icon: 'icon-user'
-        }
+        // {
+        //   name: 'Privilages',
+        //   url: '/admin',
+        //   icon: 'icon-user'
+        // }
       ]
     },
   
