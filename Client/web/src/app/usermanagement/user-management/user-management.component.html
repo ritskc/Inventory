@@ -4,30 +4,36 @@
   </div>
   <div class="card-body">
     <div class="row" style="margin-top: 20px; margin-left: 0px;">
-      <select class="col-xs-2 col-md-2 form-control">
+      <select class="col-xs-2 col-md-2 form-control" [(ngModel)]="companyId">
         <option value="0">Please select company</option>
         <option *ngFor="let company of companies" [value]="company.id">{{company.name}}</option>
       </select>
-      <select class="col-xs-2 col-md-2 form-control" style="margin-left: 20px;">
+      <select class="col-xs-2 col-md-2 form-control" style="margin-left: 20px;" [(ngModel)]="user.priviledgeId">
         <option value="0">Please select privilege</option>
         <option *ngFor="let privilege of privileges" [value]="privilege.id">{{privilege.name}}</option>
       </select>
+      <label class="col-md-1 col-xs-1 label-top-adjustment" style="margin-left: 10px; padding-top: 2px;">Super User</label>
+      <label class="switch switch-3d switch-primary" style="margin-left: 20px;">
+        <input class="switch-input ng-untouched ng-pristine" type="checkbox" [(ngModel)]="user.isSuperAdmin">
+        <span class="switch-slider"></span>
+      </label>
     </div>
 
     <div class="row" style="margin-top: 20px; margin-left: 0px;">
       <input [(ngModel)]="user.userName" placeholder="Enter the username here" class="col-md-2 col-xs-2 form-control"/>
       <input [(ngModel)]="user.password" style="margin-left: 20px;" placeholder="Enter the password here" type="password" class="col-md-2 col-xs-2 form-control"/>
-      <input [(ngModel)]="user.confirmPassword" style="margin-left: 20px;" placeholder="Confirm password again" type="password" class="col-md-2 col-xs-2 form-control"/>
+      <input [(ngModel)]="confirmPassword" style="margin-left: 20px;" placeholder="Confirm password again" type="password" class="col-md-2 col-xs-2 form-control"/>
     </div>
 
     <div class="row" style="margin-top: 20px; margin-left: 0px;">
       <input [(ngModel)]="user.firstName" placeholder="Enter the first name" class="col-md-2 col-xs-2 form-control"/>
       <input [(ngModel)]="user.lastName" style="margin-left: 20px;" placeholder="Enter the last name" class="col-md-2 col-xs-2 form-control"/>
       <input [(ngModel)]="user.email" style="margin-left: 20px;" placeholder="Enter email" type="email" class="col-md-2 col-xs-2 form-control"/>
+      <button style="margin-left: 20px;" class="col-xs-1 col-md-1 btn btn-primary" (click)="save()">Save User</button>
     </div>
 
     <div style="margin-top: 20px; margin-left: 0px;">
-      <simple-grid [exportRequired]="false" [addRequired]="false" [columns]="columns" [data]="users" [pageSize]="10"></simple-grid>
+      <simple-grid [exportRequired]="false" [addRequired]="false" [columns]="columns" [data]="users" [pageSize]="10" (actionButtonClickedEvent)="actionButtonClickedEvent($event)"></simple-grid>
     </div>
 
   </div>

@@ -25,7 +25,18 @@ export class UsermanagementService {
       return this.apiService.post<any>(privilege, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.privilegesUri }`);
   }
 
+  removePrivilege(id) {
+    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.privilegesUri }`);
+  }
+
   getAllUsers(): Observable<any> {
     return this.apiService.get<any>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.usersUri }`);
+  }
+
+  saveUser(user) {
+    if (user.id > 0) 
+      return this.apiService.put<any>(user, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.usersUri }/${ user.id }`);
+    else
+      return this.apiService.post<any>(user, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.usersUri }`);
   }
 }

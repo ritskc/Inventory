@@ -17,6 +17,7 @@
         <div class="col-md-3 col-xs-3">
           <input class="form-control" placeholder="Privilege Description" [(ngModel)]="privilegeDescription"/>
         </div>
+        <button class="col-xs-2 col-md-2" class="btn btn-danger" *ngIf="privilegeId > 0" (click)="removePrivilege()">Remove Privileges</button>
       </div>
       <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
         <div class="col-md-3 col-xs-3">

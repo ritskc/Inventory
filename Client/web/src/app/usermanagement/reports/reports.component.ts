@@ -19,7 +19,7 @@ export class ReportsComponent implements OnInit {
   columns: DataColumn[] = [];
   columnsForAddedPrivileges: DataColumn[] = [];
   addedPrivileges: any[] = [];
-  selectedPrivilege: any;
+  selectedPrivilege: any = {};
 
   privilegeId: number = 0;
   menuId: number = 0;
@@ -104,15 +104,26 @@ export class ReportsComponent implements OnInit {
   }
 
   save() {
+    if (!this.privilegeName || !this.privilegeDescription) {
+      this.toastr.errorToastr('Please enter mandatory fields.');
+      return;
+    }
+
+    if (this.addedPrivileges && this.addedPrivileges.length == 0) {
+      this.toastr.errorToastr('Please select at least one privilege to save');
+      return;
+    }
+
     this.httpLoaderService.show();
     this.selectedPrivilege.id = this.privilegeId;
     this.selectedPrivilege.name = this.privilegeName;
     this.selectedPrivilege.description = this.privilegeDescription;
+    this.selectedPrivilege.userPriviledgeDetails = this.addedPrivileges;
     this.userManagementService.save(this.selectedPrivilege)
         .subscribe(
           () => {
             this.toastr.successToastr('Privilege saved successfully!!');
-            this.getAllMenus();
+            this.getAllPrivileges();
             this.reset();
             this.httpLoaderService.hide();
           },
@@ -123,8 +134,23 @@ export class ReportsComponent implements OnInit {
         );
   }
 
+  removePrivilege() {
+    this.httpLoaderService.show();
+    this.userManagementService.removePrivilege(this.privilegeId)
+        .subscribe(() => {
+          this.toastr.successToastr('Privilege removed successfully');
+          this.getAllPrivileges();
+          this.reset();
+          this.httpLoaderService.hide();
+        }, (error) => {
+          this.toastr.errorToastr(error.error);
+          this.httpLoaderService.hide();
+        })
+  }
+
   reset() {
     this.privilegeId = 0;
+    this.menuId = 0;
     this.privilgesForMenu = [];
     this.addedPrivileges = [];
     this.privilegeName = '';
