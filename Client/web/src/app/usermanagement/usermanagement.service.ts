@@ -39,4 +39,8 @@ export class UsermanagementService {
     else
       return this.apiService.post<any>(user, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.usersUri }`);
   }
+
+  removeUser(id) {
+    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.usersUri }`);
+  }
 }

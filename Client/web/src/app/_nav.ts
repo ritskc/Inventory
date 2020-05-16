@@ -177,11 +177,11 @@ if (environment.isSupplier) {
           url: '/usermanagement/users',
           icon: 'icon-user'
         },
-        {
-          name: 'Upload',
-          url: '/upload',
-          icon: 'icon-user'
-        },
+        // {
+        //   name: 'Upload',
+        //   url: '/upload',
+        //   icon: 'icon-user'
+        // },
         // {
         //   name: 'Privilages',
         //   url: '/admin',

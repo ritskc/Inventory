@@ -41,7 +41,9 @@ export class LoginComponent implements OnInit {
       } else {
         this.invalidCredentials = true;
       }
-    })
+    }, (error) => {
+      alert(error.error.message);
+    });
   }
 
   handleKeyDown(event) {
