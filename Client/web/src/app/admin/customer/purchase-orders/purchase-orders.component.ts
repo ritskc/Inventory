@@ -107,6 +107,8 @@ export class PurchaseOrdersComponent implements OnInit {
       order.customerName = this.customers.find(c => c.id == order.customerId).name;
       if (this.showFullDetails) {
         order.orderDetails.forEach((detail) => {
+          if (this.showOpenOrders && detail.isClosed) return;
+
           var customerPurchaseOrderViewModel = new CustomerPurchaseOrderViewModel();
           customerPurchaseOrderViewModel.customerId = order.customerId;
           customerPurchaseOrderViewModel.id = order.id;
@@ -161,7 +163,6 @@ export class PurchaseOrdersComponent implements OnInit {
   }
 
   showFullOrderDetails(event) {
-    console.log(event);
     if (this.showFullDetails)
       this.initializeGridForDetails();
     else
