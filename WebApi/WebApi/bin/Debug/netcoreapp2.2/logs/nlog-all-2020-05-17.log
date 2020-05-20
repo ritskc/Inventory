@@ -1,0 +1,12 @@
+2020-05-17 18:47:08.4803||DEBUG|WebApi.Program|init main 
+2020-05-17 18:47:10.0351||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-17 18:47:10.9437|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-05-17 18:47:10.9437|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-05-17 18:47:10.9809|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 37.7081ms 200  
+2020-05-17 18:47:11.0703|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 127.4357ms 404  
+2020-05-17 19:32:53.8763||DEBUG|WebApi.Program|init main 
+2020-05-17 19:32:55.5301||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-17 19:32:56.3528|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-05-17 19:32:56.3528|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-05-17 19:32:56.3993|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 46.9213ms 200  
+2020-05-17 19:32:56.5068|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 154.8175ms 404  

@@ -24,5 +24,15 @@ namespace WebApi.Services
         {
             return await this.reportRepository.GetSalesDataAsync(companyId, fromDate, toDate);
         }
+
+        public async Task<IEnumerable<PurchaseData>> GetPurchaseDataSummaryAsync(int companyId, DateTime fromDate, DateTime toDate)
+        {
+            return await this.reportRepository.GetPurchaseDataSummaryAsync(companyId, fromDate, toDate);
+        }
+
+        public async Task<IEnumerable<SalesData>> GetSalesDataSummaryAsync(int companyId, DateTime fromDate, DateTime toDate)
+        {
+            return await this.reportRepository.GetSalesDataSummaryAsync(companyId, fromDate, toDate);
+        }
     }
 }

@@ -124,11 +124,6 @@ namespace WebApi.Controllers
                     return NotFound();
                 }
 
-
-                if (result.IsInvoiceCreated)
-                    return BadRequest("Invoice is already created. You can not update this Packing slip");
-
-
                 await this.packingSlipService.UpdatePackingSlipAsync(packingSlip);
 
                 return id;

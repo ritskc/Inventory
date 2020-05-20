@@ -85,12 +85,7 @@ namespace WebApi.Controllers
             {
                 var claimsIdentity = this.User.Identity as ClaimsIdentity;
                 int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
-                var existingPo = await this._poService.GetAllPosAsync(po.CompanyId, userId);
-                var selectedPos = existingPo.Where(x => x.PoNo == po.PoNo);
-
-                if(selectedPos !=null)
-                    return BadRequest("PO number already exist");
-
+                
                 var parts = await this._partService.GetAllPartsAsync(po.CompanyId,userId);
                 if (po == null || po.poDetails == null)
                     return BadRequest("Invalid PO");

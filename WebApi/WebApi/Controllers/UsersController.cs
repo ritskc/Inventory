@@ -77,29 +77,7 @@ namespace WebApi.Controllers
             }
         }
 
-        //// GET: api/Todo
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<User>>> GetAllUser()
-        //{
-        //    try
-        //    {
-        //        var result = await this._userService.GetAllUsersAsync();
-
-        //        if (result == null)
-        //        {
-        //            return NotFound();
-        //        }
-
-        //        return result.ToList();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, ex.ToString());
-        //    }
-        //}
-
-        // GET: api/Todo
-        [HttpGet("id/{userId}")]
+        [HttpGet("{id}/{userId}")]
         public async Task<ActionResult<User>> GetUser(int userId)
         {
             try
@@ -125,6 +103,14 @@ namespace WebApi.Controllers
         {
             try
             {
+                var users = _userService.GetAll();
+                var existUser = users.Where(x => x.UserName == user.UserName).FirstOrDefault();
+
+                if (users != null && existUser.UserName == user.UserName)
+                {
+                    return BadRequest("User already exist");
+                }
+
                 await this._userService.AddUserAsync(user);
                 return Ok();
             }

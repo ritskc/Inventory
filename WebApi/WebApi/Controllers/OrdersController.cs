@@ -74,6 +74,16 @@ namespace WebApi.Controllers
         {
             try
             {
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var pos = await this._orderService.GetAllOrderMastersAsync(po.CompanyId, userId);
+                var existpo = pos.Where(x => x.PONo == po.PONo).FirstOrDefault();
+
+                if(existpo != null && existpo.PONo == po.PONo)
+                {
+                    return BadRequest("PO already exist");
+                }
                 var result= await this._orderService.AddOrderMasterAsync(po);
                 return result;
             }

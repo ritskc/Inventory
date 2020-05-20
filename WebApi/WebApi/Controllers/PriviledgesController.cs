@@ -83,6 +83,14 @@ namespace WebApi.Controllers
         {
             try
             {
+                var userPriviledges = await this.priviledgeService.GetAllPriviledgeAsync(); 
+                var existPriv = userPriviledges.Where(x => x.Name == userPriviledge.Name).FirstOrDefault();
+
+                if (existPriv != null && existPriv.Name == userPriviledge.Name)
+                {
+                    return BadRequest("Priviledge already exist");
+                }
+
                 await this.priviledgeService.AddUserPriviledgeAsync(userPriviledge);
                 return Ok();
 

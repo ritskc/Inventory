@@ -232,7 +232,7 @@ namespace DAL.Repository
                     }
                     if (packingSlip.IsDeletedPackingSlipNoUsed)
                     {
-                        sql = string.Format($"DELETE FROM [dbo].[DeletedPackingSlip] WHERE PackingSlipNo = '{packingSlip.PackingSlipNo} and CompanyId = '{packingSlip.CompanyId}'");
+                        sql = string.Format($"DELETE FROM [dbo].[DeletedPackingSlip] WHERE PackingSlipNo = '{packingSlip.PackingSlipNo}' and CompanyId = '{packingSlip.CompanyId}'");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
 
@@ -890,7 +890,7 @@ namespace DAL.Repository
                         $",[Crates] = '{packingSlip.Crates}' ,[Boxes] = '{packingSlip.Boxes}' ,[GrossWeight] = '{packingSlip.GrossWeight}' " +
                         $",[ShippingCharge] = '{packingSlip.ShippingCharge}' ,[CustomCharge] = '{packingSlip.CustomCharge}' ,[SubTotal] = '{packingSlip.SubTotal}' ,[Total] = '{packingSlip.Total}' " +
                         $",[IsPaymentReceived] = '{packingSlip.IsPaymentReceived}' ,[FOB] = '{packingSlip.FOB}' ,[Terms] = '{packingSlip.Terms}' ," +
-                        $"[ShipmentInfoId] = '{packingSlip.ShipmentInfoId}'  ,[TotalSurcharge] = '{packingSlip.TotalSurcharge}' ,[IsRepackage] = '{packingSlip.IsRepackage}'  WHERE id = '{packingSlip.Id}'");
+                        $"[ShipmentInfoId] = '{packingSlip.ShipmentInfoId}'  ,[TotalSurcharge] = '{packingSlip.TotalSurcharge}' ,[IsRepackage] = '{packingSlip.IsRepackage}' ,[IsInvoiceCreated] = '{packingSlip.IsInvoiceCreated}' WHERE id = '{packingSlip.Id}'");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();                    
 

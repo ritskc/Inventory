@@ -88,7 +88,7 @@ namespace DAL.Repository
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
-                    sql = string.Format("DELETE FROM [dbo].[User] WHERE  WHERE id = '{0}'", id);
+                    sql = string.Format("DELETE FROM [dbo].[User] WHERE  id = '{0}'", id);
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();                   
 
@@ -442,13 +442,13 @@ namespace DAL.Repository
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
-                    sql = string.Format($"UPDATE [dbo].[User]   SET [UserName] = '{user.UserName}' ,[Password] = '{user.Password}' ,[FirstName] = '{user.FirstName}' ,[LastName] = '{user.LastName}' ,[Email] = '{user.Email}' ,[PriviledgeId] = '{user.PriviledgeId}' ,[UserTypeId] = '{user.UserTypeId}' ,[IsSuperAdmin] = '{user.IsSuperAdmin}' WHERE id = '{0}'", user.Id);
+                    sql = string.Format($"UPDATE [dbo].[User]   SET [UserName] = '{user.UserName}' ,[Password] = '{user.Password}' ,[FirstName] = '{user.FirstName}' ,[LastName] = '{user.LastName}' ,[Email] = '{user.Email}' ,[PriviledgeId] = '{user.PriviledgeId}' ,[UserTypeId] = '{user.UserTypeId}' ,[IsSuperAdmin] = '{user.IsSuperAdmin}' WHERE id = '{user.Id}'");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
                     foreach (Int32 companyId in user.CompanyIds)
                     {
-                        sql = string.Format($"INSERT INTO [dbo].[UserCompanyAssignment]   ([UserId]   ,[CompanyId])     VALUES   ('{user.Id}'   ,'{companyId}'");
+                        sql = string.Format($"INSERT INTO [dbo].[UserCompanyAssignment]   ([UserId]   ,[CompanyId])     VALUES   ('{user.Id}'   ,'{companyId}')");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                     }

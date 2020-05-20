@@ -681,7 +681,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             var commandText = string.Format("SELECT TOP 5 NAME as CustomerName ,[code],[Description],[PackingSlipNo],[ShippingDate],[QTY]" +
-                " FROM [PackingSlipMaster] PSM INNER JOIN [PackingSlipDetails] PSD ON PSM.ID = PSD.PackingSlipId INNER JOIN [part] P ON P.id = PSD.PartId INNER JOIN [customer] c ON c.id = PSM.CustomerId WHERE PARTID ='{0}' AND PSM.COMPANYID = '{1}' ORDER BY ShippingCharge DESC", partId, companyId);
+                " FROM [PackingSlipMaster] PSM INNER JOIN [PackingSlipDetails] PSD ON PSM.ID = PSD.PackingSlipId INNER JOIN [part] P ON P.id = PSD.PartId INNER JOIN [customer] c ON c.id = PSM.CustomerId WHERE PARTID ='{0}' AND PSM.COMPANYID = '{1}' ORDER BY PSM.ID DESC", partId, companyId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {

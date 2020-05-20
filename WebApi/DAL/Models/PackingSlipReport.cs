@@ -56,6 +56,7 @@ namespace DAL.Models
         public string ShipVia { get; set; }
         public int Crates { get; set; }
         public int Boxes { get; set; }
+        public int TotalBoxes { get; set; }
         public decimal GrossWeight { get; set; }
         public decimal ShippingCharge { get; set; }
         public decimal CustomCharge { get; set; }

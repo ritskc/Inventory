@@ -29,9 +29,19 @@ namespace WebApi.Controllers
                     var result = await this.reportService.GetPurchaseDataAsync(companyId,fromDate,toDate);
                     return Ok(result);
                 }
+                if (reportType == "purchasesummary")
+                {
+                    var result = await this.reportService.GetPurchaseDataSummaryAsync(companyId, fromDate, toDate);
+                    return Ok(result);
+                }
                 else if (reportType == "sales")
                 {
                     var result = await this.reportService.GetSalesDataAsync(companyId, fromDate, toDate);
+                    return Ok(result);
+                }
+                else if (reportType == "salessummary")
+                {
+                    var result = await this.reportService.GetSalesDataSummaryAsync(companyId, fromDate, toDate);
                     return Ok(result);
                 }
                 else

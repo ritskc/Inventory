@@ -939,7 +939,7 @@
                 </Style>
               </TextRun>
               <TextRun>
-                <Value>=Fields!Boxes.Value</Value>
+                <Value>=Fields!TotalBoxes.Value</Value>
                 <Style>
                   <FontWeight>Normal</FontWeight>
                 </Style>
@@ -1464,8 +1464,16 @@
           <DataField>ShipmentIsDefault</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
         </Field>
+        <Field Name="MasterPackingSlipNo">
+          <DataField>MasterPackingSlipNo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="PackingSlipNo">
           <DataField>PackingSlipNo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RePackingSlipNo">
+          <DataField>RePackingSlipNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="ShippingDate">
@@ -1482,6 +1490,10 @@
         </Field>
         <Field Name="Boxes">
           <DataField>Boxes</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TotalBoxes">
+          <DataField>TotalBoxes</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="GrossWeight">
@@ -1564,6 +1576,14 @@
           <DataField>Price</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="TotalRePackingCharge">
+          <DataField>TotalRePackingCharge</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SumRePackingCharge">
+          <DataField>SumRePackingCharge</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="Surcharge">
           <DataField>Surcharge</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -1582,6 +1602,10 @@
         </Field>
         <Field Name="ExcessQty">
           <DataField>ExcessQty</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="LineNumber">
+          <DataField>LineNumber</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>

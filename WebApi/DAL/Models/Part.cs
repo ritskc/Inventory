@@ -33,6 +33,9 @@ namespace DAL.Models
         public decimal SupplierPrice { get; set; }
         public decimal CustomerPrice { get; set; }
         public string SupplierCode { get; set; }
+        
+        public decimal FuturePrice { get; set; }
+        public int CurrentPricingInEffectQty { get; set; }
 
         public List<PartSupplierAssignment> partSupplierAssignments { get; set; }
         public List<PartCustomerAssignment> partCustomerAssignments { get; set; }

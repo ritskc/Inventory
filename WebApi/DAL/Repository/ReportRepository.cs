@@ -65,6 +65,7 @@ namespace DAL.Repository
                     packingSlip.ShipVia = Convert.ToString(dataReader["ShipVia"]);
                     packingSlip.Crates = Convert.ToInt32(dataReader["Crates"]);
                     packingSlip.Boxes = Convert.ToInt32(dataReader["Boxes"]);
+                    packingSlip.TotalBoxes = packingSlip.TotalBoxes + packingSlip.Boxes;
                     var grossWeight = 1.05 * Convert.ToDouble(dataReader["GrossWeight"]);                    
                     packingSlip.GrossWeight = Convert.ToDecimal(grossWeight);                    
                     packingSlip.ShippingCharge = Convert.ToDecimal(dataReader["ShippingCharge"]);
@@ -163,7 +164,7 @@ namespace DAL.Repository
                 packingSlipReport.ShippingDate = packingSlip.ShippingDate;
                 packingSlipReport.ShipVia = packingSlip.ShipVia;
                 packingSlipReport.Crates = packingSlip.Crates;
-                packingSlipReport.Boxes = packingSlip.Boxes;
+                packingSlipReport.TotalBoxes = packingSlip.TotalBoxes;
                 packingSlipReport.GrossWeight = packingSlip.GrossWeight;
                 packingSlipReport.ShippingCharge = packingSlip.ShippingCharge;
                 packingSlipReport.CustomCharge = packingSlip.CustomCharge;
@@ -476,6 +477,7 @@ namespace DAL.Repository
                     packingSlip.Crates = Convert.ToInt32(dataReader["Crates"]);
                     Crates = Crates + packingSlip.Crates;
                     packingSlip.Boxes = Convert.ToInt32(dataReader["Boxes"]);
+                    Boxes = Boxes + packingSlip.Boxes;
                     packingSlip.TotalBoxes = packingSlip.TotalBoxes + packingSlip.Boxes;
                     packingSlip.GrossWeight =  Convert.ToDecimal(dataReader["GrossWeight"]);
                     GrossWeight = GrossWeight + packingSlip.GrossWeight;
@@ -577,7 +579,7 @@ namespace DAL.Repository
                         packingSlipReport.ShippingDate = packingSlip.ShippingDate;
                         packingSlipReport.ShipVia = packingSlip.ShipVia;
                         packingSlipReport.Crates = Crates;
-                        packingSlipReport.Boxes = Boxes;
+                        packingSlipReport.TotalBoxes = Boxes;
                         packingSlipReport.GrossWeight = GrossWeight;
                         packingSlipReport.ShippingCharge = ShippingCharge;
                         packingSlipReport.CustomCharge = packingSlip.CustomCharge;
@@ -878,9 +880,10 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
 
-            var commandText = string.Format($"SELECT CM.Name as CustomerName ,PM.Code,PM.Description,PSM.PackingSlipNo,PSM.ShippingDate ,PSD.[PackingSlipId],PSD.[PartId] ,[Qty],PSD.[UnitPrice],PSD.[Price] " +
-                $"FROM [PackingSlipDetails] PSD  INNER JOIN PackingSlipMaster PSM ON PSM.ID = PSD.PackingSlipId    INNER JOIN part PM ON PM.id = PSD.PartId   INNER JOIN customer CM ON CM.id = PSM.CustomerId   " +
-                $"WHERE PSM.ShippingDate BETWEEN '{fromDate}' AND '{toDate}' AND PSM.CompanyId='{companyId}'   GROUP BY PSD.[PackingSlipId],PSD.[PartId],[Qty],PSD.[UnitPrice],PSD.[Price], PSM.PackingSlipNo ,PSM.ShippingDate,CM.Name,PM.Code,PM.Description ");
+            var commandText = string.Format($"SELECT CM.Name as CustomerName ,PM.Code,PM.Description,PSM.PackingSlipNo,PSM.ShippingDate ,PSD.[PackingSlipId],PSD.[PartId] ,Sum([Qty]) Qty,PSD.[UnitPrice],sum(PSD.[Price])  Price" +
+                $" FROM [PackingSlipDetails] PSD  INNER JOIN PackingSlipMaster PSM ON PSM.ID = PSD.PackingSlipId    INNER JOIN part PM ON PM.id = PSD.PartId   INNER JOIN customer CM ON CM.id = PSM.CustomerId   " +
+                $" WHERE PSM.ShippingDate BETWEEN '{fromDate}' AND '{toDate}' AND PSM.CompanyId='{companyId}'   " +
+                $" GROUP BY PSD.[PackingSlipId],PSD.[PartId],PSD.[UnitPrice], PSM.PackingSlipNo ,PSM.ShippingDate,CM.Name,PM.Code,PM.Description ");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -901,6 +904,67 @@ namespace DAL.Repository
                     packingSlip.ShippingDate = Convert.ToDateTime(dataReader["ShippingDate"]);
                     packingSlip.Qty = Convert.ToInt32(dataReader["Qty"]);
                     packingSlip.PartId = Convert.ToInt32(dataReader["PartId"]); 
+                    packingSlip.UnitPrice = Convert.ToDecimal(dataReader["UnitPrice"]);
+                    packingSlip.Price = Convert.ToDecimal(dataReader["Price"]);
+                    packingSlips.Add(packingSlip);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+            foreach (SalesData salesData in packingSlips)
+            {
+                commandText = string.Format($"select Top 1 name from supplier sm inner join partsupplierassignment psa on sm.id = psa.SupplierID where partid = '{salesData.PartId}'");
+
+                using (SqlCommand cmd = new SqlCommand(commandText, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    conn.Open();
+
+                    var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                    while (dataReader.Read())
+                    {
+                        salesData.SupplierName = Convert.ToString(dataReader["name"]);
+                    }
+                    dataReader.Close();
+                    conn.Close();
+                }
+            }
+
+            return packingSlips;
+        }
+
+        public async Task<IEnumerable<SalesData>> GetSalesDataSummaryAsync(int companyId, DateTime fromDate, DateTime toDate)
+        {
+            List<SalesData> packingSlips = new List<SalesData>();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+
+            var commandText = string.Format($"SELECT CM.Name as CustomerName ,PM.Code,PM.Description,PSD.[PartId] ,Sum([Qty]) Qty,PSD.[UnitPrice],sum(PSD.[Price]) [Price]" +
+                $"FROM [PackingSlipDetails] PSD  INNER JOIN PackingSlipMaster PSM ON PSM.ID = PSD.PackingSlipId    INNER JOIN part PM ON PM.id = PSD.PartId   INNER JOIN customer CM ON CM.id = PSM.CustomerId   " +
+                $"WHERE PSM.ShippingDate BETWEEN '{fromDate}' AND '{toDate}' AND PSM.CompanyId='{companyId}'   " +
+                $" GROUP BY PSD.[PartId],PSD.[UnitPrice],CM.Name,PM.Code,PM.Description" +
+                $" Order by PM.Code ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var packingSlip = new SalesData();
+
+                    packingSlip.CustomerName = Convert.ToString(dataReader["CustomerName"]);
+                    packingSlip.Code = Convert.ToString(dataReader["Code"]);
+                    packingSlip.Description = Convert.ToString(dataReader["Description"]);
+                    packingSlip.Qty = Convert.ToInt32(dataReader["Qty"]);
+                    packingSlip.PartId = Convert.ToInt32(dataReader["PartId"]);
                     packingSlip.UnitPrice = Convert.ToDecimal(dataReader["UnitPrice"]);
                     packingSlip.Price = Convert.ToDecimal(dataReader["Price"]);
                     packingSlips.Add(packingSlip);
@@ -992,6 +1056,68 @@ namespace DAL.Repository
                     while (dataReader.Read())
                     {
                         purchaseData.CustomerName = Convert.ToString(dataReader["name"]);                        
+                    }
+                    dataReader.Close();
+                    conn.Close();
+                }
+            }
+
+            return packingSlips;
+        }
+
+        public async Task<IEnumerable<PurchaseData>> GetPurchaseDataSummaryAsync(int companyId, DateTime fromDate, DateTime toDate)
+        {
+            List<PurchaseData> packingSlips = new List<PurchaseData>();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+
+            var commandText = string.Format($"SELECT SM.Name as SupplierName , SID.[PartId] ,PM.Code ,PM.Description ,Sum(SID.[Qty]) as Qty ,SID.Price,Sum(SID.[Total]) as Total " +
+                $"FROM [SupplierInvoiceDetails] SID  INNER JOIN SupplierInvoiceMaster SIM ON SIM.Id = SID.InvoiceId  " +
+                $"INNER JOIN part PM ON PM.id = SID.PartId  INNER JOIN supplier SM ON SM.id = SIM.SupplierId  " +
+                $"WHERE SIM.ReceivedDate BETWEEN '{fromDate}' AND '{toDate}' AND SIM.CompanyId = '{companyId}'  " +
+                $"Group by SID.PartId,SID.Price,PM.Code ,PM.Description,SM.Name ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var packingSlip = new PurchaseData();
+
+                    packingSlip.SupplierName = Convert.ToString(dataReader["SupplierName"]);                   
+                    packingSlip.PartId = Convert.ToInt32(dataReader["PartId"]);
+                    packingSlip.Code = Convert.ToString(dataReader["Code"]);
+                    packingSlip.Description = Convert.ToString(dataReader["Description"]);
+                    packingSlip.Qty = Convert.ToInt32(dataReader["Qty"]);
+                    packingSlip.Price = Convert.ToDecimal(dataReader["Price"]);
+                    packingSlip.Total = Convert.ToDecimal(dataReader["Total"]);
+                    packingSlips.Add(packingSlip);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+
+            foreach (PurchaseData purchaseData in packingSlips)
+            {
+                commandText = string.Format($"select Top 1 name from customer cm inner join partcustomerassignment pca on cm.id = pca.CustomerId where partid = '{purchaseData.PartId}'");
+
+                using (SqlCommand cmd = new SqlCommand(commandText, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    conn.Open();
+
+                    var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                    while (dataReader.Read())
+                    {
+                        purchaseData.CustomerName = Convert.ToString(dataReader["name"]);
                     }
                     dataReader.Close();
                     conn.Close();

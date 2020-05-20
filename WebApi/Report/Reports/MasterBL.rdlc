@@ -1013,7 +1013,7 @@
                 </Style>
               </TextRun>
               <TextRun>
-                <Value>=Fields!Boxes.Value</Value>
+                <Value>=Fields!TotalBoxes.Value</Value>
                 <Style>
                   <FontWeight>Normal</FontWeight>
                 </Style>
@@ -1546,6 +1546,10 @@
           <DataField>PackingSlipNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="RePackingSlipNo">
+          <DataField>RePackingSlipNo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="ShippingDate">
           <DataField>ShippingDate</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
@@ -1560,6 +1564,10 @@
         </Field>
         <Field Name="Boxes">
           <DataField>Boxes</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TotalBoxes">
+          <DataField>TotalBoxes</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="GrossWeight">
@@ -1640,6 +1648,14 @@
         </Field>
         <Field Name="Price">
           <DataField>Price</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TotalRePackingCharge">
+          <DataField>TotalRePackingCharge</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SumRePackingCharge">
+          <DataField>SumRePackingCharge</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Surcharge">

@@ -41,6 +41,6 @@ namespace DAL.Models
         public Supplier SupplierDetail { get;set; }
 
         public List<SupplierInvoiceDetail> supplierInvoiceDetails { get; set; }
-        //public List<SupplierInvoicePoDetails> supplierInvoicePoDetails { get; set; }
+        public List<SupplierInvoiceGroupDetail> supplierInvoiceGroupDetails { get; set; }
     }
 }

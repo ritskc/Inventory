@@ -91,6 +91,7 @@
     <Compile Include="Models\SupplierIntransitInvoice.cs" />
     <Compile Include="Models\SupplierInvoiceDetail.cs" />
     <Compile Include="Models\SupplierInvoice.cs" />
+    <Compile Include="Models\SupplierInvoiceGroupDetail.cs" />
     <Compile Include="Models\SupplierInvoicePoDetails.cs" />
     <Compile Include="Models\SupplierOpenInvoice.cs" />
     <Compile Include="Models\SupplierOpenPO.cs" />

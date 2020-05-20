@@ -63,11 +63,11 @@ namespace WebApi.Services
 
                 if(!(supplierInvoice.DontImpactPO))
                     pos = await _poRepository.GetAllPosAsync(supplierInvoice.CompanyId,1);
-                
 
+                List<string> supplierPos = supplierInvoice.PoNo.Split(',').ToList();
                 foreach (Po po in pos)
                 {
-                    if (po.IsClosed == false && po.SupplierId == supplierInvoice.SupplierId)
+                    if (po.IsClosed == false && po.SupplierId == supplierInvoice.SupplierId & supplierPos.Contains(po.PoNo))
                     {
                         foreach (PoDetail poDetail in po.poDetails)
                         {
@@ -146,8 +146,12 @@ namespace WebApi.Services
             var companyList = await this._companyRepository.GetAllCompanyAsync();
             var supplierList = await this._supplierRepository.GetAllSupplierAsync(companyId,userId);
             var partList = await this._partRepository.GetAllPartsAsync(companyId,userId);
+
+            
+
             foreach (SupplierInvoice supplierInvoice in result)
             {
+                List<SupplierInvoiceGroupDetail> supplierInvoiceGroupDetails = new List<SupplierInvoiceGroupDetail>();
                 supplierInvoice.CompanyDetail = companyList.Where(p => p.Id == supplierInvoice.CompanyId).FirstOrDefault();
                 if(supplierInvoice !=null  && supplierInvoice.CompanyDetail !=null)
                     supplierInvoice.CompanyName = supplierInvoice.CompanyDetail.Name;
@@ -156,10 +160,60 @@ namespace WebApi.Services
                     supplierInvoice.SupplierName = supplierInvoice.SupplierDetail.Name;
                 foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
                 {
-                    supplierInvoiceDetail.PartDetail = partList.Where(p => p.Id == supplierInvoiceDetail.PartId).FirstOrDefault(); //await this._partRepository.GetPartAsync(supplierInvoiceDetail.PartId);                    
+                    supplierInvoiceDetail.PartDetail = partList.Where(p => p.Id == supplierInvoiceDetail.PartId).FirstOrDefault(); //await this._partRepository.GetPartAsync(supplierInvoiceDetail.PartId);
+
+                    var supplierInvoiceGroupDetail = supplierInvoiceGroupDetails.Where(x => x.InvoiceId == supplierInvoiceDetail.InvoiceId && x.PartId == supplierInvoiceDetail.PartId).FirstOrDefault();
+                    if (supplierInvoiceGroupDetail == null)
+                    {
+                        //Id ,InvoiceId ,SrNo,PartId,PartCode, Qty, Price,Total,AdjustedPOQty,ExcessQty,BoxNo, Barcode ,IsBoxReceived,IsOpen,
+                        //AdjustedInvoiceQty,OpenQty,PoNo,PoQty, PartDetail , supplierInvoicePoDetails
+                        supplierInvoiceGroupDetail = new SupplierInvoiceGroupDetail();
+                        supplierInvoiceGroupDetail.Id = supplierInvoiceDetail.Id.ToString();
+                        supplierInvoiceGroupDetail.InvoiceId = supplierInvoiceDetail.InvoiceId;
+                        supplierInvoiceGroupDetail.SrNo = supplierInvoiceDetail.SrNo.ToString();
+                        supplierInvoiceGroupDetail.PartId = supplierInvoiceDetail.PartId;
+                        supplierInvoiceGroupDetail.PartCode = supplierInvoiceDetail.PartCode;
+                        supplierInvoiceGroupDetail.Qty = supplierInvoiceDetail.Qty;
+                        supplierInvoiceGroupDetail.Price = supplierInvoiceDetail.Price;
+                        supplierInvoiceGroupDetail.Total = supplierInvoiceDetail.Total;
+                        supplierInvoiceGroupDetail.ExcessQty = supplierInvoiceDetail.ExcessQty;
+                        supplierInvoiceGroupDetail.BoxNo = supplierInvoiceDetail.BoxNo.ToString();
+                        supplierInvoiceGroupDetail.Barcode = supplierInvoiceDetail.Barcode;
+                        supplierInvoiceGroupDetail.IsOpen = supplierInvoiceDetail.IsOpen;
+                        supplierInvoiceGroupDetail.AdjustedInvoiceQty = supplierInvoiceDetail.AdjustedInvoiceQty;
+                        supplierInvoiceGroupDetail.OpenQty = supplierInvoiceDetail.OpenQty;
+                        foreach (SupplierInvoicePoDetails supplierInvoicePoDetails in supplierInvoiceDetail.supplierInvoicePoDetails)
+                        {
+                            supplierInvoiceGroupDetail.PONo = supplierInvoiceGroupDetail.PONo + "," + supplierInvoicePoDetails.PONo;
+                            supplierInvoiceGroupDetail.AdjustedPOQty = supplierInvoiceGroupDetail.AdjustedPOQty + "," + supplierInvoicePoDetails.Qty.ToString();
+                        }
+                        supplierInvoiceGroupDetail.PartDetail = supplierInvoiceDetail.PartDetail;
+                        supplierInvoiceGroupDetails.Add(supplierInvoiceGroupDetail);
+                    }
+                    else
+                    {
+                        supplierInvoiceGroupDetail.Id = supplierInvoiceGroupDetail.Id + "," + supplierInvoiceDetail.Id.ToString();
+                        supplierInvoiceGroupDetail.SrNo = supplierInvoiceGroupDetail.SrNo + "," + supplierInvoiceDetail.SrNo.ToString();
+
+                        supplierInvoiceGroupDetail.Qty = supplierInvoiceGroupDetail.Qty + supplierInvoiceDetail.Qty;
+                        supplierInvoiceGroupDetail.Total = supplierInvoiceGroupDetail.Total + supplierInvoiceDetail.Total;
+                        supplierInvoiceGroupDetail.ExcessQty = supplierInvoiceGroupDetail.ExcessQty + supplierInvoiceDetail.ExcessQty;
+                        supplierInvoiceGroupDetail.BoxNo = supplierInvoiceGroupDetail.BoxNo + "," + supplierInvoiceDetail.BoxNo.ToString();
+                        supplierInvoiceGroupDetail.Barcode = supplierInvoiceGroupDetail.Barcode + "," + supplierInvoiceDetail.Barcode;
+                        supplierInvoiceGroupDetail.AdjustedInvoiceQty = supplierInvoiceGroupDetail.AdjustedInvoiceQty + supplierInvoiceDetail.AdjustedInvoiceQty;
+                        supplierInvoiceGroupDetail.OpenQty = supplierInvoiceGroupDetail.OpenQty + supplierInvoiceDetail.OpenQty;
+                        foreach (SupplierInvoicePoDetails supplierInvoicePoDetails in supplierInvoiceDetail.supplierInvoicePoDetails)
+                        {
+                            supplierInvoiceGroupDetail.PONo = supplierInvoiceGroupDetail.PONo + "," + supplierInvoicePoDetails.PONo;
+                            supplierInvoiceGroupDetail.AdjustedPOQty = supplierInvoiceGroupDetail.AdjustedPOQty + "," + supplierInvoicePoDetails.Qty.ToString();
+                        }
+                        supplierInvoiceGroupDetail.PartDetail = supplierInvoiceDetail.PartDetail;
+                    }
+
                 }
-            }
-            
+                supplierInvoice.supplierInvoiceGroupDetails = supplierInvoiceGroupDetails;
+            }          
+           
             return result;
         }
 
@@ -253,7 +307,7 @@ namespace WebApi.Services
             var partList = await this._partRepository.GetAllPartsAsync(supplierInvoice.CompanyDetail.Id,1);
             foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
             {
-                supplierInvoiceDetail.PartDetail = partList.Where(p => p.Id == supplierInvoiceDetail.PartId).FirstOrDefault(); 
+                supplierInvoiceDetail.PartDetail = partList.Where(p => p.Id == supplierInvoiceDetail.PartId).FirstOrDefault();
             }
 
             return supplierInvoice;

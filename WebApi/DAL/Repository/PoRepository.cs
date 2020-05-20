@@ -92,6 +92,8 @@ namespace DAL.Repository
                 conn.Close();
             }
 
+            
+
             foreach (Po po in pos)
             {
                 List<PoDetail> poDetails = new List<PoDetail>();
@@ -136,6 +138,31 @@ namespace DAL.Repository
                 }
                 po.poDetails = poDetails;
                 conn.Close();
+            }
+
+            foreach (Po po in pos)
+            {
+                foreach (PoDetail poDetail in po.poDetails)
+                {
+                    commandText = string.Format("SELECT [InvoiceNo]  FROM [dbo].[SupplierInvoiceMaster] where id in (select [InvoiceId] FROM [dbo].[SupplierInvoicePoDetails]   where PODetailId = '{0}')", poDetail.Id);
+
+                    using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                    {
+                        cmd1.CommandType = CommandType.Text;
+                        conn.Open();
+                        var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                        while (dataReader1.Read())
+                        {
+                            if (poDetail.InvoiceNo == null || poDetail.InvoiceNo == string.Empty)
+                                poDetail.InvoiceNo = Convert.ToString(dataReader1["InvoiceNo"]);
+                            else
+                                poDetail.InvoiceNo = poDetail.InvoiceNo + "," + Convert.ToString(dataReader1["InvoiceNo"]);
+                        }
+                        dataReader1.Close();
+                    }                    
+                    conn.Close();
+                }
             }
 
             foreach (Po po in pos)
