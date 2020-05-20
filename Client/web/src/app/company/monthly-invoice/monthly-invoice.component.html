@@ -1,0 +1,15 @@
+<select class="form-control" [(ngModel)]="customerId" style="width: 350px; margin: 10px 0px;">
+  <option value="0">Select customer</option>
+  <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
+</select>
+
+<simple-grid [columns]="columns" [data]="monthlyInvoices"  (addClickedEventEmitter)="addInvoice()"
+(actionButtonClickedEvent)="[actionButtonClicked($event)]">
+
+</simple-grid>
+
+<loader></loader>
+
+<div>
+  <app-report [displayReportEvent]="printDocument.asObservable()"></app-report>
+</div>

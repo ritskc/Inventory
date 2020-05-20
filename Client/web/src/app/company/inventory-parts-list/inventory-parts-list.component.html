@@ -59,7 +59,7 @@
         <div class="card-header">
         </div>
         <div class="card-body">
-          <simple-grid [headerRequired]="false" [footerRequired]="false" [addRequired]="false" [exportRequired]="false" [columns]="columnsForModal" [data]="dataForModal"></simple-grid>
+          <simple-grid [headerRequired]="false" [footerRequired]="false" [addRequired]="false" [exportRequired]="false" [columns]="columnsForModal" [data]="dataForModal" [ignoreColumnFiltering]="true"></simple-grid>
           <div>
             <button (click)="showOpenOrdersModal = false" class="btn btn-primary">Cancel</button>
           </div>
@@ -76,7 +76,7 @@
         <div class="card-header">
         </div>
         <div class="card-body">
-          <simple-grid [headerRequired]="false" [footerRequired]="false" [addRequired]="false" [exportRequired]="false" [columns]="columnsForModal" [data]="dataForModal"></simple-grid>
+          <simple-grid [headerRequired]="false" [footerRequired]="false" [addRequired]="false" [exportRequired]="false" [columns]="columnsForModal" [data]="dataForModal" [ignoreColumnFiltering]="true"></simple-grid>
           <div>
             <button (click)="showInTransitModal = false" class="btn btn-primary">Cancel</button>
           </div>
@@ -93,8 +93,8 @@
         <div class="card-header">
         </div>
         <div class="card-body">
-          <simple-grid [headerRequired]="false" [footerRequired]="false" [addRequired]="false" [exportRequired]="false" [columns]="columnsForModal" [data]="dataForModal"></simple-grid>
-          <simple-grid [headerRequired]="false" [footerRequired]="false" [addRequired]="false" [exportRequired]="false" [columns]="columnsForSecondaryGridInModal" [data]="dataForSecondaryGridInModal"></simple-grid>
+          <simple-grid [headerRequired]="false" [footerRequired]="false" [addRequired]="false" [exportRequired]="false" [columns]="columnsForModal" [data]="dataForModal" [ignoreColumnFiltering]="true"></simple-grid>
+          <simple-grid [headerRequired]="false" [footerRequired]="false" [addRequired]="false" [exportRequired]="false" [columns]="columnsForSecondaryGridInModal" [data]="dataForSecondaryGridInModal" [ignoreColumnFiltering]="true"></simple-grid>
           <div>
             <button (click)="showLatestShipmentsModal = false" class="btn btn-primary">Cancel</button>
           </div>
@@ -111,7 +111,7 @@
         <div class="card-header">
         </div>
         <div class="card-body">
-          <simple-grid [headerRequired]="false" [footerRequired]="false" [addRequired]="false" [exportRequired]="false" [columns]="columnsForModal" [data]="dataForModal"></simple-grid>
+          <simple-grid [headerRequired]="false" [footerRequired]="false" [addRequired]="false" [exportRequired]="false" [columns]="columnsForModal" [data]="dataForModal" [ignoreColumnFiltering]="true"></simple-grid>
           <div>
             <button (click)="showSupplierOpnePoModal = false" class="btn btn-primary">Cancel</button>
           </div>

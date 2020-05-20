@@ -1,4 +1,5 @@
 import { Part } from './part.model';
+import { Customer } from './customer.model';
 
 export class Shipment {
 
@@ -19,6 +20,7 @@ export class Shipment {
     shippingCharge: number = 0;
     customCharge: number = 0;
     isPaymentReceived: boolean = false;
+    customerDetail: Customer;
     packingSlipDetails: PackingSlipDetail[] = [];
     fob: string = '';
     totalSurcharge: number = 0;
@@ -31,9 +33,14 @@ export class Shipment {
 }
 
 export class PackingSlipDetail {
+
+    constructor() {}
+
     isBlankOrder: boolean = false;
     orderId: number = 0;
     orderDetailId: number = 0;
+    supplierInvoiceId: number = 0;
+    supplierInvoiceDetailsId: number = 0;
     partId: number = 0;
     partCode: string = '';
     orderNo: string = '';
@@ -51,4 +58,5 @@ export class PackingSlipDetail {
     excessQty: number = 0;
     srNo: number = 0;
     partDetail: Part;
+    SupplierInvoiceOpenQty: number = 0;
 }

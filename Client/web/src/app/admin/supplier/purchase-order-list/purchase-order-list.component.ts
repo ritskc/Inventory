@@ -45,16 +45,16 @@ export class PurchaseOrderListComponent implements OnInit {
   initializeGridColumns() {
     this.gridColumns = [];
     this.gridColumns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Email", value: "email", minWidth: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closing", value: "closingDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Ack", value: "isAcknowledged", isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center', actions: [
+    this.gridColumns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editPurchaseOrder', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'PO', actionStyle: ClassConstants.Primary, event: 'printPurchaseOrder', icon: 'fa fa-print' }),
-      new DataColumnAction({ actionText: 'Edit', actionStyle: ClassConstants.Primary, event: 'editPurchaseOrder', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deletePurchaseOrder', icon: 'fa fa-trash' })
     ] }));
   }
@@ -65,9 +65,10 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Part Code", value: "partCode"}) );
-    this.gridColumns.push( new DataColumn({ headerText: "Part Desc", value: "partDescription", minWidth: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Part Code", value: "partCode", columnName: 'PartCode' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Part Desc", value: "partDescription", columnName: 'PartDescription', minWidth: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Qty", value: "qty", customStyling: 'right' }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Open Qty", value: "openQty", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Price", value: "unitPrice", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Total", value: "total", customStyling: 'right' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Rcvd", value: "receivedQty", customStyling: 'right' }) );
@@ -119,6 +120,7 @@ export class PurchaseOrderListComponent implements OnInit {
                 viewModel.receivedQty = parseInt(detail.receivedQty);
                 viewModel.inTransitQty = detail.inTransitQty;
                 viewModel.forceClosed = detail.isForceClosed;
+                viewModel.openQty = detail.qty - (viewModel.inTransitQty + viewModel.receivedQty);
                 this.purchaseOrderViewModels.push(viewModel);
               });
             } else {
@@ -233,4 +235,5 @@ class SupplierPurchaseOrderViewModel {
   acknowledgedQty: number;
   isAcknowledged: boolean;
   forceClosed: boolean;
+  openQty: number;
 }

@@ -10,7 +10,11 @@ export class CompanyService {
 
   private _currentlyLoggedInCompanyId: number = 0;
 
-  constructor(private apiService: ApiService, private config: ConfigService) { 
+  constructor(private apiService: ApiService, private config: ConfigService) {
+    if (localStorage.getItem('currentCompany')) {
+      this._currentlyLoggedInCompanyId = parseInt(localStorage.getItem('currentCompany')); 
+      return;
+    }
     this._currentlyLoggedInCompanyId = 1;
   }
 
@@ -28,15 +32,24 @@ export class CompanyService {
 
   //TODO: Replace the logic once the logged in companyId is determined
   getCurrentlyLoggedInCompanyId(): number {
+    if (localStorage.getItem('currentCompany'))
+      return parseInt(localStorage.getItem('currentCompany'));
     return this._currentlyLoggedInCompanyId;
   }
 
   setHarisons() {
     this._currentlyLoggedInCompanyId = 1;
+    localStorage.setItem('currentCompany', this._currentlyLoggedInCompanyId.toString());
   }
 
   setCastAndForge() {
     this._currentlyLoggedInCompanyId = 2;
+    localStorage.setItem('currentCompany', this._currentlyLoggedInCompanyId.toString());
+  }
+
+  setTest() {
+    this._currentlyLoggedInCompanyId = 3;
+    localStorage.setItem('currentCompany', this._currentlyLoggedInCompanyId.toString());
   }
 
   saveCompany(company: Company) {

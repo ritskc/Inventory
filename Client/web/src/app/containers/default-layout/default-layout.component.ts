@@ -15,7 +15,7 @@ export class DefaultLayoutComponent implements OnDestroy {
   public sidebarMinimized = true;
   private changes: MutationObserver;
   public element: HTMLElement;
-  companyId: number = 0;
+  companyId: number = 1;
   
   constructor(private authService: AuthService, private router: Router,
               private companyService: CompanyService, @Inject(DOCUMENT) _document?: any) {
@@ -28,15 +28,22 @@ export class DefaultLayoutComponent implements OnDestroy {
       attributes: true,
       attributeFilter: ['class']
     });
+
+    if (localStorage.getItem('currentCompany'))
+      this.companyId = parseInt(localStorage.getItem('currentCompany'));
   }
 
   setCompany(event) {
     if (event.target.value == 1) {
       this.companyService.setHarisons();
-    } else {
+    } else if (event.target.value == 2) {
       this.companyService.setCastAndForge();
+    } else {
+      this.companyService.setTest();
     }
-    this.router.navigateByUrl('/companies');
+    var landingUrl = localStorage.getItem('landingurl')
+    this.router.navigateByUrl(landingUrl);
+    window.location.reload();
   }
 
   setHarrisons() {

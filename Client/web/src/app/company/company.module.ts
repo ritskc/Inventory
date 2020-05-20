@@ -23,6 +23,8 @@ import { POSUploadComponent } from './pos/upload/upload.component';
 import { MasterShipmentListComponent } from './master-shipment-list/master-shipment-list.component';
 import { MasterShipmentDetailComponent } from './master-shipment-detail/master-shipment-detail.component';
 import { SaleReportComponent } from './sale-report/sale-report.component';
+import { MonthlyInvoiceListComponent } from './monthly-invoice/monthly-invoice.component';
+import { EditMonthlyInvoiceComponent } from './edit-monthly-invoice/edit-monthly-invoice.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { SaleReportComponent } from './sale-report/sale-report.component';
     POSUploadComponent,
     MasterShipmentListComponent,
     MasterShipmentDetailComponent,
-    SaleReportComponent
+    SaleReportComponent,
+    MonthlyInvoiceListComponent,
+    EditMonthlyInvoiceComponent
   ],
   imports: [
     CommonModule,

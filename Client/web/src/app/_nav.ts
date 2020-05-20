@@ -96,7 +96,7 @@ if (environment.isSupplier) {
           icon: 'icon-puzzle'
         },
         {
-          name: 'Invoice',
+          name: 'Supplier Invoice',
           url: '/invoice',
           icon: 'icon-puzzle'
         },
@@ -132,8 +132,13 @@ if (environment.isSupplier) {
           icon: 'icon-puzzle'
         },
         {
-          name: 'Invoice',
+          name: 'Customer Invoice',
           url: '/companies/invoice',
+          icon: 'icon-puzzle'
+        },
+        {
+          name: 'Monthly Invoice',
+          url: '/companies/monthly-invoice',
           icon: 'icon-puzzle'
         },
         {
@@ -162,6 +167,11 @@ if (environment.isSupplier) {
     {
       name: 'Admin',
       children: [
+        {
+          name: 'Reports',
+          url: '/usermanagement/reports',
+          icon: 'icon-user'
+        },
         {
           name: 'User',
           url: '/admin',

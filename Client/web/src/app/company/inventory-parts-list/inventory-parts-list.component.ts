@@ -9,6 +9,7 @@ import { CustomerService } from '../../admin/customer/customer.service';
 import { SupplierService } from '../../admin/supplier/supplier.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { ClassConstants } from '../../common/constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inventory-parts-list',
@@ -37,7 +38,7 @@ export class InventoryPartsListComponent implements OnInit {
   dataForSecondaryGridInModal: any;
 
   constructor(private service: PartsService, private companyService: CompanyService, private httpLoaderService: httpLoaderService, private customerService: CustomerService,
-    private supplierService: SupplierService, private httpLoader: httpLoaderService, private toastr: ToastrManager) { }
+    private supplierService: SupplierService, private httpLoader: httpLoaderService, private toastr: ToastrManager, private route: Router) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompanyId = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -46,18 +47,18 @@ export class InventoryPartsListComponent implements OnInit {
   }
 
   initializeGridColumns() {
-    this.columns.push( new DataColumn({ headerText: "Code", value: "Code", sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Description", value: "Description", sortable: true, customStyling: 'column-width-150' }) );
-    this.columns.push( new DataColumn({ headerText: "Opening Qty", value: "OpeningQty" }) );
-    this.columns.push( new DataColumn({ headerText: "Open + In Hand", value: "QuantityInHand", sortable: false, hasAdditionalAction: true, additionalActionName: 'showLatestShipments' }) );
-    this.columns.push( new DataColumn({ headerText: "In Transit", value: "IntransitQty", sortable: false, hasAdditionalAction: true, additionalActionName: 'showInTransitQty' }) );
-    this.columns.push( new DataColumn({ headerText: "Open Order", value: "OpenOrderQty", isEditable: false, sortable: false, hasAdditionalAction: true, additionalActionName: 'showOpenOrders' }) );
-    this.columns.push( new DataColumn({ headerText: "Safe Qty", value: "SafeQty", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Supp Open PO", value: "SupplierOpenPoQty", sortable: false, hasAdditionalAction: true, additionalActionName: 'showSupplierOpenPO' }) );
-    this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Action", isActionColumn: true, customStyling: 'center column-width-100', actions: [
-      new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'adjustOpeningQuantity', icon: 'fa fa-adjust' })
+    this.columns.push( new DataColumn({ headerText: "Code", value: "Code", columnName: 'PartCode', sortable: true }) );
+    this.columns.push( new DataColumn({ headerText: "Description", value: "Description", columnName: 'PartDescription', sortable: true, customStyling: 'column-width-150' }) );
+    this.columns.push( new DataColumn({ headerText: "Opening Qty", value: "OpeningQty", columnName: 'OpeningQty' }) );
+    this.columns.push( new DataColumn({ headerText: "Open + In Hand", value: "QuantityInHand", columnName: 'OpenInHandQty', sortable: false, hasAdditionalAction: true, additionalActionName: 'showLatestShipments' }) );
+    this.columns.push( new DataColumn({ headerText: "In Transit", value: "IntransitQty", columnName: 'InTransitQty', sortable: false, hasAdditionalAction: true, additionalActionName: 'showInTransitQty' }) );
+    this.columns.push( new DataColumn({ headerText: "Open Order", value: "OpenOrderQty", columnName: 'OpenOrder', isEditable: false, sortable: false, hasAdditionalAction: true, additionalActionName: 'showOpenOrders' }) );
+    this.columns.push( new DataColumn({ headerText: "Safe Qty", value: "SafeQty", columnName: 'SafeQty', sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Supp Open PO", value: "SupplierOpenPoQty", columnName: 'SupplierOpenPO', sortable: false, hasAdditionalAction: true, additionalActionName: 'showSupplierOpenPO' }) );
+    this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", columnName: 'MinQty', sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", columnName: 'MaxQty', sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Action", columnName: 'Action', value: "Action", isActionColumn: true, customStyling: 'center column-width-100', actions: [
+      new DataColumnAction({ actionText: 'Adjust', actionStyle: ClassConstants.Primary, event: 'adjustOpeningQuantity' })
     ] }) );
   }
 

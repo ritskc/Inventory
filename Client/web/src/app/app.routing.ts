@@ -86,6 +86,10 @@ export const routes: Routes = [
         loadChildren: './admin/invoice/invoice.module#InvoiceModule'
       },
       {
+        path: 'usermanagement',
+        loadChildren: './usermanagement/usermanagement.module#UsermanagementModule'
+      },
+      {
         path: 'barcode',
         loadChildren: './admin/barcode/barcode.module#BarcodeModule'
       },

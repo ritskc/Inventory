@@ -17,6 +17,7 @@ export class DataColumn {
     isDisabled: boolean = false;
     hasAdditionalAction: boolean = false;
     additionalActionName: string = '';
+    columnName: string = '';
 
     constructor(init?: Partial<DataColumn>) {
         Object.assign(this, init);
