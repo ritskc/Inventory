@@ -216,7 +216,11 @@ namespace DAL.Repository
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
 
-                        sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand - '{packingSlipDetail.Qty}'  WHERE id = '{packingSlipDetail.PartId}' ");
+                        if (packingSlip.IsInvoiceCreated)
+                            sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand - '{packingSlipDetail.Qty}', [CurrentPricingInEffectQty] = CurrentPricingInEffectQty - '{packingSlipDetail.Qty}' WHERE id = '{packingSlipDetail.PartId}' ");
+                        else
+                            sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand - '{packingSlipDetail.Qty}'  WHERE id = '{packingSlipDetail.PartId}' ");
+
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                         //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
@@ -284,6 +288,10 @@ namespace DAL.Repository
                         sql = string.Format($"UPDATE [dbo].[PackingSlipDetails]   SET [UnitPrice] = '{packingSlipDetail.UnitPrice}' ,[Price] = '{packingSlipDetail.Price}' ,[Surcharge] = '{packingSlipDetail.Surcharge}' ,[SurchargePerPound] = '{packingSlipDetail.SurchargePerPound}' ,[SurchargePerUnit] = '{packingSlipDetail.SurchargePerUnit}' ,[TotalSurcharge] = '{packingSlipDetail.TotalSurcharge}' WHERE Id = '{packingSlipDetail.Id}'");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
+
+                        sql = string.Format($"UPDATE [dbo].[PART]   SET [CurrentPricingInEffectQty] = CurrentPricingInEffectQty - '{packingSlipDetail.Qty}'  WHERE Id = '{packingSlipDetail.PartId}'");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
                     }
 
                     packingSlip.Total = packingSlip.SubTotal +  packingSlip.ShippingCharge + packingSlip.CustomCharge;
@@ -342,7 +350,12 @@ namespace DAL.Repository
                             await command.ExecuteNonQueryAsync();
                         }
 
+                        if (packingslip.IsInvoiceCreated)
+                            sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}', [CurrentPricingInEffectQty] = CurrentPricingInEffectQty + '{packingSlipDetail.Qty}' WHERE id = '{packingSlipDetail.PartId}' ");
+                        else
                             sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}'  WHERE id = '{packingSlipDetail.PartId}' ");
+
+
                             command.CommandText = sql;
                             await command.ExecuteNonQueryAsync();
                             //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
@@ -800,7 +813,13 @@ namespace DAL.Repository
                             await command.ExecuteNonQueryAsync();
                         }
 
+                        if (packingslip.IsInvoiceCreated)
+                            sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}', [CurrentPricingInEffectQty] = CurrentPricingInEffectQty + '{packingSlipDetail.Qty}' WHERE id = '{packingSlipDetail.PartId}' ");
+                        else
                             sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}'  WHERE id = '{packingSlipDetail.PartId}' ");
+
+
+                        //sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}'  WHERE id = '{packingSlipDetail.PartId}' ");
                             command.CommandText = sql;
                             await command.ExecuteNonQueryAsync();
                             //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
@@ -983,7 +1002,11 @@ namespace DAL.Repository
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
 
-                        sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand - '{packingSlipDetail.Qty}'  WHERE id = '{packingSlipDetail.PartId}' ");
+                        if (packingslip.IsInvoiceCreated)
+                            sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand - '{packingSlipDetail.Qty}', [CurrentPricingInEffectQty] = CurrentPricingInEffectQty - '{packingSlipDetail.Qty}' WHERE id = '{packingSlipDetail.PartId}' ");
+                        else
+                            sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand - '{packingSlipDetail.Qty}'  WHERE id = '{packingSlipDetail.PartId}' ");
+
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                         //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
