@@ -43,4 +43,19 @@ export class UsermanagementService {
   removeUser(id) {
     return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.usersUri }`);
   }
+
+  getAllReports() {
+    return this.apiService.get<any>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.userReportsUri }`);
+  }
+
+  getAReports(id) {
+    return this.apiService.get<any>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.userReportsUri }/${ id }`);
+  }
+
+  saveReports(report: any) {
+    if (report.id > 0) 
+      return this.apiService.put<any>(report, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.usersUri }/${ report.id }`);
+    else
+      return this.apiService.post<any>(report, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.usersUri }`);
+  }
 }

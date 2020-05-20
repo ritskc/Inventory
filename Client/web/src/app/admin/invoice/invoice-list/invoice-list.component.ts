@@ -100,8 +100,8 @@ export class InvoiceListComponent implements OnInit {
       this.columns.push( new DataColumn({ headerText: "Price", value: "rate", sortable: false, minWidth: true, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Total", value: "amount", sortable: false, minWidth: true, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Adj Qty", value: "amount", sortable: false, minWidth: true, customStyling: 'right' }) );
-      this.columns.push( new DataColumn({ headerText: "PO's", value: "purchaseOrderNumbers", sortable: false, minWidth: true, customStyling: 'right' }) );
-      this.columns.push( new DataColumn({ headerText: "PO Qty's", value: "purchaseOrderQty", sortable: false, minWidth: true, customStyling: 'right' }) );
+      // this.columns.push( new DataColumn({ headerText: "PO's", value: "purchaseOrderNumbers", sortable: false, minWidth: true, customStyling: 'right' }) );
+      // this.columns.push( new DataColumn({ headerText: "PO Qty's", value: "purchaseOrderQty", sortable: false, minWidth: true, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Excess Qty", value: "excessQty", sortable: false, minWidth: true, customStyling: 'right' }) );
     }
   }
@@ -145,7 +145,7 @@ export class InvoiceListComponent implements OnInit {
       this.filteredInvoices = [];
 
       invoicesForDetails.forEach(invoice => {
-        invoice.supplierInvoiceDetails.forEach(detail => {
+        invoice.supplierInvoiceGroupDetails.forEach(detail => {
           var viewModel = new InvoiceListDetailsViewModel();
           viewModel.invoiceNo = invoice.invoiceNo;
           viewModel.poNo = invoice.poNo;
@@ -156,10 +156,10 @@ export class InvoiceListComponent implements OnInit {
           viewModel.amount = detail.total;
           viewModel.adjustedQty = detail.adjustedQty;
           viewModel.excessQty = detail.excessQty;
-          detail.supplierInvoicePoDetails.forEach(item => {
-            viewModel.purchaseOrderNumbers += `${item.poNo}, `;
-            viewModel.purchaseOrderQty += `${item.qty}, `;
-          });
+          // detail.supplierInvoicePoDetails.forEach(item => {
+          //   viewModel.purchaseOrderNumbers += `${item.poNo}, `;
+          //   viewModel.purchaseOrderQty += `${item.qty}, `;
+          // });
           viewModel.purchaseOrderNumbers = viewModel.purchaseOrderNumbers.substring(0, viewModel.purchaseOrderNumbers.length - 2);
           viewModel.purchaseOrderQty = viewModel.purchaseOrderQty.substring(0, viewModel.purchaseOrderQty.length - 2);
           this.filteredInvoices.push(viewModel);

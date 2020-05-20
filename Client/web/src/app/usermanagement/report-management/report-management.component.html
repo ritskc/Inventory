@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="card-header">
+    <title>Reports Management</title>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <select style="margin-left: 15px;" class="form-control col-md-3 col-xs-3">
+        <option value="0">Select Report</option>
+        <option *ngFor="let menu of menus" [value]="menu.id">{{menu.value}}</option>
+      </select>
+      <select style="margin-left: 20px;" class="form-control col-md-3 col-xs-3">
+        <option value="0">Select Privilege</option>
+        <option *ngFor="let privilege of privileges" [value]="privilege.id">{{privilege.name}}</option>
+      </select>
+    </div>
+    <div style="margin-top: 20px;" class="col-md-6 col-xs-6">
+      <simple-grid [exportRequired]="false" [addRequired]="false" [columns]="gridColumns" [data]="data"></simple-grid>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-primary" (click)="saveReport()">Save</button>
+  </div>
+</div>
+
+<loader></loader>

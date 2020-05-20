@@ -56,7 +56,10 @@ export class SupplierService {
     return this.apiService.get(`${this.configService.Settings.apiServerHost}/${this.configService.Settings.entityTracker}/po/${companyId}/${ date }`)
   }
 
-  getPurchaseReport(companyId: number, from: string, to: string): Observable<any[]> {
+  getPurchaseReport(companyId: number, from: string, to: string, showSummary: boolean): Observable<any[]> {
+    if (showSummary) {
+      return this.apiService.get(`${this.configService.Settings.apiServerHost}/reports/purchasesummary/${companyId}/${ from }/${ to }`);
+    }
     return this.apiService.get(`${this.configService.Settings.apiServerHost}/reports/purchase/${companyId}/${ from }/${ to }`);
   }
 

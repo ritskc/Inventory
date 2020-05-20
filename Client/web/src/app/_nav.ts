@@ -183,8 +183,8 @@ if (environment.isSupplier) {
         //   icon: 'icon-user'
         // },
         // {
-        //   name: 'Privilages',
-        //   url: '/admin',
+        //   name: 'Reports',
+        //   url: '/usermanagement/reports-management',
         //   icon: 'icon-user'
         // }
       ]

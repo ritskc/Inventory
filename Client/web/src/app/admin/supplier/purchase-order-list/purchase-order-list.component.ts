@@ -63,6 +63,7 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns = [];
     this.gridColumns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", isLink: true, sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Part Code", value: "partCode", columnName: 'PartCode' }) );
@@ -121,6 +122,7 @@ export class PurchaseOrderListComponent implements OnInit {
                 viewModel.inTransitQty = detail.inTransitQty;
                 viewModel.forceClosed = detail.isForceClosed;
                 viewModel.openQty = detail.qty - (viewModel.inTransitQty + viewModel.receivedQty);
+                viewModel.invoiceNo = detail.invoiceNo;
                 this.purchaseOrderViewModels.push(viewModel);
               });
             } else {
@@ -236,4 +238,5 @@ class SupplierPurchaseOrderViewModel {
   isAcknowledged: boolean;
   forceClosed: boolean;
   openQty: number;
+  invoiceNo: string;
 }

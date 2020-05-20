@@ -59,6 +59,7 @@ export class PurchaseOrderDetail {
     isForceClosed: boolean = false;
     packingSlipNo: string = '';
     shippingDate: string;
+    invoiceNo: string = '';
 }
 
 export class PurchaseOrderTerm {
