@@ -275,6 +275,13 @@ export class CreateShipmentComponent implements OnInit {
       selectedPartCode = this.partCode;
     }
     var selectedPartForAdd = this.parts.find(p => p.id == selectedPartCode);
+
+    if (this.quantity > selectedPartForAdd.currentPricingInEffectQty) {
+      if (!confirm('The quantity you are adding exceeds effective pricing quantity. Are you sure to add?')) {
+        return;
+      }
+    }
+
     packagingSlipDetail.partId = selectedPartCode;
     packagingSlipDetail.partDescription = selectedPartForAdd.description;
     packagingSlipDetail.orderNo = this.blankOrder? this.OrderNo : this.customerPurchaseOrders.find(o => o.id == this.orderId).poNo;

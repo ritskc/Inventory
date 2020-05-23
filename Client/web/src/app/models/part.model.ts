@@ -28,6 +28,8 @@ export class Part {
     supplierOpenPoQty: number = 0;
     supplierCode: string = '';
     isRepackage: boolean;
+    futurePrice: number = 0;
+    currentPricingInEffectQty: number = 0;
     
     partSupplierAssignments: PartSupplierAssignment[];
     partCustomerAssignments: PartCustomerAssignment[];

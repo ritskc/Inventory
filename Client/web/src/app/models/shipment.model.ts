@@ -59,4 +59,5 @@ export class PackingSlipDetail {
     srNo: number = 0;
     partDetail: Part;
     SupplierInvoiceOpenQty: number = 0;
+    hasPartQuantityExceedingLimit: boolean = false;
 }

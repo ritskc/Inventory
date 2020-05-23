@@ -101,6 +101,7 @@ export class CompanyInvoiceComponent implements OnInit {
       var part = this.parts.find(p => p.id == detail.partId);
       detail.partCode = part.code;
       detail.partDescription = part.description;
+      detail.hasPartQuantityExceedingLimit = detail.qty > part.currentPricingInEffectQty;
     });
   }
 
@@ -109,6 +110,17 @@ export class CompanyInvoiceComponent implements OnInit {
   }
 
   createInvoice() {
+    var hasPartsExceedingLimit = '';
+    this.selectedShipment.packingSlipDetails.forEach(detail => {
+      if (detail.hasPartQuantityExceedingLimit)
+        hasPartsExceedingLimit += detail.partDescription + ', ';
+    });
+
+    if (hasPartsExceedingLimit) {
+      if (!confirm(`The parts ${ hasPartsExceedingLimit } has quantities which might change the price. Are you sure to continue?`))
+        return;
+    }
+
     this.loaderService.show();
     this.invoiceService.createCustomerInvoice(this.selectedShipment)
         .subscribe((result) => {

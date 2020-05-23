@@ -20,18 +20,30 @@
                         <div *ngIf="f.description.errors.required">Description is required</div>
                       </div>
                     </div>
-                    <div class="form-group standard-top-margin">
-                      <label>Weight (Kgs)</label>
-                      <input type="text" formControlName="weightInKg" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.weightInKg.errors }" [(ngModel)]="part.weightInKg"/>
-                      <div *ngIf="submitted && f.weightInKg.errors" class="invalid-feedback">
-                        <div *ngIf="f.weightInKg.errors.required">Weight in Kgs is required</div>
+                    <div class="row">
+                      <div class="form-group col-md-6 col-xs-6 standard-top-margin">
+                        <label>Weight (Kgs)</label>
+                        <input type="text" formControlName="weightInKg" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.weightInKg.errors }" [(ngModel)]="part.weightInKg"/>
+                        <div *ngIf="submitted && f.weightInKg.errors" class="invalid-feedback">
+                          <div *ngIf="f.weightInKg.errors.required">Weight in Kgs is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-6 col-xs-6 standard-top-margin">
+                        <label>Weight (Lbs)</label>
+                        <input type="text" formControlName="weightInLb" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.weightInLb.errors }" [(ngModel)]="part.weightInLb"/>
+                        <div *ngIf="submitted && f.weightInLb.errors" class="invalid-feedback">
+                          <div *ngIf="f.weightInLb.errors.required">Weight in Lbs is required</div>
+                        </div>
                       </div>
                     </div>
-                    <div class="form-group standard-top-margin">
-                      <label>Weight (Lbs)</label>
-                      <input type="text" formControlName="weightInLb" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.weightInLb.errors }" [(ngModel)]="part.weightInLb"/>
-                      <div *ngIf="submitted && f.weightInLb.errors" class="invalid-feedback">
-                        <div *ngIf="f.weightInLb.errors.required">Weight in Lbs is required</div>
+                    <div class="row">
+                      <div class="form-group col-md-6 col-xs-6 standard-top-margin">
+                        <label>Future Pricing</label>
+                        <input type="text" formControlName="futurePrice" class="form-control" [(ngModel)]="part.futurePrice"/>
+                      </div>
+                      <div class="form-group col-md-6 col-xs-6 standard-top-margin">
+                        <label>Effective Quantity Pricing</label>
+                        <input type="text" formControlName="currentPricingInEffectQty" class="form-control" [(ngModel)]="part.currentPricingInEffectQty"/>
                       </div>
                     </div>
                 </div>
