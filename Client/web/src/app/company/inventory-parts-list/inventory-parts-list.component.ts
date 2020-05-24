@@ -36,6 +36,8 @@ export class InventoryPartsListComponent implements OnInit {
   adjustedQty: number = 0;
   dataForModal: any;
   dataForSecondaryGridInModal: any;
+  monthlyCustomer: boolean = false;
+  showOtherColumns: boolean = false;
 
   constructor(private service: PartsService, private companyService: CompanyService, private httpLoaderService: httpLoaderService, private customerService: CustomerService,
     private supplierService: SupplierService, private httpLoader: httpLoaderService, private toastr: ToastrManager, private route: Router) { }
@@ -47,19 +49,33 @@ export class InventoryPartsListComponent implements OnInit {
   }
 
   initializeGridColumns() {
-    this.columns.push( new DataColumn({ headerText: "Code", value: "Code", columnName: 'PartCode', sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Description", value: "Description", columnName: 'PartDescription', sortable: true, customStyling: 'column-width-150' }) );
-    this.columns.push( new DataColumn({ headerText: "Opening Qty", value: "OpeningQty", columnName: 'OpeningQty' }) );
-    this.columns.push( new DataColumn({ headerText: "Open + In Hand", value: "QuantityInHand", columnName: 'OpenInHandQty', sortable: false, hasAdditionalAction: true, additionalActionName: 'showLatestShipments' }) );
-    this.columns.push( new DataColumn({ headerText: "In Transit", value: "IntransitQty", columnName: 'InTransitQty', sortable: false, hasAdditionalAction: true, additionalActionName: 'showInTransitQty' }) );
-    this.columns.push( new DataColumn({ headerText: "Open Order", value: "OpenOrderQty", columnName: 'OpenOrder', isEditable: false, sortable: false, hasAdditionalAction: true, additionalActionName: 'showOpenOrders' }) );
-    this.columns.push( new DataColumn({ headerText: "Safe Qty", value: "SafeQty", columnName: 'SafeQty', sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Supp Open PO", value: "SupplierOpenPoQty", columnName: 'SupplierOpenPO', sortable: false, hasAdditionalAction: true, additionalActionName: 'showSupplierOpenPO' }) );
-    this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", columnName: 'MinQty', sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", columnName: 'MaxQty', sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "Action", columnName: 'Action', value: "Action", isActionColumn: true, customStyling: 'center column-width-100', actions: [
-      new DataColumnAction({ actionText: 'Adjust', actionStyle: ClassConstants.Primary, event: 'adjustOpeningQuantity' })
-    ] }) );
+    this.columns = [];
+    if (this.showOtherColumns || !this.monthlyCustomer) {
+      this.columns.push( new DataColumn({ headerText: "Code", value: "Code", columnName: 'PartCode', sortable: true }) );
+      this.columns.push( new DataColumn({ headerText: "Description", value: "Description", columnName: 'PartDescription', sortable: true, customStyling: 'column-width-150' }) );
+      this.columns.push( new DataColumn({ headerText: "Opening Qty", value: "OpeningQty", columnName: 'OpeningQty' }) );
+      this.columns.push( new DataColumn({ headerText: "Open + In Hand", value: "QuantityInHand", columnName: 'OpenInHandQty', sortable: false, hasAdditionalAction: true, additionalActionName: 'showLatestShipments' }) );
+      this.columns.push( new DataColumn({ headerText: "In Transit", value: "IntransitQty", columnName: 'InTransitQty', sortable: false, hasAdditionalAction: true, additionalActionName: 'showInTransitQty' }) );
+      this.columns.push( new DataColumn({ headerText: "Open Order", value: "OpenOrderQty", columnName: 'OpenOrder', isEditable: false, sortable: false, hasAdditionalAction: true, additionalActionName: 'showOpenOrders' }) );
+      this.columns.push( new DataColumn({ headerText: "Safe Qty", value: "SafeQty", columnName: 'SafeQty', sortable: false }) );
+      this.columns.push( new DataColumn({ headerText: "Supp Open PO", value: "SupplierOpenPoQty", columnName: 'SupplierOpenPO', sortable: false, hasAdditionalAction: true, additionalActionName: 'showSupplierOpenPO' }) );
+      this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", columnName: 'MinQty', sortable: false }) );
+      this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", columnName: 'MaxQty', sortable: false }) );
+      this.columns.push( new DataColumn({ headerText: "Action", columnName: 'Action', value: "Action", isActionColumn: true, customStyling: 'center column-width-100', actions: [
+        new DataColumnAction({ actionText: 'Adjust', actionStyle: ClassConstants.Primary, event: 'adjustOpeningQuantity' })
+      ] }) );
+    } else {
+      this.columns.push( new DataColumn({ headerText: "Code", value: "Code", columnName: 'PartCode', sortable: true }) );
+      this.columns.push( new DataColumn({ headerText: "Description", value: "Description", columnName: 'PartDescription', sortable: true, customStyling: 'column-width-150' }) );
+      this.columns.push( new DataColumn({ headerText: "Opening Qty", value: "monthlyOpeningQty", columnName: 'OpeningQty', sortable: false, hasAdditionalAction: true, additionalActionName: 'showLatestShipments' }) );
+      this.columns.push( new DataColumn({ headerText: "Shipped", value: "shippedQty", columnName: 'Shipped' }) );
+      this.columns.push( new DataColumn({ headerText: "Invoiced", value: "invoiceQty", columnName: 'Invoiced' }) );
+      this.columns.push( new DataColumn({ headerText: "Return Qty", value: "monthlyReturnQty", columnName: 'ReturnQty' }) );
+      this.columns.push( new DataColumn({ headerText: "Excess Qty", value: "monthlyExcessQty", columnName: 'ExcessQty' }) );
+      this.columns.push( new DataColumn({ headerText: "Reject Qty", value: "monthlyRejectQty", columnName: 'RejectQty' }) );
+      this.columns.push( new DataColumn({ headerText: "In Transit", value: "IntransitQty", columnName: 'InTransitQty', sortable: false, hasAdditionalAction: true, additionalActionName: 'showInTransitQty' }) );
+      this.columns.push( new DataColumn({ headerText: "Closing Qty", value: "monthlyClosingQty", columnName: 'ClosingQty' }) );
+    }
   }
 
   getAllPartsForCompany() {
@@ -158,6 +174,8 @@ export class InventoryPartsListComponent implements OnInit {
           partsToDisplay.push(new PartsViewModel(part));
         });
         this.parts = partsToDisplay;
+        this.monthlyCustomer = this.filter.find(c => c.id == selectedValue).invoicingtypeid == 3;
+        this.initializeGridColumns();
       });
     } else {
       observable.subscribe((parts) => {
@@ -273,5 +291,9 @@ export class InventoryPartsListComponent implements OnInit {
     .subscribe(data => {
       this.dataForSecondaryGridInModal = data;
     });
+  }
+
+  showOtherColumnsForInventory() {
+    this.initializeGridColumns();
   }
 }

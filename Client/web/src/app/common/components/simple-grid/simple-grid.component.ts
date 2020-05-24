@@ -106,6 +106,10 @@ export class SimpleGridComponent implements OnInit, OnChanges {
     this.pageSizeSelected();
   }
 
+  toggleColumns() {
+    
+  }
+
   isNotSortedOnThisColumn(columnName: string) {
     return columnName != this.currentSortColumnName;
   }

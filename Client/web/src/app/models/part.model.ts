@@ -30,6 +30,14 @@ export class Part {
     isRepackage: boolean;
     futurePrice: number = 0;
     currentPricingInEffectQty: number = 0;
+    monthlyClosingQty: number = 0;
+    monthlyExcessQty: number = 0;
+    monthlyForecastQty: number = 0;
+    monthlyOpeningQty: number = 0;
+    monthlyRejectQty: number = 0;
+    monthlyReturnQty: number = 0;
+    invoiceQty: number = 0;
+    shippedQty: number = 0;
     
     partSupplierAssignments: PartSupplierAssignment[];
     partCustomerAssignments: PartCustomerAssignment[];
@@ -112,5 +120,37 @@ export class PartsViewModel {
 
     get SupplierOpenPoQty(): number {
         return this.part.supplierOpenPoQty;
+    }
+
+    get monthlyClosingQty(): number {
+        return this.part.monthlyClosingQty;
+    }
+
+    get monthlyExcessQty() : number {
+        return this.part.monthlyExcessQty;
+    }
+
+    get monthlyForecastQty() : number {
+        return this.part.monthlyForecastQty;
+    };
+
+    get monthlyOpeningQty() : number {
+        return this.part.monthlyOpeningQty;
+    };
+    
+    get monthlyRejectQty(): number {
+        return this.part.monthlyRejectQty;
+    };
+    
+    get monthlyReturnQty(): number {
+        return this.part.monthlyReturnQty;
+    };
+
+    get invoiceQty(): number {
+        return this.part.invoiceQty;
+    }
+
+    get shippedQty(): number {
+        return this.part.shippedQty;
     }
 }
