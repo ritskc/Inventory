@@ -32,17 +32,17 @@ namespace DAL.Repository
             if (userInfo.UserTypeId == 1)
             {
                 commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] FROM [part] where CompanyId = '{0}' ", companyId);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty] FROM [part] where CompanyId = '{0}' ", companyId);
             }
             if (userInfo.UserTypeId == 2)
             {
                 string companylist = string.Join(",", userInfo.CompanyIds);
-                commandText = string.Format($"SELECT PM.[id],[Code],PM.[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty], [DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] FROM [part] PM INNER JOIN partcustomerassignment PCA ON PCA.PartId = PM.id where CompanyId = '{companyId}' AND PCA.CustomerId IN ({companylist}) ");
+                commandText = string.Format($"SELECT PM.[id],[Code],PM.[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty], [DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty] FROM [part] PM INNER JOIN partcustomerassignment PCA ON PCA.PartId = PM.id where CompanyId = '{companyId}' AND PCA.CustomerId IN ({companylist}) ");
             }
             if (userInfo.UserTypeId == 3)
             {
                 string companylist = string.Join(",", userInfo.CompanyIds);
-                commandText = string.Format($"SELECT PM.[id],[Code],PM.[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty], [DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],PM.[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] FROM [part] PM INNER JOIN partsupplierassignment PCA ON PCA.PartId = PM.id where CompanyId ='{companyId}' AND PCA.SupplierID IN ({companylist}) ");
+                commandText = string.Format($"SELECT PM.[id],[Code],PM.[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty], [DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],PM.[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty] FROM [part] PM INNER JOIN partsupplierassignment PCA ON PCA.PartId = PM.id where CompanyId ='{companyId}' AND PCA.SupplierID IN ({companylist}) ");
             }
 
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);           
@@ -81,6 +81,9 @@ namespace DAL.Repository
                     part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
                     part.FuturePrice = Convert.ToDecimal(dataReader["FuturePrice"]);
                     part.CurrentPricingInEffectQty = Convert.ToInt32(dataReader["CurrentPricingInEffectQty"]);
+                    part.MonthlyOpeningQty = Convert.ToInt32(dataReader["MonthlyOpeningQty"]);
+                    part.MonthlyReturnQty = Convert.ToInt32(dataReader["MonthlyReturnQty"]);
+                    part.MonthlyRejectQty = Convert.ToInt32(dataReader["MonthlyRejectQty"]);
 
                     parts.Add(part);
                 }
@@ -202,7 +205,7 @@ namespace DAL.Repository
                     dataReader1.Close();
                 }
                 conn.Close();
-            }
+            }        
 
             return parts.OrderBy(x=>x.Code);
         }
@@ -213,7 +216,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] FROM [part] where id = '{0}' ", partId);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] ,[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty] FROM [part] where id = '{0}' ", partId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -248,6 +251,9 @@ namespace DAL.Repository
                     part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
                     part.FuturePrice = Convert.ToDecimal(dataReader["FuturePrice"]);
                     part.CurrentPricingInEffectQty = Convert.ToInt32(dataReader["CurrentPricingInEffectQty"]);
+                    part.MonthlyOpeningQty = Convert.ToInt32(dataReader["MonthlyOpeningQty"]);
+                    part.MonthlyReturnQty = Convert.ToInt32(dataReader["MonthlyReturnQty"]);
+                    part.MonthlyRejectQty = Convert.ToInt32(dataReader["MonthlyRejectQty"]);
                 }
                 conn.Close();
             }
@@ -319,7 +325,7 @@ namespace DAL.Repository
             var part = new Part();            
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] FROM [part] where id = '{0}' ", partId);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] ,[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty] FROM [part] where id = '{0}' ", partId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
             {
@@ -352,6 +358,9 @@ namespace DAL.Repository
                     part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
                     part.FuturePrice = Convert.ToDecimal(dataReader["FuturePrice"]);
                     part.CurrentPricingInEffectQty = Convert.ToInt32(dataReader["CurrentPricingInEffectQty"]);
+                    part.MonthlyOpeningQty = Convert.ToInt32(dataReader["MonthlyOpeningQty"]);
+                    part.MonthlyReturnQty = Convert.ToInt32(dataReader["MonthlyReturnQty"]);
+                    part.MonthlyRejectQty = Convert.ToInt32(dataReader["MonthlyRejectQty"]);
                 }
                 dataReader.Close();
             }
@@ -424,7 +433,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] FROM [part] where id = '{0}' ", partId);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] ,[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty] FROM [part] where id = '{0}' ", partId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -459,6 +468,9 @@ namespace DAL.Repository
                     part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
                     part.FuturePrice = Convert.ToDecimal(dataReader["FuturePrice"]);
                     part.CurrentPricingInEffectQty = Convert.ToInt32(dataReader["CurrentPricingInEffectQty"]);
+                    part.MonthlyOpeningQty = Convert.ToInt32(dataReader["MonthlyOpeningQty"]);
+                    part.MonthlyReturnQty = Convert.ToInt32(dataReader["MonthlyReturnQty"]);
+                    part.MonthlyRejectQty = Convert.ToInt32(dataReader["MonthlyRejectQty"]);
                 }
                 conn.Close();
             }
@@ -530,9 +542,8 @@ namespace DAL.Repository
             var parts = new List<PartInTransit>();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-            var commandText = string.Format("SELECT 	[Code] ,[Description] ,[InvoiceNo] ,[InvoiceDate] ,[ETA] ,[PoNo],[SrNo] ,[PartId],[Qty],[Name] as SupplierName " +
-                "FROM [SupplierInvoiceDetails] SID   INNER JOIN [SupplierInvoiceMaster] SIM ON SID.InvoiceId = SIM.Id  INNER JOIN [part] P ON P.id = SID.PartId  INNER JOIN [supplier] S ON S.id = SIM.SupplierId  " +
-                "where (IsBoxReceived = 0 OR IsBoxReceived IS NULL) AND SIM.CompanyId = '{0}' AND PartId = '{1}' ",companyId, partId);
+            var commandText = string.Format("SELECT 	[Code] ,[Description] ,[InvoiceNo] ,[InvoiceDate] ,[ETA] ,SIPD.[PoNo],[SrNo] ,SID.[PartId],SID.[Qty],[Name] as SupplierName FROM [SupplierInvoiceDetails] SID   INNER JOIN [SupplierInvoiceMaster] SIM ON SID.InvoiceId = SIM.Id  INNER JOIN [part] P ON P.id = SID.PartId  INNER JOIN [supplier] S ON S.id = SIM.SupplierId INNER JOIN [SupplierInvoicePoDetails] SIPD  ON SID.ID = SIPD.InvoiceDetailId   where (IsBoxReceived = 0 OR IsBoxReceived IS NULL) " +
+                "AND SIM.CompanyId = '{0}' AND SID.PartId = '{1}' ", companyId, partId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -720,13 +731,76 @@ namespace DAL.Repository
             return parts;
         }
 
+        public async Task<IEnumerable<PartTotalShipment>> GetPartTotalShipmentAsync(long partId)
+        {
+            var parts = new List<PartTotalShipment>();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format("SELECT  ISNULL(SUM([Qty]),0) ShippedQty,ISNULL(SUM(ExcessQty),0) MonthlyExcessQty FROM  [dbo].[PackingSlipDetails] WHERE PARTID = {0};", partId);
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var part = new PartTotalShipment();
+
+                    part.ShippedQty = Convert.ToInt32(dataReader["ShippedQty"]);                    
+                    part.MonthlyExcessQty = Convert.ToInt32(dataReader["MonthlyExcessQty"]);
+
+                    parts.Add(part);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+
+            return parts;
+        }
+
+        public async Task<IEnumerable<PartTotalInvoiceQty>> GetPartTotalInvoiceQtyAsync(long partId)
+        {
+            var parts = new List<PartTotalInvoiceQty>();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format("SELECT  ISNULL(SUM([Qty]),0) InvoiceQty FROM  [dbo].[InvoiceDetails] WHERE PARTID =  {0};", partId);
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var part = new PartTotalInvoiceQty();
+
+                    part.InvoiceQty = Convert.ToInt32(dataReader["InvoiceQty"]);                    
+
+                    parts.Add(part);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+
+            return parts;
+        }
+
         public async Task<Part> GetPartByNameAsync(int companyId,string name)
         {
             var part = new Part();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] FROM [part] where companyId = '{0}'  and Code = '{1}'", companyId,name);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty] FROM [part] where companyId = '{0}'  and Code = '{1}'", companyId,name);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -760,6 +834,9 @@ namespace DAL.Repository
                     part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
                     part.FuturePrice = Convert.ToDecimal(dataReader["FuturePrice"]);
                     part.CurrentPricingInEffectQty = Convert.ToInt32(dataReader["CurrentPricingInEffectQty"]);
+                    part.MonthlyOpeningQty = Convert.ToInt32(dataReader["MonthlyOpeningQty"]);
+                    part.MonthlyReturnQty = Convert.ToInt32(dataReader["MonthlyReturnQty"]);
+                    part.MonthlyRejectQty = Convert.ToInt32(dataReader["MonthlyRejectQty"]);
 
                 }
                 conn.Close();
@@ -833,7 +910,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
             
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] FROM [part]   where id in (SELECT[PartID] FROM[partsupplierassignment]  where[SupplierID] = '{0}' and REPLACE(Mapcode,' ','') = '{1}')", supplierId, mapCode.Replace(" ",""));
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty] FROM [part]   where id in (SELECT[PartID] FROM[partsupplierassignment]  where[SupplierID] = '{0}' and REPLACE(Mapcode,' ','') = '{1}')", supplierId, mapCode.Replace(" ",""));
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -867,6 +944,9 @@ namespace DAL.Repository
                     part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
                     part.FuturePrice = Convert.ToDecimal(dataReader["FuturePrice"]);
                     part.CurrentPricingInEffectQty = Convert.ToInt32(dataReader["CurrentPricingInEffectQty"]);
+                    part.MonthlyOpeningQty = Convert.ToInt32(dataReader["MonthlyOpeningQty"]);
+                    part.MonthlyReturnQty = Convert.ToInt32(dataReader["MonthlyReturnQty"]);
+                    part.MonthlyRejectQty = Convert.ToInt32(dataReader["MonthlyRejectQty"]);
                 }
                 conn.Close();
             }
@@ -940,7 +1020,7 @@ namespace DAL.Repository
 
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[IntransitQty],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] FROM [part]   where id in (SELECT[PartID] FROM[partsupplierassignment]  where[SupplierID] = '{0}')", supplierId);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[IntransitQty],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] ,[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty] FROM [part]   where id in (SELECT[PartID] FROM[partsupplierassignment]  where[SupplierID] = '{0}')", supplierId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -977,6 +1057,9 @@ namespace DAL.Repository
                     part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
                     part.FuturePrice = Convert.ToDecimal(dataReader["FuturePrice"]);
                     part.CurrentPricingInEffectQty = Convert.ToInt32(dataReader["CurrentPricingInEffectQty"]);
+                    part.MonthlyOpeningQty = Convert.ToInt32(dataReader["MonthlyOpeningQty"]);
+                    part.MonthlyReturnQty = Convert.ToInt32(dataReader["MonthlyReturnQty"]);
+                    part.MonthlyRejectQty = Convert.ToInt32(dataReader["MonthlyRejectQty"]);
 
                     parts.Add(part);
                 }
@@ -1055,7 +1138,7 @@ namespace DAL.Repository
 
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                 "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[IntransitQty],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] FROM [part]   where id in (SELECT[PartID] FROM[partcustomerassignment]  where[CustomerID] = '{0}')", customerId);
+                 "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[IntransitQty],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] ,[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty] FROM [part]   where id in (SELECT[PartID] FROM[partcustomerassignment]  where[CustomerID] = '{0}')", customerId);
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
                 cmd.CommandType = CommandType.Text;
@@ -1091,6 +1174,9 @@ namespace DAL.Repository
                     part.SupplierCode = Convert.ToString(dataReader["SupplierCode"]);
                     part.FuturePrice = Convert.ToDecimal(dataReader["FuturePrice"]);
                     part.CurrentPricingInEffectQty = Convert.ToInt32(dataReader["CurrentPricingInEffectQty"]);
+                    part.MonthlyOpeningQty = Convert.ToInt32(dataReader["MonthlyOpeningQty"]);
+                    part.MonthlyReturnQty = Convert.ToInt32(dataReader["MonthlyReturnQty"]);
+                    part.MonthlyRejectQty = Convert.ToInt32(dataReader["MonthlyRejectQty"]);
 
                     parts.Add(part);
                 }
@@ -1190,7 +1276,7 @@ namespace DAL.Repository
                     if (part.DrawingFileName == null)
                         part.DrawingFileName = string.Empty;
 
-                    string sql = string.Format($"INSERT INTO [dbo].[part]   ([Code]   ,[Description]   ,[CompanyId]   ,[WeightInKg]   ,[WeightInLb]   ,[IsSample]   ,[MinQty]   ,[MaxQty]   ,[OpeningQty],[SafeQty],[DrawingNo]   ,[DrawingUploaded]   ,[DrawingFileName]   ,[IsActive]   ,[Location],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty])     VALUES   ('{part.Code.Replace("'", "''")}'   ,'{part.Description.Replace("'", "''")}'   ,'{part.CompanyId}'   ,'{part.WeightInKg}'   ,'{part.WeightInLb}'   ,'{part.IsSample}'   ,'{part.MinQty}'   ,'{part.MaxQty}'   ,'{part.OpeningQty}'   ,'{part.SafeQty}' ,'{part.DrawingNo}'   ,'{part.DrawingUploaded}'   ,'{part.DrawingFileName.Replace("'", "''")}'   ,'{part.IsActive}'   ,'{part.Location.Replace("'", "''")}','{part.MonthlyForecastQty}','{part.SupplierCode}','{part.IsRepackage}','{part.FuturePrice}','{part.CurrentPricingInEffectQty}')");
+                    string sql = string.Format($"INSERT INTO [dbo].[part]   ([Code]   ,[Description]   ,[CompanyId]   ,[WeightInKg]   ,[WeightInLb]   ,[IsSample]   ,[MinQty]   ,[MaxQty]   ,[OpeningQty],[SafeQty],[DrawingNo]   ,[DrawingUploaded]   ,[DrawingFileName]   ,[IsActive]   ,[Location],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] ,[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty])     VALUES   ('{part.Code.Replace("'", "''")}'   ,'{part.Description.Replace("'", "''")}'   ,'{part.CompanyId}'   ,'{part.WeightInKg}'   ,'{part.WeightInLb}'   ,'{part.IsSample}'   ,'{part.MinQty}'   ,'{part.MaxQty}'   ,'{part.OpeningQty}'   ,'{part.SafeQty}' ,'{part.DrawingNo}'   ,'{part.DrawingUploaded}'   ,'{part.DrawingFileName.Replace("'", "''")}'   ,'{part.IsActive}'   ,'{part.Location.Replace("'", "''")}','{part.MonthlyForecastQty}','{part.SupplierCode}','{part.IsRepackage}','{part.FuturePrice}','{part.CurrentPricingInEffectQty}','{part.MonthlyOpeningQty}','{part.MonthlyReturnQty}','{part.MonthlyRejectQty}')");
 
                     sql = sql + " Select Scope_Identity()";
                     command.CommandText = sql;
@@ -1383,6 +1469,42 @@ namespace DAL.Repository
             }
         }
 
+        public async Task UpdateMonthlyOpeningQtyByPartCodeAsync(int companyId, string partcode, int openingQty)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+
+                    var sql = string.Format($"UPDATE [part]   SET  [MonthlyOpeningQty] = '{openingQty}'  WHERE  Code= '{partcode}' AND CompanyId = '{companyId}'");
+
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    // Attempt to commit the transaction.
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
         public async Task UpdateOpeningQtyByPartIdAsync(int companyId, int partId, int openingQty)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
@@ -1404,6 +1526,42 @@ namespace DAL.Repository
                 {
 
                     var sql = string.Format($"UPDATE [part]   SET  [OpeningQty] = '{openingQty}'  WHERE  id= '{partId}' AND CompanyId = '{companyId}'");
+
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    // Attempt to commit the transaction.
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+        public async Task UpdateMonthlyOpeningQtyByPartIdAsync(int companyId, int partId, int openingQty)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+
+                    var sql = string.Format($"UPDATE [part]   SET  [MonthlyOpeningQty] = '{openingQty}'  WHERE  id= '{partId}' AND CompanyId = '{companyId}'");
 
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();

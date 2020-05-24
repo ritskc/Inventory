@@ -18,5 +18,6 @@ namespace DAL.Models
         public decimal Rate { get; set; }
         public bool SurchargeExist { get; set; }
         public decimal SurchargePerPound { get; set; }
+        public int Invoicingtypeid { get; set; }
     }
 }

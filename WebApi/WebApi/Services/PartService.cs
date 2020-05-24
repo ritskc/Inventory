@@ -43,7 +43,20 @@ namespace WebApi.Services
                 foreach (PartCustomerAssignment partCustomerAssignments in part.partCustomerAssignments)
                 {
                     partCustomerAssignments.CustomerName = customers.Where(x => x.Id == partCustomerAssignments.CustomerId).Select(x => x.Name).FirstOrDefault();
+                    partCustomerAssignments.Invoicingtypeid = customers.Where(x => x.Id == partCustomerAssignments.CustomerId).Select(x => x.Invoicingtypeid).FirstOrDefault();
                     part.CustomerPrice = partCustomerAssignments.Rate;
+
+                    if(partCustomerAssignments.Invoicingtypeid == 3)
+                    {
+
+                        var shipmentQtys = await this._partRepository.GetPartTotalShipmentAsync(part.Id);
+                        part.ShippedQty = shipmentQtys.Select(x => x.ShippedQty).FirstOrDefault();
+                        part.MonthlyExcessQty = shipmentQtys.Select(x => x.MonthlyExcessQty).FirstOrDefault();
+
+                        var invoiceQtys = await this._partRepository.GetPartTotalInvoiceQtyAsync(part.Id);
+                        part.InvoiceQty = invoiceQtys.Select(x => x.InvoiceQty).FirstOrDefault();                        
+                    }
+
                 }
             }
 
@@ -134,6 +147,16 @@ namespace WebApi.Services
         public async Task<IEnumerable<PartInTransit>> GetPartLatestReceivedAsync(long partId, int companyId)
         {
             return await Task.Run(() => this._partRepository.GetPartLatestReceivedAsync(partId, companyId));
+        }
+
+        public async Task UpdateMonthlyOpeningQtyByPartCodeAsync(int companyId, string partcode, int openingQty)
+        {
+            await Task.Run(() => this._partRepository.UpdateMonthlyOpeningQtyByPartCodeAsync(companyId, partcode, openingQty));
+        }
+
+        public async Task UpdateMonthlyOpeningQtyByPartIdAsync(int companyId, int partId, int openingQty)
+        {
+            await Task.Run(() => this._partRepository.UpdateMonthlyOpeningQtyByPartIdAsync(companyId, partId, openingQty));
         }
     }
 }

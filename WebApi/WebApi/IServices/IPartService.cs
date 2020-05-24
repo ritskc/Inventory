@@ -22,6 +22,10 @@ namespace WebApi.IServices
         Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int qtyInHand);
         Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand, string direction, string note);
 
+        Task UpdateMonthlyOpeningQtyByPartCodeAsync(int companyId, string partcode, int openingQty);       
+        Task UpdateMonthlyOpeningQtyByPartIdAsync(int companyId, int partId, int openingQty);
+
+
         Task<IEnumerable<PartInTransit>> GetPartInTransitDetailAsync(long partId, int companyId);
         Task<IEnumerable<PartOpenOrder>> GetPartOpenOrderDetailAsync(long partId, int companyId);
         Task<IEnumerable<PartLatestShipment>> GetPartLatestShipmentAsync(long partId, int companyId);

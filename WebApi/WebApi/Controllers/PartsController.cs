@@ -248,6 +248,8 @@ namespace WebApi.Controllers
             {
                 if (type.ToLower() == "OpeningQty".ToLower())
                     await this._partService.UpdateOpeningQtyByPartIdAsync(companyId, partId, qty);
+                else if (type.ToLower() == "MonthlyOpeningQty".ToLower())
+                    await this._partService.UpdateMonthlyOpeningQtyByPartIdAsync(companyId, partId, qty);
                 else if (type.ToLower() == "QtyInHand".ToLower())
                     await this._partService.UpdateQtyInHandByPartIdAsync(companyId, partId, qty);
                 else

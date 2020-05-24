@@ -16,4 +16,17 @@ namespace DAL.Models
         public DateTime ShippingDate { get; set; }
         public int Qty { get; set; }
     }
+
+    public class PartTotalShipment
+    {
+        //NAME as CustomerName ,[code],[Description],[PackingSlipNo],[ShippingDate],[QTY]
+        public int ShippedQty { get; set; }
+        public int MonthlyExcessQty { get; set; }
+    }
+
+    public class PartTotalInvoiceQty
+    {
+        //NAME as CustomerName ,[code],[Description],[PackingSlipNo],[ShippingDate],[QTY]
+        public int InvoiceQty { get; set; }        
+    }
 }

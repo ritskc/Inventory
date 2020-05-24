@@ -25,9 +25,14 @@ namespace DAL.IRepository
         Task UpdatePartSupplierPriceAsync(int companyId, string supplier, string partcode, decimal price);
 
         Task UpdateOpeningQtyByPartCodeAsync(int companyId, string partcode, int openingQty);
+        Task UpdateMonthlyOpeningQtyByPartCodeAsync(int companyId, string partcode, int openingQty);
         Task UpdateOpeningQtyByPartIdAsync(int companyId, int partId, int openingQty);
+        Task UpdateMonthlyOpeningQtyByPartIdAsync(int companyId, int partId, int openingQty);
         Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand);
         Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand, string direction, string note);
+
+        Task<IEnumerable<PartTotalShipment>> GetPartTotalShipmentAsync(long partId);
+        Task<IEnumerable<PartTotalInvoiceQty>> GetPartTotalInvoiceQtyAsync(long partId);
 
         Task<IEnumerable<PartInTransit>> GetPartInTransitDetailAsync(long partId, int companyId);
         Task<IEnumerable<PartOpenOrder>> GetPartOpenOrderDetailAsync(long partId, int companyId);

@@ -663,7 +663,7 @@ namespace DAL.Repository
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
 
-            var commandText = string.Format($"SELECT  [InvoiceId],[PartId],InvoiceNo ,sum(Qty-AdjustedInvoiceQty) OpenQty FROM [dbo].[SupplierInvoiceDetails] SID INNER JOIN SupplierInvoiceMaster SIM ON SIM.ID = SID.InvoiceId where PartId = '517' and companyid = 1 and ( Qty > AdjustedInvoiceQty) group by InvoiceId,partid,INVOICENO");
+            var commandText = string.Format($"SELECT  [InvoiceId],[PartId],InvoiceNo ,sum(Qty-AdjustedInvoiceQty) OpenQty FROM [dbo].[SupplierInvoiceDetails] SID INNER JOIN SupplierInvoiceMaster SIM ON SIM.ID = SID.InvoiceId where PartId = '{partId}' and companyid = '{companyId}'and ( Qty > AdjustedInvoiceQty) group by InvoiceId,partid,INVOICENO");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {

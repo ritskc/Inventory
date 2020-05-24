@@ -63,13 +63,13 @@ namespace WebApi.Services
 
                 if(!(supplierInvoice.DontImpactPO))
                     pos = await _poRepository.GetAllPosAsync(supplierInvoice.CompanyId,1);
-
-                List<string> supplierPos = supplierInvoice.PoNo.Split(',').ToList();
+                pos = pos.OrderBy(x => x.DueDate);
+                //List<string> supplierPos = supplierInvoice.PoNo.Split(',').ToList();
                 foreach (Po po in pos)
                 {
-                    if (po.IsClosed == false && po.SupplierId == supplierInvoice.SupplierId & supplierPos.Contains(po.PoNo))
+                    if (po.IsClosed == false && po.SupplierId == supplierInvoice.SupplierId)
                     {
-                        foreach (PoDetail poDetail in po.poDetails)
+                        foreach (PoDetail poDetail in po.poDetails.OrderBy(x => x.DueDate))
                         {
                             if (poDetail.PartId == part.Id && poDetail.IsClosed == false && poDetail.AckQty > poDetail.InTransitQty + poDetail.ReceivedQty)
                             {                    

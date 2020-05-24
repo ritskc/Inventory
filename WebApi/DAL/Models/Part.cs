@@ -33,7 +33,15 @@ namespace DAL.Models
         public decimal SupplierPrice { get; set; }
         public decimal CustomerPrice { get; set; }
         public string SupplierCode { get; set; }
-        
+
+        public int MonthlyOpeningQty { get; set; }
+        public int ShippedQty { get; set; }
+        public int InvoiceQty { get; set; }        
+        public int MonthlyExcessQty { get; set; }
+        public int MonthlyReturnQty { get; set; }
+        public int MonthlyRejectQty { get; set; }
+        public int MonthlyClosingQty { get; set; }
+
         public decimal FuturePrice { get; set; }
         public int CurrentPricingInEffectQty { get; set; }
 
