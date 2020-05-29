@@ -77,6 +77,11 @@ namespace WebApi.Services
             return await this.userRepository.GetUserPropertyAsync(userName);            
         }
 
+        public async Task<User> GetUserWithPasswordAsync(string userName)
+        {
+            return await this.userRepository.GetUserWithPasswordAsync(userName);
+        }
+
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return await this.userRepository.GetAllUsersAsync();

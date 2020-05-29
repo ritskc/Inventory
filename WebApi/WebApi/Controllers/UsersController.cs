@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.IServices;
 using DAL.Models;
+using WebApi.Utils;
+using WebApi.Settings;
+using Microsoft.Extensions.Options;
 
 namespace WebApi.Controllers
 {
@@ -15,11 +18,13 @@ namespace WebApi.Controllers
     [Route("[controller]")]    
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
+        private IUserService _userService;        
+        private readonly AppSettings appSettings;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IOptions<AppSettings> appSettings)
         {
             _userService = userService;
+            this.appSettings = appSettings.Value;
         }
 
         [AllowAnonymous]
@@ -77,6 +82,28 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpGet("{detail}/{forgotpassword}/{userName}")]
+        public async Task<ActionResult> GetUserDetail(string userName)
+        {
+            try
+            {
+                var result = await this._userService.GetUserWithPasswordAsync(userName);
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                EmailService emailService = new EmailService(appSettings);
+                emailService.SendUserDetailViaEmail(result);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
         [HttpGet("{id}/{userId}")]
         public async Task<ActionResult<User>> GetUser(int userId)
         {
@@ -106,7 +133,7 @@ namespace WebApi.Controllers
                 var users = _userService.GetAll();
                 var existUser = users.Where(x => x.UserName == user.UserName).FirstOrDefault();
 
-                if (users != null && existUser.UserName == user.UserName)
+                if (existUser != null && existUser.UserName == user.UserName)
                 {
                     return BadRequest("User already exist");
                 }

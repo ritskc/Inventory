@@ -54,7 +54,9 @@ namespace WebApi.Services
                         part.MonthlyExcessQty = shipmentQtys.Select(x => x.MonthlyExcessQty).FirstOrDefault();
 
                         var invoiceQtys = await this._partRepository.GetPartTotalInvoiceQtyAsync(part.Id);
-                        part.InvoiceQty = invoiceQtys.Select(x => x.InvoiceQty).FirstOrDefault();                        
+                        part.InvoiceQty = invoiceQtys.Select(x => x.InvoiceQty).FirstOrDefault();
+
+                        part.MonthlyClosingQty = part.MonthlyOpeningQty + part.ShippedQty - part.InvoiceQty;
                     }
 
                 }

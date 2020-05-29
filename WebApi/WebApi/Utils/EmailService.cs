@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -99,6 +100,28 @@ namespace WebApi.Utils
             {
 
             }
+        }
+
+        public void SendUserDetailViaEmail(User user)
+        {
+            string EmailBody = "";            
+            string EmailSubject = "User detail ";
+
+
+            EmailBody = "Hi " + user.FirstName + " " + user.LastName + "<br>";
+
+            EmailBody = EmailBody + "Here is your account detail " + "<br>";
+            
+
+            EmailBody = EmailBody + "Username: " + user.UserName + "<br>";
+            EmailBody = EmailBody + "Password: " + user.Password + "<br>";
+            EmailBody = EmailBody + "First name: " + user.FirstName + "<br>";
+            EmailBody = EmailBody + "Last name: " + user.LastName + "<br>";
+
+            EmailBody = EmailBody + "<br>" + "Warm Regards,";
+            EmailBody = EmailBody + "<br>" + "customer Care";
+
+            SendEmail(user.Email, EmailSubject, EmailBody);
         }
     }
 }

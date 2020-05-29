@@ -11,7 +11,7 @@ namespace WebApi.IServices
         User Authenticate(string username, string password);
         IEnumerable<User> GetAll();
         Task<User> GetUserAsync(string userName);
-
+        Task<User> GetUserWithPasswordAsync(string userName);
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User> GeUserbyIdAsync(int userId);
         Task AddUserAsync(User user);

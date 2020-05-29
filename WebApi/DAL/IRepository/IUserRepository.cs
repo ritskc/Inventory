@@ -10,6 +10,7 @@ namespace DAL.IRepository
     public interface IUserRepository
     {
         Task<User> GetUserPropertyAsync(string userName);
+        Task<User> GetUserWithPasswordAsync(string userName);
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User> GeUserbyIdAsync(int userId);
         Task AddUserAsync(User user);

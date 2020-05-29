@@ -1,0 +1,193 @@
+2020-05-29 10:46:59.7352||DEBUG|WebApi.Program|init main 
+2020-05-29 10:47:01.9338||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-29 10:47:19.1791||DEBUG|WebApi.Program|init main 
+2020-05-29 10:47:19.4988||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-29 10:47:19.7806|6|FATAL|Microsoft.AspNetCore.Hosting.Internal.WebHost|Application startup exception System.ArgumentException: There is an incomplete parameter in the route template. Check that each '{' character has a matching '}' character.
+Parameter name: routeTemplate ---> Microsoft.AspNetCore.Routing.Patterns.RoutePatternException: There is an incomplete parameter in the route template. Check that each '{' character has a matching '}' character.
+   at Microsoft.AspNetCore.Routing.Patterns.RoutePatternParser.Parse(String pattern)
+   at Microsoft.AspNetCore.Routing.Patterns.RoutePatternFactory.Parse(String pattern)
+   at Microsoft.AspNetCore.Routing.Template.TemplateParser.Parse(String routeTemplate)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Routing.Template.TemplateParser.Parse(String routeTemplate)
+   at Microsoft.AspNetCore.Mvc.ApplicationModels.InferParameterBindingInfoConvention.ParameterExistsInAnyRoute(ActionModel action, String parameterName)
+   at Microsoft.AspNetCore.Mvc.ApplicationModels.InferParameterBindingInfoConvention.InferBindingSourceForParameter(ParameterModel parameter)
+   at Microsoft.AspNetCore.Mvc.ApplicationModels.InferParameterBindingInfoConvention.InferParameterBindingSources(ActionModel action)
+   at Microsoft.AspNetCore.Mvc.ApplicationModels.InferParameterBindingInfoConvention.Apply(ActionModel action)
+   at Microsoft.AspNetCore.Mvc.ApplicationModels.ApiBehaviorApplicationModelProvider.OnProvidersExecuting(ApplicationModelProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.BuildModel()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.GetDescriptors()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.OnProvidersExecuting(ActionDescriptorProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.DefaultActionDescriptorCollectionProvider.UpdateCollection()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.DefaultActionDescriptorCollectionProvider.Initialize()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.DefaultActionDescriptorCollectionProvider.GetChangeToken()
+   at Microsoft.AspNetCore.Mvc.Internal.MvcEndpointDataSource.<>c__DisplayClass7_0.<.ctor>b__0()
+   at Microsoft.Extensions.Primitives.ChangeToken.OnChange(Func`1 changeTokenProducer, Action changeTokenConsumer)
+   at Microsoft.AspNetCore.Mvc.Internal.MvcEndpointDataSource..ctor(IActionDescriptorCollectionProvider actions, MvcEndpointInvokerFactory invokerFactory, ParameterPolicyFactory parameterPolicyFactory)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScoped(ScopedCallSite scopedCallSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitSingleton(SingletonCallSite singletonCallSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitIEnumerable(IEnumerableCallSite enumerableCallSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass1_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.GetService(Type serviceType, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at Microsoft.AspNetCore.Builder.MvcApplicationBuilderExtensions.UseMvc(IApplicationBuilder app, Action`1 configureRoutes)
+   at Microsoft.AspNetCore.Builder.MvcApplicationBuilderExtensions.UseMvc(IApplicationBuilder app)
+   at WebApi.Startup.Configure(IApplicationBuilder app, IHostingEnvironment env) in C:\Ritesh\Projects\Inventory\WebApi\WebApi\Startup.cs:line 163
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Hosting.ConventionBasedStartup.Configure(IApplicationBuilder app)
+   at Microsoft.AspNetCore.Mvc.Internal.MiddlewareFilterBuilderStartupFilter.<>c__DisplayClass0_0.<Configure>g__MiddlewareFilterBuilder|0(IApplicationBuilder builder)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISSetupFilter.<>c__DisplayClass4_0.<Configure>b__0(IApplicationBuilder app)
+   at Microsoft.AspNetCore.HostFilteringStartupFilter.<>c__DisplayClass0_0.<Configure>b__0(IApplicationBuilder app)
+   at Microsoft.AspNetCore.Hosting.Internal.AutoRequestServicesStartupFilter.<>c__DisplayClass0_0.<Configure>b__0(IApplicationBuilder builder)
+   at Microsoft.AspNetCore.Hosting.Internal.WebHost.BuildApplication()
+2020-05-29 10:47:19.9344|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-05-29 10:47:19.9621|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 27.8959ms 500 text/html; charset=utf-8 
+2020-05-29 10:47:47.1952||DEBUG|WebApi.Program|init main 
+2020-05-29 10:47:48.5479||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-29 10:48:22.8290||DEBUG|WebApi.Program|init main 
+2020-05-29 10:48:23.1909||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-29 10:48:23.4364|6|FATAL|Microsoft.AspNetCore.Hosting.Internal.WebHost|Application startup exception System.ArgumentException: There is an incomplete parameter in the route template. Check that each '{' character has a matching '}' character.
+Parameter name: routeTemplate ---> Microsoft.AspNetCore.Routing.Patterns.RoutePatternException: There is an incomplete parameter in the route template. Check that each '{' character has a matching '}' character.
+   at Microsoft.AspNetCore.Routing.Patterns.RoutePatternParser.Parse(String pattern)
+   at Microsoft.AspNetCore.Routing.Patterns.RoutePatternFactory.Parse(String pattern)
+   at Microsoft.AspNetCore.Routing.Template.TemplateParser.Parse(String routeTemplate)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Routing.Template.TemplateParser.Parse(String routeTemplate)
+   at Microsoft.AspNetCore.Mvc.ApplicationModels.InferParameterBindingInfoConvention.ParameterExistsInAnyRoute(ActionModel action, String parameterName)
+   at Microsoft.AspNetCore.Mvc.ApplicationModels.InferParameterBindingInfoConvention.InferBindingSourceForParameter(ParameterModel parameter)
+   at Microsoft.AspNetCore.Mvc.ApplicationModels.InferParameterBindingInfoConvention.InferParameterBindingSources(ActionModel action)
+   at Microsoft.AspNetCore.Mvc.ApplicationModels.InferParameterBindingInfoConvention.Apply(ActionModel action)
+   at Microsoft.AspNetCore.Mvc.ApplicationModels.ApiBehaviorApplicationModelProvider.OnProvidersExecuting(ApplicationModelProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.BuildModel()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.GetDescriptors()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionDescriptorProvider.OnProvidersExecuting(ActionDescriptorProviderContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.DefaultActionDescriptorCollectionProvider.UpdateCollection()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.DefaultActionDescriptorCollectionProvider.Initialize()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.DefaultActionDescriptorCollectionProvider.GetChangeToken()
+   at Microsoft.AspNetCore.Mvc.Internal.MvcEndpointDataSource.<>c__DisplayClass7_0.<.ctor>b__0()
+   at Microsoft.Extensions.Primitives.ChangeToken.OnChange(Func`1 changeTokenProducer, Action changeTokenConsumer)
+   at Microsoft.AspNetCore.Mvc.Internal.MvcEndpointDataSource..ctor(IActionDescriptorCollectionProvider actions, MvcEndpointInvokerFactory invokerFactory, ParameterPolicyFactory parameterPolicyFactory)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScoped(ScopedCallSite scopedCallSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitSingleton(SingletonCallSite singletonCallSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitIEnumerable(IEnumerableCallSite enumerableCallSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(IServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass1_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.GetService(Type serviceType, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at Microsoft.AspNetCore.Builder.MvcApplicationBuilderExtensions.UseMvc(IApplicationBuilder app, Action`1 configureRoutes)
+   at Microsoft.AspNetCore.Builder.MvcApplicationBuilderExtensions.UseMvc(IApplicationBuilder app)
+   at WebApi.Startup.Configure(IApplicationBuilder app, IHostingEnvironment env) in C:\Ritesh\Projects\Inventory\WebApi\WebApi\Startup.cs:line 163
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Hosting.ConventionBasedStartup.Configure(IApplicationBuilder app)
+   at Microsoft.AspNetCore.Mvc.Internal.MiddlewareFilterBuilderStartupFilter.<>c__DisplayClass0_0.<Configure>g__MiddlewareFilterBuilder|0(IApplicationBuilder builder)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISSetupFilter.<>c__DisplayClass4_0.<Configure>b__0(IApplicationBuilder app)
+   at Microsoft.AspNetCore.HostFilteringStartupFilter.<>c__DisplayClass0_0.<Configure>b__0(IApplicationBuilder app)
+   at Microsoft.AspNetCore.Hosting.Internal.AutoRequestServicesStartupFilter.<>c__DisplayClass0_0.<Configure>b__0(IApplicationBuilder builder)
+   at Microsoft.AspNetCore.Hosting.Internal.WebHost.BuildApplication()
+2020-05-29 10:48:23.5938|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-05-29 10:48:23.6187|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 25.2202ms 500 text/html; charset=utf-8 
+2020-05-29 10:48:40.4174||DEBUG|WebApi.Program|init main 
+2020-05-29 10:48:41.9449||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-29 10:48:42.8824|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-05-29 10:48:42.8824|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-05-29 10:48:42.9270|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 44.8325ms 200  
+2020-05-29 10:48:43.0443|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 162.5465ms 404  
+2020-05-29 10:52:15.9278||DEBUG|WebApi.Program|init main 
+2020-05-29 10:52:17.3181||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-29 10:52:18.1567|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-05-29 10:52:18.1567|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-05-29 10:52:18.2006|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 44.5761ms 200  
+2020-05-29 10:52:18.2942|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 138.5067ms 404  
+2020-05-29 10:52:26.6225|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/users/detail/forgotpassword/user/xyz application/json 201 
+2020-05-29 10:52:26.6351|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 12.5729ms 404  
+2020-05-29 10:52:26.6484|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM03RVH3BBKS", Request id "0HM03RVH3BBKS:00000002": the application completed without reading the entire request body. 
+2020-05-29 10:52:40.8574|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/users/detail/forgotpassword/xyz application/json 201 
+2020-05-29 10:52:40.8574|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.GetUserDetail (WebApi)' 
+2020-05-29 10:52:40.9015|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetUserDetail", controller = "Users"}. Executing action WebApi.Controllers.UsersController.GetUserDetail (WebApi) 
+2020-05-29 10:52:40.9330|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.GetUserDetail (WebApi) with arguments (xyz) - Validation state: Valid 
+2020-05-29 10:52:41.8736|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.UsersController.GetUserDetail (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 924.6762ms. 
+2020-05-29 10:52:41.8839|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-05-29 10:52:41.8951|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.UsersController.GetUserDetail (WebApi) in 989.5963ms 
+2020-05-29 10:52:41.8951|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.UsersController.GetUserDetail (WebApi)' 
+2020-05-29 10:52:41.8951|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 1045.055ms 500 application/json; charset=utf-8 
+2020-05-29 10:52:41.8951|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM03RVH3BBKT", Request id "0HM03RVH3BBKT:00000002": the application completed without reading the entire request body. 
+2020-05-29 10:52:53.7599|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/users/detail/forgotpassword/xyz application/json 201 
+2020-05-29 10:52:53.7599|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.GetUserDetail (WebApi)' 
+2020-05-29 10:52:53.7599|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetUserDetail", controller = "Users"}. Executing action WebApi.Controllers.UsersController.GetUserDetail (WebApi) 
+2020-05-29 10:52:53.7599|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.GetUserDetail (WebApi) with arguments (xyz) - Validation state: Valid 
+2020-05-29 10:54:25.4602||DEBUG|WebApi.Program|init main 
+2020-05-29 10:54:26.8713||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-29 10:54:27.7657|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-05-29 10:54:27.7657|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-05-29 10:54:27.8197|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 54.4117ms 200  
+2020-05-29 10:54:27.9075|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 142.6525ms 404  
+2020-05-29 10:54:27.9640|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/users/detail/forgotpassword/xyz application/json 201 
+2020-05-29 10:54:27.9772|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.GetUserDetail (WebApi)' 
+2020-05-29 10:54:28.0241|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetUserDetail", controller = "Users"}. Executing action WebApi.Controllers.UsersController.GetUserDetail (WebApi) 
+2020-05-29 10:54:28.0586|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.GetUserDetail (WebApi) with arguments (xyz) - Validation state: Valid 
+2020-05-29 10:55:40.1694||DEBUG|WebApi.Program|init main 
+2020-05-29 10:55:41.5335||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-29 10:55:42.1702|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-05-29 10:55:42.1702|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-05-29 10:55:42.2119|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 42.16ms 200  
+2020-05-29 10:55:42.3005|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 131.1268ms 404  
+2020-05-29 10:55:45.0775|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/users/detail/forgotpassword/xyz application/json 201 
+2020-05-29 10:55:45.0859|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.GetUserDetail (WebApi)' 
+2020-05-29 10:55:45.1204|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetUserDetail", controller = "Users"}. Executing action WebApi.Controllers.UsersController.GetUserDetail (WebApi) 
+2020-05-29 10:55:45.1448|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.GetUserDetail (WebApi) with arguments (xyz) - Validation state: Valid 
+2020-05-29 10:56:08.4765|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.UsersController.GetUserDetail (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 23328.5183ms. 
+2020-05-29 10:56:08.4907|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-05-29 10:56:08.5068|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.UsersController.GetUserDetail (WebApi) in 23381.589ms 
+2020-05-29 10:56:08.5068|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.UsersController.GetUserDetail (WebApi)' 
+2020-05-29 10:56:08.5068|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 23438.3308ms 500 application/json; charset=utf-8 
+2020-05-29 10:56:08.5293|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM03S1DSV363", Request id "0HM03S1DSV363:00000002": the application completed without reading the entire request body. 
+2020-05-29 10:56:29.5075|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/users/detail/forgotpassword/xyz application/json 201 
+2020-05-29 10:56:29.5075|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.GetUserDetail (WebApi)' 
+2020-05-29 10:56:29.5075|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetUserDetail", controller = "Users"}. Executing action WebApi.Controllers.UsersController.GetUserDetail (WebApi) 
+2020-05-29 10:56:52.7670|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.GetUserDetail (WebApi) with arguments (xyz) - Validation state: Valid 
+2020-05-29 10:59:51.1079||DEBUG|WebApi.Program|init main 
+2020-05-29 10:59:52.4333||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-29 10:59:53.3627|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-05-29 10:59:53.3627|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-05-29 10:59:53.4219|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 59.9506ms 200  
+2020-05-29 10:59:53.5255|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 163.9569ms 404  
+2020-05-29 10:59:54.0814|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/users/detail/forgotpassword/xyz application/json 201 
+2020-05-29 10:59:54.0933|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.GetUserDetail (WebApi)' 
+2020-05-29 10:59:54.1264|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetUserDetail", controller = "Users"}. Executing action WebApi.Controllers.UsersController.GetUserDetail (WebApi) 
+2020-05-29 10:59:57.8531|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.GetUserDetail (WebApi) with arguments (xyz) - Validation state: Valid 
+2020-05-29 11:00:04.4802|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.UsersController.GetUserDetail (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 6619.534ms. 
+2020-05-29 11:00:04.4947|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-05-29 11:00:04.4947|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.UsersController.GetUserDetail (WebApi) in 10372.141ms 
+2020-05-29 11:00:04.4947|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.UsersController.GetUserDetail (WebApi)' 
+2020-05-29 11:00:04.5116|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 10430.1392ms 200  
+2020-05-29 11:00:04.5242|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM03S3ONJGKF", Request id "0HM03S3ONJGKF:00000002": the application completed without reading the entire request body. 
+2020-05-29 11:05:20.0213||DEBUG|WebApi.Program|init main 
+2020-05-29 11:05:21.3372||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-29 11:05:22.1995|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-05-29 11:05:22.1995|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-05-29 11:05:22.2379|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 38.7875ms 200  
+2020-05-29 11:05:22.3202|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 121.3727ms 404  
+2020-05-29 11:05:26.0696|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/users/detail/forgotpassword/xyz application/json 201 
+2020-05-29 11:05:26.0773|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.GetUserDetail (WebApi)' 
+2020-05-29 11:05:26.1170|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetUserDetail", controller = "Users"}. Executing action WebApi.Controllers.UsersController.GetUserDetail (WebApi) 
+2020-05-29 11:05:29.7096|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.GetUserDetail (WebApi) with arguments (xyz) - Validation state: Valid 
+2020-05-29 11:05:35.7889|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.UsersController.GetUserDetail (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 6076.5546ms. 
+2020-05-29 11:05:35.8009|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-05-29 11:05:35.8083|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.UsersController.GetUserDetail (WebApi) in 9687.0701ms 
+2020-05-29 11:05:35.8083|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.UsersController.GetUserDetail (WebApi)' 
+2020-05-29 11:05:35.8083|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 9747.5744ms 200  
+2020-05-29 11:05:35.8289|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM03S6QOJP5C", Request id "0HM03S6QOJP5C:00000002": the application completed without reading the entire request body. 

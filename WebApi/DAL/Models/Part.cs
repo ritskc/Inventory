@@ -42,6 +42,7 @@ namespace DAL.Models
         public int MonthlyRejectQty { get; set; }
         public int MonthlyClosingQty { get; set; }
 
+        public bool IsDoublePricingAllowed { get; set; }
         public decimal FuturePrice { get; set; }
         public int CurrentPricingInEffectQty { get; set; }
 

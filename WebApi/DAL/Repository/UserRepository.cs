@@ -414,6 +414,43 @@ namespace DAL.Repository
             return user;
         }
 
+        public async Task<User> GetUserWithPasswordAsync(string userName)
+        {
+            var user = new User();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+
+            var commandText = string.Format("SELECT [Id] ,[UserName] ,[Password] ,[FirstName] ,[LastName] ,[Email] ,[PriviledgeId] ," +
+                "[UserTypeId],[IsSuperAdmin] FROM [User]  WITH(NOLOCK) WHERE UserName ='{0}' ", userName);
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+
+                    user.Id = Convert.ToInt32(dataReader["Id"]);
+                    user.UserName = Convert.ToString(dataReader["UserName"]);
+                    user.FirstName = Convert.ToString(dataReader["FirstName"]);
+                    user.Password = Convert.ToString(dataReader["Password"]);
+                    user.LastName = Convert.ToString(dataReader["LastName"]);
+                    user.Email = Convert.ToString(dataReader["Email"]);
+                    user.PriviledgeId = Convert.ToInt32(dataReader["PriviledgeId"]);
+                    user.UserTypeId = Convert.ToInt32(dataReader["UserTypeId"]);
+                    user.IsSuperAdmin = Convert.ToBoolean(dataReader["IsSuperAdmin"]);
+                }
+                dataReader.Close();
+                conn.Close();
+            }          
+
+            return user;
+        }
+
         public async Task<User> GeUserbyIdAsync(int userId)
         {           
             return await Task.Run(() => GetAllUsersAsync().Result.Where(p => p.Id == userId).FirstOrDefault());

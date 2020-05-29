@@ -1,0 +1,54 @@
+2020-05-26 10:20:06.8135||DEBUG|WebApi.Program|init main 
+2020-05-26 10:20:08.2712||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-26 10:20:09.0065|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-05-26 10:20:09.0065|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-05-26 10:20:09.0644|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 58.2869ms 200  
+2020-05-26 10:20:09.1565|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 150.7541ms 404  
+2020-05-26 10:20:31.1020|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/users application/json 201 
+2020-05-26 10:20:31.1135|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.Post (WebApi)' 
+2020-05-26 10:20:31.1519|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Users"}. Executing action WebApi.Controllers.UsersController.Post (WebApi) 
+2020-05-26 10:20:31.2533|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.Post (WebApi) with arguments (DAL.Models.User) - Validation state: Valid 
+2020-05-26 10:20:40.0812|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.UsersController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 8825.2495ms. 
+2020-05-26 10:20:40.0812|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-05-26 10:20:40.0990|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.UsersController.Post (WebApi) in 8944.1464ms 
+2020-05-26 10:20:40.0990|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.UsersController.Post (WebApi)' 
+2020-05-26 10:20:40.0990|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 9000.4308ms 500 application/json; charset=utf-8 
+2020-05-26 10:21:37.1496|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/users application/json 201 
+2020-05-26 10:21:37.1496|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.Post (WebApi)' 
+2020-05-26 10:21:37.1837|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Users"}. Executing action WebApi.Controllers.UsersController.Post (WebApi) 
+2020-05-26 10:21:37.1837|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.Post (WebApi) with arguments (DAL.Models.User) - Validation state: Valid 
+2020-05-26 10:46:50.0367||DEBUG|WebApi.Program|init main 
+2020-05-26 10:46:51.3155||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-26 10:46:52.1066|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-05-26 10:46:52.1066|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-05-26 10:46:52.1426|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 36.3491ms 200  
+2020-05-26 10:46:52.2308|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 125.0433ms 404  
+2020-05-26 10:46:58.0768|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/users application/json 201 
+2020-05-26 10:46:58.0854|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.Post (WebApi)' 
+2020-05-26 10:46:58.1215|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Users"}. Executing action WebApi.Controllers.UsersController.Post (WebApi) 
+2020-05-26 10:46:58.2212|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.Post (WebApi) with arguments (DAL.Models.User) - Validation state: Valid 
+2020-05-26 10:47:38.7377||DEBUG|WebApi.Program|init main 
+2020-05-26 10:47:39.9449||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-26 10:47:40.6276|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-05-26 10:47:40.6276|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-05-26 10:47:40.6818|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 54.4843ms 200  
+2020-05-26 10:47:40.7666|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 139.702ms 404  
+2020-05-26 10:47:52.7585|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/users application/json 199 
+2020-05-26 10:47:52.7585|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.Post (WebApi)' 
+2020-05-26 10:47:52.7985|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Users"}. Executing action WebApi.Controllers.UsersController.Post (WebApi) 
+2020-05-26 10:47:52.8952|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.Post (WebApi) with arguments (DAL.Models.User) - Validation state: Valid 
+2020-05-26 10:49:09.9676||DEBUG|WebApi.Program|init main 
+2020-05-26 10:49:11.2994||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-05-26 10:49:12.1496|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-05-26 10:49:12.1496|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-05-26 10:49:12.1825|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 33.3988ms 200  
+2020-05-26 10:49:12.2740|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 125.1565ms 404  
+2020-05-26 10:49:12.7034|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/users application/json 201 
+2020-05-26 10:49:12.7102|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.Post (WebApi)' 
+2020-05-26 10:49:12.7450|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "Users"}. Executing action WebApi.Controllers.UsersController.Post (WebApi) 
+2020-05-26 10:49:12.8403|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.Post (WebApi) with arguments (DAL.Models.User) - Validation state: Valid 
+2020-05-26 10:49:39.2311|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.UsersController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 26387.649ms. 
+2020-05-26 10:49:39.2466|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-05-26 10:49:39.2466|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.UsersController.Post (WebApi) in 26504.1002ms 
+2020-05-26 10:49:39.2542|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.UsersController.Post (WebApi)' 
+2020-05-26 10:49:39.2542|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 26557.0411ms 200  

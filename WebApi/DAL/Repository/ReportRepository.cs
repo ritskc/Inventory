@@ -470,6 +470,8 @@ namespace DAL.Repository
                     var packingSlip = new PackingSlip();
                     packingSlip.Id = Convert.ToInt32(dataReader["Id"]);
                     packingSlip.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
+                    if (packingSlip.CompanyId == 2)
+                        packingSlip.PackingSlipNo = "CF" + packingSlip.PackingSlipNo;
                     packingSlip.CustomerId = Convert.ToInt32(dataReader["CustomerId"]);
                     packingSlip.PackingSlipNo = Convert.ToString(dataReader["PackingSlipNo"]);
                     packingSlip.ShippingDate = Convert.ToDateTime(dataReader["ShippingDate"]);
