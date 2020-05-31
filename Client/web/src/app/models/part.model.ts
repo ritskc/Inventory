@@ -40,6 +40,7 @@ export class Part {
     shippedQty: number = 0;
     isDoublePricingAllowed: boolean = false;
     customerPrice: number = 0;
+    supplierPrice: number = 0;
     
     partSupplierAssignments: PartSupplierAssignment[];
     partCustomerAssignments: PartCustomerAssignment[];
@@ -170,5 +171,9 @@ export class PartsViewModel {
 
     get customerPrice(): number {
         return this.part.customerPrice;
+    }
+
+    get supplierPrice(): number {
+        return this.part.supplierPrice;
     }
 }

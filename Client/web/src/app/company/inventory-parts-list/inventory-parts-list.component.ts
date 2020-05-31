@@ -62,6 +62,7 @@ export class InventoryPartsListComponent implements OnInit {
       this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", columnName: 'MinQty', sortable: false, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", columnName: 'MaxQty', sortable: false, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Cust Price", value: "customerPrice", customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Supp Price", value: "supplierPrice", customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Double Price", value: "isDoublePricingAllowed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
       this.columns.push( new DataColumn({ headerText: "Future Price", value: "futurePrice", customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Efctv Price", value: "currentPricingInEffectQty", customStyling: 'right' }) );
