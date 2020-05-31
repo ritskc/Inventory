@@ -46,7 +46,7 @@ export class MasterShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Traking Number", value: "trakingNumber", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "POS Uploaded", value: "isPOSUploaded", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Comment", value: "comment" }) );
-    this.columns.push( new DataColumn({ headerText: "Actions", value: "Action", isActionColumn: true, actions: [
+    this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, actions: [
       new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editMasterPackingSlip' }),
       new DataColumnAction({ actionText: 'Print Shipment', actionStyle: ClassConstants.Primary, event: 'printShipmentForMasterPackingSlip' }),
       new DataColumnAction({ actionText: 'Print BL', actionStyle: ClassConstants.Primary, event: 'printBLForMasterPackingSlip' }),

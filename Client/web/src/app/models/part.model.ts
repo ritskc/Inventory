@@ -38,6 +38,8 @@ export class Part {
     monthlyReturnQty: number = 0;
     invoiceQty: number = 0;
     shippedQty: number = 0;
+    isDoublePricingAllowed: boolean = false;
+    customerPrice: number = 0;
     
     partSupplierAssignments: PartSupplierAssignment[];
     partCustomerAssignments: PartCustomerAssignment[];
@@ -152,5 +154,21 @@ export class PartsViewModel {
 
     get shippedQty(): number {
         return this.part.shippedQty;
+    }
+
+    get isDoublePricingAllowed(): boolean {
+        return this.part.isDoublePricingAllowed;
+    }
+
+    get futurePrice(): number  {
+        return this.part.futurePrice;
+    };
+    
+    get currentPricingInEffectQty(): number {
+        return this.part.currentPricingInEffectQty;
+    }
+
+    get customerPrice(): number {
+        return this.part.customerPrice;
     }
 }

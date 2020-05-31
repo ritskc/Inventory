@@ -53,14 +53,18 @@ export class InventoryPartsListComponent implements OnInit {
     if (this.showOtherColumns || !this.monthlyCustomer) {
       this.columns.push( new DataColumn({ headerText: "Code", value: "Code", columnName: 'PartCode', sortable: true }) );
       this.columns.push( new DataColumn({ headerText: "Description", value: "Description", columnName: 'PartDescription', sortable: true, customStyling: 'column-width-150' }) );
-      this.columns.push( new DataColumn({ headerText: "Opening Qty", value: "OpeningQty", columnName: 'OpeningQty' }) );
-      this.columns.push( new DataColumn({ headerText: "Open + In Hand", value: "QuantityInHand", columnName: 'OpenInHandQty', sortable: false, hasAdditionalAction: true, additionalActionName: 'showLatestShipments' }) );
-      this.columns.push( new DataColumn({ headerText: "In Transit", value: "IntransitQty", columnName: 'InTransitQty', sortable: false, hasAdditionalAction: true, additionalActionName: 'showInTransitQty' }) );
-      this.columns.push( new DataColumn({ headerText: "Open Order", value: "OpenOrderQty", columnName: 'OpenOrder', isEditable: false, sortable: false, hasAdditionalAction: true, additionalActionName: 'showOpenOrders' }) );
-      this.columns.push( new DataColumn({ headerText: "Safe Qty", value: "SafeQty", columnName: 'SafeQty', sortable: false }) );
-      this.columns.push( new DataColumn({ headerText: "Supp Open PO", value: "SupplierOpenPoQty", columnName: 'SupplierOpenPO', sortable: false, hasAdditionalAction: true, additionalActionName: 'showSupplierOpenPO' }) );
-      this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", columnName: 'MinQty', sortable: false }) );
-      this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", columnName: 'MaxQty', sortable: false }) );
+      this.columns.push( new DataColumn({ headerText: "Opening Qty", value: "OpeningQty", columnName: 'OpeningQty', customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Open + In Hand", value: "QuantityInHand", columnName: 'OpenInHandQty', customStyling: 'right', sortable: false, hasAdditionalAction: true, additionalActionName: 'showLatestShipments' }) );
+      this.columns.push( new DataColumn({ headerText: "In Transit", value: "IntransitQty", columnName: 'InTransitQty', customStyling: 'right', sortable: false, hasAdditionalAction: true, additionalActionName: 'showInTransitQty' }) );
+      this.columns.push( new DataColumn({ headerText: "Open Order", value: "OpenOrderQty", columnName: 'OpenOrder', isEditable: false, customStyling: 'right', sortable: false, hasAdditionalAction: true, additionalActionName: 'showOpenOrders' }) );
+      this.columns.push( new DataColumn({ headerText: "Safe Qty", value: "SafeQty", columnName: 'SafeQty', sortable: false, customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Supp Open PO", value: "SupplierOpenPoQty", columnName: 'SupplierOpenPO', customStyling: 'right', sortable: false, hasAdditionalAction: true, additionalActionName: 'showSupplierOpenPO' }) );
+      this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", columnName: 'MinQty', sortable: false, customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", columnName: 'MaxQty', sortable: false, customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Cust Price", value: "customerPrice", customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Double Price", value: "isDoublePricingAllowed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
+      this.columns.push( new DataColumn({ headerText: "Future Price", value: "futurePrice", customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Efctv Price", value: "currentPricingInEffectQty", customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Action", columnName: 'Action', value: "Action", isActionColumn: true, customStyling: 'center column-width-100', actions: [
         new DataColumnAction({ actionText: 'Adjust', actionStyle: ClassConstants.Primary, event: 'adjustOpeningQuantity' })
       ] }) );

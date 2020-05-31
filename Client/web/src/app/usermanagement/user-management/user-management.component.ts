@@ -54,7 +54,7 @@ export class UserManagementComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Privilege", value: "privilegeName" }) );
     this.columns.push( new DataColumn({ headerText: "Type", value: "type" }) );
     this.columns.push( new DataColumn({ headerText: "Super Admin", value: "isSuperAdmin", isBoolean: true, customStyling: 'center', isDisabled: true }) );
-    this.columns.push( new DataColumn({ headerText: "Actions", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+    this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Edit', actionStyle: ClassConstants.Primary, event: 'editUser', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deleteUser', icon: 'fa fa-trash' })
     ] }) );

@@ -61,7 +61,7 @@ export class InvoiceListComponent implements OnInit {
       this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
       this.columns.push( new DataColumn({ headerText: "Inv Date", value: "invoiceDate", sortable: true, isEditableDate: true }) );
       this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isEditableDate: true }) );
-      this.columns.push( new DataColumn({ headerText: "Rcvd On", value: "receivedDate", isDate: true, sortable: true }) );
+      this.columns.push( new DataColumn({ headerText: "Rcvd On", value: "receivedDate", isDate: true, sortable: true, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Rcvd", value: "isInvoiceReceived", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
       this.columns.push( new DataColumn({ headerText: "Inv", isActionColumn: true, customStyling: 'center', actions: [
         new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadInvoice', icon: 'fa fa-download', showOnlyIf: 'data["invoicePath"] != ""' }),
@@ -148,7 +148,7 @@ export class InvoiceListComponent implements OnInit {
         invoice.supplierInvoiceGroupDetails.forEach(detail => {
           var viewModel = new InvoiceListDetailsViewModel();
           viewModel.invoiceNo = invoice.invoiceNo;
-          viewModel.poNo = invoice.poNo;
+          viewModel.poNo = detail.poNo;
           viewModel.supplierName = invoice.supplierName;
           viewModel.partCode = detail.partDetail.code;
           viewModel.quantity = detail.qty;
@@ -156,10 +156,6 @@ export class InvoiceListComponent implements OnInit {
           viewModel.amount = detail.total;
           viewModel.adjustedQty = detail.adjustedQty;
           viewModel.excessQty = detail.excessQty;
-          // detail.supplierInvoicePoDetails.forEach(item => {
-          //   viewModel.purchaseOrderNumbers += `${item.poNo}, `;
-          //   viewModel.purchaseOrderQty += `${item.qty}, `;
-          // });
           viewModel.purchaseOrderNumbers = viewModel.purchaseOrderNumbers.substring(0, viewModel.purchaseOrderNumbers.length - 2);
           viewModel.purchaseOrderQty = viewModel.purchaseOrderQty.substring(0, viewModel.purchaseOrderQty.length - 2);
           this.filteredInvoices.push(viewModel);

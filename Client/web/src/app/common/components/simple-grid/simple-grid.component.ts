@@ -148,7 +148,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
     if (selectedMenuItem && selectedMenuItem.userActions && selectedMenuItem.userActions.length > 0) {
       this.addRequired = selectedMenuItem.userActions.find(m => m.action == 'Add' && m.isPermitted == true) != undefined;
       this.exportRequired = selectedMenuItem.userActions.find(m => m.action == 'Export' && m.isPermitted == true) != undefined;
-      var actionColumns = this.columns.find(c => c.isActionColumn == true);
+      var actionColumns = this.columns.find(c => c.isActionColumn == true && (c.headerText == 'Action'));
       if (actionColumns && actionColumns.actions.length > 0) {
         for(var index = 0; index < actionColumns.actions.length; index++)
           if (!selectedMenuItem.userActions.find(m => m.action == actionColumns.actions[index].actionText && m.isPermitted == true)) {

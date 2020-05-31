@@ -276,7 +276,7 @@ export class CreateShipmentComponent implements OnInit {
     }
     var selectedPartForAdd = this.parts.find(p => p.id == selectedPartCode);
 
-    if (this.quantity > selectedPartForAdd.currentPricingInEffectQty) {
+    if (selectedPartForAdd.isDoublePricingAllowed && this.quantity > selectedPartForAdd.currentPricingInEffectQty) {
       if (!confirm('The quantity you are adding exceeds effective pricing quantity. Are you sure to add?')) {
         return;
       }

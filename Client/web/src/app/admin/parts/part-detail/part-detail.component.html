@@ -37,11 +37,20 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="form-group col-md-6 col-xs-6 standard-top-margin">
+                      <div class="col-md-3 col-xs-3">
+                        <label>Double Pricing</label>
+                        <div>
+                          <label class="switch switch-3d switch-primary">
+                            <input class="switch-input" type="checkbox" [(ngModel)]="part.isDoublePricingAllowed" [ngModelOptions]="{standalone: true}"/>
+                            <span class="switch-slider"></span>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-4 col-xs-4 standard-top-margin">
                         <label>Future Pricing</label>
                         <input type="text" formControlName="futurePrice" class="form-control" [(ngModel)]="part.futurePrice"/>
                       </div>
-                      <div class="form-group col-md-6 col-xs-6 standard-top-margin">
+                      <div class="form-group col-md-5 col-xs-5 standard-top-margin">
                         <label>Effective Quantity Pricing</label>
                         <input type="text" formControlName="currentPricingInEffectQty" class="form-control" [(ngModel)]="part.currentPricingInEffectQty"/>
                       </div>
@@ -91,7 +100,7 @@
                 </div>
                 <div class="form-group standard-top-margin">
                   <div class="row">
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-lg-2 col-md-2">
                         <label>Active</label>
                         <div>
                           <label class="switch switch-3d switch-primary">
@@ -100,7 +109,7 @@
                           </label>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-lg-2 col-md-2">
                       <label>Sample</label>
                       <div>
                         <label class="switch switch-3d switch-primary">
@@ -109,7 +118,7 @@
                         </label>
                       </div>
                     </div>
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-lg-2 col-md-2">
                       <label>Repackage</label>
                       <div>
                         <label class="switch switch-3d switch-primary">

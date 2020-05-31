@@ -101,7 +101,7 @@ export class CompanyInvoiceComponent implements OnInit {
       var part = this.parts.find(p => p.id == detail.partId);
       detail.partCode = part.code;
       detail.partDescription = part.description;
-      detail.hasPartQuantityExceedingLimit = detail.qty > part.currentPricingInEffectQty;
+      detail.hasPartQuantityExceedingLimit = part.isDoublePricingAllowed && detail.qty > part.currentPricingInEffectQty;
     });
   }
 

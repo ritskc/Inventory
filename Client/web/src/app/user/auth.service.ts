@@ -28,6 +28,10 @@ export class AuthService {
     this.isLoggedIn = false;
   }
 
+  forgotPassword(loginname: string): Observable<any> {
+    return this.apiService.get(`${ this.configService.Settings.apiServerHost }${ this.configService.Settings.usersUri }/detail/forgotpassword/${ loginname }`);
+  }
+
   setPrivileges(privileges: any) {
     localStorage.setItem('privileges', JSON.stringify(privileges));
     if (!localStorage.getItem('menus')){

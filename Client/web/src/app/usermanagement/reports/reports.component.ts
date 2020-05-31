@@ -40,7 +40,7 @@ export class ReportsComponent implements OnInit {
     this.columnsForAddedPrivileges.push( new DataColumn({ headerText: "Menu Name", value: "menu" }) );
     this.columnsForAddedPrivileges.push( new DataColumn({ headerText: "Privilege Name", value: "action" }) );
     this.columnsForAddedPrivileges.push( new DataColumn({ headerText: "Is Allowed", value: "isPermitted", isBoolean: true, customStyling: 'center' }) );
-    this.columnsForAddedPrivileges.push( new DataColumn({ headerText: "Actions", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+    this.columnsForAddedPrivileges.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deletePart', icon: 'fa fa-trash' })
     ] }) );
   }
