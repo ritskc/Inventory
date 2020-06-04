@@ -25,5 +25,7 @@ namespace WebApi.Settings
 
         public string POURL { get; set; }
 
+        public string CustomerAccessURL { get; set; }
+
     }
 }

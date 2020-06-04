@@ -15,6 +15,8 @@ namespace DAL.IRepository
         Task<Int32> AddMasterPackingSlipAsync(MasterPackingSlip packingSlip);
         Task<bool> UpdateMasterPackingSlipAsync(MasterPackingSlip packingSlip);
         Task<bool> DeleteMasterPackingSlipAsync(long id);        
-        Task UpdatePOSAsync(int masterPackingSlipId, string path, string trackingNumber);
+        Task UpdatePOSAsync(int masterPackingSlipId, string path, string trackingNumber,string accessId);
+        Task<bool> AllowScanning(int masterPackingSlipId, int userId);
+        Task<int> GetIdByAccessIdAsync(string accessId);
     }
 }

@@ -30,7 +30,9 @@ namespace WebApi.Utils
 
             EmailBody = EmailBody + "Kindly acknowledge the PO by clicking on Acknowledge PO button from following link." + "<br>";
 
-            EmailBody = EmailBody + link + "<br>";
+            EmailBody = EmailBody + "<div>  <a href = " + link + " style = \"background-color:#31b59f;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:18px;font-weight:bold;line-height:65px;text-align:center;text-decoration:none;width:250px;min-width:250px;font-size:20px\" target = \"_blank\"  > Acknowledge PO </ a > </div>";
+
+            //EmailBody = EmailBody + link + "<br>";
             EmailBody = EmailBody + "<br>" + "Warm Regards,";
             EmailBody = EmailBody + "<br>" + "customer Care";
 
@@ -78,7 +80,7 @@ namespace WebApi.Utils
                     //msg.To.Add(new MailAddress(EmailIDList));
                     msg.To.Add(EmailIDList);
 
-                    msg.IsBodyHtml = true;
+                    msg.IsBodyHtml = true;                    
                     msg.Subject = EmailSubject;
                     msg.Body = EmailBody;
 
@@ -123,7 +125,39 @@ namespace WebApi.Utils
 
             SendEmail(user.Email, EmailSubject, EmailBody);
         }
-    }
+
+        public void SendPOSEmail(string companyName, string contactPersonName, string link, string packingSlipNo, string EmailIDList)
+        {
+            string divStart = "<div>";
+            string divEnd = "</div>";
+
+            string EmailBody = "";
+            string EmailSubject = "POS ready to download: " + packingSlipNo;
+
+
+            EmailBody = "Hi " + contactPersonName + "<br>";
+
+            EmailBody = EmailBody + "A POS has been uploaded. " + "<br>";
+
+            EmailBody = EmailBody + "Kindly download the POS by clicking on the following link." + "<br>";
+
+            //EmailBody = EmailBody + "< a href = " + link + " download > Download POS </ a >";
+            //EmailBody = EmailBody + "<div> style = \"text-align:center;margin:35px auto 50px;font-size:30px\">" +
+            EmailBody = EmailBody + "<div>  <a href = " + link + " style = \"background-color:#31b59f;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:18px;font-weight:bold;line-height:65px;text-align:center;text-decoration:none;width:250px;min-width:250px;font-size:20px\" target = \"_blank\"  > Download POS </ a > </div>";
+
+                          //EmailBody = EmailBody + link + "<br>";
+            EmailBody = EmailBody + divStart +  "<br>" + "Warm Regards,";
+            EmailBody = EmailBody + "<br>" + "customer Care";
+
+            EmailBody = EmailBody + "<br>" + companyName + divEnd;            
+
+            //EmailIDList = appSettings.To;
+            string[] stringArray = EmailIDList.Split(',');
+
+
+            SendEmail(EmailIDList, EmailSubject, EmailBody);
+        }
+    }   
 }
 
 

@@ -2,6 +2,7 @@
 using DAL.IRepository;
 using DAL.Models;
 using DAL.Settings;
+using DAL.Util;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,14 +22,16 @@ namespace DAL.Repository
         private readonly ICustomerRepository customerRepository;
         private readonly IUserRepository userRepository;
         private readonly ISupplierInvoiceRepository supplierInvoiceRepository;
+        private readonly IUserActivityReportRepository userActivityReportRepository;
 
-        public PackingSlipRepository(ISqlHelper sqlHelper, 
+        public PackingSlipRepository(ISqlHelper sqlHelper,
             IOrderRepository orderRepository,
             IPartRepository partRepository,
             IEntityTrackerRepository entityTrackerRepository,
             ICustomerRepository customerRepository,
             IUserRepository userRepository,
-            ISupplierInvoiceRepository supplierInvoiceRepository)
+            ISupplierInvoiceRepository supplierInvoiceRepository,
+            IUserActivityReportRepository userActivityReportRepository)
         {
             this._sqlHelper = sqlHelper;
             this._orderRepository = orderRepository;
@@ -37,6 +40,7 @@ namespace DAL.Repository
             this.customerRepository = customerRepository;
             this.userRepository = userRepository;
             this.supplierInvoiceRepository = supplierInvoiceRepository;
+            this.userActivityReportRepository = userActivityReportRepository;
         }
         public async Task<Int32> AddPackingSlipAsync(PackingSlip packingSlip)
         {
@@ -67,7 +71,7 @@ namespace DAL.Repository
                     packingSlip.FOB = customer.FOB;
                     packingSlip.Terms = customer.Terms;
                     packingSlip.IsRepackage = false;
-                    if(packingSlip.ShipmentInfoId == 0)
+                    if (packingSlip.ShipmentInfoId == 0)
                     {
                         packingSlip.ShipmentInfoId = customer.ShippingInfos.Where(x => x.IsDefault).FirstOrDefault().Id;
                     }
@@ -84,9 +88,9 @@ namespace DAL.Repository
                         if (packingSlipDetail.IsRepackage)
                             packingSlip.IsRepackage = true;
 
-                        if(packingSlip.IsInvoiceCreated)
+                        if (packingSlip.IsInvoiceCreated)
                             packingSlipDetail.UnitPrice = partDetail.partCustomerAssignments.Where(x => x.CustomerId == packingSlip.CustomerId).Select(x => x.Rate).FirstOrDefault();
-                        else                        
+                        else
                             packingSlip.IsInvoiceCreated = false;
 
                         if (packingSlip.IsInvoiceCreated && !packingSlipDetail.IsBlankOrder)
@@ -120,34 +124,34 @@ namespace DAL.Repository
                         packingSlip.Boxes = packingSlip.Boxes + packingSlipDetail.Boxes;
                         packingSlipDetail.LineNumber = 0;
                     }
-                    packingSlip.Total = packingSlip.SubTotal + packingSlip.TotalSurcharge  + packingSlip.ShippingCharge + packingSlip.CustomCharge;
-                    string sql = string.Format($"INSERT INTO [dbo].[PackingSlipMaster]   ([CompanyId]   ,[CustomerId]   ,[PackingSlipNo]   ,[ShippingDate]   ,[ShipVia]   ,[Crates]   ,[Boxes]   ,[GrossWeight]   ,[ShippingCharge]   ,[CustomCharge]   ,[SubTotal]   ,[Total]   ,[IsInvoiceCreated]   ,[IsPaymentReceived]   ,[FOB]   ,[Terms]   ,[ShipmentInfoId]   ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsRepackage],[IsMonthly]) VALUES   ('{packingSlip.CompanyId}'   ,'{packingSlip.CustomerId}'   ,'{packingSlip.PackingSlipNo}'   ,'{packingSlip.ShippingDate}'   ,'{packingSlip.ShipVia}'   ,'{packingSlip.Crates}'   ,'{packingSlip.Boxes}'   ,'{packingSlip.GrossWeight}'   ,'{packingSlip.ShippingCharge}'   ,'{packingSlip.CustomCharge}'   ,'{packingSlip.SubTotal}'   ,'{packingSlip.Total + packingSlip.TotalSurcharge}'   ,'{packingSlip.IsInvoiceCreated}'   ,'{packingSlip.IsPaymentReceived}'   ,'{packingSlip.FOB}'   ,'{packingSlip.Terms}'   ,'{packingSlip.ShipmentInfoId}'   ,'{null}','{false}','{string.Empty}','{packingSlip.TotalSurcharge}','{packingSlip.IsRepackage}','{packingSlip.IsMonthly}')");
+                    packingSlip.Total = packingSlip.SubTotal + packingSlip.TotalSurcharge + packingSlip.ShippingCharge + packingSlip.CustomCharge;
+                    string sql = string.Format($"INSERT INTO [dbo].[PackingSlipMaster]   ([CompanyId]   ,[CustomerId]   ,[PackingSlipNo]   ,[ShippingDate]   ,[ShipVia]   ,[Crates]   ,[Boxes]   ,[GrossWeight]   ,[ShippingCharge]   ,[CustomCharge]   ,[SubTotal]   ,[Total]   ,[IsInvoiceCreated]   ,[IsPaymentReceived]   ,[FOB]   ,[Terms]   ,[ShipmentInfoId]   ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsRepackage],[IsMonthly],[IsShipmentVerified],[IsScanned],[AllowScanning]) VALUES   ('{packingSlip.CompanyId}'   ,'{packingSlip.CustomerId}'   ,'{packingSlip.PackingSlipNo}'   ,'{packingSlip.ShippingDate}'   ,'{packingSlip.ShipVia}'   ,'{packingSlip.Crates}'   ,'{packingSlip.Boxes}'   ,'{packingSlip.GrossWeight}'   ,'{packingSlip.ShippingCharge}'   ,'{packingSlip.CustomCharge}'   ,'{packingSlip.SubTotal}'   ,'{packingSlip.Total + packingSlip.TotalSurcharge}'   ,'{packingSlip.IsInvoiceCreated}'   ,'{packingSlip.IsPaymentReceived}'   ,'{packingSlip.FOB}'   ,'{packingSlip.Terms}'   ,'{packingSlip.ShipmentInfoId}'   ,'{null}','{false}','{string.Empty}','{packingSlip.TotalSurcharge}','{packingSlip.IsRepackage}','{packingSlip.IsMonthly}','{false}','{false}','{false}')");
 
                     sql = sql + " Select Scope_Identity()";
-                    command.CommandText = sql;          
-                    
+                    command.CommandText = sql;
+
                     packingSlipId = Convert.ToInt32(command.ExecuteScalar());
                     packingSlip.Id = Convert.ToInt32(packingSlipId);
 
-                    
+
                     foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
                     {
                         packingSlipDetail.ExcessQty = 0;
                         if (!packingSlipDetail.IsBlankOrder)
                         {
-                            var orderResult = await _orderRepository.GetOrderMasterAsync(packingSlipDetail.OrderId, command.Connection,command.Transaction);
+                            var orderResult = await _orderRepository.GetOrderMasterAsync(packingSlipDetail.OrderId, command.Connection, command.Transaction);
 
                             if (orderResult != null && !orderResult.IsClosed)
                             {
                                 var orderDetail = orderResult.OrderDetails.Where(x => x.Id == packingSlipDetail.OrderDetailId).FirstOrDefault();
                                 packingSlipDetail.OrderNo = orderResult.PONo;
-                                
+
                                 if (orderDetail != null && !orderDetail.IsClosed)
                                 {
-                                    packingSlipDetail.LineNumber = orderDetail.LineNumber;                                    
+                                    packingSlipDetail.LineNumber = orderDetail.LineNumber;
                                     int availableshippedQty = orderDetail.Qty - orderDetail.ShippedQty;
-                                    if(packingSlipDetail.Qty < availableshippedQty)
-                                    {                                        
+                                    if (packingSlipDetail.Qty < availableshippedQty)
+                                    {
                                         sql = string.Format($"UPDATE [dbo].[OrderDetail]   SET [ShippedQty] = '{orderDetail.ShippedQty + packingSlipDetail.Qty}'  WHERE id = '{orderDetail.Id}' ");
                                         command.CommandText = sql;
                                         await command.ExecuteNonQueryAsync();
@@ -169,10 +173,10 @@ namespace DAL.Repository
                                             await command.ExecuteNonQueryAsync();
                                             //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
                                         }
-                                    }                        
+                                    }
                                 }
                             }
-                            if(customer.Invoicingtypeid == 3 && packingSlipDetail.SupplierInvoiceId > 0)
+                            if (customer.Invoicingtypeid == 3 && packingSlipDetail.SupplierInvoiceId > 0)
                             {
                                 if (packingSlipDetail.SupplierInvoiceOpenQty == packingSlipDetail.Qty)
                                 {
@@ -205,7 +209,7 @@ namespace DAL.Repository
                                         }
                                         remainingQty = remainingQty - openQty;
                                     }
-                                }                                                              
+                                }
                             }
                         }
 
@@ -227,7 +231,7 @@ namespace DAL.Repository
 
                         sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{packingSlipDetail.PartId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.CUSTOMER_PACKINGSLIP)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.OUT)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{packingSlip.Id.ToString()}'   ,'{packingSlipDetail.Qty}')");
                         command.CommandText = sql;
-                        await command.ExecuteNonQueryAsync();                      
+                        await command.ExecuteNonQueryAsync();
 
                         //sql = sql + " Select Scope_Identity()";
                         //command.CommandText = sql;
@@ -258,7 +262,7 @@ namespace DAL.Repository
             return packingSlipId;
         }
 
-        public async  Task CreateInvoiceAsync(PackingSlip packingSlip)
+        public async Task CreateInvoiceAsync(PackingSlip packingSlip)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
@@ -294,12 +298,12 @@ namespace DAL.Repository
                         await command.ExecuteNonQueryAsync();
                     }
 
-                    packingSlip.Total = packingSlip.SubTotal +  packingSlip.ShippingCharge + packingSlip.CustomCharge;
+                    packingSlip.Total = packingSlip.SubTotal + packingSlip.ShippingCharge + packingSlip.CustomCharge;
                     sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [ShippingCharge] = '{packingSlip.ShippingCharge}' ,[CustomCharge] = '{packingSlip.CustomCharge}' ,[SubTotal] = '{packingSlip.SubTotal}' ,[Total] = '{packingSlip.Total}' ,[TotalSurcharge] = '{packingSlip.TotalSurcharge}',[IsInvoiceCreated] = '{true}' ,[InvoiceDate] = '{DateTime.Now}' WHERE Id = '{packingSlip.Id}'");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
-                    
+
 
                     transaction.Commit();
                 }
@@ -314,7 +318,7 @@ namespace DAL.Repository
         public async Task<bool> DeletePackingSlipAsync(long id)
         {
             var packingslip = await GetPackingSlipAsync(id);
-            
+
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
                 connection.Open();
@@ -336,7 +340,7 @@ namespace DAL.Repository
                 string sql = string.Empty;
                 try
                 {
-                    foreach(PackingSlipDetails packingSlipDetail in packingslip.PackingSlipDetails)
+                    foreach (PackingSlipDetails packingSlipDetail in packingslip.PackingSlipDetails)
                     {
                         if (packingSlipDetail.OrderDetailId != null && packingSlipDetail.OrderDetailId > 0)
                         {
@@ -356,19 +360,19 @@ namespace DAL.Repository
                             sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}'  WHERE id = '{packingSlipDetail.PartId}' ");
 
 
-                            command.CommandText = sql;
-                            await command.ExecuteNonQueryAsync();
-                            //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                        //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
-                            sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{packingSlipDetail.PartId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.REVERT_CUSTOMER_PACKINGSLIP)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.IN)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{id.ToString()}'   ,'{packingSlipDetail.Qty}')");
-                            command.CommandText = sql;
-                            await command.ExecuteNonQueryAsync();
+                        sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{packingSlipDetail.PartId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.REVERT_CUSTOMER_PACKINGSLIP)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.IN)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{id.ToString()}'   ,'{packingSlipDetail.Qty}')");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
 
-                            sql = string.Format($"DELETE FROM [dbo].[PackingSlipDetails] WHERE id = '{packingSlipDetail.Id}'");
-                            command.CommandText = sql;
-                            await command.ExecuteNonQueryAsync(); 
+                        sql = string.Format($"DELETE FROM [dbo].[PackingSlipDetails] WHERE id = '{packingSlipDetail.Id}'");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
 
-                        if(packingslip.IsMonthly)
+                        if (packingslip.IsMonthly)
                         {
                             sql = string.Format($"UPDATE [dbo].[SupplierInvoiceDetails]   SET [AdjustedInvoiceQty] =  0   WHERE InvoiceId = '{packingSlipDetail.SupplierInvoiceId}' ");
                             command.CommandText = sql;
@@ -376,6 +380,10 @@ namespace DAL.Repository
                         }
 
                     }
+
+                    sql = string.Format($"DELETE FROM [dbo].[PackingSlipBoxDetails]  WHERE PackingSlipId = '{id}'");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
 
                     sql = string.Format($"DELETE FROM [dbo].[PackingSlipDetails]  WHERE PackingSlipId = '{id}'");
                     command.CommandText = sql;
@@ -410,7 +418,8 @@ namespace DAL.Repository
             {
                 commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[CustomerId] ,[PackingSlipNo] ,[ShippingDate] ,[ShipVia] ,[Crates] ," +
                 $"[Boxes] ,[GrossWeight] ,[ShippingCharge] ,[CustomCharge] ,[SubTotal] ,[Total] ,[IsInvoiceCreated] ,[IsPaymentReceived] ,[FOB] ,[Terms] ," +
-                $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsMasterPackingSlip],[MasterPackingSlipId],[IsRepackage],[TrakingNumber]   FROM [dbo].[PackingSlipMaster] where CompanyId = '{companyId}' ");
+                $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsMasterPackingSlip],[MasterPackingSlipId],[IsRepackage],[TrakingNumber],[IsShipmentVerified],[IsScanned],[AllowScanning]   " +
+                $"FROM [dbo].[PackingSlipMaster] where CompanyId = '{companyId}' ");
             }
             if (userInfo.UserTypeId == 2)
             {
@@ -418,14 +427,15 @@ namespace DAL.Repository
 
                 commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[CustomerId] ,[PackingSlipNo] ,[ShippingDate] ,[ShipVia] ,[Crates] ," +
                $"[Boxes] ,[GrossWeight] ,[ShippingCharge] ,[CustomCharge] ,[SubTotal] ,[Total] ,[IsInvoiceCreated] ,[IsPaymentReceived] ,[FOB] ,[Terms] ," +
-               $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsMasterPackingSlip],[MasterPackingSlipId],[IsRepackage],[TrakingNumber]   FROM [dbo].[PackingSlipMaster] where CompanyId = '{companyId}' and  [CustomerId] in ({companylist}) ");               
+               $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsMasterPackingSlip],[MasterPackingSlipId],[IsRepackage],[TrakingNumber] ,[IsShipmentVerified],[IsScanned],[AllowScanning]  " +
+               $"FROM [dbo].[PackingSlipMaster] where CompanyId = '{companyId}' and  [CustomerId] in ({companylist}) ");
             }
             if (userInfo.UserTypeId == 3)
             {
                 return packingSlips;
             }
 
-            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);           
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -464,7 +474,9 @@ namespace DAL.Repository
                     packingSlip.MasterPackingSlipId = Convert.ToInt32(dataReader["MasterPackingSlipId"]);
                     packingSlip.IsRepackage = Convert.ToBoolean(dataReader["IsRepackage"]);
                     packingSlip.TrakingNumber = Convert.ToString(dataReader["TrakingNumber"]);
-
+                    packingSlip.IsShipmentVerified = Convert.ToBoolean(dataReader["IsShipmentVerified"]);
+                    packingSlip.IsScanned = Convert.ToBoolean(dataReader["IsScanned"]);
+                    packingSlip.AllowScanning = Convert.ToBoolean(dataReader["AllowScanning"]);
                     packingSlips.Add(packingSlip);
                 }
                 dataReader.Close();
@@ -516,9 +528,43 @@ namespace DAL.Repository
                 }
                 packingSlip.PackingSlipDetails = packingSlipDetails;
                 conn.Close();
-            }            
+            }
 
-            return packingSlips;
+            foreach (PackingSlip packingSlip in packingSlips)
+            {
+                foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
+                {
+                    var packingSlipBoxDetails = new List<PackingSlipBoxDetails>();
+                    commandText = string.Format($"SELECT  [Id] ,[PackingSlipId] ,[PackingSlipDetailId] ,[PartId] ,[Qty],[BoxeNo] ,[Barcode] ,[IsScanned] FROM [dbo].[PackingSlipBoxDetails] where PackingSlipDetailId = '{packingSlipDetail.Id}' ");
+
+                    using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                    {
+                        cmd1.CommandType = CommandType.Text;
+                        conn.Open();
+                        var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                        while (dataReader1.Read())
+                        {
+                            var packingSlipBoxDetail = new PackingSlipBoxDetails();
+                            packingSlipBoxDetail.Id = Convert.ToInt32(dataReader1["Id"]);
+                            packingSlipBoxDetail.PackingSlipId = Convert.ToInt32(dataReader1["PackingSlipId"]);
+                            packingSlipBoxDetail.PackingSlipDetailId = Convert.ToInt32(dataReader1["PackingSlipDetailId"]);
+                            packingSlipBoxDetail.PartId = Convert.ToInt32(dataReader1["PartId"]);
+                            packingSlipBoxDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                            packingSlipBoxDetail.BoxeNo = Convert.ToInt32(dataReader1["BoxeNo"]);
+                            packingSlipBoxDetail.Barcode = Convert.ToString(dataReader1["Barcode"]);
+                            packingSlipBoxDetail.IsScanned = Convert.ToBoolean(dataReader1["IsScanned"]);
+
+                            packingSlipBoxDetails.Add(packingSlipBoxDetail);
+                        }
+                        dataReader1.Close();
+                    }
+                    packingSlipDetail.PackingSlipBoxDetails = packingSlipBoxDetails;
+                    conn.Close();
+                }
+            }
+
+                return packingSlips;
         }
 
         public async Task<PackingSlip> GetPackingSlipAsync(long id)
@@ -528,7 +574,8 @@ namespace DAL.Repository
 
             var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[CustomerId] ,[PackingSlipNo] ,[ShippingDate] ,[ShipVia] ,[Crates] ," +
                 $"[Boxes] ,[GrossWeight] ,[ShippingCharge] ,[CustomCharge] ,[SubTotal] ,[Total] ,[IsInvoiceCreated] ,[IsPaymentReceived] ,[FOB] ,[Terms] ," +
-                $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsMasterPackingSlip],[MasterPackingSlipId],[IsRepackage],[TrakingNumber]  FROM [dbo].[PackingSlipMaster] where Id = '{id}' ");
+                $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsMasterPackingSlip],[MasterPackingSlipId],[IsRepackage],[TrakingNumber],[IsShipmentVerified],[IsScanned],[AllowScanning] " +
+                $"  FROM [dbo].[PackingSlipMaster] where Id = '{id}' ");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -539,7 +586,7 @@ namespace DAL.Repository
                 var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
 
                 while (dataReader.Read())
-                {                    
+                {
                     packingSlip.Id = Convert.ToInt32(dataReader["Id"]);
                     packingSlip.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
                     packingSlip.CustomerId = Convert.ToInt32(dataReader["CustomerId"]);
@@ -566,6 +613,9 @@ namespace DAL.Repository
                     packingSlip.MasterPackingSlipId = Convert.ToInt32(dataReader["MasterPackingSlipId"]);
                     packingSlip.IsRepackage = Convert.ToBoolean(dataReader["IsRepackage"]);
                     packingSlip.TrakingNumber = Convert.ToString(dataReader["TrakingNumber"]);
+                    packingSlip.IsShipmentVerified = Convert.ToBoolean(dataReader["IsShipmentVerified"]);
+                    packingSlip.IsScanned = Convert.ToBoolean(dataReader["IsScanned"]);
+                    packingSlip.AllowScanning = Convert.ToBoolean(dataReader["AllowScanning"]);
 
                 }
                 dataReader.Close();
@@ -616,6 +666,37 @@ namespace DAL.Repository
             packingSlip.PackingSlipDetails = packingSlipDetails;
             conn.Close();
 
+            foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
+            {
+                var packingSlipBoxDetails = new List<PackingSlipBoxDetails>();
+                commandText = string.Format($"SELECT  [Id] ,[PackingSlipId] ,[PackingSlipDetailId] ,[PartId] ,[Qty],[BoxeNo] ,[Barcode] ,[IsScanned] FROM [dbo].[PackingSlipBoxDetails] where PackingSlipDetailId = '{packingSlipDetail.Id}' ");
+
+                using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                {
+                    cmd1.CommandType = CommandType.Text;
+                    conn.Open();
+                    var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                    while (dataReader1.Read())
+                    {
+                        var packingSlipBoxDetail = new PackingSlipBoxDetails();
+                        packingSlipBoxDetail.Id = Convert.ToInt32(dataReader1["Id"]);
+                        packingSlipBoxDetail.PackingSlipId = Convert.ToInt32(dataReader1["PackingSlipId"]);
+                        packingSlipBoxDetail.PackingSlipDetailId = Convert.ToInt32(dataReader1["PackingSlipDetailId"]);
+                        packingSlipBoxDetail.PartId = Convert.ToInt32(dataReader1["PartId"]);
+                        packingSlipBoxDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                        packingSlipBoxDetail.BoxeNo = Convert.ToInt32(dataReader1["BoxeNo"]);
+                        packingSlipBoxDetail.Barcode = Convert.ToString(dataReader1["Barcode"]);
+                        packingSlipBoxDetail.IsScanned = Convert.ToBoolean(dataReader1["IsScanned"]);
+
+                        packingSlipBoxDetails.Add(packingSlipBoxDetail);
+                    }
+                    dataReader1.Close();
+                }
+                packingSlipDetail.PackingSlipBoxDetails = packingSlipBoxDetails;
+                conn.Close();
+            }
+
             return packingSlip;
         }
 
@@ -637,7 +718,7 @@ namespace DAL.Repository
                 while (dataReader.Read())
                 {
                     var packingSlip = new DeletedPackingSlip();
-                    packingSlip.Id = Convert.ToInt32(dataReader["Id"]);                    
+                    packingSlip.Id = Convert.ToInt32(dataReader["Id"]);
                     packingSlip.PackingSlipNo = Convert.ToString(dataReader["PackingSlipNo"]);
 
                     packingSlips.Add(packingSlip);
@@ -646,7 +727,7 @@ namespace DAL.Repository
                 conn.Close();
             }
 
-            
+
             return packingSlips;
         }
 
@@ -719,7 +800,7 @@ namespace DAL.Repository
                     packingSlip.customerShippingInfo.City = Convert.ToString(dataReader["City"]);
                     packingSlip.customerShippingInfo.State = Convert.ToString(dataReader["State"]);
                     packingSlip.customerShippingInfo.ZIPCode = Convert.ToString(dataReader["ZIPCode"]);
-                    packingSlip.customerShippingInfo.IsDefault = Convert.ToBoolean(dataReader["IsDefault"]);                    
+                    packingSlip.customerShippingInfo.IsDefault = Convert.ToBoolean(dataReader["IsDefault"]);
                 }
                 dataReader.Close();
                 conn.Close();
@@ -820,17 +901,21 @@ namespace DAL.Repository
 
 
                         //sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}'  WHERE id = '{packingSlipDetail.PartId}' ");
-                            command.CommandText = sql;
-                            await command.ExecuteNonQueryAsync();
-                            //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+                        //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
-                            sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{packingSlipDetail.PartId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.REVERT_CUSTOMER_PACKINGSLIP)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.IN)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{id.ToString()}'   ,'{packingSlipDetail.Qty}')");
-                            command.CommandText = sql;
-                            await command.ExecuteNonQueryAsync();
+                        sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{packingSlipDetail.PartId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.REVERT_CUSTOMER_PACKINGSLIP)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.IN)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{id.ToString()}'   ,'{packingSlipDetail.Qty}')");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
 
-                            sql = string.Format($"DELETE FROM [dbo].[PackingSlipDetails] WHERE id = '{packingSlipDetail.Id}'");
-                            command.CommandText = sql;
-                            await command.ExecuteNonQueryAsync();
+                        sql = string.Format($"DELETE FROM [dbo].[PackingSlipBoxDetails]  WHERE PackingSlipId = '{id}'");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+
+                        sql = string.Format($"DELETE FROM [dbo].[PackingSlipDetails] WHERE id = '{packingSlipDetail.Id}'");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
 
                         if (packingslip.IsMonthly)
                         {
@@ -903,15 +988,16 @@ namespace DAL.Repository
                         packingSlipDetail.LineNumber = 0;
                     }
                     packingSlip.Total = packingSlip.SubTotal + packingSlip.TotalSurcharge + packingSlip.ShippingCharge + packingSlip.CustomCharge;
-                    
+
                     sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [CompanyId] = '{packingSlip.CompanyId}' ,[CustomerId] = '{packingSlip.CustomerId}' " +
                         $",[PackingSlipNo] = '{packingSlip.PackingSlipNo}' ,[ShippingDate] = '{packingSlip.ShippingDate}' ,[ShipVia] = '{packingSlip.ShipVia}' " +
                         $",[Crates] = '{packingSlip.Crates}' ,[Boxes] = '{packingSlip.Boxes}' ,[GrossWeight] = '{packingSlip.GrossWeight}' " +
                         $",[ShippingCharge] = '{packingSlip.ShippingCharge}' ,[CustomCharge] = '{packingSlip.CustomCharge}' ,[SubTotal] = '{packingSlip.SubTotal}' ,[Total] = '{packingSlip.Total}' " +
                         $",[IsPaymentReceived] = '{packingSlip.IsPaymentReceived}' ,[FOB] = '{packingSlip.FOB}' ,[Terms] = '{packingSlip.Terms}' ," +
-                        $"[ShipmentInfoId] = '{packingSlip.ShipmentInfoId}'  ,[TotalSurcharge] = '{packingSlip.TotalSurcharge}' ,[IsRepackage] = '{packingSlip.IsRepackage}' ,[IsInvoiceCreated] = '{packingSlip.IsInvoiceCreated}' WHERE id = '{packingSlip.Id}'");
+                        $"[ShipmentInfoId] = '{packingSlip.ShipmentInfoId}'  ,[TotalSurcharge] = '{packingSlip.TotalSurcharge}' ,[IsRepackage] = '{packingSlip.IsRepackage}' ,[IsInvoiceCreated] = '{packingSlip.IsInvoiceCreated}'" +
+                        $" ,[IsShipmentVerified] = '{false}' ,[AllowScanning] = '{false}' WHERE id = '{packingSlip.Id}'");
                     command.CommandText = sql;
-                    await command.ExecuteNonQueryAsync();                    
+                    await command.ExecuteNonQueryAsync();
 
                     var packingSlipId = packingSlip.Id;
 
@@ -1013,10 +1099,10 @@ namespace DAL.Repository
 
                         sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{packingSlipDetail.PartId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.CUSTOMER_PACKINGSLIP)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.OUT)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{packingSlip.Id.ToString()}'   ,'{packingSlipDetail.Qty}')");
                         command.CommandText = sql;
-                        await command.ExecuteNonQueryAsync();                      
+                        await command.ExecuteNonQueryAsync();
 
                     }
-                    transaction.Commit();                    
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
@@ -1027,7 +1113,7 @@ namespace DAL.Repository
             return true;
         }
 
-        public async Task UpdatePOSAsync(int packingSlipId,string path,string trackingNumber)
+        public async Task UpdatePOSAsync(int packingSlipId, string path, string trackingNumber, string accessId)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
@@ -1046,7 +1132,7 @@ namespace DAL.Repository
 
                 try
                 {
-                    string sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [IsPOSUploaded] = '{true}' ,[POSPath] = '{path}',[TrakingNumber]='{trackingNumber}'  WHERE Id = '{packingSlipId}'");
+                    string sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [IsPOSUploaded] = '{true}' ,[POSPath] = '{path}',[TrakingNumber]='{trackingNumber}' ,[AccessId]='{accessId}'  WHERE Id = '{packingSlipId}'");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
@@ -1058,6 +1144,529 @@ namespace DAL.Repository
                     throw ex;
                 }
             }
-        }        
+        }
+
+        public async Task<bool> VerifyPackingSlipAsync(PackingSlip packingSlip, int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted, "SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+                string sql = string.Empty;
+                try
+                {
+                    sql = string.Format($"DELETE FROM [dbo].[PackingSlipBoxDetails]  WHERE PackingSlipId = '{packingSlip.Id}'");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    packingSlip.Boxes = 0;
+                    foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
+                    {
+                        packingSlipDetail.Boxes = 0;
+                        foreach (PackingSlipBoxDetails packingSlipBoxDetail in packingSlipDetail.PackingSlipBoxDetails)
+                        {
+                            packingSlipDetail.Boxes = packingSlipDetail.Boxes + 1;
+                            packingSlip.Boxes = packingSlip.Boxes + 1;
+                            sql = string.Format($"INSERT INTO [dbo].[PackingSlipBoxDetails]   ([PackingSlipId]   ,[PackingSlipDetailId]   ,[PartId]   ,[Qty]   ,[BoxeNo]   ,[Barcode]   ,[IsScanned]   ) VALUES   " +
+                                $"('{packingSlip.Id}'   ,'{packingSlipDetail.Id}'   ,'{packingSlipDetail.PartId}'   ,'{packingSlipBoxDetail.Qty}'   ,'{packingSlipBoxDetail.BoxeNo}'   ,'{string.Empty}'   ,'{false}' )");
+                            command.CommandText = sql;
+                            await command.ExecuteNonQueryAsync();
+                        }
+
+                        sql = string.Format($"UPDATE [dbo].[PackingSlipDetails]   SET [Boxes] = '{packingSlipDetail.Boxes}' WHERE id = '{packingSlipDetail.Id}' ");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();                        
+                    }
+
+                    sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [Boxes] = '{packingSlip.Boxes}' ,[IsShipmentVerified] = '{true}'   WHERE id = '{packingSlip.Id}'");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    UserActivityReport userActivityReport = new UserActivityReport();
+                    userActivityReport.UserId = userId;
+                    userActivityReport.Module = BusinessConstants.MODULE.PACKING_SLIP.ToString();
+                    userActivityReport.Action = BusinessConstants.ACTION.VERIFY_SHIPMENT.ToString();
+                    userActivityReport.Reference = packingSlip.PackingSlipNo;
+                    await this.userActivityReportRepository.AddActivityAsync(userActivityReport, connection, transaction, command);
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+
+            var packingSlipBoxDetails = new List<PackingSlipBoxDetails>();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format("SELECT [Id]  FROM [dbo].[PackingSlipBoxDetails] Where [PackingSlipId] = {0};", packingSlip.Id);
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var packingSlipBoxDetail = new PackingSlipBoxDetails();
+
+                    packingSlipBoxDetail.Id = Convert.ToInt32(dataReader["Id"]);
+
+                    packingSlipBoxDetails.Add(packingSlipBoxDetail);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+                    foreach (PackingSlipBoxDetails packingSlipBoxDetail in packingSlipBoxDetails)
+                    {
+                        var sql = string.Format($"UPDATE [dbo].[PackingSlipBoxDetails]   SET [Barcode] =  '{BarCodeUtil.GetBarCodeString(packingSlipBoxDetail.Id)}' WHERE id = '{packingSlipBoxDetail.Id}' ");
+                        await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+            return true;
+        }
+
+        public async Task<List<PackingSlipScanBoxeStatus>> ScanPackingSlipBox(string barcode, int userId)
+        {
+            var packingslipId = await GetPackingslipFromBarcodeAsync(barcode);
+            var packingSlip = await GetPackingSlipAsync(packingslipId);
+            //throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted, "SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+
+                    var sql = string.Format($"UPDATE [dbo].[PackingSlipBoxDetails]   SET [IsScanned] = '{true}'  WHERE barcode = '{barcode}' ");
+
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+                    //var packingslipId = await GetPackingslipFromBarcodeAsync(barcode, command.Connection, command.Transaction); ;
+                    var BoxDetails = await GetBoxDetailFromBarcodeAsync(barcode, command.Connection, command.Transaction);
+                    foreach(PackingSlipDetails packingSlipDetails in packingSlip.PackingSlipDetails)
+                    {
+                        foreach(PackingSlipBoxDetails packingSlipBox in packingSlipDetails.PackingSlipBoxDetails)
+                        {
+                            if(packingSlipBox.Barcode == barcode)
+                            {
+                                UserActivityReport userActivityReport = new UserActivityReport();
+                                userActivityReport.UserId = userId;
+                                userActivityReport.Module = BusinessConstants.MODULE.PACKING_SLIP.ToString();
+                                userActivityReport.Action = BusinessConstants.ACTION.SCAN_BOX.ToString();
+                                userActivityReport.Reference = packingSlip.PackingSlipNo;
+                                var part = await partRepository.GetPartAsync(packingSlipBox.PartId, command.Connection, command.Transaction);
+                                if(part !=null)
+                                    userActivityReport.Description = "Line # : " + packingSlipDetails.LineNumber.ToString() + " Part : " + part.Code.ToString() + " Box # : " + packingSlipBox.BoxeNo.ToString() + " scanned";
+                                else
+                                    userActivityReport.Description = "Line # : " + packingSlipDetails.LineNumber.ToString() + " PartId : " + packingSlipBox.PartId.ToString() + " Box # : " + packingSlipBox.BoxeNo.ToString()  + " scanned";
+                                await this.userActivityReportRepository.AddActivityAsync(userActivityReport, connection, transaction, command);
+                            }
+                        }
+                    }                    
+
+                    var packingSlipBoxDetails = await GetBarcodeFromPackingSlipAsync(packingslipId, command.Connection, command.Transaction);
+                    var unScannedBoxes = packingSlipBoxDetails.Where(x => x.IsScanned == false).FirstOrDefault();
+
+                    if (unScannedBoxes == null)
+                    {
+                        sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [IsScanned] = '{true}'  WHERE id = '{packingslipId}' ");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();
+
+
+                        var userActivityReport = new UserActivityReport();
+                        userActivityReport.UserId = userId;
+                        userActivityReport.Module = BusinessConstants.MODULE.PACKING_SLIP.ToString();
+                        userActivityReport.Action = BusinessConstants.ACTION.SCAN_SHIPMENT.ToString();
+                        userActivityReport.Reference = packingSlip.PackingSlipNo;
+                        userActivityReport.Description = "Shipment is ready for trucking";
+                        await this.userActivityReportRepository.AddActivityAsync(userActivityReport, connection, transaction, command);
+                    }
+
+                    
+
+                    transaction.Commit();
+                    connection.Close();
+                    packingSlip = await GetPackingSlipAsync(packingslipId);
+                    var packingboxestatuses = new List<PackingSlipScanBoxeStatus>();
+                    foreach (PackingSlipDetails packingSlipDetails in packingSlip.PackingSlipDetails)
+                    {
+                        foreach (PackingSlipBoxDetails packingSlipBox in packingSlipDetails.PackingSlipBoxDetails)
+                        {
+                            var part = await partRepository.GetPartAsync(packingSlipBox.PartId);
+                            
+                            var packingboxestatus = new PackingSlipScanBoxeStatus();
+                            packingboxestatus.Id = packingSlipBox.Id;
+                            packingboxestatus.PackingSlipId = packingSlipBox.PackingSlipId;
+                            packingboxestatus.PackingSlipNo = packingSlip.PackingSlipNo;
+                            packingboxestatus.PackingSlipDetailId = packingSlipBox.PackingSlipDetailId;
+                            packingboxestatus.LineNumber = packingSlipDetails.LineNumber;
+                            packingboxestatus.PartId = packingSlipBox.PartId;
+                            packingboxestatus.PartCode = part.Code;
+                            packingboxestatus.Qty = packingSlipBox.Qty;
+                            packingboxestatus.TotalBox = packingSlipDetails.Boxes;
+                            packingboxestatus.BoxeNo = packingSlipBox.BoxeNo;
+                            packingboxestatus.Barcode = packingSlipBox.Barcode;
+                            packingboxestatus.IsScanned = packingSlipBox.IsScanned;
+                            
+                            packingboxestatuses.Add(packingboxestatus);
+                        }
+                    }
+                    return packingboxestatuses;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    return null;                    
+                }               
+
+            }
+        }
+
+        public async Task<PackingSlip> GetPackingSlipFromBarcodeAsync(string barcode)
+        {
+            var packingslipId = await GetPackingslipFromBarcodeAsync(barcode);
+            return await GetPackingSlipAsync(packingslipId);
+        }
+
+        public async Task<bool> ScanAutoPackingSlip(int packingSlipId, int userId)
+        {            
+            var packingSlip = await GetPackingSlipAsync(packingSlipId);
+            //throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted, "SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+
+                    var sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [IsScanned] = '{true}',  [IsShipmentVerified] = '{true}' WHERE id = '{packingSlipId}' ");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+
+                    var userActivityReport = new UserActivityReport();
+                    userActivityReport.UserId = userId;
+                    userActivityReport.Module = BusinessConstants.MODULE.PACKING_SLIP.ToString();
+                    userActivityReport.Action = BusinessConstants.ACTION.SCAN_SHIPMENT.ToString();
+                    userActivityReport.Reference = packingSlip.PackingSlipNo;
+                    userActivityReport.Description = "Shipment is ready for trucking. This shipement has been verified and scanned automatically.";
+                    await this.userActivityReportRepository.AddActivityAsync(userActivityReport, connection, transaction, command);
+
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+        
+        public async Task<int> GetPackingslipFromBarcodeAsync(string barcode, SqlConnection conn, SqlTransaction transaction)
+        {
+            int packingSlipId = 0;
+            var commandText = string.Format($"SELECT  [PackingSlipId]  FROM [dbo].[PackingSlipBoxDetails] where Barcode = '{barcode}' ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
+
+                while (dataReader.Read())
+                {
+                    packingSlipId = Convert.ToInt32(dataReader["PackingSlipId"]);
+                }
+
+                dataReader.Close();
+            }           
+
+            return packingSlipId;
+        }
+
+        public async Task<int> GetPackingslipFromBarcodeAsync(string barcode)
+        {
+            int packingSlipId = 0;
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format($"SELECT  [PackingSlipId]  FROM [dbo].[PackingSlipBoxDetails] where Barcode = '{barcode}' ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    packingSlipId = Convert.ToInt32(dataReader["PackingSlipId"]);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+            return packingSlipId;
+        }
+
+        public async Task<IEnumerable<PackingSlipBoxDetails>> GetBarcodeFromPackingSlipAsync(int packingSlipId, SqlConnection conn, SqlTransaction transaction)
+        {
+            var packingSlipBoxDetails = new List<PackingSlipBoxDetails>();
+
+            var commandText = string.Format($"SELECT  [Id] ,[PackingSlipId] ,[PackingSlipDetailId] ,[PartId] ,[Qty],[BoxeNo] ,[Barcode] ,[IsScanned] FROM [dbo].[PackingSlipBoxDetails] where PackingSlipId = '{packingSlipId}' ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
+
+                while (dataReader.Read())
+                {
+                    var packingSlipBoxDetail = new PackingSlipBoxDetails();
+                    packingSlipBoxDetail.Id = Convert.ToInt32(dataReader["Id"]);
+                    packingSlipBoxDetail.PackingSlipId = Convert.ToInt32(dataReader["PackingSlipId"]);
+                    packingSlipBoxDetail.PackingSlipDetailId = Convert.ToInt32(dataReader["PackingSlipDetailId"]);
+                    packingSlipBoxDetail.PartId = Convert.ToInt32(dataReader["PartId"]);
+                    packingSlipBoxDetail.Qty = Convert.ToInt32(dataReader["Qty"]);
+                    packingSlipBoxDetail.BoxeNo = Convert.ToInt32(dataReader["BoxeNo"]);
+                    packingSlipBoxDetail.Barcode = Convert.ToString(dataReader["Barcode"]);
+                    packingSlipBoxDetail.IsScanned = Convert.ToBoolean(dataReader["IsScanned"]);
+
+                    packingSlipBoxDetails.Add(packingSlipBoxDetail);                }
+
+                dataReader.Close();
+            }            
+            return packingSlipBoxDetails;
+        }
+
+        public async Task<IEnumerable<PackingSlipBoxDetails>> GetBoxDetailFromBarcodeAsync(string barcode, SqlConnection conn, SqlTransaction transaction)
+        {
+            var packingSlipBoxDetails = new List<PackingSlipBoxDetails>();
+
+            var commandText = string.Format($"SELECT  [Id] ,[PackingSlipId] ,[PackingSlipDetailId] ,[PartId] ,[Qty],[BoxeNo] ,[Barcode] ,[IsScanned] FROM [dbo].[PackingSlipBoxDetails] where Barcode = '{barcode}' ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
+
+                while (dataReader.Read())
+                {
+                    var packingSlipBoxDetail = new PackingSlipBoxDetails();
+                    packingSlipBoxDetail.Id = Convert.ToInt32(dataReader["Id"]);
+                    packingSlipBoxDetail.PackingSlipId = Convert.ToInt32(dataReader["PackingSlipId"]);
+                    packingSlipBoxDetail.PackingSlipDetailId = Convert.ToInt32(dataReader["PackingSlipDetailId"]);
+                    packingSlipBoxDetail.PartId = Convert.ToInt32(dataReader["PartId"]);
+                    packingSlipBoxDetail.Qty = Convert.ToInt32(dataReader["Qty"]);
+                    packingSlipBoxDetail.BoxeNo = Convert.ToInt32(dataReader["BoxeNo"]);
+                    packingSlipBoxDetail.Barcode = Convert.ToString(dataReader["Barcode"]);
+                    packingSlipBoxDetail.IsScanned = Convert.ToBoolean(dataReader["IsScanned"]);
+
+                    packingSlipBoxDetails.Add(packingSlipBoxDetail);
+                }
+
+                dataReader.Close();
+            }
+            return packingSlipBoxDetails;
+        }
+
+        public async Task<IEnumerable<PackingSlipBoxDetails>> GetPackingSlipBoxDetailsAsyncAsync(int packingSlipId)
+        {
+            var packingSlipBoxDetails = new List<PackingSlipBoxDetails>();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);            
+
+            var commandText = string.Format($"SELECT  [Id] ,[PackingSlipId] ,[PackingSlipDetailId] ,[PartId] ,[Qty],[BoxeNo] ,[Barcode] ,[IsScanned] FROM [dbo].[PackingSlipBoxDetails] where PackingSlipId = '{packingSlipId}' ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var packingSlipBoxDetail = new PackingSlipBoxDetails();
+                    packingSlipBoxDetail.Id = Convert.ToInt32(dataReader["Id"]);
+                    packingSlipBoxDetail.PackingSlipId = Convert.ToInt32(dataReader["PackingSlipId"]);
+                    packingSlipBoxDetail.PackingSlipDetailId = Convert.ToInt32(dataReader["PackingSlipDetailId"]);
+                    packingSlipBoxDetail.PartId = Convert.ToInt32(dataReader["PartId"]);
+                    packingSlipBoxDetail.Qty = Convert.ToInt32(dataReader["Qty"]);
+                    packingSlipBoxDetail.BoxeNo = Convert.ToInt32(dataReader["BoxeNo"]);
+                    packingSlipBoxDetail.Barcode = Convert.ToString(dataReader["Barcode"]);
+                    packingSlipBoxDetail.IsScanned = Convert.ToBoolean(dataReader["IsScanned"]);
+
+                    packingSlipBoxDetails.Add(packingSlipBoxDetail);
+
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+            
+            return packingSlipBoxDetails;
+        }
+
+        public async Task<bool> AllowScanning(int packingSlipId, int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+                    string sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [AllowScanning] = '{true}'   WHERE Id = '{packingSlipId}'");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    transaction.Commit();
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+        //public async Task<Customer> GetIdByAccessIdAsync(string accessId)
+        //{
+           
+        //    int id = 0;
+        //    int customerId = 0;
+        //    SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+        //    var commandText = string.Format($"SELECT [Id],[CustomerId]  FROM [dbo].[PackingSlipMaster] WHERE  [AccessId] = = '{id}' ");
+
+        //    using (SqlCommand cmd = new SqlCommand(commandText, conn))
+        //    {
+        //        cmd.CommandType = CommandType.Text;
+
+        //        conn.Open();
+
+        //        var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+        //        while (dataReader.Read())
+        //        {
+        //            id = Convert.ToInt32(dataReader["Id"]);
+        //            customerId = Convert.ToInt32(dataReader["CustomerId"]);
+        //        }
+        //        dataReader.Close();
+        //        conn.Close();
+        //    }
+        //    var customer = await this.customerRepository.GetCustomerAsync(customerId);
+        //    customer.PackingSlipId = id;
+        //    return customer;
+        //}
+
+        public async Task<int> GetIdByAccessIdAsync(string accessId)
+        {
+
+            int id = 0;
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format($"SELECT [Id]  FROM [dbo].[PackingSlipMaster] WHERE  [AccessId] = '{accessId}' ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    id = Convert.ToInt32(dataReader["Id"]);
+                }               
+                dataReader.Close();
+                conn.Close();
+            }           
+            return id;
+        }
     }
 }

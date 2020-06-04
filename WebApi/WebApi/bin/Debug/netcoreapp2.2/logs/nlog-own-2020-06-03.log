@@ -1,0 +1,14 @@
+2020-06-03 09:14:36.1436||DEBUG|WebApi.Program|init main |url: |action: 
+2020-06-03 09:14:38.8289||INFO|WebApi.Controllers.FileController|post file api called |url: https://localhost/File/POS/233/1|action: Post
+2020-06-03 09:15:34.4566||INFO|WebApi.Controllers.FileController|post file api called |url: https://localhost/File/POS/233/1|action: Post
+2020-06-03 09:24:52.4489||DEBUG|WebApi.Program|init main |url: |action: 
+2020-06-03 09:25:02.2599||INFO|WebApi.Controllers.FileController|post file api called |url: https://localhost/File/POS/233/1|action: Post
+2020-06-03 09:29:40.3626||DEBUG|WebApi.Program|init main |url: |action: 
+2020-06-03 09:29:43.0949||INFO|WebApi.Controllers.FileController|post file api called |url: https://localhost/File/POS/233/1|action: Post
+2020-06-03 09:31:31.4463||DEBUG|WebApi.Program|init main |url: |action: 
+2020-06-03 09:31:49.6958||DEBUG|WebApi.Program|init main |url: |action: 
+2020-06-03 09:32:45.1876||INFO|WebApi.Controllers.FileController|post file api called |url: https://localhost/File/POS/233/1|action: Post
+2020-06-03 09:34:22.8463||DEBUG|WebApi.Program|init main |url: |action: 
+2020-06-03 09:34:25.6970||INFO|WebApi.Controllers.FileController|post file api called |url: https://localhost/File/POS/233/1|action: Post
+2020-06-03 20:29:24.6023||DEBUG|WebApi.Program|init main |url: |action: 
+2020-06-03 20:32:12.9678||DEBUG|WebApi.Program|init main |url: |action: 

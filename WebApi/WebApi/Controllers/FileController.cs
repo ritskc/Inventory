@@ -8,6 +8,9 @@ using WebApi.IServices;
 using System.IO;
 using System.Net.Http;
 using Microsoft.Extensions.Logging;
+using WebApi.Utils;
+using WebApi.Settings;
+using Microsoft.Extensions.Options;
 
 namespace WebApi.Controllers
 {
@@ -20,18 +23,26 @@ namespace WebApi.Controllers
         private readonly ISupplierInvoiceService supplierInvoice;
         private readonly IOrderService orderService;
         private readonly ILogger<FileController> logger;
+        private readonly AppSettings _appSettings;
+        private readonly ICompanyService companyService;
+
+       
 
         public FileController(IPackingSlipService packingSlipService,
             IMasterPackingSlipService masterPackingSlipService,
             ISupplierInvoiceService supplierInvoice,
             IOrderService orderService,
-            ILogger<FileController> logger)
+            ILogger<FileController> logger,
+            IOptions<AppSettings> appSettings,
+            ICompanyService companyService)
         {
             this.packingSlipService = packingSlipService;
             this.masterPackingSlipService = masterPackingSlipService;
             this.supplierInvoice = supplierInvoice;
             this.orderService = orderService;
             this.logger = logger;
+            this.companyService = companyService;
+            this._appSettings = appSettings.Value;
         }
 
         [HttpPost("{docType}/{id}")]
@@ -104,10 +115,27 @@ namespace WebApi.Controllers
                 }
             }
             var relativeFilePath = "Docs\\" + type + "\\" + id.ToString() + ".pdf";
-            if(docType.ToLower() == "POS".ToLower())
-                await packingSlipService.UpdatePOSAsync(id, relativeFilePath, trackingNumber);
+            if (docType.ToLower() == "POS".ToLower())
+            {
+                var accessId = Guid.NewGuid().ToString();
+                await packingSlipService.UpdatePOSAsync(id, relativeFilePath, trackingNumber, accessId);
+
+                EmailService emailService = new EmailService(_appSettings);
+                var packingSlip = await packingSlipService.GetPackingSlipAsync(id);
+                var company = await companyService.GetCompanyAsync(packingSlip.CompanyId);
+                emailService.SendPOSEmail(company.Name, packingSlip.CustomerDetail.ContactPersonName,  _appSettings.CustomerAccessURL + docType + "/" +  accessId, packingSlip.PackingSlipNo, packingSlip.CustomerDetail.EmailAddress);
+
+            }
             else if (docType.ToLower() == "MasterPOS".ToLower())
-                await masterPackingSlipService.UpdatePOSAsync(id, relativeFilePath, trackingNumber);
+            {
+                var accessId = Guid.NewGuid().ToString();
+                await masterPackingSlipService.UpdatePOSAsync(id, relativeFilePath, trackingNumber, accessId);
+                EmailService emailService = new EmailService(_appSettings);
+                var packingSlip = await masterPackingSlipService.GetMasterPackingSlipAsync(id);
+                var company = await companyService.GetCompanyAsync(packingSlip.CompanyId);
+                emailService.SendPOSEmail(company.Name, packingSlip.PackingSlips.FirstOrDefault().CustomerDetail.ContactPersonName, _appSettings.CustomerAccessURL + docType + "/" + accessId, packingSlip.MasterPackingSlipNo, packingSlip.PackingSlips.FirstOrDefault().CustomerDetail.EmailAddress);
+
+            }
 
             return Ok();
         }        

@@ -91,15 +91,50 @@ namespace WebApi.Services
             return result;
         }
 
+        public async Task<bool> ScanAutoPackingSlip(int packingSlipId, int userId)
+        {
+            var result = await this.packingSlipRepository.ScanAutoPackingSlip(packingSlipId, userId);
+            return result;
+        }
+
+        public async Task<List<PackingSlipScanBoxeStatus>> ScanPackingSlipBox(string barcode, int userId)
+        {
+            var result = await this.packingSlipRepository.ScanPackingSlipBox(barcode,userId);
+            return result;
+        }
+
         public async Task<bool> UpdatePackingSlipAsync(PackingSlip packingSlip)
         {
             var result = await this.packingSlipRepository.UpdatePackingSlipAsync(packingSlip);
             return result;
         }
 
-        public async Task UpdatePOSAsync(int packingSlipId, string path,string trackingNumber)
+        public async Task UpdatePOSAsync(int packingSlipId, string path,string trackingNumber, string accessId)
         {
-            await packingSlipRepository.UpdatePOSAsync(packingSlipId,path, trackingNumber);
-        }       
+            await packingSlipRepository.UpdatePOSAsync(packingSlipId,path, trackingNumber, accessId);
+        }
+
+        public async Task<bool> VerifyPackingSlipAsync(PackingSlip packingSlip, int userId)
+        {
+            var result = await this.packingSlipRepository.VerifyPackingSlipAsync(packingSlip, userId);
+            return result;
+        }
+
+        public async Task<PackingSlip> GetPackingSlipFromBarcodeAsync(string barcode)
+        {
+           return await this.packingSlipRepository.GetPackingSlipFromBarcodeAsync(barcode);           
+        }
+
+        public async Task<bool> AllowScanning(int packingSlipId, int userId)
+        {
+            var result = await this.packingSlipRepository.AllowScanning(packingSlipId, userId);
+            return result;
+        }
+
+        public async Task<int> GetIdByAccessIdAsync(string accessId)
+        {
+            return await this.packingSlipRepository.GetIdByAccessIdAsync(accessId);            
+        }
+
     }
 }

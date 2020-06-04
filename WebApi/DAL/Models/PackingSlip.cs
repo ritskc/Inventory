@@ -35,10 +35,13 @@ namespace DAL.Models
         public bool IsDeletedPackingSlipNoUsed { get; set; }
         public bool IsRepackage { get; set; }
         public string TrakingNumber { get; set; }
+        public bool IsShipmentVerified { get; set; }
+        public bool IsScanned { get; set; }
 
         public bool IsMasterPackingSlip { get; set; }
         public int MasterPackingSlipId { get; set; }
-        public bool IsMonthly { get; set; }       
+        public bool IsMonthly { get; set; } 
+        public bool AllowScanning { get; set; }
 
         public List<PackingSlipDetails> PackingSlipDetails { get; set; }
         public CustomerShippingInfo customerShippingInfo { get; set; }

@@ -14,7 +14,7 @@
         </asp:ScriptManager>
         <div>
         </div>
-        <rsweb:ReportViewer ID="ReportViewer1" runat="server" Font-Names="Verdana" Font-Size="8pt" WaitMessageFont-Names="Verdana" WaitMessageFont-Size="14pt" Height="761px" Width="833px">
+        <rsweb:ReportViewer ID="ReportViewer1" runat="server" Font-Names="Verdana" Font-Size="8pt" WaitMessageFont-Names="Verdana" WaitMessageFont-Size="14pt" Height="761px" Width="833px" OnBookmarkNavigation="ReportViewer1_BookmarkNavigation" OnDataBinding="ReportViewer1_DataBinding" OnDisposed="ReportViewer1_Disposed" OnDocumentMapNavigation="ReportViewer1_DocumentMapNavigation" OnDrillthrough="ReportViewer1_Drillthrough" OnInit="ReportViewer1_Init" OnLoad="ReportViewer1_Load" OnPageNavigation="ReportViewer1_PageNavigation" OnPreRender="ReportViewer1_PreRender" OnReportError="ReportViewer1_ReportError" OnReportRefresh="ReportViewer1_ReportRefresh" OnSearch="ReportViewer1_Search" OnSort="ReportViewer1_Sort" OnSubmittingDataSourceCredentials="ReportViewer1_SubmittingDataSourceCredentials" OnSubmittingParameterValues="ReportViewer1_SubmittingParameterValues" OnToggle="ReportViewer1_Toggle">
             <LocalReport ReportEmbeddedResource="Report.Reports.BL.rdlc" ReportPath="./Reports/BL.rdlc">
                 <DataSources>
                     <rsweb:ReportDataSource DataSourceId="ObjectDataSource1" Name="dsReport" />

@@ -101,7 +101,8 @@ namespace WebApi.Controllers
 
             var relativeFilePath = "Docs\\POS\\" + id.ToString() + "_POS.pdf";
 
-            var result = packingSlipService.UpdatePOSAsync(id, relativeFilePath, trackingNumber);
+            var accessId = Guid.NewGuid().ToString();
+            var result = packingSlipService.UpdatePOSAsync(id, relativeFilePath, trackingNumber, accessId);
 
             return Ok();
         }
@@ -131,6 +132,23 @@ namespace WebApi.Controllers
                 await this.packingSlipService.UpdateMasterPackingSlipAsync(packingSlip);
 
                 return id;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        [HttpPut("{allowscanning}/{barcode}")]
+        public async Task<ActionResult<bool>> ScanBox(int id)
+        {
+            try
+            {
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var result1 = await this.packingSlipService.AllowScanning(id, userId);
+                return Ok(result1);
             }
             catch (Exception ex)
             {

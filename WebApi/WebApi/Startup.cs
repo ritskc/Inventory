@@ -115,6 +115,7 @@ namespace WebApi
             services.AddTransient<IPriviledgeService, PriviledgeService>();
             services.AddTransient<IMonthlyInvoiceService, MonthlyInvoiceService>();
             services.AddTransient<IUserReportService, UserReportService>();
+            
 
             //add repositories here
             //services.AddScoped<IPartRepository, PartRepository>();
@@ -134,6 +135,7 @@ namespace WebApi
             services.AddTransient<IPriviledgeRepository, PriviledgeRepository>();
             services.AddTransient<IMonthlyInvoiceRepository, MonthlyInvoiceRepository>();
             services.AddTransient<IUserReportRepository, UserReportRepository>();
+            services.AddTransient<IUserActivityReportRepository, UserActivityReportRepository>();
 
             //add helpers here
             services.AddScoped<ISqlHelper, SqlHelper>();

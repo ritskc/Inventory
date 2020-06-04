@@ -83,6 +83,57 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpPut("{scan}/{barcode}")]
+        public async Task<ActionResult<bool>> ScanBox(string scan, string barcode)
+        {
+            try
+            {
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                if (scan.ToLower() == "allowscanning")
+                {
+                    var result1 = await this.packingSlipService.AllowScanning(Convert.ToInt32(barcode), userId);
+                    return Ok(result1);
+                }
+
+                if (scan.ToLower() == "autoscan")
+                {
+                    var result1 = await this.packingSlipService.ScanAutoPackingSlip(Convert.ToInt32(barcode), userId);
+                    return Ok(result1);
+                }
+
+                var packingSlip = await this.packingSlipService.GetPackingSlipFromBarcodeAsync(barcode);
+
+                if(!packingSlip.AllowScanning)
+                    return StatusCode(500, "This packingslip is not ready for scanning. Please ask admin to enable it for Scanning.");
+                var result = await this.packingSlipService.ScanPackingSlipBox(barcode, userId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        [HttpPost("{verifyshipment}/{id}")]
+        public async Task<ActionResult<bool>> VerifyShipment([FromBody] PackingSlip packingSlip)
+        {
+            try
+            {
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var result = await this.packingSlipService.VerifyPackingSlipAsync(packingSlip, userId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+
         [HttpPost("{id}")]
         public async Task<IActionResult> Post(int id,IFormFile file,string trackingNumber)
         {
@@ -101,8 +152,8 @@ namespace WebApi.Controllers
             }        
             
             var relativeFilePath = "Docs\\POS\\" + id.ToString() + "_POS.pdf";
-
-            var result = packingSlipService.UpdatePOSAsync(id, relativeFilePath,trackingNumber);
+            var accessId = Guid.NewGuid().ToString();
+            var result = packingSlipService.UpdatePOSAsync(id, relativeFilePath,trackingNumber, accessId);
 
             return Ok();
         }

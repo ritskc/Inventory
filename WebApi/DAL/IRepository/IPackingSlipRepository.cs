@@ -16,7 +16,13 @@ namespace DAL.IRepository
         Task<bool> UpdatePackingSlipAsync(PackingSlip packingSlip);
         Task<bool> DeletePackingSlipAsync(long id);
         Task CreateInvoiceAsync(PackingSlip packingSlip);
-        Task UpdatePOSAsync(int packingSlipId, string path,string trackingNumber);
+        Task UpdatePOSAsync(int packingSlipId, string path,string trackingNumber,string accessId);
         Task<IEnumerable<DeletedPackingSlip>> GetDeletedPackingSlipAsync(int companyId);
+        Task<bool> VerifyPackingSlipAsync(PackingSlip packingSlip, int userId);
+        Task<List<PackingSlipScanBoxeStatus>> ScanPackingSlipBox(string barcode, int userId);
+        Task<bool> ScanAutoPackingSlip(int packingSlipId, int userId);
+        Task<PackingSlip> GetPackingSlipFromBarcodeAsync(string barcode);
+        Task<bool> AllowScanning(int packingSlipId, int userId);
+        Task<int> GetIdByAccessIdAsync(string accessId);
     }
 }

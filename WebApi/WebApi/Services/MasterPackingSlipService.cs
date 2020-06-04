@@ -60,9 +60,20 @@ namespace WebApi.Services
             return result;
         }
 
-        public async Task UpdatePOSAsync(int masterPackingSlipId, string path, string trackingNumber)
+        public async Task UpdatePOSAsync(int masterPackingSlipId, string path, string trackingNumber, string accessId)
         {
-            await masterPackingSlipRepository.UpdatePOSAsync(masterPackingSlipId, path, trackingNumber);
+            await masterPackingSlipRepository.UpdatePOSAsync(masterPackingSlipId, path, trackingNumber, accessId);
+        }
+
+        public async Task<bool> AllowScanning(int masterPackingSlipId, int userId)
+        {
+            var result = await this.masterPackingSlipRepository.AllowScanning(masterPackingSlipId, userId);
+            return result;
+        }
+
+        public async Task<int> GetIdByAccessIdAsync(string accessId)
+        {
+            return await this.masterPackingSlipRepository.GetIdByAccessIdAsync(accessId);
         }
     }
 }

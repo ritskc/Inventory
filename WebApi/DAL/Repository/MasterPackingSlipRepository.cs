@@ -18,14 +18,16 @@ namespace DAL.Repository
         private readonly IEntityTrackerRepository entityTrackerRepository;
         private readonly IPackingSlipRepository packingSlipRepository;
         private readonly IUserRepository userRepository;
+        private readonly ICustomerRepository customerRepository;
 
         public MasterPackingSlipRepository(ISqlHelper sqlHelper, IEntityTrackerRepository entityTrackerRepository, 
-            IPackingSlipRepository packingSlipRepository, IUserRepository userRepository)
+            IPackingSlipRepository packingSlipRepository, IUserRepository userRepository, ICustomerRepository customerRepository)
         {
             this.sqlHelper = sqlHelper;
             this.entityTrackerRepository = entityTrackerRepository;
             this.packingSlipRepository = packingSlipRepository;
             this.userRepository = userRepository;
+            this.customerRepository = customerRepository;
 
         }
         public async Task<int> AddMasterPackingSlipAsync(MasterPackingSlip masterPackingSlip)
@@ -364,7 +366,7 @@ namespace DAL.Repository
             return true;
         }
 
-        public async Task UpdatePOSAsync(int masterPackingSlipId, string path, string trackingNumber)
+        public async Task UpdatePOSAsync(int masterPackingSlipId, string path, string trackingNumber, string accessId)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
@@ -383,7 +385,7 @@ namespace DAL.Repository
 
                 try
                 {
-                    string sql = string.Format($"UPDATE [dbo].[MasterPackingSlipMaster]   SET [IsPOSUploaded] = '{true}' ,[POSPath] = '{path}',[TrakingNumber]='{trackingNumber}'  WHERE Id = '{masterPackingSlipId}'");
+                    string sql = string.Format($"UPDATE [dbo].[MasterPackingSlipMaster]   SET [IsPOSUploaded] = '{true}' ,[POSPath] = '{path}',[TrakingNumber]='{trackingNumber}' ,[AccessId]='{accessId}'  WHERE Id = '{masterPackingSlipId}'");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
@@ -395,6 +397,100 @@ namespace DAL.Repository
                     throw ex;
                 }
             }
+        }
+
+        public async Task<bool> AllowScanning(int masterPackingSlipId, int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+                    string sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [AllowScanning] = '{true}'   WHERE MasterPackingSlipId = '{masterPackingSlipId}'");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    sql = string.Format($"UPDATE [dbo].[MasterPackingSlipMaster]   SET [AllowScanning] = '{true}'   WHERE Id = '{masterPackingSlipId}'");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    transaction.Commit();
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+        //public async Task<Customer> GetIdByAccessIdAsync(string accessId)
+        //{
+        //    int id = 0;
+        //    int customerId = 0;
+        //    SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+        //    var commandText = string.Format($"SELECT [Id],[CustomerId]  FROM [dbo].[MasterPackingSlipMaster] WHERE  [AccessId] = = '{id}' ");
+
+        //    using (SqlCommand cmd = new SqlCommand(commandText, conn))
+        //    {
+        //        cmd.CommandType = CommandType.Text;
+
+        //        conn.Open();
+
+        //        var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+        //        while (dataReader.Read())
+        //        {
+        //            id = Convert.ToInt32(dataReader["Id"]);
+        //            customerId = Convert.ToInt32(dataReader["CustomerId"]);
+        //        }
+        //        dataReader.Close();
+        //        conn.Close();
+        //    }
+        //    var customer = await this.customerRepository.GetCustomerAsync(customerId);
+        //    customer.PackingSlipId = id;
+        //    return customer;
+        //}
+
+        public async Task<int> GetIdByAccessIdAsync(string accessId)
+        {
+
+            int id = 0;
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format($"SELECT [Id]  FROM [dbo].[MasterPackingSlipMaster] WHERE  [AccessId] ='{accessId}' ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    id = Convert.ToInt32(dataReader["Id"]);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+            return id;
         }
     }
 }

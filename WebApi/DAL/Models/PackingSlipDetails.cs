@@ -33,5 +33,7 @@ namespace DAL.Models
         public bool IsRepackage { get; set; }
 
         public Part PartDetail { get; set; }
+
+        public List<PackingSlipBoxDetails> PackingSlipBoxDetails { get; set; }
     }
 }

@@ -38,5 +38,29 @@ namespace DAL.Models
             IN = 1,
             OUT = 2
         }
+
+        public enum MODULE
+        {
+            PART,
+            INVENTORY,
+            SUPPLIER_ORDER,
+            SUPPLIER_INVOICE,
+            CUSTOMER_ORDER,
+            PACKING_SLIP,
+            MASTER_PACKING_SLIP,
+            MONTHLY_INVOICE       
+        }
+
+        public enum ACTION
+        {
+            ADD,
+            UPDATE,
+            DELETE,
+            CREATE_INVOICE,
+            UPLOAD_INVOICE,
+            VERIFY_SHIPMENT,
+            SCAN_SHIPMENT,
+            SCAN_BOX
+        }
     }
 }
