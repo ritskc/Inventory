@@ -288,12 +288,16 @@ export class ShipmentListComponent implements OnInit {
   }
 
   printBarcode(data) {
-    var appConfiguration = new AppConfigurations();
-    var boxNos = '';
-    data.packingSlipDetails.forEach(detail => {
-      boxNos += `${ detail.packingSlipBoxDetails[0].barcode }|`;
-    });
-    window.open(appConfiguration.barcodeUri + boxNos);
+    try{
+      var appConfiguration = new AppConfigurations();
+      var boxNos = '';
+      data.packingSlipDetails.forEach(detail => {
+        boxNos += `${ detail.packingSlipBoxDetails[0].barcode }|`;
+      });
+      window.open(appConfiguration.barcodeUri + boxNos);
+    } catch {
+      this.toastr.errorToastr(`Barcode details unavailable for packing slip ${ data.packingSlipNo }`);
+    }
   }
 }
 
