@@ -31,6 +31,14 @@ export class ShipmentService {
     return this.apiService.delete(shipmentId, this.config.Settings.apiServerHost + this.config.Settings.shipmentUri);
   }
 
+  verifyShipment(shipment: Shipment) {
+    return this.apiService.post(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/verifyshipment/${shipment.id}`);
+  }
+
+  allowScanning(shipment: Shipment) {
+    return this.apiService.post(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/allowscanning/${shipment.id}`);
+  }
+
   getLatestShipment(companyId: number, date: string): Observable<any> {
     return this.apiService.get(`${ this.config.Settings.apiServerHost }/${ this.config.Settings.entityTracker }/packing_slip/${ companyId }/${ date }`);
   }

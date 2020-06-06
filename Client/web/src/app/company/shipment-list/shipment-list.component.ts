@@ -43,7 +43,7 @@ export class ShipmentListComponent implements OnInit {
 
   initializeGridColumns() {
     this.columns = [];
-    this.columns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true, customStyling: 'column-width-200' }) );
+    this.columns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true, customStyling: 'column-width-150' }) );
     this.columns.push( new DataColumn({ headerText: "Slip No", value: "packingSlipNo", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Shipped Date", value: "shippingDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Shipped Via", value: "shipVia", sortable: false }) );
@@ -55,9 +55,12 @@ export class ShipmentListComponent implements OnInit {
       new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editShipment' }),
       new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'editInvoice' }),
       new DataColumnAction({ actionText: 'Repack', actionStyle: ClassConstants.Primary, event: 'printRepackingInvoice', showOnlyIf: 'data["isRepackage"] == true' }),
-      new DataColumnAction({ actionText: 'Print Shipment', actionStyle: ClassConstants.Primary, event: 'printShipment' }),
+      new DataColumnAction({ actionText: 'Verify', actionStyle: ClassConstants.Primary, event: 'verifyShipment', showOnlyIf: 'data["isShipmentVerified"] == false' }),
+      new DataColumnAction({ actionText: 'Allow Scanning', actionStyle: ClassConstants.Primary, event: 'allowScanning', showOnlyIf: 'data["isShipmentVerified"] == true && data["allowScanning"] == false' }),
+      new DataColumnAction({ actionText: 'Print Shipment', actionStyle: ClassConstants.Primary, event: 'printShipment', showOnlyIf: 'data["isShipmentVerified"] == true' }),
       new DataColumnAction({ actionText: 'Print Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoice' }),
-      new DataColumnAction({ actionText: 'Print BL', actionStyle: ClassConstants.Primary, event: 'printBL' }),
+      new DataColumnAction({ actionText: 'Barcode', actionStyle: ClassConstants.Primary, event: 'printBarcode', showOnlyIf: 'data["isShipmentVerified"] == true' }),
+      new DataColumnAction({ actionText: 'Print BL', actionStyle: ClassConstants.Primary, event: 'printBL', showOnlyIf: 'data["isScanned"] == true' }),
       new DataColumnAction({ actionText: 'Download POS', actionStyle: ClassConstants.Primary, event: 'downloadPOS' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'delete' })
     ] }) );
@@ -143,6 +146,15 @@ export class ShipmentListComponent implements OnInit {
         break;
       case 'editInvoice':
         this.editInvoice(data);
+        break;
+      case 'verifyShipment':
+        this.verifyShipment(data);
+        break;
+      case 'allowScanning':
+        this.allowScanning(data);
+        break;
+      case 'printBarcode':
+        this.printBarcode(data);
         break;
     }
   }
@@ -241,6 +253,47 @@ export class ShipmentListComponent implements OnInit {
 
   showRepackagedOnly() {
     this.filteredShipments = this.showRepackge ? this.shipments.filter(i => i.isRepackage == true): this.shipments;
+  }
+
+  verifyShipment(data) {
+    this.httpLoader.show();
+    this.shipmentService.verifyShipment(data)
+        .subscribe(
+          () => {
+            this.toastr.successToastr('Shipment verified successfully!!');
+            this.httpLoader.hide();
+            this.loadAllCustomers();
+          },
+          (error) => {
+            this.toastr.errorToastr(error.error);
+            this.httpLoader.hide();
+          }
+        );
+  }
+
+  allowScanning(data) {
+    this.httpLoader.show();
+    this.shipmentService.allowScanning(data)
+        .subscribe(
+          () => {
+            this.toastr.successToastr('Scanning enabled for the selected shipment!!');
+            this.httpLoader.hide();
+            this.loadAllCustomers();
+          },
+          (error) => {
+            this.toastr.errorToastr(error.error);
+            this.httpLoader.hide();
+          }
+        );
+  }
+
+  printBarcode(data) {
+    var appConfiguration = new AppConfigurations();
+    var boxNos = '';
+    data.packingSlipDetails.forEach(detail => {
+      boxNos += `${ detail.packingSlipBoxDetails[0].barcode }|`;
+    });
+    window.open(appConfiguration.barcodeUri + boxNos);
   }
 }
 

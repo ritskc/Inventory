@@ -120,6 +120,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
 
   filterColumns() {
     var privileges = JSON.parse(localStorage.getItem('privileges'));
+    if (!privileges) return;
     if (privileges.isSuperAdmin || this.ignoreColumnFiltering) return;
 
     var clonedNavItems = JSON.parse(JSON.stringify(navItems));
