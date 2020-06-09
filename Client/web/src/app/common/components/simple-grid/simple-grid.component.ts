@@ -47,6 +47,9 @@ export class SimpleGridComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
     this.filterColumns();
+    this.setPageNo(1);
+    this.calculatePages();
+    this.createRange();
   }
 
   @Input() 

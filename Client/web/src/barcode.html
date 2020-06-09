@@ -6,16 +6,16 @@
     <body>
         <div>
             <input type="button" value="Print" onclick="window.print();" style="float: right; width: 100px; height: 30px; font-size: 16px; background-color: #20a8d8; border-radius: 3px; border-color: #20a8d8; color: white;"/>
-            <div id="barcode-container"></div>
+            <div id="barcode-container" style="padding-top: 50px;"></div>
             <script>
                 var hashes = location.href.split('?')[1];
                 if(hashes) {
                     var barcodes = hashes.split('|');
                     for(var index = 0; index < barcodes.length; index++) {
-                        $('#barcode-container').append(`<div><svg style="width: 100vw; height: 100vh;" id="barcode-${index}"></svg></div>`);
+                        $('#barcode-container').append(`<div style="float:left; margin-left: 100px;"><svg id="barcode-${index}"></svg></div>`);
                         $("#barcode-" + index).JsBarcode(barcodes[index], {
-                            width: 5,
-                            height:400
+                            width: 3,
+                            height:200
                         });
                     };
                 }

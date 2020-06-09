@@ -31,3 +31,34 @@
 <div>
   <app-report [displayReportEvent]="printDocument.asObservable()"></app-report>
 </div>
+
+<div style="top: 0px; left: 0px; width: 100%; height: 300%; position: absolute; background-color: lightgray; opacity: 0.9;" *ngIf='showModal'>
+  <div style="top: 100px; left: 20%; width: 700px; height: 160px; position: absolute; background-color: darkgray; opacity: 1;">
+    <div style="width: 100%;">
+      <div class="card">
+        <div class="card-header">
+          Adjust Shipment Box Quantity
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <select class="form-control" [(ngModel)]="packingSlipDetailId">
+              <option value="0">Select Part</option>
+              <option *ngFor="let packingSlipDetails of selectedShipment.packingSlipDetails" [value]="packingSlipDetails.id">{{packingSlipDetails.partDetail.description}} (Qty: {{packingSlipDetails.qty}})</option>
+            </select>
+        </div>
+          <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+            <input class="form-control col-xs-6 col-md-6" placeholder="Enter number of boxes" [(ngModel)]="boxes"/>
+            <span class="col-md-2"></span>
+            <button class="btn btn-primary col-xs-4 col-md-4" (click)="addBoxesToShipment()">Adjust Quantity & Add</button>
+          </div>
+        </div>
+        <simple-grid [exportRequired]="false" [addRequired]="false" [pageSize]="10" [columns]="shipmentBoxesGridColumns" [data]="shipmentBoxes"
+                      (actionButtonClickedEvent)="[actionButtonClickedForQuantityGrid($event)]"></simple-grid>
+        <div class="card-footer">
+          <button (click)="verifyShipmentSave()" class="btn btn-primary">Verify Shipment</button>
+          <button (click)="showModal = false" class="btn btn-danger">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

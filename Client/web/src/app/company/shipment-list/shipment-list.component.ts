@@ -22,15 +22,21 @@ export class ShipmentListComponent implements OnInit {
 
   private currentlyLoggedInCompany: number = 0;
   private configuration: AppConfigurations = new AppConfigurations();
+  selectedShipment: Shipment;
   shipments: Shipment[] = [];
   filteredShipments: any[] = [];
   customers: Customer[] = [];
   columns: DataColumn[] = [];
+  shipmentBoxesGridColumns: DataColumn[] = [];
   customerId: number = -1;
   showFullDetails: boolean = false;
   showInvoiced: boolean = false;
   showRepackge: boolean = false;
   printDocument: Subject<string> = new Subject<string>();
+  showModal: boolean = false;
+  boxes: number = 0;
+  packingSlipDetailId: number = 0;
+  shipmentBoxes: any[] = [];
 
   constructor(private companyService: CompanyService, private shipmentService: ShipmentService, private customerService: CustomerService, 
     private router: Router, private httpLoader: httpLoaderService, private toastr: ToastrManager) { }
@@ -159,6 +165,19 @@ export class ShipmentListComponent implements OnInit {
     }
   }
 
+  actionButtonClickedForQuantityGrid(data) {
+    switch(data.eventName) {
+      case 'delete':
+        this.removeShipmentBoxAllocation(data);
+        break;
+    }
+  }
+
+  removeShipmentBoxAllocation(data) {
+    var index = this.shipmentBoxes.findIndex(d => d == data);
+    this.shipmentBoxes.splice(index, 1);
+  }
+
   downloadPOS(data) {
     if (data.isMasterPackingSlip && data.masterPackingSlipId > 0) {
       window.open(`${this.configuration.fileApiUri}/MasterPOS/${data.masterPackingSlipId}`);
@@ -255,14 +274,86 @@ export class ShipmentListComponent implements OnInit {
     this.filteredShipments = this.showRepackge ? this.shipments.filter(i => i.isRepackage == true): this.shipments;
   }
 
+  addBoxesToShipment() {
+    this.shipmentBoxesGridColumns = [];
+    this.shipmentBoxesGridColumns.push(new DataColumn({ headerText: "Part", value: "description" }));
+    this.shipmentBoxesGridColumns.push(new DataColumn({ headerText: "Box", value: "boxNo" }));
+    this.shipmentBoxesGridColumns.push(new DataColumn({ headerText: "Qty", value: "qty", isEditable: true }));
+    this.shipmentBoxesGridColumns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'delete' })
+    ] }) );
+
+    var selctedPart = this.selectedShipment.packingSlipDetails.find(d => d.id == this.packingSlipDetailId);
+    if (selctedPart.qty < this.boxes) {
+      this.toastr.errorToastr('Number of boxes cannot be more than quantity')
+      return;
+    }
+
+    if (this.boxes == 0) {
+      this.toastr.errorToastr('Number of boxes should be more than zero');
+      return;
+    }
+
+    var remainingQuantities = selctedPart.qty;
+    for (var boxIndex = 1; boxIndex <= this.boxes; boxIndex++) {
+      var box = {
+        id: 0,
+        description: selctedPart.partDetail.description,
+        packingSlipId: this.selectedShipment.id,
+        packingSlipDetailId: selctedPart.id,
+        partId: selctedPart.partId,
+        qty: boxIndex == this.boxes ? remainingQuantities: Math.floor(selctedPart.qty / this.boxes),
+        boxeNo: boxIndex,
+        barcode: '',
+        isScanned: false
+      };
+      remainingQuantities = remainingQuantities - box.qty;
+      this.shipmentBoxes.push(box);
+    }
+  }
+
   verifyShipment(data) {
+    this.showModal = true;
+    this.selectedShipment = data;
+    this.boxes = 0;
+    this.shipmentBoxes = [];
+  }
+
+  verifyShipmentSave() {
+    var hasError = false;
+    this.selectedShipment.packingSlipDetails.forEach(detail => {
+      var boxes = this.shipmentBoxes.filter(s => s.packingSlipDetailId == detail.id);
+      var totalQuantitiesInAllBoxes = boxes.reduce((a, b) => a + b.qty, 0);
+      if (totalQuantitiesInAllBoxes !== detail.qty) {
+        hasError = true;
+        this.toastr.errorToastr(`Total quantities in all boxes does not match for ${ detail.partDetail.description }`);
+        return;
+      }
+      detail.boxes = boxes.length;
+      detail.packingSlipBoxDetails = [];
+      detail.packingSlipBoxDetails.push(...boxes);
+    });
+
+    this.selectedShipment.packingSlipDetails.forEach(detail => {
+      if (detail.packingSlipBoxDetails.length == 0) {
+        hasError = true;
+        this.toastr.errorToastr('Could not verify for all products. Please enter box details for all line items');
+        return;
+      }
+    });
+
+    if (hasError) {
+      return;
+    }
+
     this.httpLoader.show();
-    this.shipmentService.verifyShipment(data)
+    this.shipmentService.verifyShipment(this.selectedShipment)
         .subscribe(
           () => {
             this.toastr.successToastr('Shipment verified successfully!!');
             this.httpLoader.hide();
             this.loadAllCustomers();
+            this.showModal = false;
           },
           (error) => {
             this.toastr.errorToastr(error.error);
@@ -292,7 +383,9 @@ export class ShipmentListComponent implements OnInit {
       var appConfiguration = new AppConfigurations();
       var boxNos = '';
       data.packingSlipDetails.forEach(detail => {
-        boxNos += `${ detail.packingSlipBoxDetails[0].barcode }|`;
+        detail.packingSlipBoxDetails.forEach(box => {
+          boxNos += box.barcode + '|';
+        });
       });
       window.open(appConfiguration.barcodeUri + boxNos);
     } catch {

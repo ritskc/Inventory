@@ -36,7 +36,7 @@ export class ShipmentService {
   }
 
   allowScanning(shipment: Shipment) {
-    return this.apiService.post(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/allowscanning/${shipment.id}`);
+    return this.apiService.put(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/allowscanning/${shipment.id}`);
   }
 
   getLatestShipment(companyId: number, date: string): Observable<any> {

@@ -36,6 +36,7 @@ export class PackingSlipDetail {
 
     constructor() {}
 
+    id: number = 0;
     isBlankOrder: boolean = false;
     orderId: number = 0;
     orderDetailId: number = 0;
@@ -60,4 +61,5 @@ export class PackingSlipDetail {
     partDetail: Part;
     SupplierInvoiceOpenQty: number = 0;
     hasPartQuantityExceedingLimit: boolean = false;
+    packingSlipBoxDetails: any[] = [];
 }
