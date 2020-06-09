@@ -41,7 +41,7 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <select class="form-control" [(ngModel)]="packingSlipDetailId">
+            <select class="form-control" [(ngModel)]="packingSlipDetailId" (change)="partSelected($event)">
               <option value="0">Select Part</option>
               <option *ngFor="let packingSlipDetails of selectedShipment.packingSlipDetails" [value]="packingSlipDetails.id">{{packingSlipDetails.partDetail.description}} (Qty: {{packingSlipDetails.qty}})</option>
             </select>

@@ -274,16 +274,27 @@ export class ShipmentListComponent implements OnInit {
     this.filteredShipments = this.showRepackge ? this.shipments.filter(i => i.isRepackage == true): this.shipments;
   }
 
+  partSelected() {
+    var selctedPart = this.selectedShipment.packingSlipDetails.find(d => d.id == this.packingSlipDetailId);
+    this.boxes = selctedPart.boxes;
+  }
+
   addBoxesToShipment() {
     this.shipmentBoxesGridColumns = [];
     this.shipmentBoxesGridColumns.push(new DataColumn({ headerText: "Part", value: "description" }));
-    this.shipmentBoxesGridColumns.push(new DataColumn({ headerText: "Box", value: "boxNo" }));
+    this.shipmentBoxesGridColumns.push(new DataColumn({ headerText: "Box", value: "boxeNo" }));
     this.shipmentBoxesGridColumns.push(new DataColumn({ headerText: "Qty", value: "qty", isEditable: true }));
     this.shipmentBoxesGridColumns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'delete' })
     ] }) );
 
     var selctedPart = this.selectedShipment.packingSlipDetails.find(d => d.id == this.packingSlipDetailId);
+
+    if (this.shipmentBoxes.filter(s => s.packingSlipDetailId == this.packingSlipDetailId).length > 0) {
+      this.toastr.errorToastr('This line item has been already added.');
+      return;
+    }
+
     if (selctedPart.qty < this.boxes) {
       this.toastr.errorToastr('Number of boxes cannot be more than quantity')
       return;
