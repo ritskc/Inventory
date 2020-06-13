@@ -37,11 +37,15 @@ export class ShipmentListComponent implements OnInit {
   boxes: number = 0;
   packingSlipDetailId: number = 0;
   shipmentBoxes: any[] = [];
+  isBarcodeMode: boolean = false;
 
   constructor(private companyService: CompanyService, private shipmentService: ShipmentService, private customerService: CustomerService, 
     private router: Router, private httpLoader: httpLoaderService, private toastr: ToastrManager) { }
 
   ngOnInit() {
+    if (window.location.hash.indexOf('/barcode') > 0)
+      this.isBarcodeMode = true;
+
     this.currentlyLoggedInCompany = this.companyService.getCurrentlyLoggedInCompanyId();
     this.initializeGridColumns();
     this.loadAllCustomers();
@@ -57,19 +61,41 @@ export class ShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "isInvoiceCreated", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "POS", value: "isPOSUploaded", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
-    this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
-      new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editShipment' }),
-      new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'editInvoice' }),
-      new DataColumnAction({ actionText: 'Repack', actionStyle: ClassConstants.Primary, event: 'printRepackingInvoice', showOnlyIf: 'data["isRepackage"] == true' }),
-      new DataColumnAction({ actionText: 'Verify', actionStyle: ClassConstants.Primary, event: 'verifyShipment', showOnlyIf: 'data["isShipmentVerified"] == false' }),
-      new DataColumnAction({ actionText: 'Allow Scanning', actionStyle: ClassConstants.Primary, event: 'allowScanning', showOnlyIf: 'data["isShipmentVerified"] == true && data["allowScanning"] == false' }),
-      new DataColumnAction({ actionText: 'Print Shipment', actionStyle: ClassConstants.Primary, event: 'printShipment', showOnlyIf: 'data["isShipmentVerified"] == true' }),
-      new DataColumnAction({ actionText: 'Print Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoice' }),
-      new DataColumnAction({ actionText: 'Barcode', actionStyle: ClassConstants.Primary, event: 'printBarcode', showOnlyIf: 'data["isShipmentVerified"] == true' }),
-      new DataColumnAction({ actionText: 'Print BL', actionStyle: ClassConstants.Primary, event: 'printBL', showOnlyIf: 'data["isScanned"] == true' }),
-      new DataColumnAction({ actionText: 'Download POS', actionStyle: ClassConstants.Primary, event: 'downloadPOS' }),
-      new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'delete' })
-    ] }) );
+    
+    // this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+    //   new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editShipment' }),
+    //   new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'editInvoice' }),
+    //   new DataColumnAction({ actionText: 'Repack', actionStyle: ClassConstants.Primary, event: 'printRepackingInvoice', showOnlyIf: 'data["isRepackage"] == true' }),
+    //   new DataColumnAction({ actionText: 'Verify', actionStyle: ClassConstants.Primary, event: 'verifyShipment', showOnlyIf: 'data["isShipmentVerified"] == false' }),
+    //   new DataColumnAction({ actionText: 'Allow Scanning', actionStyle: ClassConstants.Primary, event: 'allowScanning', showOnlyIf: 'data["isShipmentVerified"] == true && data["allowScanning"] == false' }),
+    //   new DataColumnAction({ actionText: 'Print Shipment', actionStyle: ClassConstants.Primary, event: 'printShipment', showOnlyIf: 'data["isShipmentVerified"] == true' }),
+    //   new DataColumnAction({ actionText: 'Print Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoice' }),
+    //   new DataColumnAction({ actionText: 'Barcode', actionStyle: ClassConstants.Primary, event: 'printBarcode', showOnlyIf: 'data["isShipmentVerified"] == true' }),
+    //   new DataColumnAction({ actionText: 'Print BL', actionStyle: ClassConstants.Primary, event: 'printBL', showOnlyIf: 'data["isScanned"] == true' }),
+    //   new DataColumnAction({ actionText: 'Download POS', actionStyle: ClassConstants.Primary, event: 'downloadPOS' }),
+    //   new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'delete' })
+    // ] }) );
+    
+    if (this.isBarcodeMode) {
+      this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+        new DataColumnAction({ actionText: 'Verify', actionStyle: ClassConstants.Primary, event: 'verifyShipment', showOnlyIf: 'data["isShipmentVerified"] == false' }),
+        new DataColumnAction({ actionText: 'Undo Verify', actionStyle: ClassConstants.Primary, event: 'undoVerifyShipment', showOnlyIf: 'data["isShipmentVerified"] == true' }),
+        new DataColumnAction({ actionText: 'Auto Scanning', actionStyle: ClassConstants.Primary, event: 'autoScanning' }),
+        new DataColumnAction({ actionText: 'Allow Scanning', actionStyle: ClassConstants.Primary, event: 'allowScanning', showOnlyIf: 'data["isShipmentVerified"] == true && data["allowScanning"] == false' }),
+        new DataColumnAction({ actionText: 'Barcode', actionStyle: ClassConstants.Primary, event: 'printBarcode', showOnlyIf: 'data["isShipmentVerified"] == true' })
+      ] }) );
+    } else {
+      this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+        new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editShipment' }),
+        new DataColumnAction({ actionText: 'Invoice', actionStyle: ClassConstants.Primary, event: 'editInvoice' }),
+        new DataColumnAction({ actionText: 'Repack', actionStyle: ClassConstants.Primary, event: 'printRepackingInvoice', showOnlyIf: 'data["isRepackage"] == true' }),
+        new DataColumnAction({ actionText: 'Print Shipment', actionStyle: ClassConstants.Primary, event: 'printShipment', showOnlyIf: 'data["isShipmentVerified"] == true' }),
+        new DataColumnAction({ actionText: 'Print Invoice', actionStyle: ClassConstants.Primary, event: 'printInvoice' }),
+        new DataColumnAction({ actionText: 'Print BL', actionStyle: ClassConstants.Primary, event: 'printBL', showOnlyIf: 'data["isScanned"] == true' }),
+        new DataColumnAction({ actionText: 'Download POS', actionStyle: ClassConstants.Primary, event: 'downloadPOS' }),
+        new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'delete' })
+      ] }) );
+    }
   }
 
   initializeGridColumnsForDetails() {
@@ -100,6 +126,8 @@ export class ShipmentListComponent implements OnInit {
           });
           this.shipments = shipments;
           this.filteredShipments = this.customerId > 0 ? this.shipments.filter(s => s.customerId == this.customerId && !s.isMasterPackingSlip): this.shipments;
+          if (this.isBarcodeMode)
+            this.filteredShipments = this.filteredShipments.filter(s => s.isScanned == false);
         }, (error) => this.toastr.errorToastr(error),
         () => this.httpLoader.hide());
   }
@@ -156,8 +184,14 @@ export class ShipmentListComponent implements OnInit {
       case 'verifyShipment':
         this.verifyShipment(data);
         break;
+      case 'undoVerifyShipment':
+        this.undoVerifyShipment(data);
+        break;
       case 'allowScanning':
         this.allowScanning(data);
+        break;
+      case 'autoScanning':
+        this.autoScanning(data);
         break;
       case 'printBarcode':
         this.printBarcode(data);
@@ -330,6 +364,27 @@ export class ShipmentListComponent implements OnInit {
     this.shipmentBoxes = [];
   }
 
+  undoVerifyShipment(data) {
+    if (!confirm('Are you sure you want to undo this operation?')) {
+      return;
+    }
+
+    this.httpLoader.show();
+    this.shipmentService.undoVerifyShipment(data)
+        .subscribe(
+          () => {
+            this.toastr.successToastr('Shipment verification undone successfully!!');
+            this.httpLoader.hide();
+            this.loadAllCustomers();
+            this.showModal = false;
+          },
+          (error) => {
+            this.toastr.errorToastr(error.error);
+            this.httpLoader.hide();
+          }
+        );
+  }
+
   verifyShipmentSave() {
     var hasError = false;
     this.selectedShipment.packingSlipDetails.forEach(detail => {
@@ -379,6 +434,22 @@ export class ShipmentListComponent implements OnInit {
         .subscribe(
           () => {
             this.toastr.successToastr('Scanning enabled for the selected shipment!!');
+            this.httpLoader.hide();
+            this.loadAllCustomers();
+          },
+          (error) => {
+            this.toastr.errorToastr(error.error);
+            this.httpLoader.hide();
+          }
+        );
+  }
+
+  autoScanning(data) {
+    this.httpLoader.show();
+    this.shipmentService.autoScanning(data)
+        .subscribe(
+          () => {
+            this.toastr.successToastr('Auto scanning done successfully!!');
             this.httpLoader.hide();
             this.loadAllCustomers();
           },

@@ -1,14 +1,14 @@
 <div class="card">
   <div class="card-header">
-    Scan by either <strong>Invoice Number</strong> or <strong>Box Number</strong>
+    Scan by Box Number
   </div>
   <div class="card-body">
-      <div class="radio">
+      <!-- <div class="radio">
         <label><input type="radio" name="optradio" value="1" [(ngModel)]="selection"> Invoice Number</label>
       </div>
       <div class="radio">
         <label><input type="radio" name="optradio" value="2" [(ngModel)]="selection"> Box Number</label>
-      </div>
+      </div> -->
       <input type="text" class="form-control" [(ngModel)]="barcodeValue" placeholder="Type here to generate barcode" style="width: 300px;"/>
       <button (click)="receive()" class="btn btn-primary">Receive Item</button>
 

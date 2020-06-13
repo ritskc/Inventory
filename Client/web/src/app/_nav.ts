@@ -123,7 +123,7 @@ if (environment.isSupplier) {
         },
         {
           name: 'Shipments',
-          url: '/companies/shipment-list',
+          url: '/companies/shipment-list/shipment',
           icon: 'icon-puzzle'
         },
         {
@@ -153,7 +153,8 @@ if (environment.isSupplier) {
         },
         {
           name: 'Barcode',
-          url: '/barcode',
+          //url: '/barcode',
+          url: '/companies/shipment-list/barcode',
           icon: 'icon-puzzle'
         },
         // {

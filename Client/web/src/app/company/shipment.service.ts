@@ -35,8 +35,16 @@ export class ShipmentService {
     return this.apiService.post(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/verifyshipment/${shipment.id}`);
   }
 
+  undoVerifyShipment(shipment: Shipment) {
+    return this.apiService.post(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/undoverifyshipment/${shipment.id}`);
+  }
+
   allowScanning(shipment: Shipment) {
     return this.apiService.put(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/allowscanning/${shipment.id}`);
+  }
+
+  autoScanning(shipment: Shipment) {
+    return this.apiService.put(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/autoscan/${shipment.id}`);
   }
 
   getLatestShipment(companyId: number, date: string): Observable<any> {
