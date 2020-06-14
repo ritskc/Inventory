@@ -69,6 +69,7 @@ export class SupplierDetailComponent implements OnInit {
   save() {
     this.submitted = true;
     this.supplier.companyId = this.companyService.getCurrentlyLoggedInCompanyId();
+    this.supplier.terms.forEach(term => term.terms = term.terms.replace("'", "\'").replace('"', '\"'));
     
     if (this.supplierForm.invalid) return;
 

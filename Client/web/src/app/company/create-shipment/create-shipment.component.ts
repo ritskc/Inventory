@@ -136,6 +136,7 @@ export class CreateShipmentComponent implements OnInit {
           if (order.customerId == this.selectedCustomer.id && !order.isClosed)
             this.customerPurchaseOrders.push(order);
         });
+        this.customerPurchaseOrders.sort((a, b) => a.poDate > b.poDate? 1: -1);
       }, (error) => this.toastr.errorToastr(error),
       () => {
         this.orderId = -1;

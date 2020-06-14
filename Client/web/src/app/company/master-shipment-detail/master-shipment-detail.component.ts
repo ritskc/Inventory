@@ -71,6 +71,7 @@ export class MasterShipmentDetailComponent implements OnInit {
     this.shipmentService.getAllShipments(this.currentlyLoggedInCompany)
         .subscribe(shipments => {
           this.shipments = shipments.filter(s => s.customerId == this.selectedCustomer.id && !s.isPOSUploaded);
+          this.shipments = this.shipments.sort((a, b) => a.packingSlipNo > b.packingSlipNo? 1: -1);
         }, (error) => this.toastr.errorToastr('Error while fetching shipments'),
         () => this.httpLoaderService.hide());
   }

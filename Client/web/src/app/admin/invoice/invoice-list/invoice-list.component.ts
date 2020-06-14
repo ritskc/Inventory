@@ -58,7 +58,7 @@ export class InvoiceListComponent implements OnInit {
     if (!this.invoiceForm.get('showDetails').value) {
       this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false, minWidth: true }) );
       this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false, minWidth: true, isLink: false }) );
-      this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
+      this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true, customStyling: 'column-width-50' }) );
       this.columns.push( new DataColumn({ headerText: "Inv Date", value: "invoiceDate", sortable: true, isEditableDate: true }) );
       this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isEditableDate: true }) );
       this.columns.push( new DataColumn({ headerText: "Rcvd On", value: "receivedDate", isDate: true, sortable: true, customStyling: 'right' }) );
@@ -99,7 +99,7 @@ export class InvoiceListComponent implements OnInit {
       this.columns.push( new DataColumn({ headerText: "Qty", value: "quantity", sortable: false, minWidth: true, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Price", value: "rate", sortable: false, minWidth: true, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Total", value: "amount", sortable: false, minWidth: true, customStyling: 'right' }) );
-      this.columns.push( new DataColumn({ headerText: "Adj Qty", value: "amount", sortable: false, minWidth: true, customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Adj Qty", value: "adjustedQty", sortable: false, minWidth: true, customStyling: 'right' }) );
       // this.columns.push( new DataColumn({ headerText: "PO's", value: "purchaseOrderNumbers", sortable: false, minWidth: true, customStyling: 'right' }) );
       // this.columns.push( new DataColumn({ headerText: "PO Qty's", value: "purchaseOrderQty", sortable: false, minWidth: true, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Excess Qty", value: "excessQty", sortable: false, minWidth: true, customStyling: 'right' }) );
@@ -121,7 +121,7 @@ export class InvoiceListComponent implements OnInit {
           (invoices) => {
             var supplierId = this.invoiceForm.get('supplierList').value;
             this.invoices = supplierId > 0 ? invoices.filter(s => s.supplierId == supplierId): invoices;
-            this.filteredInvoices = this.invoices;
+            this.filteredInvoices = this.invoices.sort((a, b) => (a.invoiceDate > b.invoiceDate? -1: 1));
           },
           (error) => console.log(error),
           () => { this.loaderService.hide(); }

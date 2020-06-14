@@ -138,8 +138,8 @@ export class OrderDetailComponent implements OnInit {
       this.gridColumns.push(new DataColumn({headerText: "Reference", value: "referenceNo", isEditable: true }));
     }
     if (this.SelectedCustomer > -1) {
-      this.gridColumns.push(new DataColumn({ headerText: "Open Qty", value: "openQty", customStyling: 'right' }));
       this.gridColumns.push(new DataColumn({ headerText: "Line", value: "lineNumber", isEditable: true, customStyling: 'right column-width-50' }));
+      this.gridColumns.push(new DataColumn({ headerText: "Open Qty", value: "openQty", customStyling: 'right' }));
     }
     this.gridColumns.push(new DataColumn({headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
           new DataColumnAction({actionText: "", actionStyle: ClassConstants.Danger, icon: 'fa fa-trash', event: "removeSelectedPart"})
@@ -460,6 +460,13 @@ export class OrderDetailComponent implements OnInit {
     return this.SelectedCustomer == -1 && this.SelectedSupplier == -1;
   }
 
+  valueChanged(event) {
+    if (event.column.value == 'qty' || event.column.value == 'unitPrice') {
+      var lineItemModified = event.row;
+      lineItemModified.total = lineItemModified.unitPrice * lineItemModified.qty;
+    }
+  }
+
   save() {
     var observableResult: any;
     if (this.SelectedCustomer > -1) {
@@ -467,6 +474,12 @@ export class OrderDetailComponent implements OnInit {
         observableResult = this.customerService.savePurchaseOrder(this.purchaseOrder);
       }
     } else {
+      this.purchaseOrder.paymentTerms = this.purchaseOrder.paymentTerms.replace("'", "\'").replace('"', '\"');
+      this.purchaseOrder.deliveryTerms = this.purchaseOrder.deliveryTerms.replace("'", "\'").replace('"', '\"');
+      this.purchaseOrder.poTerms.forEach(term => {
+        term.term = term.term.replace("'", "\'").replace('"', '\"');
+      })
+
       if (this.validateOrder()) {
         observableResult = this.supplierService.savePurchaseOrder(this.purchaseOrder);
       }

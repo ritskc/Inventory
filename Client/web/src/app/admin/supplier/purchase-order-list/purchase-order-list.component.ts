@@ -95,12 +95,15 @@ export class PurchaseOrderListComponent implements OnInit {
         .subscribe((purchaseOrders) => {
           this.purchaseOrderViewModels = [];
           this.purchaseOrders = this.supplierId > 0? purchaseOrders.filter(p => p.supplierId == this.supplierId): purchaseOrders;
-          this.purchaseOrders = this.showOnlyOpenOrders ? this.purchaseOrders.filter(p => p.isClosed === false): this.purchaseOrders;
+          this.purchaseOrders = this.showOnlyOpenOrders && !this.showFullDetails ? this.purchaseOrders.filter(p => p.isClosed === false): this.purchaseOrders;
           this.purchaseOrders = this.showAcknowledgedOrders ? this.purchaseOrders.filter(p => p.isAcknowledged == true): this.purchaseOrders;
 
           this.purchaseOrders.forEach(order => {
             if (this.showFullDetails) {
               order.poDetails.forEach(detail => {
+                if (this.showOnlyOpenOrders && detail.isClosed == false)
+                  return;
+
                 var viewModel = new SupplierPurchaseOrderViewModel();
                 viewModel.id = order.id;
                 viewModel.supplierId = order.supplierId;
