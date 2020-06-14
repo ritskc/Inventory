@@ -120,6 +120,12 @@ namespace WebApi.Services
             return result;
         }
 
+        public async Task<bool> UndoVerifyPackingSlipAsync(int packingSlipId, int userId)
+        {
+            var result = await this.packingSlipRepository.UndoVerifyPackingSlipAsync(packingSlipId, userId);
+            return result;
+        }
+
         public async Task<PackingSlip> GetPackingSlipFromBarcodeAsync(string barcode)
         {
            return await this.packingSlipRepository.GetPackingSlipFromBarcodeAsync(barcode);           

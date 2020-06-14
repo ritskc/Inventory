@@ -600,14 +600,14 @@ namespace DAL.Repository
 
                     foreach (PoDetail poDetail in po.poDetails)
                     {
-                        sql = string.Format($"INSERT INTO [dbo].[PoDetails]   ([PoId]   ,[PartId]   ,[ReferenceNo]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note]   ,[AckQty]   ,[InTransitQty]   ,[ReceivedQty]   ,[IsClosed],[SrNo],[IsForceClosed]  ) VALUES   ('{poId}'   ,'{poDetail.PartId}'   ,'{poDetail.ReferenceNo}'   ,'{poDetail.Qty}'   ,'{poDetail.UnitPrice}'   ,'{poDetail.DueDate}'   ,'{poDetail.Note}'   ,'{poDetail.AckQty}'   ,'{poDetail.InTransitQty}'   ,'{poDetail.ReceivedQty}'   ,'{poDetail.IsClosed}','{poDetail.SrNo}','{false}')");
+                        sql = string.Format($"INSERT INTO [dbo].[PoDetails]   ([PoId]   ,[PartId]   ,[ReferenceNo]   ,[Qty]   ,[UnitPrice]   ,[DueDate]   ,[Note]   ,[AckQty]   ,[InTransitQty]   ,[ReceivedQty]   ,[IsClosed],[SrNo],[IsForceClosed]  ) VALUES   ('{poId}'   ,'{poDetail.PartId}'   ,'{poDetail.ReferenceNo}'   ,'{poDetail.Qty}'   ,'{poDetail.UnitPrice}'   ,'{poDetail.DueDate}'   ,'{poDetail.Note}'   ,'{poDetail.Qty}'   ,'{poDetail.InTransitQty}'   ,'{poDetail.ReceivedQty}'   ,'{poDetail.IsClosed}','{poDetail.SrNo}','{false}')");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                     }
 
                     foreach (PoTerm poTerm in po.poTerms)
                     {
-                        sql = string.Format($"INSERT INTO [dbo].[PoTerms]   ([PoId]   ,[SequenceNo]   ,[Term]) VALUES   ('{poId}'   ,'{poTerm.SequenceNo}'   ,'{poTerm.Term}')");
+                        sql = string.Format($"INSERT INTO [dbo].[PoTerms]   ([PoId]   ,[SequenceNo]   ,[Term]) VALUES   ('{poId}'   ,'{poTerm.SequenceNo}'   ,'{poTerm.Term.Replace("'", "''")}')");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                     }
@@ -625,6 +625,7 @@ namespace DAL.Repository
 
         public async Task UpdatePoAsync(Po po)
         {
+            var orderResult = await GetPoAsync(po.Id);
             //start
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
@@ -647,6 +648,19 @@ namespace DAL.Repository
                 string sql = string.Empty;
                 try
                 {
+
+                    
+                    foreach (PoDetail orderDetail in orderResult.poDetails)
+                    {
+                        var deleteLine = po.poDetails.Where(x => x.Id == orderDetail.Id).FirstOrDefault();
+                        if (deleteLine == null)
+                        {
+                            var sql1 = string.Format($"DELETE [dbo].[PoDetails]   WHERE id = '{orderDetail.Id}' ");
+                            command.CommandText = sql1;
+                            await command.ExecuteNonQueryAsync();
+                        }
+                    }
+
                     sql = string.Format("DELETE FROM [dbo].[PoTerms]  WHERE poid = '{0}'", po.Id);
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
@@ -676,7 +690,7 @@ namespace DAL.Repository
 
                     foreach (PoTerm poTerm in po.poTerms)
                     {
-                        sql = string.Format($"INSERT INTO [dbo].[PoTerms]   ([PoId]   ,[SequenceNo]   ,[Term]) VALUES   ('{po.Id}'   ,'{poTerm.SequenceNo}'   ,'{poTerm.Term}')");
+                        sql = string.Format($"INSERT INTO [dbo].[PoTerms]   ([PoId]   ,[SequenceNo]   ,[Term]) VALUES   ('{po.Id}'   ,'{poTerm.SequenceNo}'   ,'{poTerm.Term.Replace("'", "''")}')");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                     }
@@ -722,7 +736,7 @@ namespace DAL.Repository
 
                     foreach (PoDetail poDetail in po.poDetails)
                     {
-                        sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [AckQty] = '{poDetail.AckQty}', [DueDate] = '{poDetail.DueDate}'   WHERE poid = '{po.Id}' ");
+                        sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [AckQty] = '{poDetail.AckQty}', [DueDate] = '{poDetail.DueDate}'   WHERE id = '{poDetail.Id}' ");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                     }                   

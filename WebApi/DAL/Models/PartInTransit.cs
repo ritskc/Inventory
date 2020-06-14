@@ -21,5 +21,6 @@ namespace DAL.Models
         public int PartId { get; set; }
         public int Qty { get; set; }
         public int InvoiceDetailId { get; set; }
+        public int InvoiceId { get; set; }
     }
 }

@@ -129,7 +129,7 @@ namespace DAL.Repository
                 conn.Close();
             }
 
-            return orders;
+            return orders.OrderBy(x=>x.PoDate);
         }
 
         public async Task<OrderMaster> GetOrderMasterAsync(long orderId)
@@ -367,6 +367,17 @@ namespace DAL.Repository
                     //var sql = string.Format("DELETE FROM [dbo].[OrderDetail]  WHERE orderid = '{0}'", order.Id);
                     //command.CommandText = sql;
                     //await command.ExecuteNonQueryAsync();
+                    var orderResult = await GetOrderMasterAsync(order.Id, command.Connection, command.Transaction);
+                    foreach (OrderDetail orderDetail in orderResult.OrderDetails)
+                    {
+                        var deleteLine = order.OrderDetails.Where(x => x.Id == orderDetail.Id).FirstOrDefault();
+                        if(deleteLine == null)
+                        {
+                            var sql1 = string.Format($"DELETE [dbo].[OrderDetail]   WHERE id = '{orderDetail.Id}' ");
+                            command.CommandText = sql1;
+                            await command.ExecuteNonQueryAsync();
+                        }
+                    }
 
                     var sql = string.Format($"UPDATE [dbo].[OrderMaster]   SET [CompanyId] = '{order.CompanyId}' ,[CustomerId] = '{order.CustomerId}' ,[IsBlanketPO] = '{order.IsBlanketPO}' ,[PONo] = '{order.PONo}' ,[PODate] = '{order.PoDate}' ,[DueDate] = '{order.DueDate}' ,[Remarks] = '{order.Remarks}'  WHERE id = '{order.Id}' ");
                     command.CommandText = sql;
@@ -402,7 +413,7 @@ namespace DAL.Repository
                         await command.ExecuteNonQueryAsync();
                     }
 
-                    var orderResult = await GetOrderMasterAsync(order.Id, command.Connection, command.Transaction);
+                    orderResult = await GetOrderMasterAsync(order.Id, command.Connection, command.Transaction);
                     var openPO = orderResult.OrderDetails.Where(x => x.OrderId == order.Id && x.IsClosed == false).FirstOrDefault();
 
                     if (openPO == null)

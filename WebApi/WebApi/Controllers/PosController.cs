@@ -20,12 +20,14 @@ namespace WebApi.Controllers
         private readonly IPoService _poService;
         private readonly IPartService _partService;
         private readonly AppSettings _appSettings;
+        private readonly ICompanyService companyService;
 
-        public PosController(IPoService poService,IPartService partService, IOptions<AppSettings> appSettings)
+        public PosController(IPoService poService,IPartService partService, IOptions<AppSettings> appSettings, ICompanyService companyService)
         {
             this._poService = poService;
             this._partService = partService;
             _appSettings = appSettings.Value;
+            this.companyService = companyService;
         }
 
         // GET: api/Todo
@@ -113,6 +115,9 @@ namespace WebApi.Controllers
                 }
                 po.AccessId = Guid.NewGuid().ToString();
                 await this._poService.AddPoAsync(po);
+
+                var company = await this.companyService.GetCompanyAsync(po.CompanyId);
+                po.CompanyName = company.Name;
 
                 EmailService emailService = new EmailService(_appSettings);
                 emailService.SendAcknoledgePOEmail(po.CompanyName,po.SupplierName,po.ContactPersonName,_appSettings.POURL + po.AccessId,po.PoNo);
@@ -215,6 +220,9 @@ namespace WebApi.Controllers
                     po.AccessId  = Guid.NewGuid().ToString();
 
                 await this._poService.UpdatePoAsync(po);
+
+                var company = await this.companyService.GetCompanyAsync(po.CompanyId);
+                po.CompanyName = company.Name;
 
                 EmailService emailService = new EmailService(_appSettings);
                 emailService.SendAcknoledgePOEmail(po.CompanyName, po.SupplierName, po.ContactPersonName, _appSettings.POURL + po.AccessId, po.PoNo);

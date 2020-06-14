@@ -1,0 +1,57 @@
+2020-06-04 13:06:10.4038||DEBUG|WebApi.Program|init main 
+2020-06-04 13:06:12.1004||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-06-04 13:06:13.0418|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-06-04 13:06:13.0418|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-06-04 13:06:13.0841|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 42.6928ms 200  
+2020-06-04 13:06:13.1795|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 138.6097ms 404  
+2020-06-04 13:17:30.3466|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/orders/161 application/json 11210 
+2020-06-04 13:17:30.4649|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-06-04 13:17:30.5379|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-06-04 13:17:30.5379|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.OrdersController.Put (WebApi)' 
+2020-06-04 13:17:30.5888|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "Orders"}. Executing action WebApi.Controllers.OrdersController.Put (WebApi) 
+2020-06-04 13:17:30.7118|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.OrdersController.Put (WebApi) with arguments (161, DAL.Models.OrderMaster) - Validation state: Valid 
+2020-06-04 13:17:38.7247|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.OrdersController.Put (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 8009.9723ms. 
+2020-06-04 13:17:38.7382|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-06-04 13:17:38.7526|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.OrdersController.Put (WebApi) in 8159.0806ms 
+2020-06-04 13:17:38.7526|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.OrdersController.Put (WebApi)' 
+2020-06-04 13:17:38.7526|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 8416.6526ms 500 application/json; charset=utf-8 
+2020-06-04 13:19:18.5150|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/orders/161 application/json 11210 
+2020-06-04 13:19:18.5206|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-06-04 13:19:18.5206|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-06-04 13:19:18.5206|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.OrdersController.Put (WebApi)' 
+2020-06-04 13:19:18.5206|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "Orders"}. Executing action WebApi.Controllers.OrdersController.Put (WebApi) 
+2020-06-04 13:19:18.5206|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.OrdersController.Put (WebApi) with arguments (161, DAL.Models.OrderMaster) - Validation state: Valid 
+2020-06-04 13:20:38.6436||DEBUG|WebApi.Program|init main 
+2020-06-04 13:20:39.0139||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-06-04 13:20:39.5834|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/orders/161 application/json 11210 
+2020-06-04 13:20:39.6520|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2020-06-04 13:20:39.6841|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.OrdersController.Put (WebApi)' 
+2020-06-04 13:20:39.7108|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "Orders"}. Executing action WebApi.Controllers.OrdersController.Put (WebApi) 
+2020-06-04 13:20:39.8080|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.OrdersController.Put (WebApi) with arguments (161, DAL.Models.OrderMaster) - Validation state: Valid 
+2020-06-04 13:20:48.1915|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-06-04 13:20:48.2160|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 24.2749ms 404  
+2020-06-04 13:21:03.3283|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/orders/161 application/json 11210 
+2020-06-04 13:21:03.3336|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2020-06-04 13:21:03.3336|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.OrdersController.Put (WebApi)' 
+2020-06-04 13:21:03.3336|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "Orders"}. Executing action WebApi.Controllers.OrdersController.Put (WebApi) 
+2020-06-04 13:21:03.3336|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.OrdersController.Put (WebApi) with arguments (161, DAL.Models.OrderMaster) - Validation state: Valid 
+2020-06-04 13:26:54.7738|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.OrdersController.Put (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 374958.8276ms. 
+2020-06-04 13:26:54.8665|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-06-04 13:26:54.8882|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.OrdersController.Put (WebApi) in 375170.8009ms 
+2020-06-04 13:26:54.8882|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.OrdersController.Put (WebApi)' 
+2020-06-04 13:26:54.9481|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 375364.1232ms 200  
+2020-06-04 13:27:32.8161|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.OrdersController.Put (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 389471.7145ms. 
+2020-06-04 13:27:32.8161|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-06-04 13:27:32.8161|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.OrdersController.Put (WebApi) in 389487.6465ms 
+2020-06-04 13:27:32.8327|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.OrdersController.Put (WebApi)' 
+2020-06-04 13:27:32.8327|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 389506.6304ms 200  

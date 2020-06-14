@@ -14,14 +14,16 @@ namespace WebApi.Services
         private readonly IPartRepository _partRepository;
         private readonly IEntityTrackerRepository _entityTrackerRepository;
         private readonly IPartService _partService;
+        private readonly ICompanyRepository companyRepository;
 
         public PoService(IPoRepository poRepository,IPartRepository partRepository, IEntityTrackerRepository entityTrackerRepository,
-            IPartService partService)
+            IPartService partService, ICompanyRepository companyRepository)
         {
             _poRepository = poRepository;
             _partRepository = partRepository;
             _entityTrackerRepository = entityTrackerRepository;
             _partService = partService;
+            this.companyRepository = companyRepository;
         }
 
 
@@ -67,7 +69,7 @@ namespace WebApi.Services
         public async Task AddPoAsync(Po po)
         {
             var entity = await this._entityTrackerRepository.GetEntityAsync(po.CompanyId,po.PoDate,BusinessConstants.ENTITY_TRACKER_PO);
-            po.PoNo = entity.EntityNo;
+            po.PoNo = entity.EntityNo;           
             await this._poRepository.AddPoAsync(po);            
         }
 

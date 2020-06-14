@@ -59,6 +59,7 @@ namespace DAL.Models
             CREATE_INVOICE,
             UPLOAD_INVOICE,
             VERIFY_SHIPMENT,
+            UNDO_VERIFY_SHIPMENT,
             SCAN_SHIPMENT,
             SCAN_BOX
         }

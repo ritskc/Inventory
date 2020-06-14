@@ -212,8 +212,8 @@ namespace WebApi.Services
 
                 }
                 supplierInvoice.supplierInvoiceGroupDetails = supplierInvoiceGroupDetails;
-            }          
-           
+            }
+            result = result.OrderByDescending(x => x.InvoiceDate);
             return result;
         }
 

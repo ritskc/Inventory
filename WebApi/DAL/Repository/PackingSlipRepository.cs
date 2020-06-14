@@ -564,7 +564,7 @@ namespace DAL.Repository
                 }
             }
 
-                return packingSlips;
+            return packingSlips.OrderByDescending(x => x.PackingSlipNo); ;
         }
 
         public async Task<PackingSlip> GetPackingSlipAsync(long id)
@@ -1265,6 +1265,110 @@ namespace DAL.Repository
             return true;
         }
 
+        public async Task<bool> UndoVerifyPackingSlipAsync(int packingSlipId, int userId)
+        {
+            var packingSlip = await GetPackingSlipAsync(packingSlipId);
+
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted, "SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+                string sql = string.Empty;
+                try
+                {
+                    sql = string.Format($"DELETE FROM [dbo].[PackingSlipBoxDetails]  WHERE PackingSlipId = '{packingSlipId}'");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    
+
+                    sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [IsShipmentVerified] = '{false}'   WHERE id = '{packingSlipId}'");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    UserActivityReport userActivityReport = new UserActivityReport();
+                    userActivityReport.UserId = userId;
+                    userActivityReport.Module = BusinessConstants.MODULE.PACKING_SLIP.ToString();
+                    userActivityReport.Action = BusinessConstants.ACTION.UNDO_VERIFY_SHIPMENT.ToString();
+                    userActivityReport.Reference = packingSlip.PackingSlipNo;
+                    await this.userActivityReportRepository.AddActivityAsync(userActivityReport, connection, transaction, command);
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+
+            var packingSlipBoxDetails = new List<PackingSlipBoxDetails>();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format("SELECT [Id]  FROM [dbo].[PackingSlipBoxDetails] Where [PackingSlipId] = {0};", packingSlip.Id);
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var packingSlipBoxDetail = new PackingSlipBoxDetails();
+
+                    packingSlipBoxDetail.Id = Convert.ToInt32(dataReader["Id"]);
+
+                    packingSlipBoxDetails.Add(packingSlipBoxDetail);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+                    foreach (PackingSlipBoxDetails packingSlipBoxDetail in packingSlipBoxDetails)
+                    {
+                        var sql = string.Format($"UPDATE [dbo].[PackingSlipBoxDetails]   SET [Barcode] =  '{BarCodeUtil.GetBarCodeString(packingSlipBoxDetail.Id)}' WHERE id = '{packingSlipBoxDetail.Id}' ");
+                        await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+            return true;
+        }
+
         public async Task<List<PackingSlipScanBoxeStatus>> ScanPackingSlipBox(string barcode, int userId)
         {
             var packingslipId = await GetPackingslipFromBarcodeAsync(barcode);
@@ -1612,6 +1716,8 @@ namespace DAL.Repository
                 }
             }
         }
+
+
 
         //public async Task<Customer> GetIdByAccessIdAsync(string accessId)
         //{

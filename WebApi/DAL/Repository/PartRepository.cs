@@ -544,10 +544,10 @@ namespace DAL.Repository
         public async Task<IEnumerable<PartInTransit>> GetPartInTransitDetailAsync(long partId,int companyId)
         {
             var parts = new List<PartInTransit>();
-            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);           
 
-            var commandText = string.Format("SELECT 	[Code] ,[Description] ,[InvoiceNo] ,[InvoiceDate] ,[ETA] ,[SrNo] ,SID.[PartId],SID.[Qty],[Name] as SupplierName,  SID.ID as [InvoiceDetailId] FROM [SupplierInvoiceDetails] SID  INNER JOIN [SupplierInvoiceMaster] SIM ON SID.InvoiceId = SIM.Id  INNER JOIN [part] P ON P.id = SID.PartId  INNER JOIN [supplier] S ON S.id = SIM.SupplierId  where (IsBoxReceived = 0 OR IsBoxReceived IS NULL) " +
-                "AND SIM.CompanyId = '{0}' AND SID.PartId = '{1}' ", companyId, partId);
+            var commandText = string.Format("SELECT 	[Code] ,[Description] ,[InvoiceNo] ,[InvoiceDate] ,[ETA] ,SID.[PartId], sum(SID.[Qty]) [Qty] ,[Name] as SupplierName,  SID.InvoiceID as [InvoiceId] FROM [SupplierInvoiceDetails] SID  INNER JOIN [SupplierInvoiceMaster] SIM ON SID.InvoiceId = SIM.Id  INNER JOIN [part] P ON P.id = SID.PartId  INNER JOIN [supplier] S ON S.id = SIM.SupplierId  where (IsBoxReceived = 0 OR IsBoxReceived IS NULL) " +
+                " AND SIM.CompanyId = '{0}' AND SID.PartId = '{1}' Group by SID.[PartId],[Code],[Description],[InvoiceNo],[InvoiceDate],[ETA],[Name], SID.InvoiceID ", companyId, partId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -568,7 +568,7 @@ namespace DAL.Repository
                     part.PartId = Convert.ToInt32(dataReader["PartId"]);
                     part.Qty = Convert.ToInt32(dataReader["Qty"]);                    
                     part.SupplierName = Convert.ToString(dataReader["SupplierName"]);
-                    part.InvoiceDetailId = Convert.ToInt32(dataReader["InvoiceDetailId"]);
+                    part.InvoiceId = Convert.ToInt32(dataReader["InvoiceId"]);
 
                     parts.Add(part);
                 }
@@ -579,7 +579,7 @@ namespace DAL.Repository
 
             foreach (PartInTransit part in parts)
             {
-                commandText = string.Format("SELECT [PONo] FROM [dbo].[SupplierInvoicePoDetails]  where [InvoiceDetailId] = '{0}' ", part.InvoiceDetailId);
+                commandText = string.Format("SELECT Distinct PONo FROM [dbo].[SupplierInvoicePoDetails]  WHERE InvoiceId = '{0}' and PartId = '{1}' ", part.InvoiceId,part.PartId);
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                 {

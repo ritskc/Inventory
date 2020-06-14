@@ -97,6 +97,12 @@ namespace WebApi.Controllers
                     return Ok(result1);
                 }
 
+                if (scan.ToLower() == "undoverifyshipment")
+                {
+                    var result1 = await this.packingSlipService.UndoVerifyPackingSlipAsync(Convert.ToInt32(barcode), userId);
+                    return Ok(result1);
+                }
+
                 if (scan.ToLower() == "autoscan")
                 {
                     var result1 = await this.packingSlipService.ScanAutoPackingSlip(Convert.ToInt32(barcode), userId);
