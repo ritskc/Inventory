@@ -82,7 +82,8 @@ export class ShipmentListComponent implements OnInit {
         new DataColumnAction({ actionText: 'Undo Verify', actionStyle: ClassConstants.Primary, event: 'undoVerifyShipment', showOnlyIf: 'data["isShipmentVerified"] == true' }),
         new DataColumnAction({ actionText: 'Auto Scanning', actionStyle: ClassConstants.Primary, event: 'autoScanning' }),
         new DataColumnAction({ actionText: 'Allow Scanning', actionStyle: ClassConstants.Primary, event: 'allowScanning', showOnlyIf: 'data["isShipmentVerified"] == true && data["allowScanning"] == false' }),
-        new DataColumnAction({ actionText: 'Barcode', actionStyle: ClassConstants.Primary, event: 'printBarcode', showOnlyIf: 'data["isShipmentVerified"] == true' })
+        new DataColumnAction({ actionText: 'Barcode', actionStyle: ClassConstants.Primary, event: 'printBarcode', showOnlyIf: 'data["isShipmentVerified"] == true' }),
+        new DataColumnAction({ actionText: 'Scan Barcode', actionStyle: ClassConstants.Primary, event: 'scanBarcode', showOnlyIf: 'data["isShipmentVerified"] == true' })
       ] }) );
     } else {
       this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
@@ -195,6 +196,9 @@ export class ShipmentListComponent implements OnInit {
         break;
       case 'printBarcode':
         this.printBarcode(data);
+        break;
+      case 'scanBarcode':
+        this.scanBarcode(data);
         break;
     }
   }
@@ -473,6 +477,10 @@ export class ShipmentListComponent implements OnInit {
     } catch {
       this.toastr.errorToastr(`Barcode details unavailable for packing slip ${ data.packingSlipNo }`);
     }
+  }
+
+  scanBarcode(data) {
+    this.router.navigateByUrl(`/barcode/scan/${ data.id }`);
   }
 }
 

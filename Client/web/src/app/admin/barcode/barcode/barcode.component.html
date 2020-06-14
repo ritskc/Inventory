@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-    Scan by Box Number
+    Scanning for Shipment: <strong>{{this.shipment.packingSlipNo}}</strong> for customer <strong>{{this.shipment.customerDetail.name}}</strong>
   </div>
   <div class="card-body">
       <!-- <div class="radio">
@@ -10,17 +10,25 @@
         <label><input type="radio" name="optradio" value="2" [(ngModel)]="selection"> Box Number</label>
       </div> -->
       <input type="text" class="form-control" [(ngModel)]="barcodeValue" placeholder="Type here to generate barcode" style="width: 300px;"/>
-      <button (click)="receive()" class="btn btn-primary">Receive Item</button>
+      <button style="margin-top: 10px;" (click)="receive()" class="btn btn-primary">Complete Scan</button>
 
-      <div style="margin-top: 20px; width: 640px; height: 480px;">
-        <barcode-scanner-livestream type="code_128" (valueChanges)="onValueChanges($event)"></barcode-scanner-livestream>
-          <div [hidden]="!barcodeValue">
-              {{barcodeValue}}
-          </div>
+      <div style="margin-top: 20px;" class="row">
+        <div class="col-xs-7 col-md-7" style="border: 1px solid lightgray; border-radius: 5px;">
+          <barcode-scanner-livestream type="code_128" (valueChanges)="onValueChanges($event)"></barcode-scanner-livestream>
+            <div [hidden]="!barcodeValue">
+                {{barcodeValue}}
+            </div>
+        </div>
+        <div class="col-xs-5 col-md-5">
+          <simple-grid [addRequired]="false" [exportRequired]="false" [data]="boxes" [columns]="columns" [exportRequired]="true"></simple-grid>
+        </div>
       </div>
+
+      
   </div>
 </div>
 
+<loader></loader>
 
 <!-- <div style="margin-top: 20px;">
   <ngx-barcode [bc-value]="value" [bc-display-value]="true"></ngx-barcode>

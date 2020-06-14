@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { BarecodeScannerLivestreamModule } from 'ngx-barcode-scanner';
 import { ToastrModule } from 'ng6-toastr-notifications';
+import { SharedModule } from '../../common/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ToastrModule } from 'ng6-toastr-notifications';
     FormsModule,
     NgxBarcodeModule,
     QRCodeModule,
+    SharedModule,
     ToastrModule.forRoot(),
   ]
 })
