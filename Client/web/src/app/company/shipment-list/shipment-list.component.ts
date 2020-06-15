@@ -232,10 +232,6 @@ export class ShipmentListComponent implements OnInit {
   }
 
   editInvoice(data) {
-    if (data.isInvoiceCreated) {
-      this.toastr.warningToastr('This cannot be edited since it is already invoiced');
-      return;
-    }
     this.router.navigateByUrl(`companies/invoice/${data.customerId}/${data.id}`);
   }
 
