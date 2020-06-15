@@ -16,6 +16,7 @@ export class DefaultLayoutComponent implements OnDestroy {
   private changes: MutationObserver;
   public element: HTMLElement;
   companyId: number = 1;
+  userAvatar: string = '';
   
   constructor(private authService: AuthService, private router: Router,
               private companyService: CompanyService, @Inject(DOCUMENT) _document?: any) {
@@ -28,6 +29,10 @@ export class DefaultLayoutComponent implements OnDestroy {
       attributes: true,
       attributeFilter: ['class']
     });
+
+    if (localStorage.getItem('username')) {
+      this.userAvatar = localStorage.getItem('username').substr(0, 1).toUpperCase();
+    }
 
     if (localStorage.getItem('currentCompany'))
       this.companyId = parseInt(localStorage.getItem('currentCompany'));

@@ -58,7 +58,7 @@ export class DirectSupplierPoComponent implements OnInit {
           alert('Order acknowledged successfully!');
         }, (error) => {
           this.httpLoaderService.hide();
-          console.log(error)
+          alert(error.error);
         },
         () => this.httpLoaderService.hide());
   }

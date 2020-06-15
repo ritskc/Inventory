@@ -101,7 +101,7 @@ export class PurchaseOrderListComponent implements OnInit {
           this.purchaseOrders.forEach(order => {
             if (this.showFullDetails) {
               order.poDetails.forEach(detail => {
-                if (this.showOnlyOpenOrders && detail.isClosed == false)
+                if (this.showOnlyOpenOrders && detail.isClosed == true)
                   return;
 
                 var viewModel = new SupplierPurchaseOrderViewModel();

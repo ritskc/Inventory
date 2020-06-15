@@ -154,7 +154,7 @@ export class InvoiceListComponent implements OnInit {
           viewModel.quantity = detail.qty;
           viewModel.rate = detail.price;
           viewModel.amount = detail.total;
-          viewModel.adjustedQty = detail.adjustedQty;
+          viewModel.adjustedQty = detail.adjustedPOQty;
           viewModel.excessQty = detail.excessQty;
           viewModel.purchaseOrderNumbers = viewModel.purchaseOrderNumbers.substring(0, viewModel.purchaseOrderNumbers.length - 2);
           viewModel.purchaseOrderQty = viewModel.purchaseOrderQty.substring(0, viewModel.purchaseOrderQty.length - 2);
