@@ -182,7 +182,7 @@ namespace DAL.Repository
                 {
                     commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[CustomerId] ,[PackingSlipNo] ,[ShippingDate] ,[ShipVia] ,[Crates] ," +
                  $"[Boxes] ,[GrossWeight] ,[ShippingCharge] ,[CustomCharge] ,[SubTotal] ,[Total] ,[IsInvoiceCreated] ,[IsPaymentReceived] ,[FOB] ,[Terms] ," +
-                 $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsMasterPackingSlip],[MasterPackingSlipId]  FROM [dbo].[PackingSlipMaster] where [MasterPackingSlipId] = '{masterPackingSlip.Id}' ");
+                 $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsMasterPackingSlip],[MasterPackingSlipId],[IsRepackage],[TrakingNumber],[IsShipmentVerified],[IsScanned],[AllowScanning]  FROM [dbo].[PackingSlipMaster] where [MasterPackingSlipId] = '{masterPackingSlip.Id}' ");
 
                 using (SqlCommand cmd = new SqlCommand(commandText, conn))
                 {
@@ -219,6 +219,12 @@ namespace DAL.Repository
                         packingSlip.TotalSurcharge = Convert.ToDecimal(dataReader["TotalSurcharge"]);
                         packingSlip.IsMasterPackingSlip = Convert.ToBoolean(dataReader["IsMasterPackingSlip"]);
                         packingSlip.MasterPackingSlipId = Convert.ToInt32(dataReader["MasterPackingSlipId"]);
+
+                        packingSlip.IsRepackage = Convert.ToBoolean(dataReader["IsRepackage"]);
+                        packingSlip.TrakingNumber = Convert.ToString(dataReader["TrakingNumber"]);
+                        packingSlip.IsShipmentVerified = Convert.ToBoolean(dataReader["IsShipmentVerified"]);
+                        packingSlip.IsScanned = Convert.ToBoolean(dataReader["IsScanned"]);
+                        packingSlip.AllowScanning = Convert.ToBoolean(dataReader["AllowScanning"]);
 
                         masterPackingSlip.PackingSlips.Add(packingSlip);
                     }

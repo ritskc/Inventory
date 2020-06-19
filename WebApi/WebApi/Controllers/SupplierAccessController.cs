@@ -19,12 +19,14 @@ namespace WebApi.Controllers
         private readonly IPoService _poService;
         private readonly IPartService _partService;
         private readonly AppSettings _appSettings;
+        private readonly ICompanyService companyService;
 
-        public SupplierAccessController(IPoService poService, IPartService partService, IOptions<AppSettings> appSettings)
+        public SupplierAccessController(IPoService poService, IPartService partService, IOptions<AppSettings> appSettings, ICompanyService companyService)
         {
             this._poService = poService;
             this._partService = partService;
             _appSettings = appSettings.Value;
+            this.companyService = companyService;
         }
         // PUT api/values/5
         [HttpPut("{acknowledge}/{id}")]
@@ -69,6 +71,9 @@ namespace WebApi.Controllers
                 }
                 //po.Id = id;
                 await this._poService.AcknowledgePoAsync(po);
+
+                var company = await this.companyService.GetCompanyAsync(po.CompanyId);
+                po.CompanyName = company.Name;
 
                 EmailService emailService = new EmailService(_appSettings);
                 emailService.SendNotifyAcknoledgePOEmail(po.CompanyName, po.SupplierName,  po.PoNo);
