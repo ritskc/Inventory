@@ -734,10 +734,10 @@ namespace DAL.Repository
                     poDetail.InTransitQty = Convert.ToInt32(dataReader1["InTransitQty"]);
                     poDetail.ReceivedQty = Convert.ToInt32(dataReader1["ReceivedQty"]);
                     poDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);
-                    //if (dataReader1["SrNo"] != DBNull.Value)
-                    //    poDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
-                    //else
-                    //    poDetail.SrNo = 0;
+                    if (dataReader1["SrNo"] != DBNull.Value)
+                        poDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
+                    else
+                        poDetail.SrNo = 0;
 
                     if (dataReader1["ClosingDate"] != DBNull.Value)
                         poDetail.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
@@ -818,7 +818,7 @@ namespace DAL.Repository
                     poReport.Status = "Close";
                 else
                     poReport.Status = "Open";
-                poReport.SrNo = srNo;
+                poReport.SrNo = poDetail.SrNo;
                 srNo++;
 
                 var part = partRepository.GetPart(poDetail.PartId);
@@ -873,7 +873,7 @@ namespace DAL.Repository
 
                 pOReports.Add(poReport);
             }
-            return pOReports;
+            return pOReports.OrderBy(x => x.SrNo).ToList();
         }
 
         public async Task<IEnumerable<SalesData>> GetSalesDataAsync(int companyId, DateTime fromDate, DateTime toDate)
