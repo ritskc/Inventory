@@ -30,8 +30,10 @@ export class AppConfigurations {
 
     initialize() {
         if (environment.production) {
-            this.apiServerHost = 'http://po.harisons.com/api';
-            this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/';
+            // this.apiServerHost = 'http://po.harisons.com/api';
+            // this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/';
+            this.apiServerHost = 'https://invoice.harisons.com/api';
+            this.reportsUri = 'https://invoice.harisons.com/reports/ReportViewer/';
         } else {
             this.apiServerHost = 'https://questapi.yellow-chips.com';
             this.reportsUri = 'https://renovate.yellow-chips.com/ReportViewer/';

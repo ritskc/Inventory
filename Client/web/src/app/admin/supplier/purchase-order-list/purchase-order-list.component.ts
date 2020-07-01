@@ -46,9 +46,9 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns = [];
     this.gridColumns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Email", value: "email", minWidth: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Ack Date", value: "acknowledgementDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closing", value: "closingDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Ack", value: "isAcknowledged", isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
@@ -111,7 +111,7 @@ export class PurchaseOrderListComponent implements OnInit {
                 viewModel.poNo = order.poNo;
                 viewModel.email = order.emailIds;
                 viewModel.poDate = order.poDate;
-                viewModel.dueDate = order.dueDate;
+                viewModel.dueDate = detail.dueDate;
                 viewModel.lateOrder = viewModel.dueDate && DateHelper.convertToDateTime(viewModel.dueDate) < new Date()? true: false;
                 viewModel.closingDate = order.closingDate;
                 viewModel.closed = detail.isClosed;
@@ -137,6 +137,7 @@ export class PurchaseOrderListComponent implements OnInit {
                 viewModel.email = order.emailIds;
                 viewModel.poDate = order.poDate;
                 viewModel.dueDate = order.dueDate;
+                viewModel.acknowledgementDate = order.acknowledgementDate;
                 viewModel.closingDate = order.closingDate;
                 viewModel.closed = order.isClosed;
                 viewModel.isAcknowledged = order.isAcknowledged;
@@ -227,6 +228,7 @@ class SupplierPurchaseOrderViewModel {
   email: string;
   poDate: string;
   dueDate: string;
+  acknowledgementDate: string;
   closingDate: string;
   closed: boolean;
   partCode: string;

@@ -28,7 +28,9 @@
                   </div>
                   <div class="form-group standard-top-margin row">
                     <label class="col-md-3 col-xs-3 label-top-adjustment">Invoice Total</label>
-                    <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-9 col-xs-9" [(ngModel)]="invoiceTotal"/>
+                    <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="invoiceTotal"/>
+                    <label class="col-md-3 col-xs-3 label-top-adjustment">Total Quantity</label>
+                    <input [attr.disabled]="disabled? '': null" type="text" class="form-control col-md-3 col-xs-3" [(ngModel)]="totalQuantities"/>
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-xs-12">
@@ -130,3 +132,5 @@
       </div>
     </div>
 </div>
+
+<loader></loader>

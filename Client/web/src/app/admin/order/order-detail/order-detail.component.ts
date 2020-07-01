@@ -249,6 +249,7 @@ export class OrderDetailComponent implements OnInit {
           this.purchaseOrder = order;
           this.purchaseOrder.poDate = DateHelper.formatDate(new Date(this.purchaseOrder.poDate));
           this.purchaseOrder.dueDate = DateHelper.formatDate(new Date(this.purchaseOrder.dueDate));
+          this.purchaseOrder.poDetails.sort((a, b) => a.srNo > b.srNo ? 1: -1);
           this.purchaseOrder.poDetails.forEach(poDetail => {
             poDetail.partCode = poDetail.part.code;
             poDetail.description = poDetail.part.description;

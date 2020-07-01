@@ -47,7 +47,7 @@ export class BarcodeComponent implements OnInit, AfterViewInit {
     this.columns = [];
     this.boxes = [];
 
-    this.columns.push( new DataColumn({ headerText: "Part Code", value: "partId", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Part Code", value: "partCode", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Quantity", value: "qty", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Box", value: "boxeNo", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Barcode", value: "barcode", customStyling: 'right' }) );
@@ -58,8 +58,12 @@ export class BarcodeComponent implements OnInit, AfterViewInit {
         .subscribe(shipment => {
           this.shipment = shipment;
           shipment.packingSlipDetails.forEach(detail => {
-            if (detail.packingSlipBoxDetails.length > 0)
+            if (detail.packingSlipBoxDetails.length > 0) {
+              detail.packingSlipBoxDetails.forEach(box => {
+                box.partCode = detail.partDetail.code;
+              })
               this.boxes.push(...detail.packingSlipBoxDetails);
+            }
           });
           console.log(this.boxes);
           this.httpLoadService.hide();

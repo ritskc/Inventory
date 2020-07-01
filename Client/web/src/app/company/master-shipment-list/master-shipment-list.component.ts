@@ -121,10 +121,19 @@ export class MasterShipmentListComponent implements OnInit {
   }
 
   printBLForMasterPackingSlip(data) {
+    if (data.packingSlips.filter(s => s.isScanned == false).length > 0) {
+      this.toastr.errorToastr('Cannot print BL for this master shipment since not all shipments are scanned.')
+      return;
+    }
     this.packagingSlipCreated.next(`${this.appConfig.reportsUri}/MasterBL.aspx?id=${data.id}`);
   }
 
   printShipmentForMasterPackingSlip(data) {
+    if (data.packingSlips.filter(s => s.isShipmentVerified == false).length > 0) {
+      this.toastr.errorToastr('Cannot print master shipment for this since not all shipments are verified yet.')
+      return;
+    }
+    
     this.packagingSlipCreated.next(`${this.appConfig.reportsUri}/MasterPackingSlip.aspx?id=${data.id}`);
   }
 

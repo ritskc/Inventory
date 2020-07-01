@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import * as DateHelper from '../../../common/helpers/dateHelper';
 import { Router, ActivatedRoute } from '@angular/router';
+import { httpLoaderService } from '../../../common/services/httpLoader.service';
 
 @Component({
   selector: 'app-upload-invoice',
@@ -31,10 +32,11 @@ export class UploadInvoiceComponent implements OnInit {
   private eta: string = '';
   private invoiceTotal: number = 0;
   private dontImpactPO: boolean = false;
+  private totalQuantities: number = 0;
   private documents = [];
 
   constructor(private companyService: CompanyService, private invoiceService: InvoiceService, private fileService: FileUploadService,
-              private http: HttpClient, private toastr: ToastrManager, private activatedRoute: ActivatedRoute) { }
+              private http: HttpClient, private toastr: ToastrManager, private activatedRoute: ActivatedRoute, private httpLoaderService: httpLoaderService) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompany = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -90,6 +92,8 @@ export class UploadInvoiceComponent implements OnInit {
   }
 
   validateInvoice(mode: UploadMode = UploadMode.Confirm) {
+    this.httpLoaderService.show();
+
     this.invoiceToValidate.InvoiceNo = this.invoiceNo;
     this.invoiceToValidate.InvoiceDate = this.invoiceDate.toString();
     this.invoiceToValidate.SupplierName = this.supplierName;
@@ -104,7 +108,9 @@ export class UploadInvoiceComponent implements OnInit {
           this.formatInvoiceValidationResult();
           this.initializeColumns();
           this.checkForInvalidParts();
-        }, (error) => this.toastr.errorToastr(error.error));
+        }, 
+        (error) => this.toastr.errorToastr(error.error),
+        () => { this.httpLoaderService.hide(); });
   }
 
   formatInvoiceValidationResult() {
@@ -119,8 +125,15 @@ export class UploadInvoiceComponent implements OnInit {
   }
 
   uploadInvoice() {
+    var totalQuantities = 0;
+    this.invoice.supplierInvoiceDetails.forEach(detail => { totalQuantities += detail.qty; });
+    if (totalQuantities != this.totalQuantities) {
+      this.toastr.errorToastr('Total quantity entered does not match with sum of all quantities in details');
+      return;
+    }
+
     if (this.invoice.supplierInvoiceDetails.filter(d => !d.isValid).length > 0) {
-      this.toastr.warningToastr('This invoice cannot be uploaded due to one ore more invalid parts. Please check the result above');
+      this.toastr.errorToastr('This invoice cannot be uploaded due to one ore more invalid parts. Please check the result above');
       return;
     }
 
