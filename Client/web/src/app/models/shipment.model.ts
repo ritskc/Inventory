@@ -30,6 +30,8 @@ export class Shipment {
     isPOSUploaded: boolean;
     isMasterPackingSlip: boolean;
     isRepackage: boolean;
+    isShipmentVerified: boolean = false;
+    allowScanning: boolean = false;
 }
 
 export class PackingSlipDetail {

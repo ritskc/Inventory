@@ -22,7 +22,9 @@ export class BarcodeComponent implements OnInit, AfterViewInit {
   private selection: string = "0";
   private columns: DataColumn[] = [];
   private boxes: any[] = [];
-  private shipment: Shipment;
+  private shipment: any;
+  private isMasterShipment: boolean = false;
+  private shipmentNo: string = '';
 
   barcodeValue;
 
@@ -54,9 +56,20 @@ export class BarcodeComponent implements OnInit, AfterViewInit {
     this.columns.push( new DataColumn({ headerText: "Scanned", value: "isScanned", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
 
     this.httpLoadService.show();
-    this.shipmentService.getAShipment(this.currentlyLoggedInCompanyId, id)
+  
+    if (window.location.href.indexOf('?type=master') > 0) {
+      this.isMasterShipment = true;
+      this.shipmentService.getAMasterShipments(this.currentlyLoggedInCompanyId, id)
+        .subscribe(shipment => {
+          this.shipmentNo = shipment.masterPackingSlipNo;
+          this.boxes = shipment.packingSlipBoxDetails;
+          this.httpLoadService.hide();
+        });
+    } else {
+      this.shipmentService.getAShipment(this.currentlyLoggedInCompanyId, id)
         .subscribe(shipment => {
           this.shipment = shipment;
+          this.shipmentNo = shipment.packingSlipNo;
           shipment.packingSlipDetails.forEach(detail => {
             if (detail.packingSlipBoxDetails.length > 0) {
               detail.packingSlipBoxDetails.forEach(box => {
@@ -68,6 +81,7 @@ export class BarcodeComponent implements OnInit, AfterViewInit {
           console.log(this.boxes);
           this.httpLoadService.hide();
         });
+    }
   }
 
   receive() {
@@ -87,7 +101,7 @@ export class BarcodeComponent implements OnInit, AfterViewInit {
     }
 
     this.httpLoadService.show();
-    this.shipmentService.completeScanning(this.shipment, this.barcodeValue)
+    this.shipmentService.completeScanning(this.shipment, this.barcodeValue, window.location.href.indexOf('?type=master') > 0)
         .subscribe(result => {
           console.log(result);
           this.getShipment(this.shipment.id);

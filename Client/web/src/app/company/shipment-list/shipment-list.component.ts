@@ -476,7 +476,7 @@ export class ShipmentListComponent implements OnInit {
   }
 
   scanBarcode(data) {
-    this.router.navigateByUrl(`/barcode/scan/${ data.id }`);
+    this.router.navigateByUrl(`/barcode/scan/${ data.id }?type=shipment`);
   }
 }
 

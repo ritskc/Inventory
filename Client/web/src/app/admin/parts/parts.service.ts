@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../../common/services/api.service';
 import { ConfigService } from '../../config/config.service';
 import { Observable } from 'rxjs';
-import { Part } from '../../models/part.model';
+import { Part, PartCosting } from '../../models/part.model';
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +46,9 @@ export class PartsService {
 
   getPartsStatus(companyId: number, partId: number, type: string): Observable<any> {
     return this.apiService.get<any>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }/${ companyId }/${ type }/${ partId }`);
+  }
+
+  updatePartCosting(companyId: number, part: Part) {
+    return this.apiService.put<PartCosting[]>(part.stockPrices, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }`);
   }
 }

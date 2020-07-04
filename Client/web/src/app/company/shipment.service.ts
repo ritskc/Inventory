@@ -47,8 +47,12 @@ export class ShipmentService {
     return this.apiService.put(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/autoscan/${shipment.id}`);
   }
 
-  completeScanning(shipment: Shipment, box: string) {
-    return this.apiService.put(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/scan/${box}`);
+  completeScanning(shipment: any, box: string, isMasterShipment: boolean) {
+    if (isMasterShipment) {
+      return this.apiService.put(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.masterShipmentUri}/scan/${box}`);
+    } else {
+      return this.apiService.put(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/scan/${box}`);
+    }
   }
 
   getLatestShipment(companyId: number, date: string): Observable<any> {
@@ -76,5 +80,9 @@ export class ShipmentService {
 
   removeMasterPackingSlip(masterShipmentId: number) {
     return this.apiService.delete(masterShipmentId, this.config.Settings.apiServerHost + this.config.Settings.masterShipmentUri);
+  }
+
+  allowMasterPackingSlipScanning(masterShipment: MasterShipment) {
+    return this.apiService.put(masterShipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.masterShipmentUri}/allowscanning/${masterShipment.id}`);
   }
 }

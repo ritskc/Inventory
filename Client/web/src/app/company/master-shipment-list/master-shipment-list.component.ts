@@ -39,15 +39,18 @@ export class MasterShipmentListComponent implements OnInit {
 
   initializeGridColumns() {
     this.columns = [];
-    this.columns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true, customStyling: 'column-width-150' }) );
-    this.columns.push( new DataColumn({ headerText: "Master Slip No", value: "masterPackingSlipNo", sortable: true }) );
+    this.columns.push( new DataColumn({ headerText: "Customer", value: "customerName", sortable: true, customStyling: 'column-width-50' }) );
+    this.columns.push( new DataColumn({ headerText: "Master Slip No", value: "masterPackingSlipNo", sortable: true, customStyling: 'column-width-50' }) );
     this.columns.push( new DataColumn({ headerText: "Packing Slips", value: "packingSlipNumbers", sortable: false, customStyling: 'column-width-100' }) );
     this.columns.push( new DataColumn({ headerText: "Updated Date", value: "updatedDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Traking Number", value: "trakingNumber", sortable: false }) );
-    this.columns.push( new DataColumn({ headerText: "POS Uploaded", value: "isPOSUploaded", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
-    this.columns.push( new DataColumn({ headerText: "Comment", value: "comment" }) );
+    this.columns.push( new DataColumn({ headerText: "POS Uploaded", value: "isPOSUploaded", sortable: false, isBoolean: true, customStyling: 'center column-width-50', isDisabled: true }) );
+    this.columns.push( new DataColumn({ headerText: "Comment", value: "comment", customStyling: 'column-width-50' }) );
     this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, actions: [
       new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editMasterPackingSlip' }),
+      new DataColumnAction({ actionText: 'Allow Scan', actionStyle: ClassConstants.Primary, event: 'allowScanning', showOnlyIf: 'data["isShipmentVerified"] == true && data["allowScanning"] == false' }),
+      new DataColumnAction({ actionText: 'Barcode', actionStyle: ClassConstants.Primary, event: 'printBarcode', showOnlyIf: 'data["isShipmentVerified"] == true' }),
+      new DataColumnAction({ actionText: 'Scan', actionStyle: ClassConstants.Primary, event: 'scanBarcode', showOnlyIf: 'data["isShipmentVerified"] == true' }),
       new DataColumnAction({ actionText: 'Print Shipment', actionStyle: ClassConstants.Primary, event: 'printShipmentForMasterPackingSlip' }),
       new DataColumnAction({ actionText: 'Print BL', actionStyle: ClassConstants.Primary, event: 'printBLForMasterPackingSlip' }),
       new DataColumnAction({ actionText: 'Download POS', actionStyle: ClassConstants.Primary, event: 'downloadMasterPackingSlip' }),
@@ -78,6 +81,8 @@ export class MasterShipmentListComponent implements OnInit {
             masterShipment.packingSlips.forEach((packingSlip) => {
               masterShipment.packingSlipNumbers += packingSlip.packingSlipNo + ', ';
             });
+            masterShipment.isShipmentVerified = masterShipment.packingSlips.some(p => p.isShipmentVerified == true);
+            masterShipment.allowScanning = masterShipment.packingSlips.some(p => p.allowScanning == true);
           });
         },
         (error) => this.toastr.errorToastr(error.error),
@@ -104,6 +109,15 @@ export class MasterShipmentListComponent implements OnInit {
         break;
       case 'downloadMasterPackingSlip':
         this.downloadMasterPackingSlip(data);
+        break;
+      case 'allowScanning':
+        this.allowScanning(data);
+        break;
+      case 'printBarcode':
+        this.printBarcode(data);
+        break;
+      case 'scanBarcode':
+        this.scanBarcode(data);
         break;
     }
   }
@@ -143,6 +157,34 @@ export class MasterShipmentListComponent implements OnInit {
     } else {
       this.toastr.warningToastr('POS is not uploaded for this shipment');
     }
+  }
+
+  allowScanning(data) {
+    this.httpLoader.show();
+    this.shipmentService.allowMasterPackingSlipScanning(data)
+        .subscribe(() => this.toastr.successToastr('Allow scanning operation completed'),
+          (error) => this.toastr.errorToastr('Failed to update allow scanning operation. Please try again!'),
+          () => {
+            this.httpLoader.hide();
+            this.loadAllMasterShipments();
+          });
+  }
+
+  printBarcode(data) {
+    try{
+      var appConfiguration = new AppConfigurations();
+      var boxNos = '';
+      data.packingSlipBoxDetails.forEach(detail => {
+        boxNos += detail.barcode + '|';
+      });
+      window.open(appConfiguration.barcodeUri + boxNos);
+    } catch {
+      this.toastr.errorToastr(`Barcode details unavailable for packing slip ${ data.packingSlipNo }`);
+    }
+  }
+
+  scanBarcode(data) {
+    this.router.navigateByUrl(`/barcode/scan/${ data.id }?type=master`);
   }
 
   removeMasterPackingSlip(data) {

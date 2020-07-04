@@ -41,6 +41,7 @@ export class Part {
     isDoublePricingAllowed: boolean = false;
     customerPrice: number = 0;
     supplierPrice: number = 0;
+    stockPrices: PartCosting[] = [];
     
     partSupplierAssignments: PartSupplierAssignment[];
     partCustomerAssignments: PartCustomerAssignment[];
@@ -69,6 +70,14 @@ export class PartCustomerAssignment
     surchargePerPound: number = 0;
     openingQty: number = 0;
     surchargeExist: boolean;
+}
+
+export class PartCosting {
+    id: number = 0;
+    PartId: number = 0;
+    supplierPrice: string = '';
+    customerPrice: string = '';
+    Qty: number = 0;
 }
 
 export class PartsViewModel {
