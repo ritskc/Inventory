@@ -10,6 +10,7 @@ import { CustomerService } from '../../customer/customer.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { SupplierService } from '../../supplier/supplier.service';
 import { ClassConstants } from '../../../common/constants';
+import readXlsxFile from 'read-excel-file';
 
 @Component({
   selector: 'app-part-list',
@@ -25,6 +26,7 @@ export class PartListComponent implements OnInit {
   filter: any;
   filterOption: FilterOption;
   showModal: boolean = false;
+  showModalForImportStockPrices: boolean = false;
   selectedPartForCostingUpdate: Part;
   stockPrices: PartCosting[] = [];
 
@@ -56,7 +58,7 @@ export class PartListComponent implements OnInit {
       new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editPart', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Stock', actionStyle: ClassConstants.Primary, event: 'showUpdateCostModal' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deletePart', icon: 'fa fa-trash' })
-    ] }) );
+    ] }) );    
   }
 
   getAllPartsForCompany() {
@@ -183,6 +185,58 @@ export class PartListComponent implements OnInit {
           (error) => this.toastr.errorToastr(error.error),
           () => this.httpLoader.hide()
         );
+  }
+
+  uploadFile(files: FileList) {
+    this.columnsForCosting = [];
+    this.columnsForCosting.push( new DataColumn({ headerText: "Part Code", value: "PartCode" }) );
+    this.columnsForCosting.push( new DataColumn({ headerText: "Supplier Price", value: "supplierPrice", isEditable: true }) );
+    this.columnsForCosting.push( new DataColumn({ headerText: "Customer Price", value: "customerPrice", isEditable: true }) );
+    this.columnsForCosting.push( new DataColumn({ headerText: "Qty", value: "qty", isEditable: true }) );
+    this.columnsForCosting.push( new DataColumn({ headerText: "Actions", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deletePartCosting', icon: 'fa fa-trash' })
+    ] }) );
+    
+    readXlsxFile(files[0]).then((rows) => {
+      this.extractDataFromFile(rows);
+    });
+  }
+
+  extractDataFromFile(rows: any) {    
+    this.stockPrices = [];
+    for (let index = 1; index < rows.length; index++) {
+      var stockPrice = new PartCosting();
+      stockPrice.PartCode = rows[index][0];
+      stockPrice.customerPrice = rows[index][1];
+      stockPrice.supplierPrice = rows[index][2];
+      stockPrice.qty = rows[index][3];
+      this.stockPrices.push(stockPrice);
+    }
+  }
+
+  updatePartsStockPricing() {
+    if (this.stockPrices.length == 0) {
+      this.toastr.errorToastr('There is no data to upload stock price');
+      return;
+    }
+
+    var partsUpdated = 0;
+    this.httpLoader.show();
+    this.stockPrices.forEach(stockPrice => {
+      this.service.updatePartCostingByPart(this.currentlyLoggedInCompanyId,  stockPrice)
+          .subscribe(() => {
+            partsUpdated++;
+            if (partsUpdated == this.stockPrices.length) {
+              this.showModalForImportStockPrices = false;
+              this.httpLoader.hide();
+              this.toastr.successToastr('Stock pricing uploaded successfully');
+              this.getAllPartsForCompany();
+              return;
+            }
+          },
+          (error) => this.toastr.errorToastr(error.error),
+          () => this.httpLoader.hide());
+    });
   }
 
   deletePartCosting(data) {

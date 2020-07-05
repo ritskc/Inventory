@@ -51,4 +51,8 @@ export class PartsService {
   updatePartCosting(companyId: number, part: Part) {
     return this.apiService.put<PartCosting[]>(part.stockPrices, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }`);
   }
+
+  updatePartCostingByPart(companyId: number, partCosting: PartCosting) {
+    return this.apiService.put<PartCosting>(partCosting, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }/import/${ companyId }`);
+  }
 }

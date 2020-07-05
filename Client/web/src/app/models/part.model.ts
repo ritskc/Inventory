@@ -75,9 +75,10 @@ export class PartCustomerAssignment
 export class PartCosting {
     id: number = 0;
     PartId: number = 0;
+    PartCode: string = '';
     supplierPrice: string = '';
     customerPrice: string = '';
-    Qty: number = 0;
+    qty: number = 0;
 }
 
 export class PartsViewModel {

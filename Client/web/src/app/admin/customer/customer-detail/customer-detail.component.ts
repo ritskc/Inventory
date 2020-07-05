@@ -48,7 +48,8 @@ export class CustomerDetailComponent implements OnInit {
       emailAddress: ['', Validators.required],
       billing: ['', Validators.required],
       contactPersonName: ['', Validators.required],
-      collectFreight: ['', Validators.required]
+      collectFreight: ['', Validators.required],
+      rePackingPoNo: ['']
     });
   }
 
