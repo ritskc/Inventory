@@ -48,5 +48,7 @@ namespace DAL.Models
 
         public List<PartSupplierAssignment> partSupplierAssignments { get; set; }
         public List<PartCustomerAssignment> partCustomerAssignments { get; set; }
+
+        public List<StockPrice> stockPrices { get; set; }
     }
 }

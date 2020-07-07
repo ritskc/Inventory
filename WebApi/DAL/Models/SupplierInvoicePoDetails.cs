@@ -15,6 +15,7 @@ namespace DAL.Models
         public long PoId { get; set; }
         public long PODetailId { get; set; }
         public string PONo { get; set; }
-        public int Qty { get; set; }        
+        public int Qty { get; set; }
+        public decimal UnitPrice { get; set; }
     }
 }

@@ -39,7 +39,7 @@ namespace WebApi.Controllers
                     return NotFound();
                 }
 
-                return result.ToList();
+                return result.OrderBy(x=>x.Name).ToList();
             }
             catch (Exception ex)
             {

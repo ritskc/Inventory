@@ -1,0 +1,172 @@
+2020-07-04 10:58:01.9182||DEBUG|WebApi.Program|init main 
+2020-07-04 10:58:04.0049||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-04 10:58:05.0065|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-04 10:58:05.0065|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-04 10:58:05.0680|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 61.5284ms 200  
+2020-07-04 10:58:05.1807|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 174.8985ms 404  
+2020-07-04 10:58:14.9671|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/MasterPackingSlips/scan/00001036 application/json 15559 
+2020-07-04 10:58:14.9951|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi)' 
+2020-07-04 10:58:15.0481|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "ScanBox", controller = "MasterPackingSlips"}. Executing action WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) 
+2020-07-04 10:58:15.0728|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) with arguments (scan, 00001036) - Validation state: Valid 
+2020-07-04 10:58:15.8137|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 737.6574ms. 
+2020-07-04 10:58:15.8137|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-04 10:58:15.8440|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) in 790.8066ms 
+2020-07-04 10:58:15.8440|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi)' 
+2020-07-04 10:58:15.8440|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 885.0134ms 500 application/json; charset=utf-8 
+2020-07-04 10:58:15.8693|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM105AJSOL9Q", Request id "0HM105AJSOL9Q:00000002": the application completed without reading the entire request body. 
+2020-07-04 10:58:33.6029|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/MasterPackingSlips/scan/00001036 application/json 15559 
+2020-07-04 10:58:33.6029|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi)' 
+2020-07-04 10:58:33.6029|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "ScanBox", controller = "MasterPackingSlips"}. Executing action WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) 
+2020-07-04 10:58:33.6029|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) with arguments (scan, 00001036) - Validation state: Valid 
+2020-07-04 10:58:45.7975|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 12180.3528ms. 
+2020-07-04 10:58:45.7975|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-04 10:58:45.7975|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) in 12185.2535ms 
+2020-07-04 10:58:45.7975|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi)' 
+2020-07-04 10:58:45.7975|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 12195.9518ms 500 application/json; charset=utf-8 
+2020-07-04 10:58:45.7975|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM105AJSOL9R", Request id "0HM105AJSOL9R:00000002": the application completed without reading the entire request body. 
+2020-07-04 10:58:48.3177|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/MasterPackingSlips/scan/00001036 application/json 15559 
+2020-07-04 10:58:48.3177|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi)' 
+2020-07-04 10:58:48.3177|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "ScanBox", controller = "MasterPackingSlips"}. Executing action WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) 
+2020-07-04 10:58:48.3231|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) with arguments (scan, 00001036) - Validation state: Valid 
+2020-07-04 10:59:38.0095||DEBUG|WebApi.Program|init main 
+2020-07-04 10:59:41.0933||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-04 10:59:42.8542|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-04 10:59:42.8542|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/MasterPackingSlips/scan/00001036 application/json 15559 
+2020-07-04 10:59:42.8542|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-04 10:59:43.0474|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 194.0364ms 200  
+2020-07-04 10:59:43.2665|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi)' 
+2020-07-04 10:59:43.2665|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 422.4594ms 404  
+2020-07-04 10:59:43.3862|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "ScanBox", controller = "MasterPackingSlips"}. Executing action WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) 
+2020-07-04 10:59:43.4584|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) with arguments (scan, 00001036) - Validation state: Valid 
+2020-07-04 10:59:47.7096|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 4224.2916ms. 
+2020-07-04 10:59:47.7254|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-04 10:59:47.7445|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) in 4350.7139ms 
+2020-07-04 10:59:47.7445|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi)' 
+2020-07-04 10:59:47.7445|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 4895.4548ms 500 application/json; charset=utf-8 
+2020-07-04 10:59:47.7728|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM105BGUT8HO", Request id "0HM105BGUT8HO:00000001": the application completed without reading the entire request body. 
+2020-07-04 11:00:12.3137|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/MasterPackingSlips/scan/00001036 application/json 15559 
+2020-07-04 11:00:12.3436|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi)' 
+2020-07-04 11:00:12.3436|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "ScanBox", controller = "MasterPackingSlips"}. Executing action WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) 
+2020-07-04 11:00:12.3436|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) with arguments (scan, 00001036) - Validation state: Valid 
+2020-07-04 11:00:49.0742|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 36710.4717ms. 
+2020-07-04 11:00:49.0742|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.PackingSlipScanBoxeStatus, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-07-04 11:00:49.1224|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) in 36761.3187ms 
+2020-07-04 11:00:49.1224|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi)' 
+2020-07-04 11:00:49.1224|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 36801.3304ms 200 application/json; charset=utf-8 
+2020-07-04 11:00:49.1224|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM105BGUT8HN", Request id "0HM105BGUT8HN:00000002": the application completed without reading the entire request body. 
+2020-07-04 17:40:06.2087||DEBUG|WebApi.Program|init main 
+2020-07-04 17:40:07.8944||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-04 17:40:08.9032|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-04 17:40:08.9032|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-04 17:40:08.9468|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 43.8831ms 200  
+2020-07-04 17:40:09.0374|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 134.8878ms 404  
+2020-07-04 17:40:24.9325|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/84 application/json 662 
+2020-07-04 17:40:25.0151|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-04 17:40:25.0850|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-04 17:40:25.0850|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-04 17:40:25.1391|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-04 17:40:25.1647|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (84) - Validation state: Valid 
+2020-07-04 17:40:59.7373|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 34567.3023ms. 
+2020-07-04 17:40:59.7501|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-04 17:40:59.7742|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 34628.287ms 
+2020-07-04 17:40:59.7742|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-04 17:40:59.7742|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 34849.9813ms 500 application/json; charset=utf-8 
+2020-07-04 17:40:59.7966|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM10CB9CF8VH", Request id "0HM10CB9CF8VH:00000002": the application completed without reading the entire request body. 
+2020-07-04 17:57:35.2482||DEBUG|WebApi.Program|init main 
+2020-07-04 17:57:36.8980||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-04 17:57:37.7398|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-04 17:57:37.7398|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-04 17:57:37.7905|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 51.4911ms 200  
+2020-07-04 17:57:37.9012|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 162.5196ms 404  
+2020-07-04 17:57:58.0002|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/706 application/json 93 
+2020-07-04 17:57:58.0758|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-04 17:57:58.1217|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-04 17:57:58.1275|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.GetParts (WebApi)' 
+2020-07-04 17:57:58.1631|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetParts", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.GetParts (WebApi) 
+2020-07-04 17:57:58.1871|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.GetParts (WebApi) with arguments (706) - Validation state: Valid 
+2020-07-04 17:58:29.3748|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.GetParts (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 31182.892ms. 
+2020-07-04 17:58:29.3908|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.Part, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-07-04 17:58:29.4402|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.GetParts (WebApi) in 31270.0486ms 
+2020-07-04 17:58:29.4431|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.GetParts (WebApi)' 
+2020-07-04 17:58:29.4431|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 31449.1475ms 200 application/json; charset=utf-8 
+2020-07-04 17:58:29.4635|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM10CL1UODUD", Request id "0HM10CL1UODUD:00000002": the application completed without reading the entire request body. 
+2020-07-04 17:59:03.0872|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1/706 application/json 93 
+2020-07-04 17:59:03.0872|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-04 17:59:03.0872|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-04 17:59:03.0872|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-04 17:59:03.1240|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.Get (WebApi) 
+2020-07-04 17:59:03.1240|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.Get (WebApi) with arguments (1, 706) - Validation state: Valid 
+2020-07-04 17:59:08.5452|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 5417.9801ms. 
+2020-07-04 17:59:08.5452|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.Part'. 
+2020-07-04 17:59:08.5980|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.Get (WebApi) in 5472.4075ms 
+2020-07-04 17:59:08.5980|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-04 17:59:08.6005|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 5512.9729ms 200 application/json; charset=utf-8 
+2020-07-04 17:59:08.6005|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM10CL1UODUD", Request id "0HM10CL1UODUD:00000003": the application completed without reading the entire request body. 
+2020-07-04 17:59:49.7693|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1 application/json 93 
+2020-07-04 17:59:49.7802|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-04 17:59:49.7802|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-04 17:59:49.7802|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.GetParts (WebApi)' 
+2020-07-04 17:59:49.7802|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetParts", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.GetParts (WebApi) 
+2020-07-04 17:59:49.7802|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.GetParts (WebApi) with arguments (1) - Validation state: Valid 
+2020-07-04 18:09:11.2910||DEBUG|WebApi.Program|init main 
+2020-07-04 18:09:12.9209||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-04 18:09:13.9825|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-04 18:09:13.9825|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-04 18:09:13.9825|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/MasterPackingSlips/scan/00001036 application/json 15559 
+2020-07-04 18:09:14.0290|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 46.7449ms 200  
+2020-07-04 18:09:14.1324|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi)' 
+2020-07-04 18:09:14.1349|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 153.1311ms 404  
+2020-07-04 18:09:14.1795|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "ScanBox", controller = "MasterPackingSlips"}. Executing action WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) 
+2020-07-04 18:09:14.2084|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) with arguments (scan, 00001036) - Validation state: Valid 
+2020-07-04 18:09:54.3265|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 40112.8196ms. 
+2020-07-04 18:09:54.3402|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.PackingSlipScanBoxeStatus, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-07-04 18:09:54.3700|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) in 40183.6536ms 
+2020-07-04 18:09:54.3723|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi)' 
+2020-07-04 18:09:54.3723|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 40393.3586ms 200 application/json; charset=utf-8 
+2020-07-04 18:09:54.3923|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM10CRHEKCNR", Request id "0HM10CRHEKCNR:00000001": the application completed without reading the entire request body. 
+2020-07-04 18:41:58.3654||DEBUG|WebApi.Program|init main 
+2020-07-04 18:41:59.8296||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-04 18:42:00.6122|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-04 18:42:00.6122|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-04 18:42:00.6506|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 38.8128ms 200  
+2020-07-04 18:42:00.7562|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 144.7625ms 404  
+2020-07-04 18:42:03.2995|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/packingslips/1 application/json 3443 
+2020-07-04 18:42:03.2995|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi)' 
+2020-07-04 18:42:03.3513|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPackingSlips", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) 
+2020-07-04 18:42:03.3726|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) with arguments (1) - Validation state: Valid 
+2020-07-04 18:42:11.5466|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 8170.6883ms. 
+2020-07-04 18:42:11.5601|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-04 18:42:11.5753|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) in 8220.2256ms 
+2020-07-04 18:42:11.5753|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi)' 
+2020-07-04 18:42:11.5856|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 8285.666ms 500 application/json; charset=utf-8 
+2020-07-04 18:42:11.6006|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM10DDRI16Q5", Request id "0HM10DDRI16Q5:00000002": the application completed without reading the entire request body. 
+2020-07-04 18:42:24.6831|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/packingslips/1 application/json 3443 
+2020-07-04 18:42:24.6831|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi)' 
+2020-07-04 18:42:24.6831|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPackingSlips", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) 
+2020-07-04 18:42:24.6831|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) with arguments (1) - Validation state: Valid 
+2020-07-04 18:49:27.0819|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 422371.6441ms. 
+2020-07-04 18:49:27.0819|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-04 18:49:27.1125|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) in 422404.167ms 
+2020-07-04 18:49:27.1125|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi)' 
+2020-07-04 18:49:27.1125|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 422409.7377ms 500 application/json; charset=utf-8 
+2020-07-04 18:49:27.1125|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM10DDRI16Q6", Request id "0HM10DDRI16Q6:00000002": the application completed without reading the entire request body. 

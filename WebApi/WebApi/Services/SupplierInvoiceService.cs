@@ -78,6 +78,7 @@ namespace WebApi.Services
                                 supplierInvoicePoDetail.PoId = poDetail.PoId;
                                 supplierInvoicePoDetail.PODetailId = poDetail.Id;
                                 supplierInvoicePoDetail.PONo = po.PoNo;
+                                supplierInvoicePoDetail.UnitPrice = poDetail.UnitPrice;
 
                                 var remainingPoQty = poDetail.AckQty - (poDetail.InTransitQty + poDetail.ReceivedQty);
 

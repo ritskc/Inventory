@@ -730,7 +730,7 @@ namespace DAL.Repository
                 string sql = string.Empty;
                 try
                 {                    
-                    sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [IsAcknowledged] = '{true}' ,[AcknowledgementDate] = '{DateTime.Now}',[DueDate] = '{po.DueDate}' WHERE id = '{po.Id}' ");
+                    sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [IsAcknowledged] = '{true}' ,[AcknowledgementDate] = '{DateTime.Now}',[DueDate] = '{po.DueDate}' ,[AccessId] = Null WHERE id = '{po.Id}' ");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
@@ -745,6 +745,50 @@ namespace DAL.Repository
                 }
                 catch (Exception ex)
                 {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+            //end           
+        }
+
+
+        public async Task AcknowledgePoAsync(int poId)
+        {
+            //start
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted, "SampleTransaction");
+
+                //1. Get SupplierInvoicePoDetails po transaction detail
+                List<SupplierInvoicePoDetails> supplierInvoicePoDetailsList = new List<SupplierInvoicePoDetails>();
+                SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+                string sql = string.Empty;
+                try
+                {
+                    sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [IsAcknowledged] = '{true}' ,[AcknowledgementDate] = '{DateTime.Now}',[AccessId] = Null WHERE id = '{poId}' ");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [AckQty] = QTY    WHERE [PoId] = '{poId}' ");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                { 
                     transaction.Rollback();
                     throw ex;
                 }

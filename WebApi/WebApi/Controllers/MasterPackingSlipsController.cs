@@ -37,7 +37,7 @@ namespace WebApi.Controllers
                     return NotFound();
                 }
 
-                return result.ToList();
+                return result.OrderByDescending(x=>x.Id).ToList();
             }
             catch (Exception ex)
             {
@@ -139,16 +139,39 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPut("{allowscanning}/{barcode}")]
-        public async Task<ActionResult<bool>> ScanBox(int id)
+        [HttpPut("{scan}/{barcode}")]
+        public async Task<ActionResult<bool>> ScanBox(string scan, string barcode)
         {
             try
             {
                 var claimsIdentity = this.User.Identity as ClaimsIdentity;
                 int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
 
-                var result1 = await this.packingSlipService.AllowScanning(id, userId);
-                return Ok(result1);
+                if (scan.ToLower() == "allowscanning")
+                {
+                    var result1 = await this.packingSlipService.AllowScanning(Convert.ToInt32(barcode), userId);
+                    return Ok(result1);
+                }
+                else if (scan.ToLower() == "scan")
+                {
+                    var packingSlip = await this.packingSlipService.GetPackingSlipFromBarcodeAsync(barcode);
+
+                    var pack = packingSlip.PackingSlips.Where(x => x.AllowScanning == false).FirstOrDefault();
+                    if(pack == null)
+                    {
+                        var result = await this.packingSlipService.ScanPackingSlipBox(barcode, userId);
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        if (!pack.AllowScanning)
+                            return StatusCode(500, "This packingslip is not ready for scanning. Please ask admin to enable it for Scanning.");
+                        var result = await this.packingSlipService.ScanPackingSlipBox(barcode, userId);
+                        return Ok(result);
+                    }
+                }
+                return BadRequest("not a valid request");
+                
             }
             catch (Exception ex)
             {

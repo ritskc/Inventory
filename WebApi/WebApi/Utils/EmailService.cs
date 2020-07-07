@@ -45,6 +45,26 @@ namespace WebApi.Utils
             SendEmail(EmailIDList, EmailSubject, EmailBody);
         }
 
+        public void SendContentEmail(string companyName,string subject,  string no)
+        {
+            string EmailBody = "";
+            string EmailIDList = "";
+            string EmailSubject = subject + no;
+
+            EmailBody = subject + no + "<br>";
+            //EmailBody = EmailBody + link + "<br>";
+            EmailBody = EmailBody + "<br>" + "Warm Regards,";
+            EmailBody = EmailBody + "<br>" + "customer Care";
+
+            EmailBody = EmailBody + "<br>" + companyName;
+
+            EmailIDList = appSettings.To;
+            string[] stringArray = EmailIDList.Split(',');
+
+
+            SendEmail(EmailIDList, EmailSubject, EmailBody);
+        }
+
         public void SendNotifyAcknoledgePOEmail(string companyName, string supplierName, string pono)
         {
             string EmailBody = "";

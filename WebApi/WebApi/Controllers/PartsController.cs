@@ -114,6 +114,11 @@ namespace WebApi.Controllers
                     var result = await this._partService.GetPartLatestReceivedAsync(typeId, companyId);
                     return Ok(result);
                 }
+                else if (type.ToLower() == "StockWithPrice".ToLower())
+                {
+                    var result = await this._partService.GetStock(typeId, companyId);
+                    return Ok(result);
+                }
                 else
                     return BadRequest();
                 
@@ -219,6 +224,39 @@ namespace WebApi.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
+
+        // PUT api/values/5
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] List<StockPrice> stockPrices)
+        {
+            try
+            {                
+                await this._partService.SetStockPriceAsync(stockPrices);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        [HttpPut("{import}/{companyId}")]
+        public async Task<IActionResult> Put(int companyId, [FromBody] StockPrice stockPrice)
+        {
+            try
+            {
+                await this._partService.SetStockPriceAsync(stockPrice,companyId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+
 
         // PUT api/values/5
         [HttpPut("{companyId}/{type}/{typeName}/{partCode}/{rate}")]

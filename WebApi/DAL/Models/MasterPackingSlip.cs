@@ -20,5 +20,7 @@ namespace DAL.Models
 
         public List<PackingSlip> PackingSlips { get; set; }
 
+        public List<PackingSlipBoxDetails> PackingSlipBoxDetails { get; set; }
+
     }
 }

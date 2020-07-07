@@ -90,6 +90,7 @@
     <Compile Include="Models\PoTerm.cs" />
     <Compile Include="Models\PurchaseData.cs" />
     <Compile Include="Models\SalesData.cs" />
+    <Compile Include="Models\StockPrice.cs" />
     <Compile Include="Models\SupplierIntransitInvoice.cs" />
     <Compile Include="Models\SupplierInvoiceDetail.cs" />
     <Compile Include="Models\SupplierInvoice.cs" />

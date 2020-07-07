@@ -19,6 +19,8 @@ namespace DAL.IRepository
         Task<IEnumerable<Part>> GetPartBySupplierIdAsync(int supplierId);
         Task<IEnumerable<Part>> GetPartByCustomerIdAsync(int customerId);
         Task AddPartAsync(Part part);
+        Task SetStockPriceAsync(List<StockPrice> stockPrice);
+        Task SetStockPriceAsync(StockPrice stockPrice, int companyId);
         Task UpdatePartAsync(Part part);
         Task DeletePartAsync(long id);
         Task UpdatePartCustomerPriceAsync(int companyId, string customer, string partcode, decimal price);
@@ -39,5 +41,6 @@ namespace DAL.IRepository
         Task<IEnumerable<PartLatestShipment>> GetPartLatestShipmentAsync(long partId, int companyId);
         Task<IEnumerable<PartInTransit>> GetPartLatestReceivedAsync(long partId, int companyId);
         Task<IEnumerable<SupplierOpenPO>> GetPartOpenPODetailAsync(long partId, int companyId);
+        Task<IEnumerable<StockPrice>> GetStock(long partId, int companyId);
     }
 }

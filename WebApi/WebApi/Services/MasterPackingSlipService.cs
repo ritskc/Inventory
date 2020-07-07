@@ -75,5 +75,16 @@ namespace WebApi.Services
         {
             return await this.masterPackingSlipRepository.GetIdByAccessIdAsync(accessId);
         }
+
+        public async Task<MasterPackingSlip> GetPackingSlipFromBarcodeAsync(string barcode)
+        {
+            return await this.masterPackingSlipRepository.GetPackingSlipFromBarcodeAsync(barcode);
+        }
+
+        public async Task<List<PackingSlipScanBoxeStatus>> ScanPackingSlipBox(string barcode, int userId)
+        {
+            var result = await this.masterPackingSlipRepository.ScanPackingSlipBox(barcode, userId);
+            return result;
+        }
     }
 }

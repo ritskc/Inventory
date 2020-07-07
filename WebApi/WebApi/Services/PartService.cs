@@ -84,7 +84,17 @@ namespace WebApi.Services
         public async Task AddPartAsync(Part part)
         {            
             await this._partRepository.AddPartAsync(part);
-        }        
+        }
+
+        public async Task SetStockPriceAsync(List<StockPrice> stockPrices)
+        {
+            await this._partRepository.SetStockPriceAsync(stockPrices);
+        }
+
+        public async Task SetStockPriceAsync(StockPrice stockPrice,int companyId)
+        {
+            await this._partRepository.SetStockPriceAsync(stockPrice, companyId);
+        }
 
         public async Task UpdatePartAsync(Part part)
         {
@@ -149,6 +159,11 @@ namespace WebApi.Services
         public async Task<IEnumerable<PartInTransit>> GetPartLatestReceivedAsync(long partId, int companyId)
         {
             return await Task.Run(() => this._partRepository.GetPartLatestReceivedAsync(partId, companyId));
+        }
+
+        public async Task<IEnumerable<StockPrice>> GetStock(long partId, int companyId)
+        {
+            return await Task.Run(() => this._partRepository.GetStock(partId, companyId));
         }
 
         public async Task UpdateMonthlyOpeningQtyByPartCodeAsync(int companyId, string partcode, int openingQty)

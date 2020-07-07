@@ -1,3 +1,7 @@
+C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\RdlCompile.cache
+C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\RdlCompile.compiled
+C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\Report.csproj.CoreCompileInputs.cache
+C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\Report.csprojAssemblyReference.cache
 C:\Ritesh\Projects\Inventory\WebApi\Report\bin\Report.dll.config
 C:\Ritesh\Projects\Inventory\WebApi\Report\bin\Report.dll
 C:\Ritesh\Projects\Inventory\WebApi\Report\bin\Report.pdb
@@ -53,6 +57,7 @@ C:\Ritesh\Projects\Inventory\WebApi\Report\bin\Microsoft.ReportViewer.Common.dll
 C:\Ritesh\Projects\Inventory\WebApi\Report\bin\Microsoft.ReportViewer.ProcessingObjectModel.DLL
 C:\Ritesh\Projects\Inventory\WebApi\Report\bin\Microsoft.ReportViewer.WebForms.DLL
 C:\Ritesh\Projects\Inventory\WebApi\Report\bin\Microsoft.ReportViewer.WinForms.dll
+C:\Ritesh\Projects\Inventory\WebApi\Report\bin\Microsoft.SqlServer.Types.dll
 C:\Ritesh\Projects\Inventory\WebApi\Report\bin\RDLCReportRunner.dll
 C:\Ritesh\Projects\Inventory\WebApi\Report\bin\Newtonsoft.Json.dll
 C:\Ritesh\Projects\Inventory\WebApi\Report\bin\netstandard.dll
@@ -61,11 +66,6 @@ C:\Ritesh\Projects\Inventory\WebApi\Report\bin\DAL.dll.config
 C:\Ritesh\Projects\Inventory\WebApi\Report\bin\Microsoft.ReportViewer.WinForms.xml
 C:\Ritesh\Projects\Inventory\WebApi\Report\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Ritesh\Projects\Inventory\WebApi\Report\bin\Newtonsoft.Json.xml
-C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\Report.csprojAssemblyReference.cache
-C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\RdlCompile.cache
-C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\RdlCompile.compiled
-C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\Report.csproj.CoreCompileInputs.cache
 C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\Report.csproj.CopyComplete
 C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\Report.dll
 C:\Ritesh\Projects\Inventory\WebApi\Report\obj\Release\Report.pdb
-C:\Ritesh\Projects\Inventory\WebApi\Report\bin\Microsoft.SqlServer.Types.dll

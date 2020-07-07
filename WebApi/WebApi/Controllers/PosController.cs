@@ -46,7 +46,7 @@ namespace WebApi.Controllers
                     return NotFound();
                 }
 
-                return result.ToList();
+                return result.OrderByDescending(x => x.Id).ToList();
             }
             catch (Exception ex)
             {
@@ -151,6 +151,12 @@ namespace WebApi.Controllers
                 if (existingPo != null && existingPo.IsClosed)
                     return BadRequest("PO is already closed.PO is not editable");
 
+
+
+                var poDetails = existingPo.poDetails.Where(x => x.IsClosed == false).FirstOrDefault();
+                if (poDetails == null)
+                    return BadRequest("PO is already closed.PO is not editable");
+                
                 //if(existingPo !=null && existingPo.poDetails != null)
                 //{
                 //    var processedPoItems = existingPo.poDetails.Where(x => x.IsClosed || x.InTransitQty > 0 || x.ReceivedQty > 0);
@@ -213,11 +219,11 @@ namespace WebApi.Controllers
                     }
 
                 }
-                po.Id = id;
-                po.AccessId = existingPo.AccessId;
 
-                if(po.AccessId == null || po.AccessId == string.Empty || po.AccessId == "")
-                    po.AccessId  = Guid.NewGuid().ToString();
+               
+
+                po.Id = id;
+                po.AccessId  = Guid.NewGuid().ToString();
 
                 await this._poService.UpdatePoAsync(po);
 
@@ -261,6 +267,42 @@ namespace WebApi.Controllers
                 }
 
                 await this._poService.DeletePoAsync(id);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        [HttpPut("{acknowledge}/{id}")]
+        public async Task<IActionResult> AcknowledgePO(int id)
+        {
+            try
+            {
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var po = await this._poService.GetPoAsync(id, userId);
+                if (po != null && po.IsClosed)
+                    return BadRequest("PO is already closed.PO is not editable");
+                if (po != null && po.poDetails != null)
+                {
+                    var processedPoItems = po.poDetails.Where(x => x.IsClosed || x.InTransitQty > 0 || x.ReceivedQty > 0);
+                    if (processedPoItems != null && processedPoItems.Count() > 0)
+                        return BadRequest("PO Detail(s) is already processed. PO is not editable");
+                }
+
+                
+                //po.Id = id;
+                await this._poService.AcknowledgePoAsync(id);
+
+                var company = await this.companyService.GetCompanyAsync(po.CompanyId);
+                po.CompanyName = company.Name;
+
+                EmailService emailService = new EmailService(_appSettings);
+                emailService.SendNotifyAcknoledgePOEmail(po.CompanyName, po.SupplierName, po.PoNo);
 
                 return Ok();
             }

@@ -1,0 +1,382 @@
+2020-07-03 14:20:53.7764||DEBUG|WebApi.Program|init main 
+2020-07-03 14:20:55.3737||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-03 14:20:56.3453|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-03 14:20:56.3453|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-03 14:20:56.4103|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 65.3638ms 200  
+2020-07-03 14:20:56.5188|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 174.3096ms 404  
+2020-07-03 14:21:48.5421|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/SupplierInvoice/74 application/json 662 
+2020-07-03 14:21:48.6704|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:21:48.7412|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:21:48.7459|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2020-07-03 14:21:48.7823|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) 
+2020-07-03 14:21:48.8056|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:22:21.1602|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 32351.631ms. 
+2020-07-03 14:22:21.1775|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:22:21.2029|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi) in 32416.1377ms 
+2020-07-03 14:22:21.2029|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.GetPos (WebApi)' 
+2020-07-03 14:22:21.2143|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 32671.9519ms 500 application/json; charset=utf-8 
+2020-07-03 14:22:21.2143|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFNA12GPE", Request id "0HM0VFNA12GPE:00000002": the application completed without reading the entire request body. 
+2020-07-03 14:22:34.7121|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/74 application/json 662 
+2020-07-03 14:22:34.7121|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:22:34.7171|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:22:34.7171|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:22:34.7299|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:22:34.8081|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2020-07-03 14:22:58.3619|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 23552.3623ms. 
+2020-07-03 14:22:58.3619|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:22:58.3731|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 23640.8937ms 
+2020-07-03 14:22:58.3731|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:22:58.3731|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 23664.7754ms 500 application/json; charset=utf-8 
+2020-07-03 14:23:33.4512|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/74 application/json 662 
+2020-07-03 14:23:33.4512|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:23:33.4512|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:23:33.4512|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:23:33.4512|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:23:33.4658|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74, DAL.Models.SupplierInvoice) - Validation state: Valid 
+2020-07-03 14:23:57.6033|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 24135.9721ms. 
+2020-07-03 14:23:57.6033|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:23:57.6033|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 24139.9172ms 
+2020-07-03 14:23:57.6102|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:23:57.6102|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 24162.9046ms 500 application/json; charset=utf-8 
+2020-07-03 14:24:35.3766|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:24:35.3766|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:24:35.3766|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:24:35.3766|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:24:35.3924|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:24:35.3924|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:25:02.5923|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 27197.3531ms. 
+2020-07-03 14:25:02.5923|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:25:02.5923|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 27200.666ms 
+2020-07-03 14:25:02.5923|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:25:02.5923|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 27222.5173ms 500 application/json; charset=utf-8 
+2020-07-03 14:25:02.5923|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFNA12GPE", Request id "0HM0VFNA12GPE:00000005": the application completed without reading the entire request body. 
+2020-07-03 14:26:41.5070|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:26:41.5070|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:26:41.5070|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:26:41.5070|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:26:41.5070|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:26:41.5170|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:27:17.9020|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 36383.0404ms. 
+2020-07-03 14:27:17.9020|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:27:17.9129|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 36395.2046ms 
+2020-07-03 14:27:17.9129|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:27:17.9129|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 36409.2468ms 500 application/json; charset=utf-8 
+2020-07-03 14:27:17.9129|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFNA12GPG", Request id "0HM0VFNA12GPG:00000001": the application completed without reading the entire request body. 
+2020-07-03 14:27:27.0353|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:27:27.0353|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:27:27.0353|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:27:27.0353|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:27:27.0353|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:27:27.0353|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:29:11.6493||DEBUG|WebApi.Program|init main 
+2020-07-03 14:29:11.9531||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-03 14:29:12.3228|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:29:12.3828|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:29:12.4107|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:29:12.4383|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:29:12.4605|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:29:12.4791|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:29:31.4563|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-03 14:29:31.4849|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 28.1384ms 404  
+2020-07-03 14:29:32.0526|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 19569.6846ms. 
+2020-07-03 14:29:32.0526|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:29:32.0770|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 19613.1167ms 
+2020-07-03 14:29:32.0770|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:29:32.0770|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 19757.7446ms 500 application/json; charset=utf-8 
+2020-07-03 14:29:32.0917|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFRTRM1P8", Request id "0HM0VFRTRM1P8:00000001": the application completed without reading the entire request body. 
+2020-07-03 14:29:35.0583|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:29:35.0583|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:29:35.0583|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:29:35.0583|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:29:35.0583|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:29:35.0673|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:30:24.4923|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 49423.4192ms. 
+2020-07-03 14:30:24.4923|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:30:24.5461|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 49479.1718ms 
+2020-07-03 14:30:24.5461|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:30:24.5461|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 49489.3634ms 500 application/json; charset=utf-8 
+2020-07-03 14:30:24.5461|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFRTRM1P9", Request id "0HM0VFRTRM1P9:00000002": the application completed without reading the entire request body. 
+2020-07-03 14:32:48.9793|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:32:48.9793|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:32:48.9793|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:32:48.9793|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:32:48.9793|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:32:48.9793|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:33:42.1231|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 53132.6032ms. 
+2020-07-03 14:33:42.1231|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:33:42.1231|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 53140.0395ms 
+2020-07-03 14:33:42.1307|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:33:42.1307|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 53152.1547ms 500 application/json; charset=utf-8 
+2020-07-03 14:33:42.1307|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFRTRM1PA", Request id "0HM0VFRTRM1PA:00000001": the application completed without reading the entire request body. 
+2020-07-03 14:33:47.1728|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:33:47.1790|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:33:47.1790|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:33:47.1790|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:33:47.1790|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:33:47.1790|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:34:53.9726|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 66787.4804ms. 
+2020-07-03 14:34:53.9726|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:34:54.0014|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 66817.536ms 
+2020-07-03 14:34:54.0064|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:34:54.0064|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 66834.6471ms 500 application/json; charset=utf-8 
+2020-07-03 14:34:54.0064|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFRTRM1PA", Request id "0HM0VFRTRM1PA:00000002": the application completed without reading the entire request body. 
+2020-07-03 14:35:51.7823|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:35:51.7881|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:35:51.7881|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:35:51.8189|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:35:51.8199|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:35:51.8199|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:36:15.6806|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 23858.735ms. 
+2020-07-03 14:36:15.6806|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:36:15.6806|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 23861.9696ms 
+2020-07-03 14:36:15.6806|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:36:15.6806|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 23905.7628ms 500 application/json; charset=utf-8 
+2020-07-03 14:36:15.6806|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFRTRM1PA", Request id "0HM0VFRTRM1PA:00000003": the application completed without reading the entire request body. 
+2020-07-03 14:37:12.0828|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:37:12.0901|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:37:12.0901|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:37:12.0901|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:37:12.0901|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:37:12.0901|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:39:15.5602|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 123464.5255ms. 
+2020-07-03 14:39:15.5602|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:39:15.5602|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 123468.1148ms 
+2020-07-03 14:39:15.5602|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:39:15.5602|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 123486.0326ms 500 application/json; charset=utf-8 
+2020-07-03 14:39:15.5708|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFRTRM1PA", Request id "0HM0VFRTRM1PA:00000004": the application completed without reading the entire request body. 
+2020-07-03 14:39:45.0370|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:39:45.0433|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:39:45.0433|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:39:45.0433|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:39:45.0433|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:39:45.0433|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:41:26.2647|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 101215.9466ms. 
+2020-07-03 14:41:26.2647|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:41:26.2772|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 101229.4099ms 
+2020-07-03 14:41:26.2772|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:41:26.2772|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 101246.5657ms 500 application/json; charset=utf-8 
+2020-07-03 14:41:26.2772|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFRTRM1PA", Request id "0HM0VFRTRM1PA:00000005": the application completed without reading the entire request body. 
+2020-07-03 14:41:44.6087|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:41:44.6294|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:41:44.6294|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:41:44.6294|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:41:44.6294|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:41:44.6340|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:42:10.8004|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 26165.2368ms. 
+2020-07-03 14:42:10.8004|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:42:10.8070|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 26173.012ms 
+2020-07-03 14:42:10.8070|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:42:10.8070|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 26209.4729ms 500 application/json; charset=utf-8 
+2020-07-03 14:42:10.8070|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFRTRM1PB", Request id "0HM0VFRTRM1PB:00000001": the application completed without reading the entire request body. 
+2020-07-03 14:42:13.1538|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:42:13.1538|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:42:13.1538|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:42:13.1538|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:42:13.1538|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:42:13.1667|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:42:41.5051|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 28336.7866ms. 
+2020-07-03 14:42:41.5051|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:42:41.5051|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 28340.5434ms 
+2020-07-03 14:42:41.5346|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:42:41.5346|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 28384.3941ms 500 application/json; charset=utf-8 
+2020-07-03 14:42:41.5346|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFRTRM1PB", Request id "0HM0VFRTRM1PB:00000002": the application completed without reading the entire request body. 
+2020-07-03 14:42:56.4217|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:42:56.4217|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:42:56.4217|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:42:56.4217|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:42:56.4217|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:43:01.2507|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:43:18.4555|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 17203.7302ms. 
+2020-07-03 14:43:18.4555|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:43:18.4683|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 22037.6407ms 
+2020-07-03 14:43:18.4683|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:43:18.4683|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 22052.0976ms 500 application/json; charset=utf-8 
+2020-07-03 14:43:18.4683|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFRTRM1PB", Request id "0HM0VFRTRM1PB:00000003": the application completed without reading the entire request body. 
+2020-07-03 14:43:21.0124|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:43:21.0124|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:43:21.0124|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:43:21.0124|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:43:21.0124|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:43:21.0124|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:46:04.6301|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 163610.3134ms. 
+2020-07-03 14:46:04.6301|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:46:04.6362|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 163617.2681ms 
+2020-07-03 14:46:04.6362|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:46:04.6362|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 163626.3913ms 500 application/json; charset=utf-8 
+2020-07-03 14:46:04.6362|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFRTRM1PB", Request id "0HM0VFRTRM1PB:00000004": the application completed without reading the entire request body. 
+2020-07-03 14:46:07.2318|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/74 application/json 662 
+2020-07-03 14:46:07.2318|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:46:07.2318|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:46:07.2318|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:46:07.2318|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:46:07.2318|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (74) - Validation state: Valid 
+2020-07-03 14:47:02.3504|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 55111.7315ms. 
+2020-07-03 14:47:02.3504|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:47:02.3559|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 55118.1082ms 
+2020-07-03 14:47:02.3559|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:47:02.3559|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 55134.8945ms 500 application/json; charset=utf-8 
+2020-07-03 14:47:02.3760|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFRTRM1PB", Request id "0HM0VFRTRM1PB:00000005": the application completed without reading the entire request body. 
+2020-07-03 14:47:10.8978|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/84 application/json 662 
+2020-07-03 14:47:10.8978|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:47:10.8978|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:47:10.8978|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:47:10.9022|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:47:10.9022|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (84) - Validation state: Valid 
+2020-07-03 14:52:40.7744|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 329868.0339ms. 
+2020-07-03 14:52:40.7744|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:52:40.7810|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 329875.6853ms 
+2020-07-03 14:52:40.7810|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:52:40.7810|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 329883.061ms 500 application/json; charset=utf-8 
+2020-07-03 14:52:40.7810|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFRTRM1PB", Request id "0HM0VFRTRM1PB:00000006": the application completed without reading the entire request body. 
+2020-07-03 14:53:00.8295|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/84 application/json 662 
+2020-07-03 14:53:00.8295|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:53:00.8410|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:53:00.8410|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:53:00.8410|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:53:00.8410|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (84) - Validation state: Valid 
+2020-07-03 14:57:36.2212|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 275374.6188ms. 
+2020-07-03 14:57:36.2212|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-03 14:57:36.2212|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 275381.8901ms 
+2020-07-03 14:57:36.2212|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:57:36.2212|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 275397.8488ms 500 application/json; charset=utf-8 
+2020-07-03 14:57:36.2212|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VFRTRM1PB", Request id "0HM0VFRTRM1PB:00000007": the application completed without reading the entire request body. 
+2020-07-03 14:58:19.0509||DEBUG|WebApi.Program|init main 
+2020-07-03 14:58:20.4294||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-03 14:58:21.0607|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-03 14:58:21.0607|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-03 14:58:21.0997|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 39.6475ms 200  
+2020-07-03 14:58:21.1877|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 127.913ms 404  
+2020-07-03 14:58:23.7658|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/84 application/json 662 
+2020-07-03 14:58:23.8256|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 14:58:23.8729|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 14:58:23.8785|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 14:58:23.9108|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 14:58:23.9362|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (84) - Validation state: Valid 
+2020-07-03 15:02:40.4100|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 256469.875ms. 
+2020-07-03 15:02:40.4490|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-07-03 15:02:40.4546|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 256540.1981ms 
+2020-07-03 15:02:40.4546|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 15:02:40.4546|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 256695.8713ms 200  
+2020-07-03 15:02:40.4750|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VGC70LTAF", Request id "0HM0VGC70LTAF:00000002": the application completed without reading the entire request body. 
+2020-07-03 15:04:16.9172|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierInvoice/receive/84 application/json 662 
+2020-07-03 15:04:16.9259|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-03 15:04:16.9259|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-03 15:04:16.9259|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 15:04:16.9259|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Post", controller = "SupplierInvoice"}. Executing action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) 
+2020-07-03 15:04:16.9259|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi) with arguments (84) - Validation state: Valid 
+2020-07-03 15:09:04.9496|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierInvoiceController.Post (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 288014.4417ms. 
+2020-07-03 15:09:04.9496|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-07-03 15:09:04.9807|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierInvoiceController.Post (WebApi) in 288047.2337ms 
+2020-07-03 15:09:04.9807|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierInvoiceController.Post (WebApi)' 
+2020-07-03 15:09:04.9807|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 288064.0009ms 200  
+2020-07-03 15:09:04.9807|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0VGC70LTAG", Request id "0HM0VGC70LTAG:00000001": the application completed without reading the entire request body. 

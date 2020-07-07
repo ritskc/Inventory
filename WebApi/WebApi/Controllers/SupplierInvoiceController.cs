@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WebApi.IServices;
 using WebApi.Settings;
+using WebApi.Utils;
 
 namespace WebApi.Controllers
 {
@@ -17,13 +18,15 @@ namespace WebApi.Controllers
     public class SupplierInvoiceController : ControllerBase
     {
         private readonly ISupplierInvoiceService supplierInvoiceService;
-        private readonly ICompanyService companyService;        
+        private readonly ICompanyService companyService;
+        private readonly AppSettings _appSettings;
 
         public SupplierInvoiceController(ISupplierInvoiceService supplierInvoiceService,
-            ICompanyService companyService)
+            ICompanyService companyService,IOptions<AppSettings> appSettings)
         {
             this.supplierInvoiceService = supplierInvoiceService;
-            this.companyService = companyService;           
+            this.companyService = companyService;
+            _appSettings = appSettings.Value;
         }
 
         // GET: api/Todo
@@ -42,7 +45,7 @@ namespace WebApi.Controllers
                     return NotFound();
                 }
 
-                return result.ToList();
+                return result.OrderByDescending(x => x.Id).ToList();
             }
             catch (Exception ex)
             {
@@ -153,6 +156,10 @@ namespace WebApi.Controllers
                 else
                 {
                     var result = await this.supplierInvoiceService.AddSupplierInvoiceAsync(supplierInvoice);
+                    
+                    EmailService emailService = new EmailService(_appSettings);
+                    emailService.SendContentEmail(company.Name, "Supplier Invoice Uploaded: ", supplierInvoice.InvoiceNo);
+
                     return result;
                 }                
             }
@@ -179,6 +186,12 @@ namespace WebApi.Controllers
                     return StatusCode(500, "One of the document(PackingSlip / Invoice / BL is not yet uploaded");
 
                 await this.supplierInvoiceService.ReceiveSupplierInvoiceAsync(id);
+
+                var company = await companyService.GetCompanyAsync(result.CompanyId);
+
+                EmailService emailService = new EmailService(_appSettings);
+                emailService.SendContentEmail(company.Name, "Supplier Invoice Received: ", result.InvoiceNo);
+
                 return Ok();
             }
             catch (Exception ex)

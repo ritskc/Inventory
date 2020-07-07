@@ -1,0 +1,28 @@
+2020-06-29 12:28:23.2849||DEBUG|WebApi.Program|init main 
+2020-06-29 12:28:24.7460||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-06-29 12:28:25.3528|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-06-29 12:28:25.3528|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-06-29 12:28:25.4088|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 56.4341ms 200  
+2020-06-29 12:28:25.4723|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 120.0649ms 404  
+2020-06-29 12:28:31.3337|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/api/SupplierAccess/0f8e1b42-f70f-4f42-b0fe-575604b37e62 application/json 4359 
+2020-06-29 12:28:31.3337|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 7.0868ms 404  
+2020-06-29 12:28:31.3545|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0S95P8FADR", Request id "0HM0S95P8FADR:00000002": the application completed without reading the entire request body. 
+2020-06-29 12:28:44.1999|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/SupplierAccess/0f8e1b42-f70f-4f42-b0fe-575604b37e62 application/json 4359 
+2020-06-29 12:28:44.2029|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint '405 HTTP Method Not Supported' 
+2020-06-29 12:28:44.2029|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint '405 HTTP Method Not Supported' 
+2020-06-29 12:28:44.2029|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 11.3662ms 405  
+2020-06-29 12:28:44.2029|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0S95P8FADS", Request id "0HM0S95P8FADS:00000002": the application completed without reading the entire request body. 
+2020-06-29 12:29:18.8158|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/SupplierAccess/0f8e1b42-f70f-4f42-b0fe-575604b37e62 application/json 4359 
+2020-06-29 12:29:18.8158|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint '405 HTTP Method Not Supported' 
+2020-06-29 12:29:18.8158|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint '405 HTTP Method Not Supported' 
+2020-06-29 12:29:18.8158|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 10.2671ms 405  
+2020-06-29 12:29:18.8272|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM0S95P8FADR", Request id "0HM0S95P8FADR:00000003": the application completed without reading the entire request body. 
+2020-06-29 12:29:40.8578|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/SupplierAccess/acknowledge/0f8e1b42-f70f-4f42-b0fe-575604b37e62 application/json 4359 
+2020-06-29 12:29:40.8578|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi)' 
+2020-06-29 12:29:40.9063|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AcknowledgePO", controller = "SupplierAccess"}. Executing action WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) 
+2020-06-29 12:29:41.0497|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) with arguments (0f8e1b42-f70f-4f42-b0fe-575604b37e62, DAL.Models.Po) - Validation state: Valid 
+2020-06-29 12:45:11.9670|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 930909.8496ms. 
+2020-06-29 12:45:11.9864|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-06-29 12:45:11.9864|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi) in 931080.4107ms 
+2020-06-29 12:45:11.9864|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.SupplierAccessController.AcknowledgePO (WebApi)' 
+2020-06-29 12:45:12.0019|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 931140.0752ms 200  

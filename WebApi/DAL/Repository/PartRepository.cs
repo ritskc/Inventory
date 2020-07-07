@@ -17,14 +17,14 @@ namespace DAL.Repository
         private readonly ISqlHelper _sqlHelper;
         private readonly IUserRepository userRepository;
 
-        public PartRepository(ISqlHelper sqlHelper,IUserRepository userRepository)
+        public PartRepository(ISqlHelper sqlHelper, IUserRepository userRepository)
         {
             _sqlHelper = sqlHelper;
             this.userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<Part>> GetAllPartsAsync(int companyId,int userId)
-        {            
+        public async Task<IEnumerable<Part>> GetAllPartsAsync(int companyId, int userId)
+        {
             List<Part> parts = new List<Part>();
 
             var commandText = "";
@@ -45,7 +45,7 @@ namespace DAL.Repository
                 commandText = string.Format($"SELECT PM.[id],[Code],PM.[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty], [DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],PM.[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty],[IsDoublePricingAllowed] FROM [part] PM INNER JOIN partsupplierassignment PCA ON PCA.PartId = PM.id where CompanyId ='{companyId}' AND PCA.SupplierID IN ({companylist}) ");
             }
 
-            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);           
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -145,17 +145,18 @@ namespace DAL.Repository
                         partCustomerAssignment.Weight = Convert.ToDecimal(dataReader1["Weight"]);
                         partCustomerAssignment.Rate = Convert.ToDecimal(dataReader1["Rate"]);
                         partCustomerAssignment.SurchargeExist = Convert.ToBoolean(dataReader1["SurchargeExist"]);
-                        partCustomerAssignment.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);                        
+                        partCustomerAssignment.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);
 
                         partCustomerAssignments.Add(partCustomerAssignment);
                     }
                     dataReader1.Close();
                 }
                 part.partCustomerAssignments = partCustomerAssignments;
-                
+
                 conn.Close();
             }
 
+            
             foreach (Part part in parts)
             {                
                 commandText = string.Format("SELECT sum(Qty - ShippedQty) as openqty from OrderDetail where partid = '{0}' and (IsClosed =0 OR IsClosed IS NULL) ", part.Id);
@@ -179,7 +180,7 @@ namespace DAL.Repository
 
                     }
                     dataReader1.Close();
-                }                
+                }
                 conn.Close();
 
 
@@ -205,10 +206,34 @@ namespace DAL.Repository
                     }
                     dataReader1.Close();
                 }
-                conn.Close();
-            }        
 
-            return parts.OrderBy(x=>x.Code);
+                commandText = string.Format("SELECT [id]  ,[PartId]  ,[SupplierPrice] ,[CustomerPrice] ,[Qty] FROM [StockPrice] where partid = '{0}' order by id", part.Id);
+                part.stockPrices = new List<StockPrice>();
+                using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                {
+                    cmd1.CommandType = CommandType.Text;
+                    conn.Open();
+                    var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                    while (dataReader1.Read())
+                    {
+                        var stockPrice = new StockPrice();
+                        stockPrice.Id = Convert.ToInt32(dataReader1["Id"]);
+                        stockPrice.PartId = Convert.ToInt32(dataReader1["PartId"]);
+                        stockPrice.SupplierPrice = Convert.ToDecimal(dataReader1["SupplierPrice"]);
+                        stockPrice.CustomerPrice = Convert.ToDecimal(dataReader1["CustomerPrice"]);
+                        stockPrice.Qty = Convert.ToInt32(dataReader1["Qty"]);                       
+
+                        part.stockPrices.Add(stockPrice);
+
+                    }
+                    dataReader1.Close();
+                }
+
+                conn.Close();
+            }
+
+            return parts.OrderBy(x => x.Code);
         }
 
         public Part GetPart(long partId)
@@ -245,7 +270,7 @@ namespace DAL.Repository
                     part.IsSample = Convert.ToBoolean(dataReader["IsSample"]);
                     part.IsRepackage = Convert.ToBoolean(dataReader["IsRepackage"]);
                     part.Location = Convert.ToString(dataReader["Location"]);
-                    part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);                    
+                    part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);
                     part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]) + Convert.ToInt32(dataReader["OpeningQty"]);
                     part.OpeningQty = Convert.ToInt32(dataReader["OpeningQty"]);
                     part.MonthlyForecastQty = Convert.ToInt32(dataReader["MonthlyForecastQty"]);
@@ -310,7 +335,7 @@ namespace DAL.Repository
                     partCustomerAssignment.Weight = Convert.ToDecimal(dataReader1["Weight"]);
                     partCustomerAssignment.Rate = Convert.ToDecimal(dataReader1["Rate"]);
                     partCustomerAssignment.SurchargeExist = Convert.ToBoolean(dataReader1["SurchargeExist"]);
-                    partCustomerAssignment.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);                    
+                    partCustomerAssignment.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);
 
                     partCustomerAssignments.Add(partCustomerAssignment);
                 }
@@ -324,14 +349,14 @@ namespace DAL.Repository
 
         public async Task<Part> GetPartAsync(long partId, SqlConnection conn, SqlTransaction transaction)
         {
-            var part = new Part();            
+            var part = new Part();
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
                 "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty] ,[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty],[IsDoublePricingAllowed] FROM [part] where id = '{0}' ", partId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
             {
-                cmd.CommandType = CommandType.Text;                
+                cmd.CommandType = CommandType.Text;
 
                 var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
 
@@ -372,10 +397,10 @@ namespace DAL.Repository
             List<PartSupplierAssignment> partSupplierAssignments = new List<PartSupplierAssignment>();
             commandText = string.Format("SELECT [id],[PartID],[SupplierID],[MapCode],[Description],[QtyInHand],[QtyInTransit],[TotalQty],[UnitPrice] FROM [partsupplierassignment]  where partid = '{0}'", part.Id);
 
-            using (SqlCommand cmd1 = new SqlCommand(commandText, conn,transaction))
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn, transaction))
             {
                 cmd1.CommandType = CommandType.Text;
-                
+
                 var dataReader1 = cmd1.ExecuteReader(CommandBehavior.Default);
 
                 while (dataReader1.Read())
@@ -401,10 +426,10 @@ namespace DAL.Repository
             List<PartCustomerAssignment> partCustomerAssignments = new List<PartCustomerAssignment>();
             commandText = string.Format("SELECT [id],[PartId] ,[CustomerId] ,[MapCode] ,[Description] ,[Weight] ,[Rate] ,[SurchargeExist] ,[SurchargePerPound]  FROM [partcustomerassignment]  where partid = '{0}'", part.Id);
 
-            using (SqlCommand cmd1 = new SqlCommand(commandText, conn,transaction))
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn, transaction))
             {
                 cmd1.CommandType = CommandType.Text;
-                
+
                 var dataReader1 = cmd1.ExecuteReader(CommandBehavior.Default);
 
                 while (dataReader1.Read())
@@ -426,6 +451,30 @@ namespace DAL.Repository
                 part.partCustomerAssignments = partCustomerAssignments;
                 dataReader1.Close();
             }
+
+
+            commandText = string.Format("SELECT [id]  ,[PartId]  ,[SupplierPrice] ,[CustomerPrice] ,[Qty] FROM [StockPrice] where partid = '{0}' order by id", part.Id);
+            part.stockPrices = new List<StockPrice>();
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn, transaction))
+            {
+                cmd1.CommandType = CommandType.Text;
+
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.Default);
+
+                while (dataReader1.Read())
+                {
+                    var stockPrice = new StockPrice();
+                    stockPrice.Id = Convert.ToInt32(dataReader1["Id"]);
+                    stockPrice.PartId = Convert.ToInt32(dataReader1["PartId"]);
+                    stockPrice.SupplierPrice = Convert.ToDecimal(dataReader1["SupplierPrice"]);
+                    stockPrice.CustomerPrice = Convert.ToDecimal(dataReader1["CustomerPrice"]);
+                    stockPrice.Qty = Convert.ToInt32(dataReader1["Qty"]);
+
+                    part.stockPrices.Add(stockPrice);
+
+                }
+                dataReader1.Close();
+            }            
 
             return part;
         }
@@ -536,15 +585,40 @@ namespace DAL.Repository
 
                 part.partCustomerAssignments = partCustomerAssignments;
                 conn.Close();
+            }            
+
+            commandText = string.Format("SELECT [id]  ,[PartId]  ,[SupplierPrice] ,[CustomerPrice] ,[Qty] FROM [StockPrice] where partid = '{0}' order by id", part.Id);
+            part.stockPrices = new List<StockPrice>();
+            using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+            {
+                cmd1.CommandType = CommandType.Text;
+                conn.Open();
+                var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dataReader1.Read())
+                {
+                    var stockPrice = new StockPrice();
+                    stockPrice.Id = Convert.ToInt32(dataReader1["Id"]);
+                    stockPrice.PartId = Convert.ToInt32(dataReader1["PartId"]);
+                    stockPrice.SupplierPrice = Convert.ToDecimal(dataReader1["SupplierPrice"]);
+                    stockPrice.CustomerPrice = Convert.ToDecimal(dataReader1["CustomerPrice"]);
+                    stockPrice.Qty = Convert.ToInt32(dataReader1["Qty"]);
+
+                    part.stockPrices.Add(stockPrice);
+
+                }
+                dataReader1.Close();
             }
+
+            conn.Close();
 
             return part;
         }
 
-        public async Task<IEnumerable<PartInTransit>> GetPartInTransitDetailAsync(long partId,int companyId)
+        public async Task<IEnumerable<PartInTransit>> GetPartInTransitDetailAsync(long partId, int companyId)
         {
             var parts = new List<PartInTransit>();
-            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);           
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             var commandText = string.Format("SELECT 	[Code] ,[Description] ,[InvoiceNo] ,[InvoiceDate] ,[ETA] ,SID.[PartId], sum(SID.[Qty]) [Qty] ,[Name] as SupplierName,  SID.InvoiceID as [InvoiceId] FROM [SupplierInvoiceDetails] SID  INNER JOIN [SupplierInvoiceMaster] SIM ON SID.InvoiceId = SIM.Id  INNER JOIN [part] P ON P.id = SID.PartId  INNER JOIN [supplier] S ON S.id = SIM.SupplierId  where (IsBoxReceived = 0 OR IsBoxReceived IS NULL) " +
                 " AND SIM.CompanyId = '{0}' AND SID.PartId = '{1}' Group by SID.[PartId],[Code],[Description],[InvoiceNo],[InvoiceDate],[ETA],[Name], SID.InvoiceID ", companyId, partId);
@@ -564,9 +638,9 @@ namespace DAL.Repository
                     part.Description = Convert.ToString(dataReader["Description"]);
                     part.InvoiceNo = Convert.ToString(dataReader["InvoiceNo"]);
                     part.InvoiceDate = Convert.ToDateTime(dataReader["InvoiceDate"]);
-                    part.ETA = Convert.ToDateTime(dataReader["ETA"]);                    
+                    part.ETA = Convert.ToDateTime(dataReader["ETA"]);
                     part.PartId = Convert.ToInt32(dataReader["PartId"]);
-                    part.Qty = Convert.ToInt32(dataReader["Qty"]);                    
+                    part.Qty = Convert.ToInt32(dataReader["Qty"]);
                     part.SupplierName = Convert.ToString(dataReader["SupplierName"]);
                     part.InvoiceId = Convert.ToInt32(dataReader["InvoiceId"]);
 
@@ -579,7 +653,7 @@ namespace DAL.Repository
 
             foreach (PartInTransit part in parts)
             {
-                commandText = string.Format("SELECT Distinct PONo FROM [dbo].[SupplierInvoicePoDetails]  WHERE InvoiceId = '{0}' and PartId = '{1}' ", part.InvoiceId,part.PartId);
+                commandText = string.Format("SELECT Distinct PONo FROM [dbo].[SupplierInvoicePoDetails]  WHERE InvoiceId = '{0}' and PartId = '{1}' ", part.InvoiceId, part.PartId);
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                 {
@@ -597,7 +671,7 @@ namespace DAL.Repository
                 conn.Close();
             }
 
-                return parts;
+            return parts;
         }
 
         public async Task<IEnumerable<PartInTransit>> GetPartLatestReceivedAsync(long partId, int companyId)
@@ -605,9 +679,9 @@ namespace DAL.Repository
             var parts = new List<PartInTransit>();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-           var commandText = string.Format("SELECT top 5 [Code] ,[Description] ,[InvoiceNo] ,[InvoiceDate],[ReceivedDate] ,[ETA] ,[PoNo] ,[PartId],Sum([Qty]) as QTY ,[Name] as SupplierName  " +
-                "FROM [SupplierInvoiceDetails] SID   INNER JOIN [SupplierInvoiceMaster] SIM ON SID.InvoiceId = SIM.Id  INNER JOIN [part] P ON P.id = SID.PartId INNER JOIN [supplier] S ON S.id = SIM.SupplierId   " +
-                "where  IsBoxReceived = 1 and SIM.CompanyId = '{0}' and Partid =  '{1}' group by [Code] ,[Description] ,[InvoiceNo] ,[InvoiceDate],[ReceivedDate] ,[ETA] ,[PoNo],[PartId],[Name] order by ReceivedDate desc", companyId, partId);
+            var commandText = string.Format("SELECT top 5 [Code] ,[Description] ,[InvoiceNo] ,[InvoiceDate],[ReceivedDate] ,[ETA] ,[PoNo] ,[PartId],Sum([Qty]) as QTY ,[Name] as SupplierName  " +
+                 "FROM [SupplierInvoiceDetails] SID   INNER JOIN [SupplierInvoiceMaster] SIM ON SID.InvoiceId = SIM.Id  INNER JOIN [part] P ON P.id = SID.PartId INNER JOIN [supplier] S ON S.id = SIM.SupplierId   " +
+                 "where  IsBoxReceived = 1 and SIM.CompanyId = '{0}' and Partid =  '{1}' group by [Code] ,[Description] ,[InvoiceNo] ,[InvoiceDate],[ReceivedDate] ,[ETA] ,[PoNo],[PartId],[Name] order by ReceivedDate desc", companyId, partId);
 
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
@@ -646,7 +720,7 @@ namespace DAL.Repository
             var parts = new List<PartOpenOrder>();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-            var commandText = string.Format("SELECT  [Name] as CustomerName,[Code],[Description],[PONo] ,[PODate] ,OD.[DueDate], Qty - ShippedQty as openqty  from OrderDetail OD INNER JOIN [OrderMaster] OM ON OD.OrderId = OM.Id INNER JOIN [part] P ON P.id = OD.PartId INNER JOIN [customer] c ON c.id = OM.CustomerId where partid = '{0}' and (OD.IsClosed =0 OR OD.IsClosed IS NULL)  AND OM.CompanyId = '{1}'",  partId, companyId);
+            var commandText = string.Format("SELECT  [Name] as CustomerName,[Code],[Description],[PONo] ,[PODate] ,OD.[DueDate], Qty - ShippedQty as openqty  from OrderDetail OD INNER JOIN [OrderMaster] OM ON OD.OrderId = OM.Id INNER JOIN [part] P ON P.id = OD.PartId INNER JOIN [customer] c ON c.id = OM.CustomerId where partid = '{0}' and (OD.IsClosed =0 OR OD.IsClosed IS NULL)  AND OM.CompanyId = '{1}'", partId, companyId);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -667,9 +741,9 @@ namespace DAL.Repository
                     part.PODate = Convert.ToDateTime(dataReader["PODate"]);
                     part.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
                     part.OpenQty = Convert.ToInt32(dataReader["openqty"]);
-                    
+
                     parts.Add(part);
-                    
+
                 }
                 dataReader.Close();
                 conn.Close();
@@ -702,7 +776,7 @@ namespace DAL.Repository
                     part.Code = Convert.ToString(dataReader["Code"]);
                     part.Description = Convert.ToString(dataReader["Description"]);
                     part.ReferenceNo = Convert.ToString(dataReader["ReferenceNo"]);
-                    part.DueDate = Convert.ToDateTime(dataReader["DueDate"]); 
+                    part.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
                     part.Note = Convert.ToString(dataReader["Note"]);
                     part.OpenQty = Convert.ToInt32(dataReader["openqty"]);
                     part.SrNo = Convert.ToInt32(dataReader["SrNo"]);
@@ -775,7 +849,7 @@ namespace DAL.Repository
                 {
                     var part = new PartTotalShipment();
 
-                    part.ShippedQty = Convert.ToInt32(dataReader["ShippedQty"]);                    
+                    part.ShippedQty = Convert.ToInt32(dataReader["ShippedQty"]);
                     part.MonthlyExcessQty = Convert.ToInt32(dataReader["MonthlyExcessQty"]);
 
                     parts.Add(part);
@@ -807,7 +881,7 @@ namespace DAL.Repository
                 {
                     var part = new PartTotalInvoiceQty();
 
-                    part.InvoiceQty = Convert.ToInt32(dataReader["InvoiceQty"]);                    
+                    part.InvoiceQty = Convert.ToInt32(dataReader["InvoiceQty"]);
 
                     parts.Add(part);
                 }
@@ -819,13 +893,42 @@ namespace DAL.Repository
             return parts;
         }
 
-        public async Task<Part> GetPartByNameAsync(int companyId,string name)
+        public async Task<IEnumerable<StockPrice>> GetStock(long partId, int companyId)
+        {
+            var stockPrices = new List<StockPrice>();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format($"SELECT id,PartId,Qty,CustomerPrice,SupplierPrice FROM StockPrice WHERE PartId = '{partId}' and Qty > 0 order by id ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
+
+                while (dataReader.Read())
+                {
+                    var stockPrice = new StockPrice();
+                    stockPrice.Id = Convert.ToInt32(dataReader["Id"]);
+                    stockPrice.PartId = Convert.ToInt32(dataReader["PartId"]);
+                    stockPrice.Qty = Convert.ToInt32(dataReader["Qty"]);
+                    stockPrice.CustomerPrice = Convert.ToDecimal(dataReader["CustomerPrice"]);
+                    stockPrice.SupplierPrice = Convert.ToDecimal(dataReader["SupplierPrice"]);
+                    stockPrices.Add(stockPrice);
+                }
+                dataReader.Close();
+            }
+
+            return stockPrices.OrderBy(x => x.Id);
+        }
+
+        public async Task<Part> GetPartByNameAsync(int companyId, string name)
         {
             var part = new Part();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty],[IsDoublePricingAllowed] FROM [part] where companyId = '{0}'  and Code = '{1}'", companyId,name);
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty],[IsDoublePricingAllowed] FROM [part] where companyId = '{0}'  and Code = '{1}'", companyId, name);
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -929,14 +1032,14 @@ namespace DAL.Repository
 
             return part;
         }
-               
+
         public async Task<Part> GetPartByMapCodeAsync(int? supplierId, string mapCode)
         {
             var part = new Part();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
-            
+
             var commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
-                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty],[IsDoublePricingAllowed] FROM [part]   where id in (SELECT[PartID] FROM[partsupplierassignment]  where[SupplierID] = '{0}' and REPLACE(Mapcode,' ','') = '{1}')", supplierId, mapCode.Replace(" ",""));
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty],[IsDoublePricingAllowed] FROM [part]   where id in (SELECT[PartID] FROM[partsupplierassignment]  where[SupplierID] = '{0}' and REPLACE(Mapcode,' ','') = '{1}')", supplierId, mapCode.Replace(" ", ""));
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -1041,7 +1144,7 @@ namespace DAL.Repository
         }
 
         public async Task<IEnumerable<Part>> GetPartBySupplierIdAsync(int supplierId)
-        {                     
+        {
             List<Part> parts = new List<Part>();
             SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
@@ -1336,10 +1439,94 @@ namespace DAL.Repository
 
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
-                    }                  
+                    }
+                    
+                    // Attempt to commit the transaction.
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+        public async Task SetStockPriceAsync(List<StockPrice> stockPrices)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+                    var sql = string.Empty;
+                    foreach (StockPrice stockPrice in stockPrices)
+                    {
+                        if (stockPrice.Id != 0)
+                        {
+                            sql = string.Format($"UPDATE [StockPrice] SET [SupplierPrice]='{stockPrice.SupplierPrice}' ,[CustomerPrice]='{stockPrice.CustomerPrice}' ,[Qty] = '{stockPrice.Qty}' WHERE PartId = '{stockPrice.PartId}'  AND Id = '{stockPrice.Id}' ");
+                            command.CommandText = sql;
+                            await command.ExecuteNonQueryAsync();
+                        }
+                        else
+                        {
+                            sql = string.Format($"INSERT INTO [dbo].[StockPrice]  ([PartId] ,[SupplierPrice] ,[CustomerPrice] ,[Qty])  VALUES  ('{stockPrice.PartId}','{stockPrice.SupplierPrice}','{stockPrice.CustomerPrice}','{stockPrice.Qty}')");
+                            command.CommandText = sql;
+                            await command.ExecuteNonQueryAsync();
+                        }
+                    }
 
                     // Attempt to commit the transaction.
-                    transaction.Commit();                    
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+        public async Task SetStockPriceAsync(StockPrice stockPrice,int companyId)
+        {
+            var part = await this.GetPartByNameAsync(companyId, stockPrice.PartCode);
+            stockPrice.PartId = Convert.ToInt32(part.Id);
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+                    var sql = string.Empty;
+                    sql = string.Format($"INSERT INTO [dbo].[StockPrice]  ([PartId] ,[SupplierPrice] ,[CustomerPrice] ,[Qty])  VALUES  ('{stockPrice.PartId}','{stockPrice.SupplierPrice}','{stockPrice.CustomerPrice}','{stockPrice.Qty}')");
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+
+                    // Attempt to commit the transaction.
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
@@ -1414,9 +1601,9 @@ namespace DAL.Repository
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                     }
-
+                    
                     // Attempt to commit the transaction.
-                    transaction.Commit();                    
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
@@ -1426,7 +1613,9 @@ namespace DAL.Repository
             }
         }
 
-        public async Task UpdatePartCustomerPriceAsync(int companyId,string customer, string partcode, decimal price)
+
+
+        public async Task UpdatePartCustomerPriceAsync(int companyId, string customer, string partcode, decimal price)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
@@ -1444,12 +1633,12 @@ namespace DAL.Repository
                 command.Transaction = transaction;
 
                 try
-                {                   
+                {
 
                     var sql = string.Format($"UPDATE pca SET pca.Rate = '{price}' FROM dbo.[partcustomerassignment] AS pca INNER JOIN dbo.customer AS cust    ON pca.CustomerId = cust.id INNER JOIN dbo.part AS part    ON pca.PartId = part.id WHERE part.Code= '{partcode}' AND part.CompanyId = '{companyId}' AND cust.Name = '{customer}'");
 
                     command.CommandText = sql;
-                    await command.ExecuteNonQueryAsync();           
+                    await command.ExecuteNonQueryAsync();
 
                     // Attempt to commit the transaction.
                     transaction.Commit();
@@ -1462,7 +1651,7 @@ namespace DAL.Repository
             }
         }
 
-        public async Task UpdateOpeningQtyByPartCodeAsync(int companyId,string partcode, int openingQty)
+        public async Task UpdateOpeningQtyByPartCodeAsync(int companyId, string partcode, int openingQty)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
@@ -1642,7 +1831,7 @@ namespace DAL.Repository
             }
         }
 
-        public async Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand,string direction,string note)
+        public async Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand, string direction, string note)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
@@ -1763,7 +1952,7 @@ namespace DAL.Repository
                     await command.ExecuteNonQueryAsync();
 
                     // Attempt to commit the transaction.
-                    transaction.Commit();                    
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {

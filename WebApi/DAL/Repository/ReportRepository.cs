@@ -324,7 +324,7 @@ namespace DAL.Repository
                 while (dataReader1.Read())
                 {
                     var packingSlipReport = new PackingSlipReport();
-                    packingSlipReport.OrderNo = "60029955";//Convert.ToString(dataReader1["OrderNo"]);
+                    packingSlipReport.OrderNo = "60049508";//Convert.ToString(dataReader1["OrderNo"]);
                     packingSlipReport.SrNo = SrNo;
                     packingSlipReport.PartId = Convert.ToInt32(dataReader1["PartId"]);
                     packingSlipReport.Qty = Convert.ToInt32(dataReader1["Qty"]);
@@ -411,7 +411,8 @@ namespace DAL.Repository
                 packingSlipReport.CustomerInvoicingtypeid = customer.Invoicingtypeid;
                 packingSlipReport.CustomerEndCustomerName = customer.EndCustomerName;
                 packingSlipReport.Billing = customer.Billing;
-
+                if(customer.RePackingPoNo == null || customer.RePackingPoNo == string.Empty)
+                    packingSlipReport.RePackingSlipNo = customer.RePackingPoNo;
 
                 packingSlipReport.ShipmentName = packingSlip.customerShippingInfo.Name;
                 packingSlipReport.ShipmentContactPersonName = packingSlip.customerShippingInfo.ContactPersonName;

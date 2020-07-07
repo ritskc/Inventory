@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi.IServices;
 using Microsoft.AspNetCore.Http.Extensions;
 using System.Security.Claims;
+using Microsoft.Extensions.Options;
+using WebApi.Settings;
+using WebApi.Utils;
 
 namespace WebApi.Controllers
 {
@@ -17,9 +20,14 @@ namespace WebApi.Controllers
     public class PackingSlipsController : ControllerBase
     {
         private readonly IPackingSlipService packingSlipService;
-        public PackingSlipsController(IPackingSlipService packingSlipService)
+        private readonly AppSettings _appSettings;
+        private readonly ICompanyService companyService;
+
+        public PackingSlipsController(IPackingSlipService packingSlipService, IOptions<AppSettings> appSettings, ICompanyService companyService)
         {
             this.packingSlipService = packingSlipService;
+            _appSettings = appSettings.Value;
+            this.companyService = companyService;
         }
 
         // GET: api/Todo
@@ -38,7 +46,7 @@ namespace WebApi.Controllers
                     return NotFound();
                 }
 
-                return result.ToList();
+                return result.OrderByDescending(x => x.Id).ToList();
             }
             catch (Exception ex)
             {
@@ -75,6 +83,11 @@ namespace WebApi.Controllers
             try
             {
                 var result = await this.packingSlipService.AddPackingSlipAsync(packingSlip);
+
+                var company = await companyService.GetCompanyAsync(packingSlip.CompanyId);
+                EmailService emailService = new EmailService(_appSettings);
+                emailService.SendContentEmail(company.Name,"Shipment Created: ", packingSlip.PackingSlipNo);
+
                 return result;
             }
             catch (Exception ex)

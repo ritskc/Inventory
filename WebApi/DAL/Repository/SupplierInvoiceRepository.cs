@@ -77,7 +77,7 @@ namespace DAL.Repository
                             {
                             supplierInvoicePoDetails.InvoiceDetailId = supplierInvoiceDetail.Id;
 
-                            sql = string.Format($"INSERT INTO [dbo].[SupplierInvoicePoDetails]   ([PartId],[InvoiceId],[InvoiceDetailId],[PoId],[PODetailId],[PONo],[Qty]) VALUES   ('{supplierInvoicePoDetails.PartId}', '{invoiceId}','{supplierInvoicePoDetails.InvoiceDetailId}','{supplierInvoicePoDetails.PoId}','{supplierInvoicePoDetails.PODetailId}'   ,'{supplierInvoicePoDetails.PONo}'   ,'{supplierInvoicePoDetails.Qty}')");
+                            sql = string.Format($"INSERT INTO [dbo].[SupplierInvoicePoDetails]   ([PartId],[InvoiceId],[InvoiceDetailId],[PoId],[PODetailId],[PONo],[Qty],[UnitPrice]) VALUES   ('{supplierInvoicePoDetails.PartId}', '{invoiceId}','{supplierInvoicePoDetails.InvoiceDetailId}','{supplierInvoicePoDetails.PoId}','{supplierInvoicePoDetails.PODetailId}'   ,'{supplierInvoicePoDetails.PONo}'   ,'{supplierInvoicePoDetails.Qty}', '{supplierInvoicePoDetails.UnitPrice}')");
 
                             command.CommandText = sql;
                             await command.ExecuteNonQueryAsync();
@@ -1078,7 +1078,25 @@ namespace DAL.Repository
                         sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{supplierInvoiceDetail.PartId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.RECEIVE_SUPPLIER_INVOICE)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.IN)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{supplierInvoiceId.ToString()}'   ,'{supplierInvoiceDetail.Qty}')");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
-                        //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                        //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);                        
+                    }
+
+                    var stocks = await GetStockQtyAsync(supplierInvoiceId, command.Connection, command.Transaction);
+
+                    foreach(StockPrice stockPrice in stocks)
+                    {
+                        if(IfStockExist(stockPrice, command.Connection, command.Transaction))
+                        {
+                            sql = string.Format($"UPDATE [StockPrice] SET [Qty] = [Qty] + '{stockPrice.Qty}' WHERE PartId = '{stockPrice.PartId}' AND SupplierPrice = '{stockPrice.SupplierPrice}' ");
+                            command.CommandText = sql;
+                            await command.ExecuteNonQueryAsync();
+                        }
+                        else
+                        {
+                            sql = string.Format($"INSERT INTO [dbo].[StockPrice]  ([PartId] ,[SupplierPrice] ,[CustomerPrice] ,[Qty])  VALUES  ('{stockPrice.PartId}','{stockPrice.SupplierPrice}','{stockPrice.CustomerPrice}','{stockPrice.Qty}')");
+                            command.CommandText = sql;
+                            await command.ExecuteNonQueryAsync();
+                        }
                     }
 
                     transaction.Commit();
@@ -1090,6 +1108,136 @@ namespace DAL.Repository
                 }
             }
 
+        }
+
+        private bool IfStockExist(StockPrice stockPrice, SqlConnection conn, SqlTransaction transaction)
+        {
+            bool IfRecordExist = false;
+            var commandText = string.Format($"SELECT CustomerPrice FROM StockPrice WHERE PartId = '{stockPrice.PartId}' AND SupplierPrice = '{stockPrice.SupplierPrice}' ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                var dataReader = cmd.ExecuteReader(CommandBehavior.Default);
+
+                while (dataReader.Read())
+                {
+                    IfRecordExist = true;
+                }
+                dataReader.Close();
+            }
+
+            return IfRecordExist;
+        }
+
+        public async Task<List<StockPrice>> GetStockQtyAsync(long invoiceId, SqlConnection conn, SqlTransaction transaction)
+        {
+            var stockPrices = new List<StockPrice>();
+
+            var commandText = string.Format($"SELECT [PartId],Sum([Qty]) QTY,[UnitPrice] FROM [SupplierInvoicePoDetails]  where InvoiceId = '{invoiceId}' group by PartId,UnitPrice ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
+
+                while (dataReader.Read())
+                {
+                    var stockPrice = new StockPrice();
+                    stockPrice.PartId = Convert.ToInt32(dataReader["PartId"]);
+                    stockPrice.Qty = Convert.ToInt32(dataReader["Qty"]);
+                    stockPrice.SupplierPrice = Convert.ToDecimal(dataReader["UnitPrice"]);
+                    stockPrices.Add(stockPrice);
+                }
+
+                dataReader.Close();
+            }
+
+            commandText = string.Format($"SELECT [PartId],sum ([ExcessQty]) QTY FROM [SupplierInvoiceDetails]  where InvoiceId = '{invoiceId}' and [ExcessQty] > 0 group by PartId ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
+
+                while (dataReader.Read())
+                {
+                    var stockPrice = new StockPrice();
+                    stockPrice.PartId = Convert.ToInt32(dataReader["PartId"]);
+                    stockPrice.Qty = Convert.ToInt32(dataReader["Qty"]);
+                    stockPrice.SupplierPrice = 0;
+                    stockPrices.Add(stockPrice);
+                }
+
+                dataReader.Close();
+            }
+
+            foreach (StockPrice stockPrice in stockPrices)
+            {
+                if (stockPrice.SupplierPrice == 0)
+                {
+                    commandText = string.Format($"SELECT TOP 1 UnitPrice FROM partsupplierassignment WHERE PartID = '{stockPrice.PartId}' ");
+
+                    using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
+                    {
+                        cmd.CommandType = CommandType.Text;
+
+                        var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
+
+                        while (dataReader.Read())
+                        {
+                            stockPrice.SupplierPrice = Convert.ToDecimal(dataReader["UnitPrice"]);
+                        }
+
+                        dataReader.Close();
+                    }
+                }
+            }
+
+            foreach (StockPrice stockPrice in stockPrices)
+            {
+                commandText = string.Format($"SELECT CustomerPrice FROM StockPrice WHERE PartId = '{stockPrice.PartId}' AND SupplierPrice = '{stockPrice.SupplierPrice}' ");
+
+                using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
+
+                    while (dataReader.Read())
+                    {                      
+                        stockPrice.CustomerPrice = Convert.ToDecimal(dataReader["CustomerPrice"]);                       
+                    }
+                    dataReader.Close();
+                }
+            }
+
+            foreach (StockPrice stockPrice in stockPrices)
+            {
+                if (stockPrice.CustomerPrice == 0)
+                {
+                    commandText = string.Format($"SELECT TOP 1 Rate FROM partcustomerassignment WHERE PartID  = '{stockPrice.PartId}' ");
+
+                    using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
+                    {
+                        cmd.CommandType = CommandType.Text;
+
+                        var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
+
+                        while (dataReader.Read())
+                        {
+                            stockPrice.CustomerPrice = Convert.ToDecimal(dataReader["Rate"]);
+                        }
+
+                        dataReader.Close();
+                    }
+                }
+            }
+
+            return stockPrices;
         }
 
         public async Task UnReceiveSupplierInvoiceAsync(long supplierInvoiceId)
@@ -1119,6 +1267,18 @@ namespace DAL.Repository
                     sql = string.Format($"UPDATE [dbo].[SupplierInvoiceDetails]   SET [IsBoxReceived] = '{false}'  WHERE [InvoiceId] = '{supplierInvoiceId}'");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
+
+                    var stocks = await GetStockQtyAsync(supplierInvoiceId, command.Connection, command.Transaction);
+
+                    foreach (StockPrice stockPrice in stocks)
+                    {
+                        if (IfStockExist(stockPrice, command.Connection, command.Transaction))
+                        {
+                            sql = string.Format($"UPDATE [StockPrice] SET [Qty] = [Qty] - '{stockPrice.Qty}' WHERE PartId = '{stockPrice.PartId}' AND SupplierPrice = '{stockPrice.SupplierPrice}' ");
+                            command.CommandText = sql;
+                            await command.ExecuteNonQueryAsync();
+                        }                        
+                    }
 
                     var supplierInvoice = await GetSupplierInvoiceAsync(supplierInvoiceId, command.Connection, command.Transaction);
 

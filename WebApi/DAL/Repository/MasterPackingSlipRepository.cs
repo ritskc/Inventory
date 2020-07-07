@@ -19,15 +19,17 @@ namespace DAL.Repository
         private readonly IPackingSlipRepository packingSlipRepository;
         private readonly IUserRepository userRepository;
         private readonly ICustomerRepository customerRepository;
+        private readonly IPartRepository partRepository;
 
         public MasterPackingSlipRepository(ISqlHelper sqlHelper, IEntityTrackerRepository entityTrackerRepository, 
-            IPackingSlipRepository packingSlipRepository, IUserRepository userRepository, ICustomerRepository customerRepository)
+            IPackingSlipRepository packingSlipRepository, IUserRepository userRepository, ICustomerRepository customerRepository, IPartRepository partRepository)
         {
             this.sqlHelper = sqlHelper;
             this.entityTrackerRepository = entityTrackerRepository;
             this.packingSlipRepository = packingSlipRepository;
             this.userRepository = userRepository;
             this.customerRepository = customerRepository;
+            this.partRepository = partRepository;
 
         }
         public async Task<int> AddMasterPackingSlipAsync(MasterPackingSlip masterPackingSlip)
@@ -233,6 +235,40 @@ namespace DAL.Repository
 
                 }
             }
+            foreach (MasterPackingSlip masterPackingSlip in masterPackingSlips)
+            {
+                masterPackingSlip.PackingSlipBoxDetails = new List<PackingSlipBoxDetails>();
+                var packingSlipBoxDetails = new List<PackingSlipBoxDetails>();
+                foreach (PackingSlip packingSlip in masterPackingSlip.PackingSlips)
+                {
+                    commandText = string.Format($"SELECT  [Id] ,[PackingSlipId] ,[PackingSlipDetailId] ,[PartId] ,[Qty],[BoxeNo] ,[Barcode] ,[IsScanned] FROM [dbo].[PackingSlipBoxDetails] where PackingSlipDetailId = '{packingSlip.Id}' ");
+
+                    using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                    {
+                        cmd1.CommandType = CommandType.Text;
+                        conn.Open();
+                        var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                        while (dataReader1.Read())
+                        {
+                            var packingSlipBoxDetail = new PackingSlipBoxDetails();
+                            packingSlipBoxDetail.Id = Convert.ToInt32(dataReader1["Id"]);
+                            packingSlipBoxDetail.PackingSlipId = Convert.ToInt32(dataReader1["PackingSlipId"]);
+                            packingSlipBoxDetail.PackingSlipDetailId = Convert.ToInt32(dataReader1["PackingSlipDetailId"]);
+                            packingSlipBoxDetail.PartId = Convert.ToInt32(dataReader1["PartId"]);
+                            packingSlipBoxDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                            packingSlipBoxDetail.BoxeNo = Convert.ToInt32(dataReader1["BoxeNo"]);
+                            packingSlipBoxDetail.Barcode = Convert.ToString(dataReader1["Barcode"]);
+                            packingSlipBoxDetail.IsScanned = Convert.ToBoolean(dataReader1["IsScanned"]);
+
+                            packingSlipBoxDetails.Add(packingSlipBoxDetail);
+                        }
+                        dataReader1.Close();
+                    }
+                    masterPackingSlip.PackingSlipBoxDetails = packingSlipBoxDetails;
+                    conn.Close();
+                }
+            }
             return masterPackingSlips;
         }
 
@@ -317,6 +353,38 @@ namespace DAL.Repository
                     masterPackingSlip.PackingSlips.Add(packingSlip);
                 }
                 dataReader.Close();
+                conn.Close();
+            }
+
+            masterPackingSlip.PackingSlipBoxDetails = new List<PackingSlipBoxDetails>();
+            var packingSlipBoxDetails = new List<PackingSlipBoxDetails>();
+            foreach (PackingSlip packingSlip in masterPackingSlip.PackingSlips)
+            {                
+                commandText = string.Format($"SELECT  [Id] ,[PackingSlipId] ,[PackingSlipDetailId] ,[PartId] ,[Qty],[BoxeNo] ,[Barcode] ,[IsScanned] FROM [dbo].[PackingSlipBoxDetails] where PackingSlipDetailId = '{packingSlip.Id}' ");
+
+                using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                {
+                    cmd1.CommandType = CommandType.Text;
+                    conn.Open();
+                    var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                    while (dataReader1.Read())
+                    {
+                        var packingSlipBoxDetail = new PackingSlipBoxDetails();
+                        packingSlipBoxDetail.Id = Convert.ToInt32(dataReader1["Id"]);
+                        packingSlipBoxDetail.PackingSlipId = Convert.ToInt32(dataReader1["PackingSlipId"]);
+                        packingSlipBoxDetail.PackingSlipDetailId = Convert.ToInt32(dataReader1["PackingSlipDetailId"]);
+                        packingSlipBoxDetail.PartId = Convert.ToInt32(dataReader1["PartId"]);
+                        packingSlipBoxDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                        packingSlipBoxDetail.BoxeNo = Convert.ToInt32(dataReader1["BoxeNo"]);
+                        packingSlipBoxDetail.Barcode = Convert.ToString(dataReader1["Barcode"]);
+                        packingSlipBoxDetail.IsScanned = Convert.ToBoolean(dataReader1["IsScanned"]);
+
+                        packingSlipBoxDetails.Add(packingSlipBoxDetail);
+                    }
+                    dataReader1.Close();
+                }
+                masterPackingSlip.PackingSlipBoxDetails = packingSlipBoxDetails;
                 conn.Close();
             }
 
@@ -498,5 +566,76 @@ namespace DAL.Repository
             }
             return id;
         }
+
+        public async Task<MasterPackingSlip> GetPackingSlipFromBarcodeAsync(string barcode)
+        {
+            var packingslipId = await GetPackingslipFromBarcodeAsync(barcode);
+            return await GetMasterPackingSlipAsync(packingslipId);
+        }
+
+        public async Task<int> GetPackingslipFromBarcodeAsync(string barcode)
+        {
+            int packingSlipId = 0;
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Format($"SELECT [MasterPackingSlipId] FROM [PackingSlipMaster] WHERE ID IN (SELECT  [PackingSlipId]  FROM [dbo].[PackingSlipBoxDetails] where Barcode = '{barcode}') ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    packingSlipId = Convert.ToInt32(dataReader["MasterPackingSlipId"]);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+            return packingSlipId;
+        }
+
+        public async Task<List<PackingSlipScanBoxeStatus>> ScanPackingSlipBox(string barcode, int userId)
+        {
+            var result =  await this.packingSlipRepository.ScanPackingSlipBox(barcode, userId);
+            var packingslipId = await GetPackingslipFromBarcodeAsync(barcode);
+
+            var masterPackingslip = await GetMasterPackingSlipAsync(packingslipId);
+
+            var packingboxestatuses = new List<PackingSlipScanBoxeStatus>();
+            foreach (PackingSlip pSlip in masterPackingslip.PackingSlips)
+            {
+                var packingSlip = await this.packingSlipRepository.GetPackingSlipAsync(pSlip.Id);
+                
+                foreach (PackingSlipDetails packingSlipDetails in packingSlip.PackingSlipDetails)
+                {
+                    foreach (PackingSlipBoxDetails packingSlipBox in packingSlipDetails.PackingSlipBoxDetails)
+                    {
+                        var part = await partRepository.GetPartAsync(packingSlipBox.PartId);
+
+                        var packingboxestatus = new PackingSlipScanBoxeStatus();
+                        packingboxestatus.Id = packingSlipBox.Id;
+                        packingboxestatus.PackingSlipId = packingSlipBox.PackingSlipId;
+                        packingboxestatus.PackingSlipNo = packingSlip.PackingSlipNo;
+                        packingboxestatus.PackingSlipDetailId = packingSlipBox.PackingSlipDetailId;
+                        packingboxestatus.LineNumber = packingSlipDetails.LineNumber;
+                        packingboxestatus.PartId = packingSlipBox.PartId;
+                        packingboxestatus.PartCode = part.Code;
+                        packingboxestatus.Qty = packingSlipBox.Qty;
+                        packingboxestatus.TotalBox = packingSlipDetails.Boxes;
+                        packingboxestatus.BoxeNo = packingSlipBox.BoxeNo;
+                        packingboxestatus.Barcode = packingSlipBox.Barcode;
+                        packingboxestatus.IsScanned = packingSlipBox.IsScanned;
+
+                        packingboxestatuses.Add(packingboxestatus);
+                    }
+                }
+            }
+            return packingboxestatuses;            
+        }        
     }
 }

@@ -18,5 +18,7 @@ namespace DAL.IRepository
         Task UpdatePOSAsync(int masterPackingSlipId, string path, string trackingNumber,string accessId);
         Task<bool> AllowScanning(int masterPackingSlipId, int userId);
         Task<int> GetIdByAccessIdAsync(string accessId);
+        Task<List<PackingSlipScanBoxeStatus>> ScanPackingSlipBox(string barcode, int userId);
+        Task<MasterPackingSlip> GetPackingSlipFromBarcodeAsync(string barcode);
     }
 }

@@ -32,6 +32,7 @@ namespace DAL.Models
        public bool DisplayLineNo { get; set; }
        public string Billing { get; set; }
        public int PackingSlipId { get; set; }
+       public string RePackingPoNo { get; set; }
 
         public List<CustomerShippingInfo> ShippingInfos { get; set; }
     }

@@ -1,0 +1,6 @@
+2020-06-26 17:21:33.8650||DEBUG|WebApi.Program|init main 
+2020-06-26 17:21:34.5604||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-06-26 17:21:34.6163|58|INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|Creating key {843a34f8-ebcb-4112-af9f-13d4e8aad1d5} with creation date 2020-06-26 21:21:34Z, activation date 2020-06-26 21:21:34Z, and expiration date 2020-09-24 21:21:34Z. 
+2020-06-26 17:21:34.6367|39|INFO|Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository|Writing data to file 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys\key-843a34f8-ebcb-4112-af9f-13d4e8aad1d5.xml'. 
+2020-06-26 17:21:35.2512|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-06-26 17:21:35.3262|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 75.2383ms 404  

@@ -84,6 +84,7 @@ namespace DAL.Repository
                     foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
                     {
                         var partDetail = await this.partRepository.GetPartAsync(packingSlipDetail.PartId, connection, transaction);
+                        decimal orderPartPrice = 0;
                         packingSlipDetail.IsRepackage = partDetail.IsRepackage;
                         if (packingSlipDetail.IsRepackage)
                             packingSlip.IsRepackage = true;
@@ -106,8 +107,41 @@ namespace DAL.Repository
                                 {
                                     packingSlipDetail.LineNumber = orderDetail.LineNumber;
                                     packingSlipDetail.UnitPrice = orderDetail.UnitPrice;
+                                    orderPartPrice = orderDetail.UnitPrice;
                                 }
                             }
+
+                            var stocks = GetStock(packingSlipDetail.PartId, command.Connection, command.Transaction);
+
+                            int stockAdjusment = packingSlipDetail.Qty;
+                            decimal customerPrice = 0;
+                            foreach (StockPrice stockPrice in stocks)
+                            {
+                                if (stockPrice.Qty >= stockAdjusment)
+                                {
+                                    var sql1 = string.Format($"UPDATE [StockPrice] SET [Qty] = [Qty] - '{stockAdjusment}' WHERE id = '{stockPrice.Id}' ");
+                                    command.CommandText = sql1;
+                                    await command.ExecuteNonQueryAsync();
+
+                                    if(customerPrice > stockPrice.CustomerPrice)
+                                        packingSlipDetail.UnitPrice = customerPrice;
+                                    else
+                                        packingSlipDetail.UnitPrice = stockPrice.CustomerPrice;
+                                    break;
+                                }
+                                else
+                                {
+                                    var sql1 = string.Format($"UPDATE [StockPrice] SET [Qty] = 0 WHERE id = '{stockPrice.Id}' ");
+                                    command.CommandText = sql1;
+                                    await command.ExecuteNonQueryAsync();
+
+                                    stockAdjusment = stockAdjusment - stockPrice.Qty;
+                                    packingSlipDetail.UnitPrice = stockPrice.CustomerPrice;
+                                }
+                            }
+
+                            if (packingSlipDetail.UnitPrice == 0)
+                                packingSlipDetail.UnitPrice = orderPartPrice;
                         }
                         else
                             packingSlip.IsInvoiceCreated = false;
@@ -262,6 +296,33 @@ namespace DAL.Repository
             return packingSlipId;
         }
 
+        private IEnumerable<StockPrice> GetStock(int partId, SqlConnection conn, SqlTransaction transaction)
+        {
+            var stockPrices = new List<StockPrice>();
+            var commandText = string.Format($"SELECT id,PartId,Qty,CustomerPrice FROM StockPrice WHERE PartId = '{partId}' and Qty > 0 order by id ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                var dataReader = cmd.ExecuteReader(CommandBehavior.Default);
+
+                while (dataReader.Read())
+                {
+                    var stockPrice = new StockPrice();
+                    stockPrice.Id = Convert.ToInt32(dataReader["Id"]);
+                    stockPrice.PartId = Convert.ToInt32(dataReader["PartId"]);
+                    stockPrice.Qty = Convert.ToInt32(dataReader["Qty"]);
+                    stockPrice.CustomerPrice = Convert.ToDecimal(dataReader["CustomerPrice"]);
+
+                    stockPrices.Add(stockPrice);
+                }
+                dataReader.Close();
+            }
+
+            return stockPrices.OrderBy(x => x.Id);
+        }
+
         public async Task CreateInvoiceAsync(PackingSlip packingSlip)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
@@ -286,6 +347,39 @@ namespace DAL.Repository
                     packingSlip.Total = 0;
                     foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
                     {
+                        //
+                        var orderPartPrice = packingSlipDetail.UnitPrice;
+                        var stocks = GetStock(packingSlipDetail.PartId, command.Connection, command.Transaction);
+
+                        int stockAdjusment = packingSlipDetail.Qty;
+                        decimal customerPrice = 0;
+                        foreach (StockPrice stockPrice in stocks)
+                        {
+                            if (stockPrice.Qty >= stockAdjusment)
+                            {
+                                var sql1 = string.Format($"UPDATE [StockPrice] SET [Qty] = [Qty] - '{stockAdjusment}' WHERE id = '{stockPrice.Id}' ");
+                                command.CommandText = sql1;
+                                await command.ExecuteNonQueryAsync();
+
+                                if(customerPrice > stockPrice.CustomerPrice)
+                                    packingSlipDetail.UnitPrice = customerPrice;
+                                else
+                                    packingSlipDetail.UnitPrice = stockPrice.CustomerPrice;
+                                break;
+                            }
+                            else
+                            {
+                                var sql1 = string.Format($"UPDATE [StockPrice] SET [Qty] = 0 WHERE id = '{stockPrice.Id}' ");
+                                command.CommandText = sql1;
+                                await command.ExecuteNonQueryAsync();
+
+                                stockAdjusment = stockAdjusment - stockPrice.Qty;
+                                packingSlipDetail.UnitPrice = stockPrice.CustomerPrice;
+                            }
+                        }
+                        if (packingSlipDetail.UnitPrice == 0)
+                            packingSlipDetail.UnitPrice = orderPartPrice;
+
                         packingSlipDetail.Price = packingSlipDetail.UnitPrice * packingSlipDetail.Qty;
                         packingSlip.SubTotal = packingSlip.SubTotal + packingSlipDetail.Price;
                         //packingSlip.TotalSurcharge = packingSlip.TotalSurcharge + (packingSlipDetail.SurchargePerUnit * packingSlipDetail.Qty);
@@ -296,6 +390,7 @@ namespace DAL.Repository
                         sql = string.Format($"UPDATE [dbo].[PART]   SET [CurrentPricingInEffectQty] = CurrentPricingInEffectQty - '{packingSlipDetail.Qty}'  WHERE Id = '{packingSlipDetail.PartId}'");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
+                        //
                     }
 
                     packingSlip.Total = packingSlip.SubTotal + packingSlip.ShippingCharge + packingSlip.CustomCharge;
@@ -355,7 +450,19 @@ namespace DAL.Repository
                         }
 
                         if (packingslip.IsInvoiceCreated)
+                        {
                             sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}', [CurrentPricingInEffectQty] = CurrentPricingInEffectQty + '{packingSlipDetail.Qty}' WHERE id = '{packingSlipDetail.PartId}' ");
+
+                            var stocks = GetStock(packingSlipDetail.PartId, command.Connection, command.Transaction);
+                            
+                            foreach (StockPrice stockPrice in stocks)
+                            {
+                                var sql1 = string.Format($"UPDATE [StockPrice] SET [Qty] = [Qty] + '{packingSlipDetail.Qty}' WHERE id = '{stockPrice.Id}' ");
+                                command.CommandText = sql1;
+                                await command.ExecuteNonQueryAsync();                                
+                                break;
+                            }
+                        }
                         else
                             sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}'  WHERE id = '{packingSlipDetail.PartId}' ");
 
@@ -535,7 +642,7 @@ namespace DAL.Repository
                 foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
                 {
                     var packingSlipBoxDetails = new List<PackingSlipBoxDetails>();
-                    commandText = string.Format($"SELECT  [Id] ,[PackingSlipId] ,[PackingSlipDetailId] ,[PartId] ,[Qty],[BoxeNo] ,[Barcode] ,[IsScanned] FROM [dbo].[PackingSlipBoxDetails] where PackingSlipDetailId = '{packingSlipDetail.Id}' ");
+                    commandText = string.Format($"SELECT  psbd.[Id] ,[PackingSlipId] ,[PackingSlipDetailId] ,[PartId],p.Code ,[Qty],[BoxeNo] ,[Barcode] ,[IsScanned] FROM [dbo].[PackingSlipBoxDetails] psbd inner join part p on p.id = psbd.PartId where psbd.PackingSlipDetailId = '{packingSlipDetail.Id}' ");
 
                     using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                     {
@@ -554,7 +661,7 @@ namespace DAL.Repository
                             packingSlipBoxDetail.BoxeNo = Convert.ToInt32(dataReader1["BoxeNo"]);
                             packingSlipBoxDetail.Barcode = Convert.ToString(dataReader1["Barcode"]);
                             packingSlipBoxDetail.IsScanned = Convert.ToBoolean(dataReader1["IsScanned"]);
-
+                            packingSlipBoxDetail.PartCode = Convert.ToString(dataReader1["Code"]);
                             packingSlipBoxDetails.Add(packingSlipBoxDetail);
                         }
                         dataReader1.Close();
@@ -669,7 +776,7 @@ namespace DAL.Repository
             foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
             {
                 var packingSlipBoxDetails = new List<PackingSlipBoxDetails>();
-                commandText = string.Format($"SELECT  [Id] ,[PackingSlipId] ,[PackingSlipDetailId] ,[PartId] ,[Qty],[BoxeNo] ,[Barcode] ,[IsScanned] FROM [dbo].[PackingSlipBoxDetails] where PackingSlipDetailId = '{packingSlipDetail.Id}' ");
+                commandText = string.Format($"SELECT  psbd.[Id] ,[PackingSlipId] ,[PackingSlipDetailId] ,[PartId],p.Code ,[Qty],[BoxeNo] ,[Barcode] ,[IsScanned] FROM [dbo].[PackingSlipBoxDetails] psbd inner join part p on p.id = psbd.PartId where psbd.PackingSlipDetailId = '{packingSlipDetail.Id}' ");
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                 {
@@ -688,7 +795,7 @@ namespace DAL.Repository
                         packingSlipBoxDetail.BoxeNo = Convert.ToInt32(dataReader1["BoxeNo"]);
                         packingSlipBoxDetail.Barcode = Convert.ToString(dataReader1["Barcode"]);
                         packingSlipBoxDetail.IsScanned = Convert.ToBoolean(dataReader1["IsScanned"]);
-
+                        packingSlipBoxDetail.PartCode = Convert.ToString(dataReader1["Code"]);
                         packingSlipBoxDetails.Add(packingSlipBoxDetail);
                     }
                     dataReader1.Close();
@@ -895,7 +1002,19 @@ namespace DAL.Repository
                         }
 
                         if (packingslip.IsInvoiceCreated)
+                        {
                             sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}', [CurrentPricingInEffectQty] = CurrentPricingInEffectQty + '{packingSlipDetail.Qty}' WHERE id = '{packingSlipDetail.PartId}' ");
+
+                            var stocks = GetStock(packingSlipDetail.PartId, command.Connection, command.Transaction);
+
+                            foreach (StockPrice stockPrice in stocks)
+                            {
+                                var sql1 = string.Format($"UPDATE [StockPrice] SET [Qty] = [Qty] + '{packingSlipDetail.Qty}' WHERE id = '{stockPrice.Id}' ");
+                                command.CommandText = sql1;
+                                await command.ExecuteNonQueryAsync();
+                                break;
+                            }
+                        }
                         else
                             sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}'  WHERE id = '{packingSlipDetail.PartId}' ");
 
@@ -1185,7 +1304,7 @@ namespace DAL.Repository
 
                         sql = string.Format($"UPDATE [dbo].[PackingSlipDetails]   SET [Boxes] = '{packingSlipDetail.Boxes}' WHERE id = '{packingSlipDetail.Id}' ");
                         command.CommandText = sql;
-                        await command.ExecuteNonQueryAsync();                        
+                        await command.ExecuteNonQueryAsync();
                     }
 
                     sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [Boxes] = '{packingSlip.Boxes}' ,[IsShipmentVerified] = '{true}'   WHERE id = '{packingSlip.Id}'");
@@ -1290,7 +1409,7 @@ namespace DAL.Repository
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
-                    
+
 
                     sql = string.Format($"UPDATE [dbo].[PackingSlipMaster]   SET [IsShipmentVerified] = '{false}'   WHERE id = '{packingSlipId}'");
                     command.CommandText = sql;
@@ -1398,11 +1517,11 @@ namespace DAL.Repository
                     await command.ExecuteNonQueryAsync();
                     //var packingslipId = await GetPackingslipFromBarcodeAsync(barcode, command.Connection, command.Transaction); ;
                     var BoxDetails = await GetBoxDetailFromBarcodeAsync(barcode, command.Connection, command.Transaction);
-                    foreach(PackingSlipDetails packingSlipDetails in packingSlip.PackingSlipDetails)
+                    foreach (PackingSlipDetails packingSlipDetails in packingSlip.PackingSlipDetails)
                     {
-                        foreach(PackingSlipBoxDetails packingSlipBox in packingSlipDetails.PackingSlipBoxDetails)
+                        foreach (PackingSlipBoxDetails packingSlipBox in packingSlipDetails.PackingSlipBoxDetails)
                         {
-                            if(packingSlipBox.Barcode == barcode)
+                            if (packingSlipBox.Barcode == barcode)
                             {
                                 UserActivityReport userActivityReport = new UserActivityReport();
                                 userActivityReport.UserId = userId;
@@ -1410,14 +1529,14 @@ namespace DAL.Repository
                                 userActivityReport.Action = BusinessConstants.ACTION.SCAN_BOX.ToString();
                                 userActivityReport.Reference = packingSlip.PackingSlipNo;
                                 var part = await partRepository.GetPartAsync(packingSlipBox.PartId, command.Connection, command.Transaction);
-                                if(part !=null)
+                                if (part != null)
                                     userActivityReport.Description = "Line # : " + packingSlipDetails.LineNumber.ToString() + " Part : " + part.Code.ToString() + " Box # : " + packingSlipBox.BoxeNo.ToString() + " scanned";
                                 else
-                                    userActivityReport.Description = "Line # : " + packingSlipDetails.LineNumber.ToString() + " PartId : " + packingSlipBox.PartId.ToString() + " Box # : " + packingSlipBox.BoxeNo.ToString()  + " scanned";
+                                    userActivityReport.Description = "Line # : " + packingSlipDetails.LineNumber.ToString() + " PartId : " + packingSlipBox.PartId.ToString() + " Box # : " + packingSlipBox.BoxeNo.ToString() + " scanned";
                                 await this.userActivityReportRepository.AddActivityAsync(userActivityReport, connection, transaction, command);
                             }
                         }
-                    }                    
+                    }
 
                     var packingSlipBoxDetails = await GetBarcodeFromPackingSlipAsync(packingslipId, command.Connection, command.Transaction);
                     var unScannedBoxes = packingSlipBoxDetails.Where(x => x.IsScanned == false).FirstOrDefault();
@@ -1438,7 +1557,7 @@ namespace DAL.Repository
                         await this.userActivityReportRepository.AddActivityAsync(userActivityReport, connection, transaction, command);
                     }
 
-                    
+
 
                     transaction.Commit();
                     connection.Close();
@@ -1449,7 +1568,7 @@ namespace DAL.Repository
                         foreach (PackingSlipBoxDetails packingSlipBox in packingSlipDetails.PackingSlipBoxDetails)
                         {
                             var part = await partRepository.GetPartAsync(packingSlipBox.PartId);
-                            
+
                             var packingboxestatus = new PackingSlipScanBoxeStatus();
                             packingboxestatus.Id = packingSlipBox.Id;
                             packingboxestatus.PackingSlipId = packingSlipBox.PackingSlipId;
@@ -1463,7 +1582,7 @@ namespace DAL.Repository
                             packingboxestatus.BoxeNo = packingSlipBox.BoxeNo;
                             packingboxestatus.Barcode = packingSlipBox.Barcode;
                             packingboxestatus.IsScanned = packingSlipBox.IsScanned;
-                            
+
                             packingboxestatuses.Add(packingboxestatus);
                         }
                     }
@@ -1472,8 +1591,8 @@ namespace DAL.Repository
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    return null;                    
-                }               
+                    return null;
+                }
 
             }
         }
@@ -1485,7 +1604,7 @@ namespace DAL.Repository
         }
 
         public async Task<bool> ScanAutoPackingSlip(int packingSlipId, int userId)
-        {            
+        {
             var packingSlip = await GetPackingSlipAsync(packingSlipId);
             //throw new NotImplementedException();
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
@@ -1533,7 +1652,7 @@ namespace DAL.Repository
                 }
             }
         }
-        
+
         public async Task<int> GetPackingslipFromBarcodeAsync(string barcode, SqlConnection conn, SqlTransaction transaction)
         {
             int packingSlipId = 0;
@@ -1551,7 +1670,7 @@ namespace DAL.Repository
                 }
 
                 dataReader.Close();
-            }           
+            }
 
             return packingSlipId;
         }
@@ -1606,10 +1725,11 @@ namespace DAL.Repository
                     packingSlipBoxDetail.Barcode = Convert.ToString(dataReader["Barcode"]);
                     packingSlipBoxDetail.IsScanned = Convert.ToBoolean(dataReader["IsScanned"]);
 
-                    packingSlipBoxDetails.Add(packingSlipBoxDetail);                }
+                    packingSlipBoxDetails.Add(packingSlipBoxDetail);
+                }
 
                 dataReader.Close();
-            }            
+            }
             return packingSlipBoxDetails;
         }
 
@@ -1648,7 +1768,7 @@ namespace DAL.Repository
         public async Task<IEnumerable<PackingSlipBoxDetails>> GetPackingSlipBoxDetailsAsyncAsync(int packingSlipId)
         {
             var packingSlipBoxDetails = new List<PackingSlipBoxDetails>();
-            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);            
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
             var commandText = string.Format($"SELECT  [Id] ,[PackingSlipId] ,[PackingSlipDetailId] ,[PartId] ,[Qty],[BoxeNo] ,[Barcode] ,[IsScanned] FROM [dbo].[PackingSlipBoxDetails] where PackingSlipId = '{packingSlipId}' ");
 
@@ -1678,7 +1798,7 @@ namespace DAL.Repository
                 dataReader.Close();
                 conn.Close();
             }
-            
+
             return packingSlipBoxDetails;
         }
 
@@ -1721,7 +1841,7 @@ namespace DAL.Repository
 
         //public async Task<Customer> GetIdByAccessIdAsync(string accessId)
         //{
-           
+
         //    int id = 0;
         //    int customerId = 0;
         //    SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
@@ -1768,10 +1888,10 @@ namespace DAL.Repository
                 while (dataReader.Read())
                 {
                     id = Convert.ToInt32(dataReader["Id"]);
-                }               
+                }
                 dataReader.Close();
                 conn.Close();
-            }           
+            }
             return id;
         }
     }

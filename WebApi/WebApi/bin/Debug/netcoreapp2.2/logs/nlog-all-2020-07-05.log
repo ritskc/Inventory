@@ -1,0 +1,42 @@
+2020-07-05 11:26:23.0091|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/packingslips/1 application/json 3443 
+2020-07-05 11:26:23.1006|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi)' 
+2020-07-05 11:26:23.1026|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPackingSlips", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) 
+2020-07-05 11:26:23.1026|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) with arguments (1) - Validation state: Valid 
+2020-07-05 11:26:37.3243|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 14217.0126ms. 
+2020-07-05 11:26:37.3243|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-05 11:26:37.3243|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) in 14222.2348ms 
+2020-07-05 11:26:37.3243|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi)' 
+2020-07-05 11:26:37.3243|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 14319.0528ms 500 application/json; charset=utf-8 
+2020-07-05 11:26:37.3243|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM10DDRI16Q7", Request id "0HM10DDRI16Q7:00000001": the application completed without reading the entire request body. 
+2020-07-05 11:26:59.4770||DEBUG|WebApi.Program|init main 
+2020-07-05 11:27:01.8878||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-05 11:27:02.9758|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-05 11:27:02.9758|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-05 11:27:02.9758|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/packingslips/1 application/json 3443 
+2020-07-05 11:27:03.0677|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 60.5421ms 200  
+2020-07-05 11:27:03.1809|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi)' 
+2020-07-05 11:27:03.1809|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 212.5696ms 404  
+2020-07-05 11:27:03.2364|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPackingSlips", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) 
+2020-07-05 11:27:03.2749|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) with arguments (1) - Validation state: Valid 
+2020-07-05 11:35:11.1360|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 487857.8605ms. 
+2020-07-05 11:35:11.1360|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-05 11:35:11.1756|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) in 487936.1961ms 
+2020-07-05 11:35:11.1756|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi)' 
+2020-07-05 11:35:11.1803|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 488205.4326ms 500 application/json; charset=utf-8 
+2020-07-05 11:35:11.1803|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM10UVF24N0U", Request id "0HM10UVF24N0U:00000001": the application completed without reading the entire request body. 
+2020-07-05 11:35:47.8068||DEBUG|WebApi.Program|init main 
+2020-07-05 11:35:49.3789||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-05 11:35:50.0765|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-05 11:35:50.0765|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-05 11:35:50.1234|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 47.3074ms 200  
+2020-07-05 11:35:50.2275|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 151.7513ms 404  
+2020-07-05 11:35:56.6631|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/packingslips/1 application/json 3443 
+2020-07-05 11:35:56.6698|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi)' 
+2020-07-05 11:35:56.7068|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPackingSlips", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) 
+2020-07-05 11:35:56.7306|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) with arguments (1) - Validation state: Valid 
+2020-07-05 11:42:13.5705|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 376837.1224ms. 
+2020-07-05 11:42:13.6201|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.PackingSlip, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-07-05 11:42:13.7587|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi) in 377048.306ms 
+2020-07-05 11:42:13.7587|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.GetPackingSlips (WebApi)' 
+2020-07-05 11:42:13.7587|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 377106.0353ms 200 application/json; charset=utf-8 
+2020-07-05 11:42:13.7814|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM10V4C52OIL", Request id "0HM10V4C52OIL:00000002": the application completed without reading the entire request body. 
