@@ -68,6 +68,6 @@ export class SupplierService {
   }
 
   acknowledgePurchaseOrder(purchaseOrder: PurchaseOrder) {
-    return this.apiService.put(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.supplierUri + `/acknowledge/${ purchaseOrder.id }`);
+    return this.apiService.put(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.posUri + `/acknowledge/${ purchaseOrder.id }`);
   }
 }

@@ -35,8 +35,10 @@ export class AppConfigurations {
             this.apiServerHost = 'https://invoice.harisons.com/api';
             this.reportsUri = 'https://invoice.harisons.com/reports/ReportViewer/';
         } else {
-            this.apiServerHost = 'https://questapi.yellow-chips.com';
-            this.reportsUri = 'https://renovate.yellow-chips.com/ReportViewer/';
+            // this.apiServerHost = 'https://questapi.yellow-chips.com';
+            // this.reportsUri = 'https://renovate.yellow-chips.com/ReportViewer/';
+            this.apiServerHost = 'http://cf.globalexportech.com/api';
+            this.reportsUri = 'http://cf.globalexportech.com/reports/';
         }
 
         this.fileApiUri = `${this.apiServerHost}/File`;
