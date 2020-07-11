@@ -55,6 +55,7 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editPurchaseOrder', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Supplier PO', actionStyle: ClassConstants.Primary, event: 'printPurchaseOrder', icon: 'fa fa-print' }),
+      new DataColumnAction({ actionText: 'Acknowledge', actionStyle: ClassConstants.Primary, event: 'acknowledgePurchaseOrder' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deletePurchaseOrder', icon: 'fa fa-trash' })
     ] }));
   }
@@ -66,6 +67,7 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", isLink: true, sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Ack Date", value: "partAcknowledgementDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Part Code", value: "partCode", columnName: 'PartCode' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Part Desc", value: "partDescription", columnName: 'PartDescription', minWidth: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Qty", value: "qty", customStyling: 'right' }) );
@@ -126,6 +128,7 @@ export class PurchaseOrderListComponent implements OnInit {
                 viewModel.forceClosed = detail.isForceClosed;
                 viewModel.openQty = detail.qty - (viewModel.inTransitQty + viewModel.receivedQty);
                 viewModel.invoiceNo = detail.invoiceNo;
+                viewModel.partAcknowledgementDate = detail.partAcknowledgementDate;
                 this.purchaseOrderViewModels.push(viewModel);
               });
             } else {
@@ -195,6 +198,15 @@ export class PurchaseOrderListComponent implements OnInit {
         var appConfig = new AppConfigurations();
         this.printDocument.next(`${appConfig.reportsUri}/supplierpo.aspx?id=${data.id}`);
         break;
+      case 'acknowledgePurchaseOrder':
+        this.loaderService.show();
+        this.service.acknowledgePurchaseOrder(data)
+            .subscribe(
+              () => this.toastr.successToastr('Purhcase order successfully acknowledged!!'),
+              (error) => this.toastr.errorToastr(error.error),
+              () => this.loaderService.hide()
+            );
+        break;
     }
   }
 
@@ -244,4 +256,5 @@ class SupplierPurchaseOrderViewModel {
   forceClosed: boolean;
   openQty: number;
   invoiceNo: string;
+  partAcknowledgementDate: string;
 }

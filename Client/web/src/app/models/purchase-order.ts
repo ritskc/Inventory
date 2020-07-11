@@ -60,6 +60,7 @@ export class PurchaseOrderDetail {
     packingSlipNo: string = '';
     shippingDate: string;
     invoiceNo: string = '';
+    partAcknowledgementDate: string;
 }
 
 export class PurchaseOrderTerm {
