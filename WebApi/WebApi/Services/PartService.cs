@@ -1,9 +1,13 @@
 ﻿using DAL.IRepository;
 using DAL.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 using WebApi.IServices;
 
 namespace WebApi.Services
@@ -136,6 +140,11 @@ namespace WebApi.Services
             await Task.Run(() => this._partRepository.UpdateQtyInHandByPartIdAsync(companyId, partId, QtyInHand,direction,note));
         }
 
+        public async Task UpdateMonthlyQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand, string direction, string note)
+        {
+            await Task.Run(() => this._partRepository.UpdateMonthlyQtyInHandByPartIdAsync(companyId, partId, QtyInHand, direction, note));
+        }
+
         public async Task<IEnumerable<PartInTransit>> GetPartInTransitDetailAsync(long partId, int companyId)
         {
             return await Task.Run(() => this._partRepository.GetPartInTransitDetailAsync(partId, companyId));
@@ -166,6 +175,11 @@ namespace WebApi.Services
             return await Task.Run(() => this._partRepository.GetStock(partId, companyId));
         }
 
+        public async Task<IEnumerable<StockPrice>> GetAllPartsStocksAsync(int companyId)
+        {
+            return await Task.Run(() => this._partRepository.GetAllPartsStocksAsync(companyId));
+        }
+
         public async Task UpdateMonthlyOpeningQtyByPartCodeAsync(int companyId, string partcode, int openingQty)
         {
             await Task.Run(() => this._partRepository.UpdateMonthlyOpeningQtyByPartCodeAsync(companyId, partcode, openingQty));
@@ -174,6 +188,6 @@ namespace WebApi.Services
         public async Task UpdateMonthlyOpeningQtyByPartIdAsync(int companyId, int partId, int openingQty)
         {
             await Task.Run(() => this._partRepository.UpdateMonthlyOpeningQtyByPartIdAsync(companyId, partId, openingQty));
-        }
+        }        
     }
 }

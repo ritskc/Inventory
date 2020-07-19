@@ -25,6 +25,7 @@ namespace DAL.Models
         public int OpenQty { get; set; }
         public string PONo { get; set; }
         public string AdjustedPOQty { get; set; }
+        public string AdjustedPOPrice { get; set; }
 
         public Part PartDetail { get; set; }
 

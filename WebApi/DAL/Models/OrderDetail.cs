@@ -14,7 +14,7 @@ namespace DAL.Models
         public long BlanketPOId { get; set; }
         public int BlanketPOAdjQty { get; set; }
         public int SrNo { get; set; }
-        public int LineNumber { get; set; }
+        public string LineNumber { get; set; }
         public int Qty { get; set; }
         public int ShippedQty { get; set; }
         public decimal UnitPrice { get; set; }

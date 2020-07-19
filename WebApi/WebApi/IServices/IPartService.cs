@@ -23,6 +23,7 @@ namespace WebApi.IServices
         Task UpdateOpeningQtyByPartIdAsync(int companyId, int partId, int openingQty);
         Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int qtyInHand);
         Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand, string direction, string note);
+        Task UpdateMonthlyQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand, string direction, string note);
 
         Task UpdateMonthlyOpeningQtyByPartCodeAsync(int companyId, string partcode, int openingQty);       
         Task UpdateMonthlyOpeningQtyByPartIdAsync(int companyId, int partId, int openingQty);
@@ -34,5 +35,6 @@ namespace WebApi.IServices
         Task<IEnumerable<PartInTransit>> GetPartLatestReceivedAsync(long partId, int companyId);
         Task<IEnumerable<SupplierOpenPO>> GetPartOpenPODetailAsync(long partId, int companyId);
         Task<IEnumerable<StockPrice>> GetStock(long partId, int companyId);
+        Task<IEnumerable<StockPrice>> GetAllPartsStocksAsync(int companyId);
     }
 }

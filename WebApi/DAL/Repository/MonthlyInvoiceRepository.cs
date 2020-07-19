@@ -86,10 +86,11 @@ namespace DAL.Repository
                         if (packingSlipDetail.IsRepackage)
                             packingSlip.IsRepackage = true;
 
-                        if (packingSlip.IsInvoiceCreated)
-                            packingSlipDetail.UnitPrice = partDetail.partCustomerAssignments.Where(x => x.CustomerId == packingSlip.CustomerId).Select(x => x.Rate).FirstOrDefault();
-                        else
-                            packingSlip.IsInvoiceCreated = false;
+                        packingSlip.IsInvoiceCreated = true;
+                        //if (packingSlip.IsInvoiceCreated)
+                        //    packingSlipDetail.UnitPrice = partDetail.partCustomerAssignments.Where(x => x.CustomerId == packingSlip.CustomerId).Select(x => x.Rate).FirstOrDefault();
+                        //else
+                        //    packingSlip.IsInvoiceCreated = false;
 
                         //if (packingSlip.IsInvoiceCreated && !packingSlipDetail.IsBlankOrder)
                         //{
@@ -120,7 +121,7 @@ namespace DAL.Repository
                         packingSlip.TotalSurcharge = packingSlip.TotalSurcharge + packingSlipDetail.TotalSurcharge;
                         packingSlip.GrossWeight = packingSlip.GrossWeight + (packingSlipDetail.Qty * partDetail.WeightInLb);
                         packingSlip.Boxes = packingSlip.Boxes + packingSlipDetail.Boxes;
-                        packingSlipDetail.LineNumber = 0;
+                        packingSlipDetail.LineNumber = "";
                     }
                     packingSlip.Total = packingSlip.SubTotal + packingSlip.TotalSurcharge + packingSlip.ShippingCharge + packingSlip.CustomCharge;
                     string sql = string.Format($"INSERT INTO [dbo].[InvoiceMaster]   ([CompanyId]   ,[CustomerId]   ,[PackingSlipNo]   ,[ShippingDate]   ,[ShipVia]   ,[Crates]   ,[Boxes]   ,[GrossWeight]   ,[ShippingCharge]   ,[CustomCharge]   ,[SubTotal]   ,[Total]   ,[IsInvoiceCreated]   ,[IsPaymentReceived]   ,[FOB]   ,[Terms]   ,[ShipmentInfoId]   ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsRepackage],[IsMonthly]) VALUES   ('{packingSlip.CompanyId}'   ,'{packingSlip.CustomerId}'   ,'{packingSlip.PackingSlipNo}'   ,'{packingSlip.ShippingDate}'   ,'{packingSlip.ShipVia}'   ,'{packingSlip.Crates}'   ,'{packingSlip.Boxes}'   ,'{packingSlip.GrossWeight}'   ,'{packingSlip.ShippingCharge}'   ,'{packingSlip.CustomCharge}'   ,'{packingSlip.SubTotal}'   ,'{packingSlip.Total + packingSlip.TotalSurcharge}'   ,'{packingSlip.IsInvoiceCreated}'   ,'{packingSlip.IsPaymentReceived}'   ,'{packingSlip.FOB}'   ,'{packingSlip.Terms}'   ,'{packingSlip.ShipmentInfoId}'   ,'{null}','{false}','{string.Empty}','{packingSlip.TotalSurcharge}','{packingSlip.IsRepackage}','{packingSlip.IsMonthly}')");
@@ -568,7 +569,7 @@ namespace DAL.Repository
                     packingSlipDetail.SurchargePerUnit = Convert.ToDecimal(dataReader1["SurchargePerUnit"]);
                     packingSlipDetail.TotalSurcharge = Convert.ToDecimal(dataReader1["TotalSurcharge"]);
                     packingSlipDetail.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);
-                    packingSlipDetail.LineNumber = Convert.ToInt32(dataReader1["LineNumber"]);
+                    packingSlipDetail.LineNumber = Convert.ToString(dataReader1["LineNumber"]);
                     packingSlipDetail.IsRepackage = Convert.ToBoolean(dataReader1["IsRepackage"]);
 
                     if (dataReader1["SrNo"] != DBNull.Value)
@@ -644,10 +645,11 @@ namespace DAL.Repository
                         if (packingSlipDetail.IsRepackage)
                             packingSlip.IsRepackage = true;
 
-                        if (packingSlip.IsInvoiceCreated)
-                            packingSlipDetail.UnitPrice = partDetail.partCustomerAssignments.Where(x => x.CustomerId == packingSlip.CustomerId).Select(x => x.Rate).FirstOrDefault();
-                        else
-                            packingSlip.IsInvoiceCreated = false;                        
+                        packingSlip.IsInvoiceCreated = true;
+                        //if (packingSlip.IsInvoiceCreated)
+                        //    packingSlipDetail.UnitPrice = partDetail.partCustomerAssignments.Where(x => x.CustomerId == packingSlip.CustomerId).Select(x => x.Rate).FirstOrDefault();
+                        //else
+                        //    packingSlip.IsInvoiceCreated = false;                        
 
                         packingSlipDetail.Price = packingSlipDetail.Qty * packingSlipDetail.UnitPrice;
                         packingSlip.SubTotal = packingSlip.SubTotal + packingSlipDetail.Price;
@@ -659,7 +661,7 @@ namespace DAL.Repository
                         packingSlip.TotalSurcharge = packingSlip.TotalSurcharge + packingSlipDetail.TotalSurcharge;
                         packingSlip.GrossWeight = packingSlip.GrossWeight + (packingSlipDetail.Qty * partDetail.WeightInLb);
                         packingSlip.Boxes = packingSlip.Boxes + packingSlipDetail.Boxes;
-                        packingSlipDetail.LineNumber = 0;
+                        packingSlipDetail.LineNumber = "";
                     }
                     packingSlip.Total = packingSlip.SubTotal + packingSlip.TotalSurcharge + packingSlip.ShippingCharge + packingSlip.CustomCharge;
 

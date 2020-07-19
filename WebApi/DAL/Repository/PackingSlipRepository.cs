@@ -156,7 +156,7 @@ namespace DAL.Repository
                         packingSlip.TotalSurcharge = packingSlip.TotalSurcharge + packingSlipDetail.TotalSurcharge;
                         packingSlip.GrossWeight = packingSlip.GrossWeight + (packingSlipDetail.Qty * partDetail.WeightInLb);
                         packingSlip.Boxes = packingSlip.Boxes + packingSlipDetail.Boxes;
-                        packingSlipDetail.LineNumber = 0;
+                        packingSlipDetail.LineNumber = "";
                     }
                     packingSlip.Total = packingSlip.SubTotal + packingSlip.TotalSurcharge + packingSlip.ShippingCharge + packingSlip.CustomCharge;
                     string sql = string.Format($"INSERT INTO [dbo].[PackingSlipMaster]   ([CompanyId]   ,[CustomerId]   ,[PackingSlipNo]   ,[ShippingDate]   ,[ShipVia]   ,[Crates]   ,[Boxes]   ,[GrossWeight]   ,[ShippingCharge]   ,[CustomCharge]   ,[SubTotal]   ,[Total]   ,[IsInvoiceCreated]   ,[IsPaymentReceived]   ,[FOB]   ,[Terms]   ,[ShipmentInfoId]   ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsRepackage],[IsMonthly],[IsShipmentVerified],[IsScanned],[AllowScanning]) VALUES   ('{packingSlip.CompanyId}'   ,'{packingSlip.CustomerId}'   ,'{packingSlip.PackingSlipNo}'   ,'{packingSlip.ShippingDate}'   ,'{packingSlip.ShipVia}'   ,'{packingSlip.Crates}'   ,'{packingSlip.Boxes}'   ,'{packingSlip.GrossWeight}'   ,'{packingSlip.ShippingCharge}'   ,'{packingSlip.CustomCharge}'   ,'{packingSlip.SubTotal}'   ,'{packingSlip.Total + packingSlip.TotalSurcharge}'   ,'{packingSlip.IsInvoiceCreated}'   ,'{packingSlip.IsPaymentReceived}'   ,'{packingSlip.FOB}'   ,'{packingSlip.Terms}'   ,'{packingSlip.ShipmentInfoId}'   ,'{null}','{false}','{string.Empty}','{packingSlip.TotalSurcharge}','{packingSlip.IsRepackage}','{packingSlip.IsMonthly}','{false}','{false}','{false}')");
@@ -594,7 +594,7 @@ namespace DAL.Repository
             {
                 List<PackingSlipDetails> packingSlipDetails = new List<PackingSlipDetails>();
                 commandText = string.Format($"SELECT [Id] ,[PackingSlipId] ,[IsBlankOrder] ,[OrderNo] ,[OrderId] ,[OrderDetailId] ,[PartId] ,[Qty] ," +
-                    $"[Boxes] ,[InBasket] ,[UnitPrice] ,[Price] ,[Surcharge] ,[SurchargePerPound] ,[SurchargePerUnit] ,[TotalSurcharge] ,[ExcessQty],[SrNo],[IsRepackage]  FROM [dbo].[PackingSlipDetails] where PackingSlipId = '{ packingSlip.Id}'");
+                    $"[Boxes] ,[InBasket] ,[UnitPrice] ,[Price] ,[Surcharge] ,[SurchargePerPound] ,[SurchargePerUnit] ,[TotalSurcharge] ,[ExcessQty],[SrNo],[IsRepackage],[LineNumber]  FROM [dbo].[PackingSlipDetails] where PackingSlipId = '{ packingSlip.Id}'");
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                 {
@@ -628,6 +628,11 @@ namespace DAL.Repository
                             packingSlipDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
                         else
                             packingSlipDetail.SrNo = 0;
+
+                        if (dataReader1["LineNumber"] != DBNull.Value)
+                            packingSlipDetail.LineNumber = Convert.ToString(dataReader1["LineNumber"]);
+                        else
+                            packingSlipDetail.LineNumber = "";
 
                         packingSlipDetails.Add(packingSlipDetail);
                     }
@@ -731,7 +736,7 @@ namespace DAL.Repository
 
             List<PackingSlipDetails> packingSlipDetails = new List<PackingSlipDetails>();
             commandText = string.Format($"SELECT [Id] ,[PackingSlipId] ,[IsBlankOrder] ,[OrderNo] ,[OrderId] ,[OrderDetailId] ,[PartId] ,[Qty] ," +
-                $"[Boxes] ,[InBasket] ,[UnitPrice] ,[Price] ,[Surcharge] ,[SurchargePerPound] ,[SurchargePerUnit] ,[TotalSurcharge] ,[ExcessQty],[SrNo],[IsRepackage],[SupplierInvoiceId]  FROM [dbo].[PackingSlipDetails] where PackingSlipId = '{ packingSlip.Id}'");
+                $"[Boxes] ,[InBasket] ,[UnitPrice] ,[Price] ,[Surcharge] ,[SurchargePerPound] ,[SurchargePerUnit] ,[TotalSurcharge] ,[ExcessQty],[SrNo],[IsRepackage],[SupplierInvoiceId],[LineNumber]  FROM [dbo].[PackingSlipDetails] where PackingSlipId = '{ packingSlip.Id}'");
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
             {
@@ -765,6 +770,11 @@ namespace DAL.Repository
                         packingSlipDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
                     else
                         packingSlipDetail.SrNo = 0;
+
+                    if (dataReader1["LineNumber"] != DBNull.Value)
+                        packingSlipDetail.LineNumber = Convert.ToString(dataReader1["LineNumber"]);
+                    else
+                        packingSlipDetail.LineNumber = "";
 
                     packingSlipDetails.Add(packingSlipDetail);
                 }
@@ -943,7 +953,7 @@ namespace DAL.Repository
                     packingSlipDetail.SurchargePerUnit = Convert.ToDecimal(dataReader1["SurchargePerUnit"]);
                     packingSlipDetail.TotalSurcharge = Convert.ToDecimal(dataReader1["TotalSurcharge"]);
                     packingSlipDetail.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);
-                    packingSlipDetail.LineNumber = Convert.ToInt32(dataReader1["LineNumber"]);
+                    packingSlipDetail.LineNumber = Convert.ToString(dataReader1["LineNumber"]);
                     packingSlipDetail.IsRepackage = Convert.ToBoolean(dataReader1["IsRepackage"]);
 
                     if (dataReader1["SrNo"] != DBNull.Value)
@@ -1104,7 +1114,7 @@ namespace DAL.Repository
                         packingSlip.TotalSurcharge = packingSlip.TotalSurcharge + packingSlipDetail.TotalSurcharge;
                         packingSlip.GrossWeight = packingSlip.GrossWeight + (packingSlipDetail.Qty * partDetail.WeightInLb);
                         packingSlip.Boxes = packingSlip.Boxes + packingSlipDetail.Boxes;
-                        packingSlipDetail.LineNumber = 0;
+                        packingSlipDetail.LineNumber = "";
                     }
                     packingSlip.Total = packingSlip.SubTotal + packingSlip.TotalSurcharge + packingSlip.ShippingCharge + packingSlip.CustomCharge;
 
@@ -1529,12 +1539,22 @@ namespace DAL.Repository
                                 userActivityReport.Action = BusinessConstants.ACTION.SCAN_BOX.ToString();
                                 userActivityReport.Reference = packingSlip.PackingSlipNo;
                                 var part = await partRepository.GetPartAsync(packingSlipBox.PartId, command.Connection, command.Transaction);
-                                if (part != null)
-                                    userActivityReport.Description = "Line # : " + packingSlipDetails.LineNumber.ToString() + " Part : " + part.Code.ToString() + " Box # : " + packingSlipBox.BoxeNo.ToString() + " scanned";
-                                else
-                                    userActivityReport.Description = "Line # : " + packingSlipDetails.LineNumber.ToString() + " PartId : " + packingSlipBox.PartId.ToString() + " Box # : " + packingSlipBox.BoxeNo.ToString() + " scanned";
-                                await this.userActivityReportRepository.AddActivityAsync(userActivityReport, connection, transaction, command);
-                            }
+
+                                try
+                                {
+                                    if (packingSlipDetails.LineNumber == null)
+                                        packingSlipDetails.LineNumber = string.Empty;
+                                    if (part != null)
+                                        userActivityReport.Description = "Line # : " + packingSlipDetails.LineNumber.ToString() + " Part : " + part.Code.ToString() + " Box # : " + packingSlipBox.BoxeNo.ToString() + " scanned";
+                                    else
+                                        userActivityReport.Description = "Line # : " + packingSlipDetails.LineNumber.ToString() + " PartId : " + packingSlipBox.PartId.ToString() + " Box # : " + packingSlipBox.BoxeNo.ToString() + " scanned";
+                                    await this.userActivityReportRepository.AddActivityAsync(userActivityReport, connection, transaction, command);
+                                }
+                                catch
+                                {
+
+                                }
+                           }
                         }
                     }
 

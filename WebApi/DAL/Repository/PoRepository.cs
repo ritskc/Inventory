@@ -98,7 +98,7 @@ namespace DAL.Repository
             {
                 List<PoDetail> poDetails = new List<PoDetail>();
                 commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ," +
-                    $"[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate] , [SrNo],[IsForceClosed] FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
+                    $"[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate] , [SrNo],[IsForceClosed],[PartAcknowledgementDate] FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                 {
@@ -131,6 +131,11 @@ namespace DAL.Repository
                             poDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
                         else
                             poDetail.SrNo = 0;
+
+                        if (dataReader1["PartAcknowledgementDate"] != DBNull.Value)
+                            poDetail.PartAcknowledgementDate = Convert.ToDateTime(dataReader1["PartAcknowledgementDate"]);
+                        else
+                            poDetail.PartAcknowledgementDate = null;
 
                         poDetails.Add(poDetail);
                     }
@@ -248,7 +253,7 @@ namespace DAL.Repository
 
 
             List<PoDetail> poDetails = new List<PoDetail>();
-            commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate],[SrNo],[IsForceClosed]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
+            commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate],[SrNo],[IsForceClosed],[PartAcknowledgementDate]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
             {
@@ -281,6 +286,11 @@ namespace DAL.Repository
                         poDetail.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
                     else
                         poDetail.ClosingDate = null;
+
+                    if (dataReader1["PartAcknowledgementDate"] != DBNull.Value)
+                        poDetail.PartAcknowledgementDate = Convert.ToDateTime(dataReader1["PartAcknowledgementDate"]);
+                    else
+                        poDetail.PartAcknowledgementDate = null;
 
                     poDetails.Add(poDetail);
                 }
@@ -377,7 +387,7 @@ namespace DAL.Repository
 
 
             List<PoDetail> poDetails = new List<PoDetail>();
-            commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate],[SrNo]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
+            commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate],[SrNo],[PartAcknowledgementDate]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
             {
@@ -409,6 +419,10 @@ namespace DAL.Repository
                         poDetail.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
                     else
                         poDetail.ClosingDate = null;
+                    if (dataReader1["PartAcknowledgementDate"] != DBNull.Value)
+                        poDetail.PartAcknowledgementDate = Convert.ToDateTime(dataReader1["PartAcknowledgementDate"]);
+                    else
+                        poDetail.PartAcknowledgementDate = null;
 
                     poDetails.Add(poDetail);
                 }
@@ -496,7 +510,7 @@ namespace DAL.Repository
 
 
             List<PoDetail> poDetails = new List<PoDetail>();
-            commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate],[SrNo],[IsForceClosed]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
+            commandText = string.Format($"SELECT [Id] ,[PoId] ,[PartId] ,[ReferenceNo] ,[Qty] ,[UnitPrice] ,[DueDate] ,[Note] ,[AckQty] ,[InTransitQty] ,[ReceivedQty] ,[IsClosed] ,[ClosingDate],[SrNo],[IsForceClosed],[PartAcknowledgementDate]  FROM [dbo].[PoDetails] where poid = '{ po.Id}'");
 
             using (SqlCommand cmd1 = new SqlCommand(commandText, conn, transaction))
             {
@@ -528,6 +542,11 @@ namespace DAL.Repository
                         poDetail.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
                     else
                         poDetail.ClosingDate = null;
+
+                    if (dataReader1["PartAcknowledgementDate"] != DBNull.Value)
+                        poDetail.PartAcknowledgementDate = Convert.ToDateTime(dataReader1["PartAcknowledgementDate"]);
+                    else
+                        poDetail.PartAcknowledgementDate = null;
 
                     poDetails.Add(poDetail);
                 }
@@ -736,7 +755,7 @@ namespace DAL.Repository
 
                     foreach (PoDetail poDetail in po.poDetails)
                     {
-                        sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [AckQty] = '{poDetail.AckQty}', [DueDate] = '{poDetail.DueDate}'   WHERE id = '{poDetail.Id}' ");
+                        sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [AckQty] = '{poDetail.AckQty}', [PartAcknowledgementDate] = '{poDetail.DueDate}'   WHERE id = '{poDetail.Id}' ");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                     }                   
@@ -753,7 +772,7 @@ namespace DAL.Repository
         }
 
 
-        public async Task AcknowledgePoAsync(int poId)
+        public async Task AcknowledgePoAsync(int poId,string accessId)
         {
             //start
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
@@ -777,13 +796,9 @@ namespace DAL.Repository
                 string sql = string.Empty;
                 try
                 {
-                    sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [IsAcknowledged] = '{true}' ,[AcknowledgementDate] = '{DateTime.Now}',[AccessId] = Null WHERE id = '{poId}' ");
+                    sql = string.Format($"UPDATE [dbo].[PoMaster]   SET [AccessId] =  '{accessId}' WHERE id = '{poId}' ");
                     command.CommandText = sql;
-                    await command.ExecuteNonQueryAsync();
-
-                    sql = string.Format($"UPDATE [dbo].[PoDetails]   SET [AckQty] = QTY    WHERE [PoId] = '{poId}' ");
-                    command.CommandText = sql;
-                    await command.ExecuteNonQueryAsync();
+                    await command.ExecuteNonQueryAsync();                   
 
                     transaction.Commit();
                 }

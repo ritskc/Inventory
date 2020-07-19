@@ -1,0 +1,325 @@
+2020-07-10 12:26:38.3746||DEBUG|WebApi.Program|init main 
+2020-07-10 12:26:40.0907||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-10 12:26:41.0041|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-10 12:26:41.0041|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-10 12:26:41.0498|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 47.0485ms 200  
+2020-07-10 12:26:41.1471|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 146.0658ms 404  
+2020-07-10 12:26:47.7032|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1/2 application/json 3443 
+2020-07-10 12:26:47.7164|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Routing.Matching.AmbiguousMatchException: The request matched multiple endpoints. Matches: 
+
+WebApi.Controllers.PartsController.Get (WebApi)
+WebApi.Controllers.PartsController.GetPartsStocks (WebApi)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ReportAmbiguity(CandidateSet candidates)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ProcessFinalCandidates(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.SelectAsync(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DfaMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.Matching.DataSourceDependentMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-07-10 12:26:47.8263|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 124.8925ms 500 text/html; charset=utf-8 
+2020-07-10 12:26:47.8408|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM14TO3DVTJ8", Request id "0HM14TO3DVTJ8:00000002": the application completed without reading the entire request body. 
+2020-07-10 12:29:44.8395||DEBUG|WebApi.Program|init main 
+2020-07-10 12:29:46.1554||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-10 12:29:46.8336|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-10 12:29:46.8336|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-10 12:29:46.8686|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 35.8709ms 200  
+2020-07-10 12:29:46.9536|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 122.2821ms 404  
+2020-07-10 12:31:47.6421|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1/2 application/json 3443 
+2020-07-10 12:31:47.6595|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-10 12:31:47.7133|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.Get (WebApi) 
+2020-07-10 12:31:47.7384|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.Get (WebApi) with arguments (1, 2) - Validation state: Valid 
+2020-07-10 12:31:48.4009|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 668.8217ms. 
+2020-07-10 12:31:48.4131|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.Part'. 
+2020-07-10 12:31:48.4563|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.Get (WebApi) in 749.3643ms 
+2020-07-10 12:31:48.4563|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-10 12:31:48.4563|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 833.4129ms 200 application/json; charset=utf-8 
+2020-07-10 12:31:48.4793|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM14TPQQA8IE", Request id "0HM14TPQQA8IE:00000001": the application completed without reading the entire request body. 
+2020-07-10 12:32:07.5402|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1/stock application/json 3443 
+2020-07-10 12:32:07.5402|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-10 12:32:07.5533|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.Get (WebApi) 
+2020-07-10 12:32:07.5645|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'. 
+2020-07-10 12:32:07.5803|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.Get (WebApi) in 26.1623ms 
+2020-07-10 12:32:07.5803|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-10 12:32:07.5803|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 43.0968ms 400 application/problem+json; charset=utf-8 
+2020-07-10 12:32:07.5803|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM14TPQQA8IE", Request id "0HM14TPQQA8IE:00000002": the application completed without reading the entire request body. 
+2020-07-10 12:33:45.5734||DEBUG|WebApi.Program|init main 
+2020-07-10 12:33:46.9104||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-10 12:33:47.7619|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-10 12:33:47.7619|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-10 12:33:47.7936|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 32.4548ms 200  
+2020-07-10 12:33:47.8706|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 110.7692ms 404  
+2020-07-10 12:33:51.6016|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1/2 application/json 3443 
+2020-07-10 12:33:51.6092|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-10 12:33:51.6425|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.Get (WebApi) 
+2020-07-10 12:33:51.6610|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.Get (WebApi) with arguments (1, 2) - Validation state: Valid 
+2020-07-10 12:33:52.1896|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 533.1775ms. 
+2020-07-10 12:33:52.1991|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.Part'. 
+2020-07-10 12:33:52.2368|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.Get (WebApi) in 599.8111ms 
+2020-07-10 12:33:52.2368|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-10 12:33:52.2439|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 651.1771ms 200 application/json; charset=utf-8 
+2020-07-10 12:33:52.2550|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM14TS2JRDJU", Request id "0HM14TS2JRDJU:00000002": the application completed without reading the entire request body. 
+2020-07-10 12:33:57.4689|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1/stock application/json 3443 
+2020-07-10 12:33:57.4689|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-10 12:33:57.4689|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.Get (WebApi) 
+2020-07-10 12:33:57.4689|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.Get (WebApi) with arguments (1, stock) - Validation state: Valid 
+2020-07-10 12:33:57.7299|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 258.0748ms. 
+2020-07-10 12:33:57.7299|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-10 12:33:57.7299|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.Get (WebApi) in 262.6525ms 
+2020-07-10 12:33:57.7299|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-10 12:33:57.7299|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 269.0122ms 500 application/json; charset=utf-8 
+2020-07-10 12:33:57.7299|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM14TS2JRDJT", Request id "0HM14TS2JRDJT:00000002": the application completed without reading the entire request body. 
+2020-07-10 12:34:42.4085|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1/stock application/json 3443 
+2020-07-10 12:34:42.4085|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-10 12:34:42.4085|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.Get (WebApi) 
+2020-07-10 12:34:42.4085|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.Get (WebApi) with arguments (1, stock) - Validation state: Valid 
+2020-07-10 12:35:30.7952||DEBUG|WebApi.Program|init main 
+2020-07-10 12:35:32.4798||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-10 12:35:33.5945|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-10 12:35:33.5945|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-10 12:35:33.5945|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1/stock application/json 3443 
+2020-07-10 12:35:33.6363|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 42.4233ms 200  
+2020-07-10 12:35:33.8016|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-10 12:35:33.8048|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 214.2054ms 404  
+2020-07-10 12:35:33.8552|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.Get (WebApi) 
+2020-07-10 12:35:33.8932|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.Get (WebApi) with arguments (1, stock) - Validation state: Valid 
+2020-07-10 12:35:36.0046|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2136.9446ms. 
+2020-07-10 12:35:36.0172|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Linq.OrderedEnumerable`2[[DAL.Models.StockPrice, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'. 
+2020-07-10 12:35:36.0379|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.Get (WebApi) in 2208.938ms 
+2020-07-10 12:35:36.0423|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-10 12:35:36.0423|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 2488.6892ms 200 application/json; charset=utf-8 
+2020-07-10 12:35:36.0627|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM14TT24MNEH", Request id "0HM14TT24MNEH:00000001": the application completed without reading the entire request body. 
+2020-07-10 12:38:35.8728||DEBUG|WebApi.Program|init main 
+2020-07-10 12:38:37.3740||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-10 12:38:38.2931|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-10 12:38:38.2931|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-10 12:38:38.3368|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 44.7213ms 200  
+2020-07-10 12:38:38.4344|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 143.9596ms 404  
+2020-07-10 12:40:14.0188|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/pos/1/2 application/json 3443 
+2020-07-10 12:40:14.0861|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PosController.Get (WebApi)' 
+2020-07-10 12:40:14.1225|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "Pos"}. Executing action WebApi.Controllers.PosController.Get (WebApi) 
+2020-07-10 12:40:14.1444|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PosController.Get (WebApi) with arguments (1, 2) - Validation state: Valid 
+2020-07-10 12:40:23.1412|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PosController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 9113.5605ms. 
+2020-07-10 12:40:23.1531|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-10 12:40:23.1531|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PosController.Get (WebApi) in 9161.7392ms 
+2020-07-10 12:40:23.1531|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PosController.Get (WebApi)' 
+2020-07-10 12:40:23.1756|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 9278.9677ms 500 application/json; charset=utf-8 
+2020-07-10 12:40:23.1860|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM14TUP6DJJ5", Request id "0HM14TUP6DJJ5:00000001": the application completed without reading the entire request body. 
+2020-07-10 12:41:01.5565|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/pos/1/2 application/json 3443 
+2020-07-10 12:41:01.5565|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PosController.Get (WebApi)' 
+2020-07-10 12:41:01.5565|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "Pos"}. Executing action WebApi.Controllers.PosController.Get (WebApi) 
+2020-07-10 12:41:01.5680|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PosController.Get (WebApi) with arguments (1, 2) - Validation state: Valid 
+2020-07-10 12:43:01.3959|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PosController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 121370.2993ms. 
+2020-07-10 12:43:01.3959|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-10 12:43:01.4028|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PosController.Get (WebApi) in 121378.8883ms 
+2020-07-10 12:43:01.4028|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PosController.Get (WebApi)' 
+2020-07-10 12:43:01.4028|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 121392.1812ms 500 application/json; charset=utf-8 
+2020-07-10 12:43:01.4028|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM14TUP6DJJ5", Request id "0HM14TUP6DJJ5:00000002": the application completed without reading the entire request body. 
+2020-07-10 12:43:05.6366|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/pos/1 application/json 3443 
+2020-07-10 12:43:05.6366|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2020-07-10 12:43:05.6450|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "Pos"}. Executing action WebApi.Controllers.PosController.GetPos (WebApi) 
+2020-07-10 12:43:05.6450|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PosController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2020-07-10 12:43:15.9903|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PosController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 10474.7612ms. 
+2020-07-10 12:43:15.9903|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-10 12:43:15.9927|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PosController.GetPos (WebApi) in 10479.2141ms 
+2020-07-10 12:43:15.9927|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2020-07-10 12:43:15.9927|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 10491.7225ms 500 application/json; charset=utf-8 
+2020-07-10 12:43:15.9927|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM14TUP6DJJ5", Request id "0HM14TUP6DJJ5:00000003": the application completed without reading the entire request body. 
+2020-07-10 12:43:25.1475|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/pos/1 application/json 3443 
+2020-07-10 12:43:25.1475|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2020-07-10 12:43:25.1475|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "Pos"}. Executing action WebApi.Controllers.PosController.GetPos (WebApi) 
+2020-07-10 12:43:25.1475|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PosController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2020-07-10 12:44:56.3635||DEBUG|WebApi.Program|init main 
+2020-07-10 12:44:56.6832||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-10 12:44:57.0840|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/pos/1 application/json 3443 
+2020-07-10 12:44:57.1419|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2020-07-10 12:44:57.1650|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "Pos"}. Executing action WebApi.Controllers.PosController.GetPos (WebApi) 
+2020-07-10 12:44:57.1818|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PosController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2020-07-10 12:45:04.9813|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PosController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 7896.221ms. 
+2020-07-10 12:45:04.9813|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-10 12:45:05.0055|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PosController.GetPos (WebApi) in 7938.7067ms 
+2020-07-10 12:45:05.0098|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2020-07-10 12:45:05.0098|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 8039.4775ms 500 application/json; charset=utf-8 
+2020-07-10 12:45:05.0332|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM14U2A32P32", Request id "0HM14U2A32P32:00000001": the application completed without reading the entire request body. 
+2020-07-10 12:45:29.1315|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-10 12:45:29.1530|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 21.779ms 404  
+2020-07-10 12:45:31.4682|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/pos/1 application/json 3443 
+2020-07-10 12:45:31.4682|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2020-07-10 12:45:31.4682|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "Pos"}. Executing action WebApi.Controllers.PosController.GetPos (WebApi) 
+2020-07-10 12:45:31.4682|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PosController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2020-07-10 12:46:48.4621|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PosController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 77953.1372ms. 
+2020-07-10 12:46:48.4621|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-10 12:46:48.4621|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PosController.GetPos (WebApi) in 77961.6088ms 
+2020-07-10 12:46:48.4621|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2020-07-10 12:46:48.4701|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 77966.9421ms 500 application/json; charset=utf-8 
+2020-07-10 12:46:48.4701|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM14U2A32P32", Request id "0HM14U2A32P32:00000003": the application completed without reading the entire request body. 
+2020-07-10 12:47:31.4637|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/pos/1 application/json 3443 
+2020-07-10 12:47:31.4637|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2020-07-10 12:47:31.4694|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetPos", controller = "Pos"}. Executing action WebApi.Controllers.PosController.GetPos (WebApi) 
+2020-07-10 12:47:31.4694|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PosController.GetPos (WebApi) with arguments (1) - Validation state: Valid 
+2020-07-10 12:53:26.3926|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PosController.GetPos (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 359264.2914ms. 
+2020-07-10 12:53:26.3926|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.Po, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-07-10 12:53:26.4891|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PosController.GetPos (WebApi) in 359362.8189ms 
+2020-07-10 12:53:26.4891|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PosController.GetPos (WebApi)' 
+2020-07-10 12:53:26.4891|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 359374.6294ms 200 application/json; charset=utf-8 
+2020-07-10 12:53:26.4891|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM14U2A32P32", Request id "0HM14U2A32P32:00000004": the application completed without reading the entire request body. 
+2020-07-10 12:53:44.4700|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/pos/1/2812 application/json 3443 
+2020-07-10 12:53:44.4700|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PosController.Get (WebApi)' 
+2020-07-10 12:53:44.4869|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "Pos"}. Executing action WebApi.Controllers.PosController.Get (WebApi) 
+2020-07-10 12:53:44.4869|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PosController.Get (WebApi) with arguments (1, 2812) - Validation state: Valid 
+2020-07-10 12:54:00.3740|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PosController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 16076.0594ms. 
+2020-07-10 12:54:00.3740|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-10 12:54:00.3740|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PosController.Get (WebApi) in 16083.324ms 
+2020-07-10 12:54:00.3740|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PosController.Get (WebApi)' 
+2020-07-10 12:54:00.3740|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 16103.4841ms 500 application/json; charset=utf-8 
+2020-07-10 12:54:00.3838|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM14U2A32P32", Request id "0HM14U2A32P32:00000005": the application completed without reading the entire request body. 
+2020-07-10 12:54:08.1922|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/pos/1/2812 application/json 3443 
+2020-07-10 12:54:08.1922|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PosController.Get (WebApi)' 
+2020-07-10 12:54:08.1922|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "Pos"}. Executing action WebApi.Controllers.PosController.Get (WebApi) 
+2020-07-10 12:54:08.1922|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PosController.Get (WebApi) with arguments (1, 2812) - Validation state: Valid 
+2020-07-10 12:54:34.7606|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PosController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 26884.3272ms. 
+2020-07-10 12:54:34.7606|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.String'. 
+2020-07-10 12:54:34.7606|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PosController.Get (WebApi) in 26891.3087ms 
+2020-07-10 12:54:34.7714|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PosController.Get (WebApi)' 
+2020-07-10 12:54:34.7714|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 26899.3804ms 500 application/json; charset=utf-8 
+2020-07-10 12:54:34.7714|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM14U2A32P32", Request id "0HM14U2A32P32:00000006": the application completed without reading the entire request body. 
+2020-07-10 14:48:15.3991||DEBUG|WebApi.Program|init main 
+2020-07-10 14:48:16.7936||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-10 14:48:17.5282|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-10 14:48:17.5282|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-10 14:48:17.5650|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 37.0229ms 200  
+2020-07-10 14:48:17.6414|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 114.4487ms 404  
+2020-07-10 14:49:08.9038|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/users/authenticate application/json 45 
+2020-07-10 14:49:08.9978|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-10 14:49:09.0399|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-10 14:49:09.0452|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.Authenticate (WebApi)' 
+2020-07-10 14:49:09.0717|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Authenticate", controller = "Users"}. Executing action WebApi.Controllers.UsersController.Authenticate (WebApi) 
+2020-07-10 14:49:09.1297|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.Authenticate (WebApi) with arguments (DAL.Models.User) - Validation state: Valid 
+2020-07-10 14:49:17.3034|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.UsersController.Authenticate (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 8213.7875ms. 
+2020-07-10 14:49:17.3284|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.User'. 
+2020-07-10 14:49:17.3625|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.UsersController.Authenticate (WebApi) in 8330.4493ms 
+2020-07-10 14:49:17.3625|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.UsersController.Authenticate (WebApi)' 
+2020-07-10 14:49:17.3709|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 8514.6295ms 200 application/json; charset=utf-8 
+2020-07-10 17:01:40.2658||DEBUG|WebApi.Program|init main 
+2020-07-10 17:01:41.7452||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-10 17:01:42.5700|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-10 17:01:42.5700|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-10 17:01:42.6113|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 41.7255ms 200  
+2020-07-10 17:01:42.6928|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 123.4795ms 404  
+2020-07-10 17:02:14.4220|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/users/authenticate application/json 45 
+2020-07-10 17:02:14.5182|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenInvalidSignatureException: IDX10503: Signature validation failed. Keys tried: '[PII is hidden]'.
+Exceptions caught:
+ '[PII is hidden]'.
+token: '[PII is hidden]'.
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateSignature(String token, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-10 17:02:14.5832|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10503: Signature validation failed. Keys tried: '[PII is hidden]'.
+Exceptions caught:
+ '[PII is hidden]'.
+token: '[PII is hidden]'. 
+2020-07-10 17:02:14.5832|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.Authenticate (WebApi)' 
+2020-07-10 17:02:14.6208|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Authenticate", controller = "Users"}. Executing action WebApi.Controllers.UsersController.Authenticate (WebApi) 
+2020-07-10 17:02:14.6876|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.Authenticate (WebApi) with arguments (DAL.Models.User) - Validation state: Valid 
+2020-07-10 17:03:00.4189|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.UsersController.Authenticate (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 45726.4122ms. 
+2020-07-10 17:03:00.4419|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.User'. 
+2020-07-10 17:03:00.4656|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.UsersController.Authenticate (WebApi) in 45840.9632ms 
+2020-07-10 17:03:00.4656|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.UsersController.Authenticate (WebApi)' 
+2020-07-10 17:03:00.4656|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 46046.7669ms 200 application/json; charset=utf-8 
+2020-07-10 17:16:35.9880||DEBUG|WebApi.Program|init main 
+2020-07-10 17:16:36.2636||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-10 17:16:36.7712|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/users/authenticate application/json 45 
+2020-07-10 17:16:36.8260|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenInvalidSignatureException: IDX10503: Signature validation failed. Keys tried: '[PII is hidden]'.
+Exceptions caught:
+ '[PII is hidden]'.
+token: '[PII is hidden]'.
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateSignature(String token, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-10 17:16:36.8528|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10503: Signature validation failed. Keys tried: '[PII is hidden]'.
+Exceptions caught:
+ '[PII is hidden]'.
+token: '[PII is hidden]'. 
+2020-07-10 17:16:36.8794|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.Authenticate (WebApi)' 
+2020-07-10 17:16:36.9019|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Authenticate", controller = "Users"}. Executing action WebApi.Controllers.UsersController.Authenticate (WebApi) 
+2020-07-10 17:16:36.9471|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.Authenticate (WebApi) with arguments (DAL.Models.User) - Validation state: Valid 
+2020-07-10 17:16:44.7087|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.UsersController.Authenticate (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 7756.5695ms. 
+2020-07-10 17:16:44.7087|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.User'. 
+2020-07-10 17:16:44.7446|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.UsersController.Authenticate (WebApi) in 7839.7674ms 
+2020-07-10 17:16:44.7446|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.UsersController.Authenticate (WebApi)' 
+2020-07-10 17:16:44.7446|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 7980.776ms 200 application/json; charset=utf-8 
+2020-07-10 17:17:26.7864|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-10 17:17:26.8222|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 35.889ms 404  
+2020-07-10 17:18:15.0706|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1/2 application/json 3443 
+2020-07-10 17:18:15.0706|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2020-07-10 17:18:15.0706|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-10 17:18:15.0868|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.Get (WebApi) 
+2020-07-10 17:18:15.0868|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.Get (WebApi) with arguments (1, 2) - Validation state: Valid 
+2020-07-10 17:18:29.0920|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 14001.3804ms. 
+2020-07-10 17:18:29.0995|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.Part'. 
+2020-07-10 17:18:29.1605|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.Get (WebApi) in 14072.7266ms 
+2020-07-10 17:18:29.1605|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.Get (WebApi)' 
+2020-07-10 17:18:29.1791|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 14108.4252ms 200 application/json; charset=utf-8 
+2020-07-10 17:18:29.1913|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM152Q3PBNBT", Request id "0HM152Q3PBNBT:00000003": the application completed without reading the entire request body. 
+2020-07-10 17:18:35.3215|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/parts/1 application/json 3443 
+2020-07-10 17:18:35.3215|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2020-07-10 17:18:35.3215|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.GetParts (WebApi)' 
+2020-07-10 17:18:35.3325|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetParts", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.GetParts (WebApi) 
+2020-07-10 17:18:35.3325|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.GetParts (WebApi) with arguments (1) - Validation state: Valid 
+2020-07-10 17:34:15.1874||DEBUG|WebApi.Program|init main 
+2020-07-10 17:34:16.4397||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-10 17:34:17.1450|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-10 17:34:17.1450|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-10 17:34:17.1933|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 48.7817ms 200  
+2020-07-10 17:34:17.2824|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 138.1784ms 404  
+2020-07-10 17:34:56.8756|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/users/authenticate application/json 45 
+2020-07-10 17:34:56.9315|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenInvalidSignatureException: IDX10503: Signature validation failed. Keys tried: '[PII is hidden]'.
+Exceptions caught:
+ '[PII is hidden]'.
+token: '[PII is hidden]'.
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateSignature(String token, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-10 17:34:56.9720|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10503: Signature validation failed. Keys tried: '[PII is hidden]'.
+Exceptions caught:
+ '[PII is hidden]'.
+token: '[PII is hidden]'. 
+2020-07-10 17:34:56.9720|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.UsersController.Authenticate (WebApi)' 
+2020-07-10 17:34:57.0036|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Authenticate", controller = "Users"}. Executing action WebApi.Controllers.UsersController.Authenticate (WebApi) 
+2020-07-10 17:34:57.0519|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.UsersController.Authenticate (WebApi) with arguments (DAL.Models.User) - Validation state: Valid 
+2020-07-10 17:36:39.4143|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.UsersController.Authenticate (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 102354.8357ms. 
+2020-07-10 17:36:39.4395|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.User'. 
+2020-07-10 17:36:39.4846|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.UsersController.Authenticate (WebApi) in 102474.1078ms 
+2020-07-10 17:36:39.4846|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.UsersController.Authenticate (WebApi)' 
+2020-07-10 17:36:39.4913|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 102615.6816ms 200 application/json; charset=utf-8 
+2020-07-10 21:22:12.3030||DEBUG|WebApi.Program|init main 
+2020-07-10 21:22:13.6140||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-10 21:22:14.2138|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-10 21:22:14.2138|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-10 21:22:14.2488|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 35.3876ms 200  
+2020-07-10 21:22:14.3264|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 113.1951ms 404  
+2020-07-10 21:23:48.7378|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/MasterPackingSlips/1/3 application/json 11406 
+2020-07-10 21:23:48.8777|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenInvalidSignatureException: IDX10503: Signature validation failed. Keys tried: '[PII is hidden]'.
+Exceptions caught:
+ '[PII is hidden]'.
+token: '[PII is hidden]'.
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateSignature(String token, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-10 21:23:48.9108|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10503: Signature validation failed. Keys tried: '[PII is hidden]'.
+Exceptions caught:
+ '[PII is hidden]'.
+token: '[PII is hidden]'. 
+2020-07-10 21:23:48.9108|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MasterPackingSlipsController.Get (WebApi)' 
+2020-07-10 21:23:48.9451|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Get", controller = "MasterPackingSlips"}. Executing action WebApi.Controllers.MasterPackingSlipsController.Get (WebApi) 
+2020-07-10 21:23:48.9688|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MasterPackingSlipsController.Get (WebApi) with arguments (1, 3) - Validation state: Valid 
+2020-07-10 21:23:49.7879|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.MasterPackingSlipsController.Get (WebApi), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 814.5211ms. 
+2020-07-10 21:23:49.8101|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.MasterPackingSlip'. 
+2020-07-10 21:23:49.8563|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.MasterPackingSlipsController.Get (WebApi) in 907.9636ms 
+2020-07-10 21:23:49.8563|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.MasterPackingSlipsController.Get (WebApi)' 
+2020-07-10 21:23:49.8651|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 1127.3445ms 200 application/json; charset=utf-8 
+2020-07-10 21:23:49.8651|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM1573BS8LBR", Request id "0HM1573BS8LBR:00000001": the application completed without reading the entire request body. 

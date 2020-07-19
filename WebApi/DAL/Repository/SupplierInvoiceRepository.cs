@@ -418,7 +418,7 @@ namespace DAL.Repository
                 foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
                 {
                     List<SupplierInvoicePoDetails> supplierInvoicePoDetails = new List<SupplierInvoicePoDetails>();
-                    commandText = string.Format("SELECT  [Id] ,[PartId] ,[InvoiceId] ,[InvoiceDetailId] ,[POId] ,[PODetailId] ,[PONo] ,[Qty]  FROM [dbo].[SupplierInvoicePoDetails] " +
+                    commandText = string.Format("SELECT  [Id] ,[PartId] ,[InvoiceId] ,[InvoiceDetailId] ,[POId] ,[PODetailId] ,[PONo] ,[Qty],[UnitPrice]  FROM [dbo].[SupplierInvoicePoDetails] " +
                         "where InvoiceDetailId = '{0}'", supplierInvoiceDetail.Id);
 
                     using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
@@ -438,6 +438,7 @@ namespace DAL.Repository
                             supplierInvoicePoDetail.PODetailId = Convert.ToInt64(dataReader1["PODetailId"]);
                             supplierInvoicePoDetail.PONo = Convert.ToString(dataReader1["PONo"]);
                             supplierInvoicePoDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                            supplierInvoicePoDetail.UnitPrice = Convert.ToInt32(dataReader1["UnitPrice"]);
 
                             supplierInvoicePoDetails.Add(supplierInvoicePoDetail);
                         }

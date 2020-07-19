@@ -46,12 +46,12 @@ namespace WebApi.Controllers
                 var existingPo = await this._poService.GetPoAsync(po.Id,1);
                 if (existingPo != null && existingPo.IsClosed)
                     return BadRequest("PO is already closed.PO is not editable");
-                if (existingPo != null && existingPo.poDetails != null)
-                {
-                    var processedPoItems = existingPo.poDetails.Where(x => x.IsClosed || x.InTransitQty > 0 || x.ReceivedQty > 0);
-                    if (processedPoItems != null && processedPoItems.Count() > 0)
-                        return BadRequest("PO Detail(s) is already processed. PO is not editable");
-                }
+                //if (existingPo != null && existingPo.poDetails != null)
+                //{
+                //    var processedPoItems = existingPo.poDetails.Where(x => x.IsClosed || x.InTransitQty > 0 || x.ReceivedQty > 0);
+                //    if (processedPoItems != null && processedPoItems.Count() > 0)
+                //        return BadRequest("PO Detail(s) is already processed. PO is not editable");
+                //}
 
                 foreach (PoDetail poDetail in po.poDetails)
                 {

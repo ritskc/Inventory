@@ -23,7 +23,7 @@ namespace DAL.Repository
         private readonly ISupplierRepository supplierRepository;
 
         public ReportRepository(ISqlHelper sqlHelper, IOrderRepository orderRepository,
-            ICompanyRepository companyRepository,ICustomerRepository customerRepository,
+            ICompanyRepository companyRepository, ICustomerRepository customerRepository,
             IPartRepository partRepository, ISupplierRepository supplierRepository)
         {
             this._sqlHelper = sqlHelper;
@@ -66,8 +66,8 @@ namespace DAL.Repository
                     packingSlip.Crates = Convert.ToInt32(dataReader["Crates"]);
                     packingSlip.Boxes = Convert.ToInt32(dataReader["Boxes"]);
                     packingSlip.TotalBoxes = packingSlip.TotalBoxes + packingSlip.Boxes;
-                    var grossWeight = 1.05 * Convert.ToDouble(dataReader["GrossWeight"]);                    
-                    packingSlip.GrossWeight = Convert.ToDecimal(grossWeight);                    
+                    var grossWeight = 1.05 * Convert.ToDouble(dataReader["GrossWeight"]);
+                    packingSlip.GrossWeight = Convert.ToDecimal(grossWeight);
                     packingSlip.ShippingCharge = Convert.ToDecimal(dataReader["ShippingCharge"]);
                     packingSlip.CustomCharge = Convert.ToDecimal(dataReader["CustomCharge"]);
                     packingSlip.SubTotal = Convert.ToDecimal(dataReader["SubTotal"]);
@@ -77,8 +77,8 @@ namespace DAL.Repository
                     packingSlip.FOB = Convert.ToString(dataReader["FOB"]);
                     packingSlip.Terms = Convert.ToString(dataReader["Terms"]);
                     packingSlip.ShipmentInfoId = Convert.ToInt32(dataReader["ShipmentInfoId"]);
-                    packingSlip.InvoiceDate = Convert.ToDateTime(dataReader["InvoiceDate"]);                   
-                    
+                    packingSlip.InvoiceDate = Convert.ToDateTime(dataReader["InvoiceDate"]);
+
                 }
                 conn.Close();
             }
@@ -121,7 +121,7 @@ namespace DAL.Repository
                 int SrNo = 1;
                 while (dataReader1.Read())
                 {
-                    var packingSlipReport = new PackingSlipReport();                    
+                    var packingSlipReport = new PackingSlipReport();
                     packingSlipReport.OrderNo = Convert.ToString(dataReader1["OrderNo"]);
                     packingSlipReport.SrNo = SrNo;
                     packingSlipReport.PartId = Convert.ToInt32(dataReader1["PartId"]);
@@ -134,13 +134,15 @@ namespace DAL.Repository
                     packingSlipReport.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);
                     packingSlipReport.SurchargePerUnit = Convert.ToDecimal(dataReader1["SurchargePerUnit"]);
                     packingSlipReport.TotalSurcharge = Convert.ToDecimal(dataReader1["TotalSurcharge"]);
-                    packingSlipReport.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);                    
+                    packingSlipReport.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);
                     try
                     {
-                        packingSlipReport.LineNumber = Convert.ToInt32(dataReader1["LineNumber"]);
+                        packingSlipReport.LineNumber = Convert.ToString(dataReader1["LineNumber"]);
 
 
-                        if (packingSlipReport.LineNumber > 0)
+                        if (packingSlipReport.LineNumber == string.Empty || packingSlipReport.LineNumber == "" || packingSlipReport.LineNumber == null)
+                            packingSlipReport.OrderNo = packingSlipReport.OrderNo;
+                        else
                             packingSlipReport.OrderNo = packingSlipReport.OrderNo + "-" + packingSlipReport.LineNumber.ToString();
                     }
                     catch
@@ -150,7 +152,7 @@ namespace DAL.Repository
                     SrNo++;
                     packingSlipReports.Add(packingSlipReport);
                 }
-            }            
+            }
             conn.Close();
             var company = companyRepository.GetCompany(packingSlip.CompanyId);
             var customer = customerRepository.GetCustomer(packingSlip.CustomerId);
@@ -158,8 +160,8 @@ namespace DAL.Repository
             decimal totalRepackingSlipCost = 0;
 
             foreach (PackingSlipReport packingSlipReport in packingSlipReports)
-            {                
-                packingSlipReport.CompanyId = packingSlip.CompanyId;                
+            {
+                packingSlipReport.CompanyId = packingSlip.CompanyId;
                 packingSlipReport.PackingSlipNo = packingSlip.PackingSlipNo;
                 packingSlipReport.ShippingDate = packingSlip.ShippingDate;
                 packingSlipReport.ShipVia = packingSlip.ShipVia;
@@ -188,7 +190,7 @@ namespace DAL.Repository
                 packingSlipReport.CompanyWHAddress = company.WHAddress;
                 packingSlipReport.CompanyWHPhoneNo = company.WHPhoneNo;
                 packingSlipReport.CompanyWHEmail = company.WHEmail;
-                
+
                 packingSlipReport.CompanyId = customer.CompanyId;
                 packingSlipReport.CustomerName = customer.Name;
                 packingSlipReport.CustomerAddressLine1 = customer.AddressLine1;
@@ -211,7 +213,7 @@ namespace DAL.Repository
                 packingSlipReport.CustomerEndCustomerName = customer.EndCustomerName;
                 packingSlipReport.Billing = customer.Billing;
 
-                
+
                 packingSlipReport.ShipmentName = packingSlip.customerShippingInfo.Name;
                 packingSlipReport.ShipmentContactPersonName = packingSlip.customerShippingInfo.ContactPersonName;
                 packingSlipReport.ShipmentAddressLine1 = packingSlip.customerShippingInfo.AddressLine1;
@@ -233,7 +235,7 @@ namespace DAL.Repository
                 packingSlipReport.SumRePackingCharge = totalRepackingSlipCost;
             }
 
-                return packingSlipReports;
+            return packingSlipReports;
         }
 
         public List<PackingSlipReport> GetRepackingInvoiceReport(long id)
@@ -269,7 +271,7 @@ namespace DAL.Repository
                     packingSlip.Boxes = Convert.ToInt32(dataReader["Boxes"]);
                     var grossWeight = 1.05 * Convert.ToDouble(dataReader["GrossWeight"]);
                     packingSlip.GrossWeight = Convert.ToDecimal(grossWeight);
-                   // packingSlip.GrossWeight = Convert.ToDecimal(dataReader["GrossWeight"]);
+                    // packingSlip.GrossWeight = Convert.ToDecimal(dataReader["GrossWeight"]);
                     packingSlip.ShippingCharge = Convert.ToDecimal(dataReader["ShippingCharge"]);
                     packingSlip.CustomCharge = Convert.ToDecimal(dataReader["CustomCharge"]);
                     packingSlip.SubTotal = Convert.ToDecimal(dataReader["SubTotal"]);
@@ -390,7 +392,7 @@ namespace DAL.Repository
                 packingSlipReport.CompanyWHAddress = company.WHAddress;
                 packingSlipReport.CompanyWHPhoneNo = company.WHPhoneNo;
                 packingSlipReport.CompanyWHEmail = company.WHEmail;
-                
+
                 packingSlipReport.CustomerName = customer.Name;
                 packingSlipReport.CustomerAddressLine1 = customer.AddressLine1;
                 packingSlipReport.CustomerCity = customer.City;
@@ -411,7 +413,7 @@ namespace DAL.Repository
                 packingSlipReport.CustomerInvoicingtypeid = customer.Invoicingtypeid;
                 packingSlipReport.CustomerEndCustomerName = customer.EndCustomerName;
                 packingSlipReport.Billing = customer.Billing;
-                if(customer.RePackingPoNo == null || customer.RePackingPoNo == string.Empty)
+                if (customer.RePackingPoNo == null || customer.RePackingPoNo == string.Empty)
                     packingSlipReport.RePackingSlipNo = customer.RePackingPoNo;
 
                 packingSlipReport.ShipmentName = packingSlip.customerShippingInfo.Name;
@@ -452,10 +454,10 @@ namespace DAL.Repository
 
             var commandText = string.Empty;
 
-             commandText = string.Format($"SELECT PSM.[Id] ,PSM.[CompanyId] ,PSM.[CustomerId] ,[PackingSlipNo],[ShippingDate] ,[ShipVia] ,[Crates]," +
-                       $"MPSM.MasterPackingSlipNo,[Boxes] ,[GrossWeight] ,[ShippingCharge] ,[CustomCharge] ,[SubTotal] ,[Total] ,[IsInvoiceCreated] ," +
-                       $"[IsPaymentReceived] ,[FOB] ,[Terms] ,[ShipmentInfoId] ,[InvoiceDate]  FROM [dbo].[PackingSlipMaster] PSM INNER JOIN MasterPackingSlipMaster MPSM ON MPSM.ID = PSM.MasterPackingSlipId where MPSM.ID = '{id}' ");
-            
+            commandText = string.Format($"SELECT PSM.[Id] ,PSM.[CompanyId] ,PSM.[CustomerId] ,[PackingSlipNo],[ShippingDate] ,[ShipVia] ,[Crates]," +
+                      $"MPSM.MasterPackingSlipNo,[Boxes] ,[GrossWeight] ,[ShippingCharge] ,[CustomCharge] ,[SubTotal] ,[Total] ,[IsInvoiceCreated] ," +
+                      $"[IsPaymentReceived] ,[FOB] ,[Terms] ,[ShipmentInfoId] ,[InvoiceDate]  FROM [dbo].[PackingSlipMaster] PSM INNER JOIN MasterPackingSlipMaster MPSM ON MPSM.ID = PSM.MasterPackingSlipId where MPSM.ID = '{id}' ");
+
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -464,7 +466,7 @@ namespace DAL.Repository
                 conn.Open();
 
                 var dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-               
+
 
                 while (dataReader.Read())
                 {
@@ -482,7 +484,7 @@ namespace DAL.Repository
                     packingSlip.Boxes = Convert.ToInt32(dataReader["Boxes"]);
                     Boxes = Boxes + packingSlip.Boxes;
                     packingSlip.TotalBoxes = packingSlip.TotalBoxes + packingSlip.Boxes;
-                    packingSlip.GrossWeight =  Convert.ToDecimal(dataReader["GrossWeight"]);
+                    packingSlip.GrossWeight = Convert.ToDecimal(dataReader["GrossWeight"]);
                     GrossWeight = GrossWeight + packingSlip.GrossWeight;
                     packingSlip.ShippingCharge = ShippingCharge + Convert.ToDecimal(dataReader["ShippingCharge"]);
                     ShippingCharge = ShippingCharge + packingSlip.ShippingCharge;
@@ -565,10 +567,12 @@ namespace DAL.Repository
                         packingSlipReport.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);
                         try
                         {
-                            packingSlipReport.LineNumber = Convert.ToInt32(dataReader1["LineNumber"]);
+                            packingSlipReport.LineNumber = Convert.ToString(dataReader1["LineNumber"]);
 
 
-                            if (packingSlipReport.LineNumber > 0)
+                            if (packingSlipReport.LineNumber == string.Empty || packingSlipReport.LineNumber == "" || packingSlipReport.LineNumber == null)
+                                packingSlipReport.OrderNo = packingSlipReport.OrderNo;
+                            else
                                 packingSlipReport.OrderNo = packingSlipReport.OrderNo + "-" + packingSlipReport.LineNumber.ToString();
                         }
                         catch
@@ -605,7 +609,7 @@ namespace DAL.Repository
             var customer = customerRepository.GetCustomer(packingSlips.FirstOrDefault().CustomerId);
 
             foreach (PackingSlipReport packingSlipReport in packingSlipReports)
-            {                
+            {
 
                 packingSlipReport.CompanyId = company.Id;
                 packingSlipReport.CompanyName = company.Name;
@@ -655,7 +659,7 @@ namespace DAL.Repository
                 packingSlipReport.PartDescription = part.Description;
             }
 
-            return packingSlipReports.OrderBy(x => x.PackingSlipNo).ToList();            
+            return packingSlipReports.OrderBy(x => x.PackingSlipNo).ToList();
         }
 
         public List<POReport> GetPoReport(long poId)
@@ -782,7 +786,7 @@ namespace DAL.Repository
 
             List<POReport> pOReports = new List<POReport>();
             int srNo = 1;
-            foreach(PoDetail poDetail in po.poDetails)
+            foreach (PoDetail poDetail in po.poDetails)
             {
                 var poReport = new POReport();
 
@@ -824,11 +828,11 @@ namespace DAL.Repository
 
                 var part = partRepository.GetPart(poDetail.PartId);
                 poReport.PartCode = part.Code;
-                poReport.PartDescription = part.Description;              
+                poReport.PartDescription = part.Description;
 
                 poReport.PoLetterHead = supplier.PoLetterHead;
 
-               
+
                 poReport.SupplierName = supplier.Name;
                 poReport.SupplierContactPersonName = supplier.ContactPersonName;
                 poReport.SupplierPhoneNo = supplier.PhoneNo;
@@ -854,19 +858,19 @@ namespace DAL.Repository
                 poReport.CompanyWHEmail = company.WHEmail;
                 if (poReport.PoLetterHead == 2)
                 {
-                    
+
                     poReport.CompanyName = "Phloem LLC.";
-                    poReport.CompanyAddress = "226 West 27th Street, Northampton, PA 18067 USA";                    
+                    poReport.CompanyAddress = "226 West 27th Street, Northampton, PA 18067 USA";
                 }
                 else
-                {                   
+                {
                     poReport.CompanyName = company.Name;
-                    poReport.CompanyAddress = company.Address;                    
+                    poReport.CompanyAddress = company.Address;
                 }
 
-                foreach (PoTerm poTerm in po.poTerms.OrderBy(x=>x.SequenceNo))
+                foreach (PoTerm poTerm in po.poTerms.OrderBy(x => x.SequenceNo))
                 {
-                    if(poTerm.SequenceNo == 1)
+                    if (poTerm.SequenceNo == 1)
                         poReport.TermsConditions = poTerm.SequenceNo.ToString() + ". " + poTerm.Term;
                     else
                         poReport.TermsConditions = poReport.TermsConditions + Environment.NewLine + poTerm.SequenceNo.ToString() + ". " + poTerm.Term;
@@ -906,7 +910,7 @@ namespace DAL.Repository
                     packingSlip.PackingSlipNo = Convert.ToString(dataReader["PackingSlipNo"]);
                     packingSlip.ShippingDate = Convert.ToDateTime(dataReader["ShippingDate"]);
                     packingSlip.Qty = Convert.ToInt32(dataReader["Qty"]);
-                    packingSlip.PartId = Convert.ToInt32(dataReader["PartId"]); 
+                    packingSlip.PartId = Convert.ToInt32(dataReader["PartId"]);
                     packingSlip.UnitPrice = Convert.ToDecimal(dataReader["UnitPrice"]);
                     packingSlip.Price = Convert.ToDecimal(dataReader["Price"]);
                     packingSlips.Add(packingSlip);
@@ -1026,7 +1030,7 @@ namespace DAL.Repository
                     var packingSlip = new PurchaseData();
 
                     packingSlip.SupplierName = Convert.ToString(dataReader["SupplierName"]);
-                   
+
                     packingSlip.InvoiceNo = Convert.ToString(dataReader["InvoiceNo"]);
                     packingSlip.InvoiceDate = Convert.ToDateTime(dataReader["InvoiceDate"]);
                     packingSlip.ReceivedDate = Convert.ToDateTime(dataReader["ReceivedDate"]);
@@ -1034,15 +1038,15 @@ namespace DAL.Repository
                     packingSlip.Code = Convert.ToString(dataReader["Code"]);
                     packingSlip.Description = Convert.ToString(dataReader["Description"]);
 
-                    packingSlip.Qty = Convert.ToInt32(dataReader["Qty"]);                    
+                    packingSlip.Qty = Convert.ToInt32(dataReader["Qty"]);
                     packingSlip.Price = Convert.ToDecimal(dataReader["Price"]);
                     packingSlip.Total = Convert.ToDecimal(dataReader["Total"]);
                     packingSlips.Add(packingSlip);
                 }
                 dataReader.Close();
                 conn.Close();
-            }     
-           
+            }
+
 
             foreach (PurchaseData purchaseData in packingSlips)
             {
@@ -1058,7 +1062,7 @@ namespace DAL.Repository
 
                     while (dataReader.Read())
                     {
-                        purchaseData.CustomerName = Convert.ToString(dataReader["name"]);                        
+                        purchaseData.CustomerName = Convert.ToString(dataReader["name"]);
                     }
                     dataReader.Close();
                     conn.Close();
@@ -1092,7 +1096,7 @@ namespace DAL.Repository
                 {
                     var packingSlip = new PurchaseData();
 
-                    packingSlip.SupplierName = Convert.ToString(dataReader["SupplierName"]);                   
+                    packingSlip.SupplierName = Convert.ToString(dataReader["SupplierName"]);
                     packingSlip.PartId = Convert.ToInt32(dataReader["PartId"]);
                     packingSlip.Code = Convert.ToString(dataReader["Code"]);
                     packingSlip.Description = Convert.ToString(dataReader["Description"]);
@@ -1232,10 +1236,12 @@ namespace DAL.Repository
                     packingSlipReport.ExcessQty = Convert.ToInt32(dataReader1["ExcessQty"]);
                     try
                     {
-                        packingSlipReport.LineNumber = Convert.ToInt32(dataReader1["LineNumber"]);
+                        packingSlipReport.LineNumber = Convert.ToString(dataReader1["LineNumber"]);
 
 
-                        if (packingSlipReport.LineNumber > 0)
+                        if (packingSlipReport.LineNumber == string.Empty || packingSlipReport.LineNumber == "" || packingSlipReport.LineNumber == null)
+                            packingSlipReport.OrderNo = packingSlipReport.OrderNo;
+                        else
                             packingSlipReport.OrderNo = packingSlipReport.OrderNo + "-" + packingSlipReport.LineNumber.ToString();
                     }
                     catch

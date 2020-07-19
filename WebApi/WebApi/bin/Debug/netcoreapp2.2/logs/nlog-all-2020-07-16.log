@@ -1,0 +1,52 @@
+2020-07-16 12:32:12.4455||DEBUG|WebApi.Program|init main 
+2020-07-16 12:32:14.3612||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-16 12:32:15.3274|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-16 12:32:15.3274|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-16 12:32:15.3708|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 43.5795ms 200  
+2020-07-16 12:32:15.4582|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 131.4613ms 404  
+2020-07-16 14:15:47.1077||DEBUG|WebApi.Program|init main 
+2020-07-16 14:15:48.7453||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-16 14:15:49.5705|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-16 14:15:49.5705|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-16 14:15:49.6123|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 42.3701ms 200  
+2020-07-16 14:15:49.6928|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 123.2918ms 404  
+2020-07-16 14:16:27.6875|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/MasterPackingSlips/scan/00001036 application/json 15559 
+2020-07-16 14:16:27.7054|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi)' 
+2020-07-16 14:16:27.7518|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "ScanBox", controller = "MasterPackingSlips"}. Executing action WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) 
+2020-07-16 14:16:27.7875|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) with arguments (scan, 00001036) - Validation state: Valid 
+2020-07-16 14:17:36.5545|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 68763.3184ms. 
+2020-07-16 14:17:36.5716|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.PackingSlipScanBoxeStatus, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-07-16 14:17:36.5941|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi) in 68839.0849ms 
+2020-07-16 14:17:36.5941|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.MasterPackingSlipsController.ScanBox (WebApi)' 
+2020-07-16 14:17:36.5941|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 68913.6112ms 200 application/json; charset=utf-8 
+2020-07-16 14:17:36.6128|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM19MH29MJLM", Request id "0HM19MH29MJLM:00000002": the application completed without reading the entire request body. 
+2020-07-16 14:18:23.8145|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/packingslips/scan/00001057 application/json 15559 
+2020-07-16 14:18:23.8145|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.ScanBox (WebApi)' 
+2020-07-16 14:18:23.8379|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "ScanBox", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.ScanBox (WebApi) 
+2020-07-16 14:18:23.8500|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.ScanBox (WebApi) with arguments (scan, 00001057) - Validation state: Valid 
+2020-07-16 14:19:24.0487|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.ScanBox (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 60197.6729ms. 
+2020-07-16 14:19:24.0487|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'null'. 
+2020-07-16 14:19:24.0636|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.ScanBox (WebApi) in 60224.5219ms 
+2020-07-16 14:19:24.0636|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.ScanBox (WebApi)' 
+2020-07-16 14:19:24.0748|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 60260.3464ms 204  
+2020-07-16 14:19:24.0748|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM19MH29MJLM", Request id "0HM19MH29MJLM:00000003": the application completed without reading the entire request body. 
+2020-07-16 14:19:30.7595|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/packingslips/scan/00001057 application/json 15559 
+2020-07-16 14:19:30.7613|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.ScanBox (WebApi)' 
+2020-07-16 14:19:30.7613|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "ScanBox", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.ScanBox (WebApi) 
+2020-07-16 14:19:30.7613|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.ScanBox (WebApi) with arguments (scan, 00001057) - Validation state: Valid 
+2020-07-16 14:26:30.2347||DEBUG|WebApi.Program|init main 
+2020-07-16 14:26:31.8614||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-16 14:26:32.6233|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-16 14:26:32.6233|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-16 14:26:32.6658|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 42.8542ms 200  
+2020-07-16 14:26:32.7604|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 137.7326ms 404  
+2020-07-16 14:26:42.4815|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/packingslips/scan/00001057 application/json 15559 
+2020-07-16 14:26:42.4815|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PackingSlipsController.ScanBox (WebApi)' 
+2020-07-16 14:26:42.5325|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "ScanBox", controller = "PackingSlips"}. Executing action WebApi.Controllers.PackingSlipsController.ScanBox (WebApi) 
+2020-07-16 14:26:42.5597|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PackingSlipsController.ScanBox (WebApi) with arguments (scan, 00001057) - Validation state: Valid 
+2020-07-16 14:28:02.7349|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PackingSlipsController.ScanBox (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 80171.1434ms. 
+2020-07-16 14:28:02.7526|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DAL.Models.PackingSlipScanBoxeStatus, DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+2020-07-16 14:28:02.7795|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PackingSlipsController.ScanBox (WebApi) in 80240.9997ms 
+2020-07-16 14:28:02.7795|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PackingSlipsController.ScanBox (WebApi)' 
+2020-07-16 14:28:02.7795|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 80306.2892ms 200 application/json; charset=utf-8 
+2020-07-16 14:28:02.8051|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM19MN1UA3L1", Request id "0HM19MN1UA3L1:00000002": the application completed without reading the entire request body. 

@@ -277,7 +277,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("{acknowledge}/{id}")]
-        public async Task<IActionResult> AcknowledgePO(int id)
+        public async Task<ActionResult<PoAccessResponse>> AcknowledgePO(int id)
         {
             try
             {
@@ -294,17 +294,20 @@ namespace WebApi.Controllers
                         return BadRequest("PO Detail(s) is already processed. PO is not editable");
                 }
 
-                
+
                 //po.Id = id;
-                await this._poService.AcknowledgePoAsync(id);
+                string AccessId = Guid.NewGuid().ToString();
+                var poAccessResponse = new PoAccessResponse();
+                poAccessResponse.AccessId = AccessId;
+                await this._poService.AcknowledgePoAsync(id,AccessId);
 
-                var company = await this.companyService.GetCompanyAsync(po.CompanyId);
-                po.CompanyName = company.Name;
+                //var company = await this.companyService.GetCompanyAsync(po.CompanyId);
+                //po.CompanyName = company.Name;
 
-                EmailService emailService = new EmailService(_appSettings);
-                emailService.SendNotifyAcknoledgePOEmail(po.CompanyName, po.SupplierName, po.PoNo);
+                //EmailService emailService = new EmailService(_appSettings);
+                //emailService.SendNotifyAcknoledgePOEmail(po.CompanyName, po.SupplierName, po.PoNo);
 
-                return Ok();
+                return Ok(poAccessResponse);
             }
             catch (Exception ex)
             {

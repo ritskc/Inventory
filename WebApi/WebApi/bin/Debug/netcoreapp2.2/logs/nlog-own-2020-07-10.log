@@ -1,0 +1,22 @@
+2020-07-10 12:26:38.3746||DEBUG|WebApi.Program|init main |url: |action: 
+2020-07-10 12:26:47.7164|1|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request. Microsoft.AspNetCore.Routing.Matching.AmbiguousMatchException: The request matched multiple endpoints. Matches: 
+
+WebApi.Controllers.PartsController.Get (WebApi)
+WebApi.Controllers.PartsController.GetPartsStocks (WebApi)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ReportAmbiguity(CandidateSet candidates)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.ProcessFinalCandidates(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DefaultEndpointSelector.SelectAsync(HttpContext httpContext, EndpointSelectorContext context, CandidateSet candidateSet)
+   at Microsoft.AspNetCore.Routing.Matching.DfaMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.Matching.DataSourceDependentMatcher.MatchAsync(HttpContext httpContext, EndpointSelectorContext context)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)|url: https://localhost/parts/1/2|action: 
+2020-07-10 12:29:44.8395||DEBUG|WebApi.Program|init main |url: |action: 
+2020-07-10 12:33:45.5734||DEBUG|WebApi.Program|init main |url: |action: 
+2020-07-10 12:35:30.7952||DEBUG|WebApi.Program|init main |url: |action: 
+2020-07-10 12:38:35.8728||DEBUG|WebApi.Program|init main |url: |action: 
+2020-07-10 12:44:56.3635||DEBUG|WebApi.Program|init main |url: |action: 
+2020-07-10 14:48:15.3991||DEBUG|WebApi.Program|init main |url: |action: 
+2020-07-10 17:01:40.2658||DEBUG|WebApi.Program|init main |url: |action: 
+2020-07-10 17:16:35.9880||DEBUG|WebApi.Program|init main |url: |action: 
+2020-07-10 17:34:15.1874||DEBUG|WebApi.Program|init main |url: |action: 
+2020-07-10 21:22:12.3030||DEBUG|WebApi.Program|init main |url: |action: 

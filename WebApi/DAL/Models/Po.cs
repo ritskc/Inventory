@@ -15,19 +15,24 @@ namespace DAL.Models
         public string SupplierName { get; set; }
         public string ContactPersonName { get; set; }
         public string PoNo { get; set; }
-        public DateTime PoDate { get; set; }       
+        public DateTime PoDate { get; set; }
         public string EmailIds { get; set; }
         public string Remarks { get; set; }
-        public bool IsClosed { get; set; }        
+        public bool IsClosed { get; set; }
         public DateTime? ClosingDate { get; set; }
         public bool IsAcknowledged { get; set; }
         public DateTime? AcknowledgementDate { get; set; }
         public DateTime? DueDate { get; set; }
-        public string PaymentTerms { get; set; }      
+        public string PaymentTerms { get; set; }
         public string DeliveryTerms { get; set; }
         public string AccessId { get; set; }
 
         public List<PoDetail> poDetails { get; set; }
         public List<PoTerm> poTerms { get; set; }
+    }
+
+    public class PoAccessResponse
+    {
+        public string AccessId { get; set; }
     }
 }

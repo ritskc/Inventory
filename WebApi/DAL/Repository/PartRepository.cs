@@ -1795,6 +1795,50 @@ namespace DAL.Repository
             }
         }
 
+        public async Task UpdateMonthlyQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand, string direction, string note)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = connection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                command.Connection = connection;
+                command.Transaction = transaction;
+
+                try
+                {
+                    var sql = string.Empty;
+                    if (direction.ToLower() == BusinessConstants.DIRECTION.IN.ToString().ToLower())
+                    {
+                        sql = string.Format($"UPDATE [part]   SET  [MonthlyOpeningQty] = [MonthlyOpeningQty] + '{QtyInHand}'  WHERE  id= '{partId}' AND CompanyId = '{companyId}'");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();                        
+                    }
+                    else
+                    {
+                        sql = string.Format($"UPDATE [part]   SET  [MonthlyOpeningQty] = [MonthlyOpeningQty] - '{QtyInHand}'  WHERE  id= '{partId}' AND CompanyId = '{companyId}'");
+                        command.CommandText = sql;
+                        await command.ExecuteNonQueryAsync();                       
+                    }
+
+                    // Attempt to commit the transaction.
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
         public async Task UpdateQtyInHandByPartIdAsync(int companyId, int partId, int QtyInHand)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
@@ -1960,6 +2004,41 @@ namespace DAL.Repository
                     throw ex;
                 }
             }
+        }
+
+        public async Task<IEnumerable<StockPrice>> GetAllPartsStocksAsync(int companyId)
+        {
+            List<StockPrice> stockPrices = new List<StockPrice>();
+
+            var commandText = string.Format("SELECT SP.[id] ,[PartId] ,[SupplierPrice] ,[CustomerPrice] ,[Qty],PM.Code,PM.Description  FROM [dbo].[StockPrice] SP INNER JOIN part PM ON PM.id = SP.PartId WHERE PM.CompanyId = '{0}' ", companyId);
+
+           SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var stockPrice = new StockPrice();
+                    stockPrice.Id = Convert.ToInt32(dataReader["Id"]);
+                    stockPrice.PartCode = Convert.ToString(dataReader["Code"]);
+                    stockPrice.Description = Convert.ToString(dataReader["Description"]);                    
+                    stockPrice.SupplierPrice = Convert.ToDecimal(dataReader["SupplierPrice"]);
+                    stockPrice.CustomerPrice = Convert.ToDecimal(dataReader["CustomerPrice"]);
+                    stockPrice.Qty = Convert.ToInt32(dataReader["Qty"]);
+
+                    stockPrices.Add(stockPrice);
+                }
+                conn.Close();
+            }
+
+           
+            return stockPrices.OrderBy(x => x.PartCode);
         }
     }
 }

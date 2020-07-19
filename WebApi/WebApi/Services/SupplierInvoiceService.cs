@@ -163,7 +163,7 @@ namespace WebApi.Services
                 {
                     supplierInvoiceDetail.PartDetail = partList.Where(p => p.Id == supplierInvoiceDetail.PartId).FirstOrDefault(); //await this._partRepository.GetPartAsync(supplierInvoiceDetail.PartId);
 
-                    var supplierInvoiceGroupDetail = supplierInvoiceGroupDetails.Where(x => x.InvoiceId == supplierInvoiceDetail.InvoiceId && x.PartId == supplierInvoiceDetail.PartId).FirstOrDefault();
+                    var supplierInvoiceGroupDetail = supplierInvoiceGroupDetails.Where(x => x.InvoiceId == supplierInvoiceDetail.InvoiceId && x.PartId == supplierInvoiceDetail.PartId && x.Price == supplierInvoiceDetail.Price).FirstOrDefault();
                     if (supplierInvoiceGroupDetail == null)
                     {
                         //Id ,InvoiceId ,SrNo,PartId,PartCode, Qty, Price,Total,AdjustedPOQty,ExcessQty,BoxNo, Barcode ,IsBoxReceived,IsOpen,
@@ -187,6 +187,7 @@ namespace WebApi.Services
                         {
                             supplierInvoiceGroupDetail.PONo = supplierInvoiceGroupDetail.PONo + "," + supplierInvoicePoDetails.PONo;
                             supplierInvoiceGroupDetail.AdjustedPOQty = supplierInvoiceGroupDetail.AdjustedPOQty + "," + supplierInvoicePoDetails.Qty.ToString();
+                            supplierInvoiceGroupDetail.AdjustedPOPrice = supplierInvoiceGroupDetail.AdjustedPOPrice + "," + supplierInvoicePoDetails.UnitPrice.ToString();
                         }
                         supplierInvoiceGroupDetail.PartDetail = supplierInvoiceDetail.PartDetail;
                         supplierInvoiceGroupDetails.Add(supplierInvoiceGroupDetail);
@@ -207,6 +208,7 @@ namespace WebApi.Services
                         {
                             supplierInvoiceGroupDetail.PONo = supplierInvoiceGroupDetail.PONo + "," + supplierInvoicePoDetails.PONo;
                             supplierInvoiceGroupDetail.AdjustedPOQty = supplierInvoiceGroupDetail.AdjustedPOQty + "," + supplierInvoicePoDetails.Qty.ToString();
+                            supplierInvoiceGroupDetail.AdjustedPOPrice = supplierInvoiceGroupDetail.AdjustedPOPrice + "," + supplierInvoicePoDetails.UnitPrice.ToString();
                         }
                         supplierInvoiceGroupDetail.PartDetail = supplierInvoiceDetail.PartDetail;
                     }

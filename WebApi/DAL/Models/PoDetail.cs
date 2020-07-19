@@ -23,6 +23,7 @@ namespace DAL.Models
         public bool IsClosed { get; set; }
         public bool IsForceClosed { get; set; }
         public DateTime? ClosingDate { get; set; }
+        public DateTime? PartAcknowledgementDate { get; set; }
         public string InvoiceNo { get; set; }
 
         public Part part { get; set; }       

@@ -1,0 +1,57 @@
+2020-07-19 11:39:08.4261||DEBUG|WebApi.Program|init main 
+2020-07-19 11:39:10.1085||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-19 11:39:11.1813|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-19 11:39:11.1813|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-19 11:39:11.2247|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 44.3906ms 200  
+2020-07-19 11:39:11.3051|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 125.178ms 404  
+2020-07-19 11:39:54.7763|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/parts/1/333/monthly/out/5/note1 application/json 11406 
+2020-07-19 11:39:54.8635|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-19 11:39:54.9410|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-19 11:39:54.9410|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.Put (WebApi)' 
+2020-07-19 11:39:54.9743|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.Put (WebApi) 
+2020-07-19 11:39:54.9920|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.Put (WebApi) with arguments (1, monthly, 333, 5, out, note1) - Validation state: Valid 
+2020-07-19 11:40:03.7958|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.Put (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 8798.8614ms. 
+2020-07-19 11:40:03.8089|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-07-19 11:40:03.8089|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.Put (WebApi) in 8837.6014ms 
+2020-07-19 11:40:03.8089|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.Put (WebApi)' 
+2020-07-19 11:40:03.8278|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 9051.5709ms 200  
+2020-07-19 11:40:03.8485|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM1BV7GUP4TK", Request id "0HM1BV7GUP4TK:00000002": the application completed without reading the entire request body. 
+2020-07-19 11:40:15.7711|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:44390/parts/1/333/regular/out/5/note1 application/json 11406 
+2020-07-19 11:40:15.7711|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-07-19 11:40:15.7711|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-07-19 11:40:15.7862|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PartsController.Put (WebApi)' 
+2020-07-19 11:40:15.7862|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Put", controller = "Parts"}. Executing action WebApi.Controllers.PartsController.Put (WebApi) 
+2020-07-19 11:40:15.7862|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PartsController.Put (WebApi) with arguments (1, regular, 333, 5, out, note1) - Validation state: Valid 
+2020-07-19 11:40:28.9541|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PartsController.Put (WebApi), returned result Microsoft.AspNetCore.Mvc.OkResult in 13164.2293ms. 
+2020-07-19 11:40:28.9541|1|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 200 
+2020-07-19 11:40:28.9541|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PartsController.Put (WebApi) in 13167.7047ms 
+2020-07-19 11:40:28.9541|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PartsController.Put (WebApi)' 
+2020-07-19 11:40:28.9541|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 13187.1618ms 200  
+2020-07-19 11:40:28.9541|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM1BV7GUP4TK", Request id "0HM1BV7GUP4TK:00000003": the application completed without reading the entire request body. 
+2020-07-19 14:52:26.8175||DEBUG|WebApi.Program|init main 
+2020-07-19 14:52:29.0082||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-07-19 14:52:30.1573|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-07-19 14:52:30.1573|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-07-19 14:52:30.2338|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 75.1765ms 200  
+2020-07-19 14:52:30.4232|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 266.5349ms 404  
+2020-07-19 14:52:38.4279|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:44390/pos/acknowledge/908 application/json 4359 
+2020-07-19 14:52:38.5167|2|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Successfully validated the token. 
+2020-07-19 14:52:38.5167|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.PosController.AcknowledgePO (WebApi)' 
+2020-07-19 14:52:38.5635|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AcknowledgePO", controller = "Pos"}. Executing action WebApi.Controllers.PosController.AcknowledgePO (WebApi) 
+2020-07-19 14:52:38.5927|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.PosController.AcknowledgePO (WebApi) with arguments (908) - Validation state: Valid 
+2020-07-19 14:53:40.1807|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.PosController.AcknowledgePO (WebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 61580.5875ms. 
+2020-07-19 14:53:40.2306|1|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'DAL.Models.PoAccessResponse'. 
+2020-07-19 14:53:40.2593|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.PosController.AcknowledgePO (WebApi) in 61689.5487ms 
+2020-07-19 14:53:40.2637|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.PosController.AcknowledgePO (WebApi)' 
+2020-07-19 14:53:40.2798|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 61851.6391ms 200 application/json; charset=utf-8 
+2020-07-19 14:53:40.3022|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM1C2JHNC68B", Request id "0HM1C2JHNC68B:00000002": the application completed without reading the entire request body. 

@@ -25,7 +25,7 @@ namespace DAL.Models
         public int PackingSlipId { get; set; }
         public string PackingSlipNo { get; set; }
         public int PackingSlipDetailId { get; set; }
-        public int LineNumber { get; set; }
+        public string LineNumber { get; set; }
         public int PartId { get; set; }
         public string PartCode { get; set; }
         public int Qty { get; set; }

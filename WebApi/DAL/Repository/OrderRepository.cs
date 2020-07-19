@@ -99,7 +99,7 @@ namespace DAL.Repository
                         orderDetail.OrderId = Convert.ToInt64(dataReader1["OrderId"]);
                         orderDetail.PartId = Convert.ToInt64(dataReader1["PartId"]);
                         orderDetail.BlanketPOId = Convert.ToInt64(dataReader1["BlanketPOId"]);
-                        orderDetail.LineNumber = Convert.ToInt32(dataReader1["LineNumber"]);
+                        orderDetail.LineNumber = Convert.ToString(dataReader1["LineNumber"]);
                         orderDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
                         orderDetail.ShippedQty = Convert.ToInt32(dataReader1["ShippedQty"]);
                         orderDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
@@ -187,7 +187,7 @@ namespace DAL.Repository
                     orderDetail.OrderId = Convert.ToInt64(dataReader1["OrderId"]);
                     orderDetail.PartId = Convert.ToInt64(dataReader1["PartId"]);
                     orderDetail.BlanketPOId = Convert.ToInt64(dataReader1["BlanketPOId"]);
-                    orderDetail.LineNumber = Convert.ToInt32(dataReader1["LineNumber"]);
+                    orderDetail.LineNumber = Convert.ToString(dataReader1["LineNumber"]);
                     orderDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
                     orderDetail.ShippedQty = Convert.ToInt32(dataReader1["ShippedQty"]);
                     orderDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
@@ -267,7 +267,7 @@ namespace DAL.Repository
                     orderDetail.OrderId = Convert.ToInt64(dataReader1["OrderId"]);
                     orderDetail.PartId = Convert.ToInt64(dataReader1["PartId"]);
                     orderDetail.BlanketPOId = Convert.ToInt64(dataReader1["BlanketPOId"]);
-                    orderDetail.LineNumber = Convert.ToInt32(dataReader1["LineNumber"]);
+                    orderDetail.LineNumber = Convert.ToString(dataReader1["LineNumber"]);
                     orderDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
                     orderDetail.ShippedQty = Convert.ToInt32(dataReader1["ShippedQty"]);
                     orderDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);

@@ -88,9 +88,9 @@ namespace WebApi.Services
             await this._poRepository.AcknowledgePoAsync(po);
         }
 
-        public async Task AcknowledgePoAsync(int poId)
+        public async Task AcknowledgePoAsync(int poId,string accessId)
         {
-            await this._poRepository.AcknowledgePoAsync(poId);
+            await this._poRepository.AcknowledgePoAsync(poId, accessId);
         }
     }
 }

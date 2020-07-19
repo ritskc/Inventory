@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Xml;
 using DAL.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.HttpSys;
+using Newtonsoft.Json;
 using WebApi.IServices;
 
 namespace WebApi.Controllers
@@ -52,18 +56,27 @@ namespace WebApi.Controllers
 
         // GET api/values/5
         [HttpGet("{companyId}/{id}")]
-        public async Task<ActionResult<Part>> Get(int companyId, int id)
+        public async Task<ActionResult<Part>> Get(int companyId, string id)
         {
             try
-            {               
-                var result = await this._partService.GetPartAsync(id);
-
-                if (result == null)
+            {
+                if (id.ToString() == "stock")
                 {
-                    return NotFound();
+                    var result1 = await this._partService.GetAllPartsStocksAsync(companyId);
+                    return Ok(result1);
                 }
 
-                return result;
+                else
+                {
+                    var result = await this._partService.GetPartAsync(Convert.ToInt64(id));
+
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return result;
+                }
             }
             catch(Exception ex)
             {
@@ -72,6 +85,8 @@ namespace WebApi.Controllers
 
         }
 
+
+        
         [HttpGet("{companyId}/{type}/{typeId}")]
         // [HttpGet("{companyId}/{type}/{partId}")]
         public async Task<ActionResult> GetPartsByType(int companyId,string type, int typeId)
@@ -128,7 +143,7 @@ namespace WebApi.Controllers
                 return StatusCode(500, ex.ToString());
             }
 
-        }
+        }        
 
         //// PUT api/values/5
         //[HttpGet("{companyId}/{type}/{partId}")]
@@ -152,7 +167,7 @@ namespace WebApi.Controllers
         //            return Ok(result);
         //        }
         //        return BadRequest();
-                
+
         //    }
         //    catch (Exception ex)
         //    {
@@ -301,11 +316,16 @@ namespace WebApi.Controllers
         }
 
         // PUT api/values/5
-        [HttpPost("{companyId}/{partId}/{direction}/{qty}/{note}")]
+        [HttpPost("{companyId}/{partId}/{type}/{direction}/{qty}/{note}")]
         public async Task<IActionResult> Put(int companyId, string type, int partId, int qty,string direction, string note)
         {
             try
-            {                
+            {  if(type == "monthly")
+                {
+                    if (direction.ToLower() == BusinessConstants.DIRECTION.IN.ToString().ToLower() || direction.ToLower() == BusinessConstants.DIRECTION.OUT.ToString().ToLower())
+                        await this._partService.UpdateMonthlyQtyInHandByPartIdAsync(companyId, partId, qty, direction, note);
+                    return Ok();
+                }
                 if (direction.ToLower() == BusinessConstants.DIRECTION.IN.ToString().ToLower() || direction.ToLower() == BusinessConstants.DIRECTION.OUT.ToString().ToLower())
                     await this._partService.UpdateQtyInHandByPartIdAsync(companyId, partId, qty,direction,note);
                 else
