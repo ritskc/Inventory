@@ -25,6 +25,7 @@ export class PurchaseReportComponent implements OnInit {
   private columns: DataColumn[] = [];
   private from: Date;
   private to: Date;
+  private showSummary: boolean = false;
 
   constructor(private companyService: CompanyService, private customerService: CustomerService, private supplierService: SupplierService, 
     private loaderService: httpLoaderService, private toastr: ToastrManager
@@ -81,7 +82,7 @@ export class PurchaseReportComponent implements OnInit {
     }
 
     this.loaderService.show();
-    this.supplierService.getPurchaseReport(this.currentlyLoggedInCompany, this.from.toString(), this.to.toString())
+    this.supplierService.getPurchaseReport(this.currentlyLoggedInCompany, this.from.toString(), this.to.toString(), this.showSummary)
         .subscribe((result) => {
           this.unfilteredData = result;
           this.filterPurchaseReportForSupplierSelection();

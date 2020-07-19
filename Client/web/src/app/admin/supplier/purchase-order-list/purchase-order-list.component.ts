@@ -46,15 +46,16 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns = [];
     this.gridColumns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Email", value: "email", minWidth: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Ack Date", value: "acknowledgementDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closing", value: "closingDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Ack", value: "isAcknowledged", isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Closed", value: "closed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editPurchaseOrder', icon: 'fa fa-edit' }),
-      new DataColumnAction({ actionText: 'PO', actionStyle: ClassConstants.Primary, event: 'printPurchaseOrder', icon: 'fa fa-print' }),
+      new DataColumnAction({ actionText: 'Supplier PO', actionStyle: ClassConstants.Primary, event: 'printPurchaseOrder', icon: 'fa fa-print' }),
+      new DataColumnAction({ actionText: 'Acknowledge', actionStyle: ClassConstants.Primary, event: 'acknowledgePurchaseOrder' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deletePurchaseOrder', icon: 'fa fa-trash' })
     ] }));
   }
@@ -63,8 +64,10 @@ export class PurchaseOrderListComponent implements OnInit {
     this.gridColumns = [];
     this.gridColumns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", isLink: true, sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Ack Date", value: "partAcknowledgementDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Part Code", value: "partCode", columnName: 'PartCode' }) );
     this.gridColumns.push( new DataColumn({ headerText: "Part Desc", value: "partDescription", columnName: 'PartDescription', minWidth: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Qty", value: "qty", customStyling: 'right' }) );
@@ -94,12 +97,15 @@ export class PurchaseOrderListComponent implements OnInit {
         .subscribe((purchaseOrders) => {
           this.purchaseOrderViewModels = [];
           this.purchaseOrders = this.supplierId > 0? purchaseOrders.filter(p => p.supplierId == this.supplierId): purchaseOrders;
-          this.purchaseOrders = this.showOnlyOpenOrders ? this.purchaseOrders.filter(p => p.isClosed === false): this.purchaseOrders;
+          this.purchaseOrders = this.showOnlyOpenOrders && !this.showFullDetails ? this.purchaseOrders.filter(p => p.isClosed === false): this.purchaseOrders;
           this.purchaseOrders = this.showAcknowledgedOrders ? this.purchaseOrders.filter(p => p.isAcknowledged == true): this.purchaseOrders;
 
           this.purchaseOrders.forEach(order => {
             if (this.showFullDetails) {
               order.poDetails.forEach(detail => {
+                if (this.showOnlyOpenOrders && detail.isClosed == true)
+                  return;
+
                 var viewModel = new SupplierPurchaseOrderViewModel();
                 viewModel.id = order.id;
                 viewModel.supplierId = order.supplierId;
@@ -107,7 +113,7 @@ export class PurchaseOrderListComponent implements OnInit {
                 viewModel.poNo = order.poNo;
                 viewModel.email = order.emailIds;
                 viewModel.poDate = order.poDate;
-                viewModel.dueDate = order.dueDate;
+                viewModel.dueDate = detail.dueDate;
                 viewModel.lateOrder = viewModel.dueDate && DateHelper.convertToDateTime(viewModel.dueDate) < new Date()? true: false;
                 viewModel.closingDate = order.closingDate;
                 viewModel.closed = detail.isClosed;
@@ -121,6 +127,8 @@ export class PurchaseOrderListComponent implements OnInit {
                 viewModel.inTransitQty = detail.inTransitQty;
                 viewModel.forceClosed = detail.isForceClosed;
                 viewModel.openQty = detail.qty - (viewModel.inTransitQty + viewModel.receivedQty);
+                viewModel.invoiceNo = detail.invoiceNo;
+                viewModel.partAcknowledgementDate = detail.partAcknowledgementDate;
                 this.purchaseOrderViewModels.push(viewModel);
               });
             } else {
@@ -132,6 +140,7 @@ export class PurchaseOrderListComponent implements OnInit {
                 viewModel.email = order.emailIds;
                 viewModel.poDate = order.poDate;
                 viewModel.dueDate = order.dueDate;
+                viewModel.acknowledgementDate = order.acknowledgementDate;
                 viewModel.closingDate = order.closingDate;
                 viewModel.closed = order.isClosed;
                 viewModel.isAcknowledged = order.isAcknowledged;
@@ -189,6 +198,15 @@ export class PurchaseOrderListComponent implements OnInit {
         var appConfig = new AppConfigurations();
         this.printDocument.next(`${appConfig.reportsUri}/supplierpo.aspx?id=${data.id}`);
         break;
+      case 'acknowledgePurchaseOrder':
+        this.loaderService.show();
+        this.service.acknowledgePurchaseOrder(data)
+            .subscribe(
+              () => this.toastr.successToastr('Purhcase order successfully acknowledged!!'),
+              (error) => this.toastr.errorToastr(error.error),
+              () => this.loaderService.hide()
+            );
+        break;
     }
   }
 
@@ -222,6 +240,7 @@ class SupplierPurchaseOrderViewModel {
   email: string;
   poDate: string;
   dueDate: string;
+  acknowledgementDate: string;
   closingDate: string;
   closed: boolean;
   partCode: string;
@@ -236,4 +255,6 @@ class SupplierPurchaseOrderViewModel {
   isAcknowledged: boolean;
   forceClosed: boolean;
   openQty: number;
+  invoiceNo: string;
+  partAcknowledgementDate: string;
 }

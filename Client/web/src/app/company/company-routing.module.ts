@@ -24,7 +24,14 @@ const routes: Routes = [{
       component: CompanyListComponent
     },
     {
-      path: 'shipment-list',
+      path: 'shipment-list/shipment',
+      component: ShipmentListComponent,
+      data: {
+        title: 'View Shipments'
+      }
+    },
+    {
+      path: 'shipment-list/barcode',
       component: ShipmentListComponent,
       data: {
         title: 'View Shipments'

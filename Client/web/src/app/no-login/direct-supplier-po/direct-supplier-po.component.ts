@@ -28,13 +28,14 @@ export class DirectSupplierPoComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Sr No", value: "srNo" }) );
     this.columns.push( new DataColumn({ headerText: "Part Code", value: "partCode" }) );
     this.columns.push( new DataColumn({ headerText: "Part Code", value: "partDescription" }) );
-    this.columns.push( new DataColumn({ headerText: "Quantity", value: "qty" }) );
-    this.columns.push( new DataColumn({ headerText: "Ack Quantity", value: "ackQty", isEditable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice" }) );
-    this.columns.push( new DataColumn({ headerText: "Total", value: "total" }) );
+    this.columns.push( new DataColumn({ headerText: "Quantity", value: "qty", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Ack Quantity", value: "ackQty", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Total", value: "total", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", isEditableDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Reference", value: "referenceNo" }) );
     this.columns.push( new DataColumn({ headerText: "Notes", value: "note" }) );
+    this.columns.push( new DataColumn({ headerText: "Closed", value: "isClosed", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
   }
 
   getDirectSupplierPurchaseOrder(id: string) {
@@ -58,7 +59,7 @@ export class DirectSupplierPoComponent implements OnInit {
           alert('Order acknowledged successfully!');
         }, (error) => {
           this.httpLoaderService.hide();
-          console.log(error)
+          alert(error.error);
         },
         () => this.httpLoaderService.hide());
   }
@@ -68,6 +69,7 @@ export class DirectSupplierPoComponent implements OnInit {
   }
 
   private transformData() {
+    this.supplerPurchaseOrder.poDetails.sort((a, b) => a.srNo > b.srNo ? 1: -1);
     this.supplerPurchaseOrder.poDetails.forEach(item => {
       item.partCode = item.part.code;
       item.partDescription = item.part.description;

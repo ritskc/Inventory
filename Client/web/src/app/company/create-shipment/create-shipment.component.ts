@@ -136,6 +136,7 @@ export class CreateShipmentComponent implements OnInit {
           if (order.customerId == this.selectedCustomer.id && !order.isClosed)
             this.customerPurchaseOrders.push(order);
         });
+        this.customerPurchaseOrders.sort((a, b) => a.poDate > b.poDate? 1: -1);
       }, (error) => this.toastr.errorToastr(error),
       () => {
         this.orderId = -1;
@@ -275,6 +276,13 @@ export class CreateShipmentComponent implements OnInit {
       selectedPartCode = this.partCode;
     }
     var selectedPartForAdd = this.parts.find(p => p.id == selectedPartCode);
+
+    if (selectedPartForAdd.isDoublePricingAllowed && this.quantity > selectedPartForAdd.currentPricingInEffectQty) {
+      if (!confirm('The quantity you are adding exceeds effective pricing quantity. Are you sure to add?')) {
+        return;
+      }
+    }
+
     packagingSlipDetail.partId = selectedPartCode;
     packagingSlipDetail.partDescription = selectedPartForAdd.description;
     packagingSlipDetail.orderNo = this.blankOrder? this.OrderNo : this.customerPurchaseOrders.find(o => o.id == this.orderId).poNo;

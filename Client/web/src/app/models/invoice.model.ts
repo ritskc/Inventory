@@ -38,6 +38,7 @@ export class Invoice {
     companyDetail: Company;
     supplierDetail: Supplier;
     supplierInvoiceDetails: InvoiceDetail[];
+    supplierInvoiceGroupDetails: any;
     dontImpactPO: boolean;
 }
 

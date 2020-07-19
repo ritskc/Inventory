@@ -123,7 +123,7 @@ if (environment.isSupplier) {
         },
         {
           name: 'Shipments',
-          url: '/companies/shipment-list',
+          url: '/companies/shipment-list/shipment',
           icon: 'icon-puzzle'
         },
         {
@@ -153,7 +153,8 @@ if (environment.isSupplier) {
         },
         {
           name: 'Barcode',
-          url: '/barcode',
+          //url: '/barcode',
+          url: '/companies/shipment-list/barcode',
           icon: 'icon-puzzle'
         },
         // {
@@ -168,25 +169,25 @@ if (environment.isSupplier) {
       name: 'Admin',
       children: [
         {
-          name: 'Reports',
+          name: 'Privileges',
           url: '/usermanagement/reports',
           icon: 'icon-user'
         },
         {
           name: 'User',
-          url: '/admin',
+          url: '/usermanagement/users',
           icon: 'icon-user'
         },
-        {
-          name: 'Upload',
-          url: '/upload',
-          icon: 'icon-user'
-        },
-        {
-          name: 'Privilages',
-          url: '/admin',
-          icon: 'icon-user'
-        }
+        // {
+        //   name: 'Upload',
+        //   url: '/upload',
+        //   icon: 'icon-user'
+        // },
+        // {
+        //   name: 'Reports',
+        //   url: '/usermanagement/reports-management',
+        //   icon: 'icon-user'
+        // }
       ]
     },
   

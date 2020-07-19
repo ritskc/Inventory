@@ -11,4 +11,7 @@ export class MasterShipment {
     updatedDate: string = '';
     isPOSUploaded: boolean = false;
     packingSlips: Shipment[] = [];
+    isShipmentVerified: boolean = false;
+    allowScanning:boolean = false
+    packingSlipBoxDetails: [] = [];
 }

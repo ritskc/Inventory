@@ -30,12 +30,15 @@ export class Shipment {
     isPOSUploaded: boolean;
     isMasterPackingSlip: boolean;
     isRepackage: boolean;
+    isShipmentVerified: boolean = false;
+    allowScanning: boolean = false;
 }
 
 export class PackingSlipDetail {
 
     constructor() {}
 
+    id: number = 0;
     isBlankOrder: boolean = false;
     orderId: number = 0;
     orderDetailId: number = 0;
@@ -59,4 +62,6 @@ export class PackingSlipDetail {
     srNo: number = 0;
     partDetail: Part;
     SupplierInvoiceOpenQty: number = 0;
+    hasPartQuantityExceedingLimit: boolean = false;
+    packingSlipBoxDetails: any[] = [];
 }

@@ -58,10 +58,10 @@ export class InvoiceListComponent implements OnInit {
     if (!this.invoiceForm.get('showDetails').value) {
       this.columns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false, minWidth: true }) );
       this.columns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: false, minWidth: true, isLink: false }) );
-      this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true }) );
+      this.columns.push( new DataColumn({ headerText: "PO", value: "poNo", sortable: false, minWidth: true, customStyling: 'column-width-50' }) );
       this.columns.push( new DataColumn({ headerText: "Inv Date", value: "invoiceDate", sortable: true, isEditableDate: true }) );
       this.columns.push( new DataColumn({ headerText: "ETA", value: "eta", sortable: true, isEditableDate: true }) );
-      this.columns.push( new DataColumn({ headerText: "Rcvd On", value: "receivedDate", isDate: true, sortable: true }) );
+      this.columns.push( new DataColumn({ headerText: "Rcvd On", value: "receivedDate", isDate: true, sortable: true, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Rcvd", value: "isInvoiceReceived", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
       this.columns.push( new DataColumn({ headerText: "Inv", isActionColumn: true, customStyling: 'center', actions: [
         new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadInvoice', icon: 'fa fa-download', showOnlyIf: 'data["invoicePath"] != ""' }),
@@ -99,9 +99,9 @@ export class InvoiceListComponent implements OnInit {
       this.columns.push( new DataColumn({ headerText: "Qty", value: "quantity", sortable: false, minWidth: true, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Price", value: "rate", sortable: false, minWidth: true, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Total", value: "amount", sortable: false, minWidth: true, customStyling: 'right' }) );
-      this.columns.push( new DataColumn({ headerText: "Adj Qty", value: "amount", sortable: false, minWidth: true, customStyling: 'right' }) );
-      this.columns.push( new DataColumn({ headerText: "PO's", value: "purchaseOrderNumbers", sortable: false, minWidth: true, customStyling: 'right' }) );
-      this.columns.push( new DataColumn({ headerText: "PO Qty's", value: "purchaseOrderQty", sortable: false, minWidth: true, customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Adj Qty", value: "adjustedQty", sortable: false, minWidth: true, customStyling: 'right' }) );
+      // this.columns.push( new DataColumn({ headerText: "PO's", value: "purchaseOrderNumbers", sortable: false, minWidth: true, customStyling: 'right' }) );
+      // this.columns.push( new DataColumn({ headerText: "PO Qty's", value: "purchaseOrderQty", sortable: false, minWidth: true, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Excess Qty", value: "excessQty", sortable: false, minWidth: true, customStyling: 'right' }) );
     }
   }
@@ -121,7 +121,7 @@ export class InvoiceListComponent implements OnInit {
           (invoices) => {
             var supplierId = this.invoiceForm.get('supplierList').value;
             this.invoices = supplierId > 0 ? invoices.filter(s => s.supplierId == supplierId): invoices;
-            this.filteredInvoices = this.invoices;
+            this.filteredInvoices = this.invoices.sort((a, b) => (a.invoiceDate > b.invoiceDate? -1: 1));
           },
           (error) => console.log(error),
           () => { this.loaderService.hide(); }
@@ -145,21 +145,17 @@ export class InvoiceListComponent implements OnInit {
       this.filteredInvoices = [];
 
       invoicesForDetails.forEach(invoice => {
-        invoice.supplierInvoiceDetails.forEach(detail => {
+        invoice.supplierInvoiceGroupDetails.forEach(detail => {
           var viewModel = new InvoiceListDetailsViewModel();
           viewModel.invoiceNo = invoice.invoiceNo;
-          viewModel.poNo = invoice.poNo;
+          viewModel.poNo = detail.poNo;
           viewModel.supplierName = invoice.supplierName;
           viewModel.partCode = detail.partDetail.code;
           viewModel.quantity = detail.qty;
           viewModel.rate = detail.price;
           viewModel.amount = detail.total;
-          viewModel.adjustedQty = detail.adjustedQty;
+          viewModel.adjustedQty = detail.adjustedPOQty;
           viewModel.excessQty = detail.excessQty;
-          detail.supplierInvoicePoDetails.forEach(item => {
-            viewModel.purchaseOrderNumbers += `${item.poNo}, `;
-            viewModel.purchaseOrderQty += `${item.qty}, `;
-          });
           viewModel.purchaseOrderNumbers = viewModel.purchaseOrderNumbers.substring(0, viewModel.purchaseOrderNumbers.length - 2);
           viewModel.purchaseOrderQty = viewModel.purchaseOrderQty.substring(0, viewModel.purchaseOrderQty.length - 2);
           this.filteredInvoices.push(viewModel);

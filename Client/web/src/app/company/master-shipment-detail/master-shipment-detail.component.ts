@@ -53,7 +53,7 @@ export class MasterShipmentDetailComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Shipped Via", value: "shipVia", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "isInvoiceCreated", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
-    this.columns.push( new DataColumn({ headerText: "Actions", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+    this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'removeShipment', icon: 'fa fa-trash' })
     ] }) );
   }
@@ -71,6 +71,7 @@ export class MasterShipmentDetailComponent implements OnInit {
     this.shipmentService.getAllShipments(this.currentlyLoggedInCompany)
         .subscribe(shipments => {
           this.shipments = shipments.filter(s => s.customerId == this.selectedCustomer.id && !s.isPOSUploaded);
+          this.shipments = this.shipments.sort((a, b) => a.packingSlipNo > b.packingSlipNo? 1: -1);
         }, (error) => this.toastr.errorToastr('Error while fetching shipments'),
         () => this.httpLoaderService.hide());
   }

@@ -126,7 +126,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-6 col-md-6">
+            <div class="col-xs-4 col-md-4">
               <div class="form-group standard-top-margin">
                 <label>Invoice Type</label>
                 <select class="form-control" formControlName="invoicingtypeid" [(ngModel)]="customer.invoicingtypeid">
@@ -140,13 +140,19 @@
                 </div>
               </div>
             </div>
-            <div class="col-xs-6 col-md-6">
+            <div class="col-xs-4 col-md-4">
               <div class="form-group standard-top-margin">
-                <label>Repackagin Charge</label>
+                <label>Repacking Charge</label>
                 <input type="text" formControlName="rePackingCharge" class="form-control" [(ngModel)]="customer.rePackingCharge" [ngClass]="{ 'is-invalid': submitted && f.rePackingCharge.errors }"/>
                 <div *ngIf="submitted && f.rePackingCharge.errors" class="invalid-feedback">
                   <div *ngIf="f.rePackingCharge.errors.required">Repackaging charge is required</div>
                 </div>
+              </div>
+            </div>
+            <div class="col-xs-4 col-md-4">
+              <div class="form-group standard-top-margin">
+                <label>Repacking PO No</label>
+                <input type="text" formControlName="rePackingPoNo" class="form-control" [(ngModel)]="customer.rePackingPoNo"/>
               </div>
             </div>
           </div>

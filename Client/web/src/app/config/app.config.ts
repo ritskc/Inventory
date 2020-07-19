@@ -25,14 +25,20 @@ export class AppConfigurations {
     reportsUri: string;
     entityTracker: string;
     directSupplierPo: string;
+    privilegesUri: string;
+    userReportsUri: string;
 
     initialize() {
         if (environment.production) {
-            this.apiServerHost = 'http://po.harisons.com/api';
-            this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/';
+            // this.apiServerHost = 'http://po.harisons.com/api';
+            // this.reportsUri = 'http://po.harisons.com/reports/ReportViewer/';
+            this.apiServerHost = 'https://invoice.harisons.com/api';
+            this.reportsUri = 'https://invoice.harisons.com/reports/ReportViewer/';
         } else {
-            this.apiServerHost = 'https://questapi.yellow-chips.com';
-            this.reportsUri = 'https://renovate.yellow-chips.com/ReportViewer/';
+            // this.apiServerHost = 'https://questapi.yellow-chips.com';
+            // this.reportsUri = 'https://renovate.yellow-chips.com/ReportViewer/';
+            this.apiServerHost = 'http://cf.globalexportech.com/api';
+            this.reportsUri = 'http://cf.globalexportech.com/reports/';
         }
 
         this.fileApiUri = `${this.apiServerHost}/File`;
@@ -52,6 +58,8 @@ export class AppConfigurations {
         this.customerInvoiceUri =  '/Invoices';
         this.entityTracker = '/EntityTracker';
         this.directSupplierPo = '/SupplierAccess';
+        this.privilegesUri = '/priviledges';
+        this.userReportsUri = '/UserReports'
         this.barcodeUri = 'https://quest.yellow-chips.com/static/barcode.html?';
     }
 }

@@ -23,6 +23,7 @@ export class Customer {
     fob: string;
     terms: string;
     rePackingCharge: number;
+    rePackingPoNo: string = ''
     shipVia: string;
     invoicingtypeid: number;
     endCustomerName: string;

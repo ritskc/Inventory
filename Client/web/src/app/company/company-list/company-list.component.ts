@@ -35,7 +35,7 @@ export class CompanyListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Address", value: "address", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Phone No", value: "phoneNo", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Email", value: "eMail", sortable: true }) );
-    this.columns.push( new DataColumn({ headerText: "Actions", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+    this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editCompany', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deleteCompany', icon: 'fa fa-trash' })
     ] }) );

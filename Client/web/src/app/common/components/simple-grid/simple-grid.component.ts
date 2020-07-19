@@ -47,6 +47,9 @@ export class SimpleGridComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
     this.filterColumns();
+    this.setPageNo(1);
+    this.calculatePages();
+    this.createRange();
   }
 
   @Input() 
@@ -106,6 +109,10 @@ export class SimpleGridComponent implements OnInit, OnChanges {
     this.pageSizeSelected();
   }
 
+  toggleColumns() {
+    
+  }
+
   isNotSortedOnThisColumn(columnName: string) {
     return columnName != this.currentSortColumnName;
   }
@@ -116,6 +123,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
 
   filterColumns() {
     var privileges = JSON.parse(localStorage.getItem('privileges'));
+    if (!privileges) return;
     if (privileges.isSuperAdmin || this.ignoreColumnFiltering) return;
 
     var clonedNavItems = JSON.parse(JSON.stringify(navItems));
@@ -144,7 +152,7 @@ export class SimpleGridComponent implements OnInit, OnChanges {
     if (selectedMenuItem && selectedMenuItem.userActions && selectedMenuItem.userActions.length > 0) {
       this.addRequired = selectedMenuItem.userActions.find(m => m.action == 'Add' && m.isPermitted == true) != undefined;
       this.exportRequired = selectedMenuItem.userActions.find(m => m.action == 'Export' && m.isPermitted == true) != undefined;
-      var actionColumns = this.columns.find(c => c.isActionColumn == true);
+      var actionColumns = this.columns.find(c => c.isActionColumn == true && (c.headerText == 'Action'));
       if (actionColumns && actionColumns.actions.length > 0) {
         for(var index = 0; index < actionColumns.actions.length; index++)
           if (!selectedMenuItem.userActions.find(m => m.action == actionColumns.actions[index].actionText && m.isPermitted == true)) {
@@ -156,7 +164,8 @@ export class SimpleGridComponent implements OnInit, OnChanges {
   }
 
   export() {
-    this.jsonToCsvExporter.export(`Data Export ${Date.now()}`, 'csv', this._data, this.columns);
+    var filtered = this._data.filter(d => JSON.stringify(d).toUpperCase().indexOf(this.searchText.toUpperCase()) > -1);
+    this.jsonToCsvExporter.export(`Data Export ${Date.now()}`, 'csv', filtered, this.columns);
   }
 
   actionButtonClicked(eventName: string, data: any) {

@@ -9,7 +9,7 @@ const routes: Routes = [{
     title: 'Barcode'
   }, 
   children: [{
-    path: '',
+    path: 'scan/:id',
     component: BarcodeComponent
   }, {
     path: 'qrcode',

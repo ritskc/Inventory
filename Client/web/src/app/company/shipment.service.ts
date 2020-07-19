@@ -31,6 +31,30 @@ export class ShipmentService {
     return this.apiService.delete(shipmentId, this.config.Settings.apiServerHost + this.config.Settings.shipmentUri);
   }
 
+  verifyShipment(shipment: Shipment) {
+    return this.apiService.post(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/verifyshipment/${shipment.id}`);
+  }
+
+  undoVerifyShipment(shipment: Shipment) {
+    return this.apiService.put(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/undoverifyshipment/${shipment.id}`);
+  }
+
+  allowScanning(shipment: Shipment) {
+    return this.apiService.put(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/allowscanning/${shipment.id}`);
+  }
+
+  autoScanning(shipment: Shipment) {
+    return this.apiService.put(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/autoscan/${shipment.id}`);
+  }
+
+  completeScanning(shipment: any, box: string, isMasterShipment: boolean) {
+    if (isMasterShipment) {
+      return this.apiService.put(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.masterShipmentUri}/scan/${box}`);
+    } else {
+      return this.apiService.put(shipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.shipmentUri}/scan/${box}`);
+    }
+  }
+
   getLatestShipment(companyId: number, date: string): Observable<any> {
     return this.apiService.get(`${ this.config.Settings.apiServerHost }/${ this.config.Settings.entityTracker }/packing_slip/${ companyId }/${ date }`);
   }
@@ -56,5 +80,9 @@ export class ShipmentService {
 
   removeMasterPackingSlip(masterShipmentId: number) {
     return this.apiService.delete(masterShipmentId, this.config.Settings.apiServerHost + this.config.Settings.masterShipmentUri);
+  }
+
+  allowMasterPackingSlipScanning(masterShipment: MasterShipment) {
+    return this.apiService.put(masterShipment, `${this.config.Settings.apiServerHost}/${this.config.Settings.masterShipmentUri}/allowscanning/${masterShipment.id}`);
   }
 }

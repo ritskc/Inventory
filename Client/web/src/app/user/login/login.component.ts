@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { User } from '../../models/user.model';
 import { environment } from '../../../environments/environment';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   password: string = '';
   user: User
   
-  constructor(private router: Router, private authService: AuthService) { 
+  constructor(private router: Router, private authService: AuthService, private toastr: ToastrManager) { 
     this.user = new User();
   }
 
@@ -41,7 +42,21 @@ export class LoginComponent implements OnInit {
       } else {
         this.invalidCredentials = true;
       }
-    })
+    }, (error) => {
+      this.toastr.errorToastr(error.error.message);
+    });
+  }
+
+  forgotPassword() {
+    if (!this.loginname) {
+      this.toastr.warningToastr('Please enter the username to continue');
+      return;
+    }
+    this.authService.forgotPassword(this.loginname)
+        .subscribe(
+          () => this.toastr.successToastr('Your password has been emailed. Please check.'),
+          (error) => this.toastr.errorToastr(error.error)
+        );
   }
 
   handleKeyDown(event) {

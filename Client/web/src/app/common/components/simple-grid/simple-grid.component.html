@@ -56,6 +56,7 @@
                         <input type="text" style="text-align: right; width: 60px;" [ngModel]="row[item.value] | date: 'MM/dd/yyyy'" (blur)="row[item.value]=transformDate($event.target.value)"/>
                       </span>
                       <span *ngIf="item.isBoolean">
+                        <span *ngIf="item.checkboxText">{{item.checkboxText}}</span>
                         <input type="checkbox" [checked]="row[item.value]" (change)="checkboxChanged(row, item, row[item.value])" [attr.disabled]="item.isDisabled? '': null"/>
                       </span>
                       <div *ngIf="item.isActionColumn" class="center">

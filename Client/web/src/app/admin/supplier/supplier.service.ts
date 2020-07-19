@@ -56,11 +56,18 @@ export class SupplierService {
     return this.apiService.get(`${this.configService.Settings.apiServerHost}/${this.configService.Settings.entityTracker}/po/${companyId}/${ date }`)
   }
 
-  getPurchaseReport(companyId: number, from: string, to: string): Observable<any[]> {
+  getPurchaseReport(companyId: number, from: string, to: string, showSummary: boolean): Observable<any[]> {
+    if (showSummary) {
+      return this.apiService.get(`${this.configService.Settings.apiServerHost}/reports/purchasesummary/${companyId}/${ from }/${ to }`);
+    }
     return this.apiService.get(`${this.configService.Settings.apiServerHost}/reports/purchase/${companyId}/${ from }/${ to }`);
   }
 
   getSupplierOpenInvoice(companyId: number, partId: number): Observable<any> {
     return this.apiService.get(`${this.configService.Settings.apiServerHost}/${ this.configService.Settings.invoiceUri }/openinvoice/${ companyId }/${ partId }`);
+  }
+
+  acknowledgePurchaseOrder(purchaseOrder: PurchaseOrder) {
+    return this.apiService.put(purchaseOrder, this.configService.Settings.apiServerHost + this.configService.Settings.posUri + `/acknowledge/${ purchaseOrder.id }`);
   }
 }
