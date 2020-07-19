@@ -100,8 +100,7 @@ export class InvoiceListComponent implements OnInit {
       this.columns.push( new DataColumn({ headerText: "Price", value: "rate", sortable: false, minWidth: true, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Total", value: "amount", sortable: false, minWidth: true, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Adj Qty", value: "adjustedQty", sortable: false, minWidth: true, customStyling: 'right' }) );
-      // this.columns.push( new DataColumn({ headerText: "PO's", value: "purchaseOrderNumbers", sortable: false, minWidth: true, customStyling: 'right' }) );
-      // this.columns.push( new DataColumn({ headerText: "PO Qty's", value: "purchaseOrderQty", sortable: false, minWidth: true, customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Adj PO Price", value: "adjustedPOPrice", sortable: false, minWidth: true, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Excess Qty", value: "excessQty", sortable: false, minWidth: true, customStyling: 'right' }) );
     }
   }
@@ -157,6 +156,7 @@ export class InvoiceListComponent implements OnInit {
           viewModel.adjustedQty = detail.adjustedPOQty;
           viewModel.excessQty = detail.excessQty;
           viewModel.purchaseOrderNumbers = viewModel.purchaseOrderNumbers.substring(0, viewModel.purchaseOrderNumbers.length - 2);
+          viewModel.adjustedPOPrice = detail.adjustedPOPrice;
           viewModel.purchaseOrderQty = viewModel.purchaseOrderQty.substring(0, viewModel.purchaseOrderQty.length - 2);
           this.filteredInvoices.push(viewModel);
         });
@@ -334,6 +334,7 @@ export class InvoiceListDetailsViewModel {
   amount: number;
   adjustedQty: number;
   purchaseOrderNumbers: string = '';
+  adjustedPOPrice: number;
   purchaseOrderQty: string = '';
   excessQty: number;
 }

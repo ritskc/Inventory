@@ -202,10 +202,11 @@ export class PurchaseOrderListComponent implements OnInit {
         this.loaderService.show();
         this.service.acknowledgePurchaseOrder(data)
             .subscribe(
-              () => this.toastr.successToastr('Purhcase order successfully acknowledged!!'),
+              (result: any) => {
+                this.router.navigateByUrl(`/direct-supplier-po/${ result.accessId }`);
+              }, 
               (error) => this.toastr.errorToastr(error.error),
-              () => this.loaderService.hide()
-            );
+              () => this.loaderService.hide());
         break;
     }
   }

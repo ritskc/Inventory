@@ -82,6 +82,7 @@ export class InvoiceDetail {
     price: number = 0;
     total: number = 0;
     adjustedPOQty: number = 0;
+    adjustedPOPrice: number = 0;
     excessQty: number = 0;
     boxNo: number = 0;
     partDetail: Part;

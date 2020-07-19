@@ -40,8 +40,9 @@ export class PartsService {
     return this.apiService.put<Part>(part, `${ this.configService.Settings.apiServerHost }${ this.configService.Settings.partsUri }/${ companyId }/${ partId }/${ quantity }`);
   }
 
-  adjustPart(partId: number, direction: string, notes: string, companyId: number, quantity: number) {
-    return this.apiService.post<Part>(null, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }/${ companyId }/${ partId }/${ direction }/${ quantity }/${ notes }`);
+  adjustPart(partId: number, direction: string, notes: string, companyId: number, quantity: number, monthlyCustomer: boolean) {
+    var monthlyCustomerText = monthlyCustomer ? 'monthly': 'regular';
+    return this.apiService.post<Part>(null, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }/${ companyId }/${ partId }/${ monthlyCustomerText }/${ direction }/${ quantity }/${ notes }`);
   }
 
   getPartsStatus(companyId: number, partId: number, type: string): Observable<any> {

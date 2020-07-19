@@ -60,15 +60,12 @@ export class InventoryPartsListComponent implements OnInit {
       this.columns.push( new DataColumn({ headerText: "Safe Qty", value: "SafeQty", columnName: 'SafeQty', sortable: false, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Supp Open PO", value: "SupplierOpenPoQty", columnName: 'SupplierOpenPO', customStyling: 'right', sortable: false, hasAdditionalAction: true, additionalActionName: 'showSupplierOpenPO' }) );
       this.columns.push( new DataColumn({ headerText: "Min Qty", value: "MinQty", columnName: 'MinQty', sortable: false, customStyling: 'right' }) );
-      this.columns.push( new DataColumn({ headerText: "Max Qty (Lbs)", value: "MaxQty", columnName: 'MaxQty', sortable: false, customStyling: 'right' }) );
+      this.columns.push( new DataColumn({ headerText: "Max Qty", value: "MaxQty", columnName: 'MaxQty', sortable: false, customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Cust Price", value: "customerPrice", customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Supp Price", value: "supplierPrice", customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Double Price", value: "isDoublePricingAllowed", isBoolean: true, customStyling: 'center', isDisabled: true }) );
       this.columns.push( new DataColumn({ headerText: "Future Price", value: "futurePrice", customStyling: 'right' }) );
       this.columns.push( new DataColumn({ headerText: "Efctv Price", value: "currentPricingInEffectQty", customStyling: 'right' }) );
-      this.columns.push( new DataColumn({ headerText: "Action", columnName: 'Action', value: "Action", isActionColumn: true, customStyling: 'center column-width-100', actions: [
-        new DataColumnAction({ actionText: 'Adjust', actionStyle: ClassConstants.Primary, event: 'adjustOpeningQuantity' })
-      ] }) );
     } else {
       this.columns.push( new DataColumn({ headerText: "Code", value: "Code", columnName: 'PartCode', sortable: true }) );
       this.columns.push( new DataColumn({ headerText: "Description", value: "Description", columnName: 'PartDescription', sortable: true, customStyling: 'column-width-150' }) );
@@ -81,7 +78,10 @@ export class InventoryPartsListComponent implements OnInit {
       this.columns.push( new DataColumn({ headerText: "In Transit", value: "IntransitQty", columnName: 'InTransitQty', sortable: false, hasAdditionalAction: true, additionalActionName: 'showInTransitQty' }) );
       this.columns.push( new DataColumn({ headerText: "Closing Qty", value: "monthlyClosingQty", columnName: 'ClosingQty' }) );
     }
-  }
+    this.columns.push( new DataColumn({ headerText: "Action", columnName: 'Action', value: "Action", isActionColumn: true, customStyling: 'center column-width-100', actions: [
+      new DataColumnAction({ actionText: 'Adjust', actionStyle: ClassConstants.Primary, event: 'adjustOpeningQuantity' })
+    ] }) );
+}
 
   getAllPartsForCompany() {
     this.httpLoaderService.show();
@@ -152,13 +152,15 @@ export class InventoryPartsListComponent implements OnInit {
   }
 
   savePartAdjustment() {
-    this.service.adjustPart(this.selectedPartIdForAdjustment, this.direction, this.notes, this.currentlyLoggedInCompanyId, this.adjustedQty)
+    this.httpLoader.show();
+    this.service.adjustPart(this.selectedPartIdForAdjustment, this.direction, this.notes, this.currentlyLoggedInCompanyId, this.adjustedQty, this.monthlyCustomer)
         .subscribe(() => {
           this.showModal = false;
           this.toastr.successToastr('Part inventory quantity adjusted successfully!!');
         }, 
         (error) => this.toastr.errorToastr(error.error),
         () => { 
+          this.httpLoader.hide();
           this.getAllPartsForCompany(); 
           this.direction = 'in';
           this.adjustedQty = 0;
