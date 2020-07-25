@@ -222,21 +222,14 @@ export class PartListComponent implements OnInit {
 
     var partsUpdated = 0;
     this.httpLoader.show();
-    this.stockPrices.forEach(stockPrice => {
-      this.service.updatePartCostingByPart(this.currentlyLoggedInCompanyId,  stockPrice)
+    this.service.updatePartCostingByPart(this.currentlyLoggedInCompanyId,  this.stockPrices)
           .subscribe(() => {
-            partsUpdated++;
-            if (partsUpdated == this.stockPrices.length) {
-              this.showModalForImportStockPrices = false;
-              this.httpLoader.hide();
-              this.toastr.successToastr('Stock pricing uploaded successfully');
-              this.getAllPartsForCompany();
-              return;
-            }
+            this.showModalForImportStockPrices = false;
+            this.httpLoader.hide();
+            this.toastr.successToastr('Stock pricing uploaded successfully');
           },
           (error) => this.toastr.errorToastr(error.error),
           () => this.httpLoader.hide());
-    });
   }
 
   deletePartCosting(data) {

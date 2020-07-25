@@ -48,7 +48,9 @@ export class UploadInvoiceComponent implements OnInit {
   initializeColumns(mode: UploadMode = UploadMode.Confirm) {
     this.columns = [];
     this.columns.push( new DataColumn({ headerText: "Valid", value: "isValid", isBoolean: true, customStyling: 'center', isDisabled: true }) );
+    this.columns.push( new DataColumn({ headerText: "PO Found", value: "isPOFound", isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Part Code", value: "partCode" }) );
+    this.columns.push( new DataColumn({ headerText: "PO No", value: "poNo" }) );
     this.columns.push( new DataColumn({ headerText: "Quantity", value: "qty", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Rate", value: "price", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Amount", value: "total", customStyling: 'right' }) );
@@ -75,18 +77,17 @@ export class UploadInvoiceComponent implements OnInit {
     this.invoiceNo = rows[1][0];
     this.invoiceDate = Utils.DateToString(new Date(rows[1][1]));
     this.supplierName = rows[1][2];
-    this.poNo = rows[1][3];
-    this.invoiceTotal = rows[1][4];
-    this.company = rows[1][5];
+    this.invoiceTotal = rows[1][3];
+    this.company = rows[1][4];
     
     this.invoiceToValidate.supplierInvoiceDetails = [];
     for (let index = 1; index < rows.length; index++) {
       var invoiceDetail = new UploadInvoiceDetail();
+      invoiceDetail.poNo = rows[index][5];
       invoiceDetail.PartCode = rows[index][6];
       invoiceDetail.Qty = rows[index][7];
       invoiceDetail.Price = rows[index][8];
       invoiceDetail.Total = invoiceDetail.Qty * invoiceDetail.Price;
-      invoiceDetail.BoxNo = rows[index][11];
       this.invoiceToValidate.supplierInvoiceDetails.push(invoiceDetail);
     }
   }
@@ -97,7 +98,6 @@ export class UploadInvoiceComponent implements OnInit {
     this.invoiceToValidate.InvoiceNo = this.invoiceNo;
     this.invoiceToValidate.InvoiceDate = this.invoiceDate.toString();
     this.invoiceToValidate.SupplierName = this.supplierName;
-    this.invoiceToValidate.PoNo = this.poNo;
     this.invoiceToValidate.InvoiceTotal = this.invoiceTotal;
     this.invoiceToValidate.CompanyName = this.company;
     this.invoiceToValidate.ETA = this.eta ? this.eta: DateHelper.getToday();
@@ -127,6 +127,12 @@ export class UploadInvoiceComponent implements OnInit {
   uploadInvoice() {
     var totalQuantities = 0;
     this.invoice.supplierInvoiceDetails.forEach(detail => { totalQuantities += detail.qty; });
+
+    if (this.invoice.supplierInvoiceDetails.some(d => d.isPOFound == false)) {
+      this.toastr.errorToastr('Some of the parts are not found in PO. Please check all line items');
+      return;
+    }
+
     if (totalQuantities != this.totalQuantities) {
       this.toastr.errorToastr('Total quantity entered does not match with sum of all quantities in details');
       return;

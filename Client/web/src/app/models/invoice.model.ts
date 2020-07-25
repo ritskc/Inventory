@@ -51,7 +51,6 @@ export class UploadInvoice {
     InvoiceNo: string = '';
     InvoiceDate: string = '';
     SupplierName: string = '';
-    PoNo: string = '';
     CompanyName: string = '';
     ETA: string = '';
     UploadedDate: string = '';
@@ -64,7 +63,7 @@ export class UploadInvoiceDetail {
     Qty: number = 0;
     Price: number = 0;
     Total: number = 0;
-    BoxNo: string = '';
+    poNo: string = '';
 }
 
 export class InvoiceDetail {
@@ -91,6 +90,8 @@ export class InvoiceDetail {
     supplierInvoicePoDetails: any;
     multiplePurchaseOrders: string = '';
     multiplePosQty: string = '';
+    isPOFound: boolean = false;
+    poNo: string = '';
 }
 
 export enum UploadMode {
