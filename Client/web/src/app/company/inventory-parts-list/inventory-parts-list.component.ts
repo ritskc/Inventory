@@ -10,6 +10,8 @@ import { SupplierService } from '../../admin/supplier/supplier.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { ClassConstants } from '../../common/constants';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import * as DateHelper from '../../common/helpers/dateHelper';
 
 @Component({
   selector: 'app-inventory-parts-list',
@@ -38,6 +40,7 @@ export class InventoryPartsListComponent implements OnInit {
   dataForSecondaryGridInModal: any;
   monthlyCustomer: boolean = false;
   showOtherColumns: boolean = false;
+  from: Date;
 
   constructor(private service: PartsService, private companyService: CompanyService, private httpLoaderService: httpLoaderService, private customerService: CustomerService,
     private supplierService: SupplierService, private httpLoader: httpLoaderService, private toastr: ToastrManager, private route: Router) { }
@@ -83,9 +86,12 @@ export class InventoryPartsListComponent implements OnInit {
     ] }) );
 }
 
-  getAllPartsForCompany() {
+  getAllPartsForCompany(dateRangeSelected: boolean = false) {
     this.httpLoaderService.show();
-    this.service.getAllParts(this.currentlyLoggedInCompanyId)
+    var partObservable: Observable<Part[]> = dateRangeSelected ? this.service.getInventoryForDateRange(this.currentlyLoggedInCompanyId, this.from)
+                        : this.service.getAllParts(this.currentlyLoggedInCompanyId)
+
+        partObservable
         .subscribe((parts) => {
           var partsToDisplay = [];
           parts.forEach((part) => {
@@ -261,6 +267,7 @@ export class InventoryPartsListComponent implements OnInit {
     this.columnsForModal.push( new DataColumn({ headerText: "Reference", value: "referenceNo" }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", customStyling: 'right' }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Due", value: "dueDate", isDate: true }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Ack Date", value: "acknowledgeDate", isDate: true }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Open Qty", value: "openQty" }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Note", value: "note" }) );
 

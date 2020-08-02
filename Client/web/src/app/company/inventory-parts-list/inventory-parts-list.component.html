@@ -1,19 +1,27 @@
 <div class="standard-margin">
   <div class="row" style="margin-left: 1px; margin-bottom: 5px;">
-    <select class="form-control" style="width: 300px; float: left;" (change)="optionSelected($event)">
-      <option value="1">Show all Parts</option>
-      <option value="2">Select by Customer</option>
-      <option value="3">Select by Supplier</option>
-    </select>
-    <select class="form-control" style="width: 300px; float: left;" (change)="filterBySelection($event)" *ngIf="filterOption > 1">
-      <option value="-1">Please select the option</option>
-      <option *ngFor="let item of filter" [value]="item.id">{{item.name}}</option>
-    </select>
-    <div class="form-check" style="margin-left: 15px; padding-top: 5px;" *ngIf="monthlyCustomer">
-      <input class="form-check-input" type="checkbox" id="showOtherColumns" (change)="showOtherColumnsForInventory()" [(ngModel)]="showOtherColumns">
-      <label class="form-check-label" for="showOtherColumns">
-        View Company Inventory
-      </label>
+    <div class="col-xs-9 col-md-9">
+      <select class="form-control" style="width: 300px; float: left;" (change)="optionSelected($event)">
+        <option value="1">Show all Parts</option>
+        <option value="2">Select by Customer</option>
+        <option value="3">Select by Supplier</option>
+      </select>
+      <select class="form-control" style="width: 300px; float: left;" (change)="filterBySelection($event)" *ngIf="filterOption > 1">
+        <option value="-1">Please select the option</option>
+        <option *ngFor="let item of filter" [value]="item.id">{{item.name}}</option>
+      </select>
+      <div class="form-check" style="margin-left: 15px; padding-top: 5px;" *ngIf="monthlyCustomer">
+        <input class="form-check-input" type="checkbox" id="showOtherColumns" (change)="showOtherColumnsForInventory()" [(ngModel)]="showOtherColumns">
+        <label class="form-check-label" for="showOtherColumns">
+          View Company Inventory
+        </label>
+      </div>
+    </div>
+    <div class="col-md-3 col-xs-3">
+      <div class="row">
+        <input type="date" class="form-control col-xs-6 col-md-6" [(ngModel)]="from"/>
+        <button class="btn btn-primary" style="margin-left: 10px;" (click)="getAllPartsForCompany(true)">Generate</button>
+      </div>
     </div>
   </div>
   

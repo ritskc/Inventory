@@ -66,6 +66,8 @@ export class SaleReportComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Qty", value: "qty", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Price", value: "price", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Purchase Price", value: "purchasePrice", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Tot Purchase Price", value: "totalPurchasePrice", customStyling: 'right' }) );
   }
 
   generate() {
