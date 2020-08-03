@@ -30,7 +30,9 @@ export class JsonToCsvExporterService {
             valueToPrint = item[column.value];
           }
           if (typeof(valueToPrint) === 'string') valueToPrint = valueToPrint.replace(/\,/gi, "");
-          dataToWrite += valueToPrint + ","
+          dataToWrite += valueToPrint + ",";
+        } else if (item[column.value] == null) {
+          dataToWrite += ',';
         }
       });
       dataToWrite += String.fromCharCode(13);
