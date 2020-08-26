@@ -104,7 +104,7 @@ export class BarcodeComponent implements OnInit, AfterViewInit {
     this.shipmentService.completeScanning(this.shipment, this.barcodeValue, window.location.href.indexOf('?type=master') > 0)
         .subscribe(result => {
           console.log(result);
-          this.getShipment(this.shipment.id);
+          this.getShipment(this.activatedRoute.snapshot.params.id);
           this.httpLoadService.hide();
           this.toastr.successToastr(`Barcode ${ this.barcodeValue } scanned successfully!!`);
           this.barcodeValue = '';

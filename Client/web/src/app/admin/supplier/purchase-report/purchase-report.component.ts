@@ -66,6 +66,7 @@ export class PurchaseReportComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Code", value: "code", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Description", value: "description", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Qty", value: "qty", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "In Transit", value: "inTransitQty", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Price", value: "price", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Total", value: "total", customStyling: 'right' }) );
   }
