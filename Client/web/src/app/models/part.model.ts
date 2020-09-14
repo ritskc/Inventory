@@ -186,4 +186,8 @@ export class PartsViewModel {
     get supplierPrice(): number {
         return this.part.supplierPrice;
     }
+
+    get supplierCode(): string {
+        return this.part.supplierCode;
+    }
 }

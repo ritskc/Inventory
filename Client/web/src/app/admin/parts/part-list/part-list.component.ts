@@ -54,7 +54,7 @@ export class PartListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Double Price", value: "isDoublePricingAllowed", sortable: true, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Active", value: "isActive", sortable: true, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Sample", value: "isSample", sortable: true, isBoolean: true, customStyling: 'center', isDisabled: true }) );
-    this.columns.push( new DataColumn({ headerText: "Actions", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+    this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
       new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editPart', icon: 'fa fa-edit' }),
       new DataColumnAction({ actionText: 'Stock', actionStyle: ClassConstants.Primary, event: 'showUpdateCostModal' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deletePart', icon: 'fa fa-trash' })

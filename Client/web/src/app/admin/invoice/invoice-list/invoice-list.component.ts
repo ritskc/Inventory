@@ -65,23 +65,23 @@ export class InvoiceListComponent implements OnInit {
       this.columns.push( new DataColumn({ headerText: "Rcvd", value: "isInvoiceReceived", isBoolean: true, isDisabled: true, customStyling: 'center' }) );
       this.columns.push( new DataColumn({ headerText: "Inv", isActionColumn: true, customStyling: 'center', actions: [
         new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadInvoice', icon: 'fa fa-download', showOnlyIf: 'data["invoicePath"] != ""' }),
-        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadInvoice', icon: 'fa fa-upload', showOnlyIf: 'data["invoicePath"] == ""' })
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadInvoice', icon: 'fa fa-upload' })
       ] }) );
       this.columns.push( new DataColumn({ headerText: "Pack", isActionColumn: true, customStyling: 'center', actions: [
         new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadPackingSlip', icon: 'fa fa-download', showOnlyIf: 'data["packingSlipPath"] != ""' }),
-        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadPackingSlip', icon: 'fa fa-upload', showOnlyIf: 'data["packingSlipPath"] == ""' })
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadPackingSlip', icon: 'fa fa-upload' })
       ] }) );
       this.columns.push( new DataColumn({ headerText: "10+2", isActionColumn: true, customStyling: 'center', actions: [
         new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTenPlus', icon: 'fa fa-download', showOnlyIf: 'data["tenPlusPath"] != ""' }),
-        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadTenPlus', icon: 'fa fa-upload', showOnlyIf: 'data["tenPlusPath"] == ""' })
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadTenPlus', icon: 'fa fa-upload' })
       ] }) );
       this.columns.push( new DataColumn({ headerText: "BL", isActionColumn: true, customStyling: 'center', actions: [
         new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadBl', icon: 'fa fa-download', showOnlyIf: 'data["blPath"] != ""' }),
-        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadBl', icon: 'fa fa-upload', showOnlyIf: 'data["blPath"] == ""' })
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadBl', icon: 'fa fa-upload' })
       ] }) );
       this.columns.push( new DataColumn({ headerText: "TC", isActionColumn: true, customStyling: 'center', actions: [
         new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Primary, event: 'downloadTc', icon: 'fa fa-download', showOnlyIf: 'data["tcPath"] != ""' }),
-        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadTc', icon: 'fa fa-upload', showOnlyIf: 'data["tcPath"] == ""' })
+        new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadTc', icon: 'fa fa-upload' })
       ] }) );
       this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
         new DataColumnAction({ actionText: 'Inv', actionStyle: ClassConstants.Primary, event: 'printInvoiceBarcode', icon: 'fa fa-barcode' }),

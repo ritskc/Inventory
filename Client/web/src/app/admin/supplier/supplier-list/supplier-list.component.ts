@@ -33,6 +33,7 @@ export class SupplierListComponent implements OnInit {
   initializeGridColumns() {
     this.columns.push( new DataColumn({ headerText: "Name", value: "name", sortable: true, customStyling: 'column-width-150' }) );
     this.columns.push( new DataColumn({ headerText: "Phone No", value: "phoneNo", sortable: true, customStyling: 'column-width-100' }) );
+    this.columns.push( new DataColumn({ headerText: "Email", value: "emailID", sortable: true, customStyling: 'column-width-100' }) );
     this.columns.push( new DataColumn({ headerText: "Address", value: "address", customStyling: 'column-width-200' }) );
     this.columns.push( new DataColumn({ headerText: "City", value: "city", customStyling: 'column-width-100' }) );
     this.columns.push( new DataColumn({ headerText: "State", value: "state", customStyling: 'column-width-100' }) );
