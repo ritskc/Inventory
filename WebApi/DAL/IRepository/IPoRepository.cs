@@ -12,6 +12,7 @@ namespace DAL.IRepository
     {
         Task<IEnumerable<Po>> GetAllPosAsync(int companyId,int userId);
         Task<Po> GetPoAsync(long poId);
+        Task<Po> GetPobyPoNoAsync(int companyId, string poNo);
         Task<Po> GetPoByAccessIdAsync(string id);
         Task<Po> GetPoAsync(long poId, SqlConnection conn, SqlTransaction transaction);
         Task AddPoAsync(Po po);

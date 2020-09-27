@@ -14,7 +14,7 @@ namespace DAL.Models
         public int? SupplierId { get; set; }
         public string SupplierName { get; set; }
         public string InvoiceNo { get; set; }
-        public DateTime InvoiceDate { get; set; }
+        public DateTime? InvoiceDate { get; set; }
         public DateTime? ETA { get; set; }
         public bool IsAirShipment { get; set; }
         public string PoNo { get; set; }

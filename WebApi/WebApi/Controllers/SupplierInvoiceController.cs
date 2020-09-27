@@ -136,7 +136,7 @@ namespace WebApi.Controllers
         }
         // POST api/values
         [HttpPost("{step}")]
-        public async Task<ActionResult<SupplierInvoice>> Post(int step,[FromBody] SupplierInvoice supplierInvoice)
+        public async Task<ActionResult<SupplierInvoice>> Post(int step, [FromBody] SupplierInvoice supplierInvoice)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace WebApi.Controllers
                 var invoice = await this.supplierInvoiceService.GetSupplierInvoiceAsync(supplierInvoice.InvoiceNo);
 
                 //var invoice = invoices.Where(x => x.InvoiceNo == supplierInvoice.InvoiceNo).FirstOrDefault();
-                if(!(invoice == null || invoice.supplierInvoiceDetails == null || invoice.supplierInvoiceDetails.Count == 0))
+                if (!(invoice == null || invoice.supplierInvoiceDetails == null || invoice.supplierInvoiceDetails.Count == 0))
                     return StatusCode(500, "Invoice already uploaded");
                 if (step == 1)
                 {
@@ -156,12 +156,12 @@ namespace WebApi.Controllers
                 else
                 {
                     var result = await this.supplierInvoiceService.AddSupplierInvoiceAsync(supplierInvoice);
-                    
+
                     EmailService emailService = new EmailService(_appSettings);
                     emailService.SendContentEmail(company.Name, "Supplier Invoice Uploaded: ", supplierInvoice.InvoiceNo);
 
                     return result;
-                }                
+                }
             }
             catch (Exception ex)
             {
@@ -169,7 +169,7 @@ namespace WebApi.Controllers
             }
         }
 
-        // POST api/values
+        //// POST api/values
         [HttpPost("receive/{id}")]
         public async Task<ActionResult> Post(long id)
         {
@@ -208,7 +208,7 @@ namespace WebApi.Controllers
             {
                 var result = await this.supplierInvoiceService.GetSupplierInvoiceAsync(id);
                 if (result == null)
-                    return NotFound();                
+                    return NotFound();
 
                 await this.supplierInvoiceService.UnReceiveSupplierInvoiceAsync(id);
                 return Ok();
@@ -221,7 +221,7 @@ namespace WebApi.Controllers
 
         // POST api/values
         [HttpPut("{id}")]
-        public async Task<ActionResult<SupplierInvoice>> Put(int id,[FromBody] SupplierInvoice supplierInvoice)
+        public async Task<ActionResult<SupplierInvoice>> Put(int id, [FromBody] SupplierInvoice supplierInvoice)
         {
             try
             {

@@ -19,5 +19,7 @@ namespace DAL.Models
         public string Note { get; set; }
         public int SrNo { get; set; }
         public string PoNo { get; set; }
+        public DateTime? AcknowledgeDate { get; set; }
+        public int OrderedQty { get; set; }
     }
 }

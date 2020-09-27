@@ -60,7 +60,8 @@ namespace DAL.Repository
 
                     foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
                     {
-                        if(supplierInvoice.DontImpactPO)
+                        supplierInvoiceDetail.BoxNo = 1;
+                        if (supplierInvoice.DontImpactPO)
                         {
                             supplierInvoiceDetail.AdjustedPOQty = 0;
                             supplierInvoiceDetail.ExcessQty = supplierInvoiceDetail.Qty;
@@ -356,8 +357,13 @@ namespace DAL.Repository
                     supplierInvoice.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
                     supplierInvoice.SupplierId = Convert.ToInt32(dataReader["SupplierId"]);
                     supplierInvoice.InvoiceNo = Convert.ToString(dataReader["InvoiceNo"]);
-                    supplierInvoice.InvoiceDate = Convert.ToDateTime(dataReader["InvoiceDate"]);
-                    supplierInvoice.ETA = Convert.ToDateTime(dataReader["ETA"]);
+                    if(!(DBNull.Value.Equals(dataReader["InvoiceDate"])))
+                        supplierInvoice.InvoiceDate =  Convert.ToDateTime(dataReader["InvoiceDate"]);
+
+                    if (!(DBNull.Value.Equals(dataReader["ETA"])))
+                        supplierInvoice.ETA = Convert.ToDateTime(dataReader["ETA"]);
+
+                   
                     supplierInvoice.IsAirShipment = Convert.ToBoolean(dataReader["IsAirShipment"]);
                     supplierInvoice.PoNo = Convert.ToString(dataReader["PoNo"]);
                     supplierInvoice.ReferenceNo = Convert.ToString(dataReader["ReferenceNo"]);
@@ -438,7 +444,7 @@ namespace DAL.Repository
                             supplierInvoicePoDetail.PODetailId = Convert.ToInt64(dataReader1["PODetailId"]);
                             supplierInvoicePoDetail.PONo = Convert.ToString(dataReader1["PONo"]);
                             supplierInvoicePoDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
-                            supplierInvoicePoDetail.UnitPrice = Convert.ToInt32(dataReader1["UnitPrice"]);
+                            supplierInvoicePoDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
 
                             supplierInvoicePoDetails.Add(supplierInvoicePoDetail);
                         }
@@ -1136,7 +1142,7 @@ namespace DAL.Repository
         {
             var stockPrices = new List<StockPrice>();
 
-            var commandText = string.Format($"SELECT [PartId],Sum([Qty]) QTY,[UnitPrice] FROM [SupplierInvoicePoDetails]  where InvoiceId = '{invoiceId}' group by PartId,UnitPrice ");
+            var commandText = string.Format($"SELECT  [PartId] ,Sum([Qty]) QTY,[Price]  FROM [SupplierInvoiceDetails] where InvoiceId = '{invoiceId}' group by PartId,[Price] ");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
             {
@@ -1149,54 +1155,54 @@ namespace DAL.Repository
                     var stockPrice = new StockPrice();
                     stockPrice.PartId = Convert.ToInt32(dataReader["PartId"]);
                     stockPrice.Qty = Convert.ToInt32(dataReader["Qty"]);
-                    stockPrice.SupplierPrice = Convert.ToDecimal(dataReader["UnitPrice"]);
+                    stockPrice.SupplierPrice = Convert.ToDecimal(dataReader["Price"]);
                     stockPrices.Add(stockPrice);
                 }
 
                 dataReader.Close();
             }
 
-            commandText = string.Format($"SELECT [PartId],sum ([ExcessQty]) QTY FROM [SupplierInvoiceDetails]  where InvoiceId = '{invoiceId}' and [ExcessQty] > 0 group by PartId ");
+            //commandText = string.Format($"SELECT [PartId],sum ([ExcessQty]) QTY FROM [SupplierInvoiceDetails]  where InvoiceId = '{invoiceId}' and [ExcessQty] > 0 group by PartId ");
 
-            using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
-            {
-                cmd.CommandType = CommandType.Text;
+            //using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
+            //{
+            //    cmd.CommandType = CommandType.Text;
 
-                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
+            //    var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
 
-                while (dataReader.Read())
-                {
-                    var stockPrice = new StockPrice();
-                    stockPrice.PartId = Convert.ToInt32(dataReader["PartId"]);
-                    stockPrice.Qty = Convert.ToInt32(dataReader["Qty"]);
-                    stockPrice.SupplierPrice = 0;
-                    stockPrices.Add(stockPrice);
-                }
+            //    while (dataReader.Read())
+            //    {
+            //        var stockPrice = new StockPrice();
+            //        stockPrice.PartId = Convert.ToInt32(dataReader["PartId"]);
+            //        stockPrice.Qty = Convert.ToInt32(dataReader["Qty"]);
+            //        stockPrice.SupplierPrice = 0;
+            //        stockPrices.Add(stockPrice);
+            //    }
 
-                dataReader.Close();
-            }
+            //    dataReader.Close();
+            //}
 
-            foreach (StockPrice stockPrice in stockPrices)
-            {
-                if (stockPrice.SupplierPrice == 0)
-                {
-                    commandText = string.Format($"SELECT TOP 1 UnitPrice FROM partsupplierassignment WHERE PartID = '{stockPrice.PartId}' ");
+            //foreach (StockPrice stockPrice in stockPrices)
+            //{
+            //    if (stockPrice.SupplierPrice == 0)
+            //    {
+            //        commandText = string.Format($"SELECT TOP 1 UnitPrice FROM partsupplierassignment WHERE PartID = '{stockPrice.PartId}' ");
 
-                    using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
-                    {
-                        cmd.CommandType = CommandType.Text;
+            //        using (SqlCommand cmd = new SqlCommand(commandText, conn, transaction))
+            //        {
+            //            cmd.CommandType = CommandType.Text;
 
-                        var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
+            //            var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.Default);
 
-                        while (dataReader.Read())
-                        {
-                            stockPrice.SupplierPrice = Convert.ToDecimal(dataReader["UnitPrice"]);
-                        }
+            //            while (dataReader.Read())
+            //            {
+            //                stockPrice.SupplierPrice = Convert.ToDecimal(dataReader["UnitPrice"]);
+            //            }
 
-                        dataReader.Close();
-                    }
-                }
-            }
+            //            dataReader.Close();
+            //        }
+            //    }
+            //}
 
             foreach (StockPrice stockPrice in stockPrices)
             {

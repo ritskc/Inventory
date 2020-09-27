@@ -19,6 +19,8 @@ namespace DAL.Models
         public int Qty { get; set; }
         public int PartId { get; set; }
         public decimal UnitPrice { get; set; }
-        public decimal Price { get; set; }        
+        public decimal Price { get; set; }
+        public decimal PurchasePrice { get; set; }
+        public decimal TotalPurchasePrice { get; set; }
     }
 }

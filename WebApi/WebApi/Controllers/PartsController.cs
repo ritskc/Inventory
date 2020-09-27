@@ -89,51 +89,59 @@ namespace WebApi.Controllers
         
         [HttpGet("{companyId}/{type}/{typeId}")]
         // [HttpGet("{companyId}/{type}/{partId}")]
-        public async Task<ActionResult> GetPartsByType(int companyId,string type, int typeId)
+        public async Task<ActionResult> GetPartsByType(int companyId,string type, string typeId)
         {
             try
             {
 
                 if (type == "customer")
                 {
-                    var result = await this._partService.GetPartByCustomerIdAsync(typeId);
+                    var result = await this._partService.GetPartByCustomerIdAsync(Convert.ToInt32(typeId));
                     return Ok(result);
                 }
                 else if (type == "supplier")
                 {
-                    var result = await this._partService.GetPartBySupplierIdAsync(typeId);
+                    var result = await this._partService.GetPartBySupplierIdAsync(Convert.ToInt32(typeId));
                     return Ok(result);
                 }
                 if (type.ToLower() == "InTransit".ToLower())
                 {
-                    var result = await this._partService.GetPartInTransitDetailAsync(typeId, companyId);
+                    var result = await this._partService.GetPartInTransitDetailAsync(Convert.ToInt32(typeId), companyId);
                     return Ok(result);
                 }
                 else if (type.ToLower() == "OpenOrder".ToLower())
                 {
-                    var result = await this._partService.GetPartOpenOrderDetailAsync(typeId, companyId);
+                    var result = await this._partService.GetPartOpenOrderDetailAsync(Convert.ToInt32(typeId), companyId);
                     return Ok(result);
                 }
                 else if (type.ToLower() == "SupplierOpenPO".ToLower())
                 {
-                    var result = await this._partService.GetPartOpenPODetailAsync(typeId, companyId);
+                    var result = await this._partService.GetPartOpenPODetailAsync(Convert.ToInt32(typeId), companyId);
                     return Ok(result);
                 }
                 else if (type.ToLower() == "LatestShipment".ToLower())
                 {
-                    var result = await this._partService.GetPartLatestShipmentAsync(typeId, companyId);
+                    var result = await this._partService.GetPartLatestShipmentAsync(Convert.ToInt32(typeId), companyId);
                     return Ok(result);
                 }
                 else if (type.ToLower() == "LatestReceived".ToLower())
                 {
-                    var result = await this._partService.GetPartLatestReceivedAsync(typeId, companyId);
+                    var result = await this._partService.GetPartLatestReceivedAsync(Convert.ToInt32(typeId), companyId);
                     return Ok(result);
                 }
                 else if (type.ToLower() == "StockWithPrice".ToLower())
                 {
-                    var result = await this._partService.GetStock(typeId, companyId);
+                    var result = await this._partService.GetStock(Convert.ToInt32(typeId), companyId);
                     return Ok(result);
                 }
+                else if (type.ToLower() == "inventory".ToLower())
+                {
+                    var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                    int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+                    var result = await this._partService.GetAllPartsByDateAsync(companyId, userId, Convert.ToDateTime(typeId)); 
+                    return Ok(result);
+                }
+               
                 else
                     return BadRequest();
                 
@@ -241,12 +249,12 @@ namespace WebApi.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody] List<StockPrice> stockPrices)
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Post(int id, [FromBody] List<StockPrice> stockPrices)
         {
             try
             {                
-                await this._partService.SetStockPriceAsync(stockPrices);
+                await this._partService.SetStockPriceAsync(id,stockPrices);
 
                 return Ok();
             }
@@ -257,11 +265,11 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("{import}/{companyId}")]
-        public async Task<IActionResult> Put(int companyId, [FromBody] StockPrice stockPrice)
+        public async Task<IActionResult> Put(int companyId, [FromBody] List<StockPrice> stockPrices)
         {
             try
             {
-                await this._partService.SetStockPriceAsync(stockPrice,companyId);
+                await this._partService.SetStockPriceAsync(stockPrices, companyId);
 
                 return Ok();
             }

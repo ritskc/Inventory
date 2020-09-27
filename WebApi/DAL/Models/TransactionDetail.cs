@@ -16,5 +16,8 @@ namespace DAL.Models
         public BusinessConstants.DIRECTION DirectionId { get; set; } 
         public BusinessConstants.INVENTORY_TYPE InventoryType { get; set; }
         public string ReferenceNo { get; set; }
+        public string DirectionType { get; set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
     }
 }

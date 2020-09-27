@@ -69,6 +69,90 @@ namespace WebApi.Services
             return parts;
         }
 
+        public async Task<IEnumerable<Part>> GetAllPartsCompactAsync(int companyId, int userId)
+        {
+            //var suppliers = await _supplierRepository.GetAllSupplierAsync(companyId, userId);
+            //var customers = await _customerRepository.GetAllCustomerAsync(companyId, userId);
+
+            var parts = await this._partRepository.GetAllPartsCompactAsync(companyId, userId);
+            //foreach (Part part in parts)
+            //{
+            //    foreach (PartSupplierAssignment partSupplierAssignment in part.partSupplierAssignments)
+            //    {
+            //        partSupplierAssignment.SupplierName = suppliers.Where(x => x.Id == partSupplierAssignment.SupplierID).Select(x => x.Name).FirstOrDefault();
+            //        part.SupplierPrice = partSupplierAssignment.UnitPrice;
+            //    }
+            //}
+
+            //foreach (Part part in parts)
+            //{
+            //    foreach (PartCustomerAssignment partCustomerAssignments in part.partCustomerAssignments)
+            //    {
+            //        partCustomerAssignments.CustomerName = customers.Where(x => x.Id == partCustomerAssignments.CustomerId).Select(x => x.Name).FirstOrDefault();
+            //        partCustomerAssignments.Invoicingtypeid = customers.Where(x => x.Id == partCustomerAssignments.CustomerId).Select(x => x.Invoicingtypeid).FirstOrDefault();
+            //        part.CustomerPrice = partCustomerAssignments.Rate;
+
+            //        if (partCustomerAssignments.Invoicingtypeid == 3)
+            //        {
+
+            //            var shipmentQtys = await this._partRepository.GetPartTotalShipmentAsync(part.Id);
+            //            part.ShippedQty = shipmentQtys.Select(x => x.ShippedQty).FirstOrDefault();
+            //            part.MonthlyExcessQty = shipmentQtys.Select(x => x.MonthlyExcessQty).FirstOrDefault();
+
+            //            var invoiceQtys = await this._partRepository.GetPartTotalInvoiceQtyAsync(part.Id);
+            //            part.InvoiceQty = invoiceQtys.Select(x => x.InvoiceQty).FirstOrDefault();
+
+            //            part.MonthlyClosingQty = part.MonthlyOpeningQty + part.ShippedQty - part.InvoiceQty;
+            //        }
+
+            //    }
+            //}
+
+            return parts;
+        }
+
+        public async Task<IEnumerable<Part>> GetAllPartsByDateAsync(int companyId, int userId,DateTime dateTime)
+        {
+            var suppliers = await _supplierRepository.GetAllSupplierAsync(companyId, userId);
+            var customers = await _customerRepository.GetAllCustomerAsync(companyId, userId);
+
+            var parts = await this._partRepository.GetAllPartsByDateAsync(companyId, userId, dateTime);
+            foreach (Part part in parts)
+            {
+                foreach (PartSupplierAssignment partSupplierAssignment in part.partSupplierAssignments)
+                {
+                    partSupplierAssignment.SupplierName = suppliers.Where(x => x.Id == partSupplierAssignment.SupplierID).Select(x => x.Name).FirstOrDefault();
+                    part.SupplierPrice = partSupplierAssignment.UnitPrice;
+                }
+            }
+
+            //foreach (Part part in parts)
+            //{
+            //    foreach (PartCustomerAssignment partCustomerAssignments in part.partCustomerAssignments)
+            //    {
+            //        partCustomerAssignments.CustomerName = customers.Where(x => x.Id == partCustomerAssignments.CustomerId).Select(x => x.Name).FirstOrDefault();
+            //        partCustomerAssignments.Invoicingtypeid = customers.Where(x => x.Id == partCustomerAssignments.CustomerId).Select(x => x.Invoicingtypeid).FirstOrDefault();
+            //        part.CustomerPrice = partCustomerAssignments.Rate;
+
+            //        if (partCustomerAssignments.Invoicingtypeid == 3)
+            //        {
+
+            //            var shipmentQtys = await this._partRepository.GetPartTotalShipmentAsync(part.Id);
+            //            part.ShippedQty = shipmentQtys.Select(x => x.ShippedQty).FirstOrDefault();
+            //            part.MonthlyExcessQty = shipmentQtys.Select(x => x.MonthlyExcessQty).FirstOrDefault();
+
+            //            var invoiceQtys = await this._partRepository.GetPartTotalInvoiceQtyAsync(part.Id);
+            //            part.InvoiceQty = invoiceQtys.Select(x => x.InvoiceQty).FirstOrDefault();
+
+            //            part.MonthlyClosingQty = part.MonthlyOpeningQty + part.ShippedQty - part.InvoiceQty;
+            //        }
+
+            //    }
+            //}
+
+            return parts;
+        }
+
         public async Task<IEnumerable<Part>> GetPartBySupplierIdAsync(int supplierId)
         {
             return await this._partRepository.GetPartBySupplierIdAsync(supplierId);
@@ -90,14 +174,14 @@ namespace WebApi.Services
             await this._partRepository.AddPartAsync(part);
         }
 
-        public async Task SetStockPriceAsync(List<StockPrice> stockPrices)
+        public async Task SetStockPriceAsync(int partId,List<StockPrice> stockPrices)
         {
-            await this._partRepository.SetStockPriceAsync(stockPrices);
+            await this._partRepository.SetStockPriceAsync(partId,stockPrices);
         }
 
-        public async Task SetStockPriceAsync(StockPrice stockPrice,int companyId)
+        public async Task SetStockPriceAsync(List<StockPrice> stockPrices,int companyId)
         {
-            await this._partRepository.SetStockPriceAsync(stockPrice, companyId);
+            await this._partRepository.SetStockPriceAsync(stockPrices, companyId);
         }
 
         public async Task UpdatePartAsync(Part part)

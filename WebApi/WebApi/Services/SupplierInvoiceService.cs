@@ -52,6 +52,7 @@ namespace WebApi.Services
             int srNo = 1;
             foreach (SupplierInvoiceDetail supplierInvoiceDetail in supplierInvoice.supplierInvoiceDetails)
             {
+                supplierInvoiceDetail.BoxNo = 1;
                 List<SupplierInvoicePoDetails> supplierInvoicePoDetails = new List<SupplierInvoicePoDetails>();
 
                 var part = await _partRepository.GetPartByMapCodeAsync(supplierInvoice.SupplierId, supplierInvoiceDetail.PartCode);
@@ -59,20 +60,22 @@ namespace WebApi.Services
                 supplierInvoiceDetail.SrNo = srNo;
                 srNo++;
                 var adjustedQty = 0;
-                IEnumerable<Po> pos = new List<Po>();
+                List<Po> pos = new List<Po>();
 
-                if(!(supplierInvoice.DontImpactPO))
-                    pos = await _poRepository.GetAllPosAsync(supplierInvoice.CompanyId,1);
-                pos = pos.OrderBy(x => x.DueDate);
+               // if(!(supplierInvoice.DontImpactPO))
+                var po1 = await _poRepository.GetPobyPoNoAsync(supplierInvoice.CompanyId, supplierInvoiceDetail.PoNo);
+                pos.Add(po1);
+                //pos = pos.OrderBy(x => x.DueDate);
                 //List<string> supplierPos = supplierInvoice.PoNo.Split(',').ToList();
                 foreach (Po po in pos)
                 {
-                    if (po.IsClosed == false && po.SupplierId == supplierInvoice.SupplierId)
+                    if (po.SupplierId == supplierInvoice.SupplierId)
                     {
                         foreach (PoDetail poDetail in po.poDetails.OrderBy(x => x.DueDate))
                         {
-                            if (poDetail.PartId == part.Id && poDetail.IsClosed == false && poDetail.AckQty > poDetail.InTransitQty + poDetail.ReceivedQty)
-                            {                    
+                            if (po.PoNo.Trim().ToLower() == supplierInvoiceDetail.PoNo.Trim().ToLower() &&  poDetail.PartId == part.Id && poDetail.IsClosed == false && (poDetail.AckQty >= poDetail.InTransitQty + poDetail.ReceivedQty + supplierInvoiceDetail.Qty) )
+                            {
+                                supplierInvoiceDetail.IsPOFound = true;
                                 SupplierInvoicePoDetails supplierInvoicePoDetail = new SupplierInvoicePoDetails();
                                 supplierInvoicePoDetail.PartId = poDetail.PartId;
                                 supplierInvoicePoDetail.PoId = poDetail.PoId;

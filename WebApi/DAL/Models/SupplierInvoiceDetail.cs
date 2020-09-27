@@ -13,6 +13,7 @@ namespace DAL.Models
         public int SrNo { get; set; }
         public long PartId { get; set; }
         public string PartCode { get; set; }
+        public string PoNo { get; set; }
         public int Qty { get; set; }
         public decimal Price { get; set; }
         public decimal Total { get; set; }
@@ -22,6 +23,7 @@ namespace DAL.Models
         public string Barcode { get; set; }
         public bool IsBoxReceived { get; set; }
         public bool IsOpen { get; set; }
+        public bool IsPOFound { get; set; }
         public int AdjustedInvoiceQty { get; set; }
         public int OpenQty { get; set; }
 

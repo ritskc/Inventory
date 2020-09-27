@@ -11,6 +11,8 @@ namespace DAL.IRepository
     public interface IPartRepository
     {
         Task<IEnumerable<Part>> GetAllPartsAsync(int companyId,int userId);
+        Task<IEnumerable<Part>> GetAllPartsCompactAsync(int companyId, int userId);
+        Task<IEnumerable<Part>> GetAllPartsByDateAsync(int companyId, int userId, DateTime dateTime);
         Task<Part> GetPartAsync(long partId);
         Task<Part> GetPartAsync(long partId, SqlConnection conn, SqlTransaction transaction);
         Part GetPart(long partId);
@@ -19,8 +21,8 @@ namespace DAL.IRepository
         Task<IEnumerable<Part>> GetPartBySupplierIdAsync(int supplierId);
         Task<IEnumerable<Part>> GetPartByCustomerIdAsync(int customerId);
         Task AddPartAsync(Part part);
-        Task SetStockPriceAsync(List<StockPrice> stockPrice);
-        Task SetStockPriceAsync(StockPrice stockPrice, int companyId);
+        Task SetStockPriceAsync(int partId, List<StockPrice> stockPrice);
+        Task SetStockPriceAsync(List<StockPrice> stockPrice, int companyId);
         Task UpdatePartAsync(Part part);
         Task DeletePartAsync(long id);
         Task UpdatePartCustomerPriceAsync(int companyId, string customer, string partcode, decimal price);

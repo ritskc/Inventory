@@ -20,6 +20,7 @@ namespace DAL.Models
         public string Code { get; set; }
         public string Description { get; set; }
         public int Qty { get; set; }
+        public int InTransitQty { get; set; }
         public decimal Price { get; set; }
         public decimal Total { get; set; }
     }

@@ -44,6 +44,11 @@ namespace WebApi.Controllers
                     var result = await this.reportService.GetSalesDataSummaryAsync(companyId, fromDate, toDate);
                     return Ok(result);
                 }
+                else if (reportType == "inventoryadjustment")
+                {
+                    var result = await this.reportService.GetInventoryAdjustmentReport(companyId, fromDate, toDate);
+                    return Ok(result);
+                }
                 else
                     return BadRequest();
 

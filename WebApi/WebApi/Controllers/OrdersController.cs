@@ -78,7 +78,7 @@ namespace WebApi.Controllers
                 int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
 
                 var pos = await this._orderService.GetAllOrderMastersAsync(po.CompanyId, userId);
-                var existpo = pos.Where(x => x.PONo == po.PONo).FirstOrDefault();
+                var existpo = pos.Where(x => x.PONo.ToLower().Trim() == po.PONo.ToLower().Trim() && x.CustomerId == po.CustomerId).FirstOrDefault();
 
                 if(existpo != null && existpo.PONo == po.PONo)
                 {

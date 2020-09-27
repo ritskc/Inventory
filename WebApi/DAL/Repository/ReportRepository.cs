@@ -921,7 +921,7 @@ namespace DAL.Repository
 
             foreach (SalesData salesData in packingSlips)
             {
-                commandText = string.Format($"select Top 1 name from supplier sm inner join partsupplierassignment psa on sm.id = psa.SupplierID where partid = '{salesData.PartId}'");
+                commandText = string.Format($"select Top 1 name,UnitPrice from supplier sm inner join partsupplierassignment psa on sm.id = psa.SupplierID where partid = '{salesData.PartId}'");
 
                 using (SqlCommand cmd = new SqlCommand(commandText, conn))
                 {
@@ -934,6 +934,8 @@ namespace DAL.Repository
                     while (dataReader.Read())
                     {
                         salesData.SupplierName = Convert.ToString(dataReader["name"]);
+                        salesData.PurchasePrice = Convert.ToDecimal(dataReader["UnitPrice"]);
+                        salesData.TotalPurchasePrice = salesData.PurchasePrice * salesData.Qty;
                     }
                     dataReader.Close();
                     conn.Close();
@@ -982,7 +984,7 @@ namespace DAL.Repository
 
             foreach (SalesData salesData in packingSlips)
             {
-                commandText = string.Format($"select Top 1 name from supplier sm inner join partsupplierassignment psa on sm.id = psa.SupplierID where partid = '{salesData.PartId}'");
+                commandText = string.Format($"select Top 1 name,UnitPrice from supplier sm inner join partsupplierassignment psa on sm.id = psa.SupplierID where partid = '{salesData.PartId}'");
 
                 using (SqlCommand cmd = new SqlCommand(commandText, conn))
                 {
@@ -995,6 +997,8 @@ namespace DAL.Repository
                     while (dataReader.Read())
                     {
                         salesData.SupplierName = Convert.ToString(dataReader["name"]);
+                        salesData.PurchasePrice = Convert.ToDecimal(dataReader["UnitPrice"]);
+                        salesData.TotalPurchasePrice = salesData.PurchasePrice * salesData.Qty;
                     }
                     dataReader.Close();
                     conn.Close();
@@ -1048,6 +1052,43 @@ namespace DAL.Repository
             }
 
 
+            commandText = string.Format($"SELECT SM.Name as SupplierName	,SIM.InvoiceNo ,SIM.InvoiceDate	,SIM.UploadedDate ,SID.[InvoiceId], " +
+                 $"SID.[PartId], PM.Code, PM.Description, Sum(SID.[Qty]) as Qty, SID.Price, Sum(SID.[Total]) as Total " +
+                 $"FROM[SupplierInvoiceDetails] SID  INNER JOIN SupplierInvoiceMaster SIM ON SIM.Id = SID.InvoiceId " +
+                 $"INNER JOIN part PM ON PM.id = SID.PartId  INNER JOIN supplier SM ON SM.id = SIM.SupplierId " +
+                 $"WHERE SIM.UploadedDate BETWEEN '{fromDate}' AND '{toDate}' AND SIM.CompanyId = '{companyId}' AND SIM.IsInvoiceUploaded = '1' AND SIM.IsInvoiceReceived = '0' " +
+                 $"Group by SID.InvoiceId, SID.PartId, SID.Price, SIM.InvoiceNo, SIM.InvoiceDate, SIM.UploadedDate, PM.Code, PM.Description, SM.Name ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var packingSlip = new PurchaseData();
+
+                    packingSlip.SupplierName = Convert.ToString(dataReader["SupplierName"]);
+
+                    packingSlip.InvoiceNo = Convert.ToString(dataReader["InvoiceNo"]);
+                    packingSlip.InvoiceDate = Convert.ToDateTime(dataReader["InvoiceDate"]);
+                    packingSlip.ReceivedDate = Convert.ToDateTime(dataReader["UploadedDate"]);
+                    packingSlip.PartId = Convert.ToInt32(dataReader["PartId"]);
+                    packingSlip.Code = Convert.ToString(dataReader["Code"]);
+                    packingSlip.Description = Convert.ToString(dataReader["Description"]);
+                    packingSlip.InTransitQty = Convert.ToInt32(dataReader["Qty"]);
+                    packingSlip.Price = Convert.ToDecimal(dataReader["Price"]);
+                    packingSlip.Total = Convert.ToDecimal(dataReader["Total"]);
+                    packingSlips.Add(packingSlip);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+
             foreach (PurchaseData purchaseData in packingSlips)
             {
                 commandText = string.Format($"select Top 1 name from customer cm inner join partcustomerassignment pca on cm.id = pca.CustomerId where partid = '{purchaseData.PartId}'");
@@ -1080,6 +1121,38 @@ namespace DAL.Repository
 
             var commandText = string.Format($"SELECT SM.Name as SupplierName , SID.[PartId] ,PM.Code ,PM.Description ,Sum(SID.[Qty]) as Qty ,SID.Price,Sum(SID.[Total]) as Total " +
                 $"FROM [SupplierInvoiceDetails] SID  INNER JOIN SupplierInvoiceMaster SIM ON SIM.Id = SID.InvoiceId  " +
+                $"INNER JOIN part PM ON PM.id = SID.PartId  INNER JOIN supplier SM ON SM.id = SIM.SupplierId  " +                
+                $"WHERE SIM.UploadedDate BETWEEN '{fromDate}' AND '{toDate}' AND SIM.CompanyId = '{companyId}' AND SIM.IsInvoiceUploaded = '1' AND SIM.IsInvoiceReceived = '0' " +
+                $"Group by SID.PartId,SID.Price,PM.Code ,PM.Description,SM.Name ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var packingSlip = new PurchaseData();
+
+                    packingSlip.SupplierName = Convert.ToString(dataReader["SupplierName"]);
+                    packingSlip.PartId = Convert.ToInt32(dataReader["PartId"]);
+                    packingSlip.Code = Convert.ToString(dataReader["Code"]);
+                    packingSlip.Description = Convert.ToString(dataReader["Description"]);
+                    packingSlip.Qty = Convert.ToInt32(dataReader["Qty"]);
+                    packingSlip.Price = Convert.ToDecimal(dataReader["Price"]);
+                    packingSlip.Total = Convert.ToDecimal(dataReader["Total"]);
+                    packingSlips.Add(packingSlip);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+
+            commandText = string.Format($"SELECT SM.Name as SupplierName , SID.[PartId] ,PM.Code ,PM.Description ,Sum(SID.[Qty]) as Qty ,SID.Price,Sum(SID.[Total]) as Total " +
+                $"FROM [SupplierInvoiceDetails] SID  INNER JOIN SupplierInvoiceMaster SIM ON SIM.Id = SID.InvoiceId  " +
                 $"INNER JOIN part PM ON PM.id = SID.PartId  INNER JOIN supplier SM ON SM.id = SIM.SupplierId  " +
                 $"WHERE SIM.ReceivedDate BETWEEN '{fromDate}' AND '{toDate}' AND SIM.CompanyId = '{companyId}'  " +
                 $"Group by SID.PartId,SID.Price,PM.Code ,PM.Description,SM.Name ");
@@ -1100,7 +1173,7 @@ namespace DAL.Repository
                     packingSlip.PartId = Convert.ToInt32(dataReader["PartId"]);
                     packingSlip.Code = Convert.ToString(dataReader["Code"]);
                     packingSlip.Description = Convert.ToString(dataReader["Description"]);
-                    packingSlip.Qty = Convert.ToInt32(dataReader["Qty"]);
+                    packingSlip.InTransitQty = Convert.ToInt32(dataReader["Qty"]);
                     packingSlip.Price = Convert.ToDecimal(dataReader["Price"]);
                     packingSlip.Total = Convert.ToDecimal(dataReader["Total"]);
                     packingSlips.Add(packingSlip);
@@ -1335,6 +1408,48 @@ namespace DAL.Repository
             }
 
             return packingSlipReports;
+        }
+
+        public async Task<IEnumerable<TransactionDetail>> GetInventoryAdjustmentReport(int companyId,DateTime from,DateTime to)
+        {
+            var transactionDetails = new List<TransactionDetail>();
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            var commandText = string.Empty;
+
+            commandText = string.Format($"SELECT PM.Code, PM.Description,[PartId],[TransactionTypeId],[TransactionDate],[DirectionTypeId],[InventoryTypeId],[ReferenceNo],[Qty] FROM[dbo].[TransactionDetails] TD  INNER JOIN part PM ON PM.ID = TD.PartId  where[TransactionTypeId] in (4, 5) AND PM.CompanyId = '{companyId}'   AND [TransactionDate] between '{from}' and '{to}' ");
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var packingSlip = new TransactionDetail();
+
+                    packingSlip.Code = Convert.ToString(dataReader["Code"]);
+                    packingSlip.Description = Convert.ToString(dataReader["Description"]);
+                    packingSlip.PartId = Convert.ToInt32(dataReader["PartId"]);
+                    if (Convert.ToInt32(dataReader["DirectionTypeId"]) == 1)
+                        packingSlip.DirectionType = "IN";
+                    else
+                        packingSlip.DirectionType = "OUT";
+                    
+                    packingSlip.TransactionDate = Convert.ToDateTime(dataReader["TransactionDate"]);
+                    packingSlip.ReferenceNo = Convert.ToString(dataReader["ReferenceNo"]);                   
+
+                    transactionDetails.Add(packingSlip);
+
+                }
+                conn.Close();
+            }
+            
+
+            return transactionDetails.OrderByDescending(x=>x.TransactionDate).ToList();
         }
     }
 }

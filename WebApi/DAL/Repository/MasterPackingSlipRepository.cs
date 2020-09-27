@@ -312,7 +312,7 @@ namespace DAL.Repository
 
             commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[CustomerId] ,[PackingSlipNo] ,[ShippingDate] ,[ShipVia] ,[Crates] ," +
                  $"[Boxes] ,[GrossWeight] ,[ShippingCharge] ,[CustomCharge] ,[SubTotal] ,[Total] ,[IsInvoiceCreated] ,[IsPaymentReceived] ,[FOB] ,[Terms] ," +
-                 $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsMasterPackingSlip],[MasterPackingSlipId]  FROM [dbo].[PackingSlipMaster] where [MasterPackingSlipId] = '{masterPackingSlip.Id}' ");
+                 $"[ShipmentInfoId] ,[InvoiceDate],[IsPOSUploaded],[POSPath],[TotalSurcharge],[IsMasterPackingSlip],[MasterPackingSlipId],[AllowScanning]  FROM [dbo].[PackingSlipMaster] where [MasterPackingSlipId] = '{masterPackingSlip.Id}' ");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn))
             {
@@ -349,6 +349,7 @@ namespace DAL.Repository
                     packingSlip.TotalSurcharge = Convert.ToDecimal(dataReader["TotalSurcharge"]);
                     packingSlip.IsMasterPackingSlip = Convert.ToBoolean(dataReader["IsMasterPackingSlip"]);
                     packingSlip.MasterPackingSlipId = Convert.ToInt32(dataReader["MasterPackingSlipId"]);
+                    packingSlip.AllowScanning = Convert.ToBoolean(dataReader["AllowScanning"]);
 
                     masterPackingSlip.PackingSlips.Add(packingSlip);
                 }
@@ -360,7 +361,7 @@ namespace DAL.Repository
             var packingSlipBoxDetails = new List<PackingSlipBoxDetails>();
             foreach (PackingSlip packingSlip in masterPackingSlip.PackingSlips)
             {                
-                commandText = string.Format($"SELECT  [Id] ,[PackingSlipId] ,[PackingSlipDetailId] ,[PartId] ,[Qty],[BoxeNo] ,[Barcode] ,[IsScanned] FROM [dbo].[PackingSlipBoxDetails] where PackingSlipDetailId = '{packingSlip.Id}' ");
+                commandText = string.Format($"SELECT  [Id] ,[PackingSlipId] ,[PackingSlipDetailId] ,[PartId] ,[Qty],[BoxeNo] ,[Barcode] ,[IsScanned] FROM [dbo].[PackingSlipBoxDetails] where PackingSlipId = '{packingSlip.Id}' ");
 
                 using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
                 {
@@ -387,6 +388,14 @@ namespace DAL.Repository
                 masterPackingSlip.PackingSlipBoxDetails = packingSlipBoxDetails;
                 conn.Close();
             }
+
+            foreach(PackingSlipBoxDetails packingSlipBox in masterPackingSlip.PackingSlipBoxDetails)
+            {
+                var part = await partRepository.GetPartAsync(packingSlipBox.PartId);
+                packingSlipBox.PartCode = part.Code;
+
+            }
+            
 
             return masterPackingSlip;
         }

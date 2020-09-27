@@ -13,5 +13,6 @@ namespace WebApi.IServices
 
         Task<IEnumerable<SalesData>> GetSalesDataSummaryAsync(int companyId, DateTime fromDate, DateTime toDate);
         Task<IEnumerable<PurchaseData>> GetPurchaseDataSummaryAsync(int companyId, DateTime fromDate, DateTime toDate);
+        Task<IEnumerable<TransactionDetail>> GetInventoryAdjustmentReport(int companyId, DateTime from, DateTime to);
     }
 }
