@@ -28,6 +28,8 @@ export class Part {
     supplierOpenPoQty: number = 0;
     supplierCode: string = '';
     isRepackage: boolean;
+    defaultWarehouse: boolean = false;
+    warehouseId: number = 0;
     futurePrice: number = 0;
     currentPricingInEffectQty: number = 0;
     monthlyClosingQty: number = 0;

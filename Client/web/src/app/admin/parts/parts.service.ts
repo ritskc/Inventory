@@ -60,4 +60,12 @@ export class PartsService {
   updatePartCostingByPart(companyId: number, partCosting: PartCosting[]) {
     return this.apiService.put<PartCosting[]>(partCosting, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }/import/${ companyId }`);
   }
+
+  transferToAnotherWarehouse(transfer: any) {
+    return this.apiService.put<Part>(transfer, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }`);
+  }
+
+  getWarehouseInventory(companyId: number, partId: number): Observable<any[]> {
+    return this.apiService.get<any[]>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }/${ companyId }/WarehouseInventory/${ partId }`);
+  }
 }

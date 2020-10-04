@@ -12,6 +12,7 @@ import { ClassConstants } from '../../common/constants';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as DateHelper from '../../common/helpers/dateHelper';
+import { Company, Warehouse } from '../../models/company.model';
 
 @Component({
   selector: 'app-inventory-parts-list',
@@ -24,12 +25,14 @@ export class InventoryPartsListComponent implements OnInit {
   columns: DataColumn[] = [];
   columnsForModal: DataColumn[] = [];
   columnsForSecondaryGridInModal: DataColumn[] = [];
+  columnsForThirdGridInModal: DataColumn[] = [];
   currentlyLoggedInCompanyId: number = 0;
   filter: any;
   filterOption: FilterOption;
   showModal: boolean = false;
   showOpenOrdersModal: boolean = false;
   showInTransitModal: boolean = false;
+  showTransferModal: boolean = false;
   showLatestShipmentsModal: boolean = false;
   showSupplierOpnePoModal: boolean = false;
   selectedPartIdForAdjustment: number = 0;
@@ -38,9 +41,14 @@ export class InventoryPartsListComponent implements OnInit {
   adjustedQty: number = 0;
   dataForModal: any;
   dataForSecondaryGridInModal: any;
+  dataForThirdGridInModal: any;
   monthlyCustomer: boolean = false;
   showOtherColumns: boolean = false;
   from: Date;
+  warehouses: Warehouse[];
+  fromWarehouseId: number = 0;
+  transferQty: number = 0;
+  toWarehouseId: number = 0;
 
   constructor(private service: PartsService, private companyService: CompanyService, private httpLoaderService: httpLoaderService, private customerService: CustomerService,
     private supplierService: SupplierService, private httpLoader: httpLoaderService, private toastr: ToastrManager, private route: Router) { }
@@ -82,8 +90,9 @@ export class InventoryPartsListComponent implements OnInit {
       this.columns.push( new DataColumn({ headerText: "In Transit", value: "IntransitQty", columnName: 'InTransitQty', sortable: false, hasAdditionalAction: true, additionalActionName: 'showInTransitQty' }) );
       this.columns.push( new DataColumn({ headerText: "Closing Qty", value: "monthlyClosingQty", columnName: 'ClosingQty' }) );
     }
-    this.columns.push( new DataColumn({ headerText: "Action", columnName: 'Action', value: "Action", isActionColumn: true, customStyling: 'center column-width-100', actions: [
-      new DataColumnAction({ actionText: 'Adjust', actionStyle: ClassConstants.Primary, event: 'adjustOpeningQuantity' })
+    this.columns.push( new DataColumn({ headerText: "Action", columnName: 'Action', value: "Action", isActionColumn: true, customStyling: 'center column-width-150', actions: [
+      new DataColumnAction({ actionText: 'Adjust', actionStyle: ClassConstants.Primary, event: 'adjustOpeningQuantity' }),
+      new DataColumnAction({ actionText: 'Transfer', actionStyle: ClassConstants.Warning, event: 'transferWithinWarehouse' })
     ] }) );
 }
 
@@ -155,7 +164,43 @@ export class InventoryPartsListComponent implements OnInit {
         this.selectedPartIdForAdjustment = data.part.id;
         this.showModal = true;
         break;
+      case 'transferWithinWarehouse':
+        this.companyService.getCompany(this.currentlyLoggedInCompanyId)
+            .subscribe(company => this.warehouses = company.warehouses);
+
+        this.dataForModal = data;
+        this.showTransferModal = true;
+        break;
     }
+  }
+
+  transferToWarehouse() {
+    if (this.fromWarehouseId == this.toWarehouseId) {
+      alert('Please select different warehouses to proceed with transfer');
+      return;
+    }
+
+    if (this.transferQty < 1) {
+      alert('Invalid quantity');
+      return;
+    }
+
+    var transferData = {
+      PartId: this.dataForModal.part.id,
+      CompanyId: this.currentlyLoggedInCompanyId,
+      FromWarehouseId: this.fromWarehouseId,
+      ToWarehouseId: this.toWarehouseId,
+      Qty: this.transferQty
+    }
+
+    this.service.transferToAnotherWarehouse(transferData)
+        .subscribe(
+          () => {
+            this.toastr.successToastr("Part transferred successfully");
+            this.showTransferModal = false
+          },
+          (error) => this.toastr.errorToastr(error.error)
+        );
   }
 
   savePartAdjustment() {
@@ -297,6 +342,12 @@ export class InventoryPartsListComponent implements OnInit {
     this.columnsForSecondaryGridInModal.push( new DataColumn({ headerText: "Received Date", value: "receivedDate", isDate: true }) );
     this.columnsForSecondaryGridInModal.push( new DataColumn({ headerText: "Qty", value: "qty" }) );
 
+    this.columnsForThirdGridInModal = [];
+    this.columnsForThirdGridInModal.push( new DataColumn({ headerText: "Part Code", value: "code" }) );
+    this.columnsForThirdGridInModal.push( new DataColumn({ headerText: "Part Description", value: "description" }) );
+    this.columnsForThirdGridInModal.push( new DataColumn({ headerText: "Warehouse", value: "warehousename" }) );
+    this.columnsForThirdGridInModal.push( new DataColumn({ headerText: "Qty", value: "qtyInHand" }) );
+
     this.service.getPartsStatus(this.currentlyLoggedInCompanyId, data.part.id, 'LatestShipment')
         .subscribe(data => {
           this.dataForModal = data;
@@ -306,6 +357,9 @@ export class InventoryPartsListComponent implements OnInit {
     .subscribe(data => {
       this.dataForSecondaryGridInModal = data;
     });
+
+    this.service.getWarehouseInventory(this.currentlyLoggedInCompanyId, data.part.id)
+        .subscribe((result) => this.dataForThirdGridInModal = result);
   }
 
   showOtherColumnsForInventory() {

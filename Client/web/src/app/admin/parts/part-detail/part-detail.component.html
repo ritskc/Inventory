@@ -127,6 +127,18 @@
                         </label>
                       </div>
                     </div>
+                    <div class="col-lg-6 col-md-6">
+                      <label>Default Warehouse</label>
+                      <div class="row">
+                        <label class="switch switch-3d switch-primary">
+                          <input class="switch-input" type="checkbox" [(ngModel)]="part.defaultWarehouse" [ngModelOptions]="{standalone: true}"/>
+                          <span class="switch-slider"></span>
+                        </label>
+                        <select class="form-control col-md-8 col-xs-8" style="margin-left: 10px" [(ngModel)]="part.warehouseId" [ngModelOptions]="{standalone: true}" *ngIf="!part.defaultWarehouse">
+                          <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">{{warehouse.name}}</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </div>
             </div>

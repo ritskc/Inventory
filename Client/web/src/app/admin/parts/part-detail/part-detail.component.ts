@@ -11,6 +11,7 @@ import { CustomerService } from '../../customer/customer.service';
 import { Supplier } from '../../../models/supplier.model';
 import { SupplierService } from '../../supplier/supplier.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { Company } from '../../../models/company.model';
 
 @Component({
   selector: 'app-part-detail',
@@ -27,6 +28,9 @@ export class PartDetailComponent implements OnInit {
   currentlyLoggedInCompanyId: number = 0;
   customers: Customer[] = [];
   suppliers: Supplier[] = [];
+  company: Company;
+  warehouses: any[] = [];
+  warehouseId: number = 0;
 
   constructor(private formBuilder: FormBuilder, private service: PartsService, private activatedRoute: ActivatedRoute,
               private companyService: CompanyService, private customerService: CustomerService,
@@ -48,7 +52,8 @@ export class PartDetailComponent implements OnInit {
       futurePrice: [''],
       currentPricingInEffectQty: [''],
       monthlyForecastQty: [''],
-      supplierCode: ['']
+      supplierCode: [''],
+      warehouse: ['']
     })
   }
 
@@ -61,8 +66,13 @@ export class PartDetailComponent implements OnInit {
         .subscribe((suppliers) => this.suppliers = suppliers, 
                    (error) => console.log(error));
 
-    if (this.activatedRoute.snapshot.params.action == UserAction.Edit)
-      this.getPart();
+    this.companyService.getCompany(this.currentlyLoggedInCompanyId)
+        .subscribe((company) => {
+          this.warehouses = company.warehouses;
+
+          if (this.activatedRoute.snapshot.params.action == UserAction.Edit)
+            this.getPart();
+        });    
   }
 
   f() {
@@ -72,7 +82,12 @@ export class PartDetailComponent implements OnInit {
   getPart() {
     this.service.getPart(this.currentlyLoggedInCompanyId, this.activatedRoute.snapshot.params.id)
         .subscribe(
-          (part) => this.part = part,
+          (part) => {
+            this.part = part;
+            setTimeout(() => {
+              this.warehouseId = this.part.warehouseId;
+            }, 5000);
+          },
           (error) => console.log(error)
         );
   }

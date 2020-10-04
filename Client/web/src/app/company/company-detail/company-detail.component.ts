@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Company } from '../../models/company.model';
+import { Company, Warehouse } from '../../models/company.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserAction } from '../../models/enum/userAction';
@@ -74,6 +74,10 @@ export class CompanyDetailComponent implements OnInit {
       (error) => {
         this.toastr.errorToastr('Could not delete the company. Please try again & contact administrator if the problem persists.');
       })
+  }
+
+  addMoreWarehouse() {
+    this.company.warehouses.push(new Warehouse());
   }
 
   clear() {

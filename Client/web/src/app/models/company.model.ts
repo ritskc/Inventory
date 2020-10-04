@@ -10,8 +10,14 @@ export class Company {
     whAddress: string = '';
     whPhoneNo: string = '';
     whEmail: string = '';
+    warehouses: Warehouse[] = [];
 
     constructor(init?: Partial<Company>) {
         Object.assign(this, init);
     }
+}
+
+export class Warehouse {
+    id: number = 0;
+    name: string = '';
 }
