@@ -54,6 +54,11 @@ export class CompanyDetailComponent implements OnInit {
     this.submitted = true;
     if (this.companyForm.invalid) return;
 
+    if (this.company.warehouses.filter(w => w.name == '').length > 0) {
+      this.toastr.errorToastr('Warehouse name cannot be empty');
+      return;
+    }
+
     this.companyService.saveCompany(this.company)
       .subscribe((response) => { 
         this.toastr.successToastr('Details saved successfully.');
