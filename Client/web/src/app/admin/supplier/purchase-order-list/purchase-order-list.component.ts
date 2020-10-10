@@ -63,8 +63,8 @@ export class PurchaseOrderListComponent implements OnInit {
   initializeGridColumnsForDetails() {
     this.gridColumns = [];
     this.gridColumns.push( new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", isLink: true, sortable: true }) );
-    this.gridColumns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", isLink: true, sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "PO Number", value: "poNo", sortable: true }) );
+    this.gridColumns.push( new DataColumn({ headerText: "Invoice", value: "invoiceNo", sortable: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Date", value: "poDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Due Date", value: "dueDate", sortable: true, isDate: true }) );
     this.gridColumns.push( new DataColumn({ headerText: "Ack Date", value: "partAcknowledgementDate", sortable: true, isDate: true }) );

@@ -255,5 +255,6 @@ export class PartListComponent implements OnInit {
 export enum FilterOption {
   SelectAll = 1,
   Customer,
-  Supplier
+  Supplier,
+  Warehouse
 }

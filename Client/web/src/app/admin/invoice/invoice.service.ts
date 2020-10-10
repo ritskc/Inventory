@@ -28,8 +28,8 @@ export class InvoiceService {
     return this.apiService.get<Invoice>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/${ companyId }/${ invoiceId }`);
   }
 
-  receivedInvoice(supplierId: number, invoiceId: number) {
-    return this.apiService.post<number>(invoiceId, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/receive/${ invoiceId }`);
+  receivedInvoice(supplierId: number, invoiceId: number, warehouseId: number) {
+    return this.apiService.post<number>(invoiceId, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.invoiceUri }/receive/${ invoiceId }/${ warehouseId }`);
   }
 
   unReceivedInvoice(supplierId: number, invoiceId: number) {

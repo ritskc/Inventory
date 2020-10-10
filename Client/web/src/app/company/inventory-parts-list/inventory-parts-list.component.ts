@@ -28,7 +28,7 @@ export class InventoryPartsListComponent implements OnInit {
   columnsForThirdGridInModal: DataColumn[] = [];
   currentlyLoggedInCompanyId: number = 0;
   filter: any;
-  filterOption: FilterOption;
+  filterOption: FilterOption = FilterOption.Customer;
   showModal: boolean = false;
   showOpenOrdersModal: boolean = false;
   showInTransitModal: boolean = false;
@@ -129,6 +129,10 @@ export class InventoryPartsListComponent implements OnInit {
         this.filterOption = FilterOption.Supplier;
         this.loadAllSuppliers();
         break;
+      case "4":
+        this.filterOption = FilterOption.Warehouse;
+        this.getAllWarehouses();
+        break;
     }
   }
 
@@ -165,13 +169,21 @@ export class InventoryPartsListComponent implements OnInit {
         this.showModal = true;
         break;
       case 'transferWithinWarehouse':
-        this.companyService.getCompany(this.currentlyLoggedInCompanyId)
-            .subscribe(company => this.warehouses = company.warehouses);
-
+        this.getAllWarehouses();
         this.dataForModal = data;
         this.showTransferModal = true;
         break;
     }
+  }
+
+  getAllWarehouses() {
+    this.companyService.getCompany(this.currentlyLoggedInCompanyId)
+            .subscribe(company => {
+              this.warehouses = company.warehouses;
+              if (this.filterOption == FilterOption.Warehouse) {
+                this.filter = this.warehouses;
+              }
+            });
   }
 
   transferToWarehouse() {
@@ -224,10 +236,9 @@ export class InventoryPartsListComponent implements OnInit {
     this.parts = [];
     let selectedValue = parseInt(event.target.value);
     var partsToDisplay = [];
-    let observable = this.service.getAllParts(this.currentlyLoggedInCompanyId);
 
     if (this.filterOption === FilterOption.Customer) {
-      observable.subscribe((parts) => {
+      this.service.getAllParts(this.currentlyLoggedInCompanyId).subscribe((parts) => {
         var filteredParts = parts.filter(p => p.partCustomerAssignments.find(c => c.customerId === selectedValue));
         filteredParts.forEach((part) => {
           partsToDisplay.push(new PartsViewModel(part));
@@ -236,14 +247,24 @@ export class InventoryPartsListComponent implements OnInit {
         this.monthlyCustomer = this.filter.find(c => c.id == selectedValue).invoicingtypeid == 3;
         this.initializeGridColumns();
       });
-    } else {
-      observable.subscribe((parts) => {
+    } else if (this.filterOption === FilterOption.Supplier) {
+      this.service.getAllParts(this.currentlyLoggedInCompanyId).subscribe((parts) => {
         var filteredParts = parts.filter(p => p.partSupplierAssignments.find(s => s.supplierID === selectedValue));
         filteredParts.forEach((part) => {
           partsToDisplay.push(new PartsViewModel(part));
         });
         this.parts = partsToDisplay;
       });
+    } else {
+      this.httpLoader.show();
+      this.service.getAllPartsInWarehouse(this.currentlyLoggedInCompanyId, selectedValue).subscribe((parts) => {
+        parts.forEach((part) => {
+          partsToDisplay.push(new PartsViewModel(part));
+        });
+        this.parts = partsToDisplay;
+      }, 
+      () => { this.toastr.errorToastr('Error while fetching inventory list for the selected warehouse') },
+      () => this.httpLoaderService.hide());
     }
   }
 

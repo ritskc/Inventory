@@ -5,6 +5,7 @@
         <option value="1">Show all Parts</option>
         <option value="2">Select by Customer</option>
         <option value="3">Select by Supplier</option>
+        <option value="4">Select by Warehouse</option>
       </select>
       <select class="form-control" style="width: 300px; float: left;" (change)="filterBySelection($event)" *ngIf="filterOption > 1">
         <option value="-1">Please select the option</option>
@@ -17,7 +18,7 @@
         </label>
       </div>
     </div>
-    <div class="col-md-3 col-xs-3">
+    <div class="col-md-3 col-xs-3" *ngIf="filterOption < 4">
       <div class="row">
         <input type="date" class="form-control col-xs-6 col-md-6" [(ngModel)]="from"/>
         <button class="btn btn-primary" style="margin-left: 10px;" (click)="getAllPartsForCompany(true)">Generate</button>

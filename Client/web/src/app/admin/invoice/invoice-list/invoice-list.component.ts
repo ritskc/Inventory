@@ -13,6 +13,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { httpLoaderService } from '../../../common/services/httpLoader.service';
 import { map, mergeMap } from 'rxjs/operators';
 import { FileUploadService } from '../../../common/services/file-upload.service';
+import { Warehouse } from '../../../models/company.model';
 
 @Component({
   selector: 'app-invoice-list',
@@ -27,6 +28,9 @@ export class InvoiceListComponent implements OnInit {
   private appConfiguration: AppConfigurations;
   private fileAttributes: any;
   private dataToUpdate: any;
+  private warehouses: Warehouse[] = [];
+  private warehouseId: number = 0;
+  private showWarehouseModal: boolean = false;
 
   suppliers: Supplier[] = [];
   invoices: Invoice[] = [];
@@ -240,15 +244,16 @@ export class InvoiceListComponent implements OnInit {
         window.open(`${this.configuration.fileApiUri}/TC/${data.id}`);
         break;
       case 'receiveInvoice':
-        this.loaderService.show();
-        this.invoiceService.receivedInvoice(data.supplierId, data.id)
-            .subscribe(() => {
-              this.toastr.successToastr('Invoice received successfully!!');
-              data.isInvoiceReceived = true;
-            }, 
-              (error) => { this.toastr.errorToastr(error.error); this.loaderService.hide(); },
-              () => this.loaderService.hide()
-            );
+        this.dataToUpdate = data;
+        this.companyService.getCompany(this.currentlyLoggedInCompany)
+            .subscribe(company => {
+              if (company.warehouses && company.warehouses.length > 0) {
+                this.warehouses = company.warehouses;
+                this.showWarehouseModal = true;
+              } else {
+                this.receiveOrderInWarehouse();
+              }
+            });
         break;
       case 'unReceiveInvoice':
         this.loaderService.show();
@@ -272,6 +277,19 @@ export class InvoiceListComponent implements OnInit {
         this.deleteInvoice(data);
         break;
     }
+  }
+
+  receiveOrderInWarehouse() {
+    this.showWarehouseModal = false;
+    this.loaderService.show();
+        this.invoiceService.receivedInvoice(this.dataToUpdate.supplierId, this.dataToUpdate.id, this.warehouseId)
+            .subscribe(() => {
+              this.toastr.successToastr('Invoice received to the selected or default warehouse successfully');
+              this.dataToUpdate.isInvoiceReceived = true;
+            }, 
+              (error) => { this.toastr.errorToastr(error.error); this.loaderService.hide(); },
+              () => this.loaderService.hide()
+            );
   }
 
   deleteInvoice(data) {
