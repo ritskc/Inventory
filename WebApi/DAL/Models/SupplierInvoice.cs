@@ -10,6 +10,7 @@ namespace DAL.Models
     {
         public long Id { get; set; }        
         public int CompanyId { get; set; }
+        public int WarehouseId { get; set; }
         public string CompanyName { get; set; }
         public int? SupplierId { get; set; }
         public string SupplierName { get; set; }

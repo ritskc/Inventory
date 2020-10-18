@@ -20,7 +20,7 @@ namespace DAL.IRepository
         Task<Int64> AddSupplierInvoiceAsync(SupplierInvoice supplierInvoice);
         Task UpdateSupplierInvoiceAsync(SupplierInvoice supplierInvoice);
         Task<bool> DeleteSupplierInvoiceAsync(long supplierInvoiceId);
-        Task ReceiveSupplierInvoiceAsync(long supplierInvoiceId);
+        Task ReceiveSupplierInvoiceAsync(long supplierInvoiceId, int warehouseId);
         Task UnReceiveSupplierInvoiceAsync(long supplierInvoiceId);
         Task ReceiveBoxInvoiceAsync(string barcode);
         Task UploadFileAsync(int id, string docType, string path);

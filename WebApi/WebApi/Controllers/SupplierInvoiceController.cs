@@ -170,8 +170,8 @@ namespace WebApi.Controllers
         }
 
         //// POST api/values
-        [HttpPost("receive/{id}")]
-        public async Task<ActionResult> Post(long id)
+        [HttpPost("receive/{id}/{warehouseId}")]
+        public async Task<ActionResult> Post(long id, int warehouseId)
         {
             try
             {
@@ -185,7 +185,7 @@ namespace WebApi.Controllers
                 if (!(result.IsPackingSlipUploaded && result.IsInvoiceUploaded && result.IsBLUploaded))
                     return StatusCode(500, "One of the document(PackingSlip / Invoice / BL is not yet uploaded");
 
-                await this.supplierInvoiceService.ReceiveSupplierInvoiceAsync(id);
+                await this.supplierInvoiceService.ReceiveSupplierInvoiceAsync(id, warehouseId);
 
                 var company = await companyService.GetCompanyAsync(result.CompanyId);
 

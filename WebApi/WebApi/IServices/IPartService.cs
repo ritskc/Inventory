@@ -38,5 +38,10 @@ namespace WebApi.IServices
         Task<IEnumerable<SupplierOpenPO>> GetPartOpenPODetailAsync(long partId, int companyId);
         Task<IEnumerable<StockPrice>> GetStock(long partId, int companyId);
         Task<IEnumerable<StockPrice>> GetAllPartsStocksAsync(int companyId);
+
+        Task TransferInventoryInternallyAsync(PartTransfer partTransfer);
+        Task<IEnumerable<WarehouseInventory>> GetPartWarehouseInventoryAsync(long partId, int companyId);
+
+        Task<IEnumerable<Part>> GetAllPartsbyWarehouseAsync(int companyId, int userId, int warehouseId);
     }
 }

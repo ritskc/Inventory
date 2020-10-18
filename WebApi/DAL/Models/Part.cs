@@ -46,6 +46,9 @@ namespace DAL.Models
         public decimal FuturePrice { get; set; }
         public int CurrentPricingInEffectQty { get; set; }
 
+        public bool DefaultWarehouse { get; set; }
+        public int WarehouseId { get; set; }
+
         public List<PartSupplierAssignment> partSupplierAssignments { get; set; }
         public List<PartCustomerAssignment> partCustomerAssignments { get; set; }
 

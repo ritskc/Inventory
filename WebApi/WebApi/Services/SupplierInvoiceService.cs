@@ -326,9 +326,9 @@ namespace WebApi.Services
             return supplierInvoice;
         }
 
-        public async Task ReceiveSupplierInvoiceAsync(long supplierInvoiceId)
+        public async Task ReceiveSupplierInvoiceAsync(long supplierInvoiceId, int warehouseId)
         {
-            await this._supplierInvoiceRepository.ReceiveSupplierInvoiceAsync(supplierInvoiceId);                     
+            await this._supplierInvoiceRepository.ReceiveSupplierInvoiceAsync(supplierInvoiceId, warehouseId);                     
         }
 
         public async Task UnReceiveSupplierInvoiceAsync(long supplierInvoiceId)

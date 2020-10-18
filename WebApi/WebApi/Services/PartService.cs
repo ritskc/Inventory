@@ -158,6 +158,11 @@ namespace WebApi.Services
             return await this._partRepository.GetPartBySupplierIdAsync(supplierId);
         }
 
+        public async Task<IEnumerable<Part>> GetAllPartsbyWarehouseAsync(int companyId, int userId, int warehouseId)
+        {
+            return await this._partRepository.GetAllPartsbyWarehouseAsync(companyId, userId, warehouseId);
+        }
+
         public async Task<IEnumerable<Part>> GetPartByCustomerIdAsync(int customerId)
         {
             return await this._partRepository.GetPartByCustomerIdAsync(customerId);
@@ -254,6 +259,12 @@ namespace WebApi.Services
             return await Task.Run(() => this._partRepository.GetPartLatestReceivedAsync(partId, companyId));
         }
 
+        public async Task<IEnumerable<WarehouseInventory>> GetPartWarehouseInventoryAsync(long partId, int companyId)
+        {
+            return await Task.Run(() => this._partRepository.GetPartWarehouseInventoryAsync(partId, companyId));
+        }
+
+
         public async Task<IEnumerable<StockPrice>> GetStock(long partId, int companyId)
         {
             return await Task.Run(() => this._partRepository.GetStock(partId, companyId));
@@ -272,6 +283,11 @@ namespace WebApi.Services
         public async Task UpdateMonthlyOpeningQtyByPartIdAsync(int companyId, int partId, int openingQty)
         {
             await Task.Run(() => this._partRepository.UpdateMonthlyOpeningQtyByPartIdAsync(companyId, partId, openingQty));
-        }        
+        }
+
+        public async Task TransferInventoryInternallyAsync(PartTransfer partTransfer)
+        {
+            await Task.Run(() => this._partRepository.TransferInventoryInternallyAsync(partTransfer));
+        }
     }
 }

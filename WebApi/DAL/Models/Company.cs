@@ -19,5 +19,7 @@ namespace DAL.Models
         public string WHAddress { get; set; }
         public string WHPhoneNo { get; set; }
         public string WHEmail { get; set; }
+
+        public List<Warehouse> Warehouses { get; set; }
     }
 }

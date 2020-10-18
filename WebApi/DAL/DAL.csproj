@@ -84,6 +84,7 @@
     <Compile Include="Models\PartLatestShipment.cs" />
     <Compile Include="Models\PartOpenOrder.cs" />
     <Compile Include="Models\PartSupplierAssignment.cs" />
+    <Compile Include="Models\PartTransfer.cs" />
     <Compile Include="Models\PoDetail.cs" />
     <Compile Include="Models\Po.cs" />
     <Compile Include="Models\POReport.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Models\UserPriviledge.cs" />
     <Compile Include="Models\UserPriviledgeDetail.cs" />
     <Compile Include="Models\UserReport.cs" />
+    <Compile Include="Models\Warehouse.cs" />
     <Compile Include="Repository\CustomerRepository.cs" />
     <Compile Include="Repository\EntityTrackerRepository.cs" />
     <Compile Include="Repository\MasterPackingSlipRepository.cs" />

@@ -817,7 +817,7 @@ namespace DAL.Repository
 
             var commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[InvoiceNo] ,[InvoiceDate] ,[ETA] ,[IsAirShipment] ,[PoNo] ,[ReferenceNo] ,[Email] " +
                 $",[ByCourier] ,[IsInvoiceUploaded] ,[IsPackingSlipUploaded] ,[IsTenPlusUploaded] ,[IsBLUploaded] ,[IsTCUploaded] ," +
-                $"[InvoicePath] ,[PackingSlipPath] ,[TenPlusPath] ,[BLPath] ,[IsInvoiceReceived] ,[UploadedDate] ,[ReceivedDate],[Barcode]  FROM [SupplierInvoiceMaster] where Id = '{supplierInvoiceId}' ");
+                $"[InvoicePath] ,[PackingSlipPath] ,[TenPlusPath] ,[BLPath] ,[IsInvoiceReceived] ,[UploadedDate] ,[ReceivedDate],[Barcode],[WarehouseId]  FROM [SupplierInvoiceMaster] where Id = '{supplierInvoiceId}' ");
 
             using (SqlCommand cmd = new SqlCommand(commandText, conn,transaction))
             {
@@ -829,6 +829,7 @@ namespace DAL.Repository
                 {
                     supplierInvoice.Id = Convert.ToInt64(dataReader["Id"]);
                     supplierInvoice.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
+                    supplierInvoice.WarehouseId = Convert.ToInt32(dataReader["WarehouseId"]);
                     supplierInvoice.SupplierId = Convert.ToInt32(dataReader["SupplierId"]);
                     supplierInvoice.InvoiceNo = Convert.ToString(dataReader["InvoiceNo"]);
                     supplierInvoice.InvoiceDate = Convert.ToDateTime(dataReader["InvoiceDate"]);
@@ -1036,8 +1037,33 @@ namespace DAL.Repository
             return supplierInvoice;
         }
 
-        public async Task ReceiveSupplierInvoiceAsync(long supplierInvoiceId)
+        public async Task ReceiveSupplierInvoiceAsync(long supplierInvoiceId, int warehouseId)
         {
+            //bool IsPartExistInWarehouse = false;
+
+            //if (warehouseId > 0)
+            //{
+
+            //    var commandText = string.Format($"SELECT [id]   FROM  [PartWarehouseInventory] where  CompanyId = '{partTransfer.CompanyId}' AND PartId = '{partTransfer.PartId}' AND WarehouseId = '{partTransfer.ToWarehouseId}' ");
+
+            //    SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            //    using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            //    {
+            //        cmd.CommandType = CommandType.Text;
+
+            //        conn.Open();
+
+            //        var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+            //        while (dataReader.Read())
+            //        {
+            //            IsPartExistInWarehouse = true;
+            //        }
+            //        conn.Close();
+            //    }
+            //}
+
             using (SqlConnection connection = new SqlConnection(ConnectionSettings.ConnectionString))
             {
                 connection.Open();
@@ -1055,7 +1081,7 @@ namespace DAL.Repository
 
                 try
                 {
-                    var sql = string.Format($"UPDATE [dbo].[SupplierInvoiceMaster]   SET [IsInvoiceReceived] = '{true}'   ,[ReceivedDate] = '{DateTime.Now}' WHERE Id = '{supplierInvoiceId}'");
+                    var sql = string.Format($"UPDATE [dbo].[SupplierInvoiceMaster]   SET [IsInvoiceReceived] = '{true}'   ,[ReceivedDate] = '{DateTime.Now}',[WarehouseId] = '{warehouseId}' WHERE Id = '{supplierInvoiceId}'");
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
 
@@ -1080,6 +1106,21 @@ namespace DAL.Repository
                         sql = string.Format($"UPDATE [dbo].[part]   SET [IntransitQty] =  IntransitQty - '{supplierInvoiceDetail.Qty}',[QtyInHand] =  QtyInHand + '{supplierInvoiceDetail.Qty}'  WHERE id = '{supplierInvoiceDetail.PartId}' ");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
+
+                        if (warehouseId > 0)
+                        {
+                            sql = string.Format($"UPDATE PartWarehouseInventory SET QtyInHand =  QtyInHand + '{supplierInvoiceDetail.Qty}' where partid= '{supplierInvoiceDetail.PartId}' AND CompanyId= '{supplierInvoice.CompanyId}' AND WarehouseId= '{warehouseId}' ");
+
+                            command.CommandText = sql;
+                            await command.ExecuteNonQueryAsync();
+
+                            sql = string.Format($"INSERT INTO [dbo].[PartWarehouseInventoryTransfer]   " +
+                                $"([PartId]   ,[CompanyId]   ,[Qty]   ,[FromWarehouseId]   ,[ToWarehouseId]   ,[ActionTime]  )     VALUES   " +
+                                $"('{supplierInvoiceDetail.PartId}'   ,'{supplierInvoice.CompanyId}'   ,'{supplierInvoiceDetail.Qty}'   ,'{0}'   ,'{warehouseId}', '{DateTime.Now}'     )");
+
+                            command.CommandText = sql;
+                            await command.ExecuteNonQueryAsync();
+                        }
                         //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
                         sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{supplierInvoiceDetail.PartId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.RECEIVE_SUPPLIER_INVOICE)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.IN)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{supplierInvoiceId.ToString()}'   ,'{supplierInvoiceDetail.Qty}')");
@@ -1304,10 +1345,26 @@ namespace DAL.Repository
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
                         //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                                               
 
                         sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{supplierInvoiceDetail.PartId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.UNRECEIVE_SUPPLIER_INVOICE)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.OUT)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{supplierInvoiceId.ToString()}'   ,'{supplierInvoiceDetail.Qty}')");
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
+
+                        if (supplierInvoice.WarehouseId > 0)
+                        {
+                            sql = string.Format($"UPDATE PartWarehouseInventory SET QtyInHand =  QtyInHand - '{supplierInvoiceDetail.Qty}' where partid= '{supplierInvoiceDetail.PartId}' AND CompanyId= '{supplierInvoice.CompanyId}' AND WarehouseId= '{supplierInvoice.WarehouseId}' ");
+
+                            command.CommandText = sql;
+                            await command.ExecuteNonQueryAsync();
+                            supplierInvoiceDetail.Qty = supplierInvoiceDetail.Qty * -1;
+                            sql = string.Format($"INSERT INTO [dbo].[PartWarehouseInventoryTransfer]   " +
+                                $"([PartId]   ,[CompanyId]   ,[Qty]   ,[FromWarehouseId]   ,[ToWarehouseId]   ,[ActionTime]  )     VALUES   " +
+                                $"('{supplierInvoiceDetail.PartId}'   ,'{supplierInvoice.CompanyId}'   ,'{supplierInvoiceDetail.Qty}'   ,'{0}'   ,'{supplierInvoice.WarehouseId}', '{DateTime.Now}'     )");
+
+                            command.CommandText = sql;
+                            await command.ExecuteNonQueryAsync();
+                        }
                         //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
                     }
 

@@ -129,6 +129,11 @@ namespace WebApi.Controllers
                     var result = await this._partService.GetPartLatestReceivedAsync(Convert.ToInt32(typeId), companyId);
                     return Ok(result);
                 }
+                else if (type.ToLower() == "WarehouseInventory".ToLower())
+                {
+                    var result = await this._partService.GetPartWarehouseInventoryAsync(Convert.ToInt32(typeId), companyId);
+                    return Ok(result);
+                }
                 else if (type.ToLower() == "StockWithPrice".ToLower())
                 {
                     var result = await this._partService.GetStock(Convert.ToInt32(typeId), companyId);
@@ -141,7 +146,14 @@ namespace WebApi.Controllers
                     var result = await this._partService.GetAllPartsByDateAsync(companyId, userId, Convert.ToDateTime(typeId)); 
                     return Ok(result);
                 }
-               
+                if (type.ToLower() == "warehouse".ToLower())
+                {
+                    var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                    int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+                    var result = await this._partService.GetAllPartsbyWarehouseAsync( companyId, userId,Convert.ToInt32(typeId));
+                    return Ok(result);
+                }
+
                 else
                     return BadRequest();
                 
@@ -339,6 +351,21 @@ namespace WebApi.Controllers
                 else
                     return BadRequest();
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        // PUT api/values/5
+        [HttpPut("")]
+        public async Task<IActionResult> Put([FromBody] PartTransfer partTransfer)
+        {
+            try
+            {
+                await this._partService.TransferInventoryInternallyAsync(partTransfer);
+                return Ok();               
             }
             catch (Exception ex)
             {

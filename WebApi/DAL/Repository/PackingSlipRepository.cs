@@ -84,7 +84,11 @@ namespace DAL.Repository
                     foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
                     {
                         var partDetail = await this.partRepository.GetPartAsync(packingSlipDetail.PartId, connection, transaction);
-                        decimal orderPartPrice = 0;
+
+                        packingSlipDetail.DefaultWarehouse = partDetail.DefaultWarehouse;
+                        packingSlipDetail.WarehouseId = partDetail.WarehouseId;
+
+                        decimal orderPartPrice = 0 ;
                         packingSlipDetail.IsRepackage = partDetail.IsRepackage;
                         if (packingSlipDetail.IsRepackage)
                             packingSlip.IsRepackage = true;
@@ -261,6 +265,14 @@ namespace DAL.Repository
 
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
+
+                        if (!packingSlipDetail.DefaultWarehouse)
+                        {
+                            sql = string.Format($"UPDATE [dbo].[PartWarehouseInventory]   SET [QtyInHand] =  QtyInHand - '{packingSlipDetail.Qty}' WHERE PartId = '{packingSlipDetail.PartId}' and CompanyId = '{packingSlip.CompanyId}' and WarehouseId = '{packingSlipDetail.WarehouseId}' ");
+                            command.CommandText = sql;
+                            await command.ExecuteNonQueryAsync();
+                        }
+
                         //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
                         sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{packingSlipDetail.PartId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.CUSTOMER_PACKINGSLIP)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.OUT)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{packingSlip.Id.ToString()}'   ,'{packingSlipDetail.Qty}')");
@@ -437,6 +449,11 @@ namespace DAL.Repository
                 {
                     foreach (PackingSlipDetails packingSlipDetail in packingslip.PackingSlipDetails)
                     {
+                        var partDetail = await this.partRepository.GetPartAsync(packingSlipDetail.PartId, connection, transaction);
+
+                        packingSlipDetail.DefaultWarehouse = partDetail.DefaultWarehouse;
+                        packingSlipDetail.WarehouseId = partDetail.WarehouseId;
+
                         if (packingSlipDetail.OrderDetailId != null && packingSlipDetail.OrderDetailId > 0)
                         {
                             var reflectedQty = packingSlipDetail.Qty - packingSlipDetail.ExcessQty;
@@ -461,7 +478,7 @@ namespace DAL.Repository
                                 command.CommandText = sql1;
                                 await command.ExecuteNonQueryAsync();                                
                                 break;
-                            }
+                            }                            
                         }
                         else
                             sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}'  WHERE id = '{packingSlipDetail.PartId}' ");
@@ -469,7 +486,13 @@ namespace DAL.Repository
 
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
-                        //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+
+                        if (!packingSlipDetail.DefaultWarehouse)
+                        {
+                            sql = string.Format($"UPDATE [dbo].[PartWarehouseInventory]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}' WHERE PartId = '{packingSlipDetail.PartId}' and CompanyId = '{packingslip.CompanyId}' and WarehouseId = '{packingSlipDetail.WarehouseId}' ");
+                            command.CommandText = sql;
+                            await command.ExecuteNonQueryAsync();
+                        }//await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
                         sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{packingSlipDetail.PartId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.REVERT_CUSTOMER_PACKINGSLIP)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.IN)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{id.ToString()}'   ,'{packingSlipDetail.Qty}')");
                         command.CommandText = sql;
@@ -999,6 +1022,11 @@ namespace DAL.Repository
                 {
                     foreach (PackingSlipDetails packingSlipDetail in packingslip.PackingSlipDetails)
                     {
+                        var partDetail = await this.partRepository.GetPartAsync(packingSlipDetail.PartId, connection, transaction);
+
+                        packingSlipDetail.DefaultWarehouse = partDetail.DefaultWarehouse;
+                        packingSlipDetail.WarehouseId = partDetail.WarehouseId;
+
                         if (packingSlipDetail.OrderDetailId != null && packingSlipDetail.OrderDetailId > 0)
                         {
                             var reflectedQty = packingSlipDetail.Qty - packingSlipDetail.ExcessQty;
@@ -1024,6 +1052,14 @@ namespace DAL.Repository
                                 await command.ExecuteNonQueryAsync();
                                 break;
                             }
+
+                            if (!packingSlipDetail.DefaultWarehouse)
+                            {
+                                sql = string.Format($"UPDATE [dbo].[PartWarehouseInventory]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}' WHERE PartId = '{packingSlipDetail.PartId}' and CompanyId = '{packingSlip.CompanyId}' and WarehouseId = '{packingSlipDetail.WarehouseId}' ");
+                                command.CommandText = sql;
+                                await command.ExecuteNonQueryAsync();
+                            }
+
                         }
                         else
                             sql = string.Format($"UPDATE [dbo].[part]   SET [QtyInHand] =  QtyInHand + '{packingSlipDetail.Qty}'  WHERE id = '{packingSlipDetail.PartId}' ");
@@ -1075,6 +1111,8 @@ namespace DAL.Repository
                     foreach (PackingSlipDetails packingSlipDetail in packingSlip.PackingSlipDetails)
                     {
                         var partDetail = await this.partRepository.GetPartAsync(packingSlipDetail.PartId, connection, transaction);
+                        packingSlipDetail.DefaultWarehouse = partDetail.DefaultWarehouse;
+                        packingSlipDetail.WarehouseId = partDetail.WarehouseId;
 
                         packingSlipDetail.IsRepackage = partDetail.IsRepackage;
                         if (packingSlipDetail.IsRepackage)
@@ -1224,6 +1262,13 @@ namespace DAL.Repository
 
                         command.CommandText = sql;
                         await command.ExecuteNonQueryAsync();
+
+                        if (!packingSlipDetail.DefaultWarehouse)
+                        {
+                            sql = string.Format($"UPDATE [dbo].[PartWarehouseInventory]   SET [QtyInHand] =  QtyInHand - '{packingSlipDetail.Qty}' WHERE PartId = '{packingSlipDetail.PartId}' and CompanyId = '{packingSlip.CompanyId}' and WarehouseId = '{packingSlipDetail.WarehouseId}' ");
+                            command.CommandText = sql;
+                            await command.ExecuteNonQueryAsync();
+                        }
                         //await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
 
                         sql = string.Format($"INSERT INTO [dbo].[TransactionDetails]   ([PartId]   ,[TransactionTypeId]   ,[TransactionDate]   ,[DirectionTypeId]   ,[InventoryTypeId]   ,[ReferenceNo]   ,[Qty]) VALUES   ('{packingSlipDetail.PartId}'   ,'{ Convert.ToInt32(BusinessConstants.TRANSACTION_TYPE.CUSTOMER_PACKINGSLIP)}'   ,'{DateTime.Now}'   ,'{Convert.ToInt32(BusinessConstants.DIRECTION.OUT)}'   ,'{Convert.ToInt32(BusinessConstants.INVENTORY_TYPE.QTY_IN_HAND)}'   ,'{packingSlip.Id.ToString()}'   ,'{packingSlipDetail.Qty}')");

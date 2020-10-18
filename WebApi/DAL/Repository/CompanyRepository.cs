@@ -54,6 +54,29 @@ namespace DAL.Repository
                     }
                     conn.Close();
                 }
+
+                foreach (Company company in companys)
+                {                    
+                    commandText = string.Format("SELECT [id]  ,[CompanyId] ,[Name]  FROM [Warehouse] WITH(NOLOCK)  WHERE CompanyId = '{0}'", company.Id);
+                    company.Warehouses = new List<Warehouse>();
+                    using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                    {
+                        cmd1.CommandType = CommandType.Text;
+                        conn.Open();
+                        var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                        while (dataReader1.Read())
+                        {
+                            var warehouse = new Warehouse();
+                            warehouse.Id = Convert.ToInt32(dataReader1["Id"]);
+                            warehouse.CompanyId = Convert.ToInt32(dataReader1["CompanyId"]);
+                            warehouse.Name = Convert.ToString(dataReader1["Name"]);
+                            company.Warehouses.Add(warehouse);
+                        }
+                    }                    
+                    conn.Close();
+                }
+
                 return companys;
             }
             catch (Exception ex)
@@ -93,6 +116,29 @@ namespace DAL.Repository
                 }
                 conn.Close();
             }
+
+            foreach (Company company in companys)
+            {
+                commandText = string.Format("SELECT [id]  ,[CompanyId] ,[Name]  FROM [Warehouse] WITH(NOLOCK)  WHERE CompanyId = '{0}'", company.Id);
+                company.Warehouses = new List<Warehouse>();
+                using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                {
+                    cmd1.CommandType = CommandType.Text;
+                    conn.Open();
+                    var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                    while (dataReader1.Read())
+                    {
+                        var warehouse = new Warehouse();
+                        warehouse.Id = Convert.ToInt32(dataReader1["Id"]);
+                        warehouse.CompanyId = Convert.ToInt32(dataReader1["CompanyId"]);
+                        warehouse.Name = Convert.ToString(dataReader1["Name"]);
+                        company.Warehouses.Add(warehouse);
+                    }
+                }
+                conn.Close();
+            }
+
             return companys;
 
         }
@@ -129,6 +175,26 @@ namespace DAL.Repository
                     }
                     conn.Close();
                 }
+
+                commandText = string.Format("SELECT [id]  ,[CompanyId] ,[Name]  FROM [Warehouse] WITH(NOLOCK)  WHERE CompanyId = '{0}'", company.Id);
+                company.Warehouses = new List<Warehouse>();
+                using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                {
+                    cmd1.CommandType = CommandType.Text;
+                    conn.Open();
+                    var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                    while (dataReader1.Read())
+                    {
+                        var warehouse = new Warehouse();
+                        warehouse.Id = Convert.ToInt32(dataReader1["Id"]);
+                        warehouse.CompanyId = Convert.ToInt32(dataReader1["CompanyId"]);
+                        warehouse.Name = Convert.ToString(dataReader1["Name"]);
+                        company.Warehouses.Add(warehouse);
+                    }
+                }
+                conn.Close();
+
                 return company;
             }
             catch (Exception ex)
@@ -226,11 +292,27 @@ namespace DAL.Repository
         }
 
         public async Task<int> UpdateCompanyAsync(Company company)
-        {
+        {            
             string sql = string.Format("UPDATE [dbo].[Company] SET [name] = '{0}'  ,[Address] ='{1}' ,[PhoneNo] ='{2}' ,[FaxNo] = '{3}'  ,[EMail] ='{4}' ,[ContactPersonName] ='{5}',[WHName] = '{6}'  ,[WHAddress] ='{7}' ,[WHPhoneNo] ='{8}',[WHEmail] ='{9}'" +
                 " WHERE id = '{10}'", company.Name.Replace("'", "''"), company.Address.Replace("'", "''"), company.PhoneNo, company.FaxNo, company.EMail.Replace("'", "''"), company.ContactPersonName.Replace("'", "''"), company.WHName.Replace("'", "''"), company.WHAddress.Replace("'", "''"), company.WHPhoneNo, company.WHEmail.Replace("'", "''"), company.Id);
 
-            return await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+            await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+
+            foreach (Warehouse warehouse in company.Warehouses)
+            {
+                if (warehouse.Id == 0)
+                {
+                    sql = string.Format($"INSERT INTO [dbo].[Warehouse] ([CompanyId],[Name]) VALUES ('{company.Id}','{warehouse.Name}')");
+                    await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                }
+                else
+                {
+                    sql = string.Format("UPDATE [dbo].[Warehouse] SET [name] = '{0}' where id = '{1}' ", warehouse.Name,warehouse.Id  );
+                    await _sqlHelper.ExecuteNonQueryAsync(ConnectionSettings.ConnectionString, sql, CommandType.Text);
+                }
+            }
+
+            return 1;
         }
 
         public async Task<int> DeleteCompanyAsync(long id)

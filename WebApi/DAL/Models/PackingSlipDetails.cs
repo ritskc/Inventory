@@ -31,6 +31,8 @@ namespace DAL.Models
         public string LineNumber { get; set; }
         public int ExcessQty { get; set; }
         public bool IsRepackage { get; set; }
+        public int WarehouseId { get; set; }
+        public bool DefaultWarehouse { get; set; }
 
         public Part PartDetail { get; set; }
 
