@@ -103,6 +103,7 @@ export class InventoryPartsListComponent implements OnInit {
 
         partObservable
         .subscribe((parts) => {
+          parts = parts.filter(p => p.isActive == true);
           var partsToDisplay = [];
           parts.forEach((part) => {
             partsToDisplay.push(new PartsViewModel(part));
