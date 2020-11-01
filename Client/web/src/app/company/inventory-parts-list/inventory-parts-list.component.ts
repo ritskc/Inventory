@@ -333,11 +333,10 @@ export class InventoryPartsListComponent implements OnInit {
     this.columnsForModal.push( new DataColumn({ headerText: "Part Description", value: "description" }) );
     this.columnsForModal.push( new DataColumn({ headerText: 'PO No', value: 'poNo' }));
     this.columnsForModal.push( new DataColumn({ headerText: "Reference", value: "referenceNo" }) );
-    this.columnsForModal.push( new DataColumn({ headerText: "Unit Price", value: "unitPrice", customStyling: 'right' }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Due", value: "dueDate", isDate: true }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Ack Date", value: "acknowledgeDate", isDate: true }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Open Qty", value: "openQty" }) );
-    this.columnsForModal.push( new DataColumn({ headerText: "Note", value: "note" }) );
+    this.columnsForModal.push( new DataColumn({ headerText: "Order Qty", value: "orderedQty" }) );
 
     this.service.getPartsStatus(this.currentlyLoggedInCompanyId, data.part.id, 'SupplierOpenPO')
         .subscribe(data => {
