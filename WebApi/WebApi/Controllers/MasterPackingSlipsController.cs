@@ -46,6 +46,39 @@ namespace WebApi.Controllers
 
         }
 
+        // GET: api/Todo
+        [HttpGet("{companyId}/{customer}/{customerId}")]
+        public async Task<ActionResult<IEnumerable<MasterPackingSlip>>> GetPackingSlipsByCustomer(int companyId,int customerId)
+        {
+            try
+            {
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                var result = await this.packingSlipService.GetAllMasterPackingSlipsAsync(companyId, userId);
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                result = result.Where(x => x.CustomerId == customerId);
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+
+                return result.OrderByDescending(x => x.Id).ToList();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+
+        }
+
         // GET api/values/5        
         [HttpGet("{companyId}/{id}")]
         public async Task<ActionResult<MasterPackingSlip>> Get(int companyId, int id)

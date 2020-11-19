@@ -24,10 +24,19 @@ namespace WebApi.Controllers
     public class PartsController : ControllerBase
     {
         private readonly IPartService _partService;
+        private readonly IPoService _poService;
+        private readonly ISupplierInvoiceService _supplierInvoiceService;
+        private readonly IOrderService _orderService;
+        private readonly IPackingSlipService _packingSlipService;
 
-        public PartsController(IPartService partService)
+        public PartsController(IPartService partService, IPoService poService, ISupplierInvoiceService supplierInvoiceService,
+            IOrderService orderService,IPackingSlipService packingSlipService)
         {
             this._partService = partService;
+            this._poService = poService;
+            this._supplierInvoiceService = supplierInvoiceService;
+            this._orderService = orderService;
+            this._packingSlipService = packingSlipService;
         }
 
         // GET: api/Todo
@@ -400,6 +409,92 @@ namespace WebApi.Controllers
                 {
                     return NotFound();
                 }
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
+
+                bool partExist = false;
+
+                var pos = await this._poService.GetAllPosAsync(result.CompanyId, userId);
+
+                
+                if(pos !=null && pos.Count() > 0)
+                {
+                    foreach(Po po in pos)
+                    {
+                        var parts = po.poDetails.Where(x => x.PartId == id);
+                        if(parts !=null && parts.Count() > 0)
+                        {
+                            partExist = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (partExist)
+                {
+                    return BadRequest("Part is already used in some PO");
+                }
+
+                var supplierInvoices = await this._supplierInvoiceService.GetAllSupplierInvoicesAsync(result.CompanyId, userId);
+
+                if (supplierInvoices != null && supplierInvoices.Count() > 0)
+                {
+                    foreach (SupplierInvoice po in supplierInvoices)
+                    {
+                        var parts = po.supplierInvoiceDetails.Where(x => x.PartId == id);
+                        if (parts != null && parts.Count() > 0)
+                        {
+                            partExist = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (partExist)
+                {
+                    return BadRequest("Part is already used in some Supplier Invoice");
+                }
+
+                var orders = await this._orderService.GetAllOrderMastersAsync(result.CompanyId, userId);
+
+                if (orders != null && orders.Count() > 0)
+                {
+                    foreach (OrderMaster po in orders)
+                    {
+                        var parts = po.OrderDetails.Where(x => x.PartId == id);
+                        if (parts != null && parts.Count() > 0)
+                        {
+                            partExist = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (partExist)
+                {
+                    return BadRequest("Part is already used in some Customer Order");
+                }
+
+                var packingSlips = await this._packingSlipService.GetAllPackingSlipsAsync(result.CompanyId, userId);
+
+                if (packingSlips != null && packingSlips.Count() > 0)
+                {
+                    foreach (PackingSlip po in packingSlips)
+                    {
+                        var parts = po.PackingSlipDetails.Where(x => x.PartId == id);
+                        if (parts != null && parts.Count() > 0)
+                        {
+                            partExist = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (partExist)
+                {
+                    return BadRequest("Part is already used in some Packing Slip");
+                }
+
 
                 await this._partService.DeletePartAsync(id);
 

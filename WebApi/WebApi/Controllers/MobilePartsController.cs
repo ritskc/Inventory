@@ -23,13 +23,13 @@ namespace WebApi.Controllers
 
         // GET: api/Todo
         [HttpGet("{companyId}")]
-        public async Task<ActionResult<IEnumerable<Part>>> GetParts(int companyId)
+        public async Task<ActionResult<IEnumerable<PartCompact>>> GetParts(int companyId)
         {
             try
             {
                 var claimsIdentity = this.User.Identity as ClaimsIdentity;
                 int userId = Convert.ToInt32(claimsIdentity.FindFirst(ClaimTypes.Name)?.Value);
-                var result = await this._partService.GetAllPartsCompactAsync(companyId, userId);
+                var result = await this._partService.GetAllPartsCompactAsync1(companyId, userId);
 
                 if (result == null)
                 {

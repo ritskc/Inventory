@@ -79,6 +79,7 @@
     <Compile Include="Models\PackingSlipDetails.cs" />
     <Compile Include="Models\PackingSlipReport.cs" />
     <Compile Include="Models\Part.cs" />
+    <Compile Include="Models\PartCompact.cs" />
     <Compile Include="Models\PartCustomerAssignment.cs" />
     <Compile Include="Models\PartInTransit.cs" />
     <Compile Include="Models\PartLatestShipment.cs" />

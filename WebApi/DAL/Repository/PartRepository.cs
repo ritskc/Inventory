@@ -524,147 +524,61 @@ namespace DAL.Repository
                 conn.Close();
             }
 
-            //foreach (Part part in parts)
-            //{
-            //    List<PartSupplierAssignment> partSupplierAssignments = new List<PartSupplierAssignment>();
-            //    commandText = string.Format("SELECT [id],[PartID],[SupplierID],[MapCode],[Description],[QtyInHand],[QtyInTransit],[TotalQty],[UnitPrice] FROM [partsupplierassignment]  where partid = '{0}'", part.Id);
+            
 
-            //    using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
-            //    {
-            //        cmd1.CommandType = CommandType.Text;
-            //        conn.Open();
-            //        var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+            return parts.OrderBy(x => x.Code);
+        }
 
-            //        while (dataReader1.Read())
-            //        {
-            //            var partSupplierAssignment = new PartSupplierAssignment();
-            //            partSupplierAssignment.Id = Convert.ToInt64(dataReader1["Id"]);
-            //            partSupplierAssignment.PartID = Convert.ToInt64(dataReader1["PartID"]);
-            //            partSupplierAssignment.SupplierID = Convert.ToInt32(dataReader1["SupplierID"]);
-            //            partSupplierAssignment.MapCode = Convert.ToString(dataReader1["MapCode"]);
-            //            partSupplierAssignment.Description = Convert.ToString(dataReader1["Description"]);
-            //            partSupplierAssignment.QtyInHand = Convert.ToInt32(dataReader1["QtyInHand"]);
-            //            partSupplierAssignment.QtyInTransit = Convert.ToInt32(dataReader1["QtyInTransit"]);
-            //            partSupplierAssignment.TotalQty = Convert.ToInt32(dataReader1["TotalQty"]);
-            //            partSupplierAssignment.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
+        public async Task<IEnumerable<PartCompact>> GetAllPartsCompactAsync1(int companyId, int userId)
+        {
+            List<PartCompact> parts = new List<PartCompact>();
 
-            //            partSupplierAssignments.Add(partSupplierAssignment);
-            //        }
-            //        dataReader1.Close();
-            //    }
-            //    part.partSupplierAssignments = partSupplierAssignments;
-            //    conn.Close();
-            //}
+            var commandText = "";
+            var userInfo = await userRepository.GeUserbyIdAsync(userId);
+            if (userInfo.UserTypeId == 1)
+            {
+                commandText = string.Format("SELECT [id],[Code],[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty]," +
+                "[DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty],[IsDoublePricingAllowed],[DefaultWarehouse],[WarehouseId] FROM [part] where CompanyId = '{0}' ", companyId);
+            }
+            if (userInfo.UserTypeId == 2)
+            {
+                string companylist = string.Join(",", userInfo.CompanyIds);
+                commandText = string.Format($"SELECT PM.[id],[Code],PM.[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty], [DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty],[IsDoublePricingAllowed],[DefaultWarehouse],[WarehouseId] FROM [part] PM INNER JOIN partcustomerassignment PCA ON PCA.PartId = PM.id where CompanyId = '{companyId}' AND PCA.CustomerId IN ({companylist}) ");
+            }
+            if (userInfo.UserTypeId == 3)
+            {
+                string companylist = string.Join(",", userInfo.CompanyIds);
+                commandText = string.Format($"SELECT PM.[id],[Code],PM.[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty], [DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],PM.[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty],[IsDoublePricingAllowed],[DefaultWarehouse],[WarehouseId] FROM [part] PM INNER JOIN partsupplierassignment PCA ON PCA.PartId = PM.id where CompanyId ='{companyId}' AND PCA.SupplierID IN ({companylist}) ");
+            }
 
-            //foreach (Part part in parts)
-            //{
-            //    List<PartCustomerAssignment> partCustomerAssignments = new List<PartCustomerAssignment>();
-            //    commandText = string.Format("SELECT [id],[PartId] ,[CustomerId] ,[MapCode] ,[Description] ,[Weight] ,[Rate] ,[SurchargeExist] ,[SurchargePerPound]  FROM [partcustomerassignment]  where partid = '{0}'", part.Id);
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
 
-            //    using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
-            //    {
-            //        cmd1.CommandType = CommandType.Text;
-            //        conn.Open();
-            //        var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
 
-            //        while (dataReader1.Read())
-            //        {
-            //            var partCustomerAssignment = new PartCustomerAssignment();
-            //            partCustomerAssignment.Id = Convert.ToInt64(dataReader1["Id"]);
-            //            partCustomerAssignment.PartId = Convert.ToInt64(dataReader1["PartId"]);
-            //            partCustomerAssignment.CustomerId = Convert.ToInt32(dataReader1["CustomerId"]);
-            //            partCustomerAssignment.MapCode = Convert.ToString(dataReader1["MapCode"]);
-            //            partCustomerAssignment.Description = Convert.ToString(dataReader1["Description"]);
-            //            partCustomerAssignment.Weight = Convert.ToDecimal(dataReader1["Weight"]);
-            //            partCustomerAssignment.Rate = Convert.ToDecimal(dataReader1["Rate"]);
-            //            partCustomerAssignment.SurchargeExist = Convert.ToBoolean(dataReader1["SurchargeExist"]);
-            //            partCustomerAssignment.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);
+                conn.Open();
 
-            //            partCustomerAssignments.Add(partCustomerAssignment);
-            //        }
-            //        dataReader1.Close();
-            //    }
-            //    part.partCustomerAssignments = partCustomerAssignments;
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
 
-            //    conn.Close();
-            //}
+                while (dataReader.Read())
+                {
+                    var part = new PartCompact();
+                    part.Id = Convert.ToInt64(dataReader["Id"]);
+                    part.Code = Convert.ToString(dataReader["Code"]);
+                    part.Description = Convert.ToString(dataReader["Description"]);
+                    part.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
+                    
+                    part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);
+                    part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]);
+                    
+
+                    parts.Add(part);
+                }
+                conn.Close();
+            }
 
 
-            //foreach (Part part in parts)
-            //{
-            //    commandText = string.Format("SELECT sum(Qty - ShippedQty) as openqty from OrderDetail where partid = '{0}' and (IsClosed =0 OR IsClosed IS NULL) ", part.Id);
-
-            //    using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
-            //    {
-            //        cmd1.CommandType = CommandType.Text;
-            //        conn.Open();
-            //        var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
-
-            //        while (dataReader1.Read())
-            //        {
-            //            try
-            //            {
-            //                part.OpenOrderQty = Convert.ToInt32(dataReader1["openqty"]);
-            //            }
-            //            catch
-            //            {
-            //                part.OpenOrderQty = 0;
-            //            }
-
-            //        }
-            //        dataReader1.Close();
-            //    }
-            //    conn.Close();
-
-
-            //    commandText = string.Format("SELECT sum(Qty - (InTransitQty + ReceivedQty )) as openqty from PoDetails where partid = '{0}' and (IsClosed =0 OR IsClosed IS NULL) ", part.Id);
-
-            //    using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
-            //    {
-            //        cmd1.CommandType = CommandType.Text;
-            //        conn.Open();
-            //        var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
-
-            //        while (dataReader1.Read())
-            //        {
-            //            try
-            //            {
-            //                part.SupplierOpenPoQty = Convert.ToInt32(dataReader1["openqty"]);
-            //            }
-            //            catch
-            //            {
-            //                part.SupplierOpenPoQty = 0;
-            //            }
-
-            //        }
-            //        dataReader1.Close();
-            //    }
-
-            //    commandText = string.Format("SELECT [id]  ,[PartId]  ,[SupplierPrice] ,[CustomerPrice] ,[Qty] FROM [StockPrice] where partid = '{0}' order by id", part.Id);
-            //    part.stockPrices = new List<StockPrice>();
-            //    using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
-            //    {
-            //        cmd1.CommandType = CommandType.Text;
-            //        conn.Open();
-            //        var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
-
-            //        while (dataReader1.Read())
-            //        {
-            //            var stockPrice = new StockPrice();
-            //            stockPrice.Id = Convert.ToInt32(dataReader1["Id"]);
-            //            stockPrice.PartId = Convert.ToInt32(dataReader1["PartId"]);
-            //            stockPrice.SupplierPrice = Convert.ToDecimal(dataReader1["SupplierPrice"]);
-            //            stockPrice.CustomerPrice = Convert.ToDecimal(dataReader1["CustomerPrice"]);
-            //            stockPrice.Qty = Convert.ToInt32(dataReader1["Qty"]);
-
-            //            part.stockPrices.Add(stockPrice);
-
-            //        }
-            //        dataReader1.Close();
-            //    }
-
-            //    conn.Close();
-            //}
 
             return parts.OrderBy(x => x.Code);
         }
@@ -1465,8 +1379,7 @@ namespace DAL.Repository
                     part.Code = Convert.ToString(dataReader["Code"]);
                     part.Description = Convert.ToString(dataReader["Description"]);
                     part.ReferenceNo = Convert.ToString(dataReader["ReferenceNo"]);
-                    part.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
-                    part.Note = Convert.ToString(dataReader["Note"]);
+                    part.DueDate = Convert.ToDateTime(dataReader["DueDate"]);                    
                     part.OrderedQty = Convert.ToInt32(dataReader["Qty"]);
                     part.OpenQty = Convert.ToInt32(dataReader["openqty"]);
                     part.SrNo = Convert.ToInt32(dataReader["SrNo"]);

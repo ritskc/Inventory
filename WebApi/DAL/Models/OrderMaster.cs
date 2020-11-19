@@ -21,4 +21,5 @@ namespace DAL.Models
 
         public List<OrderDetail> OrderDetails { get; set; }
     }
+    
 }

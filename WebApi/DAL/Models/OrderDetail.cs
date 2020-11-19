@@ -28,4 +28,5 @@ namespace DAL.Models
 
         public Part part { get; set; }
     }
+    
 }

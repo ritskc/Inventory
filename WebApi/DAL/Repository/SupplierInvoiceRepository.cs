@@ -458,6 +458,83 @@ namespace DAL.Repository
             return supplierInvoices;
         }
 
+        public async Task<IEnumerable<SupplierInvoice>> GetAllUnReceipveSupplierInvoicesAsync(int companyId, int userId)
+        {
+            List<SupplierInvoice> supplierInvoices = new List<SupplierInvoice>();
+
+            var userInfo = await userRepository.GeUserbyIdAsync(userId);
+            var commandText = "";
+            if (userInfo.UserTypeId == 1)
+            {
+                commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[InvoiceNo] ,[InvoiceDate] ,[ETA] ,[IsAirShipment] ,[PoNo] ,[ReferenceNo] ,[Email] " +
+               $",[ByCourier] ,[IsInvoiceUploaded] ,[IsPackingSlipUploaded] ,[IsTenPlusUploaded] ,[IsBLUploaded] ,[IsTCUploaded] ," +
+               $"[InvoicePath] ,[PackingSlipPath] ,[TenPlusPath] ,[BLPath] ,[IsInvoiceReceived] ,[UploadedDate] ,[ReceivedDate],[Barcode]  FROM [SupplierInvoiceMaster] where IsInvoiceReceived = 0 and CompanyId = '{companyId}' ");
+
+            }
+            if (userInfo.UserTypeId == 2)
+            {
+                return supplierInvoices;
+            }
+            if (userInfo.UserTypeId == 3)
+            {
+                string companylist = string.Join(",", userInfo.CompanyIds);
+                commandText = string.Format($"SELECT [Id] ,[CompanyId] ,[SupplierId] ,[InvoiceNo] ,[InvoiceDate] ,[ETA] ,[IsAirShipment] ,[PoNo] ,[ReferenceNo] ,[Email] " +
+               $",[ByCourier] ,[IsInvoiceUploaded] ,[IsPackingSlipUploaded] ,[IsTenPlusUploaded] ,[IsBLUploaded] ,[IsTCUploaded] ," +
+               $"[InvoicePath] ,[PackingSlipPath] ,[TenPlusPath] ,[BLPath] ,[IsInvoiceReceived] ,[UploadedDate] ,[ReceivedDate],[Barcode]  FROM [SupplierInvoiceMaster] where IsInvoiceReceived = 0 and CompanyId = '{companyId}' and  [SupplierId] in ({companylist})");
+
+            }
+
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var supplierInvoice = new SupplierInvoice();
+                    supplierInvoice.Id = Convert.ToInt64(dataReader["Id"]);
+                    supplierInvoice.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
+                    supplierInvoice.SupplierId = Convert.ToInt32(dataReader["SupplierId"]);
+                    supplierInvoice.InvoiceNo = Convert.ToString(dataReader["InvoiceNo"]);
+                    if (!(DBNull.Value.Equals(dataReader["InvoiceDate"])))
+                        supplierInvoice.InvoiceDate = Convert.ToDateTime(dataReader["InvoiceDate"]);
+
+                    if (!(DBNull.Value.Equals(dataReader["ETA"])))
+                        supplierInvoice.ETA = Convert.ToDateTime(dataReader["ETA"]);
+
+
+                    supplierInvoice.IsAirShipment = Convert.ToBoolean(dataReader["IsAirShipment"]);
+                    supplierInvoice.PoNo = Convert.ToString(dataReader["PoNo"]);
+                    supplierInvoice.ReferenceNo = Convert.ToString(dataReader["ReferenceNo"]);
+                    supplierInvoice.Email = Convert.ToString(dataReader["Email"]);
+                    supplierInvoice.ByCourier = Convert.ToBoolean(dataReader["ByCourier"]);
+                    supplierInvoice.IsInvoiceUploaded = Convert.ToBoolean(dataReader["IsInvoiceUploaded"]);
+                    supplierInvoice.IsPackingSlipUploaded = Convert.ToBoolean(dataReader["IsPackingSlipUploaded"]);
+                    supplierInvoice.IsTenPlusUploaded = Convert.ToBoolean(dataReader["IsTenPlusUploaded"]);
+                    supplierInvoice.IsBLUploaded = Convert.ToBoolean(dataReader["IsBLUploaded"]);
+                    supplierInvoice.IsTCUploaded = Convert.ToBoolean(dataReader["IsTCUploaded"]);
+                    supplierInvoice.InvoicePath = Convert.ToString(dataReader["InvoicePath"]);
+                    supplierInvoice.PackingSlipPath = Convert.ToString(dataReader["PackingSlipPath"]);
+                    supplierInvoice.TenPlusPath = Convert.ToString(dataReader["TenPlusPath"]);
+                    supplierInvoice.BLPath = Convert.ToString(dataReader["BLPath"]);
+                    supplierInvoice.IsInvoiceReceived = Convert.ToBoolean(dataReader["IsInvoiceReceived"]);
+                    supplierInvoice.UploadedDate = Convert.ToDateTime(dataReader["UploadedDate"]);
+                    supplierInvoice.ReceivedDate = Convert.ToDateTime(dataReader["ReceivedDate"]);
+                    supplierInvoice.Barcode = DBNull.Value.Equals(dataReader["Barcode"]) ? string.Empty : Convert.ToString(dataReader["Barcode"]);
+                    supplierInvoices.Add(supplierInvoice);
+                }
+                conn.Close();
+            }          
+
+            return supplierInvoices;
+        }
+
         public async Task<IEnumerable<SupplierInvoice>> GetIntransitSupplierInvoicesAsync(int companyId)
         {
             List<SupplierInvoice> supplierInvoices = new List<SupplierInvoice>();

@@ -11,6 +11,7 @@ namespace DAL.IRepository
     public interface ISupplierInvoiceRepository
     {
         Task<IEnumerable<SupplierInvoice>> GetAllSupplierInvoicesAsync(int companyId,int userId);
+        Task<IEnumerable<SupplierInvoice>> GetAllUnReceipveSupplierInvoicesAsync(int companyId, int userId);
         Task<SupplierInvoice> GetSupplierInvoiceAsync(long supplierInvoiceId);
         Task<IEnumerable<SupplierInvoice>> GetIntransitSupplierInvoicesAsync(int companyId);
         Task<IEnumerable<SupplierInvoice>> GetIntransitSupplierInvoicesByPartIdAsync(int companyId,int partId);

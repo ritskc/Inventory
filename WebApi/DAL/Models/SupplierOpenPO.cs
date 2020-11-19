@@ -12,11 +12,9 @@ namespace DAL.Models
         public string SupplierName { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }
-        public string ReferenceNo { get; set; }
-        public float UnitPrice { get; set; }
+        public string ReferenceNo { get; set; }        
         public DateTime DueDate { get; set; }
-        public int OpenQty { get; set; }
-        public string Note { get; set; }
+        public int OpenQty { get; set; }        
         public int SrNo { get; set; }
         public string PoNo { get; set; }
         public DateTime? AcknowledgeDate { get; set; }

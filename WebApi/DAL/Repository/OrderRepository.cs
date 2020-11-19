@@ -132,6 +132,224 @@ namespace DAL.Repository
             return orders.OrderBy(x=>x.PoDate);
         }
 
+        public async Task<IEnumerable<OrderMaster>> GetAllOrderMastersAsync(int companyId, int userId, int customerId)
+        {
+            List<OrderMaster> orders = new List<OrderMaster>();
+
+            var commandText = "";
+            var userInfo = await userRepository.GeUserbyIdAsync(userId);
+            if (userInfo.UserTypeId == 1)
+            {
+                commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks],[IsClosed] ,[ClosingDate]  FROM [dbo].[OrderMaster] where CompanyId = '{0}' and  [CustomerId] = '{1}'", companyId, customerId);
+            }
+            if (userInfo.UserTypeId == 2)
+            {
+                string companylist = string.Join(",", userInfo.CompanyIds);
+
+                commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks],[IsClosed] ,[ClosingDate]  FROM [dbo].[OrderMaster] where CompanyId = '{0}'  " +
+                    "and  [CustomerId] in ({1}) ", companyId, companylist);
+            }
+            if (userInfo.UserTypeId == 3)
+            {
+                return orders;
+            }
+
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var order = new OrderMaster();
+                    order.Id = Convert.ToInt64(dataReader["Id"]);
+                    order.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
+                    order.CustomerId = Convert.ToInt32(dataReader["CustomerId"]);
+                    order.IsBlanketPO = Convert.ToBoolean(dataReader["IsBlanketPO"]);
+                    order.PONo = Convert.ToString(dataReader["PONo"]);
+                    order.PoDate = Convert.ToDateTime(dataReader["PoDate"]);
+                    order.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
+                    order.Remarks = Convert.ToString(dataReader["Remarks"]);
+                    if (dataReader["IsClosed"] != DBNull.Value)
+                        order.IsClosed = Convert.ToBoolean(dataReader["IsClosed"]);
+                    else
+                        order.IsClosed = false;
+                    if (dataReader["ClosingDate"] != DBNull.Value)
+                        order.ClosingDate = Convert.ToDateTime(dataReader["ClosingDate"]);
+                    else
+                        order.ClosingDate = null;
+                    orders.Add(order);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+            foreach (OrderMaster order in orders)
+            {
+                List<OrderDetail> orderDetails = new List<OrderDetail>();
+                commandText = string.Format("SELECT [Id] ,[OrderId] ,[PartId] ,[BlanketPOId] ,[BlanketPOAdjQty] ,[LineNumber] ,[Qty] ,[UnitPrice] " +
+                    ",[DueDate] ,[Note],[ShippedQty],[IsClosed] ,[ClosingDate],[SrNo],[IsForceClosed]  FROM [dbo].[OrderDetail]  where orderid = '{0}'", order.Id);
+
+                using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                {
+                    cmd1.CommandType = CommandType.Text;
+                    conn.Open();
+                    var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                    while (dataReader1.Read())
+                    {
+                        var orderDetail = new OrderDetail();
+                        orderDetail.Id = Convert.ToInt64(dataReader1["Id"]);
+                        orderDetail.OrderId = Convert.ToInt64(dataReader1["OrderId"]);
+                        orderDetail.PartId = Convert.ToInt64(dataReader1["PartId"]);
+                        orderDetail.BlanketPOId = Convert.ToInt64(dataReader1["BlanketPOId"]);
+                        orderDetail.LineNumber = Convert.ToString(dataReader1["LineNumber"]);
+                        orderDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                        orderDetail.ShippedQty = Convert.ToInt32(dataReader1["ShippedQty"]);
+                        orderDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
+                        orderDetail.DueDate = Convert.ToDateTime(dataReader1["DueDate"]);
+                        orderDetail.Note = Convert.ToString(dataReader1["Note"]);
+                        if (dataReader1["IsClosed"] != DBNull.Value)
+                            orderDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);
+                        else
+                            orderDetail.IsClosed = false;
+                        if (dataReader1["ClosingDate"] != DBNull.Value)
+                            orderDetail.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
+                        else
+                            orderDetail.ClosingDate = null;
+
+                        orderDetail.IsForceClosed = Convert.ToBoolean(dataReader1["IsForceClosed"]);
+
+                        if (dataReader1["SrNo"] != DBNull.Value)
+                            orderDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
+                        else
+                            orderDetail.SrNo = 0;
+
+                        orderDetails.Add(orderDetail);
+                    }
+                    dataReader1.Close();
+                }
+                order.OrderDetails = orderDetails;
+                conn.Close();
+            }
+
+            return orders.OrderBy(x => x.PoDate);
+        }
+
+        public async Task<IEnumerable<OrderMaster>> GetAllOpenOrderMastersAsync(int companyId, int userId)
+        {
+            List<OrderMaster> orders = new List<OrderMaster>();
+
+            var commandText = "";
+            var userInfo = await userRepository.GeUserbyIdAsync(userId);
+            if (userInfo.UserTypeId == 1)
+            {
+                commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks],[IsClosed] ,[ClosingDate]  FROM [dbo].[OrderMaster] where IsClosed = 0 and CompanyId = '{0}' ", companyId);
+            }
+            if (userInfo.UserTypeId == 2)
+            {
+                string companylist = string.Join(",", userInfo.CompanyIds);
+
+                commandText = string.Format("SELECT [Id] ,[CompanyId] ,[CustomerId] ,[IsBlanketPO] ,[PONo] ,[PODate] ,[DueDate] ,[Remarks],[IsClosed] ,[ClosingDate]  FROM [dbo].[OrderMaster] where IsClosed = 0 and CompanyId = '{0}'  " +
+                    "and  [CustomerId] in ({1}) ", companyId, companylist);
+            }
+            if (userInfo.UserTypeId == 3)
+            {
+                return orders;
+            }
+
+            SqlConnection conn = new SqlConnection(ConnectionSettings.ConnectionString);
+
+            using (SqlCommand cmd = new SqlCommand(commandText, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+
+                conn.Open();
+
+                var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                while (dataReader.Read())
+                {
+                    var order = new OrderMaster();
+                    order.Id = Convert.ToInt64(dataReader["Id"]);
+                    order.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
+                    order.CustomerId = Convert.ToInt32(dataReader["CustomerId"]);
+                    order.IsBlanketPO = Convert.ToBoolean(dataReader["IsBlanketPO"]);
+                    order.PONo = Convert.ToString(dataReader["PONo"]);
+                    order.PoDate = Convert.ToDateTime(dataReader["PoDate"]);
+                    order.DueDate = Convert.ToDateTime(dataReader["DueDate"]);
+                    order.Remarks = Convert.ToString(dataReader["Remarks"]);
+                    if (dataReader["IsClosed"] != DBNull.Value)
+                        order.IsClosed = Convert.ToBoolean(dataReader["IsClosed"]);
+                    else
+                        order.IsClosed = false;
+                    if (dataReader["ClosingDate"] != DBNull.Value)
+                        order.ClosingDate = Convert.ToDateTime(dataReader["ClosingDate"]);
+                    else
+                        order.ClosingDate = null;
+                    orders.Add(order);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+
+            foreach (OrderMaster order in orders)
+            {
+                List<OrderDetail> orderDetails = new List<OrderDetail>();
+                commandText = string.Format("SELECT [Id] ,[OrderId] ,[PartId] ,[BlanketPOId] ,[BlanketPOAdjQty] ,[LineNumber] ,[Qty] ,[UnitPrice] " +
+                    ",[DueDate] ,[Note],[ShippedQty],[IsClosed] ,[ClosingDate],[SrNo],[IsForceClosed]  FROM [dbo].[OrderDetail]  where orderid = '{0}'", order.Id);
+
+                using (SqlCommand cmd1 = new SqlCommand(commandText, conn))
+                {
+                    cmd1.CommandType = CommandType.Text;
+                    conn.Open();
+                    var dataReader1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection);
+
+                    while (dataReader1.Read())
+                    {
+                        var orderDetail = new OrderDetail();
+                        orderDetail.Id = Convert.ToInt64(dataReader1["Id"]);
+                        orderDetail.OrderId = Convert.ToInt64(dataReader1["OrderId"]);
+                        orderDetail.PartId = Convert.ToInt64(dataReader1["PartId"]);
+                        orderDetail.BlanketPOId = Convert.ToInt64(dataReader1["BlanketPOId"]);
+                        orderDetail.LineNumber = Convert.ToString(dataReader1["LineNumber"]);
+                        orderDetail.Qty = Convert.ToInt32(dataReader1["Qty"]);
+                        orderDetail.ShippedQty = Convert.ToInt32(dataReader1["ShippedQty"]);
+                        orderDetail.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
+                        orderDetail.DueDate = Convert.ToDateTime(dataReader1["DueDate"]);
+                        orderDetail.Note = Convert.ToString(dataReader1["Note"]);
+                        if (dataReader1["IsClosed"] != DBNull.Value)
+                            orderDetail.IsClosed = Convert.ToBoolean(dataReader1["IsClosed"]);
+                        else
+                            orderDetail.IsClosed = false;
+                        if (dataReader1["ClosingDate"] != DBNull.Value)
+                            orderDetail.ClosingDate = Convert.ToDateTime(dataReader1["ClosingDate"]);
+                        else
+                            orderDetail.ClosingDate = null;
+
+                        orderDetail.IsForceClosed = Convert.ToBoolean(dataReader1["IsForceClosed"]);
+
+                        if (dataReader1["SrNo"] != DBNull.Value)
+                            orderDetail.SrNo = Convert.ToInt32(dataReader1["SrNo"]);
+                        else
+                            orderDetail.SrNo = 0;
+
+                        orderDetails.Add(orderDetail);
+                    }
+                    dataReader1.Close();
+                }
+                order.OrderDetails = orderDetails;
+                conn.Close();
+            }
+
+            return orders.OrderBy(x => x.PoDate);
+        }
+
         public async Task<OrderMaster> GetOrderMasterAsync(long orderId)
         {
             OrderMaster order = new OrderMaster();

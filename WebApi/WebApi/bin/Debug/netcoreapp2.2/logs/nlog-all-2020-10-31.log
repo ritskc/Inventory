@@ -1,0 +1,23 @@
+2020-10-31 10:28:01.6574||DEBUG|WebApi.Program|init main 
+2020-10-31 10:28:18.9777||INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\rcharkhawala\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2020-10-31 10:28:26.8587|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:52652/  0 
+2020-10-31 10:28:26.8587|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/api/values   
+2020-10-31 10:28:27.6559|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 805.6171ms 200  
+2020-10-31 10:28:27.8190|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 969.8575ms 404  
+2020-10-31 10:37:59.6053|1|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:44390/CustomerAccess/POS/e94c7f90-bc09-4829-8da8-eb79483f7114 application/json 4070 
+2020-10-31 10:38:00.5056|1|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Failed to validate the token. Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2020-10-31 10:38:01.2306|7|INFO|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'. 
+2020-10-31 10:38:01.2804|0|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executing endpoint 'WebApi.Controllers.CustomerAccessController.Download (WebApi)' 
+2020-10-31 10:38:01.4915|3|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "Download", controller = "CustomerAccess"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Download(System.String, System.String) on controller WebApi.Controllers.CustomerAccessController (WebApi). 
+2020-10-31 10:38:01.5168|1|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method WebApi.Controllers.CustomerAccessController.Download (WebApi) - Validation state: Valid 
+2020-10-31 10:39:28.1009|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method WebApi.Controllers.CustomerAccessController.Download (WebApi), returned result Microsoft.AspNetCore.Mvc.FileStreamResult in 86580.1774ms. 
+2020-10-31 10:39:28.1009|2|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.FileStreamResultExecutor|Executing Microsoft.AspNetCore.Mvc.FileStreamResult, sending file with download name '166.pdf' ... 
+2020-10-31 10:39:28.3496|2|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action WebApi.Controllers.CustomerAccessController.Download (WebApi) in 86838.1108ms 
+2020-10-31 10:39:28.3754|1|INFO|Microsoft.AspNetCore.Routing.EndpointMiddleware|Executed endpoint 'WebApi.Controllers.CustomerAccessController.Download (WebApi)' 
+2020-10-31 10:39:28.4309|2|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 88825.2233ms 200 application/pdf 
+2020-10-31 10:39:28.5413|32|INFO|Microsoft.AspNetCore.Server.Kestrel|Connection id "0HM3TL4TFOLVM", Request id "0HM3TL4TFOLVM:00000001": the application completed without reading the entire request body. 

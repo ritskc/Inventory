@@ -223,6 +223,22 @@ namespace WebApi.Services
             return result;
         }
 
+        public async Task<IEnumerable<SupplierInvoice>> GetAllUnReceipveSupplierInvoicesAsync(int companyId, int userId)
+        {
+            var result = await this._supplierInvoiceRepository.GetAllUnReceipveSupplierInvoicesAsync(companyId, userId);            
+            var supplierList = await this._supplierRepository.GetAllSupplierAsync(companyId, userId);
+            foreach (SupplierInvoice supplierInvoice in result)
+            {
+                List<SupplierInvoiceGroupDetail> supplierInvoiceGroupDetails = new List<SupplierInvoiceGroupDetail>();               
+
+                supplierInvoice.SupplierDetail = supplierList.Where(p => p.Id == supplierInvoice.SupplierId).FirstOrDefault();
+                if (supplierInvoice != null && supplierInvoice.SupplierDetail != null)
+                    supplierInvoice.SupplierName = supplierInvoice.SupplierDetail.Name;          
+            }
+            result = result.OrderByDescending(x => x.InvoiceDate);
+            return result;
+        }
+
         public async Task<IEnumerable<SupplierInvoice>> GetIntransitSupplierInvoicesAsync(int companyId)
         {
             var result = await this._supplierInvoiceRepository.GetIntransitSupplierInvoicesAsync(companyId);

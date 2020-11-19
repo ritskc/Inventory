@@ -12,6 +12,7 @@ namespace DAL.IRepository
     {
         Task<IEnumerable<Part>> GetAllPartsAsync(int companyId,int userId);
         Task<IEnumerable<Part>> GetAllPartsCompactAsync(int companyId, int userId);
+        Task<IEnumerable<PartCompact>> GetAllPartsCompactAsync1(int companyId, int userId);
         Task<IEnumerable<Part>> GetAllPartsByDateAsync(int companyId, int userId, DateTime dateTime);
         Task<Part> GetPartAsync(long partId);
         Task<Part> GetPartAsync(long partId, SqlConnection conn, SqlTransaction transaction);

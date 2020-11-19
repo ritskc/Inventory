@@ -9,6 +9,7 @@ namespace WebApi.IServices
     public interface ISupplierInvoiceService
     {
         Task<IEnumerable<SupplierInvoice>> GetAllSupplierInvoicesAsync(int companyId,int userId);
+        Task<IEnumerable<SupplierInvoice>> GetAllUnReceipveSupplierInvoicesAsync(int companyId, int userId);
         Task<SupplierInvoice> GetSupplierInvoiceAsync(long supplierInvoiceId);
         Task<IEnumerable<SupplierInvoice>> GetIntransitSupplierInvoicesAsync(int companyId);
         Task<IEnumerable<SupplierIntransitInvoice>> GetIntransitSupplierInvoicesByPartIdAsync(int companyId, int partId);
