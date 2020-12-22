@@ -182,7 +182,10 @@ export class InventoryPartsListComponent implements OnInit {
             .subscribe(company => {
               this.warehouses = company.warehouses;
               if (this.filterOption == FilterOption.Warehouse) {
-                this.filter = this.warehouses;
+                var defaultWarehouse = new Warehouse();
+                defaultWarehouse.id = 0;
+                defaultWarehouse.name = 'Default Warehouse';
+                this.filter = [defaultWarehouse, ...this.warehouses];
               }
             });
   }
