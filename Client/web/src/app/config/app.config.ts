@@ -34,7 +34,7 @@ export class AppConfigurations {
             this.reportsUri = 'https://erp.harisons.com/reports/ReportViewer/';
         } else {
             this.apiServerHost = 'http://cf.globalexportech.com/api';
-            this.reportsUri = 'http://cf.globalexportech.com/reports/';
+            this.reportsUri = 'http://cf.globalexportech.com/reports/ReportViewer';
         }
 
         this.fileApiUri = `${this.apiServerHost}/File`;

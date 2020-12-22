@@ -369,6 +369,7 @@ export class CreateShipmentComponent implements OnInit {
             this.toastr.successToastr('Shipment Created Successfully!!');
             this.packagingSlipCreated.next(`${this.appConfig.reportsUri}/PackingSlip.aspx?id=${result}`);
             this.loadAllOrdersForCustomer();
+            
           },
           (error) => { 
             this.toastr.errorToastr('Error while creating shipment'); 
@@ -436,7 +437,7 @@ export class CreateShipmentComponent implements OnInit {
   }
 
   closeReportEvent(event) {
-    this.router.navigateByUrl(`companies/create-shipment/${ this.selectedCustomerId }/0/0`);
+    this.router.navigateByUrl(`companies/shipment-list/shipment`);
   }
 }
 
