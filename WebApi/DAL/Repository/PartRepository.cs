@@ -24,7 +24,7 @@ namespace DAL.Repository
         }
 
         public async Task<IEnumerable<Part>> GetAllPartsAsync(int companyId, int userId)
-        {
+        {          
             List<Part> parts = new List<Part>();
 
             var commandText = "";
@@ -116,6 +116,8 @@ namespace DAL.Repository
                         partSupplierAssignment.QtyInTransit = Convert.ToInt32(dataReader1["QtyInTransit"]);
                         partSupplierAssignment.TotalQty = Convert.ToInt32(dataReader1["TotalQty"]);
                         partSupplierAssignment.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
+                        if (companyId == 1)
+                            part.SupplierPrice = partSupplierAssignment.UnitPrice;
 
                         partSupplierAssignments.Add(partSupplierAssignment);
                     }
@@ -144,8 +146,10 @@ namespace DAL.Repository
                         partCustomerAssignment.CustomerId = Convert.ToInt32(dataReader1["CustomerId"]);
                         partCustomerAssignment.MapCode = Convert.ToString(dataReader1["MapCode"]);
                         partCustomerAssignment.Description = Convert.ToString(dataReader1["Description"]);
-                        partCustomerAssignment.Weight = Convert.ToDecimal(dataReader1["Weight"]);
+                        partCustomerAssignment.Weight = Convert.ToDecimal(dataReader1["Weight"]);                       
                         partCustomerAssignment.Rate = Convert.ToDecimal(dataReader1["Rate"]);
+                        if (companyId == 1)
+                            part.CustomerPrice = partCustomerAssignment.Rate;
                         partCustomerAssignment.SurchargeExist = Convert.ToBoolean(dataReader1["SurchargeExist"]);
                         partCustomerAssignment.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);
 
@@ -241,6 +245,54 @@ namespace DAL.Repository
 
         public async Task<IEnumerable<Part>> GetAllPartsbyWarehouseAsync(int companyId, int userId, int warehouseId)
         {
+            if(warehouseId == 0)
+            {
+                var result = await GetAllPartsAsync(companyId, userId);
+
+                var commandText1 = "";
+                var userInfo1 = await userRepository.GeUserbyIdAsync(userId);
+                if (userInfo1.UserTypeId == 1)
+                {
+                    commandText1 = string.Format($" SELECT partid, sum(PWI.[QtyInHand]) [QtyInHand] FROM [part] INNER JOIN [PartWarehouseInventory] PWI ON PWI.PARTID = PART.ID where PART.CompanyId ='{companyId}'  group by partid");
+                }
+                if (userInfo1.UserTypeId == 2)
+                {
+                    string companylist = string.Join(",", userInfo1.CompanyIds);
+                    commandText1 = string.Format($"SELECT PM.[id],[Code],PM.[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty], [DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty],[IsDoublePricingAllowed],[DefaultWarehouse],[WarehouseId] FROM [part] PM INNER JOIN partcustomerassignment PCA ON PCA.PartId = PM.id where CompanyId = '{companyId}' AND PCA.CustomerId IN ({companylist}) ");
+                }
+                if (userInfo1.UserTypeId == 3)
+                {
+                    string companylist = string.Join(",", userInfo1.CompanyIds);
+                    commandText1 = string.Format($"SELECT PM.[id],[Code],PM.[Description],[CompanyId],[WeightInKg],[WeightInLb],[IsSample],[MinQty],[MaxQty],[OpeningQty],[SafeQty], [DrawingNo],[DrawingUploaded],[DrawingFileName],[IsActive],[Location],[IntransitQty],PM.[QtyInHand],[MonthlyForecastQty],[SupplierCode],[IsRepackage],[FuturePrice],[CurrentPricingInEffectQty],[MonthlyOpeningQty] ,[MonthlyReturnQty] ,[MonthlyRejectQty],[IsDoublePricingAllowed],[DefaultWarehouse],[WarehouseId] FROM [part] PM INNER JOIN partsupplierassignment PCA ON PCA.PartId = PM.id where CompanyId ='{companyId}' AND PCA.SupplierID IN ({companylist}) ");
+                }
+
+                SqlConnection conn1 = new SqlConnection(ConnectionSettings.ConnectionString);
+
+                using (SqlCommand cmd = new SqlCommand(commandText1, conn1))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    conn1.Open();
+
+                    var dataReader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+
+                    while (dataReader.Read())
+                    {
+                        foreach (Part part in result)
+                        {
+                            if (Convert.ToInt32(dataReader["partid"]) == part.Id)
+                            {
+                                part.QtyInHand = part.QtyInHand + part.OpeningQty - Convert.ToInt32(dataReader["QtyInHand"]);
+                                part.OpeningQty = 0;
+                            }
+                        }
+                       
+                    }
+                    conn1.Close();
+                }
+
+                return result;
+            }
             List<Part> parts = new List<Part>();
 
             var commandText = "";
@@ -281,7 +333,7 @@ namespace DAL.Repository
                     part.WeightInLb = Convert.ToDecimal(dataReader["WeightInLb"]);
                     part.MinQty = Convert.ToInt32(dataReader["MinQty"]);
                     part.MaxQty = Convert.ToInt32(dataReader["MaxQty"]);
-                    part.OpeningQty = Convert.ToInt32(dataReader["OpeningQty"]);
+                    part.OpeningQty = 0;
                     part.SafeQty = Convert.ToInt32(dataReader["SafeQty"]);
                     part.DrawingNo = Convert.ToString(dataReader["DrawingNo"]);
                     part.DrawingUploaded = Convert.ToBoolean(dataReader["DrawingUploaded"]);
@@ -331,7 +383,7 @@ namespace DAL.Repository
                         partSupplierAssignment.QtyInTransit = Convert.ToInt32(dataReader1["QtyInTransit"]);
                         partSupplierAssignment.TotalQty = Convert.ToInt32(dataReader1["TotalQty"]);
                         partSupplierAssignment.UnitPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
-
+                        part.SupplierPrice = Convert.ToDecimal(dataReader1["UnitPrice"]);
                         partSupplierAssignments.Add(partSupplierAssignment);
                     }
                     dataReader1.Close();
@@ -363,7 +415,7 @@ namespace DAL.Repository
                         partCustomerAssignment.Rate = Convert.ToDecimal(dataReader1["Rate"]);
                         partCustomerAssignment.SurchargeExist = Convert.ToBoolean(dataReader1["SurchargeExist"]);
                         partCustomerAssignment.SurchargePerPound = Convert.ToDecimal(dataReader1["SurchargePerPound"]);
-
+                        part.CustomerPrice = Convert.ToDecimal(dataReader1["Rate"]);
                         partCustomerAssignments.Add(partCustomerAssignment);
                     }
                     dataReader1.Close();
@@ -570,7 +622,7 @@ namespace DAL.Repository
                     part.CompanyId = Convert.ToInt32(dataReader["CompanyId"]);
                     
                     part.IntransitQty = Convert.ToInt32(dataReader["IntransitQty"]);
-                    part.QtyInHand = Convert.ToInt32(dataReader["QtyInHand"]);
+                    part.QtyInHand = Convert.ToInt32(dataReader["OpeningQty"]) + Convert.ToInt32(dataReader["QtyInHand"]);
                     
 
                     parts.Add(part);
