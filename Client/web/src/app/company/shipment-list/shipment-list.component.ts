@@ -57,6 +57,7 @@ export class ShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Slip No", value: "packingSlipNo", sortable: true }) );
     this.columns.push( new DataColumn({ headerText: "Shipped Date", value: "shippingDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Shipped Via", value: "shipVia", sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Gross Weight", value: "grossWeight", sortable: false, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Tracking", value: "trakingNumber", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Invoice", value: "isInvoiceCreated", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Payment", value: "isPaymentReceived", sortable: false, isBoolean: true, customStyling: 'center', isDisabled: true }) );
@@ -108,6 +109,7 @@ export class ShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Part Code", value: "partCode", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Description", value: "partDescription", sortable: false }) );
     this.columns.push( new DataColumn({ headerText: "Quantity", value: "shippedQty", sortable: false, customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "Gross Weight", value: "grossWeight", sortable: false, customStyling: 'right' }) );
   }
 
   loadAllCustomers() {
@@ -285,6 +287,7 @@ export class ShipmentListComponent implements OnInit {
           viewModel.partCode = detail.partDetail? detail.partDetail.code: '';
           viewModel.partDescription = detail.partDetail? detail.partDetail.description: '';
           viewModel.shippedQty = detail.qty;
+          viewModel.grossWeight = shipment.grossWeight;
           this.filteredShipments.push(viewModel);
         });
       });
@@ -488,4 +491,5 @@ class ShipmentListViewModel {
   partCode: string;
   partDescription: string;
   shippedQty: number;
+  grossWeight: number;
 }

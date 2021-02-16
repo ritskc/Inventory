@@ -49,6 +49,7 @@ export class InventoryPartsListComponent implements OnInit {
   fromWarehouseId: number = 0;
   transferQty: number = 0;
   toWarehouseId: number = 0;
+  selectedWarehouseId: number = 0;
 
   constructor(private service: PartsService, private companyService: CompanyService, private httpLoaderService: httpLoaderService, private customerService: CustomerService,
     private supplierService: SupplierService, private httpLoader: httpLoaderService, private toastr: ToastrManager, private route: Router) { }
@@ -98,8 +99,12 @@ export class InventoryPartsListComponent implements OnInit {
 
   getAllPartsForCompany(dateRangeSelected: boolean = false) {
     this.httpLoaderService.show();
-    var partObservable: Observable<Part[]> = dateRangeSelected ? this.service.getInventoryForDateRange(this.currentlyLoggedInCompanyId, this.from)
-                        : this.service.getAllParts(this.currentlyLoggedInCompanyId)
+    var partObservable: Observable<Part[]> = dateRangeSelected 
+                        ? ( this.filterOption < 4 
+                            ? this.service.getInventoryForDateRange(this.currentlyLoggedInCompanyId, this.from)
+                            : partObservable = this.service.getWarehouseInventoryForDateRange(this.currentlyLoggedInCompanyId, this.selectedWarehouseId, this.from)
+                          )
+                        : this.service.getAllParts(this.currentlyLoggedInCompanyId);
 
         partObservable
         .subscribe((parts) => {
@@ -261,6 +266,7 @@ export class InventoryPartsListComponent implements OnInit {
       });
     } else {
       this.httpLoader.show();
+      this.selectedWarehouseId = selectedValue;
       this.service.getAllPartsInWarehouse(this.currentlyLoggedInCompanyId, selectedValue).subscribe((parts) => {
         parts.forEach((part) => {
           partsToDisplay.push(new PartsViewModel(part));
@@ -335,6 +341,7 @@ export class InventoryPartsListComponent implements OnInit {
     this.columnsForModal.push( new DataColumn({ headerText: "Part Code", value: "code" }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Part Description", value: "description" }) );
     this.columnsForModal.push( new DataColumn({ headerText: 'PO No', value: 'poNo' }));
+    this.columnsForModal.push( new DataColumn({ headerText: "PO Date", value: "poDate", isDate: true }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Reference", value: "referenceNo" }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Due", value: "dueDate", isDate: true }) );
     this.columnsForModal.push( new DataColumn({ headerText: "Ack Date", value: "acknowledgeDate", isDate: true }) );

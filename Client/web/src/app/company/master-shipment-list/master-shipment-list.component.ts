@@ -44,6 +44,7 @@ export class MasterShipmentListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Packing Slips", value: "packingSlipNumbers", sortable: false, customStyling: 'column-width-100' }) );
     this.columns.push( new DataColumn({ headerText: "Updated Date", value: "updatedDate", sortable: true, isDate: true }) );
     this.columns.push( new DataColumn({ headerText: "Traking Number", value: "trakingNumber", sortable: false }) );
+    this.columns.push( new DataColumn({ headerText: "Gross Weight", value: "grossWeight", sortable: false, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "POS Uploaded", value: "isPOSUploaded", sortable: false, isBoolean: true, customStyling: 'center column-width-50', isDisabled: true }) );
     this.columns.push( new DataColumn({ headerText: "Comment", value: "comment", customStyling: 'column-width-50' }) );
     this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, actions: [

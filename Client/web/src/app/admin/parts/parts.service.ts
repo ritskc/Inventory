@@ -25,6 +25,10 @@ export class PartsService {
     return this.apiService.get<Part[]>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }/${ companyId }/inventory/${ date }`);
   }
 
+  getWarehouseInventoryForDateRange(companyId: number, warehouseId: number, date: any): Observable<Part[]> {
+    return this.apiService.get<Part[]>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.warehousesUri }/${ companyId }/${ warehouseId }/${ date }`);
+  }
+
   getPart(companyId: number, partId: number): Observable<Part> {
     return this.apiService.get<Part>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }/${ companyId }/${ partId }`);
   }
