@@ -84,10 +84,12 @@ export class CompanyInvoiceComponent implements OnInit {
     this.loaderService.show();
     this.shipmentService.getAllShipments(this.currentlyLoggedInCompany)
         .subscribe((shipments) => {
-          this.shipments = shipments.filter(s => s.customerId == this.customerId && !s.isInvoiceCreated);
           if (this.activatedRoute.snapshot.params.shipmentId) {
             this.shipmentId = this.activatedRoute.snapshot.params.shipmentId;
+            this.shipments = shipments.filter(s => s.customerId == this.customerId && s.id == this.shipmentId);
             this.shipmentSelected();
+          } else {
+            this.shipments = shipments.filter(s => s.customerId == this.customerId && !s.isInvoiceCreated);
           }
           this.loaderService.hide();
         });

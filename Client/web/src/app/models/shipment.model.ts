@@ -32,6 +32,7 @@ export class Shipment {
     isRepackage: boolean;
     isShipmentVerified: boolean = false;
     allowScanning: boolean = false;
+    isOverridePrice: boolean = false;
 }
 
 export class PackingSlipDetail {

@@ -7,6 +7,12 @@
         <option value="-1">Please select a Packaging Slip</option>
         <option *ngFor="let shipment of shipments" [value]="shipment.id">{{shipment.packingSlipNo}}</option>
     </select>
+    <div class="form-check" style="margin-left: 15px; padding-top: 5px;">
+        <input class="form-check-input" type="checkbox" value="" id="isOverridePrice" [(ngModel)]="selectedShipment.isOverridePrice">
+        <label class="form-check-label" for="isOverridePrice">
+            Override Price
+        </label>
+    </div>
 </div>
 <div class="container-margin row" *ngIf="selectedShipment.id > 0">
     <span class="font-weight-bold col-xs-2 col-md-2">Packing Date</span>
