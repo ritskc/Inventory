@@ -53,6 +53,7 @@ export class UploadInvoiceComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "PO No", value: "poNo" }) );
     this.columns.push( new DataColumn({ headerText: "Quantity", value: "qty", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Rate", value: "price", customStyling: 'right' }) );
+    this.columns.push( new DataColumn({ headerText: "PO Rate", value: "poUnitPrice", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Amount", value: "total", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Adjusted Qty", value: "adjustedPOQty", customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Purchase Orders", value: "multiplePurchaseOrders", customStyling: 'right' }) );
@@ -177,6 +178,10 @@ export class UploadInvoiceComponent implements OnInit {
   private checkForInvalidParts() {
     this.invoice.supplierInvoiceDetails.forEach(item => {
       item.isValid = item.partId > 0;
+
+      if (!item.isPOFound || item.price != item.poUnitPrice) {
+        item.isValid = false;
+      }
     });
   }
 }

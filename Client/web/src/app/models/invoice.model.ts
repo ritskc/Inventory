@@ -79,6 +79,7 @@ export class InvoiceDetail {
     partCode: string = '';
     qty: number = 0;
     price: number = 0;
+    poUnitPrice: number = 0;
     total: number = 0;
     adjustedPOQty: number = 0;
     adjustedPOPrice: number = 0;
