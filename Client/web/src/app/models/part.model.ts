@@ -44,6 +44,7 @@ export class Part {
     customerPrice: number = 0;
     supplierPrice: number = 0;
     stockPrices: PartCosting[] = [];
+    isAssemblyRequired: boolean = false;
     
     partSupplierAssignments: PartSupplierAssignment[];
     partCustomerAssignments: PartCustomerAssignment[];

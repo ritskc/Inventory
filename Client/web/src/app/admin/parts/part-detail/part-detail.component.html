@@ -100,7 +100,7 @@
                 </div>
                 <div class="form-group standard-top-margin">
                   <div class="row">
-                    <div class="col-lg-2 col-md-2">
+                    <div class="check-boxes">
                         <label>Active</label>
                         <div>
                           <label class="switch switch-3d switch-primary">
@@ -109,7 +109,7 @@
                           </label>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-2">
+                    <div class="check-boxes" style="margin-left: 35px;">
                       <label>Sample</label>
                       <div>
                         <label class="switch switch-3d switch-primary">
@@ -118,7 +118,16 @@
                         </label>
                       </div>
                     </div>
-                    <div class="col-lg-2 col-md-2">
+                    <div class="check-boxes" style="margin-left: 35px;">
+                      <label>Assembly</label>
+                      <div>
+                        <label class="switch switch-3d switch-primary">
+                          <input class="switch-input" type="checkbox" [(ngModel)]="part.isAssemblyRequired" [ngModelOptions]="{standalone: true}"/>
+                          <span class="switch-slider"></span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="check-boxes" style="margin-left: 45px;">
                       <label>Repackage</label>
                       <div>
                         <label class="switch switch-3d switch-primary">
@@ -127,9 +136,9 @@
                         </label>
                       </div>
                     </div>
-                    <div class="col-lg-6 col-md-6">
+                    <div style="margin-left: 55px; width: 150px;">
                       <label>Default Warehouse</label>
-                      <div class="row">
+                      <div class="row" style="margin-left: 5px;">
                         <label class="switch switch-3d switch-primary">
                           <input class="switch-input" type="checkbox" [(ngModel)]="part.defaultWarehouse" [ngModelOptions]="{standalone: true}"/>
                           <span class="switch-slider"></span>
