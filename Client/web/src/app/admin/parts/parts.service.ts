@@ -76,4 +76,16 @@ export class PartsService {
   getWarehouseInventory(companyId: number, partId: number): Observable<any[]> {
     return this.apiService.get<any[]>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.partsUri }/${ companyId }/WarehouseInventory/${ partId }`);
   }
+
+  getAllAssembliesInCompany(companyId: number): Observable<Part[]> {
+    return this.apiService.get<Part[]>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.assemblyUri }/${ companyId }`);
+  }
+
+  getAnAssembly(companyId: number, id: number): Observable<Part> {
+    return this.apiService.get<Part>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.assemblyUri }/${ companyId }/${ id }`);
+  }
+
+  deleteAnAssembly(id: number) {
+    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.assemblyUri }`);
+  }
 }
