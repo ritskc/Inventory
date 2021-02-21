@@ -10,11 +10,13 @@ import { ToastrModule } from 'ng6-toastr-notifications';
 import { httpLoaderService } from '../../common/services/httpLoader.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../../common/services/api.service';
+import { AssemblyListComponent } from './assembly-list/assembly-list.component';
+import { AssemblyDetailComponent } from './assembly-detail/assembly-detail.component';
 
 @NgModule({
   declarations: [
     PartListComponent, 
-    PartDetailComponent
+    PartDetailComponent, AssemblyListComponent, AssemblyDetailComponent
   ],
   imports: [
     CommonModule,

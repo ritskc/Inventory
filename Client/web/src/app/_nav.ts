@@ -78,6 +78,11 @@ if (environment.isSupplier) {
           name: 'Inventory',
           url: '/companies/inventory',
           icon: 'icon-puzzle'
+        },
+        {
+          name: 'Assembly',
+          url: '/parts/assembly',
+          icon: 'icon-puzzle'
         }
       ]
     },
