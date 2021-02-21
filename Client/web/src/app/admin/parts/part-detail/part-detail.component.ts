@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Part, PartCustomerAssignment, PartSupplierAssignment } from '../../../models/part.model';
+import { Part, PartCustomerAssignment, PartPartAssignments, PartSupplierAssignment } from '../../../models/part.model';
 import { PartsService } from '../parts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -12,6 +12,7 @@ import { Supplier } from '../../../models/supplier.model';
 import { SupplierService } from '../../supplier/supplier.service';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Company } from '../../../models/company.model';
+import { httpLoaderService } from '../../../common/services/httpLoader.service';
 
 @Component({
   selector: 'app-part-detail',
@@ -26,14 +27,16 @@ export class PartDetailComponent implements OnInit {
   atleastOneSupplierPresent: boolean = false;
   atleastOneCustomerPresent: boolean = false;
   currentlyLoggedInCompanyId: number = 0;
+  company: Company;
+
+  warehouseId: number = 0;
   customers: Customer[] = [];
   suppliers: Supplier[] = [];
-  company: Company;
   warehouses: any[] = [];
-  warehouseId: number = 0;
+  parts: Part[] = [];
 
   constructor(private formBuilder: FormBuilder, private service: PartsService, private activatedRoute: ActivatedRoute,
-              private companyService: CompanyService, private customerService: CustomerService,
+              private companyService: CompanyService, private customerService: CustomerService, private loadingAnimationService: httpLoaderService,
               private supplierService: SupplierService, private toastr: ToastrManager, private router: Router) {
 
     this.part = new Part();
@@ -84,12 +87,39 @@ export class PartDetailComponent implements OnInit {
         .subscribe(
           (part) => {
             this.part = part;
+            if (this.part.isAssemblyRequired) {
+              this.getAllPartsForAssembly();
+            }
             setTimeout(() => {
               this.warehouseId = this.part.warehouseId;
             }, 5000);
           },
           (error) => console.log(error)
         );
+  }
+
+  getAllPartsForAssembly() {
+    this.loadingAnimationService.show();
+    this.service.getAllParts(this.currentlyLoggedInCompanyId)
+        .subscribe(
+          (parts) => this.parts = parts,
+          (error) => console.log(error.error),
+          () => this.loadingAnimationService.hide()
+        );
+  }
+
+  assemblyRequired() {
+    if (this.part.isAssemblyRequired && this.parts.length == 0) {
+      this.getAllPartsForAssembly();
+    }
+  }
+
+  addPartToAssembly() {
+    this.part.partPartAssignments.push(new PartPartAssignments());
+  }
+
+  removePartFromAssembly(index) {
+    this.part.partPartAssignments.splice(index, 1);
   }
 
   addSupplierInfo() {
@@ -175,6 +205,16 @@ export class PartDetailComponent implements OnInit {
     }
     if (this.part.partSupplierAssignments.some(s => s.unitPrice < 0)) {
       this.toastr.warningToastr('Some of the unit prices in supplier association are invalid. Please verify.');
+      return false;
+    }
+
+    if (this.part.isAssemblyRequired && this.part.partPartAssignments.length == 0) {
+      this.toastr.warningToastr('No parts selected for assembly');
+      return false;
+    }
+
+    if (this.part.isAssemblyRequired && this.part.partPartAssignments.find(p => p.requiredQty < 1)) {
+      this.toastr.warningToastr(`Some of parts required in the assembly cannot be zero`);
       return false;
     }
 

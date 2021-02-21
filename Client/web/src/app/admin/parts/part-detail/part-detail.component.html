@@ -122,7 +122,7 @@
                       <label>Assembly</label>
                       <div>
                         <label class="switch switch-3d switch-primary">
-                          <input class="switch-input" type="checkbox" [(ngModel)]="part.isAssemblyRequired" [ngModelOptions]="{standalone: true}"/>
+                          <input class="switch-input" type="checkbox" (change)="assemblyRequired()" [(ngModel)]="part.isAssemblyRequired" [ngModelOptions]="{standalone: true}"/>
                           <span class="switch-slider"></span>
                         </label>
                       </div>
@@ -153,6 +153,44 @@
             </div>
           </div>
         </div>
+    </div>
+
+    <div class="row" *ngIf="part.isAssemblyRequired">
+      <div class="col-lg-12 col-md-12 col-xs-12">
+        <div class="card">
+          <div class="card-header">
+            <strong>Assembly</strong> Details
+            <button class="btn btn-sm btn-primary float-right" (click)="addPartToAssembly()"><span class="fa fa-plus"></span> Add Part to Assembly</button>
+          </div>
+          <div class="card-body">
+            <table class="table table-responsive-sm table-bordered table-striped table-sm">
+              <thead>
+                <tr>
+                  <td>Part</td>
+                  <td>Quantity</td>
+                  <td>Action</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let partPartAssignment of part.partPartAssignments; let index=index" >
+                  <td>
+                    <select class="form-control" [(ngModel)]="partPartAssignment.subPartID" [ngModelOptions]="{standalone: true}">
+                      <option value="0">Please select a part</option>
+                      <option *ngFor="let part of parts" [value]="part.id">{{part.code}} - {{part.description}}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" [(ngModel)]="partPartAssignment.requiredQty" [ngModelOptions]="{standalone: true}"/>
+                  </td>
+                  <td class="action-buttons">
+                    <button class="btn btn-sm btn-danger" (click)="removePartFromAssembly(index)"><span class="fa fa-remove"></span> Remove</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="row">
@@ -260,3 +298,5 @@
       </div>
     </div>
 </form>
+
+<loader></loader>

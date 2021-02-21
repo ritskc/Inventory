@@ -48,6 +48,7 @@ export class Part {
     
     partSupplierAssignments: PartSupplierAssignment[];
     partCustomerAssignments: PartCustomerAssignment[];
+    partPartAssignments: PartPartAssignments[];
 }
 
 export class PartSupplierAssignment
@@ -82,6 +83,16 @@ export class PartCosting {
     supplierPrice: string = '';
     customerPrice: string = '';
     qty: number = 0;
+}
+
+export class PartPartAssignments {
+    id: number = 0;
+    partID: number = 0;
+    subPartID: number = 0;
+    subCode: string = '';
+    subDescription: string = '';
+    requiredQty: number = 0;
+    currentInventory: number = 0;
 }
 
 export class PartsViewModel {
