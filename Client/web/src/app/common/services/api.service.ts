@@ -21,8 +21,13 @@ export class ApiService {
     return this.http.put(url, t);
   }
 
-  delete(id: number, url: string) {
-    return this.http.delete(`${ url }/${ id }`);
+  delete(id: number, url: string, body: any = undefined) {
+    if (!body) 
+      return this.http.delete(`${ url }/${ id }`);
+    else
+      return this.http.request('delete', `${ url }/${ id }`, {
+        body: body
+      });
   }
 }
 

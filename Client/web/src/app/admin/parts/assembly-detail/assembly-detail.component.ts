@@ -48,6 +48,17 @@ export class AssemblyDetailComponent implements OnInit {
       return;
     }
 
+    var validToSave = true;
+    this.assembly.partPartAssignments.forEach(partAssignment => {
+      if (partAssignment.currentInventory - (partAssignment.requiredQty * this.quantity) < 0)
+        validToSave = false;
+    });
+
+    if (!validToSave) {
+      this.toastr.warningToastr(`Cannot create ${ this.quantity } assemblies since the inventory of few parts will go negative`);
+      return false;
+    }
+
     this.loadingAnimationService.show();
 
     let assembly = {
