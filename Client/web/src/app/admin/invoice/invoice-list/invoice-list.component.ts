@@ -88,8 +88,8 @@ export class InvoiceListComponent implements OnInit {
         new DataColumnAction({ actionText: '', actionStyle: ClassConstants.Warning, event: 'uploadTc', icon: 'fa fa-upload' })
       ] }) );
       this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
-        new DataColumnAction({ actionText: 'Inv', actionStyle: ClassConstants.Primary, event: 'printInvoiceBarcode', icon: 'fa fa-barcode' }),
-        new DataColumnAction({ actionText: 'Box', actionStyle: ClassConstants.Primary, event: 'printBoxBarcode', icon: 'fa fa-barcode' }),
+        // new DataColumnAction({ actionText: 'Inv', actionStyle: ClassConstants.Primary, event: 'printInvoiceBarcode', icon: 'fa fa-barcode' }),
+        // new DataColumnAction({ actionText: 'Box', actionStyle: ClassConstants.Primary, event: 'printBoxBarcode', icon: 'fa fa-barcode' }),
         new DataColumnAction({ actionText: 'Receive', actionStyle: ClassConstants.Primary, event: 'receiveInvoice', icon: '', showOnlyIf: 'data["isInvoiceReceived"] == false' }),
         new DataColumnAction({ actionText: 'Unreceive', actionStyle: ClassConstants.Primary, event: 'unReceiveInvoice', icon: '', showOnlyIf: 'data["isInvoiceReceived"] == true' }),
         new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Primary, event: 'updateInvoice' }),
