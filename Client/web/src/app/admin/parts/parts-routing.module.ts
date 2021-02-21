@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PartListComponent } from './part-list/part-list.component';
 import { PartDetailComponent } from './part-detail/part-detail.component';
 import { AssemblyListComponent } from './assembly-list/assembly-list.component';
+import { AssemblyDetailComponent } from './assembly-detail/assembly-detail.component';
 
 const routes: Routes = [{
   path: '',
@@ -15,7 +16,13 @@ const routes: Routes = [{
       component: PartListComponent
     }, {
       path: 'assembly',
-      component: AssemblyListComponent
+      component: AssemblyListComponent,
+      children: [
+        
+      ]
+    }, {
+      path: 'assembly/detail/:id',
+      component: AssemblyDetailComponent
     }, {
       path: 'detail/:action/:id',
       component: PartDetailComponent,

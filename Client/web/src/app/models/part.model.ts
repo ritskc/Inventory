@@ -204,4 +204,8 @@ export class PartsViewModel {
     get supplierCode(): string {
         return this.part.supplierCode;
     }
+
+    get id(): string {
+        return this.part.id;
+    }
 }

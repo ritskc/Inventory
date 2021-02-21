@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ClassConstants } from '../../../common/constants';
 import { httpLoaderService } from '../../../common/services/httpLoader.service';
 import { CompanyService } from '../../../company/company.service';
@@ -18,7 +19,8 @@ export class AssemblyListComponent implements OnInit {
   parts: PartsViewModel[] = [];
   columns: DataColumn[] = [];
 
-  constructor(private companyService: CompanyService, private partService: PartsService, private loaderService: httpLoaderService) { }
+  constructor(private companyService: CompanyService, private partService: PartsService, 
+              private loaderService: httpLoaderService, private router: Router) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompany = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -54,5 +56,13 @@ export class AssemblyListComponent implements OnInit {
           (error) => console.log(error.error),
           () => this.loaderService.show()
         );
+  }
+
+  actionButtonClicked(data) {
+    switch(data.eventName) {
+      case 'createAssembly':
+        this.router.navigateByUrl(`parts/assembly/detail/${ data.id }`);
+        break;
+    }
   }
 }

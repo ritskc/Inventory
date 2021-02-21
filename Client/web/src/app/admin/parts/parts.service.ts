@@ -85,6 +85,10 @@ export class PartsService {
     return this.apiService.get<Part>(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.assemblyUri }/${ companyId }/${ id }`);
   }
 
+  createAssembly(assembly: any) {
+    return this.apiService.post<any>(assembly, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.assemblyUri }`);
+  }
+
   deleteAnAssembly(id: number) {
     return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.assemblyUri }`);
   }

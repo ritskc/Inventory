@@ -1,3 +1,20 @@
-<p>
-  assembly-detail works!
-</p>
+<div class="card">
+  <div class="card-header">
+    Assembly for {{assembly.code}} - {{assembly.description}}
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <span class="col-xs-2 col-md-2">Assembly Quantity to create</span>
+      <input class="col-xs-2 col-md-2 form-control" [(ngModel)]="quantity"/>
+    </div>
+    <div style="margin-top: 20px;">
+      <simple-grid [data]="assembly.partPartAssignments" [columns]="columns" 
+        [addRequired]="false" [exportRequired]="false"></simple-grid>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-primary" (click)="save()">Save</button>
+  </div>
+</div>
+
+<loader></loader>
