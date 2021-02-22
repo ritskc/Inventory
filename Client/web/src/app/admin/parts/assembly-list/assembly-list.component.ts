@@ -63,23 +63,10 @@ export class AssemblyListComponent implements OnInit {
   actionButtonClicked(data) {
     switch(data.eventName) {
       case 'createAssembly':
-        this.router.navigateByUrl(`parts/assembly/detail/${ data.id }`);
+        this.router.navigateByUrl(`parts/assembly/detail/${ data.id }/create`);
         break;
       case 'deleteAssembly':
-        var qtyToDelete = prompt('Enter the number of assembly quantities to delete');
-        if (confirm(`Are you sure to delete ${ qtyToDelete } assembly?`)) {
-          var body = {
-            partId: data.id,
-            qty: qtyToDelete,
-            warehouseId: data.part.warehouseId
-          };
-          this.partService.deleteAnAssembly(data.id, body)
-            .subscribe(
-              () => this.loadAllAssemblies(),
-              (error) => console.log(error.error),
-              () => {}
-            );
-        }
+        this.router.navigateByUrl(`parts/assembly/detail/${ data.id }/remove`);
         break;
     }
   }

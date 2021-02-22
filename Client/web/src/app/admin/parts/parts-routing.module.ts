@@ -21,7 +21,7 @@ const routes: Routes = [{
         
       ]
     }, {
-      path: 'assembly/detail/:id',
+      path: 'assembly/detail/:id/:mode',
       component: AssemblyDetailComponent
     }, {
       path: 'detail/:action/:id',

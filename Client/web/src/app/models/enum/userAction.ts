@@ -1,4 +1,4 @@
-export enum UserAction {
+export enum     UserAction {
     Add,
     Edit,
     Delete,

@@ -92,6 +92,14 @@ export class PartPartAssignments {
     subCode: string = '';
     subDescription: string = '';
     requiredQty: number = 0;
+    quantity: number = 0;
+    currentInventory: number = 0;
+
+    warehouseInventories: WarehouseInventory[] = [];
+}
+
+export class WarehouseInventory {
+    warehouseId: number = 0;
     currentInventory: number = 0;
 }
 

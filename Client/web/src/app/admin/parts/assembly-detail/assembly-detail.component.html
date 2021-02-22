@@ -4,8 +4,14 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <span class="col-xs-2 col-md-2">Assembly Quantity to create</span>
-      <input class="col-xs-2 col-md-2 form-control" [(ngModel)]="quantity"/>
+      <span class="col-xs-1 col-md-1" style="margin-top: 4px;">Quantity</span>
+      <input class="col-xs-2 col-md-2 form-control" [(ngModel)]="quantity" (change)="quantityEntered()"/>
+      <span class="col-xs-1 col-md-1" style="margin-top: 4px;">Warehouse</span>
+      <select class="col-xs-2 col-md-2 form-control" [(ngModel)]="warehouseId" (change)="warehouseSelected()">
+        <option value="-1">Please select a Warehouse</option>
+        <option value="0">Default Warehouse</option>
+        <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">{{warehouse.name}}</option>
+      </select>
     </div>
     <div style="margin-top: 20px;">
       <simple-grid [data]="assembly.partPartAssignments" [columns]="columns" 
@@ -13,7 +19,9 @@
     </div>
   </div>
   <div class="card-footer">
-    <button class="btn btn-primary" (click)="save()">Save</button>
+    <button *ngIf="mode == 0" class="btn btn-primary" (click)="save()"><i class="fa fa-save"></i> Create Assembly</button>
+    <button *ngIf="mode == 2" class="btn btn-danger" (click)="remove()"><i class="fa fa-trash"></i> Delete Assembly</button>
+    <button (click)="back()" class="btn btn-warning"><i class="fa fa-arrow-left"></i> Back</button>
   </div>
 </div>
 
