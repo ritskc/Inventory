@@ -40,9 +40,10 @@
                 <ng-template ngFor let-row [ngForOf]="_data | search: searchText | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
                   <tr>
                     <td *ngFor="let item of columns" [ngClass]="item.customStyling">
-                      <span *ngIf="!item.isLink && !item.nested && !item.isDate && !item.isEditable && !item.isBoolean && !item.hasAdditionalAction && !item.isEditableDate">{{row[item.value]}}</span>
+                      <span *ngIf="!item.isLink && !item.nested && !item.isDate && !item.isDateTime && !item.isEditable && !item.isBoolean && !item.hasAdditionalAction && !item.isEditableDate">{{row[item.value]}}</span>
                       <span *ngIf="item.constantText && !item.isLink">{{item.constantText}}</span>
                       <span *ngIf="item.isDate">{{row[item.value] | date}}</span>
+                      <span *ngIf="item.isDateTime">{{row[item.value] | date:'medium'}}</span>
                       <span class="clickable" *ngIf="item.constantText && item.isLink">{{item.constantText}}</span>
                       <span class="clickable" (click)="rowSelected(row)" *ngIf="item.isLink">{{row[item.value]}}</span>
                       <span *ngIf="item.nested">{{row[item.value][item.nested]}}</span>

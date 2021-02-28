@@ -12,6 +12,7 @@ import { MasterShipmentDetailComponent } from './master-shipment-detail/master-s
 import { SaleReportComponent } from './sale-report/sale-report.component';
 import { MonthlyInvoiceListComponent } from './monthly-invoice/monthly-invoice.component';
 import { EditMonthlyInvoiceComponent } from './edit-monthly-invoice/edit-monthly-invoice.component';
+import { WarehouseListComponent } from './warehouse-list/warehouse-list.component';
 
 const routes: Routes = [{
   path: '',
@@ -22,6 +23,10 @@ const routes: Routes = [{
     {
       path: '',
       component: CompanyListComponent
+    },
+    {
+      path: 'warehouse-report',
+      component: WarehouseListComponent
     },
     {
       path: 'shipment-list/shipment',

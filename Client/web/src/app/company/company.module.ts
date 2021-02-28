@@ -25,6 +25,7 @@ import { MasterShipmentDetailComponent } from './master-shipment-detail/master-s
 import { SaleReportComponent } from './sale-report/sale-report.component';
 import { MonthlyInvoiceListComponent } from './monthly-invoice/monthly-invoice.component';
 import { EditMonthlyInvoiceComponent } from './edit-monthly-invoice/edit-monthly-invoice.component';
+import { WarehouseListComponent } from './warehouse-list/warehouse-list.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { EditMonthlyInvoiceComponent } from './edit-monthly-invoice/edit-monthly
     MasterShipmentDetailComponent,
     SaleReportComponent,
     MonthlyInvoiceListComponent,
-    EditMonthlyInvoiceComponent
+    EditMonthlyInvoiceComponent,
+    WarehouseListComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ApiService } from '../common/services/api.service';
 import { ConfigService } from '../config/config.service';
 import { Company } from '../models/company.model';
@@ -61,5 +62,10 @@ export class CompanyService {
 
   deleteCompany(id: number) {
     return this.apiService.delete(id, this.config.Settings.apiServerHost + this.config.Settings.companyUri);
+  }
+
+  getWarehouseReport(): Observable<any[]> {
+    var companyId = this.getCurrentlyLoggedInCompanyId();
+    return this.apiService.get<any[]>(`${ this.config.Settings.apiServerHost }/warehouses/${ companyId }/transactions`);
   }
 }

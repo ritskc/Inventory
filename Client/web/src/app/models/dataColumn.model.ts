@@ -10,6 +10,7 @@ export class DataColumn {
     nested:string = '';
     constantText: string = '';
     isDate: boolean = false;
+    isDateTime: boolean = false;
     isEditableDate: boolean = false;
     isBoolean: boolean = false;
     checkboxText: string = '';
