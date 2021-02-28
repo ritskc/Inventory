@@ -466,13 +466,14 @@ export class ShipmentListComponent implements OnInit {
   printBarcode(data) {
     try{
       var appConfiguration = new AppConfigurations();
-      var boxNos = '';
-      data.packingSlipDetails.forEach(detail => {
-        detail.packingSlipBoxDetails.forEach(box => {
-          boxNos += box.barcode + '|';
-        });
-      });
-      window.open(appConfiguration.barcodeUri + boxNos);
+      window.open(`${ appConfiguration.reportsUri }/barcode.aspx?id=${ data.id }`);
+      // var boxNos = '';
+      // data.packingSlipDetails.forEach(detail => {
+      //   detail.packingSlipBoxDetails.forEach(box => {
+      //     boxNos += box.barcode + '|';
+      //   });
+      // });
+      // window.open(appConfiguration.barcodeUri + boxNos);
     } catch {
       this.toastr.errorToastr(`Barcode details unavailable for packing slip ${ data.packingSlipNo }`);
     }
