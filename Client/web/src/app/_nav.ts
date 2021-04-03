@@ -65,6 +65,11 @@ if (environment.isSupplier) {
       name: 'Company',
       children: [
         {
+          name: 'Dashboard',
+          url: '/companies/dashboard',
+          icon: 'fa fa-building-o'
+        },
+        {
           name: 'Company',
           url: '/companies',
           icon: 'fa fa-building-o'

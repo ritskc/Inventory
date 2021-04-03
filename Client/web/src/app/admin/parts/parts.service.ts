@@ -96,4 +96,8 @@ export class PartsService {
   getStockPrice(companyId: number): Observable<any> {
     return this.apiService.get<any>(`${ this.configService.Settings.apiServerHost }/reports/stockprice/${ companyId }`);
   }
+
+  getPartsForDashboard(companyId: number): Observable<any> {
+    return this.apiService.get<any>(`${ this.configService.Settings.apiServerHost }/reports/dashboard/${ companyId }`);
+  }
 }

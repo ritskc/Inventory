@@ -13,6 +13,7 @@ import { SaleReportComponent } from './sale-report/sale-report.component';
 import { MonthlyInvoiceListComponent } from './monthly-invoice/monthly-invoice.component';
 import { EditMonthlyInvoiceComponent } from './edit-monthly-invoice/edit-monthly-invoice.component';
 import { WarehouseListComponent } from './warehouse-list/warehouse-list.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [{
   path: '',
@@ -27,6 +28,13 @@ const routes: Routes = [{
     {
       path: 'warehouse-report',
       component: WarehouseListComponent
+    },
+    {
+      path: 'dashboard',
+      component: DashboardComponent,
+      data: {
+        title: 'Dashboard'
+      }
     },
     {
       path: 'shipment-list/shipment',
