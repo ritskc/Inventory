@@ -92,4 +92,8 @@ export class PartsService {
   deleteAnAssembly(id: number, body: any) {
     return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.assemblyUri }`, body);
   }
+
+  getStockPrice(companyId: number): Observable<any> {
+    return this.apiService.get<any>(`${ this.configService.Settings.apiServerHost }/reports/stockprice/${ companyId }`);
+  }
 }

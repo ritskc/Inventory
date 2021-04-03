@@ -10,6 +10,7 @@
       <option *ngFor="let item of filter" [value]="item.id">{{item.name}}</option>
     </select>
     <button class="btn btn-primary" style="margin-left: 10px;" (click)="showModalForImportStockPrices = true">Import Stock Prices</button>
+    <button class="btn btn-primary" style="margin-left: 10px;" (click)="exportStockPrice()">Export Stock Prices</button>
   </div>
 
   <simple-grid [data]="parts" [columns]="columns"  (actionButtonClickedEvent)="[actionButtonClicked($event)]"

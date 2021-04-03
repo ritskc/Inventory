@@ -11,6 +11,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { SupplierService } from '../../supplier/supplier.service';
 import { ClassConstants } from '../../../common/constants';
 import readXlsxFile from 'read-excel-file';
+import { JsonToCsvExporterService } from '../../../common/services/json-to-csv-exporter.service';
 
 @Component({
   selector: 'app-part-list',
@@ -31,7 +32,8 @@ export class PartListComponent implements OnInit {
   stockPrices: PartCosting[] = [];
 
   constructor(private service: PartsService, private activatedRoute: ActivatedRoute, private router: Router, private customerService: CustomerService,
-              private httpLoader: httpLoaderService, private companyService: CompanyService, private toastr: ToastrManager, private supplierService: SupplierService) { }
+              private httpLoader: httpLoaderService, private companyService: CompanyService, private toastr: ToastrManager, private supplierService: SupplierService,
+              private jsonToCsvExporterService: JsonToCsvExporterService) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompanyId = this.companyService.getCurrentlyLoggedInCompanyId();
@@ -249,6 +251,27 @@ export class PartListComponent implements OnInit {
             (error) => this.toastr.errorToastr(error.error)
           );
     }
+  }
+
+  exportStockPrice() {
+    var columnsForStockExport: DataColumn[] = [];
+    columnsForStockExport.push( new DataColumn({ headerText: "Customer Name", value: "customerName" }) );
+    columnsForStockExport.push( new DataColumn({ headerText: "Customer Price", value: "customerPrice" }) );
+    columnsForStockExport.push( new DataColumn({ headerText: "Part Code", value: "partCode" }) );
+    columnsForStockExport.push( new DataColumn({ headerText: "Part Description", value: "description" }) );
+    columnsForStockExport.push( new DataColumn({ headerText: "Quantity", value: "qty" }) );
+    columnsForStockExport.push( new DataColumn({ headerText: "Supplier Name", value: "supplierName" }) );
+    columnsForStockExport.push( new DataColumn({ headerText: "Supplier Price", value: "supplierPrice" }) );
+
+    this.httpLoader.show();
+    this.service.getStockPrice(this.currentlyLoggedInCompanyId)
+        .subscribe(
+          (result) => {
+            this.jsonToCsvExporterService.export(`Stock Price`, 'csv', result, columnsForStockExport);
+          },
+          (error) => console.log(error),
+          () => this.httpLoader.hide()
+        );
   }
 }
 
