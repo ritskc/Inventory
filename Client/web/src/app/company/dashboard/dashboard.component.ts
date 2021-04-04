@@ -24,17 +24,17 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.minQtyGridColumn.push(new DataColumn({ headerText: "Part", value: "description", sortable: false }));
-    this.minQtyGridColumn.push(new DataColumn({ headerText: "Supplier", value: "supplierCode", sortable: false }));
+    this.minQtyGridColumn.push(new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false }));
     this.minQtyGridColumn.push(new DataColumn({ headerText: "Customer", value: "customerName", sortable: false }));
     this.minQtyGridColumn.push(new DataColumn({ headerText: "In Hand", value: "qtyInHand", sortable: false }));
     this.minQtyGridColumn.push(new DataColumn({ headerText: "Min", value: "minQty", sortable: false }));
 
     this.zeroQtyPartsGridColumn.push(new DataColumn({ headerText: "Part", value: "description", sortable: false }));
-    this.zeroQtyPartsGridColumn.push(new DataColumn({ headerText: "Supplier", value: "supplierCode", sortable: false }));
+    this.zeroQtyPartsGridColumn.push(new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false }));
     this.zeroQtyPartsGridColumn.push(new DataColumn({ headerText: "Customer", value: "customerName", sortable: false }));
 
     this.zeroInTransitQtyPartsGridColumn.push(new DataColumn({ headerText: "Part", value: "description", sortable: false }));
-    this.zeroInTransitQtyPartsGridColumn.push(new DataColumn({ headerText: "Supplier", value: "supplierCode", sortable: false }));
+    this.zeroInTransitQtyPartsGridColumn.push(new DataColumn({ headerText: "Supplier", value: "supplierName", sortable: false }));
     this.zeroInTransitQtyPartsGridColumn.push(new DataColumn({ headerText: "Customer", value: "customerName", sortable: false }));
 
     this.currentlyLoggedInCompany = this.companyService.getCurrentlyLoggedInCompanyId();
