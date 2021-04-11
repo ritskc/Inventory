@@ -10,7 +10,7 @@
       <option *ngFor="let item of filter" [value]="item.id">{{item.name}}</option>
     </select>
     <button class="btn btn-primary" style="margin-left: 10px;" (click)="showModalForImportStockPrices = true">Import Stock Prices</button>
-    <button *ngIf="false" class="btn btn-primary" style="margin-left: 10px;" (click)="showModalForMinMaxQuantity = true">Set Min Max Quantity</button>
+    <button class="btn btn-primary" style="margin-left: 10px;" *ngIf="privilegeId == 1 || privilegeId == 5" (click)="showModalForMinMaxQuantity = true">Set Min Max Quantity</button>
     <button class="btn btn-primary" style="margin-left: 10px;" *ngIf="privilegeId == 1 || privilegeId == 5" (click)="exportStockPrice()">Export Stock Prices</button>
   </div>
 
@@ -69,7 +69,7 @@
           <input class="form-control input" type="file" placeholder="Select file to upload min max quantities" (change)="uploadMinMaxQuantities($event.target.files)"/>
         </div>
         <div class="card-body">
-            <button (click)="updateMinMaxQuantities()" class="btn btn-primary">Set Min Max Quantity</button>
+            <button class="btn btn-primary">Set Min Max Quantity</button>
             <button (click)="showModalForMinMaxQuantity = false" class="btn btn-primary">Cancel</button>
         </div>
       </div>

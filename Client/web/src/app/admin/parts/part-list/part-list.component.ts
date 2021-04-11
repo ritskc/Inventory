@@ -207,12 +207,6 @@ export class PartListComponent implements OnInit {
     });
   }
 
-  updateMinMaxQuantities(files: FileList) {
-    readXlsxFile(files[0]).then((rows) => {
-
-    })
-  }
-
   extractDataFromFile(rows: any) {    
     this.stockPrices = [];
     for (let index = 1; index < rows.length; index++) {
@@ -241,6 +235,31 @@ export class PartListComponent implements OnInit {
           },
           (error) => this.toastr.errorToastr(error.error),
           () => this.httpLoader.hide());
+  }
+
+  uploadMinMaxQuantities(files: FileList) {
+    readXlsxFile(files[0]).then((rows) => {
+      console.log(rows);
+      this.extractDataFromFileForMinMaxQuantity(rows);
+    });
+  }
+
+  extractDataFromFileForMinMaxQuantity(rows: any) {
+    var dataToExport = [];
+    for (let index = 1; index < rows.length; index++) {
+      var row = {
+        "code": rows[index][0],
+        "MonthlyForecastQty": rows[index][1]
+      };
+      dataToExport.push(row);
+    }
+    this.httpLoader.show();
+    this.service.updateMinMaxQuantity(dataToExport, this.currentlyLoggedInCompanyId)
+        .subscribe(
+          (result) => this.toastr.successToastr('Min/Max quantities uploaded successfully'),
+          (error) => console.log(error),
+          () => this.httpLoader.hide()
+        );
   }
 
   deletePartCosting(data) {

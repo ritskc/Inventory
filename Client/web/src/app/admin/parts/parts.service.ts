@@ -100,4 +100,8 @@ export class PartsService {
   getPartsForDashboard(companyId: number): Observable<any> {
     return this.apiService.get<any>(`${ this.configService.Settings.apiServerHost }/reports/dashboard/${ companyId }`);
   }
+
+  updateMinMaxQuantity(rows: any, companyId: number) {
+    return this.apiService.put<any>(rows, `${ this.configService.Settings.apiServerHost }/part/${ companyId }`);
+  }
 }
