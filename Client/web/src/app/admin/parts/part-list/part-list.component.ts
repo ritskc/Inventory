@@ -12,6 +12,7 @@ import { SupplierService } from '../../supplier/supplier.service';
 import { ClassConstants } from '../../../common/constants';
 import readXlsxFile from 'read-excel-file';
 import { JsonToCsvExporterService } from '../../../common/services/json-to-csv-exporter.service';
+import { AuthService } from '../../../user/auth.service';
 
 @Component({
   selector: 'app-part-list',
@@ -28,18 +29,20 @@ export class PartListComponent implements OnInit {
   filterOption: FilterOption;
   showModal: boolean = false;
   showModalForImportStockPrices: boolean = false;
+  privilegeId: number = 0;
   selectedPartForCostingUpdate: Part;
   stockPrices: PartCosting[] = [];
 
   constructor(private service: PartsService, private activatedRoute: ActivatedRoute, private router: Router, private customerService: CustomerService,
               private httpLoader: httpLoaderService, private companyService: CompanyService, private toastr: ToastrManager, private supplierService: SupplierService,
-              private jsonToCsvExporterService: JsonToCsvExporterService) { }
+              private jsonToCsvExporterService: JsonToCsvExporterService, private authService: AuthService) { }
 
   ngOnInit() {
     this.currentlyLoggedInCompanyId = this.companyService.getCurrentlyLoggedInCompanyId();
     this.initializeGridColumns();
     this.getAllPartsForCompany();
     this.filterOption = FilterOption.SelectAll;
+    this.privilegeId = this.authService.getPrivilegeId();
   }
 
   initializeGridColumns() {
@@ -202,6 +205,12 @@ export class PartListComponent implements OnInit {
     readXlsxFile(files[0]).then((rows) => {
       this.extractDataFromFile(rows);
     });
+  }
+
+  updateMinMaxQuantities(files: FileList) {
+    readXlsxFile(files[0]).then((rows) => {
+
+    })
   }
 
   extractDataFromFile(rows: any) {    

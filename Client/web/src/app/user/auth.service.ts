@@ -32,6 +32,11 @@ export class AuthService {
     return this.apiService.get(`${ this.configService.Settings.apiServerHost }${ this.configService.Settings.usersUri }/detail/forgotpassword/${ loginname }`);
   }
 
+  getPrivilegeId(): number {
+    var userInfo = JSON.parse(localStorage.getItem('privileges'));
+    return userInfo.priviledgeId;
+  }
+
   setPrivileges(privileges: any) {
     localStorage.setItem('privileges', JSON.stringify(privileges));
     if (!localStorage.getItem('menus')){
