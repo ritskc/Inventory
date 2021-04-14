@@ -14,13 +14,15 @@ import { UploadInvoiceComponent } from './upload-invoice/upload-invoice.componen
 import { ReceiveComponent } from './receive/receive.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsComponent } from '../../views/notifications/modals.component';
+import { ContainerListComponent } from '../container/list/list.component';
 
 @NgModule({
   declarations: [
     InvoiceListComponent,
     UploadInvoiceComponent,
     ReceiveComponent,
-    ModalsComponent
+    ModalsComponent,
+    ContainerListComponent
   ],
   imports: [
     CommonModule,

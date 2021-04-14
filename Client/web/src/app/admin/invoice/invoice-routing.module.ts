@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { UploadInvoiceComponent } from './upload-invoice/upload-invoice.component';
 import { ReceiveComponent } from './receive/receive.component';
+import { ContainerListComponent } from '../container/list/list.component';
 
 const routes: Routes = [{
   path: '',
@@ -42,6 +43,12 @@ const routes: Routes = [{
       component: UploadInvoiceComponent,
       data: {
         title: 'Edit Invoice'
+      }
+    }, {
+      path: 'container/list',
+      component: ContainerListComponent,
+      data: {
+        title: 'Container List'
       }
     }]
 }];

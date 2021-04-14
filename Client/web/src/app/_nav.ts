@@ -116,6 +116,11 @@ if (environment.isSupplier) {
           icon: 'icon-puzzle'
         },
         {
+          name: 'Container',
+          url: '/invoice/container/list',
+          icon: 'icon-puzzle'
+        },
+        {
           name: 'Purchase Report',
           url: '/suppliers/purchase-report',
           icon: 'icon-puzzle'
