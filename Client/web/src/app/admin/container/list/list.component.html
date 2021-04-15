@@ -1,7 +1,40 @@
+<div class="row standard-margin">
+  <div class="form-check" style="margin-left: 15px; padding-top: 5px; float: left;">
+    <input class="form-check-input" type="checkbox" id="showNotReceivedOrders" (change)="filterOptionSelected()" [(ngModel)]="showNotReceived">
+    <label class="form-check-label" for="showNotReceivedOrders">
+      Show not received containers
+    </label>
+  </div>
+</div>
+
 <div class="standard-margin">
   <simple-grid [data]="containers" [columns]="columns" 
       (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="addContainer()" (actionButtonClickedEvent)="[actionButtonClicked($event)]">
   </simple-grid>
+</div>
+
+<div style="top: 0px; left: 0px; width: 100%; height: 100%; position: absolute; background-color: lightgray; opacity: 0.9; z-index: 999999;" *ngIf='showWarehouseModal'>
+  <div style="top: 20%; left: 30%; width: 600px; height: 200px; position: absolute; background-color: darkgray; opacity: 1;">
+    <div style="width: 100%;">
+      <div class="card">
+        <div class="card-header">
+          Receive in Warehouse
+        </div>
+        <div class="card-body">
+          <div class="row" style="margin-top: 10px; margin-left: 1px;">
+            <select class="form-control" [(ngModel)]="warehouseId">
+              <option value="0">Default</option>
+              <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">{{warehouse.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button (click)="receiveOrderInWarehouse()" class="btn btn-primary">Receive</button>
+          <button (click)="showWarehouseModal = false" class="btn btn-primary">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <loader></loader>

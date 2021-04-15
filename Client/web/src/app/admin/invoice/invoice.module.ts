@@ -15,6 +15,7 @@ import { ReceiveComponent } from './receive/receive.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsComponent } from '../../views/notifications/modals.component';
 import { ContainerListComponent } from '../container/list/list.component';
+import { ContainerEditComponent } from '../container/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ContainerListComponent } from '../container/list/list.component';
     UploadInvoiceComponent,
     ReceiveComponent,
     ModalsComponent,
-    ContainerListComponent
+    ContainerListComponent,
+    ContainerEditComponent
   ],
   imports: [
     CommonModule,

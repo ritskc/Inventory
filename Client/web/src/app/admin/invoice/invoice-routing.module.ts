@@ -4,6 +4,7 @@ import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { UploadInvoiceComponent } from './upload-invoice/upload-invoice.component';
 import { ReceiveComponent } from './receive/receive.component';
 import { ContainerListComponent } from '../container/list/list.component';
+import { ContainerEditComponent } from '../container/edit/edit.component';
 
 const routes: Routes = [{
   path: '',
@@ -50,6 +51,9 @@ const routes: Routes = [{
       data: {
         title: 'Container List'
       }
+    }, {
+      path: 'container/edit/:mode/:containerId',
+      component: ContainerEditComponent
     }]
 }];
 
