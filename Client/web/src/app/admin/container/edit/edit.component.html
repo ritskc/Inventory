@@ -1,3 +1,55 @@
-<p>
-  edit works!
-</p>
+<div class="standard-margin">
+  <div class="card">
+    <div class="card-header">
+
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <span class="col-xs-1 col-md-1" style="padding-top: 3px;">Container</span>
+        <input class="col-xs-2 col-md-2 form-control" [(ngModel)]="container.containerNo"/>
+
+        <span class="col-xs-1 col-md-1" style="padding-top: 3px;">ETA</span>
+        <input type="date" class="col-xs-2 col-md-2 form-control" [(ngModel)]="eta"/>
+
+        <div class="form-check" style="margin-left: 15px; padding-top: 5px; float: left;">
+          <input disabled class="form-check-input" type="checkbox" id="isContainerReceived" [(ngModel)]="container.isContainerReceived">
+          <label class="form-check-label" for="isContainerReceived">
+            Received
+          </label>
+        </div>
+
+        <div class="form-check" style="margin-left: 15px; padding-top: 5px; float: left;">
+          <input class="form-check-input" type="checkbox" id="isAirShipment" [(ngModel)]="container.isAirShipment">
+          <label class="form-check-label" for="isAirShipment">
+            Air Shipment
+          </label>
+        </div>
+
+        <div class="form-check" style="margin-left: 15px; padding-top: 5px; float: left;">
+          <input class="form-check-input" type="checkbox" id="byCourier" [(ngModel)]="container.byCourier">
+          <label class="form-check-label" for="byCourier">
+            Courier
+          </label>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 20px;">
+        <span class="col-xs-1 col-md-1" style="padding-top: 3px;">Invoices</span>
+        <select class="col-xs-2 col-md-2 form-control" [(ngModel)]="invoiceId">
+          <option value="-1">Select Invoices</option>
+          <option *ngFor="let invoice of invoices" [value]="invoice.id">{{invoice.invoiceNo}}</option>
+        </select>
+        <button class="btn btn-primary pull-right col-md-1 col-xs-1" style="margin-left: 5px;" (click)="addToContainer()">Add</button>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <simple-grid [data]="container.supplierInvoices" [columns]="columns" [addRequired]="false" [exportRequired]="false" (actionButtonClickedEvent)="[actionButtonClicked($event)]"></simple-grid>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary pull-right" (click)="saveContainer()">Create Container</button>
+    </div>
+  </div>
+</div>
+
+<loader></loader>

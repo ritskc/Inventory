@@ -1,7 +1,7 @@
 import { Invoice } from "./invoice.model";
 
 export class Container {
-    id: number;
+    id: number = 0;
     companyId: number;
     containerNo: string;
     eta: string;

@@ -41,9 +41,9 @@ export class ContainerListComponent implements OnInit {
     this.columns.push( new DataColumn({ headerText: "Received On", value: "receivedDate", isDate: true, sortable: true, customStyling: 'right' }) );
     this.columns.push( new DataColumn({ headerText: "Received", value: "isContainerReceived", isDisabled: true, isBoolean: true, customStyling: 'center' }) );
     this.columns.push( new DataColumn({ headerText: "Action", value: "Action", isActionColumn: true, customStyling: 'center', actions: [
+      new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Warning, event: 'editContainer' }),
       new DataColumnAction({ actionText: 'Receive', actionStyle: ClassConstants.Primary, event: 'receiveContainer', showOnlyIf: 'data["isContainerReceived"] == false' }),
       new DataColumnAction({ actionText: 'Un Receive', actionStyle: ClassConstants.Primary, event: 'unreceiveContainer', showOnlyIf: 'data["isContainerReceived"] == true' }),
-      new DataColumnAction({ actionText: 'Update', actionStyle: ClassConstants.Primary, event: 'editContainer' }),
       new DataColumnAction({ actionText: 'Delete', actionStyle: ClassConstants.Danger, event: 'deleteContainer' })
     ] }) );
   }
@@ -76,6 +76,7 @@ export class ContainerListComponent implements OnInit {
 
   actionButtonClicked(data) {
     switch (data.eventName) {
+
       case 'receiveContainer':
         this.dataToUpdate = data;
         this.companyService.getCompany(this.companyService.getCurrentlyLoggedInCompanyId())
@@ -111,6 +112,10 @@ export class ContainerListComponent implements OnInit {
     }
   }
 
+  addContainer() {
+    this.router.navigateByUrl(`invoice/container/edit/0/0`);
+  }
+
   filterOptionSelected() {
     this.getAllConatinerList();
   }
@@ -137,7 +142,10 @@ export class ContainerListComponent implements OnInit {
     if (response) {
       this.containerService.deleteContainer(data.id)
           .subscribe(
-            () => this.toastr.successToastr('Container deleted successfully'),
+            () => {
+              this.toastr.successToastr('Container deleted successfully');
+              this.getAllConatinerList();
+            },
             (error) => this.toastr.errorToastr(error.error)
           );
     }

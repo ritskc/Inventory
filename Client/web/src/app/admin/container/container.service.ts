@@ -20,6 +20,11 @@ export class ContainerService {
     return this.apiService.get<Container[]>(`${ this.configService.Settings.apiServerHost }/containers/${ companyId }`);
   }
 
+  getAContainer(containerId: number): Observable<Container> {
+    var companyId = this.companyService.getCurrentlyLoggedInCompanyId();
+    return this.apiService.get<Container>(`${ this.configService.Settings.apiServerHost }/containers/${ companyId }/${ containerId }`);
+  }
+
   saveContainer(container: Container) {
     if (container.id == 0)
       return this.apiService.post(container, `${ this.configService.Settings.apiServerHost }/containers`);
@@ -28,7 +33,7 @@ export class ContainerService {
   }
 
   deleteContainer(id: number) {
-    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/containers/${ id }`);
+    return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/containers`);
   }
 
   receiveContainer(containerId: number, warehouseId: number) {
