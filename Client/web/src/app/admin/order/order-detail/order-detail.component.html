@@ -123,8 +123,8 @@
     <div class="card-header">
         <strong>Part </strong>Details
     </div>
-    <simple-grid *ngIf="SelectedSupplier > -1" [data]="purchaseOrder.poDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false" [pageSize]="50" (actionButtonClickedEvent)="removePart($event)" (valueEdited)="valueChanged($event)"></simple-grid>
-    <simple-grid *ngIf="SelectedCustomer > -1" [data]="purchaseOrder.orderDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false" [pageSize]="50" (actionButtonClickedEvent)="removePart($event)" (valueEdited)="valueChanged($event)"></simple-grid>
+    <simple-grid *ngIf="SelectedSupplier > -1" [data]="purchaseOrder.poDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false" [pageSize]="100" (actionButtonClickedEvent)="removePart($event)" (valueEdited)="valueChanged($event)"></simple-grid>
+    <simple-grid *ngIf="SelectedCustomer > -1" [data]="purchaseOrder.orderDetails" [columns]="gridColumns" [headerRequired]="false" [footerRequired]="false" [pageSize]="100" (actionButtonClickedEvent)="removePart($event)" (valueEdited)="valueChanged($event)"></simple-grid>
   </div>
 
   <div class="card" *ngIf="SelectedSupplier > -1">
