@@ -18,6 +18,8 @@ import { SupplierDetailComponent } from './supplier-detail/supplier-detail.compo
 import { PurchaseOrderListComponent } from './purchase-order-list/purchase-order-list.component';
 import { PurchaseOrderDetailComponent } from './purchase-order-detail/purchase-order-detail.component';
 import { PurchaseReportComponent } from './purchase-report/purchase-report.component';
+import { LocationListComponent } from './location-list/location-list.component';
+import { LocationDetailComponent } from './location-detail/location-detail.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { PurchaseReportComponent } from './purchase-report/purchase-report.compo
     SupplierDetailComponent,
     PurchaseOrderListComponent,
     PurchaseOrderDetailComponent,
-    PurchaseReportComponent
+    PurchaseReportComponent,
+    LocationListComponent,
+    LocationDetailComponent
   ],
   imports: [
     CommonModule,

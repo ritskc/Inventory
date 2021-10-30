@@ -29,6 +29,7 @@ export class AppConfigurations {
     userReportsUri: string;
     warehousesUri: string;
     assemblyUri: string;
+    locationUri: string;
 
     initialize() {
         if (environment.production) {
@@ -60,6 +61,7 @@ export class AppConfigurations {
         this.userReportsUri = '/UserReports';
         this.warehousesUri = 'Warehouses';
         this.assemblyUri = '/assembly';
+        this.locationUri = '/locations'
         this.barcodeUri = 'https://quest.yellow-chips.com/static/barcode.html?';
     }
 }

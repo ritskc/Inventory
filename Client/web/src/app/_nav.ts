@@ -93,6 +93,11 @@ if (environment.isSupplier) {
           name: 'Warehouse',
           url: '/companies/warehouse-report',
           icon: 'icon-puzzle'
+        },
+        {
+          name: 'Locations',
+          url: '/suppliers/locations',
+          icon: 'icon-puzzle'
         }
       ]
     },

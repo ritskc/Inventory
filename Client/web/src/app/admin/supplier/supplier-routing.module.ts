@@ -5,6 +5,8 @@ import { SupplierDetailComponent } from './supplier-detail/supplier-detail.compo
 import { PurchaseOrderListComponent } from './purchase-order-list/purchase-order-list.component';
 import { PurchaseOrderDetailComponent } from './purchase-order-detail/purchase-order-detail.component';
 import { PurchaseReportComponent } from './purchase-report/purchase-report.component';
+import { LocationListComponent } from './location-list/location-list.component';
+import { LocationDetailComponent } from './location-detail/location-detail.component';
 
 const routes: Routes = [{
   path: '',
@@ -37,6 +39,18 @@ const routes: Routes = [{
     component: PurchaseReportComponent,
     data: {
       title: 'Purchase Report'
+    }
+  }, {
+    path: 'locations',
+    component: LocationListComponent,
+    data: {
+      title: 'Locations'
+    }
+  }, {
+    path: 'locations/:action/:id',
+    component: LocationDetailComponent,
+    data: {
+      title: 'Supplier Detail'
     }
   }]
 }];

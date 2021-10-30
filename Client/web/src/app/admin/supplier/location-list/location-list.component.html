@@ -1,0 +1,8 @@
+<div class="standard-margin">
+  <simple-grid [data]="locations" [columns]="columns" 
+    (selectedRow)="rowSelected($event)" (addClickedEventEmitter)="addLocation()" (actionButtonClickedEvent)="actionButtonClicked($event)">
+
+  </simple-grid>
+</div>
+
+<loader></loader>
