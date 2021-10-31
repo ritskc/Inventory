@@ -15,6 +15,17 @@ export class LocationService {
     return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.locationUri }/${ companyId }`)
   }
 
+  getLocation(companyId: number, locationId: number) : Observable<Location> {
+    return this.apiService.get(`${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.locationUri }/${ companyId }/${ locationId }`);
+  }
+
+  save(location: Location) {
+    if (location.id == 0) 
+      return this.apiService.post(location, this.configService.Settings.apiServerHost + this.configService.Settings.locationUri);
+    else
+      return this.apiService.put(location, this.configService.Settings.apiServerHost + this.configService.Settings.locationUri + `/${ location.id }`);
+  }
+
   delete(id: number) {
     return this.apiService.delete(id, `${ this.configService.Settings.apiServerHost }/${ this.configService.Settings.locationUri }`)
   }

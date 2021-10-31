@@ -1,3 +1,31 @@
-<p>
-  location-detail works!
-</p>
+<div class="row">
+  <div class="col-xs-12 col-md-12">
+    <div class="card">
+      <div class="card-header">
+        Location Details
+      </div>
+      <div class="card-body">
+        <div class="form-group standard-top-margin col-xs-6 col-md-6">
+          <label>Name</label>
+          <input type="text" class="form-control" [(ngModel)]="location.name"/>
+        </div>
+        <div class="form-group standard-top-margin col-xs-6 col-md-6">
+          <label>Description</label>
+          <input type="text" class="form-control" [(ngModel)]="location.description"/>
+        </div>
+        <div class="form-group standard-top-margin col-xs-6 col-md-6">
+          <label>Warehouses</label>
+          <select class="form-control" [(ngModel)]="location.wareHouseId">
+            <option value="0">Default</option>
+            <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">{{warehouse.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-primary" (click)="save()"><i class="fa fa-save"></i> Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<loader></loader>

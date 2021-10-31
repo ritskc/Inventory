@@ -4,5 +4,5 @@ export class Location {
     name: string = '';
     description: string = '';
     barcode: string = '';
-    warehouseId: number = 0;
+    wareHouseId: number = 0;
 }
