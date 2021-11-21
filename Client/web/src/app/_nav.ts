@@ -98,6 +98,11 @@ if (environment.isSupplier) {
           name: 'Locations',
           url: '/suppliers/locations',
           icon: 'icon-puzzle'
+        },
+        {
+          name: 'Boxes',
+          url: '/suppliers/boxes',
+          icon: 'icon-puzzle'
         }
       ]
     },

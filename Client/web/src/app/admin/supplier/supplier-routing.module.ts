@@ -7,6 +7,8 @@ import { PurchaseOrderDetailComponent } from './purchase-order-detail/purchase-o
 import { PurchaseReportComponent } from './purchase-report/purchase-report.component';
 import { LocationListComponent } from './location-list/location-list.component';
 import { LocationDetailComponent } from './location-detail/location-detail.component';
+import { BoxListComponent } from './box-list/box-list.component';
+import { BoxDetailComponent } from './box-detail/box-detail.component';
 
 const routes: Routes = [{
   path: '',
@@ -52,6 +54,12 @@ const routes: Routes = [{
     data: {
       title: 'Supplier Detail'
     }
+  }, {
+    path: 'boxes',
+    component: BoxListComponent
+  }, {
+    path: 'boxes/:action/:id',
+    component: BoxDetailComponent
   }]
 }];
 
